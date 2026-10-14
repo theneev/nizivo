@@ -88,11 +88,12 @@
           "ok": true
         }
       },
-      "chunks": 11,
+      "chunks": 13,
       "markers": [
         "nzfm[_engines/react-aria/dialog.client]",
         "nzfm[_engines/react-aria/locale.client]",
         "nzfm[_engines/react-aria/overlay.client]",
+        "nzfm[_engines/react-aria/popup.client]",
         "nzfm[_engines/react-aria/select.client]",
         "nzfm[_engines/react-aria/tooltip.client]",
         "nzfm[config/config.client]",
@@ -146,11 +147,12 @@
           "ok": true
         }
       },
-      "chunks": 11,
+      "chunks": 13,
       "markers": [
         "nzfm[_engines/react-aria/dialog.client]",
         "nzfm[_engines/react-aria/locale.client]",
         "nzfm[_engines/react-aria/overlay.client]",
+        "nzfm[_engines/react-aria/popup.client]",
         "nzfm[_engines/react-aria/select.client]",
         "nzfm[_engines/react-aria/tooltip.client]",
         "nzfm[config/config.client]",
@@ -193,11 +195,12 @@
           "ok": true
         }
       },
-      "chunks": 10,
+      "chunks": 12,
       "markers": [
         "nzfm[_engines/react-aria/dialog.client]",
         "nzfm[_engines/react-aria/locale.client]",
         "nzfm[_engines/react-aria/overlay.client]",
+        "nzfm[_engines/react-aria/popup.client]",
         "nzfm[_engines/react-aria/tooltip.client]",
         "nzfm[config/config.client]",
         "nzfm[dialog/dialog.client]",
@@ -229,10 +232,11 @@
           "ok": true
         }
       },
-      "chunks": 11,
+      "chunks": 12,
       "markers": [
         "nzfm[_engines/react-aria/locale.client]",
         "nzfm[_engines/react-aria/overlay.client]",
+        "nzfm[_engines/react-aria/popup.client]",
         "nzfm[_engines/react-aria/select.client]",
         "nzfm[config/config.client]",
         "nzfm[select/select.client]"
@@ -275,11 +279,12 @@
           "ok": true
         }
       },
-      "chunks": 10,
+      "chunks": 11,
       "markers": [
         "nzfm[_engines/react-aria/dialog.client]",
         "nzfm[_engines/react-aria/locale.client]",
         "nzfm[_engines/react-aria/overlay.client]",
+        "nzfm[_engines/react-aria/popup.client]",
         "nzfm[config/config.client]",
         "nzfm[dialog/dialog.client]"
       ],
@@ -353,10 +358,11 @@
           "ok": true
         }
       },
-      "chunks": 11,
+      "chunks": 12,
       "markers": [
         "nzfm[_engines/react-aria/locale.client]",
         "nzfm[_engines/react-aria/overlay.client]",
+        "nzfm[_engines/react-aria/popup.client]",
         "nzfm[_engines/react-aria/select.client]",
         "nzfm[config/config.client]",
         "nzfm[select/select.client]"
@@ -387,10 +393,11 @@
           "ok": true
         }
       },
-      "chunks": 11,
+      "chunks": 12,
       "markers": [
         "nzfm[_engines/react-aria/locale.client]",
         "nzfm[_engines/react-aria/overlay.client]",
+        "nzfm[_engines/react-aria/popup.client]",
         "nzfm[_engines/react-aria/select.client]",
         "nzfm[config/config.client]",
         "nzfm[select/select.client]"
@@ -554,7 +561,7 @@
           "ok": true
         }
       },
-      "chunks": 9,
+      "chunks": 10,
       "markers": [
         "nzfm[_engines/react-aria/locale.client]",
         "nzfm[_engines/react-aria/overlay.client]",
@@ -584,7 +591,7 @@
           "ok": true
         }
       },
-      "chunks": 9,
+      "chunks": 10,
       "markers": [
         "nzfm[_engines/react-aria/locale.client]",
         "nzfm[_engines/react-aria/overlay.client]",
@@ -595,6 +602,156 @@
       ],
       "missing": [],
       "unexpected": [],
+      "failures": []
+    },
+    "/menu": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "button-label kbd kbd-glyphs menu-checkbox-item menu-group menu-group-label menu-item menu-list menu-popup menu-separator menu-trigger",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "menuDefaultOpen": {
+          "ssrExpanded": "true",
+          "ssrPopup": false,
+          "ssrDangling": "menu-trigger aria-controls=react-aria-_R_4lubtbH1_",
+          "triggerTag": "button",
+          "expanded": "true",
+          "focusInside": true,
+          "firstFocused": true,
+          "items": "5",
+          "checked": "true",
+          "linkTag": "a",
+          "linkHref": "#preview",
+          "dangling": "",
+          "focusReturned": true,
+          "reopenedByEnter": true,
+          "partsScanned": "button-label kbd kbd-glyphs menu-checkbox-item menu-group menu-group-label menu-item menu-list menu-popup menu-separator menu-trigger",
+          "partsOutsideVocabulary": "",
+          "ok": true
+        }
+      },
+      "chunks": 12,
+      "markers": [
+        "nzfm[_engines/react-aria/locale.client]",
+        "nzfm[_engines/react-aria/menu.client]",
+        "nzfm[_engines/react-aria/overlay.client]",
+        "nzfm[_engines/react-aria/popup.client]",
+        "nzfm[config/config.client]",
+        "nzfm[menu/menu.client]"
+      ],
+      "missing": [],
+      "unexpected": [],
+      "failures": []
+    },
+    "/tabs": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "tabs tabs-count tabs-label tabs-list tabs-panel tabs-tab",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "tabs": {
+          "ssrTabs": "3",
+          "ssrSelected": "Unfulfilled",
+          "ssrPanels": "1",
+          "ssrPanelText": "Paid orders that still need to ship.",
+          "ssrWired": true,
+          "ssrDangling": "",
+          "selectedAfterArrowRight": true,
+          "focusedArchived": true,
+          "panelText": "Orders you closed.",
+          "dangling": "",
+          "partsScanned": "tabs tabs-count tabs-label tabs-list tabs-panel tabs-tab",
+          "partsOutsideVocabulary": "",
+          "ok": true
+        }
+      },
+      "chunks": 10,
+      "markers": [
+        "nzfm[_engines/react-aria/locale.client]",
+        "nzfm[_engines/react-aria/tabs.client]",
+        "nzfm[config/config.client]",
+        "nzfm[tabs/tabs.client]"
+      ],
+      "missing": [],
+      "unexpected": [],
+      "failures": []
+    },
+    "/tab-nav": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "tab-nav tab-nav-label tab-nav-link",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "tabNav": {
+          "links": "3",
+          "before": "All ordersAll orders",
+          "after": "ArchivedArchived",
+          "movedWithTheUrl": true,
+          "partsScanned": "tab-nav tab-nav-label tab-nav-link",
+          "partsOutsideVocabulary": "",
+          "ok": true
+        }
+      },
+      "chunks": 8,
+      "markers": [],
+      "missing": [],
+      "unexpected": [],
+      "failures": []
+    },
+    "/icons-server": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "icons": {
+          "svgs": "[{\"stroke\":\"1.92\",\"hidden\":\"true\",\"role\":\"\",\"label\":\"\",\"size\":20},{\"stroke\":\"1.92\",\"hidden\":\"true\",\"role\":\"\",\"label\":\"\",\"size\":20},{\"stroke\":\"1.92\",\"hidden\":\"\",\"role\":\"img\",\"label\":\"Search\",\"size\":20}]",
+          "ok": true
+        }
+      },
+      "chunks": 7,
+      "markers": [],
+      "missing": [],
+      "unexpected": [],
+      "icons": [],
+      "failures": []
+    },
+    "/icons-client": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "icons": {
+          "svgs": "[{\"stroke\":\"1.92\",\"hidden\":\"true\",\"role\":\"\",\"label\":\"\",\"size\":20},{\"stroke\":\"1.92\",\"hidden\":\"true\",\"role\":\"\",\"label\":\"\",\"size\":20},{\"stroke\":\"1.92\",\"hidden\":\"\",\"role\":\"img\",\"label\":\"Search\",\"size\":20}]",
+          "ok": true
+        }
+      },
+      "chunks": 8,
+      "markers": [],
+      "missing": [],
+      "unexpected": [],
+      "icons": ["_internal/icon", "icons/bell", "icons/calendar", "icons/search"],
       "failures": []
     }
   }

@@ -147,9 +147,15 @@ add:
 
 ```js title="next.config.mjs"
 export default {
-  experimental: { optimizePackageImports: ['@nizivo/react'] },
+  experimental: { optimizePackageImports: ['@nizivo/react', '@nizivo/icons'] },
 };
 ```
+
+`@nizivo/icons` has no client modules, so its barrel does not leak this way: a client component that
+imports three icons from `@nizivo/icons` ships exactly those three in every build the fixture runs,
+and icons rendered by a Server Component ship nothing. Listing it in `optimizePackageImports`, or
+importing from subpaths (`@nizivo/icons/calendar`), lets the bundler skip the barrel's 1,880
+re-exports; the build-time saving is not measured yet.
 
 ## Fonts
 

@@ -169,6 +169,9 @@ importers:
 
   .:
     dependencies:
+      '@nizivo/icons':
+        specifier: file:.packed/icons
+        version: file:.packed/icons(react@19.3.0)
       '@nizivo/react':
         specifier: file:.packed/react
         version: file:.packed/react(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
@@ -250,6 +253,16 @@ packages:
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
+
+  '@nizivo/icons@file:.packed/icons':
+    resolution: {directory: .packed/icons, type: directory}
+    engines: {node: '>=22.12'}
+    peerDependencies:
+      '@types/react': ^19.2.0
+      react: ^19.2.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
 
   '@nizivo/react@file:.packed/react':
     resolution: {directory: .packed/react, type: directory}
@@ -422,6 +435,10 @@ snapshots:
 
   '@next/swc-win32-x64-msvc@16.4.0':
     optional: true
+
+  '@nizivo/icons@file:.packed/icons(react@19.3.0)':
+    dependencies:
+      react: 19.3.0
 
   '@nizivo/react@file:.packed/react(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
     dependencies:

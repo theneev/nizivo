@@ -6,6 +6,7 @@
   "license": "Apache-2.0",
   "type": "module",
   "dependencies": {
+    "@nizivo/icons": "file:.packed/icons",
     "@nizivo/react": "file:.packed/react",
     "@nizivo/tokens": "file:.packed/tokens",
     "next": "16.4.0",

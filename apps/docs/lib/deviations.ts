@@ -287,12 +287,17 @@ export function builderItemsW4(): { file: string; items: BuilderItemW3[] } {
   return builderItemsTable('docs/figma/13-w4-menu-tabs.md');
 }
 
-/** The floor lane's Safari 17.5 status line (fixtures/floor-lane/RESULTS.md). */
-export function safariStatus(): { file: string; text: string } {
+/**
+ * The floor lane's Safari 17.5 status lines (fixtures/floor-lane/RESULTS.md, its Verdict): Mobile
+ * Safari 17.5 on the iOS 17.5 Simulator, and macOS Safari 17.5.
+ */
+export function safariStatus(): { file: string; lines: string[] } {
   const file = 'fixtures/floor-lane/RESULTS.md';
-  const line = readRepoText(file)
-    .split('\n')
-    .find((l) => l.startsWith('- **Safari 17.5'));
-  if (!line) throw new Error(`docs: ${file} has no Safari 17.5 status line`);
-  return { file, text: line.replace(/^-\s*/, '') };
+  const all = readRepoText(file).split('\n');
+  const lines = ['- **Mobile Safari 17.5', '- **macOS Safari 17.5'].map((prefix) => {
+    const line = all.find((l) => l.startsWith(prefix));
+    if (!line) throw new Error(`docs: ${file} has no "${prefix}" status line`);
+    return line.replace(/^-\s*/, '');
+  });
+  return { file, lines };
 }

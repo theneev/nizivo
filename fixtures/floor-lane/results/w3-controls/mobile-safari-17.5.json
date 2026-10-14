@@ -1,0 +1,61 @@
+{
+  "engine": "mobile-safari",
+  "version": "17.5",
+  "driver": "xcrun simctl openurl on iPhone 15, iOS 17.5 (21F79) Simulator; the page posts its result back; simctl io screenshot",
+  "runAt": "2026-10-14T21:20:46.307Z",
+  "tokens": "packages/tokens/dist/tokens.css",
+  "pages": {
+    "w3-controls.light": {
+      "page": "w3-controls",
+      "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1",
+      "osScheme": "light",
+      "reducedMotion": false,
+      "meta": {
+        "fieldSizing": false,
+        "hasSelector": true
+      },
+      "summary": {
+        "pass": 20,
+        "fail": 0,
+        "info": 0
+      },
+      "notPassed": [],
+      "passedByGroup": {
+        "setup": 1,
+        "checkbox": 6,
+        "switch": 3,
+        "radio": 1,
+        "segmented": 5,
+        "textarea": 2,
+        "input": 1,
+        "native-select": 1
+      }
+    },
+    "w3-controls.dark": {
+      "page": "w3-controls",
+      "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1",
+      "osScheme": "dark",
+      "reducedMotion": false,
+      "meta": {
+        "fieldSizing": false,
+        "hasSelector": true
+      },
+      "summary": {
+        "pass": 20,
+        "fail": 0,
+        "info": 0
+      },
+      "notPassed": [],
+      "passedByGroup": {
+        "setup": 1,
+        "checkbox": 6,
+        "switch": 3,
+        "radio": 1,
+        "segmented": 5,
+        "textarea": 2,
+        "input": 1,
+        "native-select": 1
+      }
+    }
+  }
+}

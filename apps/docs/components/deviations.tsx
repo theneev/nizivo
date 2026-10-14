@@ -309,9 +309,11 @@ export function Degradations(): JSX.Element {
         ))}
       </dl>
       <Source path="docs/ARCHITECTURE.md" />
-      <p>
-        <InlineMd text={safari.text} base={safari.file} />
-      </p>
+      {safari.lines.map((line) => (
+        <p key={line}>
+          <InlineMd text={line} base={safari.file} />
+        </p>
+      ))}
       <Source path={safari.file} />
     </>
   );

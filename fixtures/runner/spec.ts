@@ -1,11 +1,13 @@
 // The browser checks for one running build: every page in Playwright Chromium, with
 // - zero console errors or warnings and zero page errors (React reports hydration failures there),
 // - interaction after hydration (pick a Select option, open and close the Dialog, show the Tooltip,
-//   press an Alert's dismiss button),
+//   press an Alert's dismiss button, open a Menu, select a tab, follow a TabNav link),
 // - overlays open on the server (`defaultOpen`): open after hydration with every IDREF resolved,
 // - the planted-marker grep over every client chunk the page loads (pack.ts plants them),
 // - every documented part ([data-slot]) on the page, with each overlay open, carries only vocabulary
-//   or functional-allowlist data-* attributes and no engine class (§8.3 rule 3, §9.6 case 3).
+//   or functional-allowlist data-* attributes and no engine class (§8.3 rule 3, §9.6 case 3),
+// - @nizivo/icons: a page ships exactly the icon modules its client code imports (pack.ts plants
+//   `nzim[...]` markers), and none from a Server Component.
 /* oxlint-disable no-await-in-loop -- pages and interaction steps run one after another in one browser */
 import { readFileSync } from 'node:fs';
 import { dirname, join, normalize } from 'node:path';
@@ -24,7 +26,9 @@ type Component =
   | 'switch'
   | 'radio-group'
   | 'segmented-control'
-  | 'icon-button';
+  | 'icon-button'
+  | 'menu'
+  | 'tabs';
 
 /** Each rendered component's client leaf, as its dist path without `dist/` and `.js`. */
 const LEAF: Record<Component, string> = {
@@ -44,6 +48,8 @@ const LEAF: Record<Component, string> = {
   'segmented-control': 'segmented-control/segmented-control.client',
   // IconButton is a server shell; its default tooltip is a client leaf over Tooltip.
   'icon-button': 'icon-button/icon-button.client',
+  menu: 'menu/menu.client',
+  tabs: 'tabs/tabs.client',
 };
 
 interface PageSpec {
@@ -59,7 +65,7 @@ interface PageSpec {
   barrel?: true;
   dialog?: { trigger: string; close: string; role: 'dialog' | 'alertdialog' };
   /** The overlay is open on the server; it is checked after hydration, before any interaction. */
-  defaultOpen?: 'dialog' | 'tooltip';
+  defaultOpen?: 'dialog' | 'tooltip' | 'menu';
   /** The Select trigger's expected `data-size`, and parts the open popup must show. */
   select?: { size?: string; parts?: string[] };
   /** Documented parts the server-rendered page must contain (the T0 set). */
@@ -68,6 +74,15 @@ interface PageSpec {
   forms?: true;
   /** An IconButton whose tooltip shows its label (`label`) on focus. */
   iconButtonTooltip?: string;
+  /** Tabs: the selected panel in the server HTML, and arrow-key selection after hydration. */
+  tabs?: true;
+  /** TabNav through next/link: the current link, and client navigation moving it. */
+  tabNav?: true;
+  /**
+   * @nizivo/icons: the icons (Lucide names) the page's client code imports. Exactly these modules
+   * and the shared base must ship; [] for icons rendered only by Server Components.
+   */
+  icons?: string[];
 }
 
 /** One documented part of each week 2 T0 component (§21.1 W2 "server-safe components"). */
@@ -179,6 +194,17 @@ export const PAGES: Record<string, PageSpec> = {
     iconButtonTooltip: 'Bold',
     slots: ['icon-button', 'icon-button-icon'],
   },
+  // Week 4.
+  '/menu': { renders: ['menu'], defaultOpen: 'menu', slots: ['menu-trigger'] },
+  '/tabs': {
+    renders: ['tabs'],
+    tabs: true,
+    slots: ['tabs', 'tabs-list', 'tabs-tab', 'tabs-panel', 'tabs-count'],
+  },
+  // TabNav is server-safe: next/link ships Next's own client code, no @nizivo module.
+  '/tab-nav': { renders: [], tabNav: true, slots: ['tab-nav', 'tab-nav-link'] },
+  '/icons-server': { renders: [], icons: [] },
+  '/icons-client': { renders: [], icons: ['bell', 'calendar', 'search'] },
 };
 
 export interface PageResult {
@@ -192,6 +218,8 @@ export interface PageResult {
   missing: string[];
   /** Markers of client modules the page should not ship. */
   unexpected: string[];
+  /** @nizivo/icons modules found in the page's client chunks (`icons/calendar`, `_internal/icon`). */
+  icons?: string[];
   failures: string[];
 }
 
@@ -304,18 +332,25 @@ function closure(packageRoot: string, start: string): Set<string> {
 export interface Markers {
   /** marker → dist path, as written by pack.ts. */
   all: Map<string, string>;
+  /** Icon marker → dist path in @nizivo/icons (pack.ts, icon-markers.json). */
+  icons: Map<string, string>;
   /** Markers of the client modules that the leaves of the rendered components reach. */
   allowed: (renders: Component[]) => Set<string>;
 }
 
+function readMarkers(file: string): Map<string, string> {
+  const parsed: unknown = JSON.parse(readFileSync(file, 'utf8'));
+  if (typeof parsed !== 'object' || parsed === null) throw new Error(`${file}: not an object`);
+  return new Map(Object.entries(parsed).map(([marker, path]) => [marker, String(path)]));
+}
+
 export function loadMarkers(packageRoot: string, markersFile: string): Markers {
-  const parsed: unknown = JSON.parse(readFileSync(markersFile, 'utf8'));
-  if (typeof parsed !== 'object' || parsed === null)
-    throw new Error(`${markersFile}: not an object`);
-  const all = new Map(Object.entries(parsed).map(([marker, path]) => [marker, String(path)]));
+  const all = readMarkers(markersFile);
+  const icons = readMarkers(join(dirname(markersFile), 'icon-markers.json'));
   const markerOf = new Map([...all].map(([marker, path]) => [path, marker]));
   return {
     all,
+    icons,
     allowed: (renders) => {
       const allowed = new Set<string>();
       for (const component of renders) {
@@ -714,6 +749,246 @@ async function checkIconButtonTooltip(
   };
 }
 
+/**
+ * A Menu open on the server: no popup in the server HTML (React Aria renders none during SSR), then
+ * open after hydration with focus inside it and every IDREF resolved. Escape closes it and returns
+ * focus to the trigger, though no press opened it (§12.2 Focus return); Enter on the trigger opens it
+ * again with focus on the first item; Escape.
+ */
+async function checkMenuDefaultOpen(
+  page: Page,
+  html: string,
+): Promise<Record<string, string | boolean>> {
+  const ssr = await page.evaluate((source) => {
+    const doc = new DOMParser().parseFromString(source, 'text/html');
+    return {
+      expanded:
+        doc.querySelector('[data-slot="menu-trigger"]')?.getAttribute('aria-expanded') ?? '',
+      popup: doc.querySelector('[data-slot="menu-popup"]') !== null,
+    };
+  }, html);
+  const ssrDangling = (await danglingIdrefs(page, html)).join(', ');
+  const menu = page.getByRole('menu');
+  await menu.waitFor({ state: 'visible', timeout: TIMEOUT });
+  const trigger = page.locator('[data-slot="menu-trigger"]');
+  const triggerTag = await trigger.evaluate((element) => element.localName);
+  const expanded = (await trigger.getAttribute('aria-expanded')) ?? '';
+  // Opened with no key press, React Aria focuses the menu itself (an arrow key then reaches the items).
+  const focusInside = await page
+    .waitForFunction(
+      () => document.querySelector('[data-slot="menu-popup"]')?.contains(document.activeElement),
+      undefined,
+      { timeout: 2000 },
+    )
+    .then(
+      () => true,
+      () => false,
+    );
+  const items = await page.locator('[role="menuitem"], [role="menuitemcheckbox"]').count();
+  const checked =
+    (await page.getByRole('menuitemcheckbox').getAttribute('aria-checked')) ?? 'missing';
+  const link = await page.getByRole('menuitem', { name: 'Preview on store' }).evaluate((el) => ({
+    tag: el.localName,
+    href: el.getAttribute('href') ?? '',
+  }));
+  const dangling = (await danglingIdrefs(page)).join(', ');
+  const result: Record<string, string | boolean> = {};
+  const clean = await partsClean(page, result);
+  await page.keyboard.press('Escape');
+  await menu.waitFor({ state: 'detached', timeout: TIMEOUT });
+  const focusReturned = await page
+    .waitForFunction(
+      () => document.activeElement?.getAttribute('data-slot') === 'menu-trigger',
+      undefined,
+      { timeout: 2000 },
+    )
+    .then(
+      () => true,
+      () => false,
+    );
+  await page.keyboard.press('Enter');
+  await menu.waitFor({ state: 'visible', timeout: TIMEOUT });
+  const firstFocused = await page
+    .waitForFunction(
+      () =>
+        document.activeElement?.getAttribute('data-slot') === 'menu-item' &&
+        (document.activeElement.textContent ?? '').startsWith('Edit product'),
+      undefined,
+      {
+        timeout: 2000,
+      },
+    )
+    .then(
+      () => true,
+      () => false,
+    );
+  await page.keyboard.press('Escape');
+  await menu.waitFor({ state: 'detached', timeout: TIMEOUT });
+  return {
+    ssrExpanded: ssr.expanded,
+    ssrPopup: ssr.popup,
+    ssrDangling,
+    triggerTag,
+    expanded,
+    focusInside,
+    firstFocused,
+    items: String(items),
+    checked,
+    linkTag: link.tag,
+    linkHref: link.href,
+    dangling,
+    focusReturned,
+    reopenedByEnter: true,
+    ...result,
+    ok:
+      !ssr.popup &&
+      triggerTag === 'button' &&
+      expanded === 'true' &&
+      focusInside &&
+      firstFocused &&
+      items === 5 &&
+      checked === 'true' &&
+      link.tag === 'a' &&
+      link.href === '#preview' &&
+      dangling === '' &&
+      focusReturned &&
+      clean,
+  };
+}
+
+/**
+ * Tabs in the server HTML: the selected tab and its panel are there and point at each other, and the
+ * other panels are not rendered. After hydration ArrowRight selects the next tab and shows its panel.
+ */
+async function checkTabs(page: Page, html: string): Promise<Record<string, string | boolean>> {
+  const ssr = await page.evaluate((source) => {
+    const doc = new DOMParser().parseFromString(source, 'text/html');
+    const tabs = [...doc.querySelectorAll('[role="tab"]')];
+    const selected = tabs.filter((t) => t.getAttribute('aria-selected') === 'true');
+    const panels = [...doc.querySelectorAll('[role="tabpanel"]')];
+    const panel = panels[0];
+    const tab = selected[0];
+    return {
+      tabs: tabs.length,
+      // The label without the hidden bold sizer copy and the count.
+      selected: selected
+        .map((t) => t.querySelector('[data-slot="tabs-label"] > :first-child')?.textContent ?? '')
+        .join('|'),
+      panels: panels.length,
+      panelText: panel?.textContent ?? '',
+      wired:
+        tab !== undefined &&
+        panel !== undefined &&
+        tab.getAttribute('aria-controls') === panel.id &&
+        panel.getAttribute('aria-labelledby') === tab.id,
+    };
+  }, html);
+  const ssrDangling = (await danglingIdrefs(page, html)).join(', ');
+  const selectedTab = page.getByRole('tab', { selected: true });
+  await selectedTab.focus();
+  await page.keyboard.press('ArrowRight');
+  // A tab's text holds its label twice (the hidden bold sizer); its accessible name is the label.
+  const after = page.getByRole('tab', { name: 'Archived' });
+  const moved = await page
+    .getByRole('tab', { name: 'Archived', selected: true })
+    .waitFor({ timeout: TIMEOUT })
+    .then(
+      () => true,
+      () => false,
+    );
+  const focusedArchived = await after.evaluate((el) => el === document.activeElement);
+  const panelText = (await page.getByRole('tabpanel').textContent()) ?? '';
+  const dangling = (await danglingIdrefs(page)).join(', ');
+  const result: Record<string, string | boolean> = {};
+  const clean = await partsClean(page, result);
+  return {
+    ssrTabs: String(ssr.tabs),
+    ssrSelected: ssr.selected,
+    ssrPanels: String(ssr.panels),
+    ssrPanelText: ssr.panelText,
+    ssrWired: ssr.wired,
+    ssrDangling,
+    selectedAfterArrowRight: moved,
+    focusedArchived,
+    panelText,
+    dangling,
+    ...result,
+    ok:
+      ssr.tabs === 3 &&
+      ssr.selected === 'Unfulfilled' &&
+      ssr.panels === 1 &&
+      ssr.panelText === 'Paid orders that still need to ship.' &&
+      ssr.wired &&
+      ssrDangling === '' &&
+      moved &&
+      focusedArchived &&
+      panelText === 'Orders you closed.' &&
+      dangling === '' &&
+      clean,
+  };
+}
+
+/**
+ * TabNav through next/link: a <nav> of links with the current one aria-current="page"; following a
+ * link navigates on the client and the server-rendered current link moves with the URL.
+ */
+async function checkTabNav(page: Page): Promise<Record<string, string | boolean>> {
+  const nav = page.getByRole('navigation', { name: 'Order status' });
+  const links = await nav.getByRole('link').count();
+  const current = async (): Promise<string> =>
+    (await nav.locator('a[aria-current="page"]').textContent({ timeout: TIMEOUT })) ?? '';
+  const before = await current();
+  await nav.getByRole('link', { name: 'Archived' }).click();
+  await page.waitForURL(/status=archived/, { timeout: TIMEOUT });
+  const moved = await page
+    .waitForFunction(
+      () =>
+        document.querySelector('nav a[aria-current="page"]')?.textContent?.includes('Archived') ===
+        true,
+      undefined,
+      { timeout: TIMEOUT },
+    )
+    .then(
+      () => true,
+      () => false,
+    );
+  const after = await current();
+  const result: Record<string, string | boolean> = {};
+  const clean = await partsClean(page, result);
+  return {
+    links: String(links),
+    before,
+    after,
+    movedWithTheUrl: moved,
+    ...result,
+    ok:
+      links === 3 && before.includes('All orders') && moved && after.includes('Archived') && clean,
+  };
+}
+
+/** The page's icons render: three SVGs at the Nizivo stroke, the named one with role="img". */
+async function checkIcons(page: Page): Promise<Record<string, string | boolean>> {
+  const svgs = await page.$$eval('[data-testid="icons"] > svg', (nodes) =>
+    nodes.map((node) => ({
+      stroke: node.getAttribute('stroke-width') ?? '',
+      hidden: node.getAttribute('aria-hidden') ?? '',
+      role: node.getAttribute('role') ?? '',
+      label: node.getAttribute('aria-label') ?? '',
+      size: node.getBoundingClientRect().width,
+    })),
+  );
+  const named = svgs.filter((s) => s.role === 'img' && s.label === 'Search').length;
+  const hidden = svgs.filter((s) => s.hidden === 'true').length;
+  return {
+    svgs: JSON.stringify(svgs),
+    ok:
+      svgs.length === 3 &&
+      svgs.every((s) => s.stroke === '1.92' && s.size === 20) &&
+      named === 1 &&
+      hidden === 2,
+  };
+}
+
 /** Client JS the page references in its HTML (script tags and the flight payload) or loads. */
 function chunkUrls(html: string, base: string): string[] {
   const urls = new Set<string>();
@@ -799,6 +1074,15 @@ async function runPage(
   if (failures.length === 0 && spec.defaultOpen === 'tooltip') {
     steps.push(['tooltipDefaultOpen', () => checkTooltipDefaultOpen(page, html)]);
   }
+  if (failures.length === 0 && spec.defaultOpen === 'menu') {
+    steps.push(['menuDefaultOpen', () => checkMenuDefaultOpen(page, html)]);
+  }
+  if (failures.length === 0 && spec.tabs === true) {
+    steps.push(['tabs', () => checkTabs(page, html)]);
+  }
+  if (failures.length === 0 && spec.icons !== undefined) {
+    steps.push(['icons', () => checkIcons(page)]);
+  }
   if (failures.length === 0 && spec.renders.includes('select')) {
     steps.push(['select', () => checkSelect(page, spec.select)]);
   }
@@ -822,6 +1106,10 @@ async function runPage(
   if (failures.length === 0 && iconButtonLabel !== undefined) {
     steps.push(['iconButtonTooltip', () => checkIconButtonTooltip(page, iconButtonLabel)]);
   }
+  // Last: it navigates.
+  if (failures.length === 0 && spec.tabNav === true) {
+    steps.push(['tabNav', () => checkTabNav(page)]);
+  }
   for (const [name, step] of steps) {
     try {
       interactions[name] = await step();
@@ -838,10 +1126,18 @@ async function runPage(
     url.startsWith(base),
   );
   const found = new Set<string>();
+  const iconsFound = new Set<string>();
   for (const url of urls) {
     const source = await (await fetch(url)).text();
     for (const marker of markers.all.keys()) if (source.includes(marker)) found.add(marker);
+    if (source.includes('nzim[')) {
+      for (const [marker, distPath] of markers.icons) {
+        if (source.includes(marker))
+          iconsFound.add(distPath.replace(/^dist\//, '').replace(/\.js$/, ''));
+      }
+    }
   }
+  const shippedIcons = [...iconsFound].toSorted();
   const allowed = markers.allowed([...spec.renders, ...(spec.imports ?? [])]);
   const expectedLeaves = spec.renders.map((c) => `nzfm[${LEAF[c]}]`);
   const missing = expectedLeaves.filter((marker) => !found.has(marker));
@@ -853,6 +1149,17 @@ async function runPage(
     if (unexpected.length > 0 && !excused) {
       failures.push(`unexpected client modules: ${unexpected.join(', ')}`);
     }
+    // Icons: exactly the imported ones and the shared base, or none for server-only icons. Every
+    // other page ships none.
+    const wanted = (spec.icons ?? []).map((name) => `icons/${name}`);
+    const expectedIcons = wanted.length === 0 ? [] : ['_internal/icon', ...wanted].toSorted();
+    if (shippedIcons.join(' ') !== expectedIcons.join(' ')) {
+      const extra = shippedIcons.filter((p) => !expectedIcons.includes(p));
+      const absent = expectedIcons.filter((p) => !shippedIcons.includes(p));
+      failures.push(
+        `icon modules: ${shippedIcons.length} shipped; extra ${extra.length} (${extra.slice(0, 5).join(', ')}), missing ${absent.join(', ') || 'none'}`,
+      );
+    }
   }
   await context.close();
   return {
@@ -862,6 +1169,7 @@ async function runPage(
     markers: [...found].toSorted(),
     missing,
     unexpected,
+    ...(spec.icons === undefined && shippedIcons.length === 0 ? {} : { icons: shippedIcons }),
     failures,
   };
 }

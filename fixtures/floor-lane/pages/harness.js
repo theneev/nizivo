@@ -1,5 +1,6 @@
 // Shared by every floor-lane page. A classic script (no modules, no fetch) so the pages also work when
-// opened straight from disk in any browser, including a real Safari 17.5 that no runner can drive.
+// opened straight from disk in any browser, including one no runner can drive (run.ts --ios-sim reads
+// Mobile Safari through the POST below).
 // Each page records checks, then calls finish(): the result is rendered as a table and written as JSON
 // into <pre id="result">, and <html data-done> tells a runner it can read it.
 // Page scripts use the window.nzFloor API defined at the bottom.
@@ -76,9 +77,10 @@ function finish(page, error) {
   const json = JSON.stringify(result);
   document.getElementById('result').textContent = json;
   document.documentElement.setAttribute('data-done', '');
-  // Manual runs (pages opened from index.html served by run.ts --serve) hand the result to the runner.
+  // Manual runs (pages opened from index.html served by run.ts --serve) and run.ts --ios-sim hand the
+  // result to the runner. The query goes along so the runner can tell which navigation posted it.
   if (location.protocol === 'http:' && new URLSearchParams(location.search).has('report')) {
-    fetch('/result', { method: 'POST', body: json }).catch(() => undefined);
+    fetch(`/result${location.search}`, { method: 'POST', body: json }).catch(() => undefined);
   }
 }
 

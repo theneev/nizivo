@@ -19,6 +19,11 @@ const pages = [
   ['/field-zero-js', 'a Field with a function child around a NativeSelect'],
   ['/icon-button', 'IconButton with tooltip={false}'],
   ['/icon-button-tooltip', 'IconButton with its default tooltip and a shortcut'],
+  ['/menu', 'a Menu open on the server (defaultOpen), a server Button as its trigger'],
+  ['/tabs', 'Tabs: the selected panel in the server HTML'],
+  ['/tab-nav', 'TabNav with next/link through render: no @nizivo client module'],
+  ['/icons-server', 'server-only: three icons from the @nizivo/icons barrel'],
+  ['/icons-client', 'three icons from the @nizivo/icons barrel in a client component'],
 ];
 
 export default function Home() {

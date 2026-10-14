@@ -50,6 +50,16 @@ function runPaint() {
   meta.htmlTheme = htmlTheme;
   meta.devicePixelRatio = devicePixelRatio;
   meta.paintProbes = [];
+  // ?calibrate (run.ts --ios-sim) adds a green square at the top-left corner, clear of the rows, so a
+  // whole-screen screenshot (Safari's toolbars and the status bar around the viewport) can be aligned.
+  if (new URLSearchParams(location.search).has('calibrate')) {
+    const marker = document.createElement('i');
+    marker.style.cssText =
+      'position:absolute;inset-block-start:0;inset-inline-start:0;inline-size:8px;block-size:8px;background:rgb(0 255 0)';
+    document.body.append(marker);
+    const rect = marker.getBoundingClientRect();
+    meta.calibration = { x: rect.x, y: rect.y, width: rect.width, height: rect.height };
+  }
   for (const row of document.querySelectorAll('.nzf-row')) {
     const scopes = row.dataset.scopes;
     const expected = expectedLetter([htmlTheme, ...scopes.split(' ')], os);

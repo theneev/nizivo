@@ -12,9 +12,15 @@
 //            --raw <dir> also writes every check (the committed results keep failures and notes only)
 //            --react-css <dir> serves a built packages/react/dist/css under react-css/ (w3-controls)
 //            --pages <names> runs only these pages (comma-separated keys of `pages` below)
+//   node fixtures/floor-lane/run.ts --ios-sim [--ios-runtime <id>] [--ios-device-type <name>]
+//            Mobile Safari on the iOS Simulator (Xcode's xcrun simctl): creates and boots a throwaway
+//            device on the runtime (default iOS 17.5), sets its appearance per OS scheme, opens every page
+//            with `simctl openurl`, takes the result the page POSTs back and screenshots the device for the
+//            painted check; the device is shut down and deleted at the end. Writes mobile-safari-<x.y>.json.
 //
 // Firefox is driven over WebDriver BiDi with Node's own WebSocket, so it needs no npm package or driver.
 // Chromium and WebKit go through Playwright (this fixture's devDependency), loaded only when asked for.
+// Mobile Safari needs only Xcode: the pages measure themselves and post their JSON to this server.
 import { spawn, spawnSync } from 'node:child_process';
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { createServer } from 'node:http';
@@ -23,7 +29,7 @@ import { createRequire } from 'node:module';
 import { tmpdir } from 'node:os';
 import { extname, join, relative, resolve, sep } from 'node:path';
 import { parseArgs } from 'node:util';
-import { decodePng, pixel } from './png.ts';
+import { decodePng, pixel, type Image } from './png.ts';
 
 const pagesDir = join(import.meta.dirname, 'pages');
 const resultsDir = join(import.meta.dirname, 'results');
@@ -125,7 +131,7 @@ function browserLabel(userAgent: string): string {
 }
 
 // The posted page and scheme become a file name, so only known values are accepted.
-const manualPages = new Set(['nesting', 'halo-inverse', 'overlay-entry', 'paint']);
+const manualPages = new Set(['nesting', 'halo-inverse', 'overlay-entry', 'paint', 'w3-controls']);
 const manualThemes = new Set(['none', 'light', 'dark', 'system']);
 
 function saveManualResult(body: string): string {
@@ -145,23 +151,27 @@ function saveManualResult(body: string): string {
   return file;
 }
 
+// Takes a result a page posted (with the query of the URL that page was opened at); throws to reject it.
+type ResultHandler = (body: string, query: URLSearchParams) => void;
+
 async function serve(
   host: string,
   port: number,
   tokensFile: string | undefined,
-  acceptResults: boolean,
+  onResult: ResultHandler | undefined,
   reactCssDir: string | undefined,
 ): Promise<{ origin: string; close: () => void }> {
   const server = createServer((request, response) => {
-    const path = new URL(request.url ?? '/', 'http://localhost').pathname;
-    if (request.method === 'POST' && path === '/result' && acceptResults) {
+    const url = new URL(request.url ?? '/', 'http://localhost');
+    const path = url.pathname;
+    if (request.method === 'POST' && path === '/result' && onResult) {
       let body = '';
       request.on('data', (chunk: Buffer) => {
         body += chunk.toString();
       });
       request.on('end', () => {
         try {
-          console.log(`saved ${saveManualResult(body)}`);
+          onResult(body, url.searchParams);
           response.writeHead(204).end();
         } catch (error) {
           console.error(
@@ -414,6 +424,130 @@ async function launchPlaywright(name: 'chromium' | 'webkit', scheme: Scheme): Pr
   };
 }
 
+// ---------- Mobile Safari on the iOS Simulator ----------
+
+function simctl(...args: string[]): string {
+  const done = spawnSync('xcrun', ['simctl', ...args], { encoding: 'utf8' });
+  if (done.error) throw new Error(`xcrun simctl ${args[0] ?? ''}: ${done.error.message}`);
+  if (done.status !== 0) {
+    throw new Error(`xcrun simctl ${args.join(' ')} exited ${done.status}: ${done.stderr.trim()}`);
+  }
+  return done.stdout;
+}
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((done) => setTimeout(done, ms));
+}
+
+interface Simulator {
+  udid: string;
+  label: string;
+}
+let simulator: Simulator | undefined;
+
+// Creates and boots a throwaway device; deleteSimulator() removes it whatever happens to the run.
+function createSimulator(runtime: string, deviceType: string): Simulator {
+  const runtimes = get(JSON.parse(simctl('list', 'runtimes', '--json')), 'runtimes');
+  const found = Array.isArray(runtimes)
+    ? runtimes.find((r) => get(r, 'identifier') === runtime)
+    : undefined;
+  if (!found || get(found, 'isAvailable') === false) {
+    throw new Error(`no available simulator runtime ${runtime} (see xcrun simctl list runtimes)`);
+  }
+  const version = String(get(found, 'version'));
+  const build = String(get(found, 'buildversion'));
+  const udid = simctl('create', `nz-floor-${version}`, deviceType, runtime).trim();
+  simulator = { udid, label: `${deviceType}, iOS ${version} (${build}) Simulator` };
+  console.log(`created simulator ${udid} (${simulator.label})`);
+  simctl('bootstatus', udid, '-b');
+  return simulator;
+}
+
+function deleteSimulator(): void {
+  if (!simulator) return;
+  const { udid } = simulator;
+  simulator = undefined;
+  spawnSync('xcrun', ['simctl', 'shutdown', udid]);
+  const deleted = spawnSync('xcrun', ['simctl', 'delete', udid]);
+  if (deleted.status === 0) console.log(`deleted simulator ${udid}`);
+  else console.warn(`could not delete simulator ${udid}: xcrun simctl delete ${udid}`);
+}
+
+// Results posted by pages opened in the simulator, matched by the nz= nonce in their URL.
+const waiting = new Map<string, (body: string) => void>();
+let nonce = 0;
+
+function takePosted(body: string, query: URLSearchParams): void {
+  const deliver = waiting.get(query.get('nz') ?? '');
+  if (!deliver) throw new Error(`nobody is waiting for nz=${query.get('nz') ?? '(none)'}`);
+  deliver(body);
+}
+
+function openAndWait(udid: string, url: string, ms: number): Promise<PageResult> {
+  nonce += 1;
+  const id = `${Date.now().toString(36)}-${nonce}`;
+  const full = `${url}${url.includes('?') ? '&' : '?'}report&calibrate&nz=${id}`;
+  return new Promise<PageResult>((done, failed) => {
+    const timer = setTimeout(() => {
+      waiting.delete(id);
+      failed(new Error(`no result from ${full} within ${ms / 1000} s`));
+    }, ms);
+    waiting.set(id, (body) => {
+      clearTimeout(timer);
+      waiting.delete(id);
+      try {
+        done(parseResult(body));
+      } catch (error) {
+        failed(error instanceof Error ? error : new Error(String(error)));
+      }
+    });
+    try {
+      simctl('openurl', udid, full);
+    } catch (error) {
+      clearTimeout(timer);
+      waiting.delete(id);
+      failed(error instanceof Error ? error : new Error(String(error)));
+    }
+  });
+}
+
+async function launchIosSim(scheme: Scheme): Promise<Session> {
+  const sim = simulator ?? createSimulator(iosRuntime, iosDeviceType);
+  simctl('ui', sim.udid, 'appearance', scheme);
+  const session: Session = {
+    version: '',
+    driver: `xcrun simctl openurl on ${sim.label}; the page posts its result back; simctl io screenshot`,
+    read: async (url) => {
+      let result = await openAndWait(sim.udid, url, 90_000);
+      // The first page after an appearance change can race it: give it one more go.
+      if (result.osScheme !== scheme) {
+        await sleep(2000);
+        result = await openAndWait(sim.udid, url, 90_000);
+      }
+      if (result.reducedMotion)
+        throw new Error('the simulator reports prefers-reduced-motion: reduce');
+      const seen = /Version\/([\d.]+) Mobile\/\S+ Safari\//.exec(result.userAgent)?.[1];
+      if (!seen) throw new Error(`not Mobile Safari: ${result.userAgent}`);
+      session.version ||= seen;
+      return result;
+    },
+    screenshot: async () => {
+      // Lets Safari finish the tab-opening animation before the whole screen is captured.
+      await sleep(1500);
+      const dir = mkdtempSync(join(tmpdir(), 'nz-floor-sim-'));
+      try {
+        const file = join(dir, 'screen.png');
+        simctl('io', sim.udid, 'screenshot', '--type=png', file);
+        return readFileSync(file);
+      } finally {
+        rmSync(dir, { recursive: true, force: true });
+      }
+    },
+    close: async () => undefined,
+  };
+  return session;
+}
+
 // ---------- main ----------
 
 interface PaintProbe {
@@ -428,6 +562,51 @@ function isPaintProbe(value: unknown): value is PaintProbe {
   return isRecord(value) && typeof value['x'] === 'number' && typeof value['y'] === 'number';
 }
 
+interface Box {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
+function isBox(value: unknown): value is Box {
+  return (
+    isRecord(value) && ['x', 'y', 'width', 'height'].every((k) => typeof value[k] === 'number')
+  );
+}
+
+// Where the viewport's (0, 0) is in the screenshot. A browser's own screenshot is the viewport, so it is
+// (0, 0); a whole-device screenshot is aligned on the green ?calibrate square the page reports in meta.
+function viewportOrigin(image: Image, result: PageResult, ratio: number): [number, number] {
+  const marker = result.meta['calibration'];
+  if (!isBox(marker)) return [0, 0];
+  let left = Infinity;
+  let top = Infinity;
+  let right = -1;
+  let bottom = -1;
+  for (let y = 0; y < image.height; y += 1) {
+    for (let x = 0; x < image.width; x += 1) {
+      const [r, g, b] = pixel(image, x, y);
+      if (g > 220 && r < 60 && b < 60) {
+        left = Math.min(left, x);
+        top = Math.min(top, y);
+        right = Math.max(right, x);
+        bottom = Math.max(bottom, y);
+      }
+    }
+  }
+  const size = [right - left + 1, bottom - top + 1];
+  const want = [marker.width * ratio, marker.height * ratio];
+  if (right < 0 || size.some((s, i) => Math.abs(s - (want[i] ?? 0)) > 2)) {
+    throw new Error(
+      `calibration square not found in the screenshot (found ${size.join('x')} px, expected ${want.join('x')})`,
+    );
+  }
+  const origin: [number, number] = [left - marker.x * ratio, top - marker.y * ratio];
+  result.meta['screenshotViewportOrigin'] = origin;
+  return origin;
+}
+
 // Adds a "painted" check for every probe the page listed: the pixel at its centre, red = L, blue = D.
 async function samplePaint(session: Session, result: PageResult): Promise<void> {
   const probes = result.meta['paintProbes'];
@@ -435,8 +614,9 @@ async function samplePaint(session: Session, result: PageResult): Promise<void> 
   const image = decodePng(await session.screenshot());
   const ratio =
     typeof result.meta['devicePixelRatio'] === 'number' ? result.meta['devicePixelRatio'] : 1;
+  const [dx, dy] = viewportOrigin(image, result, ratio);
   for (const probe of probes.filter(isPaintProbe)) {
-    const [r, g, b] = pixel(image, probe.x * ratio, probe.y * ratio);
+    const [r, g, b] = pixel(image, dx + probe.x * ratio, dy + probe.y * ratio);
     const got =
       r > 200 && g < 80 && b < 80
         ? 'L'
@@ -485,12 +665,18 @@ const { values } = parseArgs({
     serve: { type: 'boolean', default: false },
     'react-css': { type: 'string' },
     pages: { type: 'string' },
+    'ios-sim': { type: 'boolean', default: false },
+    'ios-runtime': { type: 'string', default: 'com.apple.CoreSimulator.SimRuntime.iOS-17-5' },
+    'ios-device-type': { type: 'string', default: 'iPhone 15' },
     port: { type: 'string', default: '0' },
     host: { type: 'string', default: '127.0.0.1' },
   },
 });
 
 const firefoxPath = values.firefox ?? process.env['NZ_FLOOR_FIREFOX'];
+const iosRuntime = values['ios-runtime'];
+const iosDeviceType = values['ios-device-type'];
+const engines = values['ios-sim'] ? ['mobile-safari'] : values.engines.split(',');
 const tokensFile = values.tokens ? resolve(values.tokens) : undefined;
 const outDir = values.results ? resolve(values.results) : resultsDir;
 const rawDir = values.raw;
@@ -515,6 +701,7 @@ async function inSequence<T>(items: readonly T[], step: (item: T) => Promise<voi
 
 function launch(engine: string, scheme: Scheme): Promise<Session> {
   if (engine === 'chromium' || engine === 'webkit') return launchPlaywright(engine, scheme);
+  if (engine === 'mobile-safari') return launchIosSim(scheme);
   if (engine !== 'firefox') throw new Error(`unknown engine ${engine}`);
   if (!firefoxPath)
     throw new Error('pass --firefox <Firefox.app> or set NZ_FLOOR_FIREFOX (see RESULTS.md)');
@@ -548,6 +735,7 @@ async function runEngine(engine: string, origin: string): Promise<boolean> {
         await samplePaint(session, result);
         if (result.osScheme !== scheme)
           throw new Error(`asked for OS ${scheme}, the page saw ${result.osScheme}`);
+        run.version = session.version;
         raw[`${page}.${scheme}`] = result;
         summaries[`${page}.${scheme}`] = compact(result);
         const { pass, fail, info } = result.summary;
@@ -577,23 +765,43 @@ async function runEngine(engine: string, origin: string): Promise<boolean> {
   return failed;
 }
 
-const server = await serve(values.host, Number(values.port), tokensFile, values.serve, reactCssDir);
+const onResult: ResultHandler | undefined = values.serve
+  ? (body) => console.log(`saved ${saveManualResult(body)}`)
+  : engines.includes('mobile-safari')
+    ? takePosted
+    : undefined;
+const server = await serve(values.host, Number(values.port), tokensFile, onResult, reactCssDir);
 if (values.serve) {
   console.log(
     `Serving ${pagesDir} at ${server.origin}/ (listening on ${values.host}; Ctrl-C to stop)`,
   );
 } else {
   let failed = false;
-  await inSequence(values.engines.split(','), async (engine) => {
-    try {
-      failed = (await runEngine(engine, server.origin)) || failed;
-    } catch (error) {
-      failed = true;
-      console.error(
-        `${engine}: not run: ${error instanceof Error ? error.message : String(error)}`,
-      );
-    }
-  });
-  server.close();
+  // A signal must not leave a booted simulator behind (128 + the signal number).
+  for (const [signal, code] of [
+    ['SIGINT', 130],
+    ['SIGTERM', 143],
+    ['SIGHUP', 129],
+  ] as const) {
+    process.once(signal, () => {
+      deleteSimulator();
+      process.exit(code);
+    });
+  }
+  try {
+    await inSequence(engines, async (engine) => {
+      try {
+        failed = (await runEngine(engine, server.origin)) || failed;
+      } catch (error) {
+        failed = true;
+        console.error(
+          `${engine}: not run: ${error instanceof Error ? error.message : String(error)}`,
+        );
+      }
+    });
+  } finally {
+    deleteSimulator();
+    server.close();
+  }
   process.exitCode = failed ? 1 : 0;
 }
