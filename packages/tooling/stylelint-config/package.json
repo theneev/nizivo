@@ -2,11 +2,18 @@
   "name": "@nizivo/stylelint-config",
   "version": "0.0.0",
   "private": true,
-  "description": "Shared stylelint rules for Nizivo CSS (minimal in week 1; the contract rules land in week 2)",
+  "description": "Shared stylelint rules for Nizivo CSS: the styling contract of ARCHITECTURE.md §8.4",
   "license": "Apache-2.0",
   "type": "module",
   "exports": {
-    ".": "./index.js",
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./contract": {
+      "types": "./contract.d.ts",
+      "default": "./contract.js"
+    },
     "./package.json": "./package.json"
   },
   "dependencies": {

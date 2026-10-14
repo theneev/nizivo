@@ -59,6 +59,7 @@
       "types": "./dist/tooltip/index.d.ts",
       "default": "./dist/tooltip/index.js"
     },
+    "./css/base.css": "./dist/css/base.css",
     "./css/button.css": "./dist/css/button.css",
     "./css/dialog.css": "./dist/css/dialog.css",
     "./css/select.css": "./dist/css/select.css",
@@ -69,11 +70,11 @@
     "access": "public"
   },
   "scripts": {
-    "build": "tsdown",
-    "typecheck": "tsc --noEmit -p .",
+    "build": "tsdown && node scripts/build-css.ts",
+    "typecheck": "tsc --noEmit -p . && tsc --noEmit -p scripts",
     "test": "vitest run --fsModuleCachePath node_modules/.vitest-cache",
     "lint": "stylelint \"src/**/*.css\" \"styles/**/*.css\" --allow-empty-input",
-    "check:dist": "tsdown && vitest run --config test/built/vitest.config.ts"
+    "check:dist": "tsdown && node scripts/build-css.ts && vitest run --config test/built/vitest.config.ts"
   },
   "dependencies": {
     "@nizivo/tokens": "workspace:*",
