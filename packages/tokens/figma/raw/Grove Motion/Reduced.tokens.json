@@ -1,0 +1,458 @@
+{
+  "Grove Motion": {
+    "duration": {
+      "instant": {
+        "$type": "dimension",
+        "$value": {
+          "value": 0,
+          "unit": "px"
+        },
+        "$description": "",
+        "scopes": [],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-duration-instant)"
+            },
+            "variableId": "VariableID:737:204",
+            "collection": {
+              "id": "VariableCollectionId:737:203",
+              "name": "Grove Motion",
+              "defaultModeId": "737:4"
+            }
+          }
+        }
+      },
+      "fast": {
+        "$type": "dimension",
+        "$value": {
+          "value": 0,
+          "unit": "px"
+        },
+        "$description": "",
+        "scopes": [],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-duration-fast)"
+            },
+            "variableId": "VariableID:737:205",
+            "collection": {
+              "id": "VariableCollectionId:737:203",
+              "name": "Grove Motion",
+              "defaultModeId": "737:4"
+            }
+          }
+        }
+      },
+      "base": {
+        "$type": "dimension",
+        "$value": {
+          "value": 120,
+          "unit": "px"
+        },
+        "$description": "",
+        "scopes": [],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-duration-base)"
+            },
+            "variableId": "VariableID:737:206",
+            "collection": {
+              "id": "VariableCollectionId:737:203",
+              "name": "Grove Motion",
+              "defaultModeId": "737:4"
+            }
+          }
+        }
+      },
+      "slow": {
+        "$type": "dimension",
+        "$value": {
+          "value": 120,
+          "unit": "px"
+        },
+        "$description": "",
+        "scopes": [],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-duration-slow)"
+            },
+            "variableId": "VariableID:737:207",
+            "collection": {
+              "id": "VariableCollectionId:737:203",
+              "name": "Grove Motion",
+              "defaultModeId": "737:4"
+            }
+          }
+        }
+      },
+      "slower": {
+        "$type": "dimension",
+        "$value": {
+          "value": 160,
+          "unit": "px"
+        },
+        "$description": "",
+        "scopes": [],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-duration-slower)"
+            },
+            "variableId": "VariableID:737:208",
+            "collection": {
+              "id": "VariableCollectionId:737:203",
+              "name": "Grove Motion",
+              "defaultModeId": "737:4"
+            }
+          }
+        }
+      },
+      "count-up": {
+        "$type": "dimension",
+        "$value": {
+          "value": 0,
+          "unit": "px"
+        },
+        "$description": "",
+        "scopes": [],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-duration-count-up)"
+            },
+            "variableId": "VariableID:737:209",
+            "collection": {
+              "id": "VariableCollectionId:737:203",
+              "name": "Grove Motion",
+              "defaultModeId": "737:4"
+            }
+          }
+        }
+      },
+      "chart-draw": {
+        "$type": "dimension",
+        "$value": {
+          "value": 0,
+          "unit": "px"
+        },
+        "$description": "",
+        "scopes": [],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-duration-chart-draw)"
+            },
+            "variableId": "VariableID:737:210",
+            "collection": {
+              "id": "VariableCollectionId:737:203",
+              "name": "Grove Motion",
+              "defaultModeId": "737:4"
+            }
+          }
+        }
+      }
+    },
+    "easing": {
+      "standard": {
+        "$type": "string",
+        "$value": "linear",
+        "$description": "",
+        "scopes": [],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-easing-standard)"
+            },
+            "variableId": "VariableID:737:211",
+            "collection": {
+              "id": "VariableCollectionId:737:203",
+              "name": "Grove Motion",
+              "defaultModeId": "737:4"
+            }
+          }
+        }
+      },
+      "enter": {
+        "$type": "string",
+        "$value": "linear",
+        "$description": "",
+        "scopes": [],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-easing-enter)"
+            },
+            "variableId": "VariableID:737:212",
+            "collection": {
+              "id": "VariableCollectionId:737:203",
+              "name": "Grove Motion",
+              "defaultModeId": "737:4"
+            }
+          }
+        }
+      },
+      "exit": {
+        "$type": "string",
+        "$value": "linear",
+        "$description": "",
+        "scopes": [],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-easing-exit)"
+            },
+            "variableId": "VariableID:737:213",
+            "collection": {
+              "id": "VariableCollectionId:737:203",
+              "name": "Grove Motion",
+              "defaultModeId": "737:4"
+            }
+          }
+        }
+      },
+      "spring": {
+        "$type": "string",
+        "$value": "linear",
+        "$description": "",
+        "scopes": [],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-easing-spring)"
+            },
+            "variableId": "VariableID:737:214",
+            "collection": {
+              "id": "VariableCollectionId:737:203",
+              "name": "Grove Motion",
+              "defaultModeId": "737:4"
+            }
+          }
+        }
+      },
+      "spring-soft": {
+        "$type": "string",
+        "$value": "linear",
+        "$description": "",
+        "scopes": [],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-easing-spring-soft)"
+            },
+            "variableId": "VariableID:737:215",
+            "collection": {
+              "id": "VariableCollectionId:737:203",
+              "name": "Grove Motion",
+              "defaultModeId": "737:4"
+            }
+          }
+        }
+      }
+    },
+    "distance": {
+      "lift": {
+        "$type": "dimension",
+        "$value": {
+          "value": 0,
+          "unit": "px"
+        },
+        "$description": "",
+        "scopes": [],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-distance-lift)"
+            },
+            "variableId": "VariableID:737:216",
+            "collection": {
+              "id": "VariableCollectionId:737:203",
+              "name": "Grove Motion",
+              "defaultModeId": "737:4"
+            }
+          }
+        }
+      },
+      "reveal": {
+        "$type": "dimension",
+        "$value": {
+          "value": 0,
+          "unit": "px"
+        },
+        "$description": "",
+        "scopes": [],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-distance-reveal)"
+            },
+            "variableId": "VariableID:737:217",
+            "collection": {
+              "id": "VariableCollectionId:737:203",
+              "name": "Grove Motion",
+              "defaultModeId": "737:4"
+            }
+          }
+        }
+      },
+      "float": {
+        "$type": "dimension",
+        "$value": {
+          "value": 0,
+          "unit": "px"
+        },
+        "$description": "",
+        "scopes": [],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-distance-float)"
+            },
+            "variableId": "VariableID:737:218",
+            "collection": {
+              "id": "VariableCollectionId:737:203",
+              "name": "Grove Motion",
+              "defaultModeId": "737:4"
+            }
+          }
+        }
+      }
+    },
+    "tilt": {
+      "max-deg": {
+        "$type": "dimension",
+        "$value": {
+          "value": 0,
+          "unit": "px"
+        },
+        "$description": "",
+        "scopes": [],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-tilt-max-deg)"
+            },
+            "variableId": "VariableID:737:219",
+            "collection": {
+              "id": "VariableCollectionId:737:203",
+              "name": "Grove Motion",
+              "defaultModeId": "737:4"
+            }
+          }
+        }
+      }
+    },
+    "scale": {
+      "press": {
+        "$type": "dimension",
+        "$value": {
+          "value": 1,
+          "unit": "px"
+        },
+        "$description": "",
+        "scopes": [],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-scale-press)"
+            },
+            "variableId": "VariableID:737:220",
+            "collection": {
+              "id": "VariableCollectionId:737:203",
+              "name": "Grove Motion",
+              "defaultModeId": "737:4"
+            }
+          }
+        }
+      },
+      "hover": {
+        "$type": "dimension",
+        "$value": {
+          "value": 1,
+          "unit": "px"
+        },
+        "$description": "",
+        "scopes": [],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-scale-hover)"
+            },
+            "variableId": "VariableID:737:221",
+            "collection": {
+              "id": "VariableCollectionId:737:203",
+              "name": "Grove Motion",
+              "defaultModeId": "737:4"
+            }
+          }
+        }
+      }
+    },
+    "stagger": {
+      "item": {
+        "$type": "dimension",
+        "$value": {
+          "value": 0,
+          "unit": "px"
+        },
+        "$description": "",
+        "scopes": [],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-stagger-item)"
+            },
+            "variableId": "VariableID:737:222",
+            "collection": {
+              "id": "VariableCollectionId:737:203",
+              "name": "Grove Motion",
+              "defaultModeId": "737:4"
+            }
+          }
+        }
+      }
+    },
+    "magnetic": {
+      "pull": {
+        "$type": "dimension",
+        "$value": {
+          "value": 0,
+          "unit": "px"
+        },
+        "$description": "",
+        "scopes": [],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-magnetic-pull)"
+            },
+            "variableId": "VariableID:737:223",
+            "collection": {
+              "id": "VariableCollectionId:737:203",
+              "name": "Grove Motion",
+              "defaultModeId": "737:4"
+            }
+          }
+        }
+      }
+    },
+    "$extensions": {
+      "tokens-bruecke-meta": {
+        "useDTCG": true,
+        "spec": "https://www.designtokens.org/tr/2025.10/format/",
+        "colorMode": "srgb-dtcg",
+        "variableCollections": [
+          "Grove Primitives",
+          "Grove Color",
+          "Grove Space",
+          "Grove Motion",
+          "Grove Responsive"
+        ],
+        "createdAt": "2026-10-14T05:05:07.930Z"
+      }
+    }
+  }
+}

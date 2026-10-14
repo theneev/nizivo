@@ -1,0 +1,1294 @@
+{
+  "Grove Color": {
+    "bg": {
+      "canvas": {
+        "$type": "color",
+        "$value": "{Grove Primitives.neutral.950}",
+        "$description": "",
+        "scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-bg-canvas)"
+            },
+            "variableId": "VariableID:737:114",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "surface": {
+        "$type": "color",
+        "$value": "{Grove Primitives.neutral.900}",
+        "$description": "",
+        "scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-bg-surface)"
+            },
+            "variableId": "VariableID:737:115",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "surface-raised": {
+        "$type": "color",
+        "$value": "{Grove Primitives.neutral.850}",
+        "$description": "",
+        "scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-bg-surface-raised)"
+            },
+            "variableId": "VariableID:737:116",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "subtle": {
+        "$type": "color",
+        "$value": "{Grove Primitives.neutral.900}",
+        "$description": "",
+        "scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-bg-subtle)"
+            },
+            "variableId": "VariableID:737:117",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "muted": {
+        "$type": "color",
+        "$value": "{Grove Primitives.neutral.800}",
+        "$description": "",
+        "scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-bg-muted)"
+            },
+            "variableId": "VariableID:737:118",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "hover": {
+        "$type": "color",
+        "$value": "{Grove Primitives.neutral.800}",
+        "$description": "",
+        "scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-bg-hover)"
+            },
+            "variableId": "VariableID:737:119",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "pressed": {
+        "$type": "color",
+        "$value": "{Grove Primitives.neutral.700}",
+        "$description": "",
+        "scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-bg-pressed)"
+            },
+            "variableId": "VariableID:737:120",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "inverse": {
+        "$type": "color",
+        "$value": "{Grove Primitives.neutral.0}",
+        "$description": "",
+        "scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-bg-inverse)"
+            },
+            "variableId": "VariableID:737:121",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "inverse-elevated": {
+        "$type": "color",
+        "$value": "{Grove Primitives.neutral.100}",
+        "$description": "",
+        "scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-bg-inverse-elevated)"
+            },
+            "variableId": "VariableID:737:122",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "brand": {
+        "$type": "color",
+        "$value": "{Grove Primitives.green.400}",
+        "$description": "",
+        "scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-bg-brand)"
+            },
+            "variableId": "VariableID:737:123",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "brand-hover": {
+        "$type": "color",
+        "$value": "{Grove Primitives.green.300}",
+        "$description": "",
+        "scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-bg-brand-hover)"
+            },
+            "variableId": "VariableID:737:124",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "brand-pressed": {
+        "$type": "color",
+        "$value": "{Grove Primitives.green.200}",
+        "$description": "",
+        "scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-bg-brand-pressed)"
+            },
+            "variableId": "VariableID:737:125",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "brand-subtle": {
+        "$type": "color",
+        "$value": "{Grove Primitives.green.950}",
+        "$description": "",
+        "scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-bg-brand-subtle)"
+            },
+            "variableId": "VariableID:737:126",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "brand-muted": {
+        "$type": "color",
+        "$value": "{Grove Primitives.green.900}",
+        "$description": "",
+        "scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-bg-brand-muted)"
+            },
+            "variableId": "VariableID:737:127",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "accent": {
+        "$type": "color",
+        "$value": "{Grove Primitives.lime.400}",
+        "$description": "",
+        "scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-bg-accent)"
+            },
+            "variableId": "VariableID:737:128",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "accent-subtle": {
+        "$type": "color",
+        "$value": "{Grove Primitives.green.950}",
+        "$description": "",
+        "scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-bg-accent-subtle)"
+            },
+            "variableId": "VariableID:737:129",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "success-subtle": {
+        "$type": "color",
+        "$value": "{Grove Primitives.green.950}",
+        "$description": "",
+        "scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-bg-success-subtle)"
+            },
+            "variableId": "VariableID:737:130",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "warning-subtle": {
+        "$type": "color",
+        "$value": "{Grove Primitives.neutral.850}",
+        "$description": "",
+        "scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-bg-warning-subtle)"
+            },
+            "variableId": "VariableID:737:131",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "critical-subtle": {
+        "$type": "color",
+        "$value": "{Grove Primitives.neutral.850}",
+        "$description": "",
+        "scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-bg-critical-subtle)"
+            },
+            "variableId": "VariableID:737:132",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "info-subtle": {
+        "$type": "color",
+        "$value": "{Grove Primitives.neutral.850}",
+        "$description": "",
+        "scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-bg-info-subtle)"
+            },
+            "variableId": "VariableID:737:133",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "critical": {
+        "$type": "color",
+        "$value": "{Grove Primitives.red.500}",
+        "$description": "",
+        "scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-bg-critical)"
+            },
+            "variableId": "VariableID:737:134",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "disabled": {
+        "$type": "color",
+        "$value": "{Grove Primitives.neutral.800}",
+        "$description": "",
+        "scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-bg-disabled)"
+            },
+            "variableId": "VariableID:737:135",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      }
+    },
+    "text": {
+      "primary": {
+        "$type": "color",
+        "$value": "{Grove Primitives.neutral.50}",
+        "$description": "",
+        "scopes": [
+          "TEXT_FILL"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-text-primary)"
+            },
+            "variableId": "VariableID:737:136",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": "{Grove Primitives.neutral.400}",
+        "$description": "",
+        "scopes": [
+          "TEXT_FILL"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-text-secondary)"
+            },
+            "variableId": "VariableID:737:137",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "tertiary": {
+        "$type": "color",
+        "$value": "{Grove Primitives.neutral.500}",
+        "$description": "",
+        "scopes": [
+          "TEXT_FILL"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-text-tertiary)"
+            },
+            "variableId": "VariableID:737:138",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "disabled": {
+        "$type": "color",
+        "$value": "{Grove Primitives.neutral.600}",
+        "$description": "",
+        "scopes": [
+          "TEXT_FILL"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-text-disabled)"
+            },
+            "variableId": "VariableID:737:139",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "inverse": {
+        "$type": "color",
+        "$value": "{Grove Primitives.neutral.900}",
+        "$description": "",
+        "scopes": [
+          "TEXT_FILL"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-text-inverse)"
+            },
+            "variableId": "VariableID:737:140",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "on-brand": {
+        "$type": "color",
+        "$value": "{Grove Primitives.green.950}",
+        "$description": "",
+        "scopes": [
+          "TEXT_FILL"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-text-on-brand)"
+            },
+            "variableId": "VariableID:737:141",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "on-accent": {
+        "$type": "color",
+        "$value": "{Grove Primitives.green.950}",
+        "$description": "",
+        "scopes": [
+          "TEXT_FILL"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-text-on-accent)"
+            },
+            "variableId": "VariableID:737:142",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "brand": {
+        "$type": "color",
+        "$value": "{Grove Primitives.green.300}",
+        "$description": "",
+        "scopes": [
+          "TEXT_FILL"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-text-brand)"
+            },
+            "variableId": "VariableID:737:143",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "success": {
+        "$type": "color",
+        "$value": "{Grove Primitives.green.300}",
+        "$description": "",
+        "scopes": [
+          "TEXT_FILL"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-text-success)"
+            },
+            "variableId": "VariableID:737:144",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "warning": {
+        "$type": "color",
+        "$value": "{Grove Primitives.amber.500}",
+        "$description": "",
+        "scopes": [
+          "TEXT_FILL"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-text-warning)"
+            },
+            "variableId": "VariableID:737:145",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "critical": {
+        "$type": "color",
+        "$value": "{Grove Primitives.red.500}",
+        "$description": "",
+        "scopes": [
+          "TEXT_FILL"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-text-critical)"
+            },
+            "variableId": "VariableID:737:146",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "info": {
+        "$type": "color",
+        "$value": "{Grove Primitives.blue.500}",
+        "$description": "",
+        "scopes": [
+          "TEXT_FILL"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-text-info)"
+            },
+            "variableId": "VariableID:737:147",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      }
+    },
+    "border": {
+      "default": {
+        "$type": "color",
+        "$value": "{Grove Primitives.neutral.800}",
+        "$description": "",
+        "scopes": [
+          "STROKE_COLOR"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-border-default)"
+            },
+            "variableId": "VariableID:737:148",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "subtle": {
+        "$type": "color",
+        "$value": "{Grove Primitives.neutral.850}",
+        "$description": "",
+        "scopes": [
+          "STROKE_COLOR"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-border-subtle)"
+            },
+            "variableId": "VariableID:737:149",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "strong": {
+        "$type": "color",
+        "$value": "{Grove Primitives.neutral.700}",
+        "$description": "",
+        "scopes": [
+          "STROKE_COLOR"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-border-strong)"
+            },
+            "variableId": "VariableID:737:150",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "brand": {
+        "$type": "color",
+        "$value": "{Grove Primitives.green.400}",
+        "$description": "",
+        "scopes": [
+          "STROKE_COLOR"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-border-brand)"
+            },
+            "variableId": "VariableID:737:151",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "focus": {
+        "$type": "color",
+        "$value": "{Grove Primitives.green.300}",
+        "$description": "",
+        "scopes": [
+          "STROKE_COLOR"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-border-focus)"
+            },
+            "variableId": "VariableID:737:152",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "critical": {
+        "$type": "color",
+        "$value": "{Grove Primitives.red.500}",
+        "$description": "",
+        "scopes": [
+          "STROKE_COLOR"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-border-critical)"
+            },
+            "variableId": "VariableID:737:153",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "warning": {
+        "$type": "color",
+        "$value": "{Grove Primitives.amber.500}",
+        "$description": "",
+        "scopes": [
+          "STROKE_COLOR"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-border-warning)"
+            },
+            "variableId": "VariableID:737:154",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      }
+    },
+    "icon": {
+      "primary": {
+        "$type": "color",
+        "$value": "{Grove Primitives.neutral.100}",
+        "$description": "",
+        "scopes": [
+          "SHAPE_FILL",
+          "STROKE_COLOR"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-icon-primary)"
+            },
+            "variableId": "VariableID:737:155",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": "{Grove Primitives.neutral.400}",
+        "$description": "",
+        "scopes": [
+          "SHAPE_FILL",
+          "STROKE_COLOR"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-icon-secondary)"
+            },
+            "variableId": "VariableID:737:156",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "brand": {
+        "$type": "color",
+        "$value": "{Grove Primitives.green.300}",
+        "$description": "",
+        "scopes": [
+          "SHAPE_FILL",
+          "STROKE_COLOR"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-icon-brand)"
+            },
+            "variableId": "VariableID:737:157",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "inverse": {
+        "$type": "color",
+        "$value": "{Grove Primitives.neutral.900}",
+        "$description": "",
+        "scopes": [
+          "SHAPE_FILL",
+          "STROKE_COLOR"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-icon-inverse)"
+            },
+            "variableId": "VariableID:737:158",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "success": {
+        "$type": "color",
+        "$value": "{Grove Primitives.green.300}",
+        "$description": "",
+        "scopes": [
+          "SHAPE_FILL",
+          "STROKE_COLOR"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-icon-success)"
+            },
+            "variableId": "VariableID:737:159",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "warning": {
+        "$type": "color",
+        "$value": "{Grove Primitives.amber.500}",
+        "$description": "",
+        "scopes": [
+          "SHAPE_FILL",
+          "STROKE_COLOR"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-icon-warning)"
+            },
+            "variableId": "VariableID:737:160",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "critical": {
+        "$type": "color",
+        "$value": "{Grove Primitives.red.500}",
+        "$description": "",
+        "scopes": [
+          "SHAPE_FILL",
+          "STROKE_COLOR"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-icon-critical)"
+            },
+            "variableId": "VariableID:737:161",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      }
+    },
+    "chart": {
+      "primary": {
+        "$type": "color",
+        "$value": "{Grove Primitives.green.400}",
+        "$description": "",
+        "scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "STROKE_COLOR"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-chart-primary)"
+            },
+            "variableId": "VariableID:737:162",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": "{Grove Primitives.green.800}",
+        "$description": "",
+        "scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "STROKE_COLOR"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-chart-secondary)"
+            },
+            "variableId": "VariableID:737:163",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "tertiary": {
+        "$type": "color",
+        "$value": "{Grove Primitives.lime.400}",
+        "$description": "",
+        "scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "STROKE_COLOR"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-chart-tertiary)"
+            },
+            "variableId": "VariableID:737:164",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "neutral": {
+        "$type": "color",
+        "$value": "{Grove Primitives.neutral.700}",
+        "$description": "",
+        "scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "STROKE_COLOR"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-chart-neutral)"
+            },
+            "variableId": "VariableID:737:165",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "track": {
+        "$type": "color",
+        "$value": "{Grove Primitives.neutral.800}",
+        "$description": "",
+        "scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "STROKE_COLOR"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-chart-track)"
+            },
+            "variableId": "VariableID:737:166",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "grid": {
+        "$type": "color",
+        "$value": "{Grove Primitives.neutral.850}",
+        "$description": "",
+        "scopes": [
+          "STROKE_COLOR"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-chart-grid)"
+            },
+            "variableId": "VariableID:737:167",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "negative": {
+        "$type": "color",
+        "$value": "{Grove Primitives.red.500}",
+        "$description": "",
+        "scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "STROKE_COLOR"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-chart-negative)"
+            },
+            "variableId": "VariableID:737:168",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "cat-1": {
+        "$type": "color",
+        "$value": "{Grove Primitives.viz.green-600}",
+        "$description": "Validated categorical slot (CVD ΔE≥14, light+dark). Fixed order, never cycled; 4th+ series fold into chart/neutral &quot;Other&quot;.",
+        "scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "STROKE_COLOR"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-chart-cat-1)"
+            },
+            "variableId": "VariableID:747:239",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "cat-2": {
+        "$type": "color",
+        "$value": "{Grove Primitives.viz.lime-600}",
+        "$description": "Validated categorical slot (CVD ΔE≥14, light+dark). Fixed order, never cycled; 4th+ series fold into chart/neutral &quot;Other&quot;.",
+        "scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "STROKE_COLOR"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-chart-cat-2)"
+            },
+            "variableId": "VariableID:747:240",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      },
+      "cat-3": {
+        "$type": "color",
+        "$value": "{Grove Primitives.viz.teal-400}",
+        "$description": "Validated categorical slot (CVD ΔE≥14, light+dark). Fixed order, never cycled; 4th+ series fold into chart/neutral &quot;Other&quot;.",
+        "scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "STROKE_COLOR"
+        ],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--grove-chart-cat-3)"
+            },
+            "variableId": "VariableID:747:241",
+            "collection": {
+              "id": "VariableCollectionId:737:113",
+              "name": "Grove Color",
+              "defaultModeId": "737:1"
+            }
+          }
+        }
+      }
+    },
+    "$extensions": {
+      "tokens-bruecke-meta": {
+        "useDTCG": true,
+        "spec": "https://www.designtokens.org/tr/2025.10/format/",
+        "colorMode": "srgb-dtcg",
+        "variableCollections": [
+          "Grove Primitives",
+          "Grove Color",
+          "Grove Space",
+          "Grove Motion",
+          "Grove Responsive"
+        ],
+        "createdAt": "2026-10-14T05:05:07.930Z"
+      }
+    }
+  }
+}

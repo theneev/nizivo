@@ -1,0 +1,537 @@
+{
+  "Typography-styles": {
+    "Grove": {
+      "Display": {
+        "L": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Geist",
+            "fontWeight": 600,
+            "fontStyle": "normal",
+            "fontSize": {
+              "value": 56,
+              "unit": "px"
+            },
+            "lineHeight": "104%",
+            "letterSpacing": "-3%",
+            "paragraphSpacing": {
+              "value": 0,
+              "unit": "px"
+            },
+            "paragraphIndent": {
+              "value": 0,
+              "unit": "px"
+            },
+            "textDecoration": "NONE",
+            "textCase": "ORIGINAL"
+          },
+          "$description": "",
+          "$extensions": {
+            "styleId": "S:693640858cd02f557cc34e9b3b6957e42963298d,"
+          }
+        },
+        "M": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Geist",
+            "fontWeight": 600,
+            "fontStyle": "normal",
+            "fontSize": {
+              "value": 44,
+              "unit": "px"
+            },
+            "lineHeight": "108%",
+            "letterSpacing": "-2.5%",
+            "paragraphSpacing": {
+              "value": 0,
+              "unit": "px"
+            },
+            "paragraphIndent": {
+              "value": 0,
+              "unit": "px"
+            },
+            "textDecoration": "NONE",
+            "textCase": "ORIGINAL"
+          },
+          "$description": "",
+          "$extensions": {
+            "styleId": "S:71499ae90898455eddd7b5813859866faf27486b,"
+          }
+        }
+      },
+      "Heading": {
+        "H1": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Geist",
+            "fontWeight": 600,
+            "fontStyle": "normal",
+            "fontSize": {
+              "value": 32,
+              "unit": "px"
+            },
+            "lineHeight": "120%",
+            "letterSpacing": "-2%",
+            "paragraphSpacing": {
+              "value": 0,
+              "unit": "px"
+            },
+            "paragraphIndent": {
+              "value": 0,
+              "unit": "px"
+            },
+            "textDecoration": "NONE",
+            "textCase": "ORIGINAL"
+          },
+          "$description": "",
+          "$extensions": {
+            "styleId": "S:e0fc78f6efa68d6c9b10f8f4f34f68417ff00f5e,"
+          }
+        },
+        "H2": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Geist",
+            "fontWeight": 600,
+            "fontStyle": "normal",
+            "fontSize": {
+              "value": 24,
+              "unit": "px"
+            },
+            "lineHeight": "130%",
+            "letterSpacing": "-1.5%",
+            "paragraphSpacing": {
+              "value": 0,
+              "unit": "px"
+            },
+            "paragraphIndent": {
+              "value": 0,
+              "unit": "px"
+            },
+            "textDecoration": "NONE",
+            "textCase": "ORIGINAL"
+          },
+          "$description": "",
+          "$extensions": {
+            "styleId": "S:45036609048a5e51ecd6b55e8e1b52d0edb1e009,"
+          }
+        },
+        "H3": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Geist",
+            "fontWeight": 600,
+            "fontStyle": "normal",
+            "fontSize": {
+              "value": 20,
+              "unit": "px"
+            },
+            "lineHeight": "140%",
+            "letterSpacing": "-1%",
+            "paragraphSpacing": {
+              "value": 0,
+              "unit": "px"
+            },
+            "paragraphIndent": {
+              "value": 0,
+              "unit": "px"
+            },
+            "textDecoration": "NONE",
+            "textCase": "ORIGINAL"
+          },
+          "$description": "",
+          "$extensions": {
+            "styleId": "S:62f2bac776a789667fe7af32c987c3c55d342ce0,"
+          }
+        },
+        "H4": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Geist",
+            "fontWeight": 600,
+            "fontStyle": "normal",
+            "fontSize": {
+              "value": 16,
+              "unit": "px"
+            },
+            "lineHeight": "150%",
+            "letterSpacing": "-0.5%",
+            "paragraphSpacing": {
+              "value": 0,
+              "unit": "px"
+            },
+            "paragraphIndent": {
+              "value": 0,
+              "unit": "px"
+            },
+            "textDecoration": "NONE",
+            "textCase": "ORIGINAL"
+          },
+          "$description": "",
+          "$extensions": {
+            "styleId": "S:74e4754fde94df75b52e6fae4fa2aba2015397fa,"
+          }
+        }
+      },
+      "Body": {
+        "L": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Geist",
+            "fontWeight": 400,
+            "fontStyle": "normal",
+            "fontSize": {
+              "value": 16,
+              "unit": "px"
+            },
+            "lineHeight": "160%",
+            "letterSpacing": "0%",
+            "paragraphSpacing": {
+              "value": 0,
+              "unit": "px"
+            },
+            "paragraphIndent": {
+              "value": 0,
+              "unit": "px"
+            },
+            "textDecoration": "NONE",
+            "textCase": "ORIGINAL"
+          },
+          "$description": "",
+          "$extensions": {
+            "styleId": "S:e09fe186bea6d9bff8757c5399b50e731939ef47,"
+          }
+        },
+        "M": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Geist",
+            "fontWeight": 400,
+            "fontStyle": "normal",
+            "fontSize": {
+              "value": 14,
+              "unit": "px"
+            },
+            "lineHeight": "150%",
+            "letterSpacing": "0%",
+            "paragraphSpacing": {
+              "value": 0,
+              "unit": "px"
+            },
+            "paragraphIndent": {
+              "value": 0,
+              "unit": "px"
+            },
+            "textDecoration": "NONE",
+            "textCase": "ORIGINAL"
+          },
+          "$description": "",
+          "$extensions": {
+            "styleId": "S:113652e64303b5ad009e540a4c1bc30a27a1b20a,"
+          }
+        },
+        "M Strong": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Geist",
+            "fontWeight": 500,
+            "fontStyle": "normal",
+            "fontSize": {
+              "value": 14,
+              "unit": "px"
+            },
+            "lineHeight": "150%",
+            "letterSpacing": "0%",
+            "paragraphSpacing": {
+              "value": 0,
+              "unit": "px"
+            },
+            "paragraphIndent": {
+              "value": 0,
+              "unit": "px"
+            },
+            "textDecoration": "NONE",
+            "textCase": "ORIGINAL"
+          },
+          "$description": "",
+          "$extensions": {
+            "styleId": "S:641e026f76f992e585a4ea605c53c6dd59555efd,"
+          }
+        }
+      },
+      "Label": {
+        "L": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Geist",
+            "fontWeight": 500,
+            "fontStyle": "normal",
+            "fontSize": {
+              "value": 16,
+              "unit": "px"
+            },
+            "lineHeight": "140%",
+            "letterSpacing": "-0.20000000298023224%",
+            "paragraphSpacing": {
+              "value": 0,
+              "unit": "px"
+            },
+            "paragraphIndent": {
+              "value": 0,
+              "unit": "px"
+            },
+            "textDecoration": "NONE",
+            "textCase": "ORIGINAL"
+          },
+          "$description": "",
+          "$extensions": {
+            "styleId": "S:05811903b8af7febb2815fe7b4b6cc699f8020af,"
+          }
+        },
+        "M": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Geist",
+            "fontWeight": 500,
+            "fontStyle": "normal",
+            "fontSize": {
+              "value": 14,
+              "unit": "px"
+            },
+            "lineHeight": "140%",
+            "letterSpacing": "0%",
+            "paragraphSpacing": {
+              "value": 0,
+              "unit": "px"
+            },
+            "paragraphIndent": {
+              "value": 0,
+              "unit": "px"
+            },
+            "textDecoration": "NONE",
+            "textCase": "ORIGINAL"
+          },
+          "$description": "",
+          "$extensions": {
+            "styleId": "S:50c505e883b896a71befe3e34573edf4ba46d481,"
+          }
+        },
+        "M Strong": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Geist",
+            "fontWeight": 600,
+            "fontStyle": "normal",
+            "fontSize": {
+              "value": 14,
+              "unit": "px"
+            },
+            "lineHeight": "140%",
+            "letterSpacing": "0%",
+            "paragraphSpacing": {
+              "value": 0,
+              "unit": "px"
+            },
+            "paragraphIndent": {
+              "value": 0,
+              "unit": "px"
+            },
+            "textDecoration": "NONE",
+            "textCase": "ORIGINAL"
+          },
+          "$description": "",
+          "$extensions": {
+            "styleId": "S:244b8f1d4e31a7409b96eef0db3d1a93bc6b6cff,"
+          }
+        }
+      },
+      "Numeric": {
+        "Display": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Geist",
+            "fontWeight": 600,
+            "fontStyle": "normal",
+            "fontSize": {
+              "value": 40,
+              "unit": "px"
+            },
+            "lineHeight": "100%",
+            "letterSpacing": "-3%",
+            "paragraphSpacing": {
+              "value": 0,
+              "unit": "px"
+            },
+            "paragraphIndent": {
+              "value": 0,
+              "unit": "px"
+            },
+            "textDecoration": "NONE",
+            "textCase": "ORIGINAL"
+          },
+          "$description": "Tabular figures (font-variant-numeric: tabular-nums). Animate with count-up, duration/count-up.",
+          "$extensions": {
+            "styleId": "S:becf29e77e995f822ebb3c1e1fdb29dc30f21445,"
+          }
+        },
+        "KPI": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Geist",
+            "fontWeight": 600,
+            "fontStyle": "normal",
+            "fontSize": {
+              "value": 32,
+              "unit": "px"
+            },
+            "lineHeight": "100%",
+            "letterSpacing": "-2.5%",
+            "paragraphSpacing": {
+              "value": 0,
+              "unit": "px"
+            },
+            "paragraphIndent": {
+              "value": 0,
+              "unit": "px"
+            },
+            "textDecoration": "NONE",
+            "textCase": "ORIGINAL"
+          },
+          "$description": "Tabular figures (font-variant-numeric: tabular-nums). Animate with count-up, duration/count-up.",
+          "$extensions": {
+            "styleId": "S:5842270f961470e28cd068bb30f380d3c9cdd03b,"
+          }
+        },
+        "L": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Geist",
+            "fontWeight": 600,
+            "fontStyle": "normal",
+            "fontSize": {
+              "value": 24,
+              "unit": "px"
+            },
+            "lineHeight": "110%",
+            "letterSpacing": "-1.5%",
+            "paragraphSpacing": {
+              "value": 0,
+              "unit": "px"
+            },
+            "paragraphIndent": {
+              "value": 0,
+              "unit": "px"
+            },
+            "textDecoration": "NONE",
+            "textCase": "ORIGINAL"
+          },
+          "$description": "Tabular figures (font-variant-numeric: tabular-nums). Animate with count-up, duration/count-up.",
+          "$extensions": {
+            "styleId": "S:479c2807ceb462b5569a54fa4e1300f9db0f17ad,"
+          }
+        },
+        "M": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Geist",
+            "fontWeight": 500,
+            "fontStyle": "normal",
+            "fontSize": {
+              "value": 16,
+              "unit": "px"
+            },
+            "lineHeight": "120%",
+            "letterSpacing": "-0.5%",
+            "paragraphSpacing": {
+              "value": 0,
+              "unit": "px"
+            },
+            "paragraphIndent": {
+              "value": 0,
+              "unit": "px"
+            },
+            "textDecoration": "NONE",
+            "textCase": "ORIGINAL"
+          },
+          "$description": "Tabular figures (font-variant-numeric: tabular-nums). Animate with count-up, duration/count-up.",
+          "$extensions": {
+            "styleId": "S:851ed51a0c81cb9a8069b6874a5f66a350d64b5b,"
+          }
+        }
+      },
+      "Mono": {
+        "M": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Geist Mono",
+            "fontWeight": 400,
+            "fontStyle": "normal",
+            "fontSize": {
+              "value": 14,
+              "unit": "px"
+            },
+            "lineHeight": "140%",
+            "letterSpacing": "0%",
+            "paragraphSpacing": {
+              "value": 0,
+              "unit": "px"
+            },
+            "paragraphIndent": {
+              "value": 0,
+              "unit": "px"
+            },
+            "textDecoration": "NONE",
+            "textCase": "ORIGINAL"
+          },
+          "$description": "",
+          "$extensions": {
+            "styleId": "S:20221c1bf6c9a51a7cd74c6db367067ffd156e14,"
+          }
+        },
+        "M Strong": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Geist Mono",
+            "fontWeight": 500,
+            "fontStyle": "normal",
+            "fontSize": {
+              "value": 14,
+              "unit": "px"
+            },
+            "lineHeight": "140%",
+            "letterSpacing": "0%",
+            "paragraphSpacing": {
+              "value": 0,
+              "unit": "px"
+            },
+            "paragraphIndent": {
+              "value": 0,
+              "unit": "px"
+            },
+            "textDecoration": "NONE",
+            "textCase": "ORIGINAL"
+          },
+          "$description": "",
+          "$extensions": {
+            "styleId": "S:1073ec7b69f3bb0057e9130702e3c5d78573e132,"
+          }
+        }
+      }
+    },
+    "$extensions": {
+      "tokens-bruecke-meta": {
+        "useDTCG": true,
+        "spec": "https://www.designtokens.org/tr/2025.10/format/",
+        "colorMode": "srgb-dtcg",
+        "variableCollections": [
+          "Grove Primitives",
+          "Grove Color",
+          "Grove Space",
+          "Grove Motion",
+          "Grove Responsive"
+        ],
+        "createdAt": "2026-10-14T05:05:07.930Z"
+      }
+    }
+  }
+}

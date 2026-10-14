@@ -1,0 +1,1621 @@
+{
+  "source": "figma/snapshot.json",
+  "prefix": "nz",
+  "summary": {
+    "variables": 175,
+    "withWebCodeSyntax": 175,
+    "rewrite": 175,
+    "unchanged": 0,
+    "mismatch": 0,
+    "missing": 0,
+    "collectionRenames": 5,
+    "textStyleRenames": 18,
+    "effectStyleRenames": 10
+  },
+  "variables": [
+    {
+      "id": "VariableID:737:65",
+      "collection": "Grove Primitives",
+      "name": "green/25",
+      "current": "var(--grove-p-green-25)",
+      "proposed": "var(--nz-p-green-25)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:66",
+      "collection": "Grove Primitives",
+      "name": "green/50",
+      "current": "var(--grove-p-green-50)",
+      "proposed": "var(--nz-p-green-50)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:67",
+      "collection": "Grove Primitives",
+      "name": "green/100",
+      "current": "var(--grove-p-green-100)",
+      "proposed": "var(--nz-p-green-100)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:68",
+      "collection": "Grove Primitives",
+      "name": "green/200",
+      "current": "var(--grove-p-green-200)",
+      "proposed": "var(--nz-p-green-200)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:69",
+      "collection": "Grove Primitives",
+      "name": "green/300",
+      "current": "var(--grove-p-green-300)",
+      "proposed": "var(--nz-p-green-300)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:70",
+      "collection": "Grove Primitives",
+      "name": "green/400",
+      "current": "var(--grove-p-green-400)",
+      "proposed": "var(--nz-p-green-400)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:71",
+      "collection": "Grove Primitives",
+      "name": "green/500",
+      "current": "var(--grove-p-green-500)",
+      "proposed": "var(--nz-p-green-500)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:72",
+      "collection": "Grove Primitives",
+      "name": "green/600",
+      "current": "var(--grove-p-green-600)",
+      "proposed": "var(--nz-p-green-600)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:73",
+      "collection": "Grove Primitives",
+      "name": "green/700",
+      "current": "var(--grove-p-green-700)",
+      "proposed": "var(--nz-p-green-700)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:74",
+      "collection": "Grove Primitives",
+      "name": "green/800",
+      "current": "var(--grove-p-green-800)",
+      "proposed": "var(--nz-p-green-800)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:75",
+      "collection": "Grove Primitives",
+      "name": "green/900",
+      "current": "var(--grove-p-green-900)",
+      "proposed": "var(--nz-p-green-900)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:76",
+      "collection": "Grove Primitives",
+      "name": "green/950",
+      "current": "var(--grove-p-green-950)",
+      "proposed": "var(--nz-p-green-950)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:77",
+      "collection": "Grove Primitives",
+      "name": "lime/50",
+      "current": "var(--grove-p-lime-50)",
+      "proposed": "var(--nz-p-lime-50)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:78",
+      "collection": "Grove Primitives",
+      "name": "lime/100",
+      "current": "var(--grove-p-lime-100)",
+      "proposed": "var(--nz-p-lime-100)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:79",
+      "collection": "Grove Primitives",
+      "name": "lime/200",
+      "current": "var(--grove-p-lime-200)",
+      "proposed": "var(--nz-p-lime-200)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:80",
+      "collection": "Grove Primitives",
+      "name": "lime/300",
+      "current": "var(--grove-p-lime-300)",
+      "proposed": "var(--nz-p-lime-300)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:81",
+      "collection": "Grove Primitives",
+      "name": "lime/400",
+      "current": "var(--grove-p-lime-400)",
+      "proposed": "var(--nz-p-lime-400)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:82",
+      "collection": "Grove Primitives",
+      "name": "lime/500",
+      "current": "var(--grove-p-lime-500)",
+      "proposed": "var(--nz-p-lime-500)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:83",
+      "collection": "Grove Primitives",
+      "name": "lime/600",
+      "current": "var(--grove-p-lime-600)",
+      "proposed": "var(--nz-p-lime-600)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:84",
+      "collection": "Grove Primitives",
+      "name": "neutral/0",
+      "current": "var(--grove-p-neutral-0)",
+      "proposed": "var(--nz-p-neutral-0)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:85",
+      "collection": "Grove Primitives",
+      "name": "neutral/25",
+      "current": "var(--grove-p-neutral-25)",
+      "proposed": "var(--nz-p-neutral-25)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:86",
+      "collection": "Grove Primitives",
+      "name": "neutral/50",
+      "current": "var(--grove-p-neutral-50)",
+      "proposed": "var(--nz-p-neutral-50)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:87",
+      "collection": "Grove Primitives",
+      "name": "neutral/100",
+      "current": "var(--grove-p-neutral-100)",
+      "proposed": "var(--nz-p-neutral-100)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:88",
+      "collection": "Grove Primitives",
+      "name": "neutral/200",
+      "current": "var(--grove-p-neutral-200)",
+      "proposed": "var(--nz-p-neutral-200)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:89",
+      "collection": "Grove Primitives",
+      "name": "neutral/300",
+      "current": "var(--grove-p-neutral-300)",
+      "proposed": "var(--nz-p-neutral-300)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:90",
+      "collection": "Grove Primitives",
+      "name": "neutral/400",
+      "current": "var(--grove-p-neutral-400)",
+      "proposed": "var(--nz-p-neutral-400)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:91",
+      "collection": "Grove Primitives",
+      "name": "neutral/500",
+      "current": "var(--grove-p-neutral-500)",
+      "proposed": "var(--nz-p-neutral-500)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:92",
+      "collection": "Grove Primitives",
+      "name": "neutral/600",
+      "current": "var(--grove-p-neutral-600)",
+      "proposed": "var(--nz-p-neutral-600)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:93",
+      "collection": "Grove Primitives",
+      "name": "neutral/700",
+      "current": "var(--grove-p-neutral-700)",
+      "proposed": "var(--nz-p-neutral-700)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:94",
+      "collection": "Grove Primitives",
+      "name": "neutral/800",
+      "current": "var(--grove-p-neutral-800)",
+      "proposed": "var(--nz-p-neutral-800)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:95",
+      "collection": "Grove Primitives",
+      "name": "neutral/850",
+      "current": "var(--grove-p-neutral-850)",
+      "proposed": "var(--nz-p-neutral-850)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:96",
+      "collection": "Grove Primitives",
+      "name": "neutral/900",
+      "current": "var(--grove-p-neutral-900)",
+      "proposed": "var(--nz-p-neutral-900)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:97",
+      "collection": "Grove Primitives",
+      "name": "neutral/950",
+      "current": "var(--grove-p-neutral-950)",
+      "proposed": "var(--nz-p-neutral-950)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:98",
+      "collection": "Grove Primitives",
+      "name": "red/50",
+      "current": "var(--grove-p-red-50)",
+      "proposed": "var(--nz-p-red-50)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:99",
+      "collection": "Grove Primitives",
+      "name": "red/100",
+      "current": "var(--grove-p-red-100)",
+      "proposed": "var(--nz-p-red-100)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:100",
+      "collection": "Grove Primitives",
+      "name": "red/500",
+      "current": "var(--grove-p-red-500)",
+      "proposed": "var(--nz-p-red-500)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:101",
+      "collection": "Grove Primitives",
+      "name": "red/600",
+      "current": "var(--grove-p-red-600)",
+      "proposed": "var(--nz-p-red-600)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:102",
+      "collection": "Grove Primitives",
+      "name": "red/700",
+      "current": "var(--grove-p-red-700)",
+      "proposed": "var(--nz-p-red-700)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:103",
+      "collection": "Grove Primitives",
+      "name": "amber/50",
+      "current": "var(--grove-p-amber-50)",
+      "proposed": "var(--nz-p-amber-50)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:104",
+      "collection": "Grove Primitives",
+      "name": "amber/100",
+      "current": "var(--grove-p-amber-100)",
+      "proposed": "var(--nz-p-amber-100)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:105",
+      "collection": "Grove Primitives",
+      "name": "amber/500",
+      "current": "var(--grove-p-amber-500)",
+      "proposed": "var(--nz-p-amber-500)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:106",
+      "collection": "Grove Primitives",
+      "name": "amber/600",
+      "current": "var(--grove-p-amber-600)",
+      "proposed": "var(--nz-p-amber-600)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:107",
+      "collection": "Grove Primitives",
+      "name": "amber/700",
+      "current": "var(--grove-p-amber-700)",
+      "proposed": "var(--nz-p-amber-700)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:108",
+      "collection": "Grove Primitives",
+      "name": "blue/50",
+      "current": "var(--grove-p-blue-50)",
+      "proposed": "var(--nz-p-blue-50)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:109",
+      "collection": "Grove Primitives",
+      "name": "blue/100",
+      "current": "var(--grove-p-blue-100)",
+      "proposed": "var(--nz-p-blue-100)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:110",
+      "collection": "Grove Primitives",
+      "name": "blue/500",
+      "current": "var(--grove-p-blue-500)",
+      "proposed": "var(--nz-p-blue-500)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:111",
+      "collection": "Grove Primitives",
+      "name": "blue/600",
+      "current": "var(--grove-p-blue-600)",
+      "proposed": "var(--nz-p-blue-600)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:112",
+      "collection": "Grove Primitives",
+      "name": "blue/700",
+      "current": "var(--grove-p-blue-700)",
+      "proposed": "var(--nz-p-blue-700)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:747:233",
+      "collection": "Grove Primitives",
+      "name": "viz/green-500",
+      "current": "var(--grove-p-viz-green-500)",
+      "proposed": "var(--nz-p-viz-green-500)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:747:234",
+      "collection": "Grove Primitives",
+      "name": "viz/green-600",
+      "current": "var(--grove-p-viz-green-600)",
+      "proposed": "var(--nz-p-viz-green-600)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:747:235",
+      "collection": "Grove Primitives",
+      "name": "viz/lime-500",
+      "current": "var(--grove-p-viz-lime-500)",
+      "proposed": "var(--nz-p-viz-lime-500)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:747:236",
+      "collection": "Grove Primitives",
+      "name": "viz/lime-600",
+      "current": "var(--grove-p-viz-lime-600)",
+      "proposed": "var(--nz-p-viz-lime-600)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:747:237",
+      "collection": "Grove Primitives",
+      "name": "viz/teal-500",
+      "current": "var(--grove-p-viz-teal-500)",
+      "proposed": "var(--nz-p-viz-teal-500)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:747:238",
+      "collection": "Grove Primitives",
+      "name": "viz/teal-400",
+      "current": "var(--grove-p-viz-teal-400)",
+      "proposed": "var(--nz-p-viz-teal-400)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:114",
+      "collection": "Grove Color",
+      "name": "bg/canvas",
+      "current": "var(--grove-bg-canvas)",
+      "proposed": "var(--nz-bg-canvas)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:115",
+      "collection": "Grove Color",
+      "name": "bg/surface",
+      "current": "var(--grove-bg-surface)",
+      "proposed": "var(--nz-bg-surface)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:116",
+      "collection": "Grove Color",
+      "name": "bg/surface-raised",
+      "current": "var(--grove-bg-surface-raised)",
+      "proposed": "var(--nz-bg-surface-raised)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:117",
+      "collection": "Grove Color",
+      "name": "bg/subtle",
+      "current": "var(--grove-bg-subtle)",
+      "proposed": "var(--nz-bg-subtle)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:118",
+      "collection": "Grove Color",
+      "name": "bg/muted",
+      "current": "var(--grove-bg-muted)",
+      "proposed": "var(--nz-bg-muted)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:119",
+      "collection": "Grove Color",
+      "name": "bg/hover",
+      "current": "var(--grove-bg-hover)",
+      "proposed": "var(--nz-bg-hover)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:120",
+      "collection": "Grove Color",
+      "name": "bg/pressed",
+      "current": "var(--grove-bg-pressed)",
+      "proposed": "var(--nz-bg-pressed)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:121",
+      "collection": "Grove Color",
+      "name": "bg/inverse",
+      "current": "var(--grove-bg-inverse)",
+      "proposed": "var(--nz-bg-inverse)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:122",
+      "collection": "Grove Color",
+      "name": "bg/inverse-elevated",
+      "current": "var(--grove-bg-inverse-elevated)",
+      "proposed": "var(--nz-bg-inverse-elevated)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:123",
+      "collection": "Grove Color",
+      "name": "bg/brand",
+      "current": "var(--grove-bg-brand)",
+      "proposed": "var(--nz-bg-brand)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:124",
+      "collection": "Grove Color",
+      "name": "bg/brand-hover",
+      "current": "var(--grove-bg-brand-hover)",
+      "proposed": "var(--nz-bg-brand-hover)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:125",
+      "collection": "Grove Color",
+      "name": "bg/brand-pressed",
+      "current": "var(--grove-bg-brand-pressed)",
+      "proposed": "var(--nz-bg-brand-pressed)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:126",
+      "collection": "Grove Color",
+      "name": "bg/brand-subtle",
+      "current": "var(--grove-bg-brand-subtle)",
+      "proposed": "var(--nz-bg-brand-subtle)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:127",
+      "collection": "Grove Color",
+      "name": "bg/brand-muted",
+      "current": "var(--grove-bg-brand-muted)",
+      "proposed": "var(--nz-bg-brand-muted)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:128",
+      "collection": "Grove Color",
+      "name": "bg/accent",
+      "current": "var(--grove-bg-accent)",
+      "proposed": "var(--nz-bg-accent)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:129",
+      "collection": "Grove Color",
+      "name": "bg/accent-subtle",
+      "current": "var(--grove-bg-accent-subtle)",
+      "proposed": "var(--nz-bg-accent-subtle)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:130",
+      "collection": "Grove Color",
+      "name": "bg/success-subtle",
+      "current": "var(--grove-bg-success-subtle)",
+      "proposed": "var(--nz-bg-success-subtle)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:131",
+      "collection": "Grove Color",
+      "name": "bg/warning-subtle",
+      "current": "var(--grove-bg-warning-subtle)",
+      "proposed": "var(--nz-bg-warning-subtle)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:132",
+      "collection": "Grove Color",
+      "name": "bg/critical-subtle",
+      "current": "var(--grove-bg-critical-subtle)",
+      "proposed": "var(--nz-bg-critical-subtle)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:133",
+      "collection": "Grove Color",
+      "name": "bg/info-subtle",
+      "current": "var(--grove-bg-info-subtle)",
+      "proposed": "var(--nz-bg-info-subtle)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:134",
+      "collection": "Grove Color",
+      "name": "bg/critical",
+      "current": "var(--grove-bg-critical)",
+      "proposed": "var(--nz-bg-critical)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:135",
+      "collection": "Grove Color",
+      "name": "bg/disabled",
+      "current": "var(--grove-bg-disabled)",
+      "proposed": "var(--nz-bg-disabled)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:136",
+      "collection": "Grove Color",
+      "name": "text/primary",
+      "current": "var(--grove-text-primary)",
+      "proposed": "var(--nz-text-primary)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:137",
+      "collection": "Grove Color",
+      "name": "text/secondary",
+      "current": "var(--grove-text-secondary)",
+      "proposed": "var(--nz-text-secondary)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:138",
+      "collection": "Grove Color",
+      "name": "text/tertiary",
+      "current": "var(--grove-text-tertiary)",
+      "proposed": "var(--nz-text-tertiary)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:139",
+      "collection": "Grove Color",
+      "name": "text/disabled",
+      "current": "var(--grove-text-disabled)",
+      "proposed": "var(--nz-text-disabled)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:140",
+      "collection": "Grove Color",
+      "name": "text/inverse",
+      "current": "var(--grove-text-inverse)",
+      "proposed": "var(--nz-text-inverse)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:141",
+      "collection": "Grove Color",
+      "name": "text/on-brand",
+      "current": "var(--grove-text-on-brand)",
+      "proposed": "var(--nz-text-on-brand)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:142",
+      "collection": "Grove Color",
+      "name": "text/on-accent",
+      "current": "var(--grove-text-on-accent)",
+      "proposed": "var(--nz-text-on-accent)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:143",
+      "collection": "Grove Color",
+      "name": "text/brand",
+      "current": "var(--grove-text-brand)",
+      "proposed": "var(--nz-text-brand)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:144",
+      "collection": "Grove Color",
+      "name": "text/success",
+      "current": "var(--grove-text-success)",
+      "proposed": "var(--nz-text-success)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:145",
+      "collection": "Grove Color",
+      "name": "text/warning",
+      "current": "var(--grove-text-warning)",
+      "proposed": "var(--nz-text-warning)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:146",
+      "collection": "Grove Color",
+      "name": "text/critical",
+      "current": "var(--grove-text-critical)",
+      "proposed": "var(--nz-text-critical)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:147",
+      "collection": "Grove Color",
+      "name": "text/info",
+      "current": "var(--grove-text-info)",
+      "proposed": "var(--nz-text-info)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:148",
+      "collection": "Grove Color",
+      "name": "border/default",
+      "current": "var(--grove-border-default)",
+      "proposed": "var(--nz-border-default)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:149",
+      "collection": "Grove Color",
+      "name": "border/subtle",
+      "current": "var(--grove-border-subtle)",
+      "proposed": "var(--nz-border-subtle)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:150",
+      "collection": "Grove Color",
+      "name": "border/strong",
+      "current": "var(--grove-border-strong)",
+      "proposed": "var(--nz-border-strong)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:151",
+      "collection": "Grove Color",
+      "name": "border/brand",
+      "current": "var(--grove-border-brand)",
+      "proposed": "var(--nz-border-brand)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:152",
+      "collection": "Grove Color",
+      "name": "border/focus",
+      "current": "var(--grove-border-focus)",
+      "proposed": "var(--nz-border-focus)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:153",
+      "collection": "Grove Color",
+      "name": "border/critical",
+      "current": "var(--grove-border-critical)",
+      "proposed": "var(--nz-border-critical)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:154",
+      "collection": "Grove Color",
+      "name": "border/warning",
+      "current": "var(--grove-border-warning)",
+      "proposed": "var(--nz-border-warning)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:155",
+      "collection": "Grove Color",
+      "name": "icon/primary",
+      "current": "var(--grove-icon-primary)",
+      "proposed": "var(--nz-icon-primary)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:156",
+      "collection": "Grove Color",
+      "name": "icon/secondary",
+      "current": "var(--grove-icon-secondary)",
+      "proposed": "var(--nz-icon-secondary)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:157",
+      "collection": "Grove Color",
+      "name": "icon/brand",
+      "current": "var(--grove-icon-brand)",
+      "proposed": "var(--nz-icon-brand)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:158",
+      "collection": "Grove Color",
+      "name": "icon/inverse",
+      "current": "var(--grove-icon-inverse)",
+      "proposed": "var(--nz-icon-inverse)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:159",
+      "collection": "Grove Color",
+      "name": "icon/success",
+      "current": "var(--grove-icon-success)",
+      "proposed": "var(--nz-icon-success)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:160",
+      "collection": "Grove Color",
+      "name": "icon/warning",
+      "current": "var(--grove-icon-warning)",
+      "proposed": "var(--nz-icon-warning)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:161",
+      "collection": "Grove Color",
+      "name": "icon/critical",
+      "current": "var(--grove-icon-critical)",
+      "proposed": "var(--nz-icon-critical)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:162",
+      "collection": "Grove Color",
+      "name": "chart/primary",
+      "current": "var(--grove-chart-primary)",
+      "proposed": "var(--nz-chart-primary)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:163",
+      "collection": "Grove Color",
+      "name": "chart/secondary",
+      "current": "var(--grove-chart-secondary)",
+      "proposed": "var(--nz-chart-secondary)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:164",
+      "collection": "Grove Color",
+      "name": "chart/tertiary",
+      "current": "var(--grove-chart-tertiary)",
+      "proposed": "var(--nz-chart-tertiary)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:165",
+      "collection": "Grove Color",
+      "name": "chart/neutral",
+      "current": "var(--grove-chart-neutral)",
+      "proposed": "var(--nz-chart-neutral)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:166",
+      "collection": "Grove Color",
+      "name": "chart/track",
+      "current": "var(--grove-chart-track)",
+      "proposed": "var(--nz-chart-track)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:167",
+      "collection": "Grove Color",
+      "name": "chart/grid",
+      "current": "var(--grove-chart-grid)",
+      "proposed": "var(--nz-chart-grid)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:168",
+      "collection": "Grove Color",
+      "name": "chart/negative",
+      "current": "var(--grove-chart-negative)",
+      "proposed": "var(--nz-chart-negative)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:747:239",
+      "collection": "Grove Color",
+      "name": "chart/cat-1",
+      "current": "var(--grove-chart-cat-1)",
+      "proposed": "var(--nz-chart-cat-1)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:747:240",
+      "collection": "Grove Color",
+      "name": "chart/cat-2",
+      "current": "var(--grove-chart-cat-2)",
+      "proposed": "var(--nz-chart-cat-2)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:747:241",
+      "collection": "Grove Color",
+      "name": "chart/cat-3",
+      "current": "var(--grove-chart-cat-3)",
+      "proposed": "var(--nz-chart-cat-3)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:170",
+      "collection": "Grove Space",
+      "name": "space/0",
+      "current": "var(--grove-space-0)",
+      "proposed": "var(--nz-space-0)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:171",
+      "collection": "Grove Space",
+      "name": "space/1",
+      "current": "var(--grove-space-1)",
+      "proposed": "var(--nz-space-1)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:172",
+      "collection": "Grove Space",
+      "name": "space/2",
+      "current": "var(--grove-space-2)",
+      "proposed": "var(--nz-space-2)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:173",
+      "collection": "Grove Space",
+      "name": "space/3",
+      "current": "var(--grove-space-3)",
+      "proposed": "var(--nz-space-3)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:174",
+      "collection": "Grove Space",
+      "name": "space/4",
+      "current": "var(--grove-space-4)",
+      "proposed": "var(--nz-space-4)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:175",
+      "collection": "Grove Space",
+      "name": "space/5",
+      "current": "var(--grove-space-5)",
+      "proposed": "var(--nz-space-5)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:176",
+      "collection": "Grove Space",
+      "name": "space/6",
+      "current": "var(--grove-space-6)",
+      "proposed": "var(--nz-space-6)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:177",
+      "collection": "Grove Space",
+      "name": "space/8",
+      "current": "var(--grove-space-8)",
+      "proposed": "var(--nz-space-8)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:178",
+      "collection": "Grove Space",
+      "name": "space/10",
+      "current": "var(--grove-space-10)",
+      "proposed": "var(--nz-space-10)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:179",
+      "collection": "Grove Space",
+      "name": "space/12",
+      "current": "var(--grove-space-12)",
+      "proposed": "var(--nz-space-12)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:180",
+      "collection": "Grove Space",
+      "name": "space/16",
+      "current": "var(--grove-space-16)",
+      "proposed": "var(--nz-space-16)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:181",
+      "collection": "Grove Space",
+      "name": "space/20",
+      "current": "var(--grove-space-20)",
+      "proposed": "var(--nz-space-20)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:182",
+      "collection": "Grove Space",
+      "name": "space/24",
+      "current": "var(--grove-space-24)",
+      "proposed": "var(--nz-space-24)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:183",
+      "collection": "Grove Space",
+      "name": "space/0-5",
+      "current": "var(--grove-space-0-5)",
+      "proposed": "var(--nz-space-0-5)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:184",
+      "collection": "Grove Space",
+      "name": "space/1-5",
+      "current": "var(--grove-space-1-5)",
+      "proposed": "var(--nz-space-1-5)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:185",
+      "collection": "Grove Space",
+      "name": "radius/none",
+      "current": "var(--grove-radius-none)",
+      "proposed": "var(--nz-radius-none)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:186",
+      "collection": "Grove Space",
+      "name": "radius/xs",
+      "current": "var(--grove-radius-xs)",
+      "proposed": "var(--nz-radius-xs)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:187",
+      "collection": "Grove Space",
+      "name": "radius/sm",
+      "current": "var(--grove-radius-sm)",
+      "proposed": "var(--nz-radius-sm)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:188",
+      "collection": "Grove Space",
+      "name": "radius/md",
+      "current": "var(--grove-radius-md)",
+      "proposed": "var(--nz-radius-md)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:189",
+      "collection": "Grove Space",
+      "name": "radius/lg",
+      "current": "var(--grove-radius-lg)",
+      "proposed": "var(--nz-radius-lg)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:190",
+      "collection": "Grove Space",
+      "name": "radius/xl",
+      "current": "var(--grove-radius-xl)",
+      "proposed": "var(--nz-radius-xl)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:191",
+      "collection": "Grove Space",
+      "name": "radius/2xl",
+      "current": "var(--grove-radius-2xl)",
+      "proposed": "var(--nz-radius-2xl)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:192",
+      "collection": "Grove Space",
+      "name": "radius/full",
+      "current": "var(--grove-radius-full)",
+      "proposed": "var(--nz-radius-full)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:193",
+      "collection": "Grove Space",
+      "name": "border-width/default",
+      "current": "var(--grove-border-width-default)",
+      "proposed": "var(--nz-border-width-default)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:194",
+      "collection": "Grove Space",
+      "name": "border-width/strong",
+      "current": "var(--grove-border-width-strong)",
+      "proposed": "var(--nz-border-width-strong)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:195",
+      "collection": "Grove Space",
+      "name": "border-width/focus",
+      "current": "var(--grove-border-width-focus)",
+      "proposed": "var(--nz-border-width-focus)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:196",
+      "collection": "Grove Space",
+      "name": "size/control-sm",
+      "current": "var(--grove-size-control-sm)",
+      "proposed": "var(--nz-size-control-sm)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:197",
+      "collection": "Grove Space",
+      "name": "size/control-md",
+      "current": "var(--grove-size-control-md)",
+      "proposed": "var(--nz-size-control-md)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:198",
+      "collection": "Grove Space",
+      "name": "size/control-lg",
+      "current": "var(--grove-size-control-lg)",
+      "proposed": "var(--nz-size-control-lg)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:199",
+      "collection": "Grove Space",
+      "name": "size/icon-sm",
+      "current": "var(--grove-size-icon-sm)",
+      "proposed": "var(--nz-size-icon-sm)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:200",
+      "collection": "Grove Space",
+      "name": "size/icon-md",
+      "current": "var(--grove-size-icon-md)",
+      "proposed": "var(--nz-size-icon-md)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:201",
+      "collection": "Grove Space",
+      "name": "size/icon-lg",
+      "current": "var(--grove-size-icon-lg)",
+      "proposed": "var(--nz-size-icon-lg)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:202",
+      "collection": "Grove Space",
+      "name": "size/touch-min",
+      "current": "var(--grove-size-touch-min)",
+      "proposed": "var(--nz-size-touch-min)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:204",
+      "collection": "Grove Motion",
+      "name": "duration/instant",
+      "current": "var(--grove-duration-instant)",
+      "proposed": "var(--nz-duration-instant)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:205",
+      "collection": "Grove Motion",
+      "name": "duration/fast",
+      "current": "var(--grove-duration-fast)",
+      "proposed": "var(--nz-duration-fast)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:206",
+      "collection": "Grove Motion",
+      "name": "duration/base",
+      "current": "var(--grove-duration-base)",
+      "proposed": "var(--nz-duration-base)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:207",
+      "collection": "Grove Motion",
+      "name": "duration/slow",
+      "current": "var(--grove-duration-slow)",
+      "proposed": "var(--nz-duration-slow)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:208",
+      "collection": "Grove Motion",
+      "name": "duration/slower",
+      "current": "var(--grove-duration-slower)",
+      "proposed": "var(--nz-duration-slower)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:209",
+      "collection": "Grove Motion",
+      "name": "duration/count-up",
+      "current": "var(--grove-duration-count-up)",
+      "proposed": "var(--nz-duration-count-up)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:210",
+      "collection": "Grove Motion",
+      "name": "duration/chart-draw",
+      "current": "var(--grove-duration-chart-draw)",
+      "proposed": "var(--nz-duration-chart-draw)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:211",
+      "collection": "Grove Motion",
+      "name": "easing/standard",
+      "current": "var(--grove-easing-standard)",
+      "proposed": "var(--nz-easing-standard)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:212",
+      "collection": "Grove Motion",
+      "name": "easing/enter",
+      "current": "var(--grove-easing-enter)",
+      "proposed": "var(--nz-easing-enter)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:213",
+      "collection": "Grove Motion",
+      "name": "easing/exit",
+      "current": "var(--grove-easing-exit)",
+      "proposed": "var(--nz-easing-exit)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:214",
+      "collection": "Grove Motion",
+      "name": "easing/spring",
+      "current": "var(--grove-easing-spring)",
+      "proposed": "var(--nz-easing-spring)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:215",
+      "collection": "Grove Motion",
+      "name": "easing/spring-soft",
+      "current": "var(--grove-easing-spring-soft)",
+      "proposed": "var(--nz-easing-spring-soft)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:216",
+      "collection": "Grove Motion",
+      "name": "distance/lift",
+      "current": "var(--grove-distance-lift)",
+      "proposed": "var(--nz-distance-lift)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:217",
+      "collection": "Grove Motion",
+      "name": "distance/reveal",
+      "current": "var(--grove-distance-reveal)",
+      "proposed": "var(--nz-distance-reveal)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:218",
+      "collection": "Grove Motion",
+      "name": "distance/float",
+      "current": "var(--grove-distance-float)",
+      "proposed": "var(--nz-distance-float)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:219",
+      "collection": "Grove Motion",
+      "name": "tilt/max-deg",
+      "current": "var(--grove-tilt-max-deg)",
+      "proposed": "var(--nz-tilt-max-deg)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:220",
+      "collection": "Grove Motion",
+      "name": "scale/press",
+      "current": "var(--grove-scale-press)",
+      "proposed": "var(--nz-scale-press)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:221",
+      "collection": "Grove Motion",
+      "name": "scale/hover",
+      "current": "var(--grove-scale-hover)",
+      "proposed": "var(--nz-scale-hover)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:222",
+      "collection": "Grove Motion",
+      "name": "stagger/item",
+      "current": "var(--grove-stagger-item)",
+      "proposed": "var(--nz-stagger-item)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:223",
+      "collection": "Grove Motion",
+      "name": "magnetic/pull",
+      "current": "var(--grove-magnetic-pull)",
+      "proposed": "var(--nz-magnetic-pull)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:225",
+      "collection": "Grove Responsive",
+      "name": "grid/columns",
+      "current": "var(--grove-grid-columns)",
+      "proposed": "var(--nz-grid-columns)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:226",
+      "collection": "Grove Responsive",
+      "name": "grid/gutter",
+      "current": "var(--grove-grid-gutter)",
+      "proposed": "var(--nz-grid-gutter)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:227",
+      "collection": "Grove Responsive",
+      "name": "grid/margin",
+      "current": "var(--grove-grid-margin)",
+      "proposed": "var(--nz-grid-margin)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:228",
+      "collection": "Grove Responsive",
+      "name": "layout/viewport",
+      "current": "var(--grove-layout-viewport)",
+      "proposed": "var(--nz-layout-viewport)",
+      "status": "rewrite",
+      "note": "not emitted in CSS: frame widths, not breakpoints (plan §7.2)"
+    },
+    {
+      "id": "VariableID:737:229",
+      "collection": "Grove Responsive",
+      "name": "layout/sidebar",
+      "current": "var(--grove-layout-sidebar)",
+      "proposed": "var(--nz-layout-sidebar)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:230",
+      "collection": "Grove Responsive",
+      "name": "layout/content-max",
+      "current": "var(--grove-layout-content-max)",
+      "proposed": "var(--nz-layout-content-max)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:231",
+      "collection": "Grove Responsive",
+      "name": "type/display",
+      "current": "var(--grove-type-display)",
+      "proposed": "var(--nz-type-display)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:232",
+      "collection": "Grove Responsive",
+      "name": "type/h1",
+      "current": "var(--grove-type-h1)",
+      "proposed": "var(--nz-type-h1)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:233",
+      "collection": "Grove Responsive",
+      "name": "type/kpi",
+      "current": "var(--grove-type-kpi)",
+      "proposed": "var(--nz-type-kpi)",
+      "status": "rewrite"
+    },
+    {
+      "id": "VariableID:737:234",
+      "collection": "Grove Responsive",
+      "name": "section/gap",
+      "current": "var(--grove-section-gap)",
+      "proposed": "var(--nz-section-gap)",
+      "status": "rewrite"
+    }
+  ],
+  "renames": [
+    {
+      "id": "VariableCollectionId:737:64",
+      "kind": "collection",
+      "current": "Grove Primitives",
+      "proposed": "Nizivo Primitives"
+    },
+    {
+      "id": "VariableCollectionId:737:113",
+      "kind": "collection",
+      "current": "Grove Color",
+      "proposed": "Nizivo Color"
+    },
+    {
+      "id": "VariableCollectionId:737:169",
+      "kind": "collection",
+      "current": "Grove Space",
+      "proposed": "Nizivo Space"
+    },
+    {
+      "id": "VariableCollectionId:737:203",
+      "kind": "collection",
+      "current": "Grove Motion",
+      "proposed": "Nizivo Motion"
+    },
+    {
+      "id": "VariableCollectionId:737:224",
+      "kind": "collection",
+      "current": "Grove Responsive",
+      "proposed": "Nizivo Responsive"
+    },
+    {
+      "id": "S:693640858cd02f557cc34e9b3b6957e42963298d,",
+      "kind": "textStyle",
+      "current": "Grove/Display/L",
+      "proposed": "Nizivo/Display/L"
+    },
+    {
+      "id": "S:71499ae90898455eddd7b5813859866faf27486b,",
+      "kind": "textStyle",
+      "current": "Grove/Display/M",
+      "proposed": "Nizivo/Display/M"
+    },
+    {
+      "id": "S:e0fc78f6efa68d6c9b10f8f4f34f68417ff00f5e,",
+      "kind": "textStyle",
+      "current": "Grove/Heading/H1",
+      "proposed": "Nizivo/Heading/H1"
+    },
+    {
+      "id": "S:45036609048a5e51ecd6b55e8e1b52d0edb1e009,",
+      "kind": "textStyle",
+      "current": "Grove/Heading/H2",
+      "proposed": "Nizivo/Heading/H2"
+    },
+    {
+      "id": "S:62f2bac776a789667fe7af32c987c3c55d342ce0,",
+      "kind": "textStyle",
+      "current": "Grove/Heading/H3",
+      "proposed": "Nizivo/Heading/H3"
+    },
+    {
+      "id": "S:74e4754fde94df75b52e6fae4fa2aba2015397fa,",
+      "kind": "textStyle",
+      "current": "Grove/Heading/H4",
+      "proposed": "Nizivo/Heading/H4"
+    },
+    {
+      "id": "S:e09fe186bea6d9bff8757c5399b50e731939ef47,",
+      "kind": "textStyle",
+      "current": "Grove/Body/L",
+      "proposed": "Nizivo/Body/L"
+    },
+    {
+      "id": "S:113652e64303b5ad009e540a4c1bc30a27a1b20a,",
+      "kind": "textStyle",
+      "current": "Grove/Body/M",
+      "proposed": "Nizivo/Body/M"
+    },
+    {
+      "id": "S:641e026f76f992e585a4ea605c53c6dd59555efd,",
+      "kind": "textStyle",
+      "current": "Grove/Body/M Strong",
+      "proposed": "Nizivo/Body/M Strong"
+    },
+    {
+      "id": "S:05811903b8af7febb2815fe7b4b6cc699f8020af,",
+      "kind": "textStyle",
+      "current": "Grove/Label/L",
+      "proposed": "Nizivo/Label/L"
+    },
+    {
+      "id": "S:50c505e883b896a71befe3e34573edf4ba46d481,",
+      "kind": "textStyle",
+      "current": "Grove/Label/M",
+      "proposed": "Nizivo/Label/M"
+    },
+    {
+      "id": "S:244b8f1d4e31a7409b96eef0db3d1a93bc6b6cff,",
+      "kind": "textStyle",
+      "current": "Grove/Label/M Strong",
+      "proposed": "Nizivo/Label/M Strong"
+    },
+    {
+      "id": "S:becf29e77e995f822ebb3c1e1fdb29dc30f21445,",
+      "kind": "textStyle",
+      "current": "Grove/Numeric/Display",
+      "proposed": "Nizivo/Numeric/Display"
+    },
+    {
+      "id": "S:5842270f961470e28cd068bb30f380d3c9cdd03b,",
+      "kind": "textStyle",
+      "current": "Grove/Numeric/KPI",
+      "proposed": "Nizivo/Numeric/KPI"
+    },
+    {
+      "id": "S:479c2807ceb462b5569a54fa4e1300f9db0f17ad,",
+      "kind": "textStyle",
+      "current": "Grove/Numeric/L",
+      "proposed": "Nizivo/Numeric/L"
+    },
+    {
+      "id": "S:851ed51a0c81cb9a8069b6874a5f66a350d64b5b,",
+      "kind": "textStyle",
+      "current": "Grove/Numeric/M",
+      "proposed": "Nizivo/Numeric/M"
+    },
+    {
+      "id": "S:20221c1bf6c9a51a7cd74c6db367067ffd156e14,",
+      "kind": "textStyle",
+      "current": "Grove/Mono/M",
+      "proposed": "Nizivo/Mono/M"
+    },
+    {
+      "id": "S:1073ec7b69f3bb0057e9130702e3c5d78573e132,",
+      "kind": "textStyle",
+      "current": "Grove/Mono/M Strong",
+      "proposed": "Nizivo/Mono/M Strong"
+    },
+    {
+      "id": "S:d12ab6fddee4b902de5c93e30e2978c4a86c37bb,",
+      "kind": "effectStyle",
+      "current": "Grove/Elevation/0 Flat",
+      "proposed": "Nizivo/Elevation/0 Flat"
+    },
+    {
+      "id": "S:316d51ea0495dbd547833b771e7073ccca287734,",
+      "kind": "effectStyle",
+      "current": "Grove/Elevation/1 Card",
+      "proposed": "Nizivo/Elevation/1 Card"
+    },
+    {
+      "id": "S:c09c43dfc0d01afa10c5dd5fc7887953570139ba,",
+      "kind": "effectStyle",
+      "current": "Grove/Elevation/2 Raised",
+      "proposed": "Nizivo/Elevation/2 Raised"
+    },
+    {
+      "id": "S:757549db8d13d42b9bf595a0700a909680123689,",
+      "kind": "effectStyle",
+      "current": "Grove/Elevation/3 Popover",
+      "proposed": "Nizivo/Elevation/3 Popover"
+    },
+    {
+      "id": "S:cca0fc695713c40d220a7c32851484f26152c35a,",
+      "kind": "effectStyle",
+      "current": "Grove/Elevation/4 Modal",
+      "proposed": "Nizivo/Elevation/4 Modal"
+    },
+    {
+      "id": "S:3d4f7da23415e32caa19dcda58cced8ece5d1992,",
+      "kind": "effectStyle",
+      "current": "Grove/Focus/Ring",
+      "proposed": "Nizivo/Focus/Ring"
+    },
+    {
+      "id": "S:8fb6fb6ca4763ffabeb0036851a95f092a5212f9,",
+      "kind": "effectStyle",
+      "current": "Grove/Focus/Ring Critical",
+      "proposed": "Nizivo/Focus/Ring Critical"
+    },
+    {
+      "id": "S:31333373bf21c8b7bb56e8b9b7ebcaffe91154e7,",
+      "kind": "effectStyle",
+      "current": "Grove/Surface/Glass",
+      "proposed": "Nizivo/Surface/Glass"
+    },
+    {
+      "id": "S:3d04cfbf3062571d646c971a1fd265fb199f271c,",
+      "kind": "effectStyle",
+      "current": "Grove/Surface/Liquid Glass",
+      "proposed": "Nizivo/Surface/Liquid Glass"
+    },
+    {
+      "id": "S:5bcec46c504cc88813502ae54b3ffba3cd47ad00,",
+      "kind": "effectStyle",
+      "current": "Grove/Surface/Inner Highlight",
+      "proposed": "Nizivo/Surface/Inner Highlight"
+    }
+  ],
+  "manual": [
+    "Rename the file \"Grove UI Library\" to \"Nizivo UI Library\" (File menu; the Plugin API cannot)."
+  ]
+}
