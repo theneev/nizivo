@@ -1,0 +1,9 @@
+# Build output of the docs site (ARCHITECTURE.md §18.2): Next's cache and the static export
+.next/
+out/
+next-env.d.ts
+# Generated before every build by scripts/generate.ts and fumadocs-mdx: the Fumadocs MDX collections,
+# the examples copied with public imports, and one route per component
+.source/
+.generated/
+app/docs/(generated)/

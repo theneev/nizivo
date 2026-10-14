@@ -1,0 +1,26 @@
+---
+title: Colour
+description: Every semantic colour token, in light and in dark, read from @nizivo/tokens at build time.
+---
+
+Components read only semantic colours (`--nz-bg-*`, `--nz-text-*`, `--nz-icon-*`, `--nz-border-*`,
+`--nz-chart-*`). Each one is a single `light-dark()` value declared once on `:root`, so it resolves in
+whichever theme scope it is used. Each swatch below is painted by the token itself inside a
+`data-nz-theme="light"` or `"dark"` scope; the values and primitive names come from
+`@nizivo/tokens/dist/tokens.css`. Text and icon colours are shown on `--nz-bg-surface`, except the
+`on-*` and `inverse` ones, which are shown on the background they are made for (`--nz-text-on-brand`
+on `--nz-bg-brand`).
+
+Some values differ from the Figma file on purpose, to meet WCAG 2.2 AA contrast. They are listed with
+their reasons and expiry dates on [Deviations from Figma](/docs/deviations/).
+
+## Semantic colours
+
+<ColourSwatches />
+
+## Primitive palette
+
+The semantic colours point at these primitives (`--nz-p-*`). Primitives are private: they can change in
+any release, so never use them in your own CSS.
+
+<PrimitivePalette />

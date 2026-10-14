@@ -1,0 +1,480 @@
+/* The docs site's one stylesheet.
+ *
+ * 1. Tailwind CSS v4 and Fumadocs UI (its styles are Tailwind).
+ * 2. Nizivo, as the Tailwind recipe documents it (ARCHITECTURE.md §7.8, §8.1): tokens.css, base.css
+ *    and every component stylesheet inside Tailwind's `components` layer, so all seven nz.* layers
+ *    sit above preflight and below utilities. The list is generated from @nizivo/react's exports map
+ *    (scripts/generate.ts), so a new component's stylesheet arrives with its page.
+ * 3. The Tailwind adapter, @nizivo/tokens/tailwind.css: `bg-nz-bg-surface` and friends.
+ * 4. Fumadocs' colour variables mapped onto Nizivo's semantic tokens. The tokens are `light-dark()`
+ *    values, so one mapping serves light and dark: the docs theme switch sets `data-nz-theme` on
+ *    <html> and every colour follows, Fumadocs chrome and live examples alike.
+ */
+@import 'tailwindcss';
+@import 'fumadocs-ui/css/lib/default-colors.css';
+@import 'fumadocs-ui/css/preset.css';
+@import '../.generated/nizivo.css';
+@import '@nizivo/tokens/tailwind.css';
+
+@theme {
+  --font-sans: var(--nz-font-family-sans);
+  --font-mono: var(--nz-font-family-mono);
+}
+
+/* Fumadocs → Nizivo. `.dark` is listed because default-colors.css sets its own dark values there. */
+:root,
+.dark {
+  --color-fd-background: var(--nz-bg-canvas);
+  --color-fd-foreground: var(--nz-text-primary);
+  --color-fd-muted: var(--nz-bg-muted);
+  --color-fd-muted-foreground: var(--nz-text-tertiary);
+  --color-fd-popover: var(--nz-bg-surface-raised);
+  --color-fd-popover-foreground: var(--nz-text-primary);
+  --color-fd-card: var(--nz-bg-surface);
+  --color-fd-card-foreground: var(--nz-text-primary);
+  --color-fd-border: var(--nz-border-default);
+  --color-fd-primary: var(--nz-text-brand);
+  --color-fd-primary-foreground: var(--nz-text-on-brand);
+  --color-fd-secondary: var(--nz-bg-subtle);
+  --color-fd-secondary-foreground: var(--nz-text-primary);
+  /* bg-hover is the canvas colour in light, so hovers and the active theme chip would not show */
+  --color-fd-accent: var(--nz-bg-muted);
+  --color-fd-accent-foreground: var(--nz-text-primary);
+  --color-fd-ring: var(--nz-border-focus);
+  --color-fd-overlay: var(--nz-bg-scrim);
+  --color-fd-info: var(--nz-icon-info);
+  --color-fd-warning: var(--nz-icon-warning);
+  --color-fd-error: var(--nz-icon-critical);
+  --color-fd-success: var(--nz-icon-success);
+  --color-fd-idea: var(--nz-icon-brand);
+}
+
+@layer base {
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  /* One focus ring for the whole site, Nizivo's: Fumadocs' links and buttons otherwise show the
+     browser's default ring. Fumadocs' own focus-visible utilities still win where it sets them. */
+  :focus-visible {
+    outline: var(--nz-border-width-focus) solid var(--nz-border-focus);
+    outline-offset: 2px;
+  }
+}
+
+/* Docs-only pieces: example frames, swatches, scales. Tailwind utilities can still override them. */
+@layer components {
+  .nz-docs-example {
+    margin-block: var(--nz-space-4) var(--nz-space-8);
+  }
+  .nz-docs-preview {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--nz-space-4);
+    padding: var(--nz-space-8) var(--nz-space-6);
+    border: 1px solid var(--nz-border-default);
+    border-bottom: 0;
+    border-start-start-radius: var(--nz-radius-lg);
+    border-start-end-radius: var(--nz-radius-lg);
+    background: var(--nz-bg-surface);
+    color: var(--nz-text-primary);
+    font: var(--nz-font-body-m);
+    overflow-x: auto;
+  }
+  /* An example's own wrapper <div> lays its items out in a row. */
+  .nz-docs-preview > div:not([data-slot]) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--nz-space-4);
+    inline-size: 100%;
+  }
+  .nz-docs-preview > div:not([data-slot]) > [data-slot='card'] {
+    flex: 1 1 16rem;
+  }
+  /* The first focus stop on every page; on screen only while focused. */
+  .nz-docs-skip {
+    position: fixed;
+    inset-block-start: var(--nz-space-2);
+    inset-inline-start: var(--nz-space-2);
+    z-index: 100;
+    padding: var(--nz-space-2) var(--nz-space-4);
+    border-radius: var(--nz-radius-md);
+    background: var(--nz-bg-surface-raised);
+    color: var(--nz-text-primary);
+    font: var(--nz-font-label-m-strong);
+    box-shadow: var(--nz-elevation-3);
+    translate: 0 calc(-100% - var(--nz-space-4));
+  }
+  .nz-docs-skip:focus {
+    translate: 0 0;
+  }
+  .nz-docs-flag {
+    display: inline-block;
+    margin-inline-start: var(--nz-space-2);
+    padding: 0 var(--nz-space-1-5);
+    border-radius: var(--nz-radius-xs);
+    background: var(--nz-bg-muted);
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-label-s);
+    vertical-align: middle;
+  }
+  .nz-docs-meta .nz-docs-flag {
+    margin-inline-start: 0;
+    margin-inline-end: var(--nz-space-2);
+  }
+  .nz-docs-flag[data-kind='server'] {
+    background: var(--nz-bg-success-subtle);
+    color: var(--nz-text-success);
+  }
+  .nz-docs-flag[data-kind='client'] {
+    background: var(--nz-bg-info-subtle);
+    color: var(--nz-text-info);
+  }
+  .nz-docs-ref {
+    display: block;
+    color: var(--nz-text-tertiary);
+    font: var(--nz-font-body-s);
+  }
+  .nz-docs-break code {
+    overflow-wrap: anywhere;
+  }
+  .nz-docs-values code {
+    white-space: nowrap;
+  }
+
+  /* Colour swatches: each cell is its own theme scope. */
+  .nz-docs-swatch {
+    display: flex;
+    align-items: center;
+    gap: var(--nz-space-3);
+    padding: var(--nz-space-2);
+    border-radius: var(--nz-radius-sm);
+    background: var(--nz-bg-canvas);
+    color: var(--nz-text-primary);
+  }
+  .nz-docs-chip {
+    display: inline-grid;
+    place-items: center;
+    flex: none;
+    inline-size: 2.5rem;
+    block-size: 2.5rem;
+    border-radius: var(--nz-radius-sm);
+    box-shadow: inset 0 0 0 1px var(--nz-border-subtle);
+    font: var(--nz-font-label-m-strong);
+  }
+  .nz-docs-chip[data-sample]::before {
+    content: attr(data-sample);
+  }
+  .nz-docs-swatch code {
+    background: transparent;
+    color: inherit;
+  }
+  .nz-docs-swatch .nz-docs-ref {
+    color: var(--nz-text-tertiary);
+  }
+
+  .nz-docs-palette {
+    display: grid;
+    gap: var(--nz-space-3);
+    margin-block: var(--nz-space-4);
+  }
+  .nz-docs-palette-row {
+    display: grid;
+    grid-template-columns: 6rem 1fr;
+    align-items: center;
+    gap: var(--nz-space-3);
+  }
+  .nz-docs-palette-name {
+    font: var(--nz-font-label-m);
+  }
+  .nz-docs-palette-steps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--nz-space-1-5);
+  }
+  .nz-docs-palette-step {
+    display: grid;
+    justify-items: center;
+    gap: var(--nz-space-0-5);
+    font: var(--nz-font-body-s);
+    color: var(--nz-text-tertiary);
+  }
+  .nz-docs-palette-step .nz-docs-chip {
+    inline-size: 2.25rem;
+    block-size: 2.25rem;
+  }
+
+  .nz-docs-type-sample {
+    display: block;
+    color: var(--nz-text-primary);
+    white-space: nowrap;
+  }
+  .nz-docs-bar {
+    display: block;
+    block-size: 0.75rem;
+    min-inline-size: 1px;
+    border-radius: var(--nz-radius-xs);
+    background: var(--nz-bg-brand);
+  }
+  .nz-docs-square {
+    display: block;
+    min-inline-size: 1px;
+    min-block-size: 1px;
+    background: var(--nz-bg-brand-muted);
+    box-shadow: inset 0 0 0 1px var(--nz-border-brand);
+  }
+  .nz-docs-radius {
+    display: block;
+    inline-size: 4rem;
+    block-size: 3rem;
+    background: var(--nz-bg-brand-subtle);
+    box-shadow: inset 0 0 0 1.5px var(--nz-border-brand);
+  }
+
+  .nz-docs-elevation {
+    display: grid;
+    gap: var(--nz-space-4);
+    margin-block: var(--nz-space-6);
+  }
+  @media (width >= 48rem) {
+    .nz-docs-elevation {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .nz-docs-elevation-scheme {
+    padding: var(--nz-space-6);
+    border-radius: var(--nz-radius-lg);
+    background: var(--nz-bg-canvas);
+    color: var(--nz-text-primary);
+  }
+  .nz-docs-elevation-label {
+    margin: 0 0 var(--nz-space-4);
+    font: var(--nz-font-label-m-strong);
+  }
+  .nz-docs-elevation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
+    gap: var(--nz-space-6);
+  }
+  .nz-docs-elevation-card {
+    display: grid;
+    place-items: center;
+    block-size: 5rem;
+    border-radius: var(--nz-radius-md);
+    background: var(--nz-bg-surface-raised);
+    font: var(--nz-font-body-s);
+  }
+
+  .nz-docs-curve line {
+    stroke: var(--nz-border-default);
+    stroke-dasharray: 2 3;
+  }
+  .nz-docs-curve path {
+    fill: none;
+    stroke: var(--nz-icon-brand);
+    stroke-width: 2;
+  }
+
+  .nz-docs-scopes {
+    display: grid;
+    gap: var(--nz-space-4);
+    margin-block: var(--nz-space-6);
+    padding: var(--nz-space-6);
+    border-radius: var(--nz-radius-lg);
+    background: var(--nz-bg-canvas);
+    color: var(--nz-text-primary);
+  }
+  .nz-docs-scopes-inner {
+    display: grid;
+    gap: var(--nz-space-4);
+    padding: var(--nz-space-6);
+    border-radius: var(--nz-radius-lg);
+    background: var(--nz-bg-canvas);
+    color: var(--nz-text-primary);
+  }
+
+  /* Home */
+  .nz-home {
+    display: grid;
+    gap: var(--nz-space-12);
+    inline-size: 100%;
+    max-inline-size: 72rem;
+    margin-inline: auto;
+    padding: var(--nz-space-16) var(--nz-space-6) var(--nz-space-24);
+  }
+  .nz-not-found {
+    align-content: center;
+    min-block-size: 70vh;
+  }
+  .nz-home-hero {
+    display: grid;
+    gap: var(--nz-space-4);
+    max-inline-size: 44rem;
+  }
+  .nz-home-hero h1 {
+    margin: 0;
+    font: var(--nz-font-display-l);
+    letter-spacing: var(--nz-tracking-display-l);
+    color: var(--nz-text-primary);
+  }
+  .nz-home-eyebrow {
+    margin: 0;
+    font: var(--nz-font-label-m);
+    color: var(--nz-text-brand);
+  }
+  .nz-home-lede {
+    margin: 0;
+    font: var(--nz-font-body-l);
+    color: var(--nz-text-secondary);
+  }
+  .nz-home-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--nz-space-3);
+    margin-block-start: var(--nz-space-2);
+  }
+  .nz-home-cta,
+  .nz-home-link {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--nz-size-control-lg);
+    padding-inline: var(--nz-space-5);
+    border-radius: var(--nz-radius-full);
+    font: var(--nz-font-label-l);
+  }
+  .nz-home-cta {
+    background: var(--nz-bg-brand);
+    color: var(--nz-text-on-brand);
+  }
+  .nz-home-cta:hover {
+    background: var(--nz-bg-brand-hover);
+  }
+  .nz-home-link {
+    box-shadow: inset 0 0 0 1px var(--nz-border-strong);
+    color: var(--nz-text-primary);
+  }
+  .nz-home-link:hover {
+    background: var(--nz-bg-hover);
+  }
+  .nz-home-cta:focus-visible,
+  .nz-home-link:focus-visible {
+    outline: var(--nz-border-width-focus) solid var(--nz-border-focus);
+    outline-offset: 2px;
+  }
+  .nz-home-composition {
+    display: grid;
+    gap: var(--nz-space-6);
+    padding: var(--nz-space-6);
+    border-radius: var(--nz-radius-2xl);
+    background: var(--nz-bg-subtle);
+    box-shadow: inset 0 0 0 1px var(--nz-border-subtle);
+  }
+  @media (width >= 48rem) {
+    .nz-home-composition {
+      grid-template-columns: 3fr 2fr;
+      padding: var(--nz-space-10);
+    }
+  }
+  .nz-home-note {
+    margin: var(--nz-space-3) 0 0;
+    font: var(--nz-font-body-s);
+    color: var(--nz-text-tertiary);
+  }
+  .nz-home-grid h2,
+  .nz-home-install h2 {
+    margin: 0 0 var(--nz-space-6);
+    font: var(--nz-font-heading-h2);
+    letter-spacing: var(--nz-tracking-heading-h2);
+  }
+  .nz-home-grid ul {
+    display: grid;
+    gap: var(--nz-space-6);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  @media (width >= 48rem) {
+    .nz-home-grid ul {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  .nz-home-grid h3 {
+    margin: 0 0 var(--nz-space-2);
+    font: var(--nz-font-heading-h4);
+  }
+  .nz-home-grid p,
+  .nz-home-install p {
+    margin: 0;
+    font: var(--nz-font-body-m);
+    color: var(--nz-text-secondary);
+  }
+  .nz-home-install {
+    display: grid;
+    gap: var(--nz-space-3);
+    max-inline-size: 44rem;
+  }
+}
+
+/* Unlayered from here: these rules restyle elements that Fumadocs styles with Tailwind utilities,
+   and unlayered CSS beats every layer. */
+
+/* Nizivo's type scale on the docs pages, in place of Fumadocs' prose scale (a 28 px title). */
+#nd-page > h1 {
+  font: var(--nz-font-heading-h1);
+  letter-spacing: var(--nz-tracking-heading-h1);
+}
+#nd-page > h1 + p {
+  font: var(--nz-font-body-l);
+}
+.prose :where(h2):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+  font: var(--nz-font-heading-h2);
+  letter-spacing: var(--nz-tracking-heading-h2);
+}
+.prose :where(h3):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+  font: var(--nz-font-heading-h3);
+  letter-spacing: var(--nz-tracking-heading-h3);
+}
+.prose :where(h4):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+  font: var(--nz-font-heading-h4);
+  letter-spacing: var(--nz-tracking-heading-h4);
+}
+
+/* An example's code block continues its preview: square top corners, the preview's radius below. */
+.nz-docs-preview + figure.nz-docs-example-code {
+  margin-block-start: 0;
+  border-start-start-radius: 0;
+  border-start-end-radius: 0;
+  border-end-start-radius: var(--nz-radius-lg);
+  border-end-end-radius: var(--nz-radius-lg);
+}
+
+/* Skip-link targets take focus so the next Tab starts inside them; they are not controls. */
+#nd-page:focus,
+.nz-home:focus {
+  outline: none;
+}
+
+/* Fumadocs' drawer, dialogs, popovers and theme cross-fade animate whatever the reader asks for;
+   Nizivo's components already drop their motion under reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  [class*='animate-fd-'],
+  [class*='transition-'],
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: 0.01ms;
+    animation-iteration-count: 1;
+    transition-duration: 0.01ms;
+  }
+}
+
+/* Forced colours drop the active sidebar item's tint; an outline keeps it visible. */
+@media (forced-colors: active) {
+  :where(#nd-sidebar, #nd-sidebar-mobile, #nd-toc) a[data-active='true'] {
+    outline: 1px solid CanvasText;
+    outline-offset: -1px;
+  }
+}

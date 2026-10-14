@@ -1,0 +1,10 @@
+---
+title: Alert
+description: A tinted message with a title, an optional action and an optional dismiss button. Static and server-rendered unless you add the dismiss leaf.
+keyboard:
+  - keys: Tab
+    action: Moves focus to the action, then to the dismiss button, in that order. The action is whatever you pass (the examples pass a Button); the dismiss control is a native button.
+  - keys: Enter, Space
+    action: Activates the focused button. The dismiss button calls onDismiss; the caller stops rendering the alert.
+keyboardSource: The Alert shell (`alert.tsx`) renders the action before the dismiss slot; `AlertDismiss` is a native `<button type="button">` (`alert-dismiss.client.tsx`), and the Next fixture checks that it takes a click.
+---

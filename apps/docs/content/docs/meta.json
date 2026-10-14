@@ -1,0 +1,16 @@
+{
+  "title": "Nizivo UI",
+  "pages": [
+    "index",
+    "---Getting started---",
+    "...getting-started",
+    "---Foundations---",
+    "...foundations",
+    "---Components---",
+    "...components",
+    "---Utilities---",
+    "...utilities",
+    "---Project---",
+    "deviations"
+  ]
+}

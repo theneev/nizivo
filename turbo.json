@@ -42,6 +42,42 @@
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/contracts/api/**"],
       "outputs": []
+    },
+    "@nizivo/docs#build": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "!RESULTS.md",
+        "!scripts/smoke.ts",
+        "!scripts/serve.ts",
+        "$TURBO_ROOT$/contracts/api/**",
+        "$TURBO_ROOT$/packages/react/package.json",
+        "$TURBO_ROOT$/packages/react/src/**/*.example.tsx",
+        "$TURBO_ROOT$/packages/react/src/**/component.json",
+        "$TURBO_ROOT$/packages/tokens/src/code-owned/**",
+        "$TURBO_ROOT$/design/component-map.json",
+        "$TURBO_ROOT$/docs/ARCHITECTURE.md",
+        "$TURBO_ROOT$/docs/figma/11-w2-server-safe-components.md",
+        "$TURBO_ROOT$/fixtures/floor-lane/RESULTS.md"
+      ],
+      "outputs": ["out/**"]
+    },
+    "@nizivo/docs#typecheck": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "!RESULTS.md",
+        "$TURBO_ROOT$/packages/react/package.json",
+        "$TURBO_ROOT$/packages/react/src/**/*.example.tsx",
+        "$TURBO_ROOT$/packages/react/src/**/component.json"
+      ],
+      "outputs": [
+        ".source/**",
+        ".generated/**",
+        "app/docs/?generated?/**",
+        ".next/types/**",
+        "next-env.d.ts"
+      ]
     }
   }
 }

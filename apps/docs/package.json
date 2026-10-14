@@ -5,6 +5,13 @@
   "description": "The Nizivo UI docs site: Fumadocs on Next.js, built as a static export (ARCHITECTURE.md §18.2)",
   "license": "Apache-2.0",
   "type": "module",
+  "scripts": {
+    "build": "node scripts/generate.ts && fumadocs-mdx && node scripts/next.ts build",
+    "dev": "node scripts/generate.ts && fumadocs-mdx && node scripts/next.ts dev",
+    "typecheck": "node scripts/generate.ts && fumadocs-mdx && node scripts/next.ts typegen && tsc --noEmit -p .",
+    "serve": "node scripts/serve.ts",
+    "smoke": "node scripts/smoke.ts"
+  },
   "dependencies": {
     "@nizivo/react": "workspace:*",
     "@nizivo/tokens": "workspace:*",
@@ -30,5 +37,12 @@
     "postcss": "catalog:",
     "tailwindcss": "catalog:",
     "typescript": "catalog:"
-  }
+  },
+  "browserslist": [
+    "chrome >= 123",
+    "edge >= 123",
+    "firefox >= 129",
+    "safari >= 17.5",
+    "ios_saf >= 17.5"
+  ]
 }

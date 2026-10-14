@@ -1,0 +1,63 @@
+---
+title: Introduction
+description: An accessible, server-first React design system, built from the Nizivo Figma library.
+---
+
+Nizivo UI turns the Nizivo Figma library into framework-neutral design tokens and pairs them with
+React components that render on the server first. It is open source (Apache-2.0) and built by Neev
+Technologies.
+
+<Callout type="warn" title="Pre-alpha">
+  Nothing is published to npm yet. The first release, 0.1.0, goes to the `next` dist-tag. Pages here
+  document the code on `main`; dark mode ships as a preview until design reviews it.
+</Callout>
+
+## Packages
+
+| Package          | What it is                                                                                         |
+| ---------------- | -------------------------------------------------------------------------------------------------- |
+| `@nizivo/tokens` | Design tokens as CSS custom properties, theme scopes, motion, and a Tailwind CSS v4 adapter        |
+| `@nizivo/react`  | React components and their static CSS: Server Components by default, `'use client'` only on leaves |
+
+Both are ESM-only, need React `^19.2.0` (for `@nizivo/react`) and Node `>=22.12`, and release
+together at the same version.
+
+## Principles
+
+- **Lightweight.** You pay per interaction. Server-safe components ship no client JavaScript; engine
+  code appears only on pages that render an engine widget such as Select. Budgets start from measurements.
+- **Server-first.** No provider is required. `'use client'` sits only on interactive leaf modules, and
+  compound parts work from Server Components through a namespace (`Card.Root`) or flat names (`CardRoot`).
+- **Accessible by default.** Native elements first, WAI-ARIA patterns through one engine family
+  (React Aria) where the platform falls short. The focus outline, touch targets and forced-colours rules
+  live in their own CSS layer, so they survive a restyle; where a component's own CSS paints a state
+  with a background, its stylesheet repeats the forced-colours rule.
+- **Token-driven.** Component CSS reads only public `--nz-*` tokens. Light and dark come from one
+  `light-dark()` value per colour, so any subtree can switch theme with one attribute.
+- **Plug in, plug out.** Every seam is a file plus a check: the behaviour engine sits behind an adapter,
+  styles are plain CSS in a fixed layer order, and every part carries a stable class and `data-slot`.
+
+## Where to start
+
+<Cards>
+  <Card
+    title="Next.js"
+    href="/docs/getting-started/next/"
+    description="Install, the CSS import rule and theme setup for the App Router."
+  />
+  <Card
+    title="Tailwind CSS"
+    href="/docs/getting-started/tailwind/"
+    description="Use Nizivo inside Tailwind v4, with token utilities."
+  />
+  <Card
+    title="Colour"
+    href="/docs/foundations/colour/"
+    description="Every semantic colour in light and dark."
+  />
+  <Card
+    title="Components"
+    href="/docs/components/"
+    description="Live examples, props, data attributes and CSS hooks."
+  />
+</Cards>

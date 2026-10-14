@@ -1,0 +1,39 @@
+---
+title: Vite
+description: Set up Nizivo in a Vite single-page app. Draft.
+---
+
+<Callout type="warn" title="Draft: not yet verified by a fixture (W5)">
+  The Vite fixture lands in week 5. Until then this page follows the plan (ARCHITECTURE.md §11.1)
+  and has not been run end to end.
+</Callout>
+
+## Install
+
+```sh
+pnpm add @nizivo/react@next @nizivo/tokens@next
+```
+
+## Import the CSS once
+
+In `main.tsx`, before rendering, import the tokens, the accessibility floor and the stylesheets of the
+components you use:
+
+```tsx title="src/main.tsx"
+import '@nizivo/tokens/tokens.css';
+import '@nizivo/react/css/base.css';
+import '@nizivo/react/css/button.css';
+```
+
+## Theme
+
+Set the theme on `<html>` in `index.html`, for example `<html lang="en" data-nz-theme="system">`. A
+user switch must set the attribute before first paint, from an inline script in `<head>`.
+
+## Known warnings
+
+Rolldown may print `MODULE_LEVEL_DIRECTIVE` warnings for the `'use client'` directives in
+`@nizivo/react`. In a single-page app they are harmless.
+
+Vite with SSR needs no `ssr.noExternal` entry: Nizivo's JavaScript never imports CSS, so Node can load
+every module as is.

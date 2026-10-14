@@ -1,0 +1,29 @@
+---
+title: Deviations from Figma
+description: Where the code differs from the Figma file, and why. Generated from the files that own each difference.
+---
+
+Nizivo follows the Figma library, except where a value fails WCAG 2.2 AA, where Figma has no value yet,
+or where a browser on the support floor cannot do what the design asks. Every difference is listed here,
+read at build time from the file that owns it; none of it is typed by hand.
+
+## Contrast overrides
+
+Figma variables that the code points somewhere else, mostly to reach 4.5:1 for text and 3:1 for
+non-text. The contrast matrix in `packages/tokens/CONTRAST.md` checks every pair with these in place.
+
+<OverridesTable />
+
+## Proposals
+
+<ProposalsTable />
+
+## Builder-chosen values
+
+<BuilderChoices />
+
+## Browser degradations
+
+Found on the browser floor (Chrome/Edge 123, Firefox 129, Safari/iOS 17.5).
+
+<Degradations />

@@ -1,0 +1,164 @@
+---
+title: Next.js
+description: Set up Nizivo in a Next.js 16 App Router project.
+---
+
+Everything on this page is checked by the Next.js fixture (`fixtures/next`, Next 16.4.0 with
+Turbopack, webpack and `next dev`) on the packed packages, except where a note says otherwise. This
+docs site is itself a Next.js 16.4 App Router app that uses the same setup.
+
+## Install
+
+<Callout type="warn">
+  Not on npm yet: these commands work once 0.1.0 is published to the `next` dist-tag.
+</Callout>
+
+```sh
+pnpm add @nizivo/react@next @nizivo/tokens@next
+```
+
+`@nizivo/react` needs `react` and `react-dom` `^19.2.0`. Install `@nizivo/tokens` as a direct dependency
+too: your CSS imports its `tokens.css`.
+
+## Import the CSS once
+
+Nizivo's JavaScript never imports CSS. Import the stylesheets once, in the root layout, in this order:
+the tokens, the accessibility floor (`base.css`), then one file per component you use.
+
+```tsx title="app/layout.tsx"
+import '@nizivo/tokens/tokens.css';
+import '@nizivo/react/css/base.css';
+import '@nizivo/react/css/button.css';
+import '@nizivo/react/css/select.css';
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en" data-nz-theme="system">
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+Every stylesheet starts with the same `@layer` statement, so the order in which the bundler emits the
+files never changes which rule wins. Each component page lists its stylesheet under **Import**. A single
+`@nizivo/react/styles.css` with every component is planned; it is not in the package yet.
+
+## Keep `light-dark()` intact
+
+Nizivo's colours are `light-dark()` values. Next 16.4's default bundler, Turbopack, lowers
+`light-dark()` for browsers older than its default targets, and the lowered form cannot follow a nested
+`data-nz-theme` scope or an inverse surface (a `tone="inverse"` Card, a Tooltip). Set your browser
+targets to Nizivo's support floor in `package.json`:
+
+```json title="package.json"
+{
+  "browserslist": [
+    "chrome >= 123",
+    "edge >= 123",
+    "firefox >= 129",
+    "safari >= 17.5",
+    "ios_saf >= 17.5"
+  ]
+}
+```
+
+<Callout type="info">
+  Found while building this site with Next 16.4.0, not by the fixture: without these targets,
+  Turbopack rewrote all 68 `light-dark()` values in `tokens.css` into a fallback that ignores nested
+  scopes; with them, it kept all 68. A webpack build (`next build --webpack`) kept them either way.
+</Callout>
+
+## Theme
+
+Nizivo is light unless you opt in. Set `data-nz-theme` on `<html>`:
+
+- `system` follows the operating system, with no script and no flash.
+- `light` or `dark` forces one theme.
+
+Any element with `data-nz-theme` starts a nested scope. See [Theming](/docs/foundations/theming/).
+
+A theme switch that remembers the user's choice must set the attribute before first paint. Nizivo's
+own `ThemeScript` for this is planned and is not in the package yet. Until then, set the attribute from
+your own inline script in `<head>`, and put `suppressHydrationWarning` on `<html>`, because the script
+changes an attribute React rendered:
+
+```tsx title="app/layout.tsx"
+const theme = `(function(){var t;try{t=localStorage.getItem('theme')}catch(e){}
+if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+document.documentElement.setAttribute('data-nz-theme',t)})()`;
+
+<html lang="en" suppressHydrationWarning>
+  <head>
+    <script dangerouslySetInnerHTML={{ __html: theme }} />
+  </head>
+```
+
+A library such as `next-themes` works for the switch itself (`attribute="data-nz-theme"`), but it
+renders its script inside `<body>`, which is too late to rule out a flash. This site pairs it with a
+`<head>` script like the one above.
+
+<Callout type="info">
+  The fixture does not check a theme script yet. This site runs the same logic, and its smoke test
+  checks that `data-nz-theme` is set before `<body>` exists, for the OS preference and for a stored
+  choice.
+</Callout>
+
+## Import from subpaths
+
+```tsx title="app/orders/page.tsx"
+import { Button } from '@nizivo/react/button';
+import { Select } from '@nizivo/react/select';
+
+export default function Page() {
+  return (
+    <Select.Root defaultValue="30d" name="period" aria-label="Period">
+      <Select.Trigger />
+      <Select.Popup>
+        <Select.Item value="7d">Last 7 days</Select.Item>
+        <Select.Item value="30d">Last 30 days</Select.Item>
+      </Select.Popup>
+    </Select.Root>
+  );
+}
+```
+
+- Pages are Server Components. Server-safe components (Button, Card, Text and the rest of the week 2
+  set) ship **no** client JavaScript: the fixture's server-only pages load no `@nizivo` client module in
+  any build.
+- Compound components work from Server Components through the namespace (`Select.Root`) and the flat
+  names (`SelectRoot`).
+- Pass `render` as an element from server code (`render={<Button variant="tertiary" />}`). The function
+  form only works in client code.
+
+### The barrel and webpack
+
+`import { Button } from '@nizivo/react'` works too. Under `next build --webpack`, a page that renders
+one client part through the barrel also gets every other client module the barrel reaches. Turbopack
+does not do this, and neither does any subpath import. If you build with webpack and prefer the barrel,
+add:
+
+```js title="next.config.mjs"
+export default {
+  experimental: { optimizePackageImports: ['@nizivo/react'] },
+};
+```
+
+## Fonts
+
+The library ships no font files. The tokens read `var(--font-geist-sans, "Geist")` and
+`var(--font-geist-mono, "Geist Mono")`, then fall back to the system stack. With the `geist` package
+(OFL-1.1), set the variables through `next/font`:
+
+```tsx title="app/layout.tsx"
+import { GeistMono } from 'geist/font/mono';
+import { GeistSans } from 'geist/font/sans';
+
+<html className={`${GeistSans.variable} ${GeistMono.variable}`} data-nz-theme="system">
+```
+
+The fonts load from your own build; nothing is fetched from a font service.
+
+## Not covered by the fixture yet
+
+Pages Router, `cacheComponents` with `<Activity>`, CSP nonces and `next@canary` are not checked yet.

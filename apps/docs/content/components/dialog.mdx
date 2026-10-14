@@ -1,0 +1,13 @@
+---
+title: Dialog
+description: A modal dialog or alert dialog with a trigger, title, description, body, footer and close parts. Focus moves in on open and returns to the trigger on close.
+apg: https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/
+keyboard:
+  - keys: Enter, Space
+    action: On the trigger (a button), opens the dialog and moves focus into it.
+  - keys: Tab, Shift+Tab
+    action: Moves focus between the focusable elements inside the dialog; focus stays inside while it is open.
+  - keys: Escape
+    action: Closes the dialog (also an alertdialog) and returns focus to the trigger.
+keyboardSource: react-aria-components 1.22.1 `ModalOverlay` and `Modal` (react-aria 3.53.1 `useModalOverlay`, which contains focus) through `_engines/react-aria/dialog.client.tsx`. apps/docs/scripts/smoke.ts checks opening with Enter, Tab staying inside, and Escape closing with focus back on the trigger; the Next fixture checks Escape and the Close part. An alertdialog does not close on an outside press.
+---

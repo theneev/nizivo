@@ -1,0 +1,10 @@
+---
+title: Button
+description: A native button in five variants and three sizes, with a pending state that keeps focus. Compose it into triggers and links through render.
+keyboard:
+  - keys: Tab
+    action: Moves focus to the button. A pending button stays focusable (aria-disabled); a disabled one does not.
+  - keys: Enter, Space
+    action: Activates the button. A pending button swallows the activation.
+keyboardSource: a native `<button>` (`button.tsx`); with `render={<a />}` it is a link and only Enter activates it.
+---

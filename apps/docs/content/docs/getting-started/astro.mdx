@@ -1,0 +1,41 @@
+---
+title: Astro
+description: Use Nizivo in Astro with @astrojs/react. Draft.
+---
+
+<Callout type="warn" title="Draft: not yet verified by a fixture (W5)">
+  The Astro fixture lands in week 5. Until then this page follows the plan (ARCHITECTURE.md §11.1)
+  and has not been run end to end.
+</Callout>
+
+## Install
+
+```sh
+pnpm add @nizivo/react@next @nizivo/tokens@next
+```
+
+Add React to Astro with `@astrojs/react`.
+
+## Import the CSS once
+
+In your base layout, import the tokens, the accessibility floor and the component stylesheets. Keep the
+`.css` extension:
+
+```astro title="src/layouts/Base.astro"
+---
+import '@nizivo/tokens/tokens.css';
+import '@nizivo/react/css/base.css';
+import '@nizivo/react/css/card.css';
+---
+<html lang="en" data-nz-theme="system">
+  <body><slot /></body>
+</html>
+```
+
+## Islands
+
+- Components rendered without a `client:*` directive are static HTML and ship no JavaScript.
+- Children passed from an `.astro` file arrive as static HTML. Compose a compound component (a
+  `Select.Root` with its parts) inside one `.tsx` island.
+- Props to a `client:*` island must be serialisable: no functions.
+- Context does not cross islands.

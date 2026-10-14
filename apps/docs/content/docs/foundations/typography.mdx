@@ -1,0 +1,28 @@
+---
+title: Typography
+description: Text styles as single `font` shorthands, with their tracking.
+---
+
+Each text style is one `font` shorthand token, plus a letter-spacing token where the style has one:
+
+```css
+.price {
+  font: var(--nz-font-numeric-l);
+  letter-spacing: var(--nz-tracking-numeric-l);
+  font-variant-numeric: tabular-nums;
+}
+```
+
+The parts are tokens too (`--nz-font-body-m-font-size`, `-font-weight`, `-line-height`,
+`-font-family`). Prefer the shorthand.
+
+## Text styles
+
+<TypeScale />
+
+## Font families
+
+The library ships no font files. The family tokens read `--font-geist-sans` and `--font-geist-mono`
+when an app sets them (this site does, through `next/font`), and fall back to the system stack.
+
+<FontFamilies />

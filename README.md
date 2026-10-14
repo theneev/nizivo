@@ -17,7 +17,7 @@ Nizivo is an open-source React design system by Neev Technologies. It turns the 
 ## Documentation
 
 - The plan and every design decision: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
-- The public docs site will live at [nizivo.neevtechnologies.in](https://nizivo.neevtechnologies.in).
+- The public docs site will live at [nizivo.neevtechnologies.in](https://nizivo.neevtechnologies.in). Its source is [apps/docs](apps/docs): Fumadocs on Next.js, built as a static export. It is not hosted yet; `pnpm docs:check` builds and checks it locally ([apps/docs/RESULTS.md](apps/docs/RESULTS.md)).
 
 ## Contributing
 

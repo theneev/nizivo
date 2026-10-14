@@ -18,7 +18,8 @@
     "test:dist": "pnpm --filter @nizivo/react exec vitest run --config test/built/vitest.config.ts",
     "check:a11y": "node packages/tokens/scripts/a11y.ts --check",
     "check:release": "node packages/tooling/release/check.ts",
-    "check": "pnpm install --frozen-lockfile && pnpm typecheck && pnpm lint && pnpm gen:check && pnpm test && pnpm build && pnpm check:a11y && pnpm test:dist && pnpm check:release",
+    "docs:check": "turbo run build --filter=@nizivo/docs && pnpm --filter @nizivo/docs smoke",
+    "check": "pnpm install --frozen-lockfile && pnpm typecheck && pnpm lint && pnpm gen:check && pnpm test && pnpm build && pnpm check:a11y && pnpm test:dist && pnpm check:release && pnpm docs:check",
     "format": "oxfmt",
     "changeset": "changeset"
   },

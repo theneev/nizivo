@@ -1,0 +1,71 @@
+---
+title: Tailwind CSS
+description: Use Nizivo inside Tailwind CSS v4, with utilities for the tokens.
+---
+
+Nizivo's CSS is plain CSS in fixed `@layer` blocks, so it works with or without Tailwind. With Tailwind CSS
+v4, import it inside Tailwind's `components` layer and add the token adapter, which turns the tokens
+into utilities such as `bg-nz-bg-surface` and `rounded-nz-lg`.
+
+This site is built that way, with Tailwind CSS 4.3.3 and `@tailwindcss/postcss`, so everything on this
+page is checked by its build.
+
+## Set up the CSS
+
+```css title="app/globals.css"
+@import 'tailwindcss';
+
+/* Nizivo inside Tailwind's components layer: above preflight, below utilities. */
+@import '@nizivo/tokens/tokens.css' layer(components);
+@import '@nizivo/react/css/base.css' layer(components);
+@import '@nizivo/react/css/button.css' layer(components);
+@import '@nizivo/react/css/select.css' layer(components);
+
+/* The token adapter: theme variables for the nz utilities. */
+@import '@nizivo/tokens/tailwind.css';
+```
+
+- `layer(components)` nests all seven `nz.*` layers inside Tailwind's `components` layer. Tailwind's
+  preflight cannot override Nizivo, and any Tailwind utility on a Nizivo component wins over the
+  component's own styles, with no `!important`.
+- Import one stylesheet per component you use, after the tokens and `base.css`, as on
+  [Next.js](/docs/getting-started/next/). A single `@nizivo/react/styles.css` with every component is
+  planned; it is not in the package yet.
+- Keep `light-dark()` intact: with Next.js and Turbopack, set the browser targets from the
+  [Next.js page](/docs/getting-started/next/#keep-light-dark-intact).
+
+## The utilities
+
+`@nizivo/tokens/tailwind.css` is one `@theme inline` block. Every utility points at a semantic token
+with `var()`, never at a fixed colour, so it follows the theme of the element it is used in. The `nz`
+namespace keeps the utilities apart from your own palette: `bg-nz-bg-surface`, not `bg-surface`.
+
+<TailwindMap />
+
+Both samples below use only these utilities, plus `p-(--nz-space-4)` and
+`[font:var(--nz-font-label-m-strong)]` for the unmapped tokens (see below). The second sits in a `data-nz-theme="dark"` scope, and
+the same classes resolve to dark values there. The grid splits into two columns at `nz-sm`:
+
+<TailwindSample />
+
+```tsx
+<div className="grid gap-4 nz-sm:grid-cols-2">
+  <div className="rounded-nz-lg border border-nz-border-default bg-nz-bg-surface p-(--nz-space-4) text-nz-text-primary shadow-nz-2">
+    …
+  </div>
+  <div
+    data-nz-theme="dark"
+    className="rounded-nz-lg border border-nz-border-default bg-nz-bg-surface …"
+  >
+    …
+  </div>
+</div>
+```
+
+## Not mapped yet
+
+Spacing, typography, z-index and durations have no utilities. Use Tailwind's own scale, or the tokens
+directly, as the samples above do: `p-(--nz-space-4)` or `[font:var(--nz-font-label-m-strong)]`. Whether the adapter should
+map them is open.
+
+`nz-lg` (80rem) is provisional until design confirms the threshold, so it can change in any release.

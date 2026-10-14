@@ -1,0 +1,23 @@
+---
+title: Select
+description: A single-choice list box with a button trigger, groups and separators, backed by a hidden native select so forms submit and reset as usual.
+apg: https://www.w3.org/WAI/ARIA/apg/patterns/listbox/
+keyboard:
+  - keys: Enter, Space, ArrowDown
+    action: On the trigger, opens the list and focuses the selected option, else the first.
+  - keys: ArrowUp
+    action: On the trigger, opens the list and focuses the selected option, else the last.
+  - keys: ArrowLeft, ArrowRight
+    action: On the closed trigger, selects the previous or next option without opening the list.
+  - keys: Type a character
+    action: Selects (on the trigger) or focuses (in the list) the next option whose label starts with what you typed.
+  - keys: ArrowDown, ArrowUp
+    action: In the open list, moves focus to the next or previous option, skipping disabled ones.
+  - keys: Home, End, PageUp, PageDown
+    action: In the open list, moves focus to the first or last option, or a page at a time.
+  - keys: Enter, Space
+    action: In the open list, selects the focused option and closes the list.
+  - keys: Escape
+    action: Closes the list without changing the selection and returns focus to the trigger.
+keyboardSource: react-aria-components 1.22.1 `Select` (react-aria 3.53.1 `useSelect`, `useMenuTrigger` and `useSelectableCollection`) through `_engines/react-aria/select.client.tsx`. apps/docs/scripts/smoke.ts checks ArrowDown opening on the selected option, ArrowDown and Enter choosing, Escape closing with focus back on the trigger, ArrowRight and ArrowLeft on the closed trigger, and typing on the trigger.
+---
