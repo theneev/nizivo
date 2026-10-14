@@ -1,9 +1,9 @@
 # Grove UI — Figma token & style snapshot (read 2026-10-14)
 
-File: https://www.figma.com/design/BIzJFf1wm8KP0YG2AVI1tP/Grove-UI-Library
+File: https://www.figma.com/design/BIzJFf1wm8KP0YG2AVI1tP/Nizivo-UI-Library
 Product will ship as **Nizivo UI** (`@nizivo/*`); every `grove` prefix below must become configurable (e.g. `--nz-`).
 
-> **Since 2026-10-14 (after this read):** the collections and styles below are named `Nizivo …` and `Nizivo/…`, every WEB codeSyntax reads `var(--nz-…)`, and `Elevation/0 Flat` holds one invisible drop shadow (alpha 0, offset 0, radius 0, spread 0) instead of none. The file title still says "Grove UI Library" until the maintainer renames it. See `packages/tokens/figma/codesyntax-rewrite.plan.md` and `packages/tokens/figma/DRY-RUN.md` (open item 9).
+> **Since 2026-10-14 (after this read):** the collections and styles below are named `Nizivo …` and `Nizivo/…`, every WEB codeSyntax reads `var(--nz-…)`, and `Elevation/0 Flat` holds one invisible drop shadow (alpha 0, offset 0, radius 0, spread 0) instead of none. The maintainer has since renamed the file title to "Nizivo UI Library" (reported 2026-10-15). See `packages/tokens/figma/codesyntax-rewrite.plan.md` and `packages/tokens/figma/DRY-RUN.md` (open item 9).
 
 ## File hygiene facts
 - Pages: Cover, 01 Foundations (7275:11884), 02 Actions & Forms (7275:11238), 03 Data Visualization (7275:13284), 04 Dashboard Widgets (7275:13737), 05 Commerce (7275:13983), 06 Navigation (7275:14694), 07 Feedback & Overlays (7275:15065), 08 Overview Dashboard (7275:15335 — sections: Overview Dashboard 7275:15336, Patterns 7275:15756, Responsive 7275:18740), 09 3D, Shader & Motion Lab (7275:19608, section labelled "11"), 10 Instagram Storefront (7275:19790, section labelled "12").

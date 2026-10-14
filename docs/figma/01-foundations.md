@@ -1,6 +1,6 @@
 # Grove · 01 Foundations — extraction & architecture analysis
 
-- File: `BIzJFf1wm8KP0YG2AVI1tP` ("Grove UI Library"), page **Grove · 01 Foundations** `7275:11884`, single section `7275:11885` (6000×4000).
+- File: `BIzJFf1wm8KP0YG2AVI1tP` ("Grove UI Library" when read; now "Nizivo UI Library"), page **Grove · 01 Foundations** `7275:11884`, single section `7275:11885` (6000×4000).
 - Ships as **Nizivo UI** (`@nizivo/*`). Every `grove` prefix / "Grove" brand string on this page is demo branding and must become configurable.
 - Read 2026-10-14, read-only. 12 Figma tool calls in total: 9 `use_figma` (6 returned data; 3 were rejected for exceeding the 20 KB return limit and were re-run narrower) + 3 `get_screenshot`. No rate-limit errors. Token names refer to `00-tokens-and-styles.md`.
 - Screenshots: `scratchpad/figma/shots/01-foundations-full.png` (whole section), `01-foundations-color.png`, `01-foundations-motion.png`.

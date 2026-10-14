@@ -1,6 +1,6 @@
 # Grove · 07 Feedback & Overlays — extraction + architecture analysis
 
-- Figma file: `BIzJFf1wm8KP0YG2AVI1tP` (Grove UI Library; ships as **Nizivo UI**, `@nizivo/*`)
+- Figma file: `BIzJFf1wm8KP0YG2AVI1tP` (Grove UI Library when read, now Nizivo UI Library; ships as **Nizivo UI**, `@nizivo/*`)
 - Page: **Grove · 07 Feedback & Overlays** `7275:15065`. Single SECTION `7275:15066` (4000 x 2299).
 - Read: 2026-10-14, strictly read-only (use_figma scripts only `return` data).
 - Screenshots: `scratchpad/figma/shots/07-feedback-overlays-section.png` (3000 px), `07-toast-set.png`, `07-modal-set.png`.

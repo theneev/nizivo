@@ -1,7 +1,7 @@
 # Nizivo UI — Component Inventory
 
 Status: Draft v0.1 · 2026-10-14
-Scope: every component in the Figma file "Grove UI Library", and every component its compositions imply, mapped to a Nizivo export, tier, RSC class and roadmap phase.
+Scope: every component in the Figma file "Nizivo UI Library" (titled "Grove UI Library" until 2026-10-15), and every component its compositions imply, mapped to a Nizivo export, tier, RSC class and roadmap phase.
 
 This is the bridge between Figma and the code backlog. It uses the package names, tiers, RSC labels, naming rules and phases of [ARCHITECTURE.md](ARCHITECTURE.md), whose [§9.5](ARCHITECTURE.md#95-per-component-tier-table-core) points here for the full mapping. The design-side backlog for the same components (every missing state, token request and hygiene task) is [figma-handoff.md](figma-handoff.md). The JSON block in [§6](#6-machine-readable-seed-designcomponent-mapjson) seeds `design/component-map.json`.
 
@@ -41,7 +41,7 @@ Code props for components that ARCHITECTURE §10 does not sketch are **proposals
 
 ### 1.2 Figma IDs and ghost flags
 
-The file key is `BIzJFf1wm8KP0YG2AVI1tP`. To open a node, use `https://www.figma.com/design/BIzJFf1wm8KP0YG2AVI1tP/Grove-UI-Library?node-id=7275-11244` with the ID's `:` replaced by `-`. Ghost IDs sit on no page, so a link cannot land on them: select an instance that uses one and choose *Go to main component*. Variable collections and styles cited with a `Grove` prefix (`Grove Color`, `Grove/Label/M`) are named with `Nizivo` since 2026-10-14 (ARCHITECTURE §23.3, M10); only the file title and the URL slug still say Grove.
+The file key is `BIzJFf1wm8KP0YG2AVI1tP`. To open a node, use `https://www.figma.com/design/BIzJFf1wm8KP0YG2AVI1tP/Nizivo-UI-Library?node-id=7275-11244` with the ID's `:` replaced by `-`. Ghost IDs sit on no page, so a link cannot land on them: select an instance that uses one and choose *Go to main component*. Variable collections and styles cited with a `Grove` prefix (`Grove Color`, `Grove/Label/M`) are named with `Nizivo` since 2026-10-14 (ARCHITECTURE §23.3, M10), and the maintainer renamed the file title to "Nizivo UI Library" (reported 2026-10-15, M16). Links use the `Nizivo-UI-Library` slug; the file key is unchanged, so old `Grove-UI-Library` links still open it.
 
 **Why most rows have two IDs.** Most components exist twice. The set on the page (`7275:*`) is a copy. The master that the instances actually use (`744:*`, `745:*`, `755:*`, `772:*` and others) sits on no page: the Plugin API reports `parent: null, removed: false`. Edits to the visible set do not reach the 707 instances on page 08 or the 373 on page 10 ([figma-handoff.md §2.4](figma-handoff.md#24-ghost-and-duplicate-masters)). The component map therefore keys **both** IDs until design relinks the ghosts (critique [C25](research/00-critique.md), ARCHITECTURE [§20.2](ARCHITECTURE.md#202-component-map-instead-of-code-connect)). Relinking is not on the v0.1 critical path.
 
@@ -526,7 +526,7 @@ Build bottom-up. Each layer is a contract the next one reads (ARCHITECTURE [§4.
          @nizivo/icons generator (independent: core never imports it) ................. cut 5
                                │
  W5      Next 16.4 (Turbopack and webpack), Vite 8, Astro 7.3 fixtures on the packed packages
-         size-limit at measured + 10% · deviations page · in-repo visual regression · release.yml
+         size-limit at measured + 10% · deviations page · in-repo visual regression · local release script (M14)
  W6      hardening · design sign-off · publish 0.1.0 on `next`        (+ 2 weeks buffer)
 ```
 
@@ -575,7 +575,7 @@ Field rules:
 {
   "version": 1,
   "about": "Seed for design/component-map.json, from docs/component-inventory.md (Draft v0.1, 2026-10-14). Figma node ids to Nizivo exports. nz gen regenerates this file from component.json files once code exists.",
-  "figmaFile": {"key": "BIzJFf1wm8KP0YG2AVI1tP", "name": "Grove UI Library", "nodeUrl": "https://www.figma.com/design/BIzJFf1wm8KP0YG2AVI1tP/Grove-UI-Library?node-id={id, with : replaced by -}"},
+  "figmaFile": {"key": "BIzJFf1wm8KP0YG2AVI1tP", "name": "Nizivo UI Library", "nodeUrl": "https://www.figma.com/design/BIzJFf1wm8KP0YG2AVI1tP/Nizivo-UI-Library?node-id={id, with : replaced by -}"},
   "enums": {
     "ghostDiff": ["identical", "props-identical", "keys-match", "unverified", "ghost-only", "unknown", "none", null],
     "tier": ["T0", "T1", "T2", "combinations joined by +", null],

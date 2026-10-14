@@ -1,6 +1,6 @@
 # Grove · 02 Actions & Forms — extraction + architecture analysis
 
-- Figma file: `BIzJFf1wm8KP0YG2AVI1tP` ("Grove UI Library"), product ships as **Nizivo UI** (`@nizivo/*`).
+- Figma file: `BIzJFf1wm8KP0YG2AVI1tP` ("Grove UI Library" when read; now "Nizivo UI Library"), product ships as **Nizivo UI** (`@nizivo/*`).
 - Page: `Grove · 02 Actions & Forms` (page `7275:11238`), single SECTION `7275:11239` (3500 x 2011).
 - Read on 2026-10-14, read-only. 7 `use_figma` calls (2 of them exceeded the 20 KB return cap and were re-run split + diffed; no data lost) + 3 `get_screenshot` calls = 10 Figma calls. No 429s.
 - Screenshots (local):

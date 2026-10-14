@@ -1,6 +1,6 @@
 # Grove · 04 Dashboard Widgets: architecture extraction for Nizivo UI
 
-- File: `BIzJFf1wm8KP0YG2AVI1tP` ("Grove UI Library" → ships as **Nizivo UI**, `@nizivo/*`)
+- File: `BIzJFf1wm8KP0YG2AVI1tP` ("Grove UI Library" when read, now "Nizivo UI Library" → ships as **Nizivo UI**, `@nizivo/*`)
 - Page: **Grove · 04 Dashboard Widgets** `7275:13737`, Section `7275:13738` (4000×2330)
 - Read on 2026-10-14. Read-only extraction: 6 `use_figma` reads + 3 `get_screenshot`. Nothing in the file was changed.
 - Screenshots: `scratchpad/figma/shots/04-section.png` (3000 px), `04-kpi-tile.png`, `04-insight-card.png`

@@ -1,6 +1,6 @@
 # Grove · 03 Data Visualization — extraction & architecture analysis
 
-- File: `BIzJFf1wm8KP0YG2AVI1tP` ("Grove UI Library", ships as **Nizivo UI**, `@nizivo/*`)
+- File: `BIzJFf1wm8KP0YG2AVI1tP` ("Grove UI Library" when read, now "Nizivo UI Library"; ships as **Nizivo UI**, `@nizivo/*`)
 - Page: `Grove · 03 Data Visualization` **7275:13284**; single section **7275:13285** (4000×1974)
 - Read on 2026-10-14. All reads were read-only (`use_figma` returning data, plus `get_screenshot`). Nothing was changed in the file.
 - Token names follow the snapshot `00-tokens-and-styles.md`. CSS names are shown as `--grove-*` today. In code they become a configurable prefix (proposed: `--nz-*`).

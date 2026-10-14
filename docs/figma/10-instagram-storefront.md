@@ -1,6 +1,6 @@
 # Page 10 · Instagram Storefront: architecture analysis (Grove UI file, ships as Nizivo UI)
 
-- File: `BIzJFf1wm8KP0YG2AVI1tP` (Grove UI Library). Page `7275:19790` "Grove · 10 Instagram Storefront".
+- File: `BIzJFf1wm8KP0YG2AVI1tP` (Grove UI Library when read; now Nizivo UI Library). Page `7275:19790` "Grove · 10 Instagram Storefront".
 - Read on 2026-10-14. Read-only extraction: 9 `use_figma` reads (8 succeeded; 1 failed because its output was too large and was re-run as smaller reads) and 7 screenshots.
 - Screenshots are in `scratchpad/figma/shots/`:
   - `10-section.png`: the whole section

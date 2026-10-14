@@ -1,6 +1,6 @@
 # Grove · 06 Navigation — component architecture report (Nizivo UI)
 
-- File: `BIzJFf1wm8KP0YG2AVI1tP` ("Grove UI Library" → ships as **Nizivo UI**, `@nizivo/*`)
+- File: `BIzJFf1wm8KP0YG2AVI1tP` ("Grove UI Library" when read, now "Nizivo UI Library" → ships as **Nizivo UI**, `@nizivo/*`)
 - Page: **Grove · 06 Navigation** `7275:14694` → single SECTION `7275:14695` (4000×1710)
 - Read: 2026-10-14, read-only. **14 Figma calls**: 11 `use_figma` (2 of them exceeded the 20 KB return cap, returned nothing and were re-run as smaller reads) + 3 `get_screenshot`. There were no rate-limit or 429 errors.
 - Screenshots: `scratchpad/figma/shots/06-navigation-section.png` (whole section @3000), `06-doc-tabs.png` (Doc/Tabs 7275:14777), `06-doc-nav-item.png` (Doc/Nav item 7275:14696).

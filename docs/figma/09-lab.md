@@ -1,6 +1,6 @@
 # 09 · 3D, Shader & Motion Lab — extraction + architecture report
 
-- Figma file: `BIzJFf1wm8KP0YG2AVI1tP` (Grove UI Library → ships as **Nizivo UI**, `@nizivo/*`)
+- Figma file: `BIzJFf1wm8KP0YG2AVI1tP` (Grove UI Library when read, now Nizivo UI Library → ships as **Nizivo UI**, `@nizivo/*`)
 - Page: **"Grove · 09 3D, Shader & Motion Lab"** `7275:19608`
 - Section: **"Grove · 11 3D, Shader & Motion Lab"** `7275:19609` (4000 × 1722). The page is numbered 09 but the section label says 11, so the numbering is inconsistent.
 - Read on 2026-10-14. Access was read-only: 15 Figma MCP calls in total (3 of them errored), with no mutations.

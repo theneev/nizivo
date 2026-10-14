@@ -1,6 +1,6 @@
 # Grove · 05 Commerce — architecture analysis for Nizivo UI
 
-- Figma file: `BIzJFf1wm8KP0YG2AVI1tP` (Grove UI Library), page **05 Commerce** `7275:13983`, section **Grove · 05 Commerce** `7275:13984` (4000×3229).
+- Figma file: `BIzJFf1wm8KP0YG2AVI1tP` (Grove UI Library when read; now Nizivo UI Library), page **05 Commerce** `7275:13983`, section **Grove · 05 Commerce** `7275:13984` (4000×3229).
 - Read 2026-10-14, read-only: 8 `use_figma` scripts (the first exceeded the 20KB return limit and returned no data) plus 4 `get_screenshot` calls, 12 Figma calls in total. No writes.
 - Screenshots: `scratchpad/figma/shots/05-commerce-section.png` (whole section), `05-commerce-product-card.png`, `05-commerce-plan-card.png`, `05-commerce-shipment-tracker.png`.
 - Token names refer to `00-tokens-and-styles.md`. `{token}` means bound to a variable. `RAW n` means a hard-coded value.

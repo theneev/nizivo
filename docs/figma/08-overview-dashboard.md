@@ -1,6 +1,6 @@
 # Grove · 08 Overview Dashboard: layout, templates and responsive analysis
 
-- **File:** `BIzJFf1wm8KP0YG2AVI1tP` ("Grove UI Library"; ships as **Nizivo UI**, `@nizivo/*`)
+- **File:** `BIzJFf1wm8KP0YG2AVI1tP` ("Grove UI Library" when read, now "Nizivo UI Library"; ships as **Nizivo UI**, `@nizivo/*`)
 - **Page:** `7275:15335` "Grove · 08 Overview Dashboard"
 - **Read on:** 2026-10-14. Read-only. 11 Figma calls (2 failed: one type guard, one over the 20 KB return limit; both retried).
 - **Sections**

@@ -95,6 +95,8 @@ pnpm changeset
 - While Nizivo is 0.x, a breaking change is a **minor** bump, and its changeset starts with `BREAKING:`.
 - Changes to docs, tests, CI or private tooling need no changeset.
 
+Contributors never publish. While GitHub Actions is off, the maintainer publishes 0.1.0 by hand with npm 2FA, through a local release script that runs the full gate and `pnpm check:release` first; that release has no npm provenance, which needs CI. Trusted publishing from CI, with provenance, returns when Actions is turned back on (plan §19.2).
+
 ## Pull requests
 
 Keep each pull request to one topic, make sure CI is green, and link the issue or the section of the plan it implements.
