@@ -4,7 +4,7 @@
 - Page: `Grove · 02 Actions & Forms` (page `7275:11238`), single SECTION `7275:11239` (3500 x 2011).
 - Read on 2026-10-14, read-only. 7 `use_figma` calls (2 of them exceeded the 20 KB return cap and were re-run split + diffed; no data lost) + 3 `get_screenshot` calls = 10 Figma calls. No 429s.
 - Screenshots (local):
-  - `/private/tmp/claude-501/-Users-amansharma-Documents-nizivo/7c73004f-bda8-4b08-8fc6-5624b64cd3c2/scratchpad/figma/shots/02-actions-forms-section.png` (whole section, 3000 px)
+  - `scratchpad/figma/shots/02-actions-forms-section.png` (whole section, 3000 px)
   - `.../shots/02-button-set.png` (Button set 7275:11244 at 1x)
   - `.../shots/02-menu-row.png` (Menu Item set + Dropdown Menu + Tooltip row 7275:11515 at 1x)
 - Token names below are Grove variable names (CSS `--grove-<name>`; must become a configurable prefix such as `--nz-`). `P:` = bound directly to a **Grove Primitives** variable (bypasses the semantic layer). `!` = hard-coded value (not bound to any variable/style).
