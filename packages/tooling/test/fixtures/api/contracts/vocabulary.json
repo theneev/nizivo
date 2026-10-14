@@ -1,0 +1,29 @@
+{
+  "$comment": "nz api test fixture: a subset of the real vocabulary.",
+  "version": 1,
+  "state": [
+    { "name": "data-open", "presence": true, "on": "triggers", "meaning": "Open" },
+    {
+      "name": "data-disabled",
+      "presence": true,
+      "on": "control roots",
+      "meaning": "Mirrors the disabled attribute"
+    },
+    { "name": "data-pressed", "presence": true, "on": "pressables", "meaning": "Pressed" },
+    { "name": "data-side", "values": ["top", "bottom"], "on": "popups", "meaning": "Resolved side" }
+  ],
+  "presentational": [
+    { "name": "data-slot", "values": null, "on": "parts", "meaning": "The class minus nz-" },
+    { "name": "data-tone", "values": null, "on": "roots", "meaning": "The tone prop" },
+    { "name": "data-size", "values": null, "on": "roots", "meaning": "The size prop" }
+  ],
+  "local": [],
+  "scope": [
+    {
+      "name": "data-nz-scheme",
+      "values": ["inverse"],
+      "setBy": "Chip",
+      "meaning": "Inverse surface scheme for the subtree"
+    }
+  ]
+}

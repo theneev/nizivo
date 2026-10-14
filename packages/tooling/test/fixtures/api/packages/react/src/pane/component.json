@@ -1,0 +1,17 @@
+{
+  "name": "pane",
+  "status": "stable",
+  "tier": "engine",
+  "engine": "fake",
+  "parts": ["Root", "Trigger"],
+  "interactive": ["pane-trigger"],
+  "focusTarget": "self",
+  "stateIndicator": [
+    { "slot": "pane-panel", "paint": "border" },
+    { "slot": "pane-trigger", "state": "[data-open]", "paint": "highlight" }
+  ],
+  "cssDeps": ["base"],
+  "variants": {
+    "size": ["sm", "md"]
+  }
+}

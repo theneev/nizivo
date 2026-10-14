@@ -1,0 +1,21 @@
+@layer nz.tokens, nz.components;
+@layer nz.components {
+  .nz-chip {
+    --_nz-chip-bg: var(--nz-bg-neutral);
+    gap: var(--nz-chip-gap, var(--nz-space-1));
+    background: var(--nz-chip-bg, var(--_nz-chip-bg));
+    border-radius: var(--nz-radius-full);
+    display: inline-flex;
+    @media (hover: hover) {
+      &:hover {
+        color: var(--nz-chip-fg-hover, var(--nz-text-primary));
+      }
+    }
+  }
+  .nz-chip[data-tone='critical'] {
+    --_nz-chip-bg: var(--nz-bg-critical);
+  }
+  .nz-chip-text {
+    max-inline-size: var(--nz-chip-text-max, 12rem);
+  }
+}

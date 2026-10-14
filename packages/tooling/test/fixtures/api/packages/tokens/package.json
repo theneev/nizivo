@@ -1,0 +1,7 @@
+{
+  "name": "@nizivo/tokens",
+  "private": true,
+  "exports": {
+    "./contract.json": "./dist/contract.json"
+  }
+}

@@ -224,6 +224,35 @@ export function attributeProblem(attribute, context) {
 }
 
 /**
+ * What a custom property name read with `var()` is (§8.2, §8.4): a `--_nz-*` private, a runtime
+ * variable, a token, or a hook of this component. The one classifier behind the stylelint rule, the
+ * emitted-CSS check and `nz api`'s hook tables, so they cannot disagree. `unchecked` means the
+ * token names are not available, so a hook-shaped name cannot be told from a token.
+ *
+ * @param {string} name
+ * @param {import('./contract.d.ts').VariableContext} context
+ * @returns {import('./contract.d.ts').VariableKind}
+ */
+export function classifyVariable(name, context) {
+  if (name.startsWith('--_nz-')) return 'private';
+  if (!name.startsWith('--nz-')) return 'foreign';
+  if (name.startsWith('--nz-p-')) return 'primitive';
+  if (RUNTIME_VARIABLES.has(name)) return 'runtime';
+  if (context.tokens?.has(name) === true) return 'token';
+  // Without the token names, a hook-shaped name may be a token (--nz-grid-columns in grid.css).
+  const tokens = context.tokens;
+  if (tokens === undefined) return 'unchecked';
+  // A prefix that is also a token family (text, grid) names tokens only, so a missing name under it
+  // is a missing token, never a hook.
+  const hook = context.component?.prefixes.some(
+    (prefix) =>
+      name.startsWith(`--nz-${prefix}-`) &&
+      ![...tokens].some((token) => token.startsWith(`--nz-${prefix}-`)),
+  );
+  return hook === true ? 'hook' : 'unknown';
+}
+
+/**
  * Whether a `var()` read is allowed (§8.2, §8.4): a token, a runtime variable, or a hook of this
  * component read with a fallback. `tokens` is undefined when the token names are not available,
  * and then only the shape is checked. The caller pairs `--_nz-*` reads with their declarations.
@@ -233,30 +262,20 @@ export function attributeProblem(attribute, context) {
  */
 export function variableProblem(variable, context) {
   const { name, hasFallback } = variable;
-  if (name.startsWith('--_nz-')) return undefined;
-  if (!name.startsWith('--nz-')) {
-    return `"${name}" is not a Nizivo variable: read --nz-* tokens and hooks or --_nz-* privates (§8.2)`;
+  switch (classifyVariable(name, context)) {
+    case 'foreign':
+      return `"${name}" is not a Nizivo variable: read --nz-* tokens and hooks or --_nz-* privates (§8.2)`;
+    case 'primitive':
+      return `"${name}" is a private primitive: read a semantic token instead (§7.2)`;
+    case 'hook':
+      return hasFallback
+        ? undefined
+        : `hook "${name}" must be read with a fallback, var(${name}, var(--_nz-…)) (§8.4 rule 1)`;
+    case 'unknown':
+      return `"${name}" is not a token in @nizivo/tokens, a runtime variable or a hook of this component (§8.4)`;
+    default:
+      return undefined;
   }
-  if (name.startsWith('--nz-p-')) {
-    return `"${name}" is a private primitive: read a semantic token instead (§7.2)`;
-  }
-  if (RUNTIME_VARIABLES.has(name) || context.tokens?.has(name) === true) return undefined;
-  // Without the token names, a hook-shaped name may be a token (--nz-grid-columns in grid.css).
-  const tokens = context.tokens;
-  if (tokens === undefined) return undefined;
-  // A prefix that is also a token family (text, grid) names tokens only, so a missing name under it
-  // is a missing token, never a hook.
-  const hook = context.component?.prefixes.some(
-    (prefix) =>
-      name.startsWith(`--nz-${prefix}-`) &&
-      ![...tokens].some((token) => token.startsWith(`--nz-${prefix}-`)),
-  );
-  if (hook === true) {
-    return hasFallback
-      ? undefined
-      : `hook "${name}" must be read with a fallback, var(${name}, var(--_nz-…)) (§8.4 rule 1)`;
-  }
-  return `"${name}" is not a token in @nizivo/tokens, a runtime variable or a hook of this component (§8.4)`;
 }
 
 /**

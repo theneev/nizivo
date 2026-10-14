@@ -1,0 +1,10 @@
+{
+  "name": "chip",
+  "status": "stable",
+  "tier": "server",
+  "parts": [],
+  "cssDeps": ["base"],
+  "variants": {
+    "tone": ["neutral", "critical"]
+  }
+}

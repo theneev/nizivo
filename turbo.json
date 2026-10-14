@@ -4,7 +4,8 @@
   "globalDependencies": [
     "packages/tooling/tsconfig/*.json",
     "packages/tooling/tsdown-preset/index.ts",
-    "contracts/**",
+    "contracts/layers.css",
+    "contracts/vocabulary.json",
     "docs/research/phase2/spikes/s4-spring/spring-results.json"
   ],
   "globalEnv": ["NZ_TOKEN_PREFIX"],
@@ -35,6 +36,11 @@
     "@nizivo/tooling#typecheck": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/fixtures/runner/pack.ts"],
+      "outputs": []
+    },
+    "@nizivo/tooling#test": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/contracts/api/**"],
       "outputs": []
     }
   }

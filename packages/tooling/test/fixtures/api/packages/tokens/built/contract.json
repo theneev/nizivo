@@ -1,0 +1,10 @@
+{
+  "variables": {
+    "--nz-bg-critical": { "type": "color" },
+    "--nz-bg-neutral": { "type": "color" },
+    "--nz-radius-full": { "type": "dimension" },
+    "--nz-space-1": { "type": "dimension" },
+    "--nz-space-2": { "type": "dimension" },
+    "--nz-text-primary": { "type": "color" }
+  }
+}

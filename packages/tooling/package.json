@@ -9,6 +9,7 @@
   },
   "type": "module",
   "exports": {
+    "./api/schema": "./api/schema.ts",
     "./spring": "./spring/spring.ts",
     "./package.json": "./package.json"
   },

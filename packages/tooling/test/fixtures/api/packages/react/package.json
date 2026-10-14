@@ -1,0 +1,22 @@
+{
+  "name": "@nizivo/react",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./chip": {
+      "types": "./dist/chip/index.d.ts",
+      "default": "./dist/chip/index.js"
+    },
+    "./pane": {
+      "types": "./dist/pane/index.d.ts",
+      "default": "./dist/pane/index.js"
+    },
+    "./css/chip.css": "./dist/css/chip.css",
+    "./package.json": "./package.json"
+  }
+}

@@ -50,6 +50,22 @@ export declare function attributeProblem(
   attribute: { name: string; operator?: string | undefined; value?: string | undefined },
   context: AttributeContext,
 ): string | undefined;
+/**
+ * `private` (`--_nz-*`), `runtime` (§8.3), `token` (in the token names), `hook` (`--nz-<component
+ * prefix>-*` of this stylesheet's component), `foreign` (not `--nz-*`), `primitive` (`--nz-p-*`),
+ * `unknown` (none of these), or `unchecked` (no token names to tell a hook from a token).
+ */
+export type VariableKind =
+  | 'private'
+  | 'foreign'
+  | 'primitive'
+  | 'runtime'
+  | 'token'
+  | 'hook'
+  | 'unknown'
+  | 'unchecked';
+
+export declare function classifyVariable(name: string, context: VariableContext): VariableKind;
 export declare function variableProblem(
   variable: { name: string; hasFallback: boolean },
   context: VariableContext,
