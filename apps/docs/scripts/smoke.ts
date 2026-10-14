@@ -820,8 +820,8 @@ async function deviationsChecks(browser: Browser): Promise<void> {
   check(proposals > 0, `deviations: ${proposals} proposal rows`);
   const text = (await page.locator('article').textContent()) ?? '';
   check(
-    text.includes('D1') && text.includes('D2') && text.includes('Firefox'),
-    'deviations: degradations D1 and D2 are listed',
+    ['D1', 'D2', 'D3', 'D4', 'Firefox', 'Mobile Safari 17.5'].every((t) => text.includes(t)),
+    'deviations: degradations D1 to D4 and the Safari 17.5 status are listed',
   );
   check(text.includes('D-i'), 'deviations: builder decision D-i is listed');
   const chosen = await rows('Builder-chosen values');
