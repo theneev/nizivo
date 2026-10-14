@@ -6,7 +6,7 @@ These are the hands-on experiments that [ARCHITECTURE.md](../../../ARCHITECTURE.
 
 Implications are recorded as written at the time. Where the plan later decided differently (for example S1b and S3 still recommend a generated `tokens.legacy.css`, which the plan deliberately does not build; see ARCHITECTURE §4.2), ARCHITECTURE.md wins. Scripts that launch browsers import `playwright-core` by bare name.
 
-Environment: macOS, Node 24.16.0, npm 11.13.0. Browsers: Playwright Chromium 156 and WebKit 27.2. Firefox could not be launched in the sandbox (S1d).
+Environment: macOS, Node 24.16.0, npm 11.13.0. Browsers: Playwright Chromium 156 and WebKit 27.2. Firefox did not launch here (S1d; the cause is now known, see the W1 note there).
 
 | Spike | Topic | Verdict |
 |---|---|---|
@@ -120,9 +120,11 @@ r2's rule 'never @property-register semantic colour tokens' is now empirically c
 
 Firefox was NOT tested. Playwright's Firefox (build firefox-1555) would not launch in this sandbox: `[err] Could not find profile folder`, exit code 1. That happened even with TMPDIR and HOME redirected into the scratchpad. Real Safari 16.4 and 17.5 were also unavailable; Playwright WebKit 27.2 is current WebKit and validates only the native path.
 
+W1 (2026-10-14): the cause was not the sandbox as such. On macOS, Firefox reads and writes `~/Library/Application Support/Firefox` even when it is given `--profile`, and it hangs or fails at startup when it cannot. Redirecting `HOME` alone did not help (above); setting both `HOME` and `CFFIXED_USER_HOME` to a writable temporary folder fixes it, for stock Firefox and for Playwright's Firefox (passed through `firefox.launch({ env })`; checked with Firefox 157.0). The week 1 floor lane used this to run the S1 matrix on Firefox 129.0, 131.0, 132.0 and 157.0: see [`fixtures/floor-lane/RESULTS.md`](../../../../fixtures/floor-lane/RESULTS.md). Real Safari 17.5 is still untested.
+
 ### Implication for the plan
 
-Before locking D6 and D7, run matrix.mjs and matrix-varinside.mjs on Firefox (128+ ESR and current) and on a real Safari 17.5 (BrowserStack or a device), especially the `color-scheme: normal`/unset → light row. The scripts can be reused as-is in CI with Playwright on Linux.
+Before locking D6 and D7, run matrix.mjs and matrix-varinside.mjs on Firefox (128+ ESR and current) and on a real Safari 17.5 (BrowserStack or a device), especially the `color-scheme: normal`/unset → light row. The scripts can be reused as-is in CI with Playwright on Linux. (W1: done for Firefox 129 in the floor lane, which ported these matrices; Safari 17.5 is still open.)
 
 ## S2
 

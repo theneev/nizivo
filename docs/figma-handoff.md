@@ -18,7 +18,7 @@ Scope: a prioritised design backlog for the Figma file "Grove UI Library" (`BIzJ
 - **Node IDs.** Linked IDs open the node in Figma. IDs in plain code font (for example `744:263`) are "ghost" masters: they sit on no page, so a link cannot land on them (§2.4). To find one, select an instance that uses it and choose *Go to main component*.
 - **Evidence.** Links point to the page reports in [`figma/`](figma/) and the research in [`research/`](research/). The contrast numbers come from the accessibility gap report's scripts, re-run for this document (WCAG 2.2 relative luminance).
 - **UNVERIFIED** marks anything nobody has confirmed yet, in the file or in the docs.
-- **No Figma tools were called** to write this. Everything comes from the extraction reports dated 2026-10-14.
+- **No Figma tools were called** to write the first version. It comes from the extraction reports dated 2026-10-14. The week 1 additions (§1.4 and the notes marked "week 1") come from the read-only snapshot in `packages/tokens/figma/snapshot.json`, the token dry run, the spring generator's golden test (`packages/tooling/spring`) and the browser floor lane (`fixtures/floor-lane/RESULTS.md`).
 
 **Package name, as the plan stands today.** The earlier message said the import would be `import { Button } from "@nizivo/ui"`. The current plan changes this to **`import { Button } from "@nizivo/react"`**. Tokens ship in `@nizivo/tokens` and icons in `@nizivo/icons`. The user still has to confirm the name before the first publish. Nothing in this handoff depends on it.
 
@@ -71,15 +71,29 @@ In priority order.
 | # | Ask | Why | Unblocks | Size |
 |---|---|---|---|---|
 | 1 | ~~Confirm which Figma team owns the file, and move it to a Neev-owned paid (Pro) team.~~ **Resolved 2026-10-14:** the file belongs to "Vampire D Studio", a Professional team, and stays there (no budget for a move). Please keep a Neev person with edit or admin access to that team. | Starter cannot create modes and has tiny API budgets. A personal team is a continuity risk (B1). | Token sync (v0.1 week 1), Community file | S |
-| 2 | Hold one 45-minute decision meeting to answer questions 1–10, 12, 34 and 35 in §6. | Each answer becomes a token value or a CSS rule. Guessing them now means rework later (B2). | v0.1 tokens, v0.2 shell | S |
+| 2 | Hold one 45-minute decision meeting to answer questions 1–10, 12, 34, 35 and 36 in §6. | Each answer becomes a token value or a CSS rule. Guessing them now means rework later (B2). | v0.1 tokens, v0.2 shell | S |
 | 3 | Approve or adjust the accessibility token remap (Option A text ladder, `border/control`, dark `red/400` and `blue/400`, `bg/critical` on `red/600`, `icon/warning` on `amber/600`), and add it to Grove Color and Grove Primitives. | Code cannot ship WCAG 2.2 AA with today's values (B4). Each fix that lands in Figma deletes a code override. | Stable release; removes overrides | M |
 | 4 | Add the missing semantic variables: `bg/scrim`, `text/accent`, `text/on-critical`, `bg/critical-hover`, `bg/accent-hover`, `icon/info`, `border/control`, `border/control-hover`, `chart/warning` and `chart/critical`. | Components already need them. Today they are raw values or misused tokens, such as the Toast action painted with `bg/accent` and Progress Bar fills painted with `text/*`. Code ships them as time-boxed proposals until they exist. | v0.1 Button, Dialog, Alert, Progress Bar, form controls | S |
 | 5 | Draw Focus, Disabled, Invalid and Pending states for the v0.1 sets: Button, Icon Button, Input, Select, Checkbox, Radio, Switch, Menu Item, Tab and Segment. | Most sets stop at Default/Hover. Engineers would otherwise invent these states (B3). | v0.1 components | L |
 | 6 | Promote Tooltip (`746:262`) and Dropdown Menu (`746:204`) to real component sets on page 02, and add the Tab list and Segmented Control track containers. | All four ship in v0.1, but today they are ghosts or loose example frames. | v0.1 Tooltip, Menu, Tabs, SegmentedControl | M |
 | 7 | Resolve the ghost and duplicate masters, v0.1 sets first: choose one surviving master per component, relink its instances and delete the dead copy. | Edits to the visible sets do not reach the 707 instances on page 08 or the 373 on page 10. | Component map freeze; Code Connect later | L |
 | 8 | Restore the 74 icon masters (`738:*`) and Brand/Logo (`739:64`) onto an Icons page, and rename Grove to Nizivo (codeSyntax `var(--nz-…)`, collection and style names, logo, copy). | Icons cannot be published or found in library search. "Grove" is a name we cannot use. | `@nizivo/icons`; Community file | M |
-| 9 | Move the leftover collections (Clario … Ardenfield) and their ~130 text styles to an archive file, and unsubscribe from unused Community libraries. | They pollute the variable pickers and every export, and would ship other brands in a Community copy. | Community file; cleaner sync | S |
+| 9 | Move the 10 leftover collections (`Clario Tokens` … `Ardenfield Tokens`, plus `Pipkin Soft`) and their 138 text styles to an archive file, and unsubscribe from unused Community libraries. | They pollute the variable pickers and every export, and would ship other brands in a Community copy. | Community file; cleaner sync | S |
 | 10 | Render dark mode for pages 02, 04, 06 and 07 with the proposed dark tokens, and review it before dark mode leaves preview in v0.2. | Every dark-mode number so far is computed, not seen (B5). | Stable dark mode (v0.2) | M |
+
+### 1.4 Asks from week 1 (2026-10-14)
+
+Week 1 took the real file through the token pipeline (`packages/tokens/figma/DRY-RUN.md`). These asks came out of it. #1 is for the maintainer; the rest are for design.
+
+| # | Ask | Why | Unblocks | Size |
+|---|---|---|---|---|
+| 1 | **Maintainer:** review [`packages/tokens/figma/codesyntax-rewrite.plan.md`](../packages/tokens/figma/codesyntax-rewrite.plan.md) with design, then approve **one** run of `packages/tokens/scripts/figma/codesyntax-apply.figma.js` with `DRY_RUN = false`. It rewrites 175 `codeSyntax.WEB` values to `var(--nz-…)` and makes 33 Grove → Nizivo renames (5 collections, 18 text styles, 10 effect styles). **It writes to the Figma file, so it runs only with explicit approval.** One variable needs a decision first: `layout/viewport`, which code does not emit (frame widths, not breakpoints). Then rename the file to "Nizivo UI Library" by hand (the Plugin API cannot). | The rename in §2.1, and Dev Mode showing the real CSS names. Nothing has been written to Figma yet. | §2.1; the first post-rename sync | S |
+| 2 | Delete the empty effect style `Grove/Elevation/0 Flat` (§3.4). | It has no effects, and TokensBrücke 3.18.0 crashes on it (`reading 'type'`). It draws nothing, so no layer changes. Engineering leaves it out of the CLI export; the plugin is expected to hit the same crash (UNVERIFIED). If you delete it before #1 runs, #1 reports it as skipped and makes the other 32 renames. | #3 | S |
+| 3 | Run the TokensBrücke plugin once with the `Nizivo` profile described in [`packages/tokens/figma/tokensbruecke.settings.md`](../packages/tokens/figma/tokensbruecke.settings.md), and upload the export as a pull request (§7.4). | It proves the designer path (v0.1 exit criterion 8) and checks what engineering could not: the plugin's style group names, the zip layout, and output equal to the CLI's apart from `createdAt`, the leftover brands' collections and text styles, which the importer drops (§2.3), and `Elevation/0 Flat` (#2). | v0.1 exit criterion 8 | S |
+| 4 | Glass: `Surface/Glass` loses its drop shadow in the export, and `Surface/Liquid Glass` is not exported at all (§3.4). Tell us whether Glass should keep its shadow and whether Liquid Glass stays. | TokensBrücke keeps only a style's first effect (here the 24 px background blur) and skips Figma's GLASS effect. Code adds its own backdrop token in week 2 either way. | Week 2 tokens; `Surface material="glass"` (v0.3) | S |
+| 5 | Confirm that `spring(1, 260, 24, 0)` means (mass, stiffness, damping, velocity) (§6 Q1). | Week 1 code assumes this order, and a golden test pins it. A different order is a token-value patch. | The week 2 spring curves | S |
+| 6 | Inverse inside inverse (§6 Q36). | Code keeps a nested inverse surface inverse for now (§4.6). | — | S |
+| 7 | Replace `&quot;` with plain quotes in the `chart/cat-1..3` descriptions. | Descriptions are copied as they are into comments in the token CSS. | — | S |
 
 ---
 
@@ -91,11 +105,11 @@ In priority order.
 
 | Thing | Today | Proposed | Why | Pri | Size |
 |---|---|---|---|---|---|
-| File name | Grove UI Library | **Nizivo UI Library** | Matches the product and the docs site (nizivo.neevtechnologies.in). | P0 | S |
+| File name | Grove UI Library | **Nizivo UI Library** | Matches the product and the docs site (nizivo.neevtechnologies.in). Rename it by hand in the File menu: the Plugin API cannot, so the script in §1.4 #1 does not. | P0 | S |
 | Variable collections | Grove Primitives, Grove Color, Grove Space, Grove Motion, Grove Responsive | **Nizivo Primitives, Nizivo Color, Nizivo Space, Nizivo Motion, Nizivo Responsive** | The token importer selects collections by name. It already accepts both `Grove *` and `Nizivo *`, and it tracks variables by their Figma id, so nothing is lost in the switch. **Tell engineering the day you rename**, so the `Grove` prefix can be dropped after the first sync that follows. | P0 | S |
-| `codeSyntax` (WEB) on all 175 Grove variables | `var(--grove-bg-surface)`, `var(--grove-p-green-500)` | **`var(--nz-bg-surface)`, `var(--nz-p-green-500)`** | Dev Mode and AI tools then show the real CSS variable names. Rules in §7.2. Engineering can run a one-off script that rewrites all 175 for you to review (a few Figma API calls, run by an engineer). | P0 | S |
+| `codeSyntax` (WEB) on all 175 Grove variables | `var(--grove-bg-surface)`, `var(--grove-p-green-500)` | **`var(--nz-bg-surface)`, `var(--nz-p-green-500)`** | Dev Mode and AI tools then show the real CSS variable names. Rules in §7.2. The script is ready (§1.4 #1): its plan lists all 175 rewrites and the 33 collection and style renames for you to review, and it runs once, with one `use_figma` call, after the maintainer approves. | P0 | S |
 | Text styles | `Grove/Heading/H1` … (18) | **`Nizivo/Heading/H1` …** | Same reason. Names after the prefix stay identical, because code maps them 1:1. | P0 | S |
-| Effect styles | `Grove/Elevation/1 Card` … | **`Nizivo/Elevation/1 Card` …** | Same | P0 | S |
+| Effect styles | `Grove/Elevation/1 Card` … (10) | **`Nizivo/Elevation/1 Card` …** | Same. Delete the empty `Elevation/0 Flat` rather than renaming it (§1.4 #2). | P0 | S |
 | Section labels | "Grove · 01 Foundations" … "Grove · 11 3D, Shader & Motion Lab" … "Grove · 12 Instagram Storefront" | "Nizivo · 01 Foundations" …, with the numbers fixed (§2.2) | Consistency | P1 | S |
 | Cover meta | "Grove Commerce System" / "Tokens, components and patterns for the Grove merchant platform." / "v1.1 · October 2026 · 62 components · 74 icons" | "Nizivo UI", a neutral tagline, the version, and a recounted total (§2.5) | The count is stale: there are about 47 sets plus about 21 standalone components. | P1 | S |
 | Component descriptions | "Grove Button. Variants: …" | "Button. Variants: …" | No brand inside reusable components | P1 | S |
@@ -118,10 +132,10 @@ In priority order.
 
 | Item | What is there | Ask | Why | Pri | Size |
 |---|---|---|---|---|---|
-| Foreign variable collections | **Clario, Pipkin, Pipkin Soft, Merit, Ashgrove, Noema, Praxa, Pogo, Halden, Ardenfield** | Copy them to an archive file (in case another project needs them, Q26), then delete them from this file. | No page report found a reference to them on pages 01–10 (page 08's check covered composition-level nodes only). They clutter every variable picker and every export. A Community copy would redistribute other brands. | P1 | S |
-| Their text styles | about 130 styles with those prefixes | Same as above | Same | P1 | S |
+| Foreign variable collections | 10 collections: **Clario Tokens, Pipkin Tokens, Merit Tokens, Ashgrove Tokens, Noema Tokens, Praxa Tokens, Pogo Tokens, Halden Tokens, Ardenfield Tokens**, plus **Pipkin Soft** (names from the week 1 snapshot) | Copy them to an archive file (in case another project needs them, Q26), then delete them from this file. | No page report found a reference to them on pages 01–10 (page 08's check covered composition-level nodes only). They clutter every variable picker and every export. A Community copy would redistribute other brands. | P1 | S |
+| Their text styles | 138 styles with those prefixes (Clario/…, Pipkin/…, Merit/… and so on) | Same as above. Until they go, the plugin's `Typography-styles` export carries them too, and the importer drops them. | Same | P1 | S |
 | Subscribed Community libraries | Material 3, Simple Design System, iOS/iPadOS 26/27, watchOS 26, visionOS 26, macOS 26/27 | Check *Libraries → this file*. Unsubscribe from any that show no usage. (Whether they are used is UNVERIFIED, Q27.) | Smaller asset panel, fewer accidental instances of foreign components | P1 | S |
-| Liquid glass and inner highlight styles | `Surface/Liquid Glass`, `Surface/Inner Highlight`: 0 consumers in the whole file | Keep them, labelled "lab", or delete them | Unused styles look like part of the system. | P2 | S |
+| Liquid glass and inner highlight styles | `Surface/Liquid Glass`, `Surface/Inner Highlight`: 0 consumers in the whole file | Keep them, labelled "lab", or delete them | Unused styles look like part of the system. TokensBrücke 3.18.0 does not export `Surface/Liquid Glass` at all (§1.4 #4). | P2 | S |
 
 ### 2.4 Ghost and duplicate masters
 
@@ -334,12 +348,13 @@ The rule: every padding and gap binds to `space/*`, radius to `radius/*` (999 �
 | `Focus/Ring Critical` | `#d64a2e40` (red/500 at 25%) | Drift (`#d64a2e` vs `#d6492f`) | Bind to a new `focus/halo-critical` variable (red/500 at 25%) | P0 |
 | Primary Button highlight and shadow | Raw on the layer: inner `0 1 0 0 #fff` 16% plus drop `0 1 2 0 #0a211a` 18% | Not a style. Only Primary has it. The Focus variant drops it, because a variant can hold only one effect style. | Make it an `Elevation/Button` style. Draw focus as a separate ring layer (§4.7), so the button keeps its effect. | P0 |
 | Switch knob shadow | Raw `0 1 2 #000` 18% | Pure black, unbound | Use an elevation style. | P1 |
-| `Surface/Glass` | Blur 24 plus shadow `#1013111a`; card fill and stroke raw | No dark values | Glass tokens (§3.1) | P2 |
-| `Surface/Liquid Glass`, `Surface/Inner Highlight` | 0 consumers | Unused | §2.3 | P2 |
+| `Elevation/0 Flat` | No effects at all | Empty, and TokensBrücke 3.18.0 crashes on an effect style with no effects (week 1) | Delete it (§1.4 #2). Flat needs no token. | P0 |
+| `Surface/Glass` | Blur 24 plus shadow `#1013111a`; card fill and stroke raw | No dark values. TokensBrücke keeps only the first effect, so the export has the blur and **loses the shadow** (week 1) | Glass tokens (§3.1); decide the shadow (§1.4 #4) | P2 |
+| `Surface/Liquid Glass`, `Surface/Inner Highlight` | 0 consumers | Unused. Liquid Glass is a Figma GLASS effect, which TokensBrücke **does not export** (week 1) | §2.3; §1.4 #4 | P2 |
 
 ### 3.5 Variable scopes
 
-Scopes decide which variables each Figma property picker offers. TokensBrücke exports them too. Today all **20 Motion variables have empty scopes**, so they are hidden from every picker ([09](figma/09-lab.md)). Nobody has checked the scopes on Color, Space or Responsive (UNVERIFIED).
+Scopes decide which variables each Figma property picker offers. TokensBrücke exports them too. Today all **20 Motion variables have empty scopes**, so they are hidden from every picker ([09](figma/09-lab.md)). **Color, Space and Responsive are already scoped**, and Primitives are already empty (checked in the week 1 snapshot, 2026-10-14). What is set matches the table below, with small differences that are fine: `chart/*` also allows Stroke (line charts need it; `chart/grid` is Stroke only), and `grid/columns` is empty, which suits a count. So only Motion needs work.
 
 | Variables | Scope | Why |
 |---|---|---|
@@ -368,7 +383,8 @@ Grove Motion stores springs as strings: `easing/spring` = `spring(1, 260, 24, 0)
 **What this means for design:**
 - **A spring brings its own duration.** Pairing `easing/spring` with `duration/base` (220 ms) squeezes the curve and changes the feel. Where the file says "enter on spring" (Dropdown Menu, Select, modals, drawers), code uses the spring's own duration. Exits and opacity-only fades use a code-owned `--nz-duration-fade` (140 ms Default, 120 ms Reduced) with `easing/exit`, because `duration/fast` is 0 in Reduced and would remove them (Q34). Your principle "Reduced mode keeps fades" is what this protects.
 - **If ~0.5 s feels slow** (§6 Q2), raise the stiffness rather than shortening the duration.
-- Earlier reports gave four different sets of numbers for these springs (440/573, 492/701, 500/710 and 600/750 ms), because they used different settle thresholds. The build now uses one generator with one threshold ([critique](research/00-critique.md) C10). All 12 generated curves pass `CSS.supports` in Chromium and WebKit.
+- Earlier reports gave four different sets of numbers for these springs (440/573, 492/701, 500/710 and 600/750 ms), because they used different settle thresholds. The build now uses one generator with one threshold ([critique](research/00-critique.md) C10). All 12 generated curves pass `CSS.supports` in Chromium and WebKit, and the `easing/spring` curve also passes in Firefox 129 (week 1).
+- Week 1 code reads `spring()` in the order above. If Q1's answer differs, only the token values change.
 
 ---
 
@@ -494,6 +510,8 @@ Toast and Tooltip paint `bg/inverse` with `text/inverse`, then reuse normal toke
 | Action (`text/accent`) | `lime/300`, 11.80:1 | **`green/700`**, 8.51:1 |
 
 **To confirm** (§6 Q17): in dark mode the white toast's action is forest green, not lime. No lime passes on white: `lime/600` reaches only 3.98:1.
+
+**Inverse inside inverse** (§6 Q36). If an inverse surface sits inside another one, for example a `tone="inverse"` Card inside another inverse Card, code keeps the inner one inverse: it does not flip back to the page's scheme. That is what the CSS does in every browser tested in week 1. Tooltips and toasts render outside the surface that opened them, so a Tooltip from an inverse Card is not nested.
 
 ### 4.7 Focus indicator: how to draw it
 
@@ -751,7 +769,7 @@ Ghost-only masters are listed in §2.4 B. These are hand-built frames, or compon
 
 ## 6. Questions for designers
 
-Questions 1–10, 12, 34 and 35 are for the decision meeting (ask #2). Most need a single word.
+Questions 1–10, 12, 34, 35 and 36 are for the decision meeting (ask #2). Most need a single word.
 
 1. `spring()` order: is `spring(1, 260, 24, 0)` mass, stiffness, damping, initial velocity?
 2. Spring timing: is it OK that overlays entering on `easing/spring` take about 493 ms to settle fully (702 ms for spring-soft), instead of `duration/base` (220 ms)?
@@ -788,6 +806,7 @@ Questions 1–10, 12, 34 and 35 are for the decision meeting (ask #2). Most need
 33. Right-to-left: OK that charts do not mirror in RTL languages (time still runs left to right)?
 34. Reduced-motion fades: Reduced mode sets `duration/fast` to 0, but your principle says "Reduced mode keeps fades … ≤160ms". May we add `duration/fade` (140 ms Default, 120 ms Reduced) to the Motion collection for exits and opacity-only fades? Code ships it as `--nz-duration-fade` until then.
 35. Mobile navigation: below 640 px the tab bar holds 5 destinations. Do the remaining sidebar items live in the "More" sheet? And do you want an off-canvas sidebar on tablet portrait (640–1279 px) instead of the rail? (Page 08 notes "Sidebar off-canvas mode for tablet portrait" as an open need; code ships the rail until you answer.)
+36. Inverse inside inverse: when an inverse surface sits inside another inverse surface, should the inner one stay inverse (what code does today) or flip back to the page's scheme? (Added 2026-10-14, §4.6.)
 
 ---
 
@@ -880,19 +899,20 @@ Questions 1–10, 12, 34 and 35 are for the decision meeting (ask #2). Most need
                                                                            docs "Deviations" page refreshes
 ```
 
-- **TokensBrücke settings** (plugin version 3.18.0). These will be checked into the repo:
+- **TokensBrücke settings** (plugin version 3.18.0):
   ```
   format:          DTCG 2025.10 (on)
-  split modes:     on   ({Collection}/{Mode}.tokens.json)
+  split modes:     on   ({Collection}/{Mode}.tokens.json; a one-mode collection is {Collection}.tokens.json;
+                        styles in Typography-styles.tokens.json and Effect-styles.tokens.json)
   include:         text styles, effect styles, scopes, Figma metadata
   colour format:   sRGB DTCG
   target:          packages/tokens/figma/raw   (set by engineering)
   push:            GitHub PR, through a dedicated bot account limited to tokens-bruecke/* branches
   ```
-  In v0.1 you can download the export and attach it to a PR instead. The plugin push comes once the bot account exists. The plugin documents a classic token with `repo` scope; whether a fine-grained token works is UNVERIFIED.
+  The full settings and the upload steps are checked in at `packages/tokens/figma/tokensbruecke.settings.md` (§1.4 #3). In v0.1 you can download the export and attach it to a PR instead. The plugin push comes once the bot account exists. The plugin documents a classic token with `repo` scope; whether a fine-grained token works is UNVERIFIED.
 - **Component changes** (not tokens): open a GitHub issue "Design change: \<Component\>" with the node link, what changed, and whether it breaks anything. Engineering updates the component.
 - **Breaking changes:** removing or renaming a public token or variant needs a major version. Please flag it.
-- **Drift:** every release PR shows the date and Figma version of the last sync. From v0.2, a library-publish webhook opens an issue automatically. Whether it fires for a variables-only publish on Pro is UNVERIFIED.
+- **Drift:** every release PR shows the date of the last sync (TokensBrücke exports no Figma version id, only the export date). From v0.2, a daily check compares the file's latest version date with the last export's date and opens a "sync needed" issue; releases wait while it is open. It runs locally while GitHub Actions is off (ARCHITECTURE §7.7). There is no library-publish webhook: it would need a hosted relay, which the zero-spend rule does not allow.
 - **Cadence:** sync whenever a token changes, and at least once per release. A weekly 30-minute design-engineering check-in. After the cleanup in §2, the Community copy of the file is updated with every minor release.
 
 ### 7.5 Component map IDs

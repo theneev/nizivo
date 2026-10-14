@@ -62,7 +62,7 @@ Each item gives our recommendation first, then what each option costs. Nothing e
 
 **Standing constraint: zero spend.** Nothing in this plan may require a paid service, seat or plan upgrade. Every paid option below is kept for the record and marked *not funded*. Free tiers are used only where their terms allow use by a company (for example, GitHub Actions on a public repo, GitHub Pages).
 
-**Standing constraint: nothing runs on GitHub Actions for now (2026-10-14).** The maintainer reports the account's monthly Actions minutes are used up and asked that every check run locally. The `CI` workflow is disabled on GitHub, so pushes start no runs; `gh workflow enable CI -R theneev/nizivo` turns it back on when the maintainer says so. GitHub's billing docs say standard hosted runners on public repos do not draw on the included minutes, which cover private repos, so lifting this is the maintainer's call rather than a billing limit on this repo. Until then: a local gate that mirrors `ci.yml` replaces CI; the daily drift check ([§7.7](#77-drift-detection)) runs as a local command; GitHub Pages deploys (also Actions) wait; and because trusted publishing runs on Actions ([§19](#19-release-security-supply-chain-and-oss-governance)), the publish path is revisited before 0.1.0.
+**Standing constraint: nothing runs on GitHub Actions for now (2026-10-14).** The maintainer reports the account's monthly Actions minutes are used up and asked that every check run locally. The `CI` workflow is disabled on GitHub, so pushes start no runs; `gh workflow enable CI -R theneev/nizivo` turns it back on when the maintainer says so. GitHub's billing docs say standard hosted runners on public repos do not draw on the included minutes, which cover private repos, so lifting this is the maintainer's call rather than a billing limit on this repo. Until then: a local gate that mirrors `ci.yml` replaces CI (`pnpm check` in the root `package.json`, described in `CONTRIBUTING.md`); the daily drift check ([§7.7](#77-drift-detection)) runs as a local command; GitHub Pages deploys (also Actions) wait; and because trusted publishing runs on Actions ([§19](#19-release-security-supply-chain-and-oss-governance)), the publish path is revisited before 0.1.0.
 
 **1. Licence: Apache-2.0. Decided 2026-10-14.**
 - *Apache-2.0* (with a `TRADEMARKS.md` and DCO sign-off): an explicit patent grant from contributors, defensive termination, and a trademark reservation for "Nizivo". Company-backed peers use it (React Spectrum, IBM Carbon). With no `NOTICE` file, the §4(d) propagation duty never arises. Redistributors still keep the licence text and attributions (§4(a), (c)), and anyone who modifies a file must mark it as changed (§4(b)). That last duty would reach consumers who edit copy-paste registry items, so registry item source is published under MIT (decision 5). It is incompatible with GPLv2, which rarely matters for a UI library. Evidence: [r5 §11](research/r5-quality-docs.md).
@@ -118,7 +118,7 @@ Each item gives our recommendation first, then what each option costs. Nothing e
 |---|---|---|---|---|
 | a | **Breakpoints beyond 640 px.** The only designer-stated threshold is "Below 640px the sidebar becomes a five-tab bar" (08). What width switches the sidebar from rail to expanded, and is there a tablet `md`? Which sidebar items go in the mobile "More" sheet, and is an off-canvas sidebar wanted on tablet portrait? | Q3, Q13, Q35 | start of v0.2 (≈ week 8); AppShell depends on it | Desktop values at a **provisional** `lg` = 1280 px, outside semver; no `md`; below 640 px the MobileTabBar replaces the sidebar, and the rail shows from 640 px |
 | b | **Sidebar widths.** The tokens say 264/72/0; the frames are drawn at 248/76. Which is right? | Q4 | start of v0.2 | Tokens (264/72/0), because they sync automatically |
-| c | **12 px caption.** The rule is "Nothing smaller than 14px", but several dense places might want 12 px. | Q20 | before v1.0 | **Answered 2026-10-14: allow 12 px.** Two code-owned text-style proposals, `Body/S` and `Label/S` at 12 px ([§7.6](#76-code-owned-tokens)); lint floor 12 px; components keep their Figma sizes unless a change is listed on the Deviations page ([§15.1](#151-baseline)) |
+| c | **12 px caption.** The rule is "Nothing smaller than 14px", but several dense places might want 12 px. | Q20 | before v1.0 | **Answered 2026-10-14: allow 12 px.** Two code-owned text-style proposals, `Body/S` and `Label/S` at 12 px, emitted as `--nz-font-body-s` and `--nz-font-label-s` (names confirmed by the week 1 Terrazzo dry run; [§7.6](#76-code-owned-tokens)); lint floor 12 px; components keep their Figma sizes unless a change is listed on the Deviations page ([§15.1](#151-baseline)) |
 | d | **Dark mode.** No dark render exists. Please review rendered dark pages 02, 04, 06 and 07 with our proposed elevation (floating surfaces on `bg/surface-raised`, an 8% white ring, shadows at 6× alpha). | ask #10, Q18 | v0.2 (dark leaves "preview") | Dark ships as **preview** in v0.1 |
 | e | **Text contrast ladder.** Accept "Option A": light secondary/tertiary n700/n600, dark n300/n400. | Q8 | v0.1 week 2 | Shipped through the time-boxed override file |
 | f | **Missing tokens.** `bg/scrim`, `bg/accent-hover` (and pressed), `bg/critical-hover`, `text/on-critical`, `text/accent`, `icon/info`, `border/control` (≥ 3:1), `border/control-hover`, `chart/warning`, `chart/critical`, and four new primitives. | ask #4 | v0.1 week 2 | Code-owned proposals with expiry dates |
@@ -147,7 +147,7 @@ Each item gives our recommendation first, then what each option costs. Nothing e
                       │
  COMPONENTS    @nizivo/react/<name>: props · parts (namespace + flat) · render · (value, details) callbacks
                server-safe modules (no directive) │ public *.client.tsx leaves (own classes, data-slot, Field wiring)
-                      │ import only through ./engine (generated from component.json)
+                      │ import only through ./engine (generated from component.json + the <Name>Engine interface)
  BEHAVIOUR     _engines/react-aria/<name>.client.tsx implements <Name>Engine  ── the ONLY importers of react-aria*
                       │ emits only the Nizivo data-* vocabulary
  CSS           styles.css · css/base.css (a11y floor) · css/<name>.css   ── first line: the canonical @layer statement
@@ -195,8 +195,8 @@ Each layer below lists its responsibility, its contract (the files both sides ma
 #### L0 — Design source and extraction
 
 - **Responsibility:** get Figma variables, text styles and effect styles into the repo as a raw snapshot.
-- **Contract:** `packages/tokens/figma/raw/{Collection}/{Mode}.tokens.json` in TokensBrücke's split-mode DTCG 2025.10 shape. Figma ids and keys are kept in `$extensions["dev.nizivo.figma"]`, and they are the token identity: override entries and drift checks key on the variable id, never on a display name. The normalizer reads collections matching `^(Grove|Nizivo) ` and styles matching `^(Grove|Nizivo)/`, and strips either prefix, so the planned v0.1 rename ([§20.3](#203-hygiene-contract-between-design-and-engineering)) changes nothing downstream.
-- **Enforcement:** a schema check in the normalizer; the CI invariant `normalize(raw) === src/figma-owned/**`; a golden fixture exported under both prefixes that must normalize to byte-identical `src/figma-owned/**`.
+- **Contract:** `packages/tokens/figma/raw/**` in TokensBrücke's split-mode DTCG 2025.10 shape: `{Collection}/{Mode}.tokens.json` for a multi-mode collection, `{Collection}.tokens.json` for a one-mode collection, and `Typography-styles.tokens.json` and `Effect-styles.tokens.json` for styles ([§7.1](#71-pipeline-figma--dtcg--outputs); the CLI's layout, and the plugin's is checked on its first run). The normalizer keeps Figma ids in `$extensions["dev.nizivo.figma"]` (variable ids, and `styleId` for text styles; the export has no variable keys, and effect styles have no id), and they are the token identity: override entries and drift checks key on the variable id, never on a display name. The normalizer reads collections matching `^(Grove|Nizivo) ` and styles matching `^(Grove|Nizivo)/`, and strips either prefix, so the planned v0.1 rename ([§20.3](#203-hygiene-contract-between-design-and-engineering)) changes nothing downstream.
+- **Enforcement:** a schema check in the normalizer; the CI invariant `normalize(raw) === src/figma-owned/**`; a both-prefix test, which renames the real export to `Nizivo` inside the test and must normalize it to byte-identical `src/figma-owned/**` (W1: it does).
 - **Replace the extractor:**
   1. Write an adapter that emits the same raw snapshot (the TokensBrücke CLI fed from an MCP `use_figma` dump, a manual export, or `tz import` on Enterprise).
   2. Accept it when, for one Figma version, its raw normalizes to byte-identical `src/figma-owned/**` and the token diff is empty. (Recomputing the invariant from whatever raw is committed cannot catch a non-equivalent extractor.)
@@ -226,7 +226,7 @@ Each layer below lists its responsibility, its contract (the files both sides ma
 - **Contract:** the canonical layer statement (`contracts/layers.css`), `nz-*` classes, `data-slot` values, the `data-*` vocabulary (`contracts/vocabulary.json`), the public hooks `--nz-<component>-*`, and the CSS file paths. Each component's surface is extracted to `contracts/api/css/<name>.json`.
 - **Enforcement:**
   - `check-css-vocabulary.mjs` parses every **emitted** CSS file with Lightning CSS. It fails on any selector that uses a class, `data-*` name or value outside the vocabulary. The adapter strips engine `data-*` attributes such as `data-rac` ([§9.3](#93-contract-rules-keep-the-seam-honest) rule 6); only an undocumented per-engine functional allowlist reaches the DOM, and no shipped CSS may target it.
-  - stylelint: no declaration of public hooks; spring easing paired with its duration; logical properties only; the layer line comes first; `font-size` ≥ 0.875rem.
+  - stylelint: no declaration of public hooks; spring easing paired with its duration; logical properties only; the layer line comes first; `font-size` ≥ 0.75rem (12 px, decision 8c), and 12 px only through the `Body/S` and `Label/S` tokens.
   - A Lightning CSS output guard fails on any `--lightningcss-*` variable, which would mean `light-dark()` was lowered (S1).
   - The manifest diff classifies every change for the changeset.
 - **Replace the authoring tool** (for example vanilla-extract or Panda `cssgen`): emit the same `dist/css/**`. The change is accepted when the manifest diff is empty and visual regression is clean.
@@ -289,7 +289,7 @@ Each layer below lists its responsibility, its contract (the files both sides ma
 
 | # | Seam | Contract file | Machine check | Runtime cost | Second implementation |
 |---|---|---|---|---|---|
-| K1 | Extractor | `figma/raw/**` schema; identity = Figma variable id | `normalize(raw) === figma-owned`; both-prefix golden fixture | 0 | MCP dump, manual export, REST on Enterprise |
+| K1 | Extractor | `figma/raw/**` schema; identity = Figma variable id | `normalize(raw) === figma-owned`; both-prefix test (built from the real export inside the test; output byte-identical) | 0 | MCP dump, manual export, REST on Enterprise |
 | K2 | Token builder | DTCG source + resolver | golden files | 0 | Style Dictionary 5.6.1 (UNVERIFIED) |
 | K3 | Token names | `contract.json` | token diff; stylelint | 0 | any consumer theme |
 | K4 | Theme confinement | "no theme logic outside tokens"; the public `light-dark()` theme format | stylelint; S1 fixture | 0 | consumer themes in the public format. A mechanism swap is a major: block output is deliberately not built (below) |
@@ -340,11 +340,11 @@ Each layer below lists its responsibility, its contract (the files both sides ma
 
 **Not published:** `@nizivo/ui`, `@nizivo/motion`, `@nizivo/dates`, `@nizivo/dashboard`, `@nizivo/commerce`, `@nizivo/social`, `@nizivo/blocks`, `@nizivo/themes`, `@nizivo/primitives`. Each would need its own trusted-publisher setup for something a subpath or the registry already covers (critique C12).
 
-**Private workspace packages:** `@nizivo/testkit` (conformance and overlay suites), `@nizivo/tooling` (`nz gen`, checks, the spring generator), `@nizivo/tsconfig`, `@nizivo/tsdown-preset`, `@nizivo/stylelint-config`, plus `apps/docs`, `apps/workshop` and `fixtures/*`.
+**Private workspace packages:** `@nizivo/testkit` (conformance and overlay suites), `@nizivo/tooling` (`nz gen`, checks, the spring generator), `@nizivo/tsconfig`, `@nizivo/tsdown-preset`, `@nizivo/stylelint-config`, plus `apps/docs`, `apps/workshop`, `fixtures/runner` (`@nizivo/fixture-runner`) and `fixtures/floor-lane`. A framework fixture such as `fixtures/next` is its own pnpm workspace root, outside the monorepo ([§18.1](#181-test-layers)).
 
 ### 5.2 Exports maps
 
-All maps are **explicit**, generated by tsdown (`exports: true`) plus `nz gen` for CSS entries, committed, and drift-checked with `git diff --exit-code`. There is **no `./*` wildcard** (critique C2): it would make internals public. `src/_engines/**` and `src/_internal/**` are excluded from `exports`; they ship in `dist/` only as relative imports.
+All maps are **explicit**, committed, and drift-checked (`nz gen --check`, plus `git diff --exit-code`). tsdown's own `exports` generation is off in the shared preset. In `@nizivo/react`, `nz gen` writes one entry per component (`./<name>`, or `./unstable/<name>`) and one `./css/<name>.css` entry wherever `src/<name>/<name>.css` exists. Entries with no `component.json` (`./config`, `./contracts`, `./augment`, later `./theme-script` and `./i18n`) are hand-maintained; `nz gen` keeps them and sorts the map. Stable and unstable components share the `./css/<name>.css` path, so component names must be unique across both. The root barrel re-exports stable components only; an unstable one is reachable only through its `./unstable/<name>` subpath. There is **no `./*` wildcard** (critique C2): it would make internals public. `src/_engines/**` and `src/_internal/**` are excluded from `exports`; they ship in `dist/` only as relative imports.
 
 ```jsonc
 // packages/tokens/package.json (excerpt)
@@ -367,7 +367,8 @@ All maps are **explicit**, generated by tsdown (`exports: true`) plus `nz gen` f
 ```
 
 ```jsonc
-// packages/react/package.json (excerpt; the full map is generated from component.json files)
+// packages/react/package.json (excerpt; component and css/<name>.css entries are generated from component.json files,
+// the others are hand-maintained and kept by nz gen)
 {
   "name": "@nizivo/react",
   "type": "module",
@@ -383,7 +384,8 @@ All maps are **explicit**, generated by tsdown (`exports: true`) plus `nz gen` f
     "./theme-script":       { "types": "./dist/theme-script/index.d.ts", "default": "./dist/theme-script/index.js" }, // server-safe
     "./i18n":               { "types": "./dist/i18n/index.d.ts",       "default": "./dist/i18n/index.js" },        // formatLabel, dirOf
     "./contracts":          { "types": "./dist/contracts/index.d.ts",  "default": "./dist/contracts/index.js" },   // renderElement, mergeProps, stateAttrs
-    "./augment":            { "types": "./dist/augment.d.ts",          "default": "./dist/augment.js" },           // types only
+    "./augment":            { "types": "./dist/augment.d.ts",          "default": "./dist/augment.js" },           // types only; augment.js is an empty
+                                                                                                                 // module, emitted because src/augment.ts is a tsdown entry
     "./unstable/date-range-picker": { "types": "…", "default": "…" },  // (v0.3) outside semver
     "./styles.css":         "./dist/styles.css",       // tokens + base + every component (the convenience sheet)
     "./css/base.css":       "./dist/css/base.css",     // reset-free base (a11y floor) + utilities, NO tokens
@@ -426,7 +428,7 @@ All maps are **explicit**, generated by tsdown (`exports: true`) plus `nz gen` f
 ```
 nizivo/                                      github.com/theneev/nizivo (public; slug is bound into npm trusted publishers; decision 9)
 ├─ package.json                              private root; devEngines.packageManager pnpm@12.11.2
-├─ pnpm-workspace.yaml                       catalogs; minimumReleaseAge: 4320; allowBuilds: {} (+ trustPolicy, blockExoticSubdeps after key check)
+├─ pnpm-workspace.yaml                       catalogs; minimumReleaseAge: 4320; allowBuilds: {}; trustPolicy; blockExoticSubdeps; '!fixtures/next'
 ├─ turbo.json
 ├─ .changeset/config.json                    fixed: [["@nizivo/tokens","@nizivo/react","@nizivo/icons","@nizivo/charts"]]
 ├─ .github/
@@ -442,6 +444,8 @@ nizivo/                                      github.com/theneev/nizivo (public; 
 │  ├─ tokens/                                @nizivo/tokens
 │  │  ├─ figma/raw/**                        extractor drop zone (committed for audit; never hand-edited)
 │  │  ├─ figma/tokensbruecke.settings.md     exact export settings for designers
+│  │  ├─ figma/snapshot.json  tb.config.json  DRY-RUN.md  codesyntax-rewrite.plan.{md,json}
+│  │  │                                      engineer snapshot, CLI config, the W1 dry run, the codeSyntax rename plan
 │  │  ├─ src/figma-owned/**                  written ONLY by the normalizer
 │  │  ├─ src/code-owned/                     breakpoints · layers (z) · elevation · focus · motion-derived (incl. fade, pulse, spin)
 │  │  │  ├─ proposals.tokens.json            NEW variables and primitives Figma lacks (scrim, accent-hover, text/on-critical,
@@ -450,7 +454,9 @@ nizivo/                                      github.com/theneev/nizivo (public; 
 │  │  ├─ src/nizivo.resolver.json
 │  │  ├─ build/  terrazzo.config.ts  plugins/{light-dark,tailwind,js-refs,contract}.ts
 │  │  ├─ scripts/  normalize.ts  token-diff.ts  a11y-overrides-check.ts  contrast-matrix.ts  contrast-pairs.json
-│  │  └─ test/golden/**                      byte-compared outputs (tokens.css, tailwind.css, …) + a both-prefix normalizer fixture
+│  │  │            figma/ (snapshot scripts, the CLI run `raw.ts`, the codeSyntax rewrite generator and its apply script)
+│  │  └─ test/golden/**                      byte-compared outputs (tokens.css, tailwind.css, …). The normalizer's golden is
+│  │                                         src/figma-owned itself; the both-prefix fixture is built inside the test from the real export
 │  ├─ react/                                 @nizivo/react
 │  │  ├─ src/
 │  │  │  ├─ contracts/                       PUBLIC at ./contracts: render.ts, merge-props.ts, state.ts (generated), details.ts
@@ -466,7 +472,7 @@ nizivo/                                      github.com/theneev/nizivo (public; 
 │  │  ├─ styles/  base.css (nz.base a11y floor, generated selector lists)  utilities.css  reset.css
 │  │  ├─ test/ssr/render-all.test.ts         renderToString every example under the default and react-server conditions
 │  │  ├─ engines.json                        the overlay-family default engine ({ "overlay": "react-aria" })
-│  │  ├─ .size-limit.json(gen)  tsdown.config.ts
+│  │  ├─ .size-limit.json(gen)  tsdown.config.ts  THIRD_PARTY_NOTICES (Lucide ISC, for the glyphs in _internal/glyphs.tsx)
 │  ├─ icons/   scripts/generate.ts  aliases.json  mirror.json  src/(gen)  LICENSE (ISC + Feather MIT notices)
 │  ├─ charts/  src/_core/{scale,time-ticks,geometry}.ts  src/_shared/{render,merge-props}.ts (vendored ~40 LOC, generated from core
 │  │           by nz gen, CI-diffed)  src/chart-frame/chart-frame.contract.ts  src/<chart>/…  (v0.2)
@@ -479,8 +485,10 @@ nizivo/                                      github.com/theneev/nizivo (public; 
 ├─ apps/
 │  ├─ docs/                                  Fumadocs 16.17 on Next 16.4: public docs, the largest RSC consumer, /r registry (v0.3)
 │  └─ workshop/                              Storybook 10.6 (react-vite): internal workshop + browser test harness
-├─ fixtures/                                 install PACKED tarballs; one shared Playwright spec
-│  ├─ next/  vite/  astro/                   v0.1
+├─ fixtures/                                 install the unpacked `pnpm pack` output as file: folders; one shared Playwright spec (§18.1)
+│  ├─ runner/                                @nizivo/fixture-runner: pack, install, build, the shared spec (in the monorepo workspace)
+│  ├─ floor-lane/                            browser floor lane: S1 matrix, halo/inverse probe, overlay entry (RESULTS.md)
+│  ├─ next/  vite/  astro/                   v0.1; each is its own pnpm workspace root, excluded from the monorepo ('!fixtures/next')
 │  └─ vite-ssr/  react-router/ (v0.2)   tanstack-start/ (v0.3)
 ├─ design/
 │  ├─ component-map.json                     generated: Figma canonical AND ghost ids → export + props (critique C25)
@@ -490,7 +498,7 @@ nizivo/                                      github.com/theneev/nizivo (public; 
 └─ LICENSE  TRADEMARKS.md  SECURITY.md  CONTRIBUTING.md  RELEASING.md  CODE_OF_CONDUCT.md
 ```
 
-**`component.json` drives the bookkeeping.** `pnpm nz gen` derives files from it, and CI reruns it and fails on `git diff`. It starts minimal in week 1 (barrels, `engine.ts`, exports entries, component map) and grows later (size-limit entries, docs stub, conformance and story skeletons).
+**`component.json` drives the bookkeeping.** `pnpm nz gen` derives files from it, and CI reruns it and fails on `git diff`. It starts minimal in week 1 (barrels, `engine.ts`, exports entries, component map) and grows later (size-limit entries, docs stub, conformance and story skeletons). `engine.ts` takes its names from the exported `<Name>Engine` interface in `<name>.contract.ts`, not from `parts`: a part can be leaf-only (Dialog's `Body` and `Footer` have no engine counterpart), and an engine element can be internal (Select's listbox). Only the interface's own members are read; `extends` is not followed. W1 (2026-10-14): a family subpath that exports several components (`text`: Text, Heading; `layout`; `progress`; `field`: Field, Fieldset) lists them in an optional `exports` field, because `<Pascal>` and `<Pascal><Part>` cannot express that. `tabs` (two compound namespaces, Tabs and TabNav, on one subpath) is still not expressible and needs a schema change before Tabs is built. `"adapter"` is rejected with a "not supported yet" error until v0.2 defines the second adapter's file layout.
 
 ```jsonc
 // packages/react/src/select/component.json
@@ -498,10 +506,12 @@ nizivo/                                      github.com/theneev/nizivo (public; 
   "name": "select",
   "status": "stable",                          // "unstable" → src/unstable/select and ./unstable/select
   "tier": "engine",                            // server | client | engine | own
-  "engine": "react-aria",                      // ← THE engine swap point (a family); nz gen writes engine.ts from it
+  "engine": "react-aria",                      // ← THE engine swap point (a family); nz gen writes engine.ts from it and from
+                                               //   the members of SelectEngine in select.contract.ts
   "overlay": true,                             // overlay family: engine must equal packages/react/engines.json (L4)
   // "adapter": "hooks",                       // optional: a second adapter inside the same family (the v0.2 Tooltip)
   "parts": ["Root", "Trigger", "Value", "Popup", "Item", "Group", "GroupLabel", "Separator"],
+  // "exports": ["Text", "Heading"],           // optional, for a family subpath such as text/component.json (see above)
   "interactive": ["trigger"],                  // parts that get the nz.base focus floor and hit target
   "focusTarget": "self",                       // "nested-input" for label-wrapped native inputs (§8.5)
   "stateIndicator": ["item[data-selected]"],   // fill- or shadow-painted states that get a forced-colours rule (§8.5)
@@ -526,14 +536,17 @@ FIGMA "Grove UI Library" (team "Vampire D Studio", Professional plan — decisio
         │ EXTRACT — the designer runs TokensBrücke 3.18.0: DTCG 2025.10, split modes, styles + metadata
         │   v0.1: export, then upload through the GitHub web UI to a branch → PR (no token pasted into Figma)
         │   later: the plugin's "push to GitHub PR" with a Neev bot account (fine-grained PAT support UNVERIFIED)
-        │   fallback: an engineer's Figma MCP use_figma snapshot, one collection per call (~6–8 calls; Pro seat; never in CI)
+        │   fallback: an engineer's read-only use_figma snapshot, converted by the TokensBrücke CLI (9 calls in W1;
+        │             Pro seat; never in CI)
         ▼
-packages/tokens/figma/raw/{Collection}/{Mode}.tokens.json
-        │ NORMALIZE — scripts/normalize.ts (ours, ~300 LOC, golden-tested)
+packages/tokens/figma/raw/{Collection}/{Mode}.tokens.json    (a one-mode collection is raw/{Collection}.tokens.json)
+                          Typography-styles.tokens.json · Effect-styles.tokens.json
+        │ NORMALIZE — scripts/normalize.ts + scripts/normalize/** (ours, ~660 lines with the collection map; golden-tested)
         │   allowlist "Grove *" | "Nizivo *" (styles "Grove/*" | "Nizivo/*"); both prefixes → nz
         │   (the Grove allowlist is removed after the first post-rename sync) · FLOAT → dimension (rem) / duration (ms) / number
-        │   "spring(m,k,c,v)" → $extensions["dev.nizivo.spring"] · text styles → typography · effects → shadow
-        │   Figma ids/keys → $extensions["dev.nizivo.figma"] (the token identity; overrides key on it) · then `tz format`
+        │   by group · "spring(m,k,c,v)" → $extensions["dev.nizivo.spring"] · text styles → typography · effects → shadow
+        │   Figma variable and text-style ids → $extensions["dev.nizivo.figma"] (the token identity; overrides key on it)
+        │   writes oxfmt-clean JSON itself; `tz format` runs only as a check (W1: its layout fails oxfmt --check)
         ▼
 src/figma-owned/** (normalizer only)  +  src/code-owned/** (engineers)  +  src/nizivo.resolver.json
         │ tooling/spring: ONE generator → code-owned/motion-derived.tokens.json (linear() + paired durations)
@@ -551,7 +564,13 @@ All three Terrazzo behaviours this depends on were VERIFIED in spike S3 on 2.8.0
 - A ~15-line `light-dark` transform produces one declaration per semantic colour.
 - The stock `plugin-tailwind` resolves aliases to **primitives** and adds an `@variant dark` block, which breaks nested themes. A ~20-line custom plugin emits semantic references instead.
 
-**UNVERIFIED until week 1:** a real TokensBrücke export through the normalizer (S3 used hand-written tokens), and the names Terrazzo gives typography sub-values.
+**Verified in week 1 (2026-10-14; `packages/tokens/figma/DRY-RUN.md`):** the real TokensBrücke export (the CLI 3.18.0 on the read-only `use_figma` snapshot) passes `tz check` once normalized, the S3a recipe holds on it (each scoped block holds only its own modifier's tokens), and the typography names are recorded in [§7.2](#72-naming). The raw export does not validate on its own (8-digit hex colours, string line heights and letter spacing, cross-file aliases), and it types durations and scales as px dimensions, which is why the normalizer maps FLOATs by group. The plugin's own export (style group names, zip layout, and output equal to the CLI's apart from the known differences in `tokensbruecke.settings.md`) stays UNVERIFIED until the designer's first run (figma-handoff §1.4 #3, exit criterion 8).
+
+**TokensBrücke 3.18.0 limits found in week 1:**
+- It crashes on an effect style with no effects (`Elevation/0 Flat`). `scripts/figma/raw.ts` leaves that style out of the CLI input; design is asked to delete it (figma-handoff §1.4).
+- Only a style's first effect decides its token type. `Surface/Glass` exports as a 24 px background `blur`, which has no DTCG type, so the normalizer skips it, and its drop shadow is lost. `Surface/Liquid Glass` (a Figma GLASS effect) is not exported at all. Week 2 decides on a code-owned backdrop token.
+- It exports no Figma version id and no variable key. `$extensions.figma` holds `variableId`, `codeSyntax` and `collection`; the export metadata holds a `createdAt` date. Text styles carry a `styleId`; effect styles carry no id, so effect tokens are matched by name.
+- Spawned from a script, the CLI rejects `--input -` as two arguments; `--input=-` works. `pnpm tokens:raw` pipes the snapshot on stdin that way, with `Elevation/0 Flat` filtered out.
 
 ### 7.2 Naming
 
@@ -562,8 +581,8 @@ All three Terrazzo behaviours this depends on were VERIFIED in spike S3 on 2.8.0
 | `space/4`, `radius/md`, `border-width/focus`, `size/control-md`, `size/touch-min` | `--nz-space-4`, `--nz-radius-md`, `--nz-border-width-focus`, `--nz-size-control-md`, `--nz-size-touch-min` | public |
 | `duration/fast`, `easing/standard`, `easing/spring`, `distance/lift`, `scale/press`, `tilt/max-deg` | `--nz-duration-fast`, `--nz-easing-standard`, `--nz-easing-spring`, `--nz-distance-lift`, `--nz-scale-press`, `--nz-tilt-max-deg` | public |
 | `grid/columns`, `layout/sidebar`, `layout/content-max`, `type/h1`, `section/gap` | `--nz-grid-columns`, `--nz-layout-sidebar`, `--nz-layout-content-max`, `--nz-type-h1`, `--nz-section-gap` | public |
-| text style `Grove/Label/M` | `--nz-font-label-m` (a `font` shorthand) + `--nz-tracking-label-m`; families `--nz-font-family-sans`, `--nz-font-family-mono` | public (exact names UNVERIFIED until the Terrazzo dry run; the `contract` plugin renames if needed) |
-| effect style `Grove/Elevation/1` … `/4` | `--nz-elevation-1` … `--nz-elevation-4` | public |
+| text style `Grove/Label/M` | `--nz-font-label-m` (a `font` shorthand) + `--nz-tracking-label-m`; families `--nz-font-family-sans`, `--nz-font-family-mono` | public. W1 dry run: Terrazzo emits `--nz-font-label-m` as a shorthand of `var()` references to its weight, size, line-height and family sub-values (`--nz-font-label-m-font-weight`, `-font-size`, `-line-height`, `-font-family`), plus a fifth sub-value, `--nz-font-label-m-letter-spacing`, which the shorthand does not include. Tracking arrives as `--nz-font-label-m-letter-spacing` in rem; week 2 renames it to `--nz-tracking-label-m` through plugin-css's `subValueVariableName` and emits `em` from the style's letter-spacing percent. Text styles carry only `"Geist"` / `"Geist Mono"`, so the family tokens are code-owned (week 2) |
+| effect styles `Grove/Elevation/1 Card`, `2 Raised`, `3 Popover`, `4 Modal` | `--nz-elevation-1` … `--nz-elevation-4` (the normalizer takes the leading number) | public |
 
 Rules:
 - There is **no** `--nz-color-*` family (critique C8). The `color.` group is stripped by `variableName`.
@@ -586,12 +605,14 @@ export default defineConfig({
   plugins: [
     captureResolver,                                          // lets lightDark() read the dark value of the same token
     css({ filename: 'tokens.css', variableName, permutations: [
-      { input: { theme: 'light', motion: 'default', viewport: 'mobile' }, transform: lightDark, prepare: rootBlock },
+      { input: { theme: 'light', motion: 'default', viewport: 'mobile' }, exclude: ['layout.viewport'],   // frame widths (§7.2)
+        transform: lightDark, prepare: rootBlock },
       // only.modifiers + include (own groups) + exclude: the S3a recipe; non-default inputs only (no base-id collision).
-      // MOTION_GROUPS = ['duration.**', 'easing.**', 'distance.**', 'scale.**', 'tilt.**', …]; VIEWPORT_GROUPS = ['grid.**', 'layout.**', 'type.**', 'section.**']
+      // MOTION_GROUPS = ['duration.**', 'easing.**', 'distance.**', 'scale.**', 'tilt.**', 'stagger.**', 'magnetic.**'];
+      // VIEWPORT_GROUPS = ['grid.**', 'layout.**', 'type.**', 'section.**']
       { input: { motion: 'reduced' },   only: { modifiers: ['motion'] },   include: MOTION_GROUPS,   exclude: ['color.p.**'], prepare: reducedBlocks },
-      { input: { viewport: 'tablet' },  only: { modifiers: ['viewport'] }, include: VIEWPORT_GROUPS, exclude: ['color.p.**'], prepare: media('--nz-sm') },
-      { input: { viewport: 'desktop' }, only: { modifiers: ['viewport'] }, include: VIEWPORT_GROUPS, exclude: ['color.p.**'], prepare: media('--nz-lg') },
+      { input: { viewport: 'tablet' },  only: { modifiers: ['viewport'] }, include: VIEWPORT_GROUPS, exclude: ['color.p.**', 'layout.viewport'], prepare: media('--nz-sm') },
+      { input: { viewport: 'desktop' }, only: { modifiers: ['viewport'] }, include: VIEWPORT_GROUPS, exclude: ['color.p.**', 'layout.viewport'], prepare: media('--nz-lg') },
     ]}),
     tailwind({ filename: 'tailwind.css', namespace: 'nz' }),
     contract({ filename: 'contract.json' }),
@@ -601,10 +622,11 @@ export default defineConfig({
 
 ### 7.4 Theme mechanism
 
-- **`light-dark()` in every semantic colour, declared once on `:root`.** Colour tokens are **never** registered with `@property`. Spike S1 (Chromium 156, WebKit 27.2) showed that native `light-dark()` nests correctly (dark → light → dark), and that both `@property` registration and Lightning CSS lowering break nesting.
+- **`light-dark()` in every semantic colour, declared once on `:root`.** Colour tokens are **never** registered with `@property`. Spike S1 (Chromium 156, WebKit 27.2) showed that native `light-dark()` nests correctly (dark → light → dark), and that both `@property` registration and Lightning CSS lowering break nesting. The week 1 floor lane reproduced the nesting matrix on Firefox 129 for the token path (`light-dark()` in custom properties, read through `var()`; `fixtures/floor-lane/RESULTS.md`); the direct literal form fails on Firefox 129–131 (Deviations page entry D1, [§7.5](#75-sample-generated-css)). Safari 17.5 is not tested yet.
 - **Opt-in default.** `:root` gets no `color-scheme`, so pages render light even when the OS is dark (S1 VERIFIED: an unset or `normal` root resolves to light). The app opts in with `<html data-nz-theme="system">` (follows the OS), `"light"` or `"dark"`. Any element with `data-nz-theme` is a nested scope.
 - **`ThemeScript`** (server-safe, ~250 B, `nonce` prop, published SHA-256) persists a user's choice before first paint (r1). There is no ThemeProvider.
-- **Inverse surfaces** (Toast, Tooltip, Card `tone="inverse"`): the component emits `data-nz-scheme="inverse"`, and `tokens.css` maps that to `color-scheme: var(--nz-scheme-inverse)`. Every nested token then resolves to the opposite theme, with no "on-inverse" token family (gap report C §2.6; probe VERIFIED in Chromium and WebKit).
+- **Inverse surfaces** (Toast, Tooltip, Card `tone="inverse"`): the component emits `data-nz-scheme="inverse"`, and `tokens.css` maps that to `color-scheme: var(--nz-scheme-inverse)`. Every nested token then resolves to the opposite theme, with no "on-inverse" token family (gap report C §2.6; probe VERIFIED in Chromium, WebKit and Firefox 129).
+  - **Inverse inside inverse stays inverse.** Adopted 2026-10-14 (builder default; the maintainer can override). A nested inverse surface does not flip back, because `--nz-scheme-inverse` is inherited unchanged; that is what the CSS does in every engine the floor lane ran. Portaled overlays render outside the surface, so the common case, a Tooltip opened from a `tone="inverse"` Card, does not nest. Design is asked to confirm (figma-handoff §6 Q36).
 - **The `nz.themes` layer** sits right after `nz.tokens`. A brand file or consumer theme written in `@layer nz.themes { … }` beats base tokens **regardless of import order**. Without it, `:root` and `[data-nz-brand]` on `<html>` tie on specificity and source order decides.
 - **Brand and density are reserved names with no values in 0.x** (`data-nz-brand`, `data-nz-density`). When a brand ships, the generator re-declares aliases on the brand scope, because `var()` substitutes where a property is declared.
 - **Motion preference:** `prefers-reduced-motion: reduce` **or** `[data-nz-motion="reduce"]` swaps the motion tokens. There is no `full` override (critique C9b) and no test-only `off`; Playwright's `animations: 'disabled'` covers screenshots.
@@ -667,9 +689,14 @@ Values come from [`figma/00-tokens-and-styles.md`](figma/00-tokens-and-styles.md
     --nz-border-width-default: 1px; --nz-border-width-focus: 2px;
     --nz-size-control-sm: 2rem; --nz-size-control-md: 2.5rem; --nz-size-control-lg: 3rem; --nz-size-touch-min: 2.75rem;
     --nz-font-family-sans: var(--font-geist-sans, "Geist"), ui-sans-serif, system-ui, sans-serif;  /* no font files shipped */
-    --nz-font-label-m: 500 0.875rem/1.4 var(--nz-font-family-sans);
-    --nz-font-body-s:  400 0.75rem/1.5 var(--nz-font-family-sans);   /* PROPOSAL (text style Body/S 12; name provisional, §7.6) */
-    --nz-font-label-s: 500 0.75rem/1.4 var(--nz-font-family-sans);   /* PROPOSAL (text style Label/S 12; name provisional, §7.6) */
+    /* text styles: a font shorthand built from its own sub-values (the shape Terrazzo 2.8.0 emits; W1 dry run) */
+    --nz-font-label-m: var(--nz-font-label-m-font-weight) var(--nz-font-label-m-font-size)/var(--nz-font-label-m-line-height)
+                       var(--nz-font-label-m-font-family);
+    --nz-font-label-m-font-family: var(--nz-font-family-sans);        /* W1 emits Figma's literal "Geist"; week 2 maps it */
+    --nz-font-label-m-font-size: 0.875rem; --nz-font-label-m-font-weight: 500; --nz-font-label-m-line-height: 1.4;
+    --nz-tracking-label-m: 0em;                                         /* the letter-spacing sub-value, renamed; em in week 2 */
+    --nz-font-body-s:  var(--nz-font-body-s-font-weight) …;            /* PROPOSAL: Body/S, 400 12 px / 1.5 (name confirmed W1, §7.6) */
+    --nz-font-label-s: var(--nz-font-label-s-font-weight) …;           /* PROPOSAL: Label/S, 500 12 px / 1.4 (name confirmed W1, §7.6) */
 
     /* motion: Figma "Default" mode + derived pairs */
     --nz-duration-instant: 80ms; --nz-duration-fast: 140ms; --nz-duration-base: 220ms; --nz-duration-chart-draw: 700ms;
@@ -723,7 +750,7 @@ Values come from [`figma/00-tokens-and-styles.md`](figma/00-tokens-and-styles.md
 ```
 
 Notes on the sample:
-- `light-dark()` inside `color-mix()` and `box-shadow` resolved per scope in Chromium 156 and WebKit 27.2 (probe). **It is UNVERIFIED on the Safari 17.5 floor itself and in Firefox.** A floor-version browser lane runs before v0.1 exit.
+- `light-dark()` inside `color-mix()` and `box-shadow` resolved per scope in Chromium 156 and WebKit 27.2 (probe), and on **Firefox 129** for the token path (`--nz-focus-halo`, `--nz-elevation-1`; W1 floor lane, `fixtures/floor-lane/RESULTS.md`). Written **directly** on a non-inherited property with literal colours (`background-color: light-dark(#fff, #181b19)`, the same inside `color-mix()` or a `box-shadow` colour), it takes the wrong scheme in nested scopes on Firefox 129–131 (bug 1914735, fixed in 132). `tokens.css` never takes that shape; consumers are told to keep it in custom properties ([§7.9](#79-consumer-theming-recipes-docs)), and it is Deviations page entry D1 ([§18.2](#182-docs-site-public)). **The Safari 17.5 floor itself is still UNVERIFIED** (§21.1, exit criterion 6).
 - The elevation shadows use gap report C §2.3's rule: same geometry as Figma, dark alpha = min(0.6, 6 × light alpha), black. These are design-tuning values.
 
 ### 7.6 Code-owned tokens
@@ -731,7 +758,7 @@ Notes on the sample:
 Figma has no breakpoints, z-index, scrim or dark elevation. These live in `src/code-owned/**`. **One rule decides where a value that Figma does not supply goes:**
 - **Re-pointed existing Figma variables** (an alias changed for contrast, or for the Option A ladder in the case of text/secondary: text/secondary, text/tertiary, dark text/critical, dark text/info, icon/warning, border/warning, dark icon/critical, dark bg/critical, dark bg/subtle and the dark border/* values) go in `code-owned/a11y/{light,dark}.overrides.tokens.json` with `$extensions["app.nizivo.override"]` (`figmaVariableId`, `figmaValueAtOverride`, …; [§15.4](#154-ownership-and-the-override-mechanism)). Drift and redundancy are checked against the Figma value.
 - **New variables and primitives** (no Figma variable yet) go in `code-owned/proposals.tokens.json` with `$extensions["app.nizivo.proposal"]` (`figmaVariable` to create, `approvedBy`, `expires`). Their redundancy check is "Figma now defines this variable", which forces deletion.
-- **New text styles** (no Figma style yet) go in the same file as `typography` tokens. Their proposal extension names a `figmaStyle` instead of a `figmaVariable`, and the redundancy check matches the style name in the export, so an entry deletes itself once design adds the style. The first two are `Body/S` and `Label/S` at 12 px (decision 8c). Their CSS names, `--nz-font-body-s` and `--nz-font-label-s`, follow the `--nz-font-label-m` pattern and are **provisional** until the week 1 Terrazzo dry run fixes how a real Figma style is named. If the names differ, the proposal is renamed before 0.1.0 so that swapping in the real style is not a breaking change.
+- **New text styles** (no Figma style yet) go in the same file as `typography` tokens. Their proposal extension names a `figmaStyle` instead of a `figmaVariable`, and the redundancy check matches the style name in the export, so an entry deletes itself once design adds the style. The first two are `Body/S` and `Label/S` at 12 px (decision 8c). Their CSS names, `--nz-font-body-s` and `--nz-font-label-s`, are **confirmed** by the week 1 Terrazzo dry run (`packages/tokens/figma/DRY-RUN.md`): written as `typography` tokens at `font.body.s` and `font.label.s`, the proposals emit the same shorthand and sub-values as a real style, and Figma styles named `Body/S` and `Label/S` normalize to the same ids. Swapping in the real styles is therefore not a breaking change.
 - **Code-owned by nature** (breakpoints, z-index, derived spring values, the inverse mechanism) carry neither and stay.
 
 | Token | Value | Why code-owned | Leaves code when |
@@ -753,6 +780,7 @@ Figma has no breakpoints, z-index, scrim or dark elevation. These live in `src/c
 | `--nz-chart-critical` (proposal) | `var(--nz-chart-negative)`: red/500 (3.77:1 on light surfaces, as `border/critical` in §15.3) | ProgressBar `tone="critical"`; Figma's fill misuses `text/critical` | design adds `chart/critical` |
 | `--nz-scale-enter` | 0.96; Reduced 1 | From the Dropdown Menu description "scale 0.96→1" | design adds `scale/enter` |
 | `--nz-font-body-s`, `--nz-font-label-s` (proposals) | 400 / 500, 12 px (0.75rem), line height 1.5 / 1.4, tracking 0 | Decision 8c allows 12 px; Figma has no 12 px style (figma/00) | design adds `Body/S` and `Label/S` |
+| `--nz-font-family-sans`, `--nz-font-family-mono` | sans: `var(--font-geist-sans, "Geist")`, then system fallbacks ([§7.5](#75-sample-generated-css)); mono: the same shape for Geist Mono (week 2) | Figma text styles carry only the family name; the fallback stack and the `next/font` hook are code concerns | never (code-owned by nature) |
 | `--nz-scheme-inverse` | dark / light | Mechanism for inverse scopes | never |
 | a11y overrides and proposals | [§15.3](#153-token-remediation-computed) | WCAG failures in Figma values; variables Figma lacks | the redundancy check deletes each one |
 
@@ -760,10 +788,10 @@ Figma has no breakpoints, z-index, scrim or dark elevation. These live in `src/c
 
 | Signal | v0.1 | Later |
 |---|---|---|
-| Figma changed but the repo did not | The release PR body prints the last sync date and Figma version id from the export metadata | A daily scheduled GitHub Action reads the file's latest version id through the REST API and opens a "sync needed" issue when it is ahead of the last export. This works because the file is on Professional (decision 3). It needs a read-only Figma token as a repo secret and no hosted relay, so it costs nothing. A `LIBRARY_PUBLISH` webhook would need a hosted relay, so it is not used under the zero-spend constraint. **Never poll a file on Starter** (6 requests a month there) |
+| Figma changed but the repo did not | The release PR body prints the last sync date: `createdAt` in the committed export's metadata (`tb.config.json` keeps `omitCreatedAt: false` for this). W1: TokensBrücke exports no Figma version id and no variable key, so the later REST check compares the file's latest version date with that `createdAt` | A daily scheduled GitHub Action (a local command while Actions is off, [§1](#1-decisions-we-need-from-you)) reads the file's latest version through the REST API and opens a "sync needed" issue when that version is newer than the committed export's `createdAt`. This works because the file is on Professional (decision 3). It needs a read-only Figma token as a repo secret and no hosted relay, so it costs nothing. A `LIBRARY_PUBLISH` webhook would need a hosted relay, so it is not used under the zero-spend constraint. **Never poll a file on Starter** (6 requests a month there) |
 | Release while Figma is ahead | — | Releases are blocked while a "sync needed" issue is open |
 | Value diff | Every extractor PR: normalize → build → token-diff sticky comment; removed or renamed public names need a breaking changeset | — |
-| Hand edits to Figma-owned files | Invariant `normalize(raw) === src/figma-owned`; code-first edits need the `tokens:code-first` label plus a recorded Figma follow-up. A one-off engineer script rewrites all 175 `codeSyntax.WEB` values to `var(--nz-…)` for design to review, with the Grove → Nizivo rename (handoff §2.1) | An agent `figma-push` script writes proposals to a Figma **branch** within the MCP budget |
+| Hand edits to Figma-owned files | Invariant `normalize(raw) === src/figma-owned`; code-first edits need the `tokens:code-first` label plus a recorded Figma follow-up. A one-off engineer script rewrites all 175 `codeSyntax.WEB` values to `var(--nz-…)` for design to review, with the Grove → Nizivo rename (handoff §2.1). W1: `scripts/figma/codesyntax-rewrite.ts` wrote the plan (`figma/codesyntax-rewrite.plan.md`: 175 rewrites, 33 renames) and generated `scripts/figma/codesyntax-apply.figma.js`; it has not run against Figma and runs once with `DRY_RUN = false` only after the maintainer approves | An agent `figma-push` script writes proposals to a Figma **branch** within the MCP budget |
 | Override drift, redundancy, expiry | CI fails on each ([§15.3](#153-token-remediation-computed)) | — |
 | Visual impact | Visual regression on every sync PR (light, desktop) | dark, mobile and RTL modes by v1.0 |
 
@@ -803,6 +831,8 @@ Figma has no breakpoints, z-index, scrim or dark elevation. These live in `src/c
 /* 4. A dark island inside a light page: <aside data-nz-theme="dark">…</aside> */
 ```
 
+Keep `light-dark()` inside custom properties, as recipe 1 does. Written directly on `background`, `border` or `box-shadow` with literal colours, it takes the wrong scheme in nested scopes on Firefox 129–131 (Deviations page entry D1, [§18.2](#182-docs-site-public)).
+
 ---
 
 ## 8. Styling contract
@@ -837,7 +867,7 @@ Figma has no breakpoints, z-index, scrim or dark elevation. These live in `src/c
 | Root class | `nz-<component>`, kebab-case, unhashed, fixed prefix | `nz-kpi-tile` |
 | Part class | `nz-<component>-<part>` (no BEM `__`/`--`; stylelint pattern `^nz(-[a-z0-9]+)+$`) | `nz-select-trigger` |
 | `data-slot` | The class minus `nz-`, on every documented part | `data-slot="select-trigger"` |
-| Variant attributes | `data-variant`, `data-size`, `data-tone`; any other enumerated presentational prop maps to `data-<prop>` | `data-padding="sm"`, `data-full-width` |
+| Variant attributes | `data-variant`, `data-size`, `data-tone`; any other enumerated presentational prop maps to `data-<prop>`. `data-full-width` is in the `presentational` group of `contracts/vocabulary.json`, with `data-slot`, so it is part-owned under the composition rule below. Adopted 2026-10-14 (builder default; the maintainer can override), for `data-full-width` only | `data-padding="sm"`, `data-full-width` |
 | Public hook | `--nz-<component>-<property>[-<state>]`; **read, never assigned by Nizivo** | `--nz-button-bg-hover` |
 | Private variable | `--_nz-<component>-<property>`; set only by variant, size and tone rules | `--_nz-button-bg` |
 | Components and parts | PascalCase; flat `<Component><Part>`, and `Component.Part` through the namespace | `SelectTrigger`, `Select.Trigger` |
@@ -848,6 +878,10 @@ Figma has no breakpoints, z-index, scrim or dark elevation. These live in `src/c
 
 Consumer `className` is appended **after** ours. Consumer event handlers run **before** ours, and ours skip when `event.defaultPrevented`. A part is "documented" when it has a `data-slot`; DOM between documented parts is not API.
 
+**Composition precedence.** Adopted 2026-10-14 (builder default; the maintainer can override). When a part renders through a `render` element, the part's presentational attributes win: `data-slot`, `data-variant`, `data-size`, `data-tone` and `data-full-width` (the vocabulary's `presentational` group; `PART_OWNED` in `contracts/render.ts`). Every other prop merges with `mergeProps` semantics, where the element wins, and duplicate `className` tokens are dropped. The rule covers a server `Button` passed into a client part: under RSC it arrives pre-rendered as a host `<button data-slot="button" data-size="md">`, so fixing precedence inside Button alone is not enough (the Next fixture caught this in week 1). Button also applies its own `data-*` before the consumer's props, so the in-tree path gives the same result. `data-size` therefore follows the part: `Select.Root size="lg"` with a Button trigger gives `data-size="lg"`.
+
+**Which parts take `render`.** Every DOM-rendering part, except the engine-owned positioned popups (`Select.Popup`, `Dialog.Popup`, `Tooltip.Popup`) and `Select.Root`. The engine owns those elements in v0.1 (positioning, focus containment, portal). Adopted 2026-10-14 (builder default; the maintainer can override); revisit with the v0.2 hooks adapter, which owns its DOM.
+
 ### 8.3 The state vocabulary (one list, engine-independent)
 
 The single source is `contracts/vocabulary.json`. It generates the `stateAttrs()` TypeScript helper, the stylelint allowlist, the emitted-CSS check and the docs page.
@@ -855,7 +889,7 @@ The single source is `contracts/vocabulary.json`. It generates the `stateAttrs()
 **Rules.**
 1. **Native and ARIA first, but only for states that belong to the element whatever the engine.** CSS may select `:disabled`, `:checked`, `:indeterminate`, `:focus-visible`, `:user-invalid`, `:placeholder-shown`, `[aria-expanded]`, `[aria-current]`, `[aria-pressed]`, `[aria-sort]` and `[aria-selected]` on T0 parts and on engine parts that render the same native element.
 2. **Overlay state is always `data-*`.** `[open]`, `:popover-open`, `:modal` and `::backdrop` are **not** in the public vocabulary, because they exist only for native overlays. Using them would make every re-skin break on an engine swap.
-3. Adapters derive attributes from the engine's **render state** (React Aria's `isEntering`, `isSelected`, …), never by copying engine DOM attributes. The adapter strips engine `data-*` attributes ([§9.3](#93-contract-rules-keep-the-seam-honest) rule 6); only an undocumented per-engine functional allowlist reaches the DOM, and no shipped CSS or docs reference it. (Without the filter, React Aria's `data-hovered` would sit next to Nizivo's `data-pressed` and look official, and CSS written against it would break on any engine swap.)
+3. Adapters derive attributes from the engine's **render state** (React Aria's `isEntering`, `isSelected`, …), never by copying engine DOM attributes. The adapter strips **every** engine `data-*` attribute, including engine copies of vocabulary names such as React Aria's own `data-invalid` and `data-pressed` ([§9.3](#93-contract-rules-keep-the-seam-honest) rule 6); only an undocumented per-engine functional allowlist reaches the DOM, and no shipped CSS or docs reference it. This rule wins where rule 6 once said vocabulary-named engine attributes may pass. Adopted 2026-10-14 (builder default; the maintainer can override). (Without the filter, React Aria's `data-hovered` would sit next to Nizivo's `data-pressed` and look official, and CSS written against it would break on any engine swap.)
 4. Every attribute is a **presence** attribute (`data-open=""`) unless a value set is listed.
 
 **Global state attributes** (emitted by `stateAttrs()`):
@@ -865,12 +899,12 @@ The single source is `contracts/vocabulary.json`. It generates the `stateAttrs()
 | `data-open` | — | triggers, positioners, popups, backdrops, disclosures | Open | `isOpen` |
 | `data-entering` / `data-exiting` | — | popups, backdrops, toasts | Enter/exit transition running; the node stays mounted until it ends | `isEntering` / `isExiting` |
 | `data-side` | `top\|right\|bottom\|left` | positioned popups | **Resolved physical** side after flip and RTL; the `side` prop takes logical values | `placement` |
-| `data-align` | `start\|center\|end` | positioned popups | Resolved alignment | `placement` (split) |
+| `data-align` | `start\|center\|end` | positioned popups | Resolved alignment | the requested `align` (React Aria reports only the resolved side, so its adapter echoes the request) |
 | `data-nested-open` | — | dialog popup | A child modal is open | own |
 | `data-highlighted` | — | collection items | Keyboard or virtual focus, or pointer hover | `isFocused` (items) |
 | `data-selected` | — | items, rows, tabs, segments | Selected | `isSelected` |
 | `data-checked` / `data-indeterminate` | — | menu checkbox/radio items, select-all | Checked/mixed where no native input exists | `isSelected` / `isIndeterminate` |
-| `data-pressed` | — | engine pressables | Pointer or keyboard press (native parts use `:active`) | `isPressed` |
+| `data-pressed` | — | engine pressables | Pointer or keyboard press (native parts use `:active`) | `isPressed`, but not while open: React Aria also reports an open Select or Dialog trigger as pressed, and adapters do not map that |
 | `data-focus-visible` | — | parts with virtual or programmatic focus | Otherwise use `:focus-visible` | `isFocusVisible` |
 | `data-disabled` / `data-readonly` / `data-required` | — | control roots, items, non-native renders | Mirrors the attribute | `isDisabled` / `isReadOnly` / `isRequired` |
 | `data-invalid` | — | field, control | **An error message is currently presented** (not "fails constraints"; gap report A §2.3) | own Field state, never the engine's |
@@ -894,7 +928,7 @@ The single source is `contracts/vocabulary.json`. It generates the `stateAttrs()
 | `data-nz-top-layer` | — | toast region and live announcer (`OverlayEngine.markTopLayer` maps it to the engine's exemption attribute) |
 | `data-nz-brand`, `data-nz-density` | **reserved, no values in 0.x** | — |
 
-**Runtime CSS variables written by components** (read-only for consumers): `--nz-trigger-width`, `--nz-available-width`, `--nz-available-height` and `--nz-transform-origin` on popups; `--nz-toast-inset`, `--nz-layout-bottom-inset` and `--nz-layout-top-inset` on `<html>`. They are written through CSSOM from client code, which a strict CSP allows (gap report B §B1.1). The React Aria stylesheet aliases its `--trigger-width` to `--nz-trigger-width`.
+**Runtime CSS variables written by components** (read-only for consumers): `--nz-trigger-width`, `--nz-available-width`, `--nz-available-height` and `--nz-transform-origin` on popups; `--nz-toast-inset`, `--nz-layout-bottom-inset` and `--nz-layout-top-inset` on `<html>`. They are written through CSSOM from client code, which a strict CSP allows (gap report B §B1.1). The React Aria adapter copies them from the engine's positioning style: `--trigger-width` → `--nz-trigger-width`, `--trigger-anchor-point` → `--nz-transform-origin`, and `maxHeight` → `--nz-available-height`. React Aria provides nothing for `--nz-available-width`, so that variable is not written with this engine. The adapter also drops the engine's inline `z-index` (100000), so the `--nz-z-overlay` band applies ([§12.1](#121-the-layering-model)).
 
 ### 8.4 Component CSS hooks
 
@@ -906,7 +940,7 @@ The single source is `contracts/vocabulary.json`. It generates the `stateAttrs()
    - a `--nz-easing-spring*` value must sit in the same transition item as its paired `--nz-duration-spring*`, and only on `transform`, `scale`, `translate` or `rotate`;
    - `animation-iteration-count: infinite` only with `--nz-duration-pulse` or `--nz-duration-spin` ([§13.2](#132-rules));
    - logical properties only (`stylelint-use-logical`);
-   - `font-size` ≥ 0.875rem;
+   - `font-size` ≥ 0.75rem (12 px, decision 8c), and 12 px only through the `Body/S` and `Label/S` tokens;
    - every file starts with the canonical layer line.
 3. **Per-state hooks** (`-hover`, `-pressed`, `-disabled`) exist in 0.x only on Button, IconButton, Input, Select trigger, Card and NavItem. Other components get base hooks. Adding a hook later is a minor.
 4. **Hooks are extracted** by a Lightning CSS visitor into `contracts/api/css/<name>.json`. A removed hook is breaking; during a deprecation the old name is aliased as `var(--nz-new, var(--nz-old, …))` for one minor.
@@ -1019,7 +1053,8 @@ An engine swap therefore cannot touch the styling contract, and the conformance 
 src/select/
   component.json           "engine": "react-aria"           ← the swap point
   select.contract.ts       public engine-free types + SelectEngine interface   (no directive)
-  engine.ts                GENERATED: named re-exports from ../_engines/<engine>/select.client   (no directive)
+  engine.ts                GENERATED: named re-exports from ../_engines/<engine>/select.client of the members of
+                           SelectEngine (not component.json "parts"; see §6)   (no directive)
   select.client.tsx        'use client' — public parts: classes, data-slot, hooks, Field wiring; call Engine.*
   select.parts.ts          GENERATED: named re-exports from ./select.client, aliased Root/Trigger/…   (no directive)
   index.ts                 GENERATED: flat named re-exports + `export * as Select from './select.parts'`   (no directive)
@@ -1043,7 +1078,7 @@ src/_engines/react-aria/select.client.tsx   'use client' — the ONLY Select mod
 3. **Documented element type on engine parts.** Engine parts (`Select.Trigger`, `Dialog.Trigger`, `Menu.Item`) render the element type their docs name; a *component* that renders that element can be swapped in through `render`. Another element type is unsupported, and Nizivo's own dev check in the public leaf warns about it. React Aria's dev-only warning (V10) is not the contract, so a replacement engine is never tested against React Aria's quirk. **`Menu.Item` supports links:** with `href`, or with `render={<Link …/>}` whose element carries `href`, the adapter passes the `href` to the engine's link mode (React Aria renders an `<a>`) and renders the consumer element. By rule 1, any replacement engine must support link items. T0 parts (Button, NavItem) have no limit.
 4. **No engine types in public `.d.ts`:** a ts-morph walk of the `.d.ts` import graph from every `types` condition in the exports map must never reach `react-aria*`, `@react-aria/*`, `@react-stately/*`, `@internationalized/*` or any `_engines/**` file. No engine attribute names in docs.
 5. **Locale is always explicit.** Every engine root is wrapped in `EngineLocale` (`I18nProvider` with the resolved locale; default `'en-US'`). Without it React Aria renders `en-US` on the server and switches to the browser locale after hydration (gap report B §A3, source-verified).
-6. **Engine DOM props are filtered.** Adapters pass engine DOM props through `engineDom(p)` (`_engines/<engine>/dom.ts`). It removes every `data-*` key that is not in `contracts/vocabulary.json`, except a per-engine functional allowlist (`_engines/<engine>/dom-allowlist.json`, for example `data-react-aria-top-layer` and `data-live-announcer`), which is never documented. Without it, React Aria 1.22.1 adds `data-rac`, `data-hovered`, `data-focused` and more to every part, and the conformance rule "nothing outside the vocabulary" ([§9.6](#96-conformance-suite)) would fail for the default engine.
+6. **Engine DOM props are filtered.** Adapters pass engine DOM props through `engineDom(p)` (`_engines/<engine>/dom.ts`). It removes **every** engine `data-*` key, vocabulary-named ones included ([§8.3](#83-the-state-vocabulary-one-list-engine-independent) rule 3 wins), except a per-engine functional allowlist (`_engines/<engine>/dom-allowlist.json`), which is never documented. Adopted 2026-10-14 (builder default; the maintainer can override). For React Aria it holds the attributes the engine reads back from the DOM: `data-key` and `data-collection` (focus, scroll-into-view and typeahead), `data-react-aria-top-layer`, `data-live-announcer`, and the `data-href` family that Menu's link items need; the file is the full list. `engineDom` also drops the engine's `className` (its default `react-aria-*` classes) and `slot` (a context slot name that would otherwise reach the DOM). Vocabulary attributes come only from `stateAttrs()` over render state, so React Aria's own `data-invalid` and `data-pressed` never reach the DOM with engine meaning. Without the filter, React Aria 1.22.1 adds `data-rac`, `data-hovered`, `data-focused` and more to every part, and the conformance rule "nothing outside the vocabulary" ([§9.6](#96-conformance-suite)) would fail for the default engine.
 7. **Engine-rendered strings are listed.** Each `<name>.contract.ts` lists the strings its engine renders as `<Name>Labels` keys. Adapters pass them in wherever the engine accepts overrides; the rest are listed as "engine-owned" on the component's docs page ([§16.4](#164-internationalisation-and-rtl-gap-report-b-part-a)).
 
 ### 9.4 Proving the seam, and escape hatches
@@ -1113,7 +1148,7 @@ Chromium runs on every PR; Firefox and WebKit run on `main` and nightly. React 1
 
 ## 10. Component API conventions with code
 
-All sketches are **illustrative and not yet compiled**. React Aria prop names follow the installed 1.22.1 type declarations (verdict V10): `Select` takes `value`/`defaultValue`/`onChange` (`selectedKey` is deprecated); components accept `render(domProps, renderProps)`; `Popover` exposes `UNSTABLE_portalContainer`. Compiling the Select, Dialog and Tooltip adapters is a week-1 task.
+All sketches are **illustrative** excerpts, not the compiled code. React Aria prop names follow the installed 1.22.1 type declarations (verdict V10): `Select` takes `value`/`defaultValue`/`onChange` (`selectedKey` is deprecated); components accept `render(domProps, renderProps)`; `Popover` exposes `UNSTABLE_portalContainer`. Week 1 compiled the Select, Dialog and Tooltip adapters; the sketches below were corrected where the compiled code differs (element types, Dialog's `contentProps`, which parts take `render`, `data-align`), and the code in `packages/react/src` is the reference.
 
 ### 10.1 Shared, server-safe helpers (`@nizivo/react/contracts`)
 
@@ -1130,16 +1165,22 @@ export type RenderProp<S> =
 export function renderElement<S>(tag: string, render: RenderProp<S> | undefined, state: S,
                                  props: Record<string, unknown>): ReactElement {
   if (typeof render === 'function') return render(props, state);
-  if (isValidElement(render)) return cloneElement(render, mergeProps(props, render.props as Record<string, unknown>));
+  if (isValidElement<Record<string, unknown>>(render)) {
+    const merged = mergeProps(props, render.props);                  // the element wins, except …
+    for (const name of PART_OWNED) if (props[name] !== undefined) merged[name] = props[name];   // … the part's presentational attrs (§8.2)
+    return cloneElement(render, merged);
+  }
   return createElement(tag, props);
 }
+/** The vocabulary's `presentational` group: the part's values win over a render element's (also a pre-rendered RSC host element). */
+export const PART_OWNED = ['data-slot', 'data-variant', 'data-size', 'data-tone', 'data-full-width'];
 /** Normalise any render prop to the function form adapters receive. */
 export const toRenderFn = <S,>(render: RenderProp<S> | undefined, tag: string) =>
   (props: Record<string, unknown>, state: S) => renderElement(tag, render, state, props);
 ```
 
 `mergeProps` (~40 LOC) rules:
-- `className` is concatenated, ours first.
+- `className` is concatenated, ours first, and duplicate tokens are dropped.
 - `style` is shallow-merged, theirs winning.
 - Event handlers are chained consumer-first, and ours skip when `defaultPrevented`.
 - Refs are merged with a callback ref.
@@ -1174,11 +1215,12 @@ export function Button({ variant = 'secondary', size = 'md', leadingIcon, traili
   fullWidth = false, disabled = false, type, render, className, onClick, children, ...rest }: ButtonProps): React.JSX.Element {
   const native = render === undefined;              // only a real <button> may receive `type` and `disabled`
   return renderElement('button', render, { variant, size, pending, disabled }, {
-    ...rest,
-    className: cx('nz-button nz-hit-target', className),
     'data-slot': 'button', 'data-variant': variant, 'data-size': size,
     'data-pending': pending ? '' : undefined, 'data-disabled': disabled ? '' : undefined,
     'data-full-width': fullWidth ? '' : undefined,
+    ...rest,                                          // after our data-*: when a part renders this Button, the part's
+                                                      // data-slot, data-size and state attributes win (§8.2)
+    className: cx('nz-button nz-hit-target', className),
     type: native ? (pending ? 'button' : (type ?? 'button')) : undefined,   // a pending submit cannot resubmit
     disabled: native && disabled && !pending ? true : undefined,
     'aria-disabled': pending || (!native && disabled) ? true : undefined,   // pending stays focusable (gap report B §C2.3)
@@ -1315,14 +1357,14 @@ export interface SelectEngine {
     side?: 'top' | 'bottom'; align?: 'start' | 'center' | 'end'; sideOffset?: number; container?: Element | null;
     list: Record<string, unknown> }): ReactElement;            // class + data-slot for the internal listbox element
   Item(p: EnginePart<'div', SelectItemState> & { value: string; textValue?: string; disabled?: boolean }): ReactElement;
-  Group(p: EnginePart<'div', Record<string, never>>): ReactElement;
-  GroupLabel(p: EnginePart<'div', Record<string, never>>): ReactElement;
+  Group(p: EnginePart<'section', Record<string, never>>): ReactElement;       // React Aria 1.22.1 renders <section> …
+  GroupLabel(p: EnginePart<'header', Record<string, never>>): ReactElement;  // … and <header> (W1)
   Separator(p: EnginePart<'div', Record<string, never>>): ReactElement;
 }
 ```
 
 ```ts
-// packages/react/src/select/engine.ts — GENERATED by `nz gen` from component.json "engine". No directive.
+// packages/react/src/select/engine.ts — GENERATED by `nz gen` from component.json "engine" and the SelectEngine members. No directive.
 export { Root, Trigger, Value, Popup, Item, Group, GroupLabel, Separator } from '../_engines/react-aria/select.client';
 ```
 
@@ -1366,6 +1408,7 @@ export function SelectTrigger({ className, leadingIcon, indicator, children, ren
   );
 }
 
+// SelectRoot and SelectPopup take no `render`: the engine owns those elements in v0.1 (§8.2).
 export function SelectPopup({ className, side = 'bottom', align = 'start', sideOffset = 8, container, children }: SelectPopupProps): React.JSX.Element {
   return (
     <Engine.Popup side={side} align={align} sideOffset={sideOffset} container={container}
@@ -1382,14 +1425,15 @@ export function SelectPopup({ className, side = 'bottom', align = 'start', sideO
 // packages/react/src/_engines/react-aria/select.client.tsx — the ONLY Select module that imports the engine.
 'use client';
 import { use } from 'react';
-import { Select, Button, SelectValue, Popover, ListBox, ListBoxItem, SelectStateContext } from 'react-aria-components';
+import { Select, Button, SelectValue, Popover, ListBox, ListBoxItem, SelectStateContext, useLocale } from 'react-aria-components';
 import type { SelectEngine } from '../../select/select.contract';
 import { stateAttrs } from '../../contracts/state';          // generated from contracts/vocabulary.json
 import { mergeProps } from '../../contracts/merge-props';
 import { details } from '../../contracts/details';
 import { EngineLocale } from './locale.client';             // I18nProvider with the resolved locale (default 'en-US')
-import { usePortalContainer, splitPlacement } from './overlay.client';   // this family's OverlayEngine
-import { engineDom } from './dom';                          // drops every engine data-* outside the vocabulary (§9.3 rule 6)
+import { toPlacement, resolveSide, popupStyle } from './overlay.client';   // this family's OverlayEngine
+import { engineDom, defined } from './dom';                 // engineDom drops every engine data-* except the functional allowlist
+                                                            // (§9.3 rule 6); defined drops undefined keys
 
 export const Root: SelectEngine['Root'] = ({ value, defaultValue, onValueChange, open, defaultOpen, onOpenChange,
   name, required, disabled, invalid, placeholder, 'aria-labelledby': labelledBy, render, children, ...dom }) => (
@@ -1407,25 +1451,31 @@ export const Root: SelectEngine['Root'] = ({ value, defaultValue, onValueChange,
 );
 
 export const Trigger: SelectEngine['Trigger'] = ({ render, children, id, 'aria-describedby': describedBy, ...dom }) => {
-  const open = use(SelectStateContext)?.isOpen ?? false;    // ButtonRenderProps has no isOpen (V10); export name UNVERIFIED
+  const open = use(SelectStateContext)?.isOpen ?? false;    // ButtonRenderProps has no isOpen (V10)
   return (
     <Button id={id} aria-describedby={describedBy} render={(p, rp) => {
-      const s = { open, pressed: rp.isPressed, focusVisible: rp.isFocusVisible, disabled: rp.isDisabled };
+      const s = { open, pressed: rp.isPressed && !open, focusVisible: rp.isFocusVisible, disabled: rp.isDisabled };   // an open trigger is not "pressed"
       return render(mergeProps(engineDom(p), dom, stateAttrs(s)), s);  // Nizivo DOM props merged here; never rely on the engine forwarding them
     }}>{children}</Button>
   );
 };
 
-export const Popup: SelectEngine['Popup'] = ({ side, align = 'start', sideOffset, container, list, render, children, ...dom }) => (
-  <Popover placement={`${side} ${align}`} offset={sideOffset} UNSTABLE_portalContainer={usePortalContainer(container)}
-    render={(p, rp) => {
-      const [s, a] = splitPlacement(rp.placement, align);
-      return render(mergeProps(engineDom(p), dom, stateAttrs({ open: true, entering: rp.isEntering, exiting: rp.isExiting, side: s, align: a })),
-                    { entering: rp.isEntering, exiting: rp.isExiting, side: s });
-    }}>
-    <ListBox render={(p) => <div {...mergeProps(engineDom(p), list)} />}>{children}</ListBox>
-  </Popover>
-);
+export const Popup: SelectEngine['Popup'] = ({ side, align, sideOffset, container, list, render, children, ...dom }) => {
+  const { direction } = useLocale();
+  return (
+    <Popover placement={toPlacement(side, align)} offset={sideOffset}
+      {...defined({ UNSTABLE_portalContainer: container ?? undefined })}   // unset: OverlayScope's container (a parent overlay), else body
+      render={(p, rp) => {
+        const s = resolveSide(rp.placement, side, direction);    // React Aria reports the resolved side only …
+        return render(mergeProps({ ...engineDom(p), style: popupStyle(p.style) }, dom,
+                                 stateAttrs({ open: !rp.isExiting, entering: rp.isEntering, exiting: rp.isExiting,
+                                              side: s, align })),   // … so data-align echoes the request
+                      { entering: rp.isEntering, exiting: rp.isExiting, side: s });
+      }}>
+      <ListBox render={(p) => <div {...mergeProps(engineDom(p), list)} />}>{children}</ListBox>
+    </Popover>
+  );
+};
 
 export const Item: SelectEngine['Item'] = ({ value, textValue, disabled, render, children, ...dom }) => (
   <ListBoxItem id={value} textValue={textValue} isDisabled={disabled} render={(p, rp) => {
@@ -1433,7 +1483,9 @@ export const Item: SelectEngine['Item'] = ({ value, textValue, disabled, render,
     return render(mergeProps(engineDom(p), dom, stateAttrs(s)), s);
   }}>{children}</ListBoxItem>
 );
-// Value, Group, GroupLabel and Separator follow the same shape. The engine stylesheet aliases --trigger-width → --nz-trigger-width.
+// Value, Group, GroupLabel and Separator follow the same shape. The Popover's positioning style is passed through
+// popupStyle(), which drops the engine's z-index and adds --nz-trigger-width, --nz-transform-origin and
+// --nz-available-height (§8.3).
 ```
 
 ```ts
@@ -1474,6 +1526,8 @@ Parts: `Root`, `Trigger`, `Popup`, `Title`, `Description`, `Body`, `Footer`, `Cl
 - It is an element, not `::backdrop`, so a future native `<dialog>` adapter must render the same element and every re-skin keeps working.
 - `role="alertdialog"` (Figma Modal `Type=Destructive`) disables outside-press dismissal and puts initial focus on the least destructive action.
 - `size`: `md` (default) is Figma's only Modal width, 480 px. `sm` (400) and `lg` (640) follow figma/07's proposed scale and are **provisional** (outside semver) until design answers the handoff's "Component sizes" ask.
+- `Dialog.Popup` takes no `render`: the engine owns the positioned element in v0.1 ([§8.2](#82-class-slot-and-naming-conventions)). `Dialog.Close` takes `render` and renders a `<button>`. The IconButton default for Close ([§12.3](#123-per-type-rules)) arrives with IconButton in week 3.
+- The precedence rule in [§8.2](#82-class-slot-and-naming-conventions) applies to the composed triggers below: the trigger's `data-slot="dialog-trigger"` wins over the server Button's `data-slot="button"`.
 
 ```tsx
 // Server Component page. Trigger and Popup are client parts; the server <Button> arrives as a host element (V3).
@@ -1497,14 +1551,17 @@ export function DialogPopup({ size = 'md', backdrop, role = 'dialog', container,
     <Engine.Popup {...rest} role={role} container={container} backdrop={backdrop}
       positioner={{ className: 'nz-dialog-positioner', 'data-slot': 'dialog-positioner' }}
       backdropProps={{ className: 'nz-dialog-backdrop', 'data-slot': 'dialog-backdrop' }}
+      contentProps={{ className: 'nz-dialog-content', 'data-slot': 'dialog-content' }}   // clipping lives here, not on the positioner
       className={cx('nz-dialog-popup', className)} data-slot="dialog-popup" data-size={size}
       render={toRenderFn(undefined, 'div')}>
-      <div className="nz-dialog-content" data-slot="dialog-content">{children}</div>   {/* clipping lives here, not on the positioner */}
+      {children}
     </Engine.Popup>
   );
 }
 // The React Aria adapter (excerpt): ModalOverlay → positioner (+ backdrop element as its first child, root modal only),
-// Modal → popup. It wraps react-aria UNSAFE_PortalProvider for the nested-portal chain, never exposed publicly.
+// Modal → popup, and React Aria's Dialog → the content element: a <section> carrying role="dialog" or "alertdialog",
+// which only the adapter can render, so the leaf passes its class and slot as `contentProps` (W1; named so because
+// `content` is also an HTML attribute). It wraps react-aria UNSAFE_PortalProvider for the nested-portal chain, never exposed publicly.
 // DialogRoot owns `open` and closes with reason 'hidden' in a layout-effect cleanup under <Activity> (r1 §11.8).
 ```
 
@@ -1819,8 +1876,8 @@ These mechanics are one contract per engine family, **`OverlayEngine`** (`_engin
 | Callbacks | `onOpenChange(open, { reason })` with `'trigger' \| 'escape' \| 'outside-press' \| 'close-part' \| 'item-press' \| 'hidden' \| 'programmatic' \| 'unknown'` |
 | Activity | The adapter passes a **controlled** open state to the engine, so preserved engine state cannot reopen a transient overlay on return. An uncontrolled user-opened Dialog closes with `'hidden'`; a controlled one receives `onOpenChange(false, { reason: 'hidden' })` and the app decides. `react-dom` 19.3 hides portals under a hidden Activity (VERIFIED in source); 19.2 is UNVERIFIED, so test O-15 runs on both |
 | SSR | Closed overlays render nothing. The live announcer (two `aria-live` nodes) and the toast region **are** in the SSR HTML, so screen readers register them before the first announcement |
-| Motion | `data-open`, `data-entering`, `data-exiting`, `data-side` and `data-align` drive CSS. Popups enter on the spring pair and exit on `--nz-duration-fade` + `--nz-easing-exit`; the backdrop only fades ([§13](#13-motion)). Portaled exits work in every browser, because the engine keeps the node mounted through `data-exiting` |
-| Positioning | Engine JS positioning, exposing `--nz-trigger-width`, `--nz-available-width`, `--nz-available-height`, `--nz-transform-origin`. CSS anchor positioning is a later enhancement behind the adapter (not Baseline as a whole) |
+| Motion | `data-open`, `data-entering`, `data-exiting`, `data-side` and `data-align` drive CSS. Popups enter on the spring pair and exit on `--nz-duration-fade` + `--nz-easing-exit`; the backdrop only fades ([§13](#13-motion)). Portaled exits do not depend on animating `display`, because the engine keeps the node mounted through `data-exiting` (by design; verified per browser by the W3–4 overlay conformance) |
+| Positioning | Engine JS positioning, exposing `--nz-trigger-width`, `--nz-available-width`, `--nz-available-height`, `--nz-transform-origin` (React Aria provides no available width, so its adapter writes the other three; [§8.3](#83-the-state-vocabulary-one-list-engine-independent)). CSS anchor positioning is a later enhancement behind the adapter (not Baseline as a whole) |
 
 ### 12.3 Per-type rules
 
@@ -1832,7 +1889,7 @@ These mechanics are one contract per engine family, **`OverlayEngine`** (`_engin
 | Popover | `role="dialog"` (non-modal semantics) | engine default modal | Esc, outside press | none | Nested overlays portal inside |
 | Menu | `role="menu"` | yes | Esc (one level), outside press, Tab, item select | none | An item that opens a Dialog closes the Menu first; the Dialog returns focus to the Menu trigger |
 | Select | listbox in popover | yes | Esc, outside press, Tab, select | none | `NativeSelect` needs none of this |
-| Tooltip | `role="tooltip"` via `aria-describedby` | no | Esc, pointer leave, blur | none | 400 ms delay (Figma); hoverable (WCAG 1.4.13); shown on keyboard focus, not on touch; never on a disabled trigger without a wrapper; inverse scheme |
+| Tooltip | `role="tooltip"` via `aria-describedby` | no | Esc, pointer leave, blur | none | 400 ms delay (Figma); hoverable (WCAG 1.4.13); shown on keyboard focus, not on touch; never on a disabled trigger without a wrapper; inverse scheme. API: the compound `Tooltip.Root` / `Trigger` / `Popup` is canonical; a `content` convenience prop and `shortcut` (needs Kbd) come in week 3 with IconButton's tooltip wiring. Adopted 2026-10-14 (builder default; the maintainer can override) |
 | Toast | region `aria-label="Notifications (F8)"` + separate announcer | n/a (top layer, exempt) | Esc on a focused toast, swipe, timer | none | [§12.6](#126-toast) |
 | Mobile navigation (< 640 px) | MobileTabBar: 5 links in `<nav>` with `aria-current`; "More" opens a `Drawer side="bottom"` rendered by AppShell | yes (the sheet) | Esc, outside press, route change | scrim | Pattern and threshold from the designer (`7275:18744`, S-11): "Below 640px the sidebar becomes a five-tab bar". The Sidebar is not rendered below 640 px |
 
@@ -1881,9 +1938,9 @@ The O-tests come from gap report C §1.10 and run against each engine family's `
 | `easing/spring` = `spring(1, 260, 24, 0)` | \|x − 1\| ≤ 0.1% of travel | `--nz-easing-spring: linear(…)` + `--nz-duration-spring: 493ms` | 3.02% | 19 / 224 B |
 | `easing/spring-soft` = `spring(1, 170, 26, 0)` | same | `--nz-easing-spring-soft` + `--nz-duration-spring-soft: 702ms` | none | 18 / 211 B |
 
-- Points are placed adaptively (Ramer–Douglas–Peucker, ε = 0.004; maximum error 0.0037). All 12 generated strings pass `CSS.supports` in Chromium 156 and WebKit 27.2 (S4, VERIFIED). A golden test pins the values.
+- Points are placed adaptively (Ramer–Douglas–Peucker, ε = 0.004; maximum error 0.0037). All 12 generated strings pass `CSS.supports` in Chromium 156 and WebKit 27.2 (S4, VERIFIED), and the `--nz-easing-spring` string also passes in Firefox 129 (W1 floor lane). A golden test pins the values.
 - Motion's own `toString()` reports 600/750 ms for the same springs, but its own done-scan settles at 554/718 ms. That is why four reports had four sets of numbers (critique C10). We take no build dependency on Motion.
-- **The parameter order `spring(mass, stiffness, damping, velocity)` is assumed.** Design must confirm it (question 8h; handoff Q1). A wrong order is a token-value patch.
+- **The parameter order `spring(mass, stiffness, damping, velocity)` is assumed.** Design must confirm it (question 8h; handoff Q1). A wrong order is a token-value patch: change `parseFigmaSpring` in `tooling/spring/spring.ts` and re-pin `spring.golden.json`.
 
 ### 13.2 Rules
 
@@ -1908,7 +1965,10 @@ The O-tests come from gap report C §1.10 and run against each engine family's `
 
 **Loops stop in Reduced mode.** Infinite animations may only run on `--nz-duration-pulse` (the Skeleton loop) or `--nz-duration-spin` (the pending spinner); stylelint enforces this. Reduced sets the pulse to 0 ms. An infinite animation with a zero iteration duration has an active duration of 0, so it never runs, and its keyframes are authored so the element's own static style is the resting look. Binding the loop to `duration/slower` instead (as the 09 specimen's label suggests) would make it pulse at about 3 Hz in Reduced (160 ms). The spinner keeps rotating, because it is essential status feedback.
 
-4. **CSS-first enter and exit:** `@starting-style` plus `transition-behavior: allow-discrete` for CSS-only components (Firefox 129, Safari 17.5: inside the floor), and `data-entering`/`data-exiting` for engine-managed overlays.
+4. **CSS-first entry; exit where the browser can animate it.** Adopted 2026-10-14 (builder default; the maintainer can override).
+   - **Entry:** `@starting-style` plus `transition-behavior: allow-discrete` for CSS-only components. It works on the whole floor tested (Firefox 129 in the W1 floor lane, in every shape tried; Safari 17.5 not tested).
+   - **Exit:** to `display: none` it is instant in every Firefox (129 to 157), because `display` is not animatable there (Mozilla bug 1834877). A CSS-only component whose exit animation matters hides with `visibility` plus `allow-discrete`, which fades in every browser tested. Otherwise the instant exit in Firefox is an accepted deviation: Deviations page entry D2 ([§18.2](#182-docs-site-public)).
+   - **Engine-managed overlays** use `data-entering`/`data-exiting` and keep the node mounted until the exit ends, so their exits do not depend on animating `display` (by design; verified per browser by the W3–4 overlay conformance).
 5. **No force-full-motion override** (critique C9b). Visual-regression screenshots use Playwright's `animations: 'disabled'`.
 
 ### 13.3 Figma motion specs → CSS
@@ -1968,7 +2028,7 @@ The O-tests come from gap report C §1.10 and run against each engine family's `
 - **`mirror.json`:** a curated directional subset gets `data-mirror="rtl"`. Clocks, checks, search, rings and trend icons never mirror.
 - **`aliases.json`** keeps names stable across Lucide renames, or when regenerating from another source.
 - **Brand glyphs** at `@nizivo/icons/brands/<name>`, from simple-icons (CC0), starting with Instagram plus its usage rule ("only for Connect / Follow on Instagram links").
-- `LICENSE` carries the Lucide ISC and Feather MIT notices; CI checks they are present.
+- `LICENSE` carries the Lucide ISC and Feather MIT notices; CI checks they are present. The notice is needed wherever Lucide path data ships, so `packages/react` also ships a `THIRD_PARTY_NOTICES` file for the glyphs in `_internal/glyphs.tsx` (Lucide ISC; the Feather MIT notice is added if a Feather-derived glyph is inlined). W1: `packages/react/test/unit/notices.test.ts` checks that the file is in `files` and carries the ISC text; it runs in `pnpm test`. The check on `@nizivo/icons`' `LICENSE` comes with the icons generator (W3–4).
 - **Core imports no icon package.** A lint bans `@nizivo/icons` and `lucide*` inside `packages/react`, and dependency-cruiser enforces it. At most 10 internal glyphs are inlined from one list in `_internal/glyphs.tsx`: spinner, error mark, check, indeterminate dash, chevron (rotated for sort, select and pagination), chevrons-up-down, close, eye/eye-off, plus/minus, calendar. Each is overridable through a slot prop on the part that renders it, so an icon-set swap leaves no Lucide-stroke glyph behind:
 
   | Glyph | Part | Slot prop |
@@ -2031,7 +2091,7 @@ export function Calendar({ size = 20, strokeWidth = 1.92, absoluteStrokeWidth = 
 | Standard | WCAG 2.2 AA. **Any AA failure in light mode blocks a stable release.** Dark is reported but not blocking while it is `preview` |
 | Focus | 2 px solid outline, offset 2 px, in `nz.base` (forced-colours safe). `border/focus` measures 4.07–4.66:1 on light backgrounds (green/500) and 5.87–8.17:1 on dark (green/300). The halo is decoration. Invalid fields keep the green outline and switch only the halo to critical |
 | Target size | Every pointer target ≥ 24 × 24 px (2.5.8). Controls are 32/40/48. On a coarse **primary** pointer, an invisible `::after` expands hit areas to 44 px on **both** axes (a 40 × 40 icon button grows 3 px per side; a 120 × 40 button grows only vertically). `data-nz-touch-targets="always"` opts hybrid devices in. Visible sizes never change automatically |
-| Type | Floor **12 px** (0.75rem), linted (decision 8c, 2026-10-14; this reverses the original 14 px floor from critique S5). 12 px is allowed only through the named `Body/S` and `Label/S` styles, never as an ad-hoc size. Small text gets no contrast discount: every colour used at 12 px must reach 4.5:1, and the contrast matrix checks those pairs. Components keep the sizes Figma draws; moving one to 12 px (for example Field help or error text) is a one-line hook change, listed on the Deviations page. Sizes in rem so user scaling works |
+| Type | Floor **12 px** (0.75rem), linted (decision 8c, 2026-10-14; this reverses the original 14 px floor from critique S5). 12 px is allowed only through the named `Body/S` and `Label/S` styles (`--nz-font-body-s`, `--nz-font-label-s`; names confirmed by the week 1 dry run), never as an ad-hoc size. Small text gets no contrast discount: every colour used at 12 px must reach 4.5:1, and the contrast matrix checks those pairs. Components keep the sizes Figma draws; moving one to 12 px (for example Field help or error text) is a one-line hook change, listed on the Deviations page. Sizes in rem so user scaling works |
 | Colour | Never colour-only: Field errors carry an icon and text (Figma recolours only help text, which fails 1.4.1) |
 | Forced colours | Overlay popups get `border: 1px solid CanvasText`; focus is an outline. Forced colours replace backgrounds and drop shadows, so every state painted with a fill or a shadow gets a system-colour rule generated from `stateIndicator` ([§8.5](#85-the-a11y-floor-nzbase)): the Switch track and thumb, the Checkbox and Radio checked state, the selected segment, progress and meter fills, and selected menu and select items. The selected segment also draws a 1 px `border/control` ring in both modes, because its thumb is 1.04:1 against the track. Forced-colours screenshots of every v0.1 control gate v0.1 (exit criterion 14) |
 | Motion | Reduced-motion token swap ([§13](#13-motion)); loops stop (`--nz-duration-pulse` = 0 ms); the pending spinner keeps turning as essential feedback |
@@ -2098,12 +2158,13 @@ All pairs below were recomputed with the WCAG 2.2 relative-luminance formula aga
 
 ```jsonc
 // code-owned/a11y/dark.overrides.tokens.json (one entry)
-{ "text": { "critical": { "$type": "color", "$value": "{p.red.400}",
+// token ids as the normalizer writes them: colours sit under `color.` (stripped from CSS names by variableName, §7.3)
+{ "color": { "text": { "critical": { "$type": "color", "$value": "{color.p.red.400}",
   "$extensions": { "app.nizivo.override": {
-    "figmaVariableId": "VariableID:…", "figmaVariable": "Grove Color/text/critical (Dark)", "figmaValueAtOverride": "{p.red.500}", "kind": "contrast",
+    "figmaVariableId": "VariableID:737:146", "figmaVariable": "Grove Color/text/critical (Dark)", "figmaValueAtOverride": "{color.p.red.500}", "kind": "contrast",
     "reason": "4.01:1 on bg/surface, 3.11 on bg/hover (WCAG 1.4.3)", "wcag": ["1.4.3"],
     "issue": "https://github.com/theneev/nizivo/issues/<n>", "approvedBy": ["design-system-lead", "a11y-owner"],
-    "expires": "2027-01-31" } } } } }
+    "expires": "2027-01-31" } } } } } }
 ```
 
 **CI rules** (`scripts/a11y-overrides-check.ts`, on every PR and every sync PR):
@@ -2261,7 +2322,7 @@ From gap report B, Part C. It applies to every data-display component (KpiTile, 
 | Unit and interaction | Vitest 5.0.4 Browser Mode + `@vitest/browser-playwright` + `vitest-browser-react`, `getByRole` locators | Chromium on PRs; Firefox and WebKit on `main` and nightly | Real CSS, focus-visible, dialogs and layout need a real browser. Any console warning or error fails the test |
 | SSR | Node-environment suite: `renderToString` of every example; every entry loads under the default condition; server-safe entries load under `react-server` | every PR | Catches a hook or browser API in a server-safe module |
 | Conformance | `@nizivo/testkit` per component per engine, plus the O-tests ([§9.6](#96-conformance-suite), [§12.5](#125-overlay-conformance-tests)) | PRs (Chromium), `main` (all) | Asserts classes, `data-slot` and `data-*`, not only behaviour |
-| Framework fixtures | `fixtures/{next,vite,astro,…}` install **packed tarballs** and run one shared Playwright spec | every PR (path-filtered), nightly in full | Zero console errors, zero recoverable hydration errors, interactivity after hydration, axe, no theme flash, no `@nizivo` client chunk on server-only pages |
+| Framework fixtures | `fixtures/{next,vite,astro,…}` install the **packed** packages and run one shared Playwright spec from `fixtures/runner` (`@nizivo/fixture-runner`). How (W1, `fixtures/next/RESULTS.md`): the runner unpacks each `pnpm pack` tarball and the fixture installs the folders as `file:` dependencies, which pnpm copies into its store (never a workspace link) with no integrity hash, so a committed lockfile stays valid across builds and installs with `--frozen-lockfile`. A tarball itself cannot carry a stable lockfile, because its hash changes with every build. Each fixture is its own pnpm workspace root, excluded from the monorepo (`'!fixtures/next'`), because the packed `@nizivo/react` depends on an unpublished exact `@nizivo/tokens` and only a workspace root can override that | every PR (path-filtered), nightly in full | Zero console errors, zero recoverable hydration errors, interactivity after hydration, axe, no theme flash, no `@nizivo` client chunk on server-only pages |
 | Accessibility | axe-core **4.14.0 pinned with a pnpm override** (the Storybook addon and `@axe-core/playwright` 4.13 otherwise disagree); Storybook a11y addon with `test: 'error'` and `wcag2a/2aa/21a/21aa/22aa`; `@axe-core/playwright` on docs and fixtures in light, dark, forced colours and reduced motion; oxlint `jsx-a11y` rules | every PR | Dark results are reported, not blocking, while dark is `preview` |
 | Screen readers | Guidepup (`@guidepup/playwright` 0.19.1): NVDA on `windows-2025`, VoiceOver on macOS | nightly from v1.0; non-blocking until green for 30 days | Select, Combobox, Menu, Tabs, Dialog, Toast, form groups, charts. Manual AT pass every minor until then |
 | Visual regression | Vitest `toMatchScreenshot` in a pinned Playwright Docker image; baselines committed as ordinary files (Git LFS only if they outgrow plain Git). No hosted service (decision 6, zero spend); stories stay CSF3, so a vendor could be added later | sync PRs and `main` | v0.1 matrix: light, desktop. Dark, mobile and RTL by v1.0. Full matrices only on the merge queue |
@@ -2274,7 +2335,9 @@ From gap report B, Part C. It applies to every data-display component (KpiTile, 
 
 - **Fumadocs 16.17.2 on Next 16.4** at nizivo.neevtechnologies.in. It is also the largest RSC consumer of the library.
 - **Hosting (zero spend):** a static export (`output: 'export'`) deployed to **GitHub Pages** from the public repo, with the custom domain through a DNS `CNAME` record at neevtechnologies.in, which the maintainer adds. A static export keeps every free static host available, Cloudflare Pages included. Vercel's free Hobby plan is for non-commercial personal use, so it is not used for a company project. Search is the built-in static index, so no server is needed.
-- Live examples come from a server `<Example>` that imports `*.example.tsx` modules and shows their Shiki-highlighted source. Props tables come from `contracts/api/react/*.json` (ts-morph 28, which bundles TS 6.0.2). Hook and token tables come from `contracts/api/css` and `contract.json`. The **"Deviations from Figma"** page is generated from the override files.
+- Live examples come from a server `<Example>` that imports `*.example.tsx` modules and shows their Shiki-highlighted source. Props tables come from `contracts/api/react/*.json` (ts-morph 28, which bundles TS 6.0.2). Hook and token tables come from `contracts/api/css` and `contract.json`. The **"Deviations from Figma"** page is generated from the override files. It also lists the browser degradations the floor lane records (exit criterion 6). The first two, from week 1 (`fixtures/floor-lane/RESULTS.md`), go on the page when it is built (W5):
+  - **D1.** "Firefox 129–131: `light-dark()` with literal colours written directly on a non-inherited property can take the wrong scheme in nested scopes (Firefox bug 1914735, fixed in 132). Nizivo's tokens are unaffected; write theme colours as custom properties."
+  - **D2.** "Firefox (all versions tested, 129 to 157): an exit transition that ends in `display: none` is instant, because Firefox cannot animate `display` (bug 1834877). Entry animations work. Engine-managed overlays are unaffected; a CSS-only component that needs an exit animation hides with `visibility` instead."
 - Every component page has sections for Accessibility (keyboard map, APG pattern), Tokens and hooks, and Figma (canonical and ghost node ids from `component-map.json`).
 - Built-in static search, `llms.txt`, and a lazy "Open in StackBlitz" (`@stackblitz/sdk`).
 - Getting-started pages for Next, Vite and Astro (v0.1), then React Router (v0.2) and TanStack Start (v0.3), each including the Tailwind recipe and the CSS import rule.
@@ -2345,10 +2408,10 @@ The rules that make Profile B true are enforced **from v0.1**; the A/B fixtures 
 
 **Dependencies and supply chain:**
 - **Runtime dependency budget** (anything new needs an RFC): tokens none; react `react-aria-components`, `react-aria` (later `@internationalized/date`, `tinykeys`); icons none; charts `d3-shape`, `d3-array`.
-- pnpm settings: `minimumReleaseAge: 4320`, `allowBuilds: {}`, `trustPolicy: no-downgrade` and `blockExoticSubdeps: true`. The last two keys are UNVERIFIED on pnpm 12.11.2, which rejects unknown keys, so they are checked on day one.
+- pnpm settings: `minimumReleaseAge: 4320`, `allowBuilds: {}`, `trustPolicy: no-downgrade` and `blockExoticSubdeps: true`. pnpm 12.11.2, which rejects unknown keys, accepted all four on 2026-10-14. `trustPolicyExclude` holds `undici-types@6.21.0`, a real provenance downgrade by the same maintainer, not a takeover. `fixtures/next/pnpm-workspace.yaml` copies all four keys.
 - **Licence gates** (two scopes, because build tools the plan pins are not under the runtime allowlist: Lightning CSS, axe-core and `@axe-core/playwright` are MPL-2.0, and Next 16.4 in `apps/docs` and `fixtures/next` depends on `caniuse-lite`, which is CC-BY-4.0):
   - **Shipped runtime trees** of the published packages (`packages/{tokens,react,icons,charts}`): the allowed licences are MIT, ISC, Apache-2.0, BSD-2-Clause, BSD-3-Clause, 0BSD, CC0-1.0, BlueOak-1.0.0, Unlicense and Python-2.0, plus written per-package exceptions (for example the optimize-locales plugin, whose `package.json` has no `license` field). Everything else fails, including GPL/AGPL/LGPL, SSPL, BUSL, PolyForm, CC-BY-NC and unknown. The gate is `pnpm licenses list --prod` per published package, in the pack job.
-  - **Every PR:** `dependency-review-action` with `fail-on-severity: moderate`, `fail-on-scopes: runtime`, and the same `allow-licenses` list. Build tooling, `apps/**` and `fixtures/**` (never shipped) may also use MPL-2.0 and CC-BY-4.0, through `allow-dependencies-licenses` purls: `caniuse-lite` (a runtime dependency of Next in the docs app and fixtures), and `lightningcss` with its platform binaries, `axe-core` and `@axe-core/playwright` in case the licence check also sees development scopes (UNVERIFIED for pnpm lockfiles). Purl wildcard support is UNVERIFIED, so platform binaries are listed one by one.
+  - **Every PR:** `dependency-review-action` with `fail-on-severity: moderate`, `fail-on-scopes: runtime`, and the same `allow-licenses` list. Build tooling, `apps/**` and `fixtures/**` (never shipped) may also use MPL-2.0 and CC-BY-4.0, through `allow-dependencies-licenses` purls: `caniuse-lite` (a runtime dependency of Next in the docs app and fixtures), and `lightningcss` with its platform binaries, `axe-core` and `@axe-core/playwright` in case the licence check also sees development scopes (UNVERIFIED for pnpm lockfiles). Purl wildcard support is UNVERIFIED, so platform binaries are listed one by one. W1: every Next tree also pulls in `@img/sharp-libvips-*` (LGPL-3.0-or-later) through Next's optional `sharp` dependency (used only by `next/image` optimisation). Each Next tree therefore sets `ignoredOptionalDependencies: [sharp]`: `fixtures/next/pnpm-workspace.yaml` does now, and the root `pnpm-workspace.yaml` does once `apps/docs` exists. A tree that needs `sharp` lists those purls here instead.
 - OpenSSF Scorecard; SHA-pinned actions; `permissions: {}` by default; `persist-credentials: false`.
 - **GSAP is banned** (its licence is not OSI-approved) through `no-restricted-imports` and the allowlist.
 - A **tarball content allowlist** (`dist/**`, `LICENSE*`, `THIRD_PARTY_NOTICES*`, `README.md`, `package.json`) fails on any image, font, `.glb` or `.env*`. Published `package.json` files have no lifecycle scripts.
@@ -2386,9 +2449,9 @@ The rules that make Profile B true are enforced **from v0.1**; the A/B fixtures 
 
 **Later upgrades:**
 - The plugin's push-to-PR with a Neev bot account, once fine-grained PAT support is confirmed (UNVERIFIED).
-- A daily scheduled GitHub Action compares the file's version id with the last export and opens a "sync needed" issue ([§7.7](#77-drift-detection)). The file is on Professional (decision 3), so the REST call is within limits; it needs a read-only Figma token as a repo secret. Releases are blocked while that issue is open. A `LIBRARY_PUBLISH` webhook would need a hosted relay, so it is not used under the zero-spend constraint.
+- A daily scheduled GitHub Action compares the file's latest version with the last export's `createdAt` (the export carries no version id) and opens a "sync needed" issue ([§7.7](#77-drift-detection)). The file is on Professional (decision 3), so the REST call is within limits; it needs a read-only Figma token as a repo secret. Releases are blocked while that issue is open. A `LIBRARY_PUBLISH` webhook would need a hosted relay, so it is not used under the zero-spend constraint.
 - **Never poll a file on a Starter team** (6 requests a month there).
-- **Engineer fallback:** a Figma MCP `use_figma` snapshot (one collection per call, ~6–8 calls per sync, within the Professional seat's 200 calls/day). It is human-triggered and never in CI, because the remote MCP server is OAuth-only.
+- **Engineer fallback:** a read-only Figma MCP `use_figma` snapshot converted by the TokensBrücke CLI (`pnpm tokens:raw`). Week 1 used 9 calls: an inventory call, Primitives and Color split in two each to keep every return small, Space, Motion and Responsive one each, and the text and effect styles together, within the Professional seat's 200 calls/day. It is human-triggered and never in CI, because the remote MCP server is OAuth-only.
 - **Code → Figma:** an optional `figma-push` script writes override proposals to a Figma **branch**. Merging the branch closes the loop through a normal sync. (The one-off rewrite of all 175 `codeSyntax.WEB` values to `var(--nz-…)`, so Dev Mode shows real names, is not "later": it runs in v0.1 with the rename, [§20.3](#203-hygiene-contract-between-design-and-engineering).)
 
 The v0.1 exit requires at least one real sync merged end to end.
@@ -2404,11 +2467,11 @@ The v0.1 exit requires at least one real sync merged end to end.
 
 | Rule | Owner | When |
 |---|---|---|
-| Only `Grove *` or `Nizivo *` collections and `Grove/*` or `Nizivo/*` styles are read (the normalizer allowlists them; both prefixes map to `nz`); the Clario, Pipkin, Merit, Ashgrove, Noema, Praxa, Pogo, Halden and Ardenfield leftovers and their ~130 text styles are ignored, and removed from any Community copy | engineering / design | now |
+| Only `Grove *` or `Nizivo *` collections and `Grove/*` or `Nizivo/*` styles are read (the normalizer allowlists them; both prefixes map to `nz`); the 10 leftover collections (nine named `<Brand> Tokens`, from Clario to Ardenfield, plus `Pipkin Soft`) and their 138 text styles are ignored, and removed from any Community copy | engineering / design | now |
 | Rename collections and styles Grove → Nizivo in the source file, and rewrite all 175 `codeSyntax.WEB` values to `var(--nz-…)` (a one-off engineer script, reviewed by design) | design + one engineer on a sync PR | v0.1 (P0, figma-handoff §2.1). The normalizer accepts both prefixes until the first post-rename sync merges, then the `Grove` allowlist is removed. Tokens and overrides key on Figma variable ids, so the rename orphans nothing |
 | Variant names stay Figma names (Primary, Secondary, Tertiary, Critical, Accent; Surface/Subtle/Inverse); renames go through a deprecation | both | always |
 | Bind hard-coded values to variables (Button Lg height, stroke weights, the Primary effect, Switch track, scrim) | design | rolling, tracked in [figma-handoff.md](figma-handoff.md) |
-| Give Motion variables (all 20 have empty scopes) and other collections proper scopes | design | v0.2 |
+| Give Motion variables (all 20 have empty scopes) proper scopes; W1 found Color, Space and Responsive already scoped, and Primitives empty as intended | design | v0.2 |
 | Relink ghost masters to the canonical sets | design | **not on the critical path**; a v1.0 / Code Connect prerequisite. The map keys both ids until then |
 | Missing states (Focus, Disabled, Loading, Error, Accent Pressed, Mobile Tab Bar Active) | design | rolling; code builds them from tokens meanwhile and lists them on the deviations page |
 | A component whose Figma set is unchanged for **two sync cycles** becomes a candidate for promotion from `unstable/*` to stable | both | from v0.2 |
@@ -2427,8 +2490,8 @@ The v0.1 exit requires at least one real sync merged end to end.
 1. ~~Confirm which team owns the Figma file~~ **Done:** "Vampire D Studio", Professional; the file stays (decision 3).
 2. ~~Decide the licence~~ **Done:** Apache-2.0 (decision 1).
 3. ~~Decide the GitHub repo and npm operator~~ **Decided:** `theneev/nizivo`, public (decision 9). **Done 2026-10-14:** the `theneev` account created the empty public repo, added `amnn-in` as a collaborator (write access) and enabled private vulnerability reporting; the code of conduct names theneevteam@gmail.com for reports. **Open:** the npm owner sets up a trusted publisher for a throwaway package on npmjs.com, and we **rehearse an OIDC publish** with it.
-4. **Week 1 is not blocked on design:** Claude Code takes the first real export through the engineer path ([§20.1](#201-token-sync-on-the-current-plan)): a read-only `use_figma` snapshot, about 6–8 MCP calls within the Professional seat's 200 a day, converted by the TokensBrücke CLI (`tokens-bruecke` 3.18.0). The normalizer is therefore tested on real TokensBrücke output, not invented output (R7). **Open, before v0.1 exit:** the designer runs the TokensBrücke **plugin** once with the settings in `packages/tokens/figma/tokensbruecke.settings.md` and uploads the export, proving the designer path (exit criterion 8).
-5. **Open, no date yet:** hold the design decision meeting: [figma-handoff §6](figma-handoff.md#6-questions-for-designers) Q1–Q10, Q12, Q34 and Q35, plus asks #3 and #4. (This covers the `spring()` order and Reduced fades, the text ladder, the token asks, the `lg` threshold, sidebar widths and mobile navigation needed by the start of v0.2, toast persistence, KPI tint and Card rest elevation.) Q20 is answered (12 px allowed). Until the meeting, every question runs on its §1 default; (e), (f) and (h) are the most urgent because weeks 1–2 build on them.
+4. **Week 1 is not blocked on design:** Claude Code takes the first real export through the engineer path ([§20.1](#201-token-sync-on-the-current-plan)): a read-only `use_figma` snapshot (9 MCP calls in week 1, within the Professional seat's 200 a day), converted by the TokensBrücke CLI (`tokens-bruecke` 3.18.0). **Done in week 1.** The normalizer is therefore tested on real TokensBrücke output, not invented output (R7). **Open, before v0.1 exit:** the designer runs the TokensBrücke **plugin** once with the settings in `packages/tokens/figma/tokensbruecke.settings.md` and uploads the export, proving the designer path (exit criterion 8).
+5. **Open, no date yet:** hold the design decision meeting: [figma-handoff §6](figma-handoff.md#6-questions-for-designers) Q1–Q10, Q12, Q34, Q35 and Q36, plus asks #3 and #4 and the week 1 asks (figma-handoff §1.4). (This covers the `spring()` order and Reduced fades, the text ladder, the token asks, the `lg` threshold, sidebar widths and mobile navigation needed by the start of v0.2, toast persistence, KPI tint, Card rest elevation, and inverse inside inverse.) Q20 is answered (12 px allowed). Until the meeting, every question runs on its §1 default; (e), (f) and (h) are the most urgent because weeks 1–2 build on them.
 
 **Not on the critical path:** ghost relinking (the component map keys both ids).
 
@@ -2437,9 +2500,17 @@ The v0.1 exit requires at least one real sync merged end to end.
 | W1 — de-risk first | A **real** TokensBrücke export through the normalizer (both prefixes, variable-id identity, golden-tested) and Terrazzo (`only.modifiers` + `exclude`; typography output names); the one-off `codeSyntax` rewrite script for the Grove → Nizivo rename. **Compile** the Select, Dialog and Tooltip adapter skeletons against React Aria 1.22.1 types (render-prop fields, `SelectStateContext`, portal container). Rebuild the S2 fixture on the **generated** barrels (both bundlers, hydration recorded). Run the S1 nesting matrix and the halo/inverse probe on **Firefox 129 and Safari 17.5** (floor lane), including `@starting-style` overlay entry. Monorepo, presets, and a **minimal** `nz gen` (barrels, `engine.ts`, exports, component map). Port the spring generator |
 | W2 | Token pipeline complete (light-dark, typography, spring, a11y overrides and proposals, contrast matrix, golden files). `css/base.css` (a11y floor, including `focusTarget` and `stateIndicator` rules). stylelint contract, emitted-CSS vocabulary check, Lightning CSS guard. Server-safe components. Fumadocs skeleton with generated tables |
 | W3–4 | Field system and controls; NativeSelect. The React Aria `OverlayEngine` and `engineDom`, then adapters for Tooltip, Dialog and Select, then Menu and Tabs, each with conformance. `@nizivo/icons` generator |
-| W5 | Next, Vite and Astro fixtures from packed tarballs. `size-limit` at measured + 10%; seam cost measured. Deviations page. In-repo visual regression. `release.yml` wired |
+| W5 | Next, Vite and Astro fixtures on the packed packages ([§18.1](#181-test-layers)). `size-limit` at measured + 10%; seam cost measured. Deviations page. In-repo visual regression. `release.yml` wired |
 | W6 | Hardening; design review of light renders; publish 0.1.0 on `next` |
 | +2 weeks | Buffer |
+
+**Week 1 status (2026-10-14).** Built and verified:
+- **Tokens:** the real Figma export (9 read-only `use_figma` calls, TokensBrücke CLI 3.18.0) through the normalizer (both prefixes, variable-id identity, golden-tested) and a Terrazzo 2.8.0 dry run: 11 source files, 200 tokens, `tz check` clean. Emitted names, TokensBrücke limits and open items: `packages/tokens/figma/DRY-RUN.md`. The `codeSyntax` rewrite is planned and waits for approval (figma-handoff §1.4).
+- **Code:** minimal `nz gen` (barrels, `engine.ts` from `<Name>Engine`, exports, component map), the spring generator, Button, and Select, Dialog and Tooltip on React Aria 1.22.1 with `engineDom` and `stateAttrs()`. `packages/react` ships a `THIRD_PARTY_NOTICES` file for its inlined glyphs, and a unit test checks it ([§14.2](#142-icons-nizivoicons)).
+- **Floor lane** (`fixtures/floor-lane/RESULTS.md`): Firefox 129.0 passes the S1 nesting matrix, the halo/inverse probe and `@starting-style` overlay entry on the token path. It records Deviations page entries D1 and D2 ([§18.2](#182-docs-site-public)) and the inverse-inside-inverse gap ([§7.4](#74-theme-mechanism)). Safari 17.5 is not tested.
+- **Next fixture** (`fixtures/next/RESULTS.md`): on the packed packages (the unpacked `pnpm pack` output, [§18.1](#181-test-layers)) and the generated barrels, Turbopack, webpack and webpack + `optimizePackageImports` all pass (Chromium). Plain webpack reproduces the S2c barrel leak and `optimizePackageImports` removes it, as [§11.1](#111-per-framework-setup-and-gotchas) says.
+- **Exit criteria:** advances 2 (the Next part, under all three builds; Vite, Astro, axe and no theme flash are W5) and 6 (Firefox 129 floor verified; Safari 17.5 not tested; the free routes are in criterion 6). It partly advances 3: exports drift through `nz gen --check`, and the `.d.ts` import-graph walk from every `types` entry (`packages/react/test/built`). The committed raw export is one of criterion 12's R3 mitigations.
+- **Moves to week 2:** `tokens.css` with `light-dark()`; the spring `linear()` transform; the `--nz-tracking-*` rename through `subValueVariableName` with an `em` transform; font-family tokens; the Lightning CSS build replacing the interim tsdown CSS copy; the tarball allowlist, publint/attw and the directive guard; a `defaultOpen` fixture page; Select Group and Separator coverage in the fixture.
 
 **Scope (37 components, plus the foundations below):**
 - **Foundations:** `tokens.css`, `tailwind.css`, `custom-media.css`, `ThemeScript`, `NizivoConfig`, `formatLabel`, `@nizivo/react/contracts`, `@nizivo/react/augment`.
@@ -2461,7 +2532,7 @@ The v0.1 exit requires at least one real sync merged end to end.
 
 **Exit criteria** (all measurable):
 1. `@nizivo/tokens`, `@nizivo/react` and `@nizivo/icons` 0.1.0 are published by `release.yml` in the repo named in decision 9, over OIDC with provenance, with no `NPM_TOKEN` anywhere.
-2. The Next 16.4 (Turbopack **and** webpack), Vite 8 SPA and Astro 7.3 fixtures install packed tarballs and pass the shared spec:
+2. The Next 16.4 (Turbopack **and** webpack), Vite 8 SPA and Astro 7.3 fixtures install the packed packages (the unpacked `pnpm pack` output as `file:` folders, [§18.1](#181-test-layers)) and pass the shared spec:
    - zero console errors and zero hydration warnings;
    - a server-only Next page ships **no** `@nizivo` client chunk, checked by planted-marker grep over the page's chunks (Next 16.4 no longer prints First Load JS);
    - under webpack with `optimizePackageImports`, a page that renders one client part through the barrel contains no marker of any other client module ([§11.1](#111-per-framework-setup-and-gotchas));
@@ -2469,7 +2540,12 @@ The v0.1 exit requires at least one real sync merged end to end.
 3. The directive guard, the `export * as` lint, the emitted-CSS vocabulary check, the Lightning CSS guard, exports drift, publint/attw, and the `.d.ts` import-graph walk (no engine package or `_engines/**` file reachable from any `types` entry) are green.
 4. axe reports 0 violations (`wcag2a/2aa/21aa/22aa`) on every story in light. Dark is reported, not blocking.
 5. Conformance (classes, `data-slot`, `data-*`, keyboard, forms, SSR) is green for Select, Dialog, Tooltip, and Menu and Tabs if not cut: Chromium on PRs, Firefox and WebKit on `main`. The v0.1 O-tests pass.
-6. The floor lane (Firefox 129, Safari 17.5) passes the S1 nesting matrix, the halo/inverse probe and the overlay entry, or each degradation is documented. *Zero-spend note:* Firefox 129 runs free from Mozilla's release archive. Playwright's WebKit is a current engine, not Safari 17.5, so it cannot stand in for the floor. Real Safari 17.5 needs an older Apple device or a cloud browser service; the free route is BrowserStack's open-source programme (eligibility for a company-backed project is UNVERIFIED). Without either, the Safari 17.5 result is recorded as "not tested" on the Deviations page.
+6. The floor lane (Firefox 129, Safari 17.5) passes the S1 nesting matrix, the halo/inverse probe and the overlay entry, or each degradation is documented. *Zero-spend note:* Firefox 129 runs free from Mozilla's release archive (done in week 1). Playwright's WebKit is a current engine, not Safari 17.5, so it cannot stand in for the floor, and GitHub's macOS runners ship a current Safari. Free routes to Safari 17.5 (steps in `fixtures/floor-lane/RESULTS.md`; `run.ts --serve` takes the results):
+   - **iOS 17.5 Simulator** on a Mac with Xcode 27, whose simulator support is iOS 17 or later: local and free, and it covers iOS Safari 17.5 (not macOS). The commands are not run yet; the posted user agent must read `Version/17.5`.
+   - **A macOS Sonoma 14.5 virtual machine** (for example in UTM) for macOS Safari 17.5. Where to get the 14.5 restore image and the VM licence terms are UNVERIFIED.
+   - **Open-source programmes** once the repo is public: BrowserStack (eligibility for a company-backed project and Safari 17.5 availability are UNVERIFIED) or TestingBot (written criteria: a public repo, an OSI licence, active maintenance and "not a commercial or closed-source product"; whether a company-backed library qualifies is UNVERIFIED).
+   - **An Apple device still on iOS 17.5 or macOS 14.5**, if anyone has one.
+   - Without any of them, the Safari 17.5 result is recorded as "not tested" on the Deviations page.
 7. The contrast matrix passes with overrides, and every override is on the deviations page with its expiry.
 8. **At least one real Figma → TokensBrücke → PR sync has been merged end to end.**
 9. `size-limit` budgets at measured + 10% are green; the seam overhead is measured and recorded; the `contracts/api` manifests are committed.
@@ -2494,7 +2570,7 @@ The v0.1 exit requires at least one real sync merged end to end.
 - **Charts seam:** `chart-frame.contract.ts`, the third-party-child conformance case and the charts-only fixture.
 - Docs examples for the commerce sets, the storefront set and the 08 templates.
 - Vite SSR and React Router 8 fixtures; React 19.2.x + 19.3.x matrix.
-- The locale-catalogue mechanism; the `LIBRARY_PUBLISH` webhook (after the file move); the non-blocking ESLint react-hooks lane.
+- The locale-catalogue mechanism; the daily Figma drift check ([§7.7](#77-drift-detection); no webhook, which would need a hosted relay); the non-blocking ESLint react-hooks lane.
 
 **Exit:** the overview dashboard (08) is rebuilt in the Next fixture from Nizivo parts only, with zero client JS for its server-rendered KPI row. CLS < 0.01 on a streamed overview. The WebKit stroke check passes. O-06, O-07 and O-15 are green. The second Tooltip adapter is green. Dark is signed off.
 
@@ -2546,8 +2622,8 @@ The v0.1 exit requires at least one real sync merged end to end.
 | R3 | **Figma ownership** (the file stays on "Vampire D Studio", a Professional team Neev does not formally own; decision 3) | Medium / high | Accepted under zero spend. A Neev person keeps edit or admin access; every sync commits the raw export to the repo; a `.fig` backup at each minor; TokensBrücke works on any plan; MCP path optional; never poll a Starter file | Loss of access to the team, or a plan downgrade |
 | R4 | **The engine contract drifts toward React Aria-only behaviour**, so a swap stops being cheap | Medium / high | Contract minimalism (two engines or native); `'unknown'` reasons; second Tooltip adapter in v0.2; Base UI Dialog + Select canary (one overlay core) in v0.3; conformance asserts classes, `data-slot` and exactly the vocabulary `data-*` (`engineDom`); engine-owned strings listed per component | v0.2, v0.3 |
 | R5 | **The S2 export shape regresses** (someone namespaces from a client file; a tsdown change) | Medium / high (production build breaks) | Generated barrels only; the `export * as` lint; directive guard; Next fixture on both bundlers on every PR; exact tsdown pin | Each tsdown upgrade |
-| R6 | **Untested on the real floor:** Firefox (S1, probe, CSP matrix, D-spike) and Safari 17.5 itself (only WebKit 27.2 ran) | Medium / high | Week-1 floor lane; v0.1 exit criterion 6; documented degradations | Week 1 |
-| R7 | **TokensBrücke output fails Terrazzo's validation**, or typography names differ | Medium / medium | Day-1 real export; normalizer runs `tz format`; golden files; `contract` plugin renames; MCP snapshot fallback | First sync |
+| R6 | **Untested on the real floor:** Safari 17.5 itself (only WebKit 27.2 ran), and Firefox for the CSP matrix and the D-spike. W1: the floor lane verified Firefox 129 for S1, the probe and overlay entry | Medium / high | Week-1 floor lane (done for Firefox); v0.1 exit criterion 6 and its free Safari routes; documented degradations (Deviations page entries D1 and D2, [§18.2](#182-docs-site-public)) | A Safari 17.5 run |
+| R7 | **TokensBrücke output fails Terrazzo's validation**, or typography names differ | Medium / medium | Day-1 real export (W1: the raw export fails `tz check` on its own and passes once normalized; names recorded in `DRY-RUN.md`); the normalizer writes the final form and `tz format` is a check; golden files; `subValueVariableName` and the `contract` plugin rename; MCP snapshot fallback | First plugin sync |
 | R8 | **Terrazzo** (small community; broke at 0.10 → 2.0) changes output | Medium / medium | Exact pin; golden files; custom logic in plugins; the DTCG source stays tool-neutral; the Style Dictionary swap is documented but UNVERIFIED | Each Terrazzo minor |
 | R9 | **tsdown is pre-1.0; pnpm 12 OIDC through Changesets is untested** | Medium / high | Exact pins; shared preset; directive guard; exports drift; publint/attw; day-1 rehearsal; pnpm 11.28.x fallback; unbundled output so tsc or bunchee can replace tsdown with no consumer impact | Each minor |
 | R10 | **React Aria toast hooks change** (stability UNVERIFIED) or the new Sheet is buggy | Medium / medium | Own store and region; hooks only render; O-06/O-07/O-09/O-14 gate upgrades; one Renovate group; Sheet falls back to Modal + CSS | Each React Aria minor |
@@ -2572,7 +2648,7 @@ ADR-style. "Judges" means the three phase-2 review lenses: swappability, technic
 
 | # | Constraint | Evidence |
 |---|---|---|
-| S-1 | `render` prop (element or `(props, state)`) on every DOM-rendering part; no `asChild`, no polymorphic `as`; a constrained `level` on Heading, CardTitle and DialogTitle | [critique C3](research/00-critique.md), [r3 §4.2](research/r3-headless-primitives.md), [r8](research/r8-extensibility-distribution.md) |
+| S-1 | `render` prop (element or `(props, state)`) on every DOM-rendering part except the engine-owned positioned popups (`Select.Popup`, `Dialog.Popup`, `Tooltip.Popup`) and `Select.Root` (narrowed 2026-10-14 by D-b, [§23.4](#234-builder-defaults-2026-10-14); revisit with the v0.2 hooks adapter); no `asChild`, no polymorphic `as`; a constrained `level` on Heading, CardTitle and DialogTitle | [critique C3](research/00-critique.md), [r3 §4.2](research/r3-headless-primitives.md), [r8](research/r8-extensibility-distribution.md) |
 | S-2 | Compounds as a namespace **and** flat parts; no static properties; `'use client'` only on leaves; src-vs-dist directive guard | C36, [r4](research/r4-build-release.md), spike S2 |
 | S-3 | One canonical `nz.` layer statement, semver'd ([§8.1](#81-the-canonical-layer-statement)) | C1, [r2 §4.2](research/r2-styling.md), r8 §8.1 |
 | S-4 | `nz-<component>[-<part>]` classes + `data-slot`; `data-variant/size/tone`; one engine-independent vocabulary ([§8.3](#83-the-state-vocabulary-one-list-engine-independent)) | C5, C6 |
@@ -2594,7 +2670,7 @@ ADR-style. "Judges" means the three phase-2 review lenses: swappability, technic
 | ID | Decision | Choice | Alternatives | Why | Reversibility / cost to change | Evidence |
 |---|---|---|---|---|---|---|
 | D1 | Behaviour engine | Native T0 + **React Aria** (RAC 1.22.1 + hooks 3.53.1) as the single T1 family; own T2 for Toast, upload, selection | Base UI 1.9.0; Radix 1.8.1; Ark/Zag; per-widget mixing | Lightest stable family covering calendar, combobox, number field and sheet (69.0 vs 88.3 KB); 36 locales; documented AT matrix; top-layer exemption for toasts. All judges agreed | Per non-overlay component: one adapter + `component.json` + a minor. Overlay family: one `OverlayEngine` and every overlay adapter, swapped together through `engines.json`. Whole family: also drop `react-aria`, re-map engine-owned strings, and ship a minor with a migration note (CSP nonce, locale plugin). Base UI has no calendar (own grid work) | [r3 §3, §6](research/r3-headless-primitives.md), gap report A §1.5, V8 |
-| D1-seam | Adapter seam structure | **Public `*.client.tsx` leaf owns the CSS contract; the adapter implements a typed `<Name>Engine` and writes no classes;** `engine.ts` generated from `component.json`; named re-exports only; engine DOM props filtered by `engineDom`, so only vocabulary `data-*` reach the DOM; one `OverlayEngine` per engine family | Velocity: the adapter is the public part (one file); lean: own DOM in adapters | Judges split (correctness and feasibility preferred a single adapter file; swappability preferred the split, because a new engine must otherwise re-implement every class and slot). We took the split, **but only for engine-backed parts** (server-safe parts have none), and generate the bookkeeping so the cost is one extra small file per engine-backed component | Collapsing to one file is internal and free | Verdicts (swappability §4.2), V3, spike S2 |
+| D1-seam | Adapter seam structure | **Public `*.client.tsx` leaf owns the CSS contract; the adapter implements a typed `<Name>Engine` and writes no classes;** `engine.ts` generated from `component.json` and the members of `<Name>Engine`; named re-exports only; engine DOM props filtered by `engineDom`, so only vocabulary `data-*` (from `stateAttrs()`) and the undocumented functional allowlist reach the DOM; one `OverlayEngine` per engine family | Velocity: the adapter is the public part (one file); lean: own DOM in adapters | Judges split (correctness and feasibility preferred a single adapter file; swappability preferred the split, because a new engine must otherwise re-implement every class and slot). We took the split, **but only for engine-backed parts** (server-safe parts have none), and generate the bookkeeping so the cost is one extra small file per engine-backed component | Collapsing to one file is internal and free | Verdicts (swappability §4.2), V3, spike S2 |
 | D1-proof | Prove the seam | Second Tooltip adapter on react-aria hooks inside the same family (v0.2, measured 7.2 vs 14.3 KB); Base UI Dialog + Select canary on one overlay core (v0.3); hooks altitude as a per-component budget escape hatch | No second engine (velocity); break-glass RAC adapters for own native overlays in v0.1 (lean) | A seam with one implementation is a hypothesis. The Tooltip adapter also pays for itself. Lean's v0.1 dual implementation was judged unshippable | Drop the canary any time; the Tooltip choice follows the measurements | V8, V9, verdict (feasibility §2) |
 | D3 | Packages and naming | `@nizivo/tokens`, `@nizivo/react`, `@nizivo/icons` (v0.1); `@nizivo/charts` (v0.2); motion at `@nizivo/react/motion`; lab independent and on demand. **Import is `@nizivo/react`, not `@nizivo/ui`** | `@nizivo/ui`; a separate `@nizivo/motion`; domain packages; five packages from day one | Each npm package needs its own 2FA trusted-publisher setup and there is no scope-wide OIDC; a framework-named binding keeps tokens and a future CSS package neutral. All judges agreed on the rename | Before 0.1.0: free. After: a shim package + codemod | C1, C12, [r4 §6.1](research/r4-build-release.md), [r8 §5.2](research/r8-extensibility-distribution.md) |
 | D3-dist | Distribution channel | npm through v0.2; docs examples (v0.2) → shadcn registry (v0.3) from the same source; behaviour and a11y contracts stay on npm. Items depend on `@nizivo/*@~x.y.0`; `<name>-source` forks only for components without an engine; item source is MIT | Registry-only patterns now; npm domain packages | The registry has no update merge (r8 E1–E7), so only thin compositions belong there; patterns churn most in a WIP design | Stop publishing items any time; copies are unaffected | C12, gap report B §B6 |
@@ -2605,7 +2681,7 @@ ADR-style. "Judges" means the three phase-2 review lenses: swappability, technic
 | D4-vocab | State vocabulary | One list ([§8.3](#83-the-state-vocabulary-one-list-engine-independent)), React Aria-aligned names; overlay state always `data-*`; no `[open]`, `:popover-open`, `:modal`, `::backdrop` publicly; checked on **emitted** CSS; engine `data-*` stripped from the DOM by `engineDom` | Base UI names (`data-starting-style`); native pseudo-classes as carriers (lean) | Near-identity mapping for the default engine; native carriers would break re-skins on any engine swap | Adding names is a minor; renaming is breaking | C5, verdicts |
 | D4-tw | Tailwind v4 | Generated `@nizivo/tokens/tailwind.css` (`@theme inline` → semantic vars, `nz` namespace) from a custom plugin | Stock `plugin-tailwind` | The stock plugin resolves to primitives and breaks nested themes (S3) | Generated file; rename or drop | Spike S3 |
 | D5 | Token pipeline | DTCG 2025.10 + resolver; Terrazzo 2.8.0 exact; golden files; `contract.json`; 4 small plugins | Style Dictionary 5.6.1 (no resolver) | Terrazzo implements the resolver; S3 verified every behaviour we rely on | Builder swap is invisible to consumers (UNVERIFIED for SD) | [r7](research/r7-token-pipeline.md), S3 |
-| D5-extract | Extractor and drift | Designer-run TokensBrücke, web-upload PR in v0.1 (no PAT); MCP snapshot as engineer fallback; webhook only after the file move; **no REST polling while on Starter**; release block on an open "sync needed" issue; the normalizer accepts `Grove *` and `Nizivo *` through the v0.1 rename, and token and override identity is the Figma variable id | Nightly REST `/meta` poll (seams) | A Starter file allows 6 REST requests a month; the file's team is unknown | Any extractor that writes `raw/` | [r7 §8](research/r7-token-pipeline.md), critique S-d |
+| D5-extract | Extractor and drift | Designer-run TokensBrücke, web-upload PR in v0.1 (no PAT); MCP snapshot as engineer fallback; a daily REST version check on the Professional plan, no webhook (it needs a hosted relay; changed by M3); **no REST polling while on Starter**; release block on an open "sync needed" issue; the normalizer accepts `Grove *` and `Nizivo *` through the v0.1 rename, and token and override identity is the Figma variable id | Nightly REST `/meta` poll (seams) | A Starter file allows 6 REST requests a month; the file's team is unknown | Any extractor that writes `raw/` | [r7 §8](research/r7-token-pipeline.md), critique S-d |
 | D6 | Theme mechanism | `light-dark()` once on `:root`; opt-in default; `data-nz-theme`; never `@property` colours; theme logic lint-confined to tokens; inverse via `data-nz-scheme` | Duplicated blocks (r7 default); OS-dark by default | S1: native nesting works; lowering and `@property` break it; no-attribute resolves light, so host apps are untouched | Changing the mechanism is a major: consumer themes use `light-dark()`, and duplicated blocks cannot express inverse surfaces inside nested themes (not built, [§4.2](#42-seam-ledger)) | S1, probe, C9 |
 | D6-dark | Dark status | **Preview** in v0.1; stable after a rendered design review (v0.2) | Stable from v0.1 (lean, seams) | No dark render exists (G4); every dark value is computed | Not applicable | Verdict (feasibility D6) |
 | D7 | Support floors | Chrome/Edge 123, **Firefox 129**, Safari/iOS 17.5; React ^19.2.0; Node ≥ 22.12; per-feature fallbacks deleted when the floor rises | Firefox 128 (lean, seams); Safari 16.4 | `@starting-style` and `transition-behavior` need Firefox 129 (web-features 3.42.0, V13); `light-dark()` needs Safari 17.5 | Lowering = a new theme mechanism (a major) + instant overlay entry | V13, [r2 §9](research/r2-styling.md), decision 4 |
@@ -2649,8 +2725,22 @@ These answer [§1](#1-decisions-we-need-from-you). Each row says which earlier r
 | M5 | Registry | Yes, v0.3, MIT items | — (confirms D3-dist) | — |
 | M6 | Zero spend | No paid service, seat or plan upgrade | Argos Pro option; Figma Professional upgrade; any paid hosting | Visual regression in-repo with plain-Git baselines; docs as a static export on GitHub Pages; the repo is public so CI minutes are free |
 | M7 | Builder | Claude Code writes the code; the maintainer reviews and merges | The 2-engineer team assumption | §21 weeks are an ordering, not a calendar; the human-only steps are listed in §21.1 week 0 |
-| M8 | Type floor | 12 px allowed through `Body/S` and `Label/S` proposals | The 14 px floor (critique S5) and handoff Q20's default | Lint floor 12 px; 4.5:1 for all small text; component sizes unchanged unless listed on the Deviations page |
+| M8 | Type floor | 12 px allowed through `Body/S` and `Label/S` proposals | The 14 px floor (critique S5) and handoff Q20's default | Lint floor 12 px; 4.5:1 for all small text; component sizes unchanged unless listed on the Deviations page; CSS names `--nz-font-body-s` and `--nz-font-label-s` confirmed by the week 1 dry run |
 | M9 | Repo | `theneev/nizivo`, public; `theneev` is a user account | The `<neev-org>` placeholder | Repo settings are changed by the owner account; transfer to an organisation only before 0.1.0 publishes |
+
+### 23.4 Builder defaults, 2026-10-14
+
+Week 1 hit seven questions the plan did not settle. The maintainer handed the build to the builder ("you build it"), so the builder adopted a default for each. Every row below is: **Adopted 2026-10-14 (builder default; the maintainer can override).** Each is also recorded in the section it changes.
+
+| ID | Decision | Choice | Alternatives | Why | Reversibility / cost to change | Evidence |
+|---|---|---|---|---|---|---|
+| D-a | Composition precedence ([§8.2](#82-class-slot-and-naming-conventions), [§10.4](#104-dialog-engine-backed-overlay)) | Adopted 2026-10-14 (builder default; the maintainer can override). With a `render` element, the part's presentational attributes win: `data-slot`, `data-variant`, `data-size`, `data-tone`, `data-full-width` (`PART_OWNED`). Every other prop merges with the element winning; `className` tokens are de-duplicated. `data-size` follows the part (`Select.Root size="lg"` with a Button trigger gives `data-size="lg"`) | The element wins everywhere; fix it inside Button only | Under RSC a server Button reaches the client part already rendered as a host element, so a fix inside Button cannot reach it. The Next fixture failed its trigger-slot check until this rule existed | One list in `contracts/render.ts`; a change shows in the DOM, so it is a minor in 0.x | `packages/react/src/contracts/render.ts`; `fixtures/next/RESULTS.md` (negative controls) |
+| D-b | `render` scope (S-1, [§8.2](#82-class-slot-and-naming-conventions), [§10.3](#103-select-engine-backed-the-adapter-seam-end-to-end)) | Adopted 2026-10-14 (builder default; the maintainer can override). Every DOM-rendering part except the engine-owned positioned popups (`Select.Popup`, `Dialog.Popup`, `Tooltip.Popup`) and `Select.Root`; S-1 now says so | `render` on every part, as S-1 said | The engine owns those elements in v0.1 (positioning, focus containment, portal), and a consumer element there would fight it. The plan's own §10.3 sketch already left it off | Adding `render` later is additive. Revisit with the v0.2 hooks adapter, which owns its DOM | W1 contracts (`select.contract.ts`, `dialog.contract.ts`, `tooltip.contract.ts`) |
+| D-c | `data-full-width` | Adopted 2026-10-14 (builder default; the maintainer can override). In the vocabulary's `presentational` group. This row decides `data-full-width` only; another presentational attribute (for example Card's `data-padding`) that joins the group also becomes part-owned under D-a, because a unit test keeps `PART_OWNED` equal to the group | The `local` group, in Button's manifest | §8.2's table lists it with the variant attributes, and that group is the `PART_OWNED` list D-a relies on | A vocabulary edit, free before 0.1.0 | `contracts/vocabulary.json` |
+| D-d | Tooltip API ([§12.3](#123-per-type-rules)) | Adopted 2026-10-14 (builder default; the maintainer can override). The compound `Tooltip.Root` / `Trigger` / `Popup` is canonical. A `content` convenience prop and `shortcut` (needs Kbd) come in week 3 with IconButton's tooltip wiring | A single `content` prop, as the inventory had it | The trigger can be any focusable element, a server Button included; the shape matches Select and Dialog; `shortcut` needs Kbd, which does not exist yet | Adding `content` later is additive | `tooltip.contract.ts`; [component-inventory.md](component-inventory.md) Tooltip row |
+| D-e | Inverse inside inverse ([§7.4](#74-theme-mechanism)) | Adopted 2026-10-14 (builder default; the maintainer can override). A nested inverse surface stays inverse; it does not flip back | Flip back to the page's scheme | It is what the CSS does in every engine tested. Portaled overlays render outside the surface, so the common case (a Tooltip opened from a `tone="inverse"` Card) does not nest. Design is asked (handoff Q36) | One rule in `tokens.css` if design wants a flip | `fixtures/floor-lane/RESULTS.md` (plan gap) |
+| D-f | Engine `data-*` ([§8.3](#83-the-state-vocabulary-one-list-engine-independent) rule 3 vs [§9.3](#93-contract-rules-keep-the-seam-honest) rule 6) | Adopted 2026-10-14 (builder default; the maintainer can override). Rule 3 wins. Adapters strip every engine `data-*` except an allowlist of what React Aria reads back from the DOM, for example `data-key` and `data-collection` (focus, scroll-into-view and typeahead), `data-react-aria-top-layer`, `data-live-announcer`, and the `data-href` family for Menu links (`dom-allowlist.json` is the full list: 14 entries in W1). An open trigger that React Aria reports as pressed is not mapped to `data-pressed` | Keep vocabulary-named engine attributes, as rule 6 said | Keeping them would let React Aria's own `data-invalid` and `data-pressed` reach the DOM with engine meaning. React Aria reads `data-key` and `data-collection` back from the DOM | The allowlist is internal and undocumented; a change is a patch | `_engines/react-aria/dom.ts`, `dom-allowlist.json` |
+| D-g | CSS-only exit motion ([§13.2](#132-rules) rule 4) | Adopted 2026-10-14 (builder default; the maintainer can override). Entry with `@starting-style` on the whole floor. Exit to `display: none` is instant in every Firefox (129 to 157; bug 1834877), so a CSS-only component hides with `visibility` plus `allow-discrete` when its exit animation matters; otherwise the instant exit in Firefox is an accepted deviation (Deviations page entry D2, [§18.2](#182-docs-site-public)) | CSS-first exit everywhere, as rule 4 said; keep nodes mounted from JS | Measured on Firefox 129, 131, 132 and 157; Firefox cannot animate `display` | Component CSS only; the workaround goes when Firefox animates `display` | `fixtures/floor-lane/RESULTS.md` (degradation D2) |
 
 ---
 
