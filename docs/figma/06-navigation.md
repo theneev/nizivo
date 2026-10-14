@@ -391,7 +391,7 @@ Segment  COMPONENT 56×32  AL:H p6/14/6/14 g0 (UNBOUND; 14 off-scale)  r8 (UNBOU
 └─ Label TEXT ← Label#755:33  Default {text/secondary} Label/M | Active {text/primary} Label/M Strong
 ```
 - **Container:** only "Example · Segmented control" 7275:14802 (FRAME): AL:H p3 g2, r10 (UNBOUND, off-scale), fill `{bg/subtle}`, clip. It is not a component.
-- **Reactions:** none.
+- **Reactions:** none on the set as first read. **Correction (week 3, [figma/12](12-w3-forms.md)):** the Default variant and every Default instance in track frames 7275:14802 and 7275:18903 switch to Active on click (220 ms, cubic 0.2,0,0,1).
 
 **Issues:**
 - Missing Hover, Focus and Disabled. No size axis (32 = `size/control-sm` only). No icon-only option.
