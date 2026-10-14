@@ -1,5 +1,6 @@
 import { expect, test } from 'vitest';
 import vocabulary from '../../../../contracts/vocabulary.json' with { type: 'json' };
+import { Button } from '../../src/button/button';
 import { PART_OWNED, renderElement } from '../../src/contracts/render';
 
 // Under RSC a server Button reaches a client part's `render` already rendered: a host <button> that
@@ -35,4 +36,26 @@ test('the part-owned attributes are the presentational group of contracts/vocabu
   expect([...PART_OWNED].toSorted()).toEqual(
     vocabulary.presentational.map((entry) => entry.name).toSorted(),
   );
+});
+
+// What RSC hands the part for `render={<Button />}`: Button already called, a host <button>. An empty
+// Button carries no children, so the part's own (Select.Value and the chevron) survive the merge.
+test("an empty server Button keeps the part's children", () => {
+  const host = Button({});
+  expect(host.type).toBe('button');
+  expect(host.props).not.toHaveProperty('children', expect.anything());
+  const value = <span data-slot="select-value">Last 30 days</span>;
+  const element = renderElement(
+    'button',
+    host,
+    {},
+    {
+      'data-slot': 'select-trigger',
+      children: value,
+    },
+  );
+  expect(element.props).toMatchObject({ 'data-slot': 'select-trigger', children: value });
+  // A Button with a label keeps it: the element's children win, as for any other prop.
+  const labelled = renderElement('button', Button({ children: 'Pick' }), {}, { children: value });
+  expect(labelled.props).not.toHaveProperty('children', value);
 });

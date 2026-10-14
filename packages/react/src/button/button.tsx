@@ -50,6 +50,7 @@ export function Button({
 }: ButtonProps): ReactElement {
   // Only a real <button> may receive `type` and `disabled`.
   const native = render === undefined;
+  const empty = children == null && leadingIcon == null && trailingIcon == null && !pending;
   return renderElement(
     'button',
     render,
@@ -72,7 +73,10 @@ export function Button({
       'aria-disabled': pending || (!native && disabled) ? true : undefined,
       // A handler only exists when a client component rendered us.
       onClick: pending && onClick ? swallow : onClick,
-      children: (
+      // Nothing to show: no children at all. Under RSC a part that renders this Button (for example
+      // Select.Trigger render={<Button />}) receives it as a host element, and an empty label span
+      // there would replace the part's own children.
+      children: empty ? undefined : (
         <>
           {pending ? (
             <span className="nz-button-icon" data-slot="button-icon" aria-hidden="true">
