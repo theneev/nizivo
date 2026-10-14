@@ -7,6 +7,13 @@ const pages = [
   ['/flat', '(c) the same through flat imports'],
   ['/render-prop', '(d) a server Button in client parts’ render prop'],
   ['/barrel-select', 'one client part (Select) through the barrel'],
+  ['/dialog-default-open', 'a Dialog open on the server (defaultOpen)'],
+  ['/tooltip-default-open', 'a Tooltip open on the server (defaultOpen)'],
+  ['/select-groups', 'Select groups, group labels and a separator'],
+  ['/select-composed', 'a server Button as the Select trigger, size="lg"'],
+  ['/t0', 'server-only: every T0 component through its subpath'],
+  ['/t0-barrel', 'server-only: every T0 component through the @nizivo/react barrel'],
+  ['/alert-dismiss', 'a dismissible Alert: the dismiss button is the only client leaf'],
 ];
 
 export default function Home() {

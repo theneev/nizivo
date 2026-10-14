@@ -18,6 +18,8 @@
         "parts": {
           "partsScanned": "button button-label",
           "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
           "ok": true
         }
       },
@@ -33,6 +35,8 @@
         "parts": {
           "partsScanned": "button button-label",
           "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
           "ok": true
         }
       },
@@ -48,12 +52,17 @@
         "parts": {
           "partsScanned": "dialog-trigger select select-chevron select-trigger select-value tooltip-trigger",
           "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
           "ok": true
         },
         "select": {
           "before": "Last 30 days",
           "after": "Last 7 days",
           "formValue": "7d",
+          "triggerSlot": "select-trigger",
+          "triggerSize": "md",
+          "triggerClass": "nz-select-trigger nz-hit-target",
           "partsScanned": "dialog-trigger select select-chevron select-item select-list select-popup select-trigger select-value tooltip-trigger",
           "partsOutsideVocabulary": "",
           "ok": true
@@ -79,7 +88,7 @@
           "ok": true
         }
       },
-      "chunks": 10,
+      "chunks": 11,
       "markers": [
         "nzfm[_engines/react-aria/dialog.client]",
         "nzfm[_engines/react-aria/locale.client]",
@@ -101,12 +110,17 @@
         "parts": {
           "partsScanned": "dialog-trigger select select-chevron select-trigger select-value tooltip-trigger",
           "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
           "ok": true
         },
         "select": {
           "before": "Last 30 days",
           "after": "Last 7 days",
           "formValue": "7d",
+          "triggerSlot": "select-trigger",
+          "triggerSize": "md",
+          "triggerClass": "nz-select-trigger nz-hit-target",
           "partsScanned": "dialog-trigger select select-chevron select-item select-list select-popup select-trigger select-value tooltip-trigger",
           "partsOutsideVocabulary": "",
           "ok": true
@@ -132,7 +146,7 @@
           "ok": true
         }
       },
-      "chunks": 10,
+      "chunks": 11,
       "markers": [
         "nzfm[_engines/react-aria/dialog.client]",
         "nzfm[_engines/react-aria/locale.client]",
@@ -154,6 +168,8 @@
         "parts": {
           "partsScanned": "button-label dialog-trigger tooltip-trigger",
           "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
           "ok": true
         },
         "dialog": {
@@ -177,7 +193,7 @@
           "ok": true
         }
       },
-      "chunks": 9,
+      "chunks": 10,
       "markers": [
         "nzfm[_engines/react-aria/dialog.client]",
         "nzfm[_engines/react-aria/locale.client]",
@@ -197,13 +213,108 @@
         "parts": {
           "partsScanned": "select select-chevron select-trigger select-value",
           "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
           "ok": true
         },
         "select": {
           "before": "Last 30 days",
           "after": "Last 7 days",
           "formValue": "7d",
+          "triggerSlot": "select-trigger",
+          "triggerSize": "md",
+          "triggerClass": "nz-select-trigger nz-hit-target",
           "partsScanned": "select select-chevron select-item select-list select-popup select-trigger select-value",
+          "partsOutsideVocabulary": "",
+          "ok": true
+        }
+      },
+      "chunks": 11,
+      "markers": [
+        "nzfm[_engines/react-aria/locale.client]",
+        "nzfm[_engines/react-aria/overlay.client]",
+        "nzfm[_engines/react-aria/select.client]",
+        "nzfm[config/config.client]",
+        "nzfm[select/select.client]"
+      ],
+      "missing": [],
+      "unexpected": [],
+      "failures": []
+    },
+    "/dialog-default-open": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "dialog-backdrop dialog-body dialog-close dialog-content dialog-description dialog-footer dialog-popup dialog-positioner dialog-title dialog-trigger",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "dialogDefaultOpen": {
+          "ssrExpanded": "true",
+          "ssrDangling": "dialog-trigger aria-controls=react-aria-_R_15fivb_",
+          "expanded": "true",
+          "controls": "react-aria-_R_15fivb_",
+          "controlsDialog": true,
+          "title": "Edit product",
+          "dangling": "",
+          "closedByEscape": true,
+          "partsScanned": "dialog-backdrop dialog-body dialog-close dialog-content dialog-description dialog-footer dialog-popup dialog-positioner dialog-title dialog-trigger",
+          "partsOutsideVocabulary": "",
+          "ok": true
+        },
+        "dialog": {
+          "triggerSlot": "dialog-trigger",
+          "title": "Edit product",
+          "closedByClosePart": true,
+          "focusReturned": true,
+          "closedByEscape": true,
+          "partsScanned": "dialog-backdrop dialog-body dialog-close dialog-content dialog-description dialog-footer dialog-popup dialog-positioner dialog-title dialog-trigger",
+          "partsOutsideVocabulary": "",
+          "ok": true
+        }
+      },
+      "chunks": 10,
+      "markers": [
+        "nzfm[_engines/react-aria/dialog.client]",
+        "nzfm[_engines/react-aria/locale.client]",
+        "nzfm[_engines/react-aria/overlay.client]",
+        "nzfm[config/config.client]",
+        "nzfm[dialog/dialog.client]"
+      ],
+      "missing": [],
+      "unexpected": [],
+      "failures": []
+    },
+    "/tooltip-default-open": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "tooltip-popup tooltip-trigger",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "tooltipDefaultOpen": {
+          "ssrDangling": "tooltip-trigger aria-describedby=react-aria-_R_15fivb_",
+          "describedBy": "react-aria-_R_15fivb_",
+          "describedByTooltip": true,
+          "text": "Download the report as CSV",
+          "dangling": "",
+          "closedByEscape": true,
+          "partsScanned": "tooltip-popup tooltip-trigger",
+          "partsOutsideVocabulary": "",
+          "ok": true
+        },
+        "tooltip": {
+          "triggerSlot": "tooltip-trigger",
+          "text": "Download the report as CSV",
+          "describedByTooltip": true,
+          "shownOnHover": true,
+          "shownOnFocus": true,
+          "partsScanned": "tooltip-popup tooltip-trigger",
           "partsOutsideVocabulary": "",
           "ok": true
         }
@@ -212,10 +323,143 @@
       "markers": [
         "nzfm[_engines/react-aria/locale.client]",
         "nzfm[_engines/react-aria/overlay.client]",
+        "nzfm[_engines/react-aria/tooltip.client]",
+        "nzfm[config/config.client]",
+        "nzfm[tooltip/tooltip.client]"
+      ],
+      "missing": [],
+      "unexpected": [],
+      "failures": []
+    },
+    "/select-groups": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "select select-chevron select-trigger select-value",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "select": {
+          "before": "Last 30 days",
+          "after": "Last 7 days",
+          "formValue": "7d",
+          "triggerSlot": "select-trigger",
+          "triggerSize": "md",
+          "triggerClass": "nz-select-trigger nz-hit-target",
+          "partsScanned": "select select-chevron select-group select-group-label select-item select-list select-popup select-separator select-trigger select-value",
+          "partsOutsideVocabulary": "",
+          "ok": true
+        }
+      },
+      "chunks": 11,
+      "markers": [
+        "nzfm[_engines/react-aria/locale.client]",
+        "nzfm[_engines/react-aria/overlay.client]",
         "nzfm[_engines/react-aria/select.client]",
         "nzfm[config/config.client]",
         "nzfm[select/select.client]"
       ],
+      "missing": [],
+      "unexpected": [],
+      "failures": []
+    },
+    "/select-composed": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "select select-chevron select-trigger select-value",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "select": {
+          "before": "Last 30 days",
+          "after": "Last 7 days",
+          "formValue": "7d",
+          "triggerSlot": "select-trigger",
+          "triggerSize": "lg",
+          "triggerClass": "nz-select-trigger nz-hit-target nz-button",
+          "partsScanned": "select select-chevron select-item select-list select-popup select-trigger select-value",
+          "partsOutsideVocabulary": "",
+          "ok": true
+        }
+      },
+      "chunks": 11,
+      "markers": [
+        "nzfm[_engines/react-aria/locale.client]",
+        "nzfm[_engines/react-aria/overlay.client]",
+        "nzfm[_engines/react-aria/select.client]",
+        "nzfm[config/config.client]",
+        "nzfm[select/select.client]"
+      ],
+      "missing": [],
+      "unexpected": [],
+      "failures": []
+    },
+    "/t0": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "alert alert-content alert-description alert-icon alert-title badge badge-dot button button-label card card-action card-body card-description card-header card-title container delta delta-value empty-state empty-state-actions empty-state-title grid grid-item heading image inline inline-error inline-error-icon inline-error-message kbd kbd-glyphs meter meter-header meter-label meter-track meter-value progress-bar progress-bar-header progress-bar-label progress-bar-track progress-bar-value progress-ring progress-ring-fill progress-ring-label progress-ring-track separator skeleton stack text",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "skeletonCircle": {
+          "sizes": "[[16,16]]",
+          "ok": true
+        }
+      },
+      "chunks": 7,
+      "markers": [],
+      "missing": [],
+      "unexpected": [],
+      "failures": []
+    },
+    "/t0-barrel": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "alert alert-content alert-description alert-icon alert-title badge badge-dot button button-label card card-action card-body card-description card-header card-title container delta delta-value empty-state empty-state-actions empty-state-title grid grid-item heading image inline inline-error inline-error-icon inline-error-message kbd kbd-glyphs meter meter-header meter-label meter-track meter-value progress-bar progress-bar-header progress-bar-label progress-bar-track progress-bar-value progress-ring progress-ring-fill progress-ring-label progress-ring-track separator skeleton stack text",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "skeletonCircle": {
+          "sizes": "[[16,16]]",
+          "ok": true
+        }
+      },
+      "chunks": 7,
+      "markers": [],
+      "missing": [],
+      "unexpected": [],
+      "failures": []
+    },
+    "/alert-dismiss": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "alert alert-content alert-description alert-dismiss alert-dismiss-icon alert-title heading",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "alertDismiss": {
+          "slot": "alert-dismiss",
+          "type": "button",
+          "clicked": true,
+          "ok": true
+        }
+      },
+      "chunks": 8,
+      "markers": ["nzfm[alert/alert-dismiss.client]"],
       "missing": [],
       "unexpected": [],
       "failures": []

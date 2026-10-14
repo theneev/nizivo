@@ -1,6 +1,8 @@
 // The browser checks for one running build: every page in Playwright Chromium, with
 // - zero console errors or warnings and zero page errors (React reports hydration failures there),
-// - interaction after hydration (pick a Select option, open and close the Dialog, show the Tooltip),
+// - interaction after hydration (pick a Select option, open and close the Dialog, show the Tooltip,
+//   press an Alert's dismiss button),
+// - overlays open on the server (`defaultOpen`): open after hydration with every IDREF resolved,
 // - the planted-marker grep over every client chunk the page loads (pack.ts plants them),
 // - every documented part ([data-slot]) on the page, with each overlay open, carries only vocabulary
 //   or functional-allowlist data-* attributes and no engine class (§8.3 rule 3, §9.6 case 3).
@@ -10,7 +12,16 @@ import { dirname, join, normalize } from 'node:path';
 import { chromium, type Browser, type Page } from 'playwright';
 import { REPO_ROOT } from './pack.ts';
 
-type Component = 'select' | 'dialog' | 'tooltip';
+type Component = 'select' | 'dialog' | 'tooltip' | 'alert';
+
+/** Each rendered component's client leaf, as its dist path without `dist/` and `.js`. */
+const LEAF: Record<Component, string> = {
+  select: 'select/select.client',
+  dialog: 'dialog/dialog.client',
+  tooltip: 'tooltip/tooltip.client',
+  // Alert is a T0 shell; only its dismiss button is a client leaf (§9.5 split).
+  alert: 'alert/alert-dismiss.client',
+};
 
 interface PageSpec {
   /** Components the page renders; their client leaves must ship, and no other client module may. */
@@ -18,7 +29,37 @@ interface PageSpec {
   /** The page imports through the root barrel, where webpack without optimizePackageImports leaks (S2c). */
   barrel?: true;
   dialog?: { trigger: string; close: string; role: 'dialog' | 'alertdialog' };
+  /** The overlay is open on the server; it is checked after hydration, before any interaction. */
+  defaultOpen?: 'dialog' | 'tooltip';
+  /** The Select trigger's expected `data-size`, and parts the open popup must show. */
+  select?: { size?: string; parts?: string[] };
+  /** Documented parts the server-rendered page must contain (the T0 set). */
+  slots?: string[];
 }
+
+/** One documented part of each week 2 T0 component (§21.1 W2 "server-safe components"). */
+const T0_SLOTS = [
+  'text',
+  'heading',
+  'stack',
+  'inline',
+  'grid',
+  'grid-item',
+  'container',
+  'separator',
+  'kbd',
+  'image',
+  'badge',
+  'card',
+  'delta',
+  'progress-bar',
+  'progress-ring',
+  'meter',
+  'skeleton',
+  'empty-state',
+  'inline-error',
+  'alert',
+];
 
 export const PAGES: Record<string, PageSpec> = {
   '/button-only': { renders: [], barrel: true },
@@ -36,6 +77,22 @@ export const PAGES: Record<string, PageSpec> = {
     dialog: { trigger: 'Delete product', close: 'Cancel', role: 'alertdialog' },
   },
   '/barrel-select': { renders: ['select'], barrel: true },
+  '/dialog-default-open': {
+    renders: ['dialog'],
+    defaultOpen: 'dialog',
+    dialog: { trigger: 'Edit product', close: 'Done', role: 'dialog' },
+  },
+  '/tooltip-default-open': { renders: ['tooltip'], defaultOpen: 'tooltip' },
+  '/select-groups': {
+    renders: ['select'],
+    select: { parts: ['select-group', 'select-group-label', 'select-separator'] },
+  },
+  '/select-composed': { renders: ['select'], select: { size: 'lg' } },
+  // Every T0 component through its subpath, then through the root barrel: no client module at all.
+  '/t0': { renders: [], slots: T0_SLOTS },
+  '/t0-barrel': { renders: [], barrel: true, slots: T0_SLOTS },
+  // A dismissible Alert: its dismiss leaf is the only client module the page may ship.
+  '/alert-dismiss': { renders: ['alert'], slots: ['alert', 'alert-dismiss'] },
 };
 
 export interface PageResult {
@@ -110,6 +167,39 @@ async function partsClean(page: Page, result: Record<string, string | boolean>):
   return outside.length === 0;
 }
 
+const IDREFS = [
+  'aria-activedescendant',
+  'aria-controls',
+  'aria-describedby',
+  'aria-details',
+  'aria-errormessage',
+  'aria-labelledby',
+  'aria-owns',
+  'for',
+];
+
+/**
+ * IDREFs that name no element, as `<data-slot or tag> <attribute>=<id>`: in the live page, or in
+ * `html` (the server's HTML) when given.
+ */
+async function danglingIdrefs(page: Page, html?: string): Promise<string[]> {
+  return page.evaluate(
+    ([source, names]) => {
+      const root =
+        source === null ? document : new DOMParser().parseFromString(source, 'text/html');
+      return names.flatMap((name) =>
+        [...root.querySelectorAll(`[${name}]`)].flatMap((element) =>
+          (element.getAttribute(name) ?? '')
+            .split(/\s+/)
+            .filter((id) => id !== '' && root.getElementById(id) === null)
+            .map((id) => `${element.getAttribute('data-slot') ?? element.localName} ${name}=${id}`),
+        ),
+      );
+    },
+    [html ?? null, IDREFS] as const,
+  );
+}
+
 const IMPORT = /(?:^|\n)\s*(?:import|export)\b[^;]*?["'](\.{1,2}\/[^"']+)["']/g;
 
 /** Every dist module `start` reaches through relative imports, read from the installed package. */
@@ -143,7 +233,7 @@ export function loadMarkers(packageRoot: string, markersFile: string): Markers {
     allowed: (renders) => {
       const allowed = new Set<string>();
       for (const component of renders) {
-        for (const file of closure(packageRoot, `dist/${component}/${component}.client.js`)) {
+        for (const file of closure(packageRoot, `dist/${LEAF[component]}.js`)) {
           const marker = markerOf.get(file);
           if (marker !== undefined) allowed.add(marker);
         }
@@ -153,14 +243,31 @@ export function loadMarkers(packageRoot: string, markersFile: string): Markers {
   };
 }
 
-async function checkSelect(page: Page): Promise<Record<string, string | boolean>> {
+async function checkSelect(
+  page: Page,
+  want: PageSpec['select'],
+): Promise<Record<string, string | boolean>> {
+  // Read through the part first, so a composed trigger that lost its name is still described.
+  const part = page.locator('[data-slot="select-trigger"]');
+  const before = (await part.textContent()) ?? '';
+  // A Button composed through `render` is still the select-trigger part, at the Root's size (D-a).
+  const triggerSize = (await part.getAttribute('data-size')) ?? '';
+  const triggerClass = (await part.getAttribute('class')) ?? '';
   const trigger = page.getByRole('button', { name: /Period/ });
-  const before = (await trigger.textContent()) ?? '';
-  await trigger.click();
+  const named = await trigger.click({ timeout: TIMEOUT }).then(
+    () => true,
+    () => false,
+  );
+  if (!named) {
+    return { before, triggerSize, triggerClass, namedPeriodAndClicked: false, ok: false };
+  }
+  const triggerSlot = (await trigger.getAttribute('data-slot')) ?? '';
   const listbox = page.getByRole('listbox');
   await listbox.waitFor({ state: 'visible', timeout: TIMEOUT });
   const result: Record<string, string | boolean> = {};
   const clean = await partsClean(page, result);
+  const scanned = String(result['partsScanned']).split(' ');
+  const partsShown = (want?.parts ?? []).every((slot) => scanned.includes(slot));
   await page.getByRole('option', { name: 'Last 7 days' }).click();
   await listbox.waitFor({ state: 'detached', timeout: TIMEOUT });
   const after = (await trigger.textContent()) ?? '';
@@ -169,12 +276,108 @@ async function checkSelect(page: Page): Promise<Record<string, string | boolean>
     before,
     after,
     formValue,
+    triggerSlot,
+    triggerSize,
+    triggerClass,
     ...result,
     ok:
       before.includes('Last 30 days') &&
       after.includes('Last 7 days') &&
       formValue === '7d' &&
+      triggerSlot === 'select-trigger' &&
+      (want?.size === undefined || triggerSize === want.size) &&
+      partsShown &&
       clean,
+  };
+}
+
+/**
+ * A dialog open on the server: React Aria renders no popup during SSR, so the server HTML carries the
+ * expanded trigger alone. After hydration, with no interaction, the dialog is open, named by its
+ * title, and every IDREF on the page resolves. Escape then closes it.
+ */
+async function checkDialogDefaultOpen(
+  page: Page,
+  spec: NonNullable<PageSpec['dialog']>,
+  html: string,
+): Promise<Record<string, string | boolean>> {
+  const ssrDangling = (await danglingIdrefs(page, html)).join(', ');
+  const ssrExpanded = await page.evaluate(
+    (source) =>
+      new DOMParser()
+        .parseFromString(source, 'text/html')
+        .querySelector('[data-slot="dialog-trigger"]')
+        ?.getAttribute('aria-expanded') ?? '',
+    html,
+  );
+  const dialog = page.getByRole(spec.role);
+  await dialog.waitFor({ state: 'visible', timeout: TIMEOUT });
+  // The open modal hides the rest of the page from the accessibility tree, trigger included.
+  const trigger = page.locator('[data-slot="dialog-trigger"]');
+  const expanded = (await trigger.getAttribute('aria-expanded')) ?? '';
+  const controls = (await trigger.getAttribute('aria-controls')) ?? '';
+  const wiring = await dialog.evaluate((element, id) => {
+    const target = id === '' ? null : document.getElementById(id);
+    const title = document.getElementById(element.getAttribute('aria-labelledby') ?? '');
+    return {
+      controlsDialog: target !== null && (target.contains(element) || element.contains(target)),
+      title: title?.textContent ?? '',
+    };
+  }, controls);
+  const dangling = (await danglingIdrefs(page)).join(', ');
+  const result: Record<string, string | boolean> = {};
+  const clean = await partsClean(page, result);
+  await page.keyboard.press('Escape');
+  await dialog.waitFor({ state: 'detached', timeout: TIMEOUT });
+  return {
+    ssrExpanded,
+    ssrDangling,
+    expanded,
+    controls,
+    controlsDialog: wiring.controlsDialog,
+    title: wiring.title,
+    dangling,
+    closedByEscape: true,
+    ...result,
+    ok:
+      expanded === 'true' &&
+      (controls === '' || wiring.controlsDialog) &&
+      wiring.title !== '' &&
+      dangling === '' &&
+      clean,
+  };
+}
+
+/**
+ * A tooltip open on the server: open after hydration with no pointer or focus event, the trigger
+ * described by it, and every IDREF on the page resolved. Escape then closes it.
+ */
+async function checkTooltipDefaultOpen(
+  page: Page,
+  html: string,
+): Promise<Record<string, string | boolean>> {
+  const ssrDangling = (await danglingIdrefs(page, html)).join(', ');
+  const tooltip = page.getByRole('tooltip');
+  await tooltip.waitFor({ state: 'visible', timeout: TIMEOUT });
+  const trigger = page.locator('[data-slot="tooltip-trigger"]');
+  const describedBy = (await trigger.getAttribute('aria-describedby')) ?? '';
+  const tooltipId = (await tooltip.getAttribute('id')) ?? '';
+  const text = (await tooltip.textContent()) ?? '';
+  const dangling = (await danglingIdrefs(page)).join(', ');
+  const result: Record<string, string | boolean> = {};
+  const clean = await partsClean(page, result);
+  await page.keyboard.press('Escape');
+  await tooltip.waitFor({ state: 'detached', timeout: TIMEOUT });
+  const describedByTooltip = tooltipId !== '' && describedBy.split(' ').includes(tooltipId);
+  return {
+    ssrDangling,
+    describedBy,
+    describedByTooltip,
+    text,
+    dangling,
+    closedByEscape: true,
+    ...result,
+    ok: describedByTooltip && text === 'Download the report as CSV' && dangling === '' && clean,
   };
 }
 
@@ -259,6 +462,33 @@ async function checkTooltip(page: Page): Promise<Record<string, string | boolean
   };
 }
 
+/**
+ * A dismissible Alert: the server-rendered shell around the client dismiss leaf. After hydration the
+ * leaf is a named button that takes a click (the page passes no onDismiss: the caller owns visibility).
+ */
+async function checkAlertDismiss(page: Page): Promise<Record<string, string | boolean>> {
+  const alert = page.getByRole('alert');
+  const button = alert.getByRole('button', { name: 'Dismiss', exact: true });
+  const slot = (await button.getAttribute('data-slot', { timeout: TIMEOUT })) ?? '';
+  const type = (await button.getAttribute('type')) ?? '';
+  await button.click({ timeout: TIMEOUT });
+  return { slot, type, clicked: true, ok: slot === 'alert-dismiss' && type === 'button' };
+}
+
+/** A circle Skeleton in a flex column (a Stack) stays square instead of stretching into a bar. */
+async function checkSkeletonCircle(page: Page): Promise<Record<string, string | boolean>> {
+  const sizes = await page.$$eval('.nz-stack > .nz-skeleton[data-shape="circle"]', (nodes) =>
+    nodes.map((node) => {
+      const { width, height } = node.getBoundingClientRect();
+      return [width, height];
+    }),
+  );
+  const square = sizes.every(
+    ([width = 0, height = 0]) => width > 0 && Math.abs(width - height) < 1,
+  );
+  return { sizes: JSON.stringify(sizes), ok: sizes.length > 0 && square };
+}
+
 /** Client JS the page references in its HTML (script tags and the flight payload) or loads. */
 function chunkUrls(html: string, base: string): string[] {
   const urls = new Set<string>();
@@ -325,20 +555,39 @@ async function runPage(
       'parts',
       async () => {
         const result: Record<string, string | boolean> = {};
-        result['ok'] = await partsClean(page, result);
+        const clean = await partsClean(page, result);
+        // A server-open overlay may still be mounting here; its own step waits for it first.
+        const dangling = spec.defaultOpen === undefined ? await danglingIdrefs(page) : [];
+        result['danglingIdrefs'] = dangling.join(', ');
+        const scanned = String(result['partsScanned']).split(' ');
+        const missingSlots = (spec.slots ?? []).filter((slot) => !scanned.includes(slot));
+        result['missingSlots'] = missingSlots.join(' ');
+        result['ok'] = clean && dangling.length === 0 && missingSlots.length === 0;
         return result;
       },
     ]);
   }
   const dialog = spec.dialog;
+  if (failures.length === 0 && spec.defaultOpen === 'dialog' && dialog !== undefined) {
+    steps.push(['dialogDefaultOpen', () => checkDialogDefaultOpen(page, dialog, html)]);
+  }
+  if (failures.length === 0 && spec.defaultOpen === 'tooltip') {
+    steps.push(['tooltipDefaultOpen', () => checkTooltipDefaultOpen(page, html)]);
+  }
   if (failures.length === 0 && spec.renders.includes('select')) {
-    steps.push(['select', () => checkSelect(page)]);
+    steps.push(['select', () => checkSelect(page, spec.select)]);
   }
   if (failures.length === 0 && dialog !== undefined) {
     steps.push(['dialog', () => checkDialog(page, dialog)]);
   }
   if (failures.length === 0 && spec.renders.includes('tooltip')) {
     steps.push(['tooltip', () => checkTooltip(page)]);
+  }
+  if (failures.length === 0 && spec.renders.includes('alert')) {
+    steps.push(['alertDismiss', () => checkAlertDismiss(page)]);
+  }
+  if (failures.length === 0 && spec.slots?.includes('skeleton') === true) {
+    steps.push(['skeletonCircle', () => checkSkeletonCircle(page)]);
   }
   for (const [name, step] of steps) {
     try {
@@ -361,7 +610,7 @@ async function runPage(
     for (const marker of markers.all.keys()) if (source.includes(marker)) found.add(marker);
   }
   const allowed = markers.allowed(spec.renders);
-  const expectedLeaves = spec.renders.map((c) => `nzfm[${c}/${c}.client]`);
+  const expectedLeaves = spec.renders.map((c) => `nzfm[${LEAF[c]}]`);
   const missing = expectedLeaves.filter((marker) => !found.has(marker));
   const unexpected = [...found].filter((marker) => !allowed.has(marker)).toSorted();
   if (options.markerChecks) {
