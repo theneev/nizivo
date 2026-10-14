@@ -1,0 +1,16 @@
+{
+  "name": "nizivo-fixture-next",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Next.js 16.4 App Router fixture: installs the packed @nizivo tarballs; fixtures/runner builds and checks it (ARCHITECTURE.md §18.1, §21.1)",
+  "license": "Apache-2.0",
+  "type": "module",
+  "dependencies": {
+    "@nizivo/react": "file:.packed/react",
+    "@nizivo/tokens": "file:.packed/tokens",
+    "next": "16.4.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "packageManager": "pnpm@12.11.2"
+}

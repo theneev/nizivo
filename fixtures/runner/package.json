@@ -1,0 +1,19 @@
+{
+  "name": "@nizivo/fixture-runner",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Packs the @nizivo tarballs for the framework fixtures and runs their shared browser spec (ARCHITECTURE.md §18.1)",
+  "license": "Apache-2.0",
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit -p .",
+    "pack:fixture": "node pack.ts",
+    "fixture:next": "node next.ts"
+  },
+  "devDependencies": {
+    "@nizivo/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "playwright": "catalog:",
+    "typescript": "catalog:"
+  }
+}

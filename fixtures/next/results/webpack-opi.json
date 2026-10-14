@@ -1,0 +1,224 @@
+{
+  "variant": "webpack-opi",
+  "command": "next build --webpack && next start",
+  "versions": {
+    "next": "16.4.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "react-aria-components": "1.22.1",
+    "browser": "Chromium 156.0.8078.4"
+  },
+  "buildWarnings": [],
+  "pass": true,
+  "failures": [],
+  "pages": {
+    "/button-only": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "button button-label",
+          "partsOutsideVocabulary": "",
+          "ok": true
+        }
+      },
+      "chunks": 5,
+      "markers": [],
+      "missing": [],
+      "unexpected": [],
+      "failures": []
+    },
+    "/button-subpath": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "button button-label",
+          "partsOutsideVocabulary": "",
+          "ok": true
+        }
+      },
+      "chunks": 5,
+      "markers": [],
+      "missing": [],
+      "unexpected": [],
+      "failures": []
+    },
+    "/namespace": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "dialog-trigger select select-chevron select-trigger select-value tooltip-trigger",
+          "partsOutsideVocabulary": "",
+          "ok": true
+        },
+        "select": {
+          "before": "Last 30 days",
+          "after": "Last 7 days",
+          "formValue": "7d",
+          "partsScanned": "dialog-trigger select select-chevron select-item select-list select-popup select-trigger select-value tooltip-trigger",
+          "partsOutsideVocabulary": "",
+          "ok": true
+        },
+        "dialog": {
+          "triggerSlot": "dialog-trigger",
+          "title": "Edit product",
+          "closedByClosePart": true,
+          "focusReturned": true,
+          "closedByEscape": true,
+          "partsScanned": "dialog-backdrop dialog-body dialog-close dialog-content dialog-description dialog-footer dialog-popup dialog-positioner dialog-title dialog-trigger select select-chevron select-trigger select-value tooltip-trigger",
+          "partsOutsideVocabulary": "",
+          "ok": true
+        },
+        "tooltip": {
+          "triggerSlot": "tooltip-trigger",
+          "text": "Download the report as CSV",
+          "describedByTooltip": true,
+          "shownOnHover": true,
+          "shownOnFocus": true,
+          "partsScanned": "dialog-trigger select select-chevron select-trigger select-value tooltip-popup tooltip-trigger",
+          "partsOutsideVocabulary": "",
+          "ok": true
+        }
+      },
+      "chunks": 9,
+      "markers": [
+        "nzfm[_engines/react-aria/dialog.client]",
+        "nzfm[_engines/react-aria/locale.client]",
+        "nzfm[_engines/react-aria/overlay.client]",
+        "nzfm[_engines/react-aria/select.client]",
+        "nzfm[_engines/react-aria/tooltip.client]",
+        "nzfm[config/config.client]",
+        "nzfm[dialog/dialog.client]",
+        "nzfm[select/select.client]",
+        "nzfm[tooltip/tooltip.client]"
+      ],
+      "missing": [],
+      "unexpected": [],
+      "failures": []
+    },
+    "/flat": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "dialog-trigger select select-chevron select-trigger select-value tooltip-trigger",
+          "partsOutsideVocabulary": "",
+          "ok": true
+        },
+        "select": {
+          "before": "Last 30 days",
+          "after": "Last 7 days",
+          "formValue": "7d",
+          "partsScanned": "dialog-trigger select select-chevron select-item select-list select-popup select-trigger select-value tooltip-trigger",
+          "partsOutsideVocabulary": "",
+          "ok": true
+        },
+        "dialog": {
+          "triggerSlot": "dialog-trigger",
+          "title": "Edit product",
+          "closedByClosePart": true,
+          "focusReturned": true,
+          "closedByEscape": true,
+          "partsScanned": "dialog-backdrop dialog-body dialog-close dialog-content dialog-description dialog-footer dialog-popup dialog-positioner dialog-title dialog-trigger select select-chevron select-trigger select-value tooltip-trigger",
+          "partsOutsideVocabulary": "",
+          "ok": true
+        },
+        "tooltip": {
+          "triggerSlot": "tooltip-trigger",
+          "text": "Download the report as CSV",
+          "describedByTooltip": true,
+          "shownOnHover": true,
+          "shownOnFocus": true,
+          "partsScanned": "dialog-trigger select select-chevron select-trigger select-value tooltip-popup tooltip-trigger",
+          "partsOutsideVocabulary": "",
+          "ok": true
+        }
+      },
+      "chunks": 9,
+      "markers": [
+        "nzfm[_engines/react-aria/dialog.client]",
+        "nzfm[_engines/react-aria/locale.client]",
+        "nzfm[_engines/react-aria/overlay.client]",
+        "nzfm[_engines/react-aria/select.client]",
+        "nzfm[_engines/react-aria/tooltip.client]",
+        "nzfm[config/config.client]",
+        "nzfm[dialog/dialog.client]",
+        "nzfm[select/select.client]",
+        "nzfm[tooltip/tooltip.client]"
+      ],
+      "missing": [],
+      "unexpected": [],
+      "failures": []
+    },
+    "/render-prop": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "button-label dialog-trigger tooltip-trigger",
+          "partsOutsideVocabulary": "",
+          "ok": true
+        },
+        "dialog": {
+          "triggerSlot": "dialog-trigger",
+          "title": "Delete “Stoneware mug”?",
+          "closedByClosePart": true,
+          "focusReturned": true,
+          "closedByEscape": true,
+          "partsScanned": "button-label dialog-backdrop dialog-close dialog-content dialog-description dialog-footer dialog-popup dialog-positioner dialog-title dialog-trigger tooltip-trigger",
+          "partsOutsideVocabulary": "",
+          "ok": true
+        },
+        "tooltip": {
+          "triggerSlot": "tooltip-trigger",
+          "text": "Download the report as CSV",
+          "describedByTooltip": true,
+          "shownOnHover": true,
+          "shownOnFocus": true,
+          "partsScanned": "button-label dialog-trigger tooltip-popup tooltip-trigger",
+          "partsOutsideVocabulary": "",
+          "ok": true
+        }
+      },
+      "chunks": 8,
+      "markers": [
+        "nzfm[_engines/react-aria/dialog.client]",
+        "nzfm[_engines/react-aria/locale.client]",
+        "nzfm[_engines/react-aria/overlay.client]",
+        "nzfm[_engines/react-aria/tooltip.client]",
+        "nzfm[config/config.client]",
+        "nzfm[dialog/dialog.client]",
+        "nzfm[tooltip/tooltip.client]"
+      ],
+      "missing": [],
+      "unexpected": [],
+      "failures": []
+    },
+    "/barrel-select": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "select select-chevron select-trigger select-value",
+          "partsOutsideVocabulary": "",
+          "ok": true
+        },
+        "select": {
+          "before": "Last 30 days",
+          "after": "Last 7 days",
+          "formValue": "7d",
+          "partsScanned": "select select-chevron select-item select-list select-popup select-trigger select-value",
+          "partsOutsideVocabulary": "",
+          "ok": true
+        }
+      },
+      "chunks": 8,
+      "markers": [
+        "nzfm[_engines/react-aria/locale.client]",
+        "nzfm[_engines/react-aria/overlay.client]",
+        "nzfm[_engines/react-aria/select.client]",
+        "nzfm[config/config.client]",
+        "nzfm[select/select.client]"
+      ],
+      "missing": [],
+      "unexpected": [],
+      "failures": []
+    }
+  }
+}

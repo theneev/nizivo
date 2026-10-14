@@ -3,6 +3,8 @@ packages:
   - packages/tooling/*
   - apps/*
   - fixtures/*
+  # Its own workspace root: it installs packed tarballs from a gitignored folder (fixtures/next/RESULTS.md).
+  - '!fixtures/next'
 
 # One version of each shared dependency across the repo (ARCHITECTURE.md §19.1).
 # Tooling is pinned exactly; engine dependencies use caret ranges so consumer trees dedupe (§5.3).

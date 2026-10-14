@@ -1,0 +1,20 @@
+# This fixture is its own pnpm workspace root, excluded from the monorepo (../../pnpm-workspace.yaml):
+# it installs @nizivo/* from the folders fixtures/runner/pack.ts unpacks from `pnpm pack` tarballs into
+# the gitignored .packed/ folder, so the monorepo's frozen install never depends on a build. `file:`
+# folders are copied into the store (not linked), and they carry no integrity hash, so the committed
+# pnpm-lock.yaml stays valid across library builds. See RESULTS.md.
+
+# @nizivo/react depends on @nizivo/tokens at its exact version, which is not on the registry.
+overrides:
+  '@nizivo/tokens': 'file:.packed/tokens'
+
+# next lists sharp as optional for next/image, which the fixture does not use. sharp pulls in
+# @img/sharp-libvips-* (LGPL-3.0-or-later), outside the §19.3 licence allowlist.
+ignoredOptionalDependencies:
+  - sharp
+
+# Same supply-chain policy as the monorepo root (ARCHITECTURE.md §19.3).
+minimumReleaseAge: 4320
+allowBuilds: {}
+trustPolicy: no-downgrade
+blockExoticSubdeps: true

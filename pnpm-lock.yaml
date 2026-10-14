@@ -290,6 +290,21 @@ importers:
         specifier: 'catalog:'
         version: 7.0.2
 
+  fixtures/runner:
+    devDependencies:
+      '@nizivo/tsconfig':
+        specifier: workspace:*
+        version: link:../../packages/tooling/tsconfig
+      '@types/node':
+        specifier: 'catalog:'
+        version: 24.19.2
+      playwright:
+        specifier: 'catalog:'
+        version: 1.64.0
+      typescript:
+        specifier: 'catalog:'
+        version: 7.0.2
+
   packages/icons:
     devDependencies:
       '@nizivo/tsconfig':
