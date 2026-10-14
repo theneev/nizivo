@@ -16,10 +16,12 @@ env:
   COREPACK_ENABLE_DOWNLOAD_PROMPT: '0'
   TURBO_TELEMETRY_DISABLED: '1'
 
+# `pnpm check` runs these same steps locally; GitHub Actions is off for now (docs/ARCHITECTURE.md §1).
 jobs:
   check:
     name: Typecheck, lint, test, build
-    runs-on: ubuntu-latest
+    # Pinned so the image changes only when we change it (ubuntu-latest moves to 26 on 2026-10-19).
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -46,7 +48,7 @@ jobs:
         run: pnpm lint
 
       - name: Generated files are current (barrels, engine.ts, exports map, component map)
-        run: pnpm nz gen --check
+        run: pnpm gen:check
 
       - name: Test
         run: pnpm test
@@ -55,4 +57,4 @@ jobs:
         run: pnpm build
 
       - name: Dist seam checks (directives, namespace objects, .d.ts walk from the exports map)
-        run: pnpm --filter @nizivo/react exec vitest run --config test/built/vitest.config.ts
+        run: pnpm test:dist

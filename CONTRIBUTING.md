@@ -20,17 +20,18 @@ COREPACK_ENABLE_DOWNLOAD_PROMPT=0 corepack pnpm@12.11.2 install
 
 ## Everyday commands
 
-| Command          | What it does                                                                                |
-| ---------------- | ------------------------------------------------------------------------------------------- |
-| `pnpm build`     | Builds every package with tsdown (Turborepo, local cache only)                              |
-| `pnpm typecheck` | `tsc --noEmit` with TypeScript 7 in every package                                           |
-| `pnpm lint`      | oxlint, the oxfmt check, then stylelint on component CSS                                    |
-| `pnpm test`      | Vitest in every package                                                                     |
-| `pnpm format`    | Formats the repo with oxfmt                                                                 |
-| `pnpm changeset` | Adds a changeset (see below)                                                                |
-| `pnpm nz gen`    | Regenerates barrels, `engine.ts`, exports and the component map from `component.json` files |
+| Command          | What it does                                                                                                                    |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `pnpm build`     | Builds every package with tsdown (Turborepo, local cache only)                                                                  |
+| `pnpm typecheck` | `tsc --noEmit` with TypeScript 7 in every package                                                                               |
+| `pnpm lint`      | oxlint, the oxfmt check, then stylelint on component CSS                                                                        |
+| `pnpm test`      | Vitest in every package                                                                                                         |
+| `pnpm format`    | Formats the repo with oxfmt                                                                                                     |
+| `pnpm changeset` | Adds a changeset (see below)                                                                                                    |
+| `pnpm nz gen`    | Regenerates barrels, `engine.ts`, exports and the component map from `component.json` files                                     |
+| `pnpm check`     | Everything CI runs, in CI's order: frozen install, typecheck, lint, `nz gen --check`, test, build, then the built-output checks |
 
-CI runs install (`--frozen-lockfile`), typecheck, lint, test and build on every pull request.
+CI runs the same steps as `pnpm check` on every pull request. GitHub Actions is switched off for now, so run `pnpm check` before you push.
 
 ## Rules CI and review enforce
 

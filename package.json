@@ -14,6 +14,9 @@
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",
     "lint": "oxlint --deny-warnings && oxfmt --check && turbo run lint",
+    "gen:check": "nz gen --check",
+    "test:dist": "pnpm --filter @nizivo/react exec vitest run --config test/built/vitest.config.ts",
+    "check": "pnpm install --frozen-lockfile && pnpm typecheck && pnpm lint && pnpm gen:check && pnpm test && pnpm build && pnpm test:dist",
     "format": "oxfmt",
     "changeset": "changeset"
   },
