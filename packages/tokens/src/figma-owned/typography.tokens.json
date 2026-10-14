@@ -1,0 +1,434 @@
+{
+  "font": {
+    "body": {
+      "l": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "Geist",
+          "fontSize": {
+            "value": 1,
+            "unit": "rem"
+          },
+          "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "rem"
+          },
+          "lineHeight": 1.6
+        },
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "styleId": "S:e09fe186bea6d9bff8757c5399b50e731939ef47,",
+            "name": "Body/L",
+            "letterSpacingPercent": 0
+          }
+        }
+      },
+      "m": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "Geist",
+          "fontSize": {
+            "value": 0.875,
+            "unit": "rem"
+          },
+          "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "rem"
+          },
+          "lineHeight": 1.5
+        },
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "styleId": "S:113652e64303b5ad009e540a4c1bc30a27a1b20a,",
+            "name": "Body/M",
+            "letterSpacingPercent": 0
+          }
+        }
+      },
+      "m-strong": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "Geist",
+          "fontSize": {
+            "value": 0.875,
+            "unit": "rem"
+          },
+          "fontWeight": 500,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "rem"
+          },
+          "lineHeight": 1.5
+        },
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "styleId": "S:641e026f76f992e585a4ea605c53c6dd59555efd,",
+            "name": "Body/M Strong",
+            "letterSpacingPercent": 0
+          }
+        }
+      }
+    },
+    "display": {
+      "l": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "Geist",
+          "fontSize": {
+            "value": 3.5,
+            "unit": "rem"
+          },
+          "fontWeight": 600,
+          "letterSpacing": {
+            "value": -0.105,
+            "unit": "rem"
+          },
+          "lineHeight": 1.04
+        },
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "styleId": "S:693640858cd02f557cc34e9b3b6957e42963298d,",
+            "name": "Display/L",
+            "letterSpacingPercent": -3
+          }
+        }
+      },
+      "m": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "Geist",
+          "fontSize": {
+            "value": 2.75,
+            "unit": "rem"
+          },
+          "fontWeight": 600,
+          "letterSpacing": {
+            "value": -0.06875,
+            "unit": "rem"
+          },
+          "lineHeight": 1.08
+        },
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "styleId": "S:71499ae90898455eddd7b5813859866faf27486b,",
+            "name": "Display/M",
+            "letterSpacingPercent": -2.5
+          }
+        }
+      }
+    },
+    "heading": {
+      "h1": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "Geist",
+          "fontSize": {
+            "value": 2,
+            "unit": "rem"
+          },
+          "fontWeight": 600,
+          "letterSpacing": {
+            "value": -0.04,
+            "unit": "rem"
+          },
+          "lineHeight": 1.2
+        },
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "styleId": "S:e0fc78f6efa68d6c9b10f8f4f34f68417ff00f5e,",
+            "name": "Heading/H1",
+            "letterSpacingPercent": -2
+          }
+        }
+      },
+      "h2": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "Geist",
+          "fontSize": {
+            "value": 1.5,
+            "unit": "rem"
+          },
+          "fontWeight": 600,
+          "letterSpacing": {
+            "value": -0.0225,
+            "unit": "rem"
+          },
+          "lineHeight": 1.3
+        },
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "styleId": "S:45036609048a5e51ecd6b55e8e1b52d0edb1e009,",
+            "name": "Heading/H2",
+            "letterSpacingPercent": -1.5
+          }
+        }
+      },
+      "h3": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "Geist",
+          "fontSize": {
+            "value": 1.25,
+            "unit": "rem"
+          },
+          "fontWeight": 600,
+          "letterSpacing": {
+            "value": -0.0125,
+            "unit": "rem"
+          },
+          "lineHeight": 1.4
+        },
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "styleId": "S:62f2bac776a789667fe7af32c987c3c55d342ce0,",
+            "name": "Heading/H3",
+            "letterSpacingPercent": -1
+          }
+        }
+      },
+      "h4": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "Geist",
+          "fontSize": {
+            "value": 1,
+            "unit": "rem"
+          },
+          "fontWeight": 600,
+          "letterSpacing": {
+            "value": -0.005,
+            "unit": "rem"
+          },
+          "lineHeight": 1.5
+        },
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "styleId": "S:74e4754fde94df75b52e6fae4fa2aba2015397fa,",
+            "name": "Heading/H4",
+            "letterSpacingPercent": -0.5
+          }
+        }
+      }
+    },
+    "label": {
+      "l": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "Geist",
+          "fontSize": {
+            "value": 1,
+            "unit": "rem"
+          },
+          "fontWeight": 500,
+          "letterSpacing": {
+            "value": -0.002,
+            "unit": "rem"
+          },
+          "lineHeight": 1.4
+        },
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "styleId": "S:05811903b8af7febb2815fe7b4b6cc699f8020af,",
+            "name": "Label/L",
+            "letterSpacingPercent": -0.2
+          }
+        }
+      },
+      "m": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "Geist",
+          "fontSize": {
+            "value": 0.875,
+            "unit": "rem"
+          },
+          "fontWeight": 500,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "rem"
+          },
+          "lineHeight": 1.4
+        },
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "styleId": "S:50c505e883b896a71befe3e34573edf4ba46d481,",
+            "name": "Label/M",
+            "letterSpacingPercent": 0
+          }
+        }
+      },
+      "m-strong": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "Geist",
+          "fontSize": {
+            "value": 0.875,
+            "unit": "rem"
+          },
+          "fontWeight": 600,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "rem"
+          },
+          "lineHeight": 1.4
+        },
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "styleId": "S:244b8f1d4e31a7409b96eef0db3d1a93bc6b6cff,",
+            "name": "Label/M Strong",
+            "letterSpacingPercent": 0
+          }
+        }
+      }
+    },
+    "mono": {
+      "m": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "Geist Mono",
+          "fontSize": {
+            "value": 0.875,
+            "unit": "rem"
+          },
+          "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "rem"
+          },
+          "lineHeight": 1.4
+        },
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "styleId": "S:20221c1bf6c9a51a7cd74c6db367067ffd156e14,",
+            "name": "Mono/M",
+            "letterSpacingPercent": 0
+          }
+        }
+      },
+      "m-strong": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "Geist Mono",
+          "fontSize": {
+            "value": 0.875,
+            "unit": "rem"
+          },
+          "fontWeight": 500,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "rem"
+          },
+          "lineHeight": 1.4
+        },
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "styleId": "S:1073ec7b69f3bb0057e9130702e3c5d78573e132,",
+            "name": "Mono/M Strong",
+            "letterSpacingPercent": 0
+          }
+        }
+      }
+    },
+    "numeric": {
+      "display": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "Geist",
+          "fontSize": {
+            "value": 2.5,
+            "unit": "rem"
+          },
+          "fontWeight": 600,
+          "letterSpacing": {
+            "value": -0.075,
+            "unit": "rem"
+          },
+          "lineHeight": 1
+        },
+        "$description": "Tabular figures (font-variant-numeric: tabular-nums). Animate with count-up, duration/count-up.",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "styleId": "S:becf29e77e995f822ebb3c1e1fdb29dc30f21445,",
+            "name": "Numeric/Display",
+            "letterSpacingPercent": -3
+          }
+        }
+      },
+      "kpi": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "Geist",
+          "fontSize": {
+            "value": 2,
+            "unit": "rem"
+          },
+          "fontWeight": 600,
+          "letterSpacing": {
+            "value": -0.05,
+            "unit": "rem"
+          },
+          "lineHeight": 1
+        },
+        "$description": "Tabular figures (font-variant-numeric: tabular-nums). Animate with count-up, duration/count-up.",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "styleId": "S:5842270f961470e28cd068bb30f380d3c9cdd03b,",
+            "name": "Numeric/KPI",
+            "letterSpacingPercent": -2.5
+          }
+        }
+      },
+      "l": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "Geist",
+          "fontSize": {
+            "value": 1.5,
+            "unit": "rem"
+          },
+          "fontWeight": 600,
+          "letterSpacing": {
+            "value": -0.0225,
+            "unit": "rem"
+          },
+          "lineHeight": 1.1
+        },
+        "$description": "Tabular figures (font-variant-numeric: tabular-nums). Animate with count-up, duration/count-up.",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "styleId": "S:479c2807ceb462b5569a54fa4e1300f9db0f17ad,",
+            "name": "Numeric/L",
+            "letterSpacingPercent": -1.5
+          }
+        }
+      },
+      "m": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "Geist",
+          "fontSize": {
+            "value": 1,
+            "unit": "rem"
+          },
+          "fontWeight": 500,
+          "letterSpacing": {
+            "value": -0.005,
+            "unit": "rem"
+          },
+          "lineHeight": 1.2
+        },
+        "$description": "Tabular figures (font-variant-numeric: tabular-nums). Animate with count-up, duration/count-up.",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "styleId": "S:851ed51a0c81cb9a8069b6874a5f66a350d64b5b,",
+            "name": "Numeric/M",
+            "letterSpacingPercent": -0.5
+          }
+        }
+      }
+    }
+  }
+}

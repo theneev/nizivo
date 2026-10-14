@@ -1,0 +1,51 @@
+{
+  "name": "Nizivo",
+  "version": "2025.10",
+  "description": "Nizivo design tokens: the Figma-owned sets and modes. Code-owned sources join in week 2.",
+  "sets": {
+    "primitives": {
+      "sources": [{ "$ref": "figma-owned/primitives.tokens.json" }]
+    },
+    "foundation": {
+      "sources": [
+        { "$ref": "figma-owned/foundation.tokens.json" },
+        { "$ref": "figma-owned/typography.tokens.json" },
+        { "$ref": "figma-owned/effects.tokens.json" }
+      ]
+    }
+  },
+  "modifiers": {
+    "theme": {
+      "description": "Figma Color collection modes (Light, Dark)",
+      "contexts": {
+        "light": [{ "$ref": "figma-owned/color/light.tokens.json" }],
+        "dark": [{ "$ref": "figma-owned/color/dark.tokens.json" }]
+      },
+      "default": "light"
+    },
+    "motion": {
+      "description": "Figma Motion collection modes (Default, Reduced)",
+      "contexts": {
+        "default": [{ "$ref": "figma-owned/motion/default.tokens.json" }],
+        "reduced": [{ "$ref": "figma-owned/motion/reduced.tokens.json" }]
+      },
+      "default": "default"
+    },
+    "viewport": {
+      "description": "Figma Responsive collection modes (Mobile, Tablet, Desktop), mobile first",
+      "contexts": {
+        "mobile": [{ "$ref": "figma-owned/viewport/mobile.tokens.json" }],
+        "tablet": [{ "$ref": "figma-owned/viewport/tablet.tokens.json" }],
+        "desktop": [{ "$ref": "figma-owned/viewport/desktop.tokens.json" }]
+      },
+      "default": "mobile"
+    }
+  },
+  "resolutionOrder": [
+    { "$ref": "#/sets/primitives" },
+    { "$ref": "#/sets/foundation" },
+    { "$ref": "#/modifiers/theme" },
+    { "$ref": "#/modifiers/motion" },
+    { "$ref": "#/modifiers/viewport" }
+  ]
+}

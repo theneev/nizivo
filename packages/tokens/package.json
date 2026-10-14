@@ -36,8 +36,15 @@
   },
   "scripts": {
     "build": "tsdown",
-    "typecheck": "tsc --noEmit -p .",
-    "test": "vitest run --passWithNoTests"
+    "typecheck": "tsc --noEmit -p . && tsc --noEmit -p tsconfig.scripts.json && tsc --noEmit -p test",
+    "test": "vitest run --fsModuleCachePath node_modules/.vitest-cache",
+    "tokens:pull:agent": "node scripts/figma/pull-agent.ts",
+    "tokens:raw": "node scripts/figma/raw.ts",
+    "tokens:codesyntax": "node scripts/figma/codesyntax-rewrite.ts",
+    "tokens:normalize": "node scripts/normalize.ts",
+    "tokens:normalize:check": "node scripts/normalize.ts --check",
+    "tokens:check": "tz check -c build/terrazzo.config.ts",
+    "tokens:dry-run": "tz build -c build/terrazzo.config.ts"
   },
   "devDependencies": {
     "@nizivo/tsconfig": "workspace:*",

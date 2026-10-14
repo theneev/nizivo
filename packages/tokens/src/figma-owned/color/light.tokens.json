@@ -1,0 +1,713 @@
+{
+  "color": {
+    "bg": {
+      "accent": {
+        "$type": "color",
+        "$value": "{color.p.lime.300}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:128",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "bg/accent",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL"]
+          }
+        }
+      },
+      "accent-subtle": {
+        "$type": "color",
+        "$value": "{color.p.lime.50}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:129",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "bg/accent-subtle",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL"]
+          }
+        }
+      },
+      "brand": {
+        "$type": "color",
+        "$value": "{color.p.green.700}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:123",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "bg/brand",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL"]
+          }
+        }
+      },
+      "brand-hover": {
+        "$type": "color",
+        "$value": "{color.p.green.800}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:124",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "bg/brand-hover",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL"]
+          }
+        }
+      },
+      "brand-muted": {
+        "$type": "color",
+        "$value": "{color.p.green.100}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:127",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "bg/brand-muted",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL"]
+          }
+        }
+      },
+      "brand-pressed": {
+        "$type": "color",
+        "$value": "{color.p.green.900}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:125",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "bg/brand-pressed",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL"]
+          }
+        }
+      },
+      "brand-subtle": {
+        "$type": "color",
+        "$value": "{color.p.green.50}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:126",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "bg/brand-subtle",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL"]
+          }
+        }
+      },
+      "canvas": {
+        "$type": "color",
+        "$value": "{color.p.neutral.50}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:114",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "bg/canvas",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL"]
+          }
+        }
+      },
+      "critical": {
+        "$type": "color",
+        "$value": "{color.p.red.600}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:134",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "bg/critical",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL"]
+          }
+        }
+      },
+      "critical-subtle": {
+        "$type": "color",
+        "$value": "{color.p.red.50}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:132",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "bg/critical-subtle",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL"]
+          }
+        }
+      },
+      "disabled": {
+        "$type": "color",
+        "$value": "{color.p.neutral.100}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:135",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "bg/disabled",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL"]
+          }
+        }
+      },
+      "hover": {
+        "$type": "color",
+        "$value": "{color.p.neutral.50}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:119",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "bg/hover",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL"]
+          }
+        }
+      },
+      "info-subtle": {
+        "$type": "color",
+        "$value": "{color.p.blue.50}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:133",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "bg/info-subtle",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL"]
+          }
+        }
+      },
+      "inverse": {
+        "$type": "color",
+        "$value": "{color.p.neutral.900}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:121",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "bg/inverse",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL"]
+          }
+        }
+      },
+      "inverse-elevated": {
+        "$type": "color",
+        "$value": "{color.p.neutral.850}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:122",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "bg/inverse-elevated",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL"]
+          }
+        }
+      },
+      "muted": {
+        "$type": "color",
+        "$value": "{color.p.neutral.100}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:118",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "bg/muted",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL"]
+          }
+        }
+      },
+      "pressed": {
+        "$type": "color",
+        "$value": "{color.p.neutral.100}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:120",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "bg/pressed",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL"]
+          }
+        }
+      },
+      "subtle": {
+        "$type": "color",
+        "$value": "{color.p.neutral.25}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:117",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "bg/subtle",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL"]
+          }
+        }
+      },
+      "success-subtle": {
+        "$type": "color",
+        "$value": "{color.p.green.50}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:130",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "bg/success-subtle",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL"]
+          }
+        }
+      },
+      "surface": {
+        "$type": "color",
+        "$value": "{color.p.neutral.0}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:115",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "bg/surface",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL"]
+          }
+        }
+      },
+      "surface-raised": {
+        "$type": "color",
+        "$value": "{color.p.neutral.0}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:116",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "bg/surface-raised",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL"]
+          }
+        }
+      },
+      "warning-subtle": {
+        "$type": "color",
+        "$value": "{color.p.amber.50}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:131",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "bg/warning-subtle",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL"]
+          }
+        }
+      }
+    },
+    "border": {
+      "brand": {
+        "$type": "color",
+        "$value": "{color.p.green.600}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:151",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "border/brand",
+            "scopes": ["STROKE_COLOR"]
+          }
+        }
+      },
+      "critical": {
+        "$type": "color",
+        "$value": "{color.p.red.500}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:153",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "border/critical",
+            "scopes": ["STROKE_COLOR"]
+          }
+        }
+      },
+      "default": {
+        "$type": "color",
+        "$value": "{color.p.neutral.200}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:148",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "border/default",
+            "scopes": ["STROKE_COLOR"]
+          }
+        }
+      },
+      "focus": {
+        "$type": "color",
+        "$value": "{color.p.green.500}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:152",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "border/focus",
+            "scopes": ["STROKE_COLOR"]
+          }
+        }
+      },
+      "strong": {
+        "$type": "color",
+        "$value": "{color.p.neutral.300}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:150",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "border/strong",
+            "scopes": ["STROKE_COLOR"]
+          }
+        }
+      },
+      "subtle": {
+        "$type": "color",
+        "$value": "{color.p.neutral.100}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:149",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "border/subtle",
+            "scopes": ["STROKE_COLOR"]
+          }
+        }
+      },
+      "warning": {
+        "$type": "color",
+        "$value": "{color.p.amber.500}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:154",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "border/warning",
+            "scopes": ["STROKE_COLOR"]
+          }
+        }
+      }
+    },
+    "chart": {
+      "cat-1": {
+        "$type": "color",
+        "$value": "{color.p.viz.green-500}",
+        "$description": "Validated categorical slot (CVD ΔE≥14, light+dark). Fixed order, never cycled; 4th+ series fold into chart/neutral &quot;Other&quot;.",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:747:239",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "chart/cat-1",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL", "STROKE_COLOR"]
+          }
+        }
+      },
+      "cat-2": {
+        "$type": "color",
+        "$value": "{color.p.viz.lime-500}",
+        "$description": "Validated categorical slot (CVD ΔE≥14, light+dark). Fixed order, never cycled; 4th+ series fold into chart/neutral &quot;Other&quot;.",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:747:240",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "chart/cat-2",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL", "STROKE_COLOR"]
+          }
+        }
+      },
+      "cat-3": {
+        "$type": "color",
+        "$value": "{color.p.viz.teal-500}",
+        "$description": "Validated categorical slot (CVD ΔE≥14, light+dark). Fixed order, never cycled; 4th+ series fold into chart/neutral &quot;Other&quot;.",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:747:241",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "chart/cat-3",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL", "STROKE_COLOR"]
+          }
+        }
+      },
+      "grid": {
+        "$type": "color",
+        "$value": "{color.p.neutral.100}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:167",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "chart/grid",
+            "scopes": ["STROKE_COLOR"]
+          }
+        }
+      },
+      "negative": {
+        "$type": "color",
+        "$value": "{color.p.red.500}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:168",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "chart/negative",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL", "STROKE_COLOR"]
+          }
+        }
+      },
+      "neutral": {
+        "$type": "color",
+        "$value": "{color.p.neutral.300}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:165",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "chart/neutral",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL", "STROKE_COLOR"]
+          }
+        }
+      },
+      "primary": {
+        "$type": "color",
+        "$value": "{color.p.green.600}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:162",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "chart/primary",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL", "STROKE_COLOR"]
+          }
+        }
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": "{color.p.green.200}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:163",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "chart/secondary",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL", "STROKE_COLOR"]
+          }
+        }
+      },
+      "tertiary": {
+        "$type": "color",
+        "$value": "{color.p.lime.400}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:164",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "chart/tertiary",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL", "STROKE_COLOR"]
+          }
+        }
+      },
+      "track": {
+        "$type": "color",
+        "$value": "{color.p.neutral.100}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:166",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "chart/track",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL", "STROKE_COLOR"]
+          }
+        }
+      }
+    },
+    "icon": {
+      "brand": {
+        "$type": "color",
+        "$value": "{color.p.green.600}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:157",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "icon/brand",
+            "scopes": ["SHAPE_FILL", "STROKE_COLOR"]
+          }
+        }
+      },
+      "critical": {
+        "$type": "color",
+        "$value": "{color.p.red.500}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:161",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "icon/critical",
+            "scopes": ["SHAPE_FILL", "STROKE_COLOR"]
+          }
+        }
+      },
+      "inverse": {
+        "$type": "color",
+        "$value": "{color.p.neutral.0}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:158",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "icon/inverse",
+            "scopes": ["SHAPE_FILL", "STROKE_COLOR"]
+          }
+        }
+      },
+      "primary": {
+        "$type": "color",
+        "$value": "{color.p.neutral.800}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:155",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "icon/primary",
+            "scopes": ["SHAPE_FILL", "STROKE_COLOR"]
+          }
+        }
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": "{color.p.neutral.500}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:156",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "icon/secondary",
+            "scopes": ["SHAPE_FILL", "STROKE_COLOR"]
+          }
+        }
+      },
+      "success": {
+        "$type": "color",
+        "$value": "{color.p.green.500}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:159",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "icon/success",
+            "scopes": ["SHAPE_FILL", "STROKE_COLOR"]
+          }
+        }
+      },
+      "warning": {
+        "$type": "color",
+        "$value": "{color.p.amber.500}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:160",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "icon/warning",
+            "scopes": ["SHAPE_FILL", "STROKE_COLOR"]
+          }
+        }
+      }
+    },
+    "text": {
+      "brand": {
+        "$type": "color",
+        "$value": "{color.p.green.700}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:143",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "text/brand",
+            "scopes": ["TEXT_FILL"]
+          }
+        }
+      },
+      "critical": {
+        "$type": "color",
+        "$value": "{color.p.red.600}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:146",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "text/critical",
+            "scopes": ["TEXT_FILL"]
+          }
+        }
+      },
+      "disabled": {
+        "$type": "color",
+        "$value": "{color.p.neutral.400}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:139",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "text/disabled",
+            "scopes": ["TEXT_FILL"]
+          }
+        }
+      },
+      "info": {
+        "$type": "color",
+        "$value": "{color.p.blue.600}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:147",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "text/info",
+            "scopes": ["TEXT_FILL"]
+          }
+        }
+      },
+      "inverse": {
+        "$type": "color",
+        "$value": "{color.p.neutral.0}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:140",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "text/inverse",
+            "scopes": ["TEXT_FILL"]
+          }
+        }
+      },
+      "on-accent": {
+        "$type": "color",
+        "$value": "{color.p.green.950}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:142",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "text/on-accent",
+            "scopes": ["TEXT_FILL"]
+          }
+        }
+      },
+      "on-brand": {
+        "$type": "color",
+        "$value": "{color.p.neutral.0}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:141",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "text/on-brand",
+            "scopes": ["TEXT_FILL"]
+          }
+        }
+      },
+      "primary": {
+        "$type": "color",
+        "$value": "{color.p.neutral.900}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:136",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "text/primary",
+            "scopes": ["TEXT_FILL"]
+          }
+        }
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": "{color.p.neutral.600}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:137",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "text/secondary",
+            "scopes": ["TEXT_FILL"]
+          }
+        }
+      },
+      "success": {
+        "$type": "color",
+        "$value": "{color.p.green.600}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:144",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "text/success",
+            "scopes": ["TEXT_FILL"]
+          }
+        }
+      },
+      "tertiary": {
+        "$type": "color",
+        "$value": "{color.p.neutral.500}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:138",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "text/tertiary",
+            "scopes": ["TEXT_FILL"]
+          }
+        }
+      },
+      "warning": {
+        "$type": "color",
+        "$value": "{color.p.amber.700}",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:737:145",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "text/warning",
+            "scopes": ["TEXT_FILL"]
+          }
+        }
+      }
+    }
+  }
+}

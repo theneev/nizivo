@@ -1,0 +1,304 @@
+{
+  "distance": {
+    "float": {
+      "$type": "dimension",
+      "$value": {
+        "value": 0.5,
+        "unit": "rem"
+      },
+      "$extensions": {
+        "dev.nizivo.figma": {
+          "variableId": "VariableID:737:218",
+          "collectionId": "VariableCollectionId:737:203",
+          "name": "distance/float",
+          "scopes": []
+        }
+      }
+    },
+    "lift": {
+      "$type": "dimension",
+      "$value": {
+        "value": 0.25,
+        "unit": "rem"
+      },
+      "$extensions": {
+        "dev.nizivo.figma": {
+          "variableId": "VariableID:737:216",
+          "collectionId": "VariableCollectionId:737:203",
+          "name": "distance/lift",
+          "scopes": []
+        }
+      }
+    },
+    "reveal": {
+      "$type": "dimension",
+      "$value": {
+        "value": 0.75,
+        "unit": "rem"
+      },
+      "$extensions": {
+        "dev.nizivo.figma": {
+          "variableId": "VariableID:737:217",
+          "collectionId": "VariableCollectionId:737:203",
+          "name": "distance/reveal",
+          "scopes": []
+        }
+      }
+    }
+  },
+  "duration": {
+    "base": {
+      "$type": "duration",
+      "$value": {
+        "value": 220,
+        "unit": "ms"
+      },
+      "$extensions": {
+        "dev.nizivo.figma": {
+          "variableId": "VariableID:737:206",
+          "collectionId": "VariableCollectionId:737:203",
+          "name": "duration/base",
+          "scopes": []
+        }
+      }
+    },
+    "chart-draw": {
+      "$type": "duration",
+      "$value": {
+        "value": 700,
+        "unit": "ms"
+      },
+      "$extensions": {
+        "dev.nizivo.figma": {
+          "variableId": "VariableID:737:210",
+          "collectionId": "VariableCollectionId:737:203",
+          "name": "duration/chart-draw",
+          "scopes": []
+        }
+      }
+    },
+    "count-up": {
+      "$type": "duration",
+      "$value": {
+        "value": 900,
+        "unit": "ms"
+      },
+      "$extensions": {
+        "dev.nizivo.figma": {
+          "variableId": "VariableID:737:209",
+          "collectionId": "VariableCollectionId:737:203",
+          "name": "duration/count-up",
+          "scopes": []
+        }
+      }
+    },
+    "fast": {
+      "$type": "duration",
+      "$value": {
+        "value": 140,
+        "unit": "ms"
+      },
+      "$extensions": {
+        "dev.nizivo.figma": {
+          "variableId": "VariableID:737:205",
+          "collectionId": "VariableCollectionId:737:203",
+          "name": "duration/fast",
+          "scopes": []
+        }
+      }
+    },
+    "instant": {
+      "$type": "duration",
+      "$value": {
+        "value": 80,
+        "unit": "ms"
+      },
+      "$extensions": {
+        "dev.nizivo.figma": {
+          "variableId": "VariableID:737:204",
+          "collectionId": "VariableCollectionId:737:203",
+          "name": "duration/instant",
+          "scopes": []
+        }
+      }
+    },
+    "slow": {
+      "$type": "duration",
+      "$value": {
+        "value": 320,
+        "unit": "ms"
+      },
+      "$extensions": {
+        "dev.nizivo.figma": {
+          "variableId": "VariableID:737:207",
+          "collectionId": "VariableCollectionId:737:203",
+          "name": "duration/slow",
+          "scopes": []
+        }
+      }
+    },
+    "slower": {
+      "$type": "duration",
+      "$value": {
+        "value": 480,
+        "unit": "ms"
+      },
+      "$extensions": {
+        "dev.nizivo.figma": {
+          "variableId": "VariableID:737:208",
+          "collectionId": "VariableCollectionId:737:203",
+          "name": "duration/slower",
+          "scopes": []
+        }
+      }
+    }
+  },
+  "easing": {
+    "enter": {
+      "$type": "cubicBezier",
+      "$value": [0, 0, 0, 1],
+      "$extensions": {
+        "dev.nizivo.figma": {
+          "variableId": "VariableID:737:212",
+          "collectionId": "VariableCollectionId:737:203",
+          "name": "easing/enter",
+          "scopes": []
+        }
+      }
+    },
+    "exit": {
+      "$type": "cubicBezier",
+      "$value": [0.3, 0, 1, 1],
+      "$extensions": {
+        "dev.nizivo.figma": {
+          "variableId": "VariableID:737:213",
+          "collectionId": "VariableCollectionId:737:203",
+          "name": "easing/exit",
+          "scopes": []
+        }
+      }
+    },
+    "spring": {
+      "$type": "cubicBezier",
+      "$value": [0.3, 0, 0, 1],
+      "$extensions": {
+        "dev.nizivo.figma": {
+          "variableId": "VariableID:737:214",
+          "collectionId": "VariableCollectionId:737:203",
+          "name": "easing/spring",
+          "scopes": []
+        },
+        "dev.nizivo.spring": {
+          "mass": 1,
+          "stiffness": 260,
+          "damping": 24,
+          "velocity": 0
+        }
+      }
+    },
+    "spring-soft": {
+      "$type": "cubicBezier",
+      "$value": [0.3, 0, 0, 1],
+      "$extensions": {
+        "dev.nizivo.figma": {
+          "variableId": "VariableID:737:215",
+          "collectionId": "VariableCollectionId:737:203",
+          "name": "easing/spring-soft",
+          "scopes": []
+        },
+        "dev.nizivo.spring": {
+          "mass": 1,
+          "stiffness": 170,
+          "damping": 26,
+          "velocity": 0
+        }
+      }
+    },
+    "standard": {
+      "$type": "cubicBezier",
+      "$value": [0.2, 0, 0, 1],
+      "$extensions": {
+        "dev.nizivo.figma": {
+          "variableId": "VariableID:737:211",
+          "collectionId": "VariableCollectionId:737:203",
+          "name": "easing/standard",
+          "scopes": []
+        }
+      }
+    }
+  },
+  "magnetic": {
+    "pull": {
+      "$type": "dimension",
+      "$value": {
+        "value": 0.375,
+        "unit": "rem"
+      },
+      "$extensions": {
+        "dev.nizivo.figma": {
+          "variableId": "VariableID:737:223",
+          "collectionId": "VariableCollectionId:737:203",
+          "name": "magnetic/pull",
+          "scopes": []
+        }
+      }
+    }
+  },
+  "scale": {
+    "hover": {
+      "$type": "number",
+      "$value": 1.02,
+      "$extensions": {
+        "dev.nizivo.figma": {
+          "variableId": "VariableID:737:221",
+          "collectionId": "VariableCollectionId:737:203",
+          "name": "scale/hover",
+          "scopes": []
+        }
+      }
+    },
+    "press": {
+      "$type": "number",
+      "$value": 0.98,
+      "$extensions": {
+        "dev.nizivo.figma": {
+          "variableId": "VariableID:737:220",
+          "collectionId": "VariableCollectionId:737:203",
+          "name": "scale/press",
+          "scopes": []
+        }
+      }
+    }
+  },
+  "stagger": {
+    "item": {
+      "$type": "duration",
+      "$value": {
+        "value": 40,
+        "unit": "ms"
+      },
+      "$extensions": {
+        "dev.nizivo.figma": {
+          "variableId": "VariableID:737:222",
+          "collectionId": "VariableCollectionId:737:203",
+          "name": "stagger/item",
+          "scopes": []
+        }
+      }
+    }
+  },
+  "tilt": {
+    "max-deg": {
+      "$type": "number",
+      "$value": 6,
+      "$extensions": {
+        "dev.nizivo.figma": {
+          "variableId": "VariableID:737:219",
+          "collectionId": "VariableCollectionId:737:203",
+          "name": "tilt/max-deg",
+          "scopes": []
+        }
+      }
+    }
+  }
+}
