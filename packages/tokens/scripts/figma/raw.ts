@@ -1,7 +1,7 @@
 // Runs the TokensBrücke CLI on figma/snapshot.json with figma/tb.config.json and writes the
 // split-by-mode DTCG export to figma/raw/. The CLI owns every transform; raw files are never
-// edited by hand. The folder is cleared first so collections renamed in Figma (Grove → Nizivo)
-// leave no stale files behind.
+// edited by hand. The folder is cleared first so collections renamed in Figma (Grove → Nizivo on
+// 2026-10-14) leave no stale files behind.
 //
 // Usage: node scripts/figma/raw.ts
 import { spawnSync } from 'node:child_process';
@@ -21,9 +21,12 @@ const KEEP = new Set(['.gitkeep']);
 
 /**
  * TokensBrücke 3.18.0 reads `style.effects[0].type` without a guard, so an effect style with no
- * effects (Grove/Elevation/0 Flat) crashes the whole export with "Cannot read properties of
- * undefined (reading 'type')". Such a style carries no token, so it is left out of the CLI input;
- * snapshot.json itself stays a verbatim copy of the file.
+ * effects crashes the whole export with "Cannot read properties of undefined (reading 'type')".
+ * Such a style carries no token, so it is left out of the CLI input; snapshot.json itself stays a
+ * verbatim copy of the file. `Elevation/0 Flat` was the one such style. Since 2026-10-14 it holds
+ * one invisible DROP_SHADOW (alpha 0, offset 0, radius 0, spread 0), so the next export should
+ * not crash on it and will carry an `elevation.0` token. Keep this filter until a fresh export
+ * shows nothing is left out.
  */
 const hasNoEffects = (style: Style) => !Array.isArray(style.effects) || style.effects.length === 0;
 

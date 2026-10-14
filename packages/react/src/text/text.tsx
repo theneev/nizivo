@@ -3,7 +3,7 @@ import type { ComponentPropsWithRef, ReactElement } from 'react';
 import { renderElement, type RenderProp } from '../contracts/render';
 import { cx } from '../_internal/cx';
 
-/** The Figma text styles as lowercase names (`Grove/Label/M` → `label-m`), plus the 12 px proposals. */
+/** The Figma text styles as lowercase names (`Nizivo/Label/M` → `label-m`), plus the 12 px proposals. */
 export type TextVariant =
   | 'display-l'
   | 'display-m'

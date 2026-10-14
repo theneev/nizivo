@@ -62,6 +62,8 @@ SECTION 7275:19609 "Grove · 11 3D, Shader & Motion Lab" (4000×1722, radius 2)
    └─ Cell 7275:19733 "Skeleton · pulse" → label "duration/slower · loop"; INSTANCE 7275:19743 Skeleton [756:1169] Shape=KPI
 ```
 
+> **Corrected 2026-10-14 (week 2 read):** `756:1169` is the Skeleton component set, not the `Shape=KPI` variant. The specimen `7275:19743` is an instance of `756:1158` (`Shape=KPI`); the other variants are Line `756:1154` and Row `756:1162`. See [11-w2-server-safe-components.md](11-w2-server-safe-components.md) §2 and §4.16.
+
 ### All documentation text on the page, verbatim
 
 | Node | Text |
@@ -234,6 +236,8 @@ The tokens match: −4 = distance/lift, 1.02 = scale/hover, 220 ms = duration/ba
 **Code:** CSS only: `@media (hover:hover){ .card[data-interactive]:hover { translate:0 calc(var(--nz-distance-lift)*-1); scale:var(--nz-scale-hover); box-shadow:var(--nz-elevation-2) } }`, plus `:active { scale: var(--nz-scale-press) }`. The `:focus-visible` state shows the focus ring and **no lift**, so the layout stays stable for keyboard users. All of this belongs in core `@nizivo/ui` Card CSS.
 
 ### 4.4 Skeleton · pulse — INSTANCE 7275:19743 (Skeleton [756:1169] Shape=KPI)
+
+> **Corrected 2026-10-14 (week 2 read):** the instance's main component is `756:1158` (`Shape=KPI`); `756:1169` is its component set (§1).
 
 | Track | Keyframes |
 |---|---|

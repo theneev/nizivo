@@ -189,6 +189,8 @@ Drawer (COMPONENT, V, 440x820 fixed, pad 0, gap 0, clip)
 - Its contents are commerce-specific (an Order detail). The design-system component should be a generic `Drawer`/`Sheet`, with the order view as a recipe in `@nizivo/commerce`.
 
 ### 4.6 Empty State — set `7275:15168`
+
+> **Corrected 2026-10-14 (week 2 read):** the root's horizontal sizing is fill inside the set, drawn at 380 px, not a fixed width. See [11-w2-server-safe-components.md](11-w2-server-safe-components.md) §4.17.
 Variants: `Context=Orders` `7275:15169`, `Context=Search` `7275:15173` (both 380x304). Default: Orders.
 ```
 EmptyState (COMPONENT, V, 380 fixed width, pad 32 RAW, gap 16 RAW, align MIN/CENTER)

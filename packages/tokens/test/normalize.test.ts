@@ -274,6 +274,54 @@ describe('both prefixes map to nz (plan §7.1, §20.3)', () => {
     expect(renderAll(normalize(renamed(RAW, { collections: false })))).toEqual(renderAll(BASE));
   });
 
+  test('a Nizivo export with the 2026-10-14 Elevation/0 Flat shadow only adds elevation.0', () => {
+    // Since 2026-10-14 the style holds one invisible drop shadow; this is the layer the
+    // TokensBrücke 3.18.0 CLI exports for it (alpha 0, offset 0, radius 0, spread 0).
+    const zero = { value: 0, unit: 'px' };
+    const raw = renamed(RAW).map((file) => {
+      const styles = isRecord(file.json) ? file.json['Effect-styles'] : undefined;
+      const nizivo = isRecord(styles) ? styles.Nizivo : undefined;
+      if (isRecord(nizivo) && isRecord(nizivo.Elevation)) {
+        nizivo.Elevation['0 Flat'] = {
+          $type: 'shadow',
+          $value: [
+            {
+              inset: false,
+              color: { colorSpace: 'srgb', components: [0, 0, 0], alpha: 0, hex: '#00000000' },
+              offsetX: zero,
+              offsetY: zero,
+              blur: zero,
+              spread: zero,
+            },
+          ],
+        };
+      }
+      return file;
+    });
+    const result = normalize(raw);
+    expect(token(result.files, 'effects.tokens.json', 'elevation.0')).toEqual({
+      $type: 'shadow',
+      $value: [
+        {
+          color: { colorSpace: 'srgb', components: [0, 0, 0], alpha: 0, hex: '#000000' },
+          offsetX: zero,
+          offsetY: zero,
+          blur: zero,
+          spread: zero,
+        },
+      ],
+      $extensions: { 'dev.nizivo.figma': { name: 'Elevation/0 Flat' } },
+    });
+    expect(result.skipped).toEqual([
+      'Effect-styles "Nizivo/Surface/Glass" (blur has no DTCG type)',
+    ]);
+    const elevation = result.files.get('effects.tokens.json')?.elevation;
+    if (!isRecord(elevation)) throw new Error('no elevation group');
+    expect(Object.keys(elevation)).toEqual(['0', '1', '2', '3', '4']);
+    delete elevation['0'];
+    expect(renderAll(result)).toEqual(renderAll(BASE));
+  });
+
   test('one collection under both prefixes is an error, not a silent merge', () => {
     const nizivoColor = renamed(RAW).filter((file) => file.path.startsWith('Nizivo Color/'));
     expect(() => normalize([...RAW, ...nizivoColor])).toThrow(

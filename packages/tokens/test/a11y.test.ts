@@ -128,7 +128,7 @@ describe('override and proposal checks (plan §15.4 CI rules 2–4)', () => {
       );
       expect(figma?.id).toBe(o.id);
       expect(figma?.value).toEqual(o.figmaValueAtOverride);
-      expect(o.figmaVariable).toMatch(/^Grove Color\/[a-z-]+\/[a-z-]+ \((Light|Dark)\)$/);
+      expect(o.figmaVariable).toMatch(/^Nizivo Color\/[a-z-]+\/[a-z-]+ \((Light|Dark)\)$/);
     }
   });
 

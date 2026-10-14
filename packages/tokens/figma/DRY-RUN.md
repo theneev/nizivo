@@ -11,6 +11,18 @@ transform, no a11y overrides, no proposals, no Tailwind or contract plugin. Thos
 sections below stay as the week 1 record of the export and the normalizer. "Emitted CSS names" is
 kept current, and the open items say which week 2 closed.
 
+**Grove → Nizivo rename (2026-10-14, after week 2).** The design file's collections are now
+`Nizivo Primitives`, `Nizivo Color`, `Nizivo Space`, `Nizivo Motion` and `Nizivo Responsive`, its
+text and effect styles are `Nizivo/…`, and every WEB code syntax reads `var(--nz-…)`
+(`codesyntax-rewrite.plan.md`). The file title is still "Grove UI Library" until the maintainer
+renames it. The committed `figma/raw/**` export predates the rename and keeps the Grove names. The
+next export carries the Nizivo names; the normalizer accepts both prefixes, so that changes nothing
+in `src/figma-owned` (the both-prefix test is byte-exact). The one change it brings is the new
+`elevation.0` token (open item 9). The `Grove …` raw files must be gone first, because one
+collection under both prefixes is a normalizer error: `raw.ts` clears the folder on the engineer
+path, and on the web-upload path engineering deletes them in the same pull request
+(`tokensbruecke.settings.md`, step 5 of the upload).
+
 ## Reproduce
 
 Run from `packages/tokens`:
@@ -114,7 +126,7 @@ It also passes things it should not: durations, scales and grid columns all arri
   `--nz-surface-inner-highlight`.
 
 **Typography from text styles** (the open question of plan §7.1 and §7.6). Each text style emits a
-shorthand plus five sub-values; for `Grove/Label/M`, as built since week 2 (week 1 emitted the family
+shorthand plus five sub-values; for `Nizivo/Label/M`, as built since week 2 (week 1 emitted the family
 as `"Geist"` and the fifth sub-value as `--nz-font-label-m-letter-spacing: 0rem`):
 
 ```text
@@ -140,7 +152,7 @@ and `--nz-font-label-s`, and a `--nz-tracking-<style>` for each of the 20.
 
 ## Problems and open items
 
-1. `Grove/Surface/Glass` arrives as `$type: "blur"` (24 px background blur, no DTCG type) and is
+1. `Surface/Glass` arrives as `$type: "blur"` (24 px background blur, no DTCG type) and is
    skipped; its drop shadow was already lost by TokensBrücke, and `Surface/Liquid Glass` is not
    exported at all. Week 2 decides on a code-owned backdrop token. **Still open after week 2.**
 2. TokensBrücke exports no style id for effect styles, so effect tokens are identified by name only.
@@ -158,3 +170,19 @@ and `--nz-font-label-s`, and a `--nz-tracking-<style>` for each of the 20.
    code-owned breakpoints, and `custom-media.css` publishes them.
 8. ~~The raw files are not `oxfmt`-clean.~~ **Closed:** `packages/tokens/figma/raw/**` is in
    `.oxfmtrc.json` `ignorePatterns`.
+9. `Elevation/0 Flat` had no effects, and TokensBrücke 3.18.0 crashes on an empty effect style
+   (plugin and CLI), so `scripts/figma/raw.ts` leaves such styles out of the CLI input. Since
+   2026-10-14 the style holds one invisible DROP_SHADOW (alpha 0, offset 0, radius 0, spread 0), so
+   the next export should not crash on it and will carry `elevation.0` (`--nz-elevation-0`).
+   Code-owned tokens define only `elevation.button`, so nothing collides. Checked in a scratch run:
+   the committed snapshot with the Nizivo names and that shadow, through the 3.18.0 CLI and the
+   normalizer, leaves nothing out and differs from `src/figma-owned` only by `elevation.0` in
+   `effects.tokens.json`. `test/normalize.test.ts` covers the normalizer step of the same case
+   (the CLI's layer added to the renamed export). Keep the empty-effects filter in `raw.ts` until a
+   fresh export proves it unnecessary. When the token lands:
+   - `test/normalize.test.ts` expects elevation keys `1`–`4` and 7 effect tokens;
+   - `elevation()` in `build/css.ts` puts the `--nz-elevation-ring` layer on every `elevation.<n>`,
+     so `--nz-elevation-0` would draw a 1 px ring in dark (white at 8 %); decide whether level 0
+     skips it;
+   - the `tokens.css`, `tailwind.css` (`--shadow-nz-0`) and `contract.json` goldens gain the
+     token.

@@ -1,7 +1,8 @@
 # Week 2 server-safe (T0) components: Figma facts for builders
 
 - File: `BIzJFf1wm8KP0YG2AVI1tP` ("Grove UI Library"; ships as **Nizivo UI**). Open a node with `https://www.figma.com/design/BIzJFf1wm8KP0YG2AVI1tP/Grove-UI-Library?node-id=<id with : replaced by ->`.
-- Scope: the 18 week 2 T0 components: Text, Heading, Stack, Inline, Grid + GridItem, Container, Separator, Kbd, Image, Badge, Card, Delta, ProgressBar, ProgressRing, Meter, Skeleton, EmptyState, InlineError, Alert (T0 shell + dismiss leaf).
+- Renamed on 2026-10-14, after this read: the variable collections and the text and effect styles went from Grove to Nizivo (`Nizivo Color`, `Nizivo/Label/M`), and every WEB code syntax now reads `var(--nz-…)` ([codesyntax-rewrite.plan.md](../../packages/tokens/figma/codesyntax-rewrite.plan.md)). The file title, and so the URL slug, still says "Grove UI Library" until the maintainer renames it. This note uses the current names.
+- Scope: the 19 week 2 T0 entries: Text, Heading, Stack, Inline, Grid + GridItem, Container, Separator, Kbd, Image, Badge, Card, Delta, ProgressBar, ProgressRing, Meter, Skeleton, EmptyState, InlineError, Alert (T0 shell + dismiss leaf).
 - Read 2026-10-14. **2 Figma calls in total, both read-only `use_figma` scripts that only returned data** (no setters, no create, no remove, no renames; no `get_design_context`, no screenshots). Nothing in the file changed.
   - Call 1 diffed the off-canvas ghost masters against the on-canvas sets (§2).
   - Call 2 read the exact anatomy of every set below, the Kbd frame, the Input `State=Error` variant and the divider nodes inside Dropdown Menu, Order Summary, Drawer and Modal.
@@ -9,8 +10,8 @@
 
 ## 0. How to read this
 
-- **Token names** are the Nizivo CSS names from `packages/tokens/figma/DRY-RUN.md` ("Emitted CSS names"), with the Grove variable in brackets: `--nz-bg-muted` [bg/muted]. Colours have no `--nz-color-*` prefix. Space and radius are rem (`--nz-space-1-5` = 0.375rem); border widths stay px.
-- **Text styles** are `--nz-font-<style>` shorthands: `--nz-font-label-m` [Label/M], `--nz-font-label-m-strong` [Label/M Strong], `--nz-font-body-m` [Body/M], `--nz-font-heading-h3` [Heading/H3], `--nz-font-numeric-m` [Numeric/M], `--nz-font-mono-m` [Mono/M]. Tracking is `--nz-font-<style>-letter-spacing` (rem) today and `--nz-tracking-<style>` (em) after the week 2 rename (ARCHITECTURE §7.2).
+- **Token names** are the Nizivo CSS names from `packages/tokens/figma/DRY-RUN.md` ("Emitted CSS names"), with the Figma variable in brackets: `--nz-bg-muted` [bg/muted]. Colours have no `--nz-color-*` prefix. Space and radius are rem (`--nz-space-1-5` = 0.375rem); border widths stay px.
+- **Text styles** are `--nz-font-<style>` shorthands: `--nz-font-label-m` [Label/M], `--nz-font-label-m-strong` [Label/M Strong], `--nz-font-body-m` [Body/M], `--nz-font-heading-h3` [Heading/H3], `--nz-font-numeric-m` [Numeric/M], `--nz-font-mono-m` [Mono/M]. Tracking is `--nz-tracking-<style>` (em) since week 2; week 1 emitted `--nz-font-<style>-letter-spacing` (rem) (ARCHITECTURE §7.2).
 - **`{x}`** means bound to variable `x` in Figma. **`!`** means hard-coded (not bound to any variable or style). After a bound token, `!` marks a semantic misuse instead, such as a text token used as a fill or a brand icon colour on an info alert (figma/02 §6 calls these "semantic misuse"). Where an existing note names the nearest token, it is quoted. Where no note gives a snap, the entry says "builder decides" (list the choice on the docs "Deviations from Figma" page).
 - **"proposal"** marks a code-owned token that Figma does not have (ARCHITECTURE §7.6, §15.3). It is never a Figma binding.
 - **"no Figma spec"** means the file has nothing for that part: implement the inventory API with plan tokens.
@@ -25,11 +26,11 @@
 
 | Component | Subpath | Figma source (node) | Ghost | Existing notes | Depth before | This read | Builder works from |
 |---|---|---|---|---|---|---|---|
-| Text | `./text` | 18 `Grove/*` text styles; specimen frame `7275:12385`; no set | — | figma/00 "Text styles"; figma/01 §4 | styles (complete) | — | text styles + `text/*` tokens |
+| Text | `./text` | 18 `Nizivo/*` text styles; specimen frame `7275:12385`; no set | — | figma/00 "Text styles"; figma/01 §4 | styles (complete) | — | text styles + `text/*` tokens |
 | Heading | `./heading` | Display/L–M, Heading/H1–H4 styles; no set | — | figma/00; figma/01 §4; figma/06 §6.8; figma/08 §3, §6.1 | styles (complete) | — | text styles + usage evidence |
 | Stack | `./stack` | none (auto-layout gaps only) | — | figma/08 §11 (gap values) | none | — | **no Figma spec**: plan tokens |
 | Inline | `./inline` | none | — | figma/08 §11 | none | — | **no Figma spec**: plan tokens |
-| Grid + GridItem | `./grid` | Doc/Grid `7275:12608`, Breakpoints `7275:12612`; `Grove Responsive` variables | — | figma/01 §7.3; figma/08 §4.1, §6.1 | variables + diagrams | — | `--nz-grid-*` variables |
+| Grid + GridItem | `./grid` | Doc/Grid `7275:12608`, Breakpoints `7275:12612`; `Nizivo Responsive` variables | — | figma/01 §7.3; figma/08 §4.1, §6.1 | variables + diagrams | — | `--nz-grid-*` variables |
 | Container | `./container` | `layout/content-max`, `grid/margin` variables; no frame | — | figma/08 §6.1 | variables only | — | variables |
 | Separator | `./separator` | no set; Divider rects `746:249`, `754:926`, `754:939`; Drawer edge strokes `756:1002`, `756:1099` | — | figma/02 §5.9; figma/05 §3.10 | incidental | **read** | read |
 | Kbd | `./kbd` | detached frame `7275:14768` (and 7 copies); no set | — | figma/06 §6.3, §6.11, §9.2 | frame anatomy | **re-read** | frame anatomy |
@@ -106,7 +107,7 @@ So the facts below hold for both the on-canvas sets and the masters the instance
 | `mono-m-strong` | `--nz-font-mono-m-strong` | Mono/M Strong (Geist Mono) | 500 · 14 / 1.4 · 0 |
 | `body-s`, `label-s` | `--nz-font-body-s`, `--nz-font-label-s` | **proposal** (no Figma style) | 400 / 500 · 12 / 1.5 / 1.4 · 0 |
 
-- **`tone`** → `text/*` (Grove Color, light/dark): `--nz-text-primary`, `-secondary`, `-tertiary`, `-disabled`, `-inverse`, `-on-brand`, `-on-accent`, `-brand`, `-success`, `-warning`, `-critical`, `-info`. Proposals: `--nz-text-accent`, `--nz-text-on-critical`.
+- **`tone`** → `text/*` (Nizivo Color, light/dark): `--nz-text-primary`, `-secondary`, `-tertiary`, `-disabled`, `-inverse`, `-on-brand`, `-on-accent`, `-brand`, `-success`, `-warning`, `-critical`, `-info`. Proposals: `--nz-text-accent`, `--nz-text-on-critical`.
 - **Responsive sizes:** `--nz-type-display` [type/display 56/44/36], `--nz-type-h1` [type/h1 32/28/24] and `--nz-type-kpi` [type/kpi 32/28/28] exist but no text style is bound to them (figma/01 §4, figma/08 §6.1). Page 08 swaps the page title from H1 (desktop, tablet) to H2 (mobile) instead of resizing. Whether Text reads the `--nz-type-*` sizes is open (inventory "Missing design states").
 - **Default:** Figma defines none. Body copy across the file is Body/M (14 px); doc leads use Body/M + `text/secondary`.
 - Hard-coded: nothing. Text is 100 % on styles outside the scaled cover render (figma/01 §9).

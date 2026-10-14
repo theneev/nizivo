@@ -2,7 +2,7 @@
 // Set COLLECTION and SLICE per call (see PULL-AGENT.md for the values used); keep each
 // return under the ~20 KB cap using the payloadBytes from snapshot-inventory.figma.js.
 // Output: the TokensBrücke snapshot `variables` shape, copied onto plain objects.
-const COLLECTION = 'Grove Primitives';
+const COLLECTION = 'Nizivo Primitives';
 const SLICE = [0, 27];
 
 const fnv1a = (text) => {
