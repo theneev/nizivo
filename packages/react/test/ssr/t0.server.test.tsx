@@ -58,6 +58,7 @@ const COMPONENTS = [
   'native-select',
   'icon-button',
   'theme-script',
+  'tab-nav',
 ] as const;
 type Name = (typeof COMPONENTS)[number];
 
@@ -120,6 +121,7 @@ const entries = {
   'native-select': () => import('../../src/native-select/index'),
   'icon-button': () => import('../../src/icon-button/index'),
   'theme-script': () => import('../../src/theme-script/index'),
+  'tab-nav': () => import('../../src/tab-nav/index'),
 } satisfies Record<Name, () => Promise<unknown>>;
 
 /** Each example module, imported again by the react-server test; every `*Example` export renders. */
@@ -149,6 +151,7 @@ const exampleModules = {
   'native-select': () => import('../../src/native-select/native-select.example'),
   'icon-button': () => import('../../src/icon-button/icon-button.example'),
   'theme-script': () => import('../../src/theme-script/theme-script.example'),
+  'tab-nav': () => import('../../src/tab-nav/tab-nav.example'),
 } satisfies Record<Name, () => Promise<Record<string, unknown>>>;
 
 /**

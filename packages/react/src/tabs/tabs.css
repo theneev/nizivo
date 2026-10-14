@@ -1,0 +1,170 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/tabs.css (figma/13 §4.4; Tab 7275:14781, tab bar 7275:14791). Only --_nz-*
+   privates are set; public --nz-tabs-* hooks are read once, at the property. TabNav copies this
+   visual in tab-nav.css (each leaf stylesheet stands alone, as NativeSelect copies Select).
+   Figma's strip has a 24 px gap between tabs that each have 2 px of inline padding. Here the gap
+   is padding (14 px a side, 2 px at the strip's ends), so the labels sit exactly where Figma puts
+   them and the space between two labels is part of a target instead of dead space. */
+@layer nz.components {
+  .nz-tabs {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-tabs-gap, var(--nz-space-4));
+    min-inline-size: 0;
+  }
+
+  /* The strip: one row that scrolls sideways when the tabs outgrow it, never wraps (two rows of
+     tabs on one hairline read as a broken strip). Arrow keys scroll the focused tab into view. */
+  .nz-tabs-list {
+    display: flex;
+    min-inline-size: 0;
+    overflow: auto hidden;
+    overscroll-behavior-inline: contain;
+    border-block-end: var(--nz-border-width-default) solid
+      var(--nz-tabs-border, var(--nz-border-subtle));
+  }
+
+  .nz-tabs-tab {
+    --_nz-tabs-tab-start: calc(var(--nz-space-3) + var(--nz-space-0-5));
+    --_nz-tabs-tab-end: calc(var(--nz-space-3) + var(--nz-space-0-5));
+
+    position: relative;
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: var(--nz-space-1-5);
+    box-sizing: border-box;
+    block-size: var(--nz-size-control-md);
+    /* the label sits 8 px from the top, as in Figma: 40 − 4 centres the 20 px line at 8 */
+    padding-block: 0 var(--nz-space-1);
+    padding-inline: var(--_nz-tabs-tab-start) var(--_nz-tabs-tab-end);
+    color: var(--nz-tabs-fg, var(--nz-text-secondary));
+    font: var(--nz-font-label-m);
+    letter-spacing: var(--nz-tracking-label-m);
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    transition: color var(--nz-duration-fast) var(--nz-easing-standard);
+
+    &:first-child {
+      --_nz-tabs-tab-start: var(--nz-space-0-5);
+    }
+
+    &:last-child {
+      --_nz-tabs-tab-end: var(--nz-space-0-5);
+    }
+
+    /* The 2 px indicator, as wide as the content, on the tab's bottom edge just above the strip's
+       hairline (Figma stacks them; it does not overlap). ::after is the hit area's (§8.5). */
+    &::before {
+      content: '';
+      position: absolute;
+      inset-block-end: 0;
+      inset-inline: var(--_nz-tabs-tab-start) var(--_nz-tabs-tab-end);
+      block-size: var(--nz-border-width-focus);
+      transition: background-color var(--nz-duration-fast) var(--nz-easing-standard);
+    }
+
+    @media (hover: hover) {
+      &:hover:not([data-disabled], [data-selected]) {
+        color: var(--nz-text-primary);
+
+        &::before {
+          background: var(--nz-border-strong);
+        }
+      }
+    }
+
+    &[data-selected] {
+      color: var(--nz-tabs-fg-selected, var(--nz-text-primary));
+
+      &::before {
+        background: var(--nz-tabs-indicator, var(--nz-bg-brand));
+      }
+    }
+
+    &[data-disabled] {
+      color: var(--nz-text-disabled);
+      cursor: not-allowed;
+    }
+  }
+
+  /* The focus outline is nz.base's (interactive, focusTarget self), drawn inside the tab through
+     data-focus-inset because the scrolling strip would clip a 2 px offset. */
+
+  .nz-tabs-icon {
+    display: inline-flex;
+    flex: none;
+    inline-size: var(--nz-size-icon-sm);
+    block-size: var(--nz-size-icon-sm);
+    /* internal glyphs are 1em: size them to the slot */
+    font-size: var(--nz-size-icon-sm);
+
+    & > svg {
+      inline-size: 100%;
+      block-size: 100%;
+    }
+  }
+
+  /* The text and an invisible copy at the selected weight share one cell, so a tab is always as
+     wide as its selected self (Label/M 500 → Label/M Strong 600 grows "All orders" 67 → 69 px). */
+  .nz-tabs-label {
+    display: inline-grid;
+  }
+
+  .nz-tabs-text,
+  .nz-tabs-sizer {
+    grid-area: 1 / 1;
+  }
+
+  .nz-tabs-sizer,
+  .nz-tabs-tab[data-selected] .nz-tabs-text {
+    font-weight: var(--nz-font-label-m-strong-font-weight);
+    letter-spacing: var(--nz-tracking-label-m-strong);
+  }
+
+  .nz-tabs-sizer {
+    visibility: hidden;
+  }
+
+  .nz-tabs-count {
+    padding-inline: var(--nz-space-1-5);
+    border-radius: var(--nz-radius-full);
+    background: var(--nz-tabs-count-bg, var(--nz-bg-subtle));
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-label-s);
+    letter-spacing: var(--nz-tracking-label-s);
+    font-variant-numeric: tabular-nums;
+
+    .nz-tabs-tab[data-disabled] & {
+      color: var(--nz-text-disabled);
+    }
+  }
+
+  /* A panel with nothing focusable inside takes focus itself (tabindex 0), so it shows where focus
+     went after Tab leaves the strip. Written here, not generated: the panel is not in component.json's
+     `interactive`, because only the engine decides whether it takes focus (a panel with a tabbable
+     child drops its tabindex), and the generated floor would also give it touch-action. */
+  .nz-tabs-panel {
+    min-inline-size: 0;
+
+    &:is(:focus-visible, [data-focus-visible]) {
+      outline: var(--nz-border-width-focus) solid var(--nz-border-focus);
+      outline-offset: 2px;
+    }
+  }
+
+  @media (forced-colors: active) {
+    /* nz.base's generated fill loses to the background above (a later layer, §8.5), so repeat it:
+       without it the selected tab's indicator is repainted as Canvas and only the weight is left */
+    .nz-tabs-tab[data-selected]::before {
+      background: Highlight;
+      forced-color-adjust: none;
+    }
+
+    .nz-tabs-tab[data-disabled] {
+      color: GrayText;
+    }
+  }
+}

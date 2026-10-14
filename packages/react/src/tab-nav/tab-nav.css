@@ -1,0 +1,133 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/tab-nav.css (figma/13 §4.5): the Tab visual (Tab 7275:14781, figma/13 §4.4) on
+   links, copied from tabs.css so this sheet stands alone (as NativeSelect copies Select's trigger).
+   Only --_nz-* privates are set; public --nz-tab-nav-* hooks are read once. Figma's 24 px gap between
+   tabs is padding here (14 px a side, 2 px at the strip's ends): the labels sit where Figma puts
+   them, and the space between two labels is part of a target. */
+@layer nz.components {
+  /* The strip: one row that scrolls sideways when the links outgrow it, never wraps. */
+  .nz-tab-nav {
+    display: flex;
+    min-inline-size: 0;
+    overflow: auto hidden;
+    overscroll-behavior-inline: contain;
+    border-block-end: var(--nz-border-width-default) solid
+      var(--nz-tab-nav-border, var(--nz-border-subtle));
+  }
+
+  .nz-tab-nav-link {
+    --_nz-tab-nav-link-start: calc(var(--nz-space-3) + var(--nz-space-0-5));
+    --_nz-tab-nav-link-end: calc(var(--nz-space-3) + var(--nz-space-0-5));
+
+    position: relative;
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: var(--nz-space-1-5);
+    box-sizing: border-box;
+    block-size: var(--nz-size-control-md);
+    /* the label sits 8 px from the top, as in Figma: 40 − 4 centres the 20 px line at 8 */
+    padding-block: 0 var(--nz-space-1);
+    padding-inline: var(--_nz-tab-nav-link-start) var(--_nz-tab-nav-link-end);
+    color: var(--nz-tab-nav-fg, var(--nz-text-secondary));
+    font: var(--nz-font-label-m);
+    letter-spacing: var(--nz-tracking-label-m);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color var(--nz-duration-fast) var(--nz-easing-standard);
+
+    &:first-child {
+      --_nz-tab-nav-link-start: var(--nz-space-0-5);
+    }
+
+    &:last-child {
+      --_nz-tab-nav-link-end: var(--nz-space-0-5);
+    }
+
+    /* The 2 px indicator above the strip's hairline. ::after is the hit area's (§8.5). */
+    &::before {
+      content: '';
+      position: absolute;
+      inset-block-end: 0;
+      inset-inline: var(--_nz-tab-nav-link-start) var(--_nz-tab-nav-link-end);
+      block-size: var(--nz-border-width-focus);
+      transition: background-color var(--nz-duration-fast) var(--nz-easing-standard);
+    }
+
+    @media (hover: hover) {
+      &:hover:not([aria-current='page']) {
+        color: var(--nz-text-primary);
+
+        &::before {
+          background: var(--nz-border-strong);
+        }
+      }
+    }
+
+    &[aria-current='page'] {
+      color: var(--nz-tab-nav-fg-current, var(--nz-text-primary));
+
+      &::before {
+        background: var(--nz-tab-nav-indicator, var(--nz-bg-brand));
+      }
+    }
+  }
+
+  /* The focus outline is nz.base's (interactive, focusTarget self), drawn inside the link through
+     data-focus-inset because the scrolling strip would clip a 2 px offset. */
+
+  .nz-tab-nav-icon {
+    display: inline-flex;
+    flex: none;
+    inline-size: var(--nz-size-icon-sm);
+    block-size: var(--nz-size-icon-sm);
+    /* internal glyphs are 1em: size them to the slot */
+    font-size: var(--nz-size-icon-sm);
+
+    & > svg {
+      inline-size: 100%;
+      block-size: 100%;
+    }
+  }
+
+  /* The text and an invisible copy at the current weight share one cell, so a link is always as
+     wide as its current self. */
+  .nz-tab-nav-label {
+    display: inline-grid;
+  }
+
+  .nz-tab-nav-text,
+  .nz-tab-nav-sizer {
+    grid-area: 1 / 1;
+  }
+
+  .nz-tab-nav-sizer,
+  .nz-tab-nav-link[aria-current='page'] .nz-tab-nav-text {
+    font-weight: var(--nz-font-label-m-strong-font-weight);
+    letter-spacing: var(--nz-tracking-label-m-strong);
+  }
+
+  .nz-tab-nav-sizer {
+    visibility: hidden;
+  }
+
+  .nz-tab-nav-count {
+    padding-inline: var(--nz-space-1-5);
+    border-radius: var(--nz-radius-full);
+    background: var(--nz-tab-nav-count-bg, var(--nz-bg-subtle));
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-label-s);
+    letter-spacing: var(--nz-tracking-label-s);
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (forced-colors: active) {
+    /* nz.base's generated fill loses to the background above (a later layer, §8.5), so repeat it:
+       without it the current link's indicator is repainted as Canvas and only the weight is left */
+    .nz-tab-nav-link[aria-current='page']::before {
+      background: Highlight;
+      forced-color-adjust: none;
+    }
+  }
+}

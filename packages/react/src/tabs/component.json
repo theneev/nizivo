@@ -1,0 +1,22 @@
+{
+  "name": "tabs",
+  "status": "stable",
+  "tier": "engine",
+  "engine": "react-aria",
+  "parts": ["Root", "List", "Tab", "Panel"],
+  "interactive": ["tabs-tab"],
+  "focusTarget": "self",
+  "stateIndicator": [{ "slot": "tabs-tab", "state": "[data-selected]::before", "paint": "fill" }],
+  "cssDeps": ["base"],
+  "figma": {
+    "canonical": ["7275:14781"],
+    "ghosts": ["755:961"],
+    "variantsSeen": ["755:952", "755:958"],
+    "related": ["7275:14791", "7275:14777"]
+  },
+  "budget": {
+    "measuredKB": 31.8,
+    "limitKB": 35,
+    "source": "RAC Tabs + TabList + Tab + TabPanel standalone, all locales: 31,757 B (esbuild 0.28.2 --minify, react external, gzip -9; W4). r3 measured 31.9. Beside Select, Dialog and Tooltip it adds 2.3 KB (62,255 → 64,572 B). Limit from §17.1"
+  }
+}

@@ -219,6 +219,21 @@ export { Stack } from './stack/index';
 export type { LayoutGap, StackProps, StackState } from './stack/index';
 export { Switch } from './switch/index';
 export type { SwitchChangeReason, SwitchProps, SwitchState } from './switch/index';
+export { TabNav, TabNavRoot, TabNavLink } from './tab-nav/index';
+export type { TabNavLinkProps, TabNavLinkState, TabNavRootProps } from './tab-nav/index';
+export { Tabs, TabsRoot, TabsList, TabsTab, TabsPanel } from './tabs/index';
+export type {
+  TabsActivationMode,
+  TabsListProps,
+  TabsListState,
+  TabsPanelProps,
+  TabsPanelState,
+  TabsRootProps,
+  TabsRootState,
+  TabsTabProps,
+  TabsTabState,
+  TabsValueReason,
+} from './tabs/index';
 export { Text } from './text/index';
 export type { TextProps, TextState, TextTone, TextVariant } from './text/index';
 export { Textarea } from './textarea/index';

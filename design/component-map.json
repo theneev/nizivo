@@ -111,6 +111,13 @@
         "tone": ["success", "critical", "neutral"]
       }
     },
+    "755:961": {
+      "component": "tabs",
+      "role": "ghost",
+      "import": "@nizivo/react/tabs",
+      "export": "Tabs",
+      "parts": ["Root", "List", "Tab", "Panel"]
+    },
     "755:982": {
       "component": "segmented-control",
       "role": "ghost",
@@ -275,6 +282,13 @@
         "padding": ["sm", "md"],
         "elevation": ["1"]
       }
+    },
+    "7275:14781": {
+      "component": "tabs",
+      "role": "canonical",
+      "import": "@nizivo/react/tabs",
+      "export": "Tabs",
+      "parts": ["Root", "List", "Tab", "Panel"]
     },
     "7275:14797": {
       "component": "segmented-control",

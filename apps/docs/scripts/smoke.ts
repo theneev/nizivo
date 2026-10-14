@@ -68,6 +68,7 @@ const NIZIVO_CLIENT_MARKERS = [
   'switch-thumb',
   'radio-input',
   'segmented-control-input',
+  'tabs-tab',
   'menu-popup',
 ];
 
@@ -94,6 +95,7 @@ const CLIENT_PAGES: Record<string, string[]> = {
   '/docs/components/switch/': ['switch-thumb', 'willValidate'],
   '/docs/components/radio-group/': ['radio-input'],
   '/docs/components/segmented-control/': ['segmented-control-input', 'willValidate'],
+  '/docs/components/tabs/': ['tabs-tab', 'nz-textarea', 'willValidate'],
   // MenuRowActionsExample's trigger is an IconButton, whose default tooltip leaf the page imports.
   '/docs/components/menu/': ['menu-popup', 'tooltip-popup'],
 };
@@ -114,6 +116,8 @@ const REPORT = [
   '/docs/components/segmented-control/',
   '/docs/components/icon-button/',
   '/docs/components/menu/',
+  '/docs/components/tabs/',
+  '/docs/components/tab-nav/',
 ];
 
 interface Js {

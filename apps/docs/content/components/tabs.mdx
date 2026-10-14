@@ -1,0 +1,15 @@
+---
+title: Tabs
+description: In-page views of one subject, one panel at a time, as WAI-ARIA tabs. Only the selected panel is rendered, on the server too; `keepMounted` keeps a panel's state while it is hidden. When each view is a URL, use TabNav; to pick a range or a value, use SegmentedControl.
+apg: https://www.w3.org/WAI/ARIA/apg/patterns/tabs/
+keyboard:
+  - keys: Tab
+    action: Moves focus into the tab list, to the selected tab; the next Tab moves into the panel, to its first focusable element or the panel itself.
+  - keys: ArrowRight, ArrowLeft
+    action: Moves focus to the next or previous tab, wrapping at the ends and skipping disabled tabs, and selects it (in manual activation, only moves focus). Under a right-to-left locale set on NizivoConfig the keys follow the reading direction; a dir attribute alone does not flip them.
+  - keys: Home, End
+    action: Moves focus to the first or last tab, and selects it, except in manual activation.
+  - keys: Enter, Space
+    action: In manual activation, selects the focused tab.
+keyboardSource: react-aria-components 1.22.1 `Tabs`, `TabList`, `Tab` and `TabPanel` (react-aria 3.53.1 `useTabList`, `useTab` and `useTabPanel`) through `_engines/react-aria/tabs.client.tsx`. The browser lane (`test/browser/tabs.spec.tsx`) checks Tab entry, arrows, Home, End, wrapping, skipping a disabled tab, manual activation and the RTL flip.
+---

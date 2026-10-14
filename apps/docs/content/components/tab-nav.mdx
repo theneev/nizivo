@@ -1,0 +1,10 @@
+---
+title: TabNav
+description: Links styled as tabs, for views that are URLs (status filters, sub-pages). A navigation landmark of plain links with `aria-current="page"` on the current one, server-rendered with no JavaScript; a router's link goes in through `render`. In-page views with panels are Tabs.
+keyboard:
+  - keys: Tab, Shift+Tab
+    action: Moves between the links, as on any link.
+  - keys: Enter
+    action: Follows the focused link.
+keyboardSource: native `<a>` elements in a `<nav>` (`tab-nav.tsx`, no client code). The browser lane (`test/browser/tabs.spec.tsx`) checks Tab between links and the focus outline.
+---

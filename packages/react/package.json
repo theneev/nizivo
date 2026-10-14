@@ -167,6 +167,14 @@
       "types": "./dist/switch/index.d.ts",
       "default": "./dist/switch/index.js"
     },
+    "./tab-nav": {
+      "types": "./dist/tab-nav/index.d.ts",
+      "default": "./dist/tab-nav/index.js"
+    },
+    "./tabs": {
+      "types": "./dist/tabs/index.d.ts",
+      "default": "./dist/tabs/index.js"
+    },
     "./text": {
       "types": "./dist/text/index.d.ts",
       "default": "./dist/text/index.js"
@@ -215,6 +223,8 @@
     "./css/skeleton.css": "./dist/css/skeleton.css",
     "./css/stack.css": "./dist/css/stack.css",
     "./css/switch.css": "./dist/css/switch.css",
+    "./css/tab-nav.css": "./dist/css/tab-nav.css",
+    "./css/tabs.css": "./dist/css/tabs.css",
     "./css/text.css": "./dist/css/text.css",
     "./css/textarea.css": "./dist/css/textarea.css",
     "./css/tooltip.css": "./dist/css/tooltip.css",

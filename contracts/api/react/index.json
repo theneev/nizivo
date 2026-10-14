@@ -1311,6 +1311,132 @@
       "name": "SwitchState"
     },
     {
+      "definedIn": "./tab-nav",
+      "import": "import { TabNav } from '@nizivo/react'",
+      "kind": "namespace",
+      "name": "TabNav"
+    },
+    {
+      "definedIn": "./tab-nav",
+      "import": "import { TabNavLink } from '@nizivo/react'",
+      "kind": "part",
+      "name": "TabNavLink"
+    },
+    {
+      "definedIn": "./tab-nav",
+      "import": "import type { TabNavLinkProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "TabNavLinkProps"
+    },
+    {
+      "definedIn": "./tab-nav",
+      "import": "import type { TabNavLinkState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "TabNavLinkState"
+    },
+    {
+      "definedIn": "./tab-nav",
+      "import": "import { TabNavRoot } from '@nizivo/react'",
+      "kind": "part",
+      "name": "TabNavRoot"
+    },
+    {
+      "definedIn": "./tab-nav",
+      "import": "import type { TabNavRootProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "TabNavRootProps"
+    },
+    {
+      "definedIn": "./tabs",
+      "import": "import { Tabs } from '@nizivo/react'",
+      "kind": "namespace",
+      "name": "Tabs"
+    },
+    {
+      "definedIn": "./tabs",
+      "import": "import type { TabsActivationMode } from '@nizivo/react'",
+      "kind": "type",
+      "name": "TabsActivationMode"
+    },
+    {
+      "definedIn": "./tabs",
+      "import": "import { TabsList } from '@nizivo/react'",
+      "kind": "part",
+      "name": "TabsList"
+    },
+    {
+      "definedIn": "./tabs",
+      "import": "import type { TabsListProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "TabsListProps"
+    },
+    {
+      "definedIn": "./tabs",
+      "import": "import type { TabsListState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "TabsListState"
+    },
+    {
+      "definedIn": "./tabs",
+      "import": "import { TabsPanel } from '@nizivo/react'",
+      "kind": "part",
+      "name": "TabsPanel"
+    },
+    {
+      "definedIn": "./tabs",
+      "import": "import type { TabsPanelProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "TabsPanelProps"
+    },
+    {
+      "definedIn": "./tabs",
+      "import": "import type { TabsPanelState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "TabsPanelState"
+    },
+    {
+      "definedIn": "./tabs",
+      "import": "import { TabsRoot } from '@nizivo/react'",
+      "kind": "part",
+      "name": "TabsRoot"
+    },
+    {
+      "definedIn": "./tabs",
+      "import": "import type { TabsRootProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "TabsRootProps"
+    },
+    {
+      "definedIn": "./tabs",
+      "import": "import type { TabsRootState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "TabsRootState"
+    },
+    {
+      "definedIn": "./tabs",
+      "import": "import { TabsTab } from '@nizivo/react'",
+      "kind": "part",
+      "name": "TabsTab"
+    },
+    {
+      "definedIn": "./tabs",
+      "import": "import type { TabsTabProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "TabsTabProps"
+    },
+    {
+      "definedIn": "./tabs",
+      "import": "import type { TabsTabState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "TabsTabState"
+    },
+    {
+      "definedIn": "./tabs",
+      "import": "import type { TabsValueReason } from '@nizivo/react'",
+      "kind": "type",
+      "name": "TabsValueReason"
+    },
+    {
       "definedIn": "./text",
       "import": "import { Text } from '@nizivo/react'",
       "kind": "component",

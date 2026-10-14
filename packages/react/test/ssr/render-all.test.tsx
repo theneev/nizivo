@@ -32,6 +32,8 @@ import { SelectExample, SelectOpenExample } from '../../src/select/select.exampl
 import { SeparatorExample } from '../../src/separator/separator.example';
 import { SkeletonExample } from '../../src/skeleton/skeleton.example';
 import { StackExample } from '../../src/stack/stack.example';
+import { TabNavExample, TabNavRouterExample } from '../../src/tab-nav/tab-nav.example';
+import { TabsExample, TabsManualExample, TabsStatesExample } from '../../src/tabs/tabs.example';
 import { TextExample } from '../../src/text/text.example';
 import { TooltipExample, TooltipOpenExample } from '../../src/tooltip/tooltip.example';
 
@@ -67,6 +69,11 @@ const examples: Record<string, () => JSX.Element> = {
   MenuRowActionsExample,
   MenuCheckboxExample,
   MenuOpenExample,
+  TabsExample,
+  TabsStatesExample,
+  TabsManualExample,
+  TabNavExample,
+  TabNavRouterExample,
 };
 
 const allowed = new Set([
