@@ -1,5 +1,11 @@
 {
   "$schema": "./node_modules/oxfmt/configuration_schema.json",
   "singleQuote": true,
-  "ignorePatterns": ["docs/**", "pnpm-lock.yaml"]
+  "ignorePatterns": [
+    "docs/**",
+    "pnpm-lock.yaml",
+    "packages/tokens/figma/raw/**",
+    "**/.next/**",
+    "**/.packed/**"
+  ]
 }

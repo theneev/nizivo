@@ -3,7 +3,9 @@
   "agentGuidance": false,
   "globalDependencies": [
     "packages/tooling/tsconfig/*.json",
-    "packages/tooling/tsdown-preset/index.ts"
+    "packages/tooling/tsdown-preset/index.ts",
+    "contracts/**",
+    "docs/research/phase2/spikes/s4-spring/spring-results.json"
   ],
   "tasks": {
     "build": {

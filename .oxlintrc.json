@@ -10,10 +10,12 @@
     "typeAware": true,
     "reportUnusedDisableDirectives": "error"
   },
-  "ignorePatterns": ["docs/**", "**/dist/**", "**/coverage/**"],
+  "ignorePatterns": ["docs/**", "**/dist/**", "**/coverage/**", "**/.next/**", "**/.packed/**"],
   "rules": {
     "react/rules-of-hooks": "error",
     "react/exhaustive-deps": "error",
+    "react/react-in-jsx-scope": "off",
+    "import/no-unassigned-import": ["warn", { "allow": ["**/*.css"] }],
     "no-restricted-imports": [
       "error",
       {
