@@ -7,6 +7,8 @@
 //   node fixtures/floor-lane/run.ts --serve [--port 8129] [--host 0.0.0.0]   serve the pages for a manual run;
 //            pages opened from the index post their results to results/manual/<browser>-<page>-<scheme>.json
 //   options: --tokens <tokens.css> serves a generated tokens file in place of pages/plan-tokens.css
+//            --results <dir> writes the results there instead of results/ (so a run on other tokens
+//            keeps the committed ones)
 //            --raw <dir> also writes every check (the committed results keep failures and notes only)
 //
 // Firefox is driven over WebDriver BiDi with Node's own WebSocket, so it needs no npm package or driver.
@@ -17,7 +19,7 @@ import { createServer } from 'node:http';
 import type { AddressInfo } from 'node:net';
 import { createRequire } from 'node:module';
 import { tmpdir } from 'node:os';
-import { extname, join, resolve, sep } from 'node:path';
+import { extname, join, relative, resolve, sep } from 'node:path';
 import { parseArgs } from 'node:util';
 import { decodePng, pixel } from './png.ts';
 
@@ -441,13 +443,22 @@ async function samplePaint(session: Session, result: PageResult): Promise<void> 
   delete result.meta['paintProbes'];
 }
 
+/** Meta a page measures from timing, which varies run to run; it stays in the --raw output only. */
+const TIMING_META = new Set(['animationFramesIn300ms']);
+
 function compact(result: PageResult): Record<string, unknown> {
   const passedByGroup: Record<string, number> = {};
   for (const c of result.checks) {
     if (c.status === 'pass') passedByGroup[c.group] = (passedByGroup[c.group] ?? 0) + 1;
   }
   const { checks, ...rest } = result;
-  return { ...rest, notPassed: checks.filter((c) => c.status !== 'pass'), passedByGroup };
+  const meta = Object.entries(result.meta).filter(([key]) => !TIMING_META.has(key));
+  return {
+    ...rest,
+    meta: Object.fromEntries(meta),
+    notPassed: checks.filter((c) => c.status !== 'pass'),
+    passedByGroup,
+  };
 }
 
 const { values } = parseArgs({
@@ -455,6 +466,7 @@ const { values } = parseArgs({
     firefox: { type: 'string' },
     engines: { type: 'string', default: 'firefox,chromium,webkit' },
     tokens: { type: 'string' },
+    results: { type: 'string' },
     raw: { type: 'string' },
     serve: { type: 'boolean', default: false },
     port: { type: 'string', default: '0' },
@@ -464,6 +476,7 @@ const { values } = parseArgs({
 
 const firefoxPath = values.firefox ?? process.env['NZ_FLOOR_FIREFOX'];
 const tokensFile = values.tokens ? resolve(values.tokens) : undefined;
+const outDir = values.results ? resolve(values.results) : resultsDir;
 const rawDir = values.raw;
 
 // One browser and one page at a time: they share the loopback server, and timing checks need the machine.
@@ -482,7 +495,7 @@ function launch(engine: string, scheme: Scheme): Promise<Session> {
   return launchFirefox(firefoxPath, scheme);
 }
 
-// Runs every page in both OS schemes and writes results/<engine>-<version>.json. Returns true on any failure.
+// Runs every page in both OS schemes and writes <results>/<engine>-<version>.json. Returns true on any failure.
 async function runEngine(engine: string, origin: string): Promise<boolean> {
   const summaries: Record<string, unknown> = {};
   const raw: Record<string, PageResult> = {};
@@ -491,6 +504,11 @@ async function runEngine(engine: string, origin: string): Promise<boolean> {
     version: '',
     driver: '',
     runAt: new Date().toISOString(),
+    // the file served as plan-tokens.css, relative to the repo root
+    tokens: relative(
+      join(import.meta.dirname, '..', '..'),
+      tokensFile ?? join(pagesDir, 'plan-tokens.css'),
+    ),
     pages: summaries,
   };
   let failed = false;
@@ -521,11 +539,8 @@ async function runEngine(engine: string, origin: string): Promise<boolean> {
       await session.close();
     }
   });
-  mkdirSync(resultsDir, { recursive: true });
-  writeFileSync(
-    join(resultsDir, `${engine}-${run.version}.json`),
-    `${JSON.stringify(run, null, 2)}\n`,
-  );
+  mkdirSync(outDir, { recursive: true });
+  writeFileSync(join(outDir, `${engine}-${run.version}.json`), `${JSON.stringify(run, null, 2)}\n`);
   if (rawDir) {
     mkdirSync(rawDir, { recursive: true });
     writeFileSync(

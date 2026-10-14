@@ -10,6 +10,28 @@ Status: run on 2026-10-14 on macOS 27.0.1 (arm64), Node 24.16.0. This is the W1 
 - **D3 (expected, matches §12.4 gate 1):** the `overlay` property is missing in Firefox 129 to 157 and WebKit 27.2, so native popover and dialog exits are instant there.
 - **Safari 17.5: not tested.** No Safari 17.5 is available on this machine. Playwright WebKit 27.2 is a current engine and is reported only as a comparison, never as Safari 17.5. Zero-cost routes are listed below.
 
+## Week 2: real `tokens.css` (2026-10-14)
+
+The same pages rerun on the built `@nizivo/tokens` instead of the §7.5 sample: `packages/tokens/dist/tokens.css` (Terrazzo 2.8.0, 334 custom properties, 22,624 bytes) served under the name `plan-tokens.css` with `--tokens`. It carries the real theme scopes, `light-dark()` colours, elevation, focus halo, spring `linear()` easing and reduced-motion blocks. Every `--nz-*` name the pages read exists in it. Results are in `results/w2-real-tokens/`; the week 1 files in `results/` are unchanged.
+
+```sh
+node fixtures/floor-lane/run.ts --firefox <Firefox 129.0.app> --tokens packages/tokens/dist/tokens.css --results fixtures/floor-lane/results/w2-real-tokens
+```
+
+Each cell is passing checks over all checks, both OS schemes together.
+
+| Page                                   | Firefox 129.0 | Chromium 156.0.8078.4 | WebKit 27.2 (not Safari 17.5) |
+| -------------------------------------- | ------------- | --------------------- | ----------------------------- |
+| S1 nesting matrix                      | 274/324       | 324/324               | 324/324                       |
+| Halo, elevation and inverse probe      | 746/790       | 790/790               | 790/790                       |
+| Overlay entry                          | 38/38         | 38/38                 | 38/38                         |
+| Painted, `<html>` unthemed             | 194/224       | 224/224               | 224/224                       |
+| Painted, `<html data-nz-theme="dark">` | 182/224       | 224/224               | 224/224                       |
+
+- **Firefox 129.0 passes every token-path check on the real tokens.** All 166 failing cells are the D1 probes that write `light-dark()` directly on the property (`direct-d1`, `direct-d1-l2`, `direct-d1-normal`, `shadow-direct`, `bg-direct`, `bg-mix-direct`). They fail by design, as in week 1: the same 166 cells, page by page, as the run on the plan sample. The runner therefore exits 1 for Firefox 129, as before.
+- **Chromium 156 and WebKit 27.2: 0 failures.**
+- No result moved between the plan sample and the real file, so the week 1 verdict, D1 to D3 and the Safari 17.5 gap below all stand for the shipped `tokens.css`.
+
 ## Browsers
 
 | Browser  | Exact version                  | Source                                                                                                                                                  | Driven by                                           | Role                                                                                |
@@ -150,8 +172,9 @@ Zero-cost routes, checked 2026-10-14:
    node fixtures/floor-lane/run.ts --firefox /tmp/nz-floor/Firefox.app
    ```
    - `--engines firefox` (or `chromium,webkit`) narrows the run; `NZ_FLOOR_FIREFOX` can replace `--firefox`.
-   - `--tokens packages/tokens/dist/tokens.css` serves the generated tokens in place of `pages/plan-tokens.css` once `@nizivo/tokens` emits them.
-   - `--raw <dir>` writes every check; the committed `results/*.json` keep summaries, failures and notes only.
+   - `--tokens packages/tokens/dist/tokens.css` serves the generated tokens in place of `pages/plan-tokens.css` (build `@nizivo/tokens` first).
+   - `--results <dir>` writes the results there instead of `results/`; the week 2 run used `results/w2-real-tokens`. Each result records the tokens file it was run on.
+   - `--raw <dir>` writes every check; the committed `results/*.json` keep summaries, failures and notes only. They also leave out timing-only meta (`animationFramesIn300ms`, 19 or 20 from run to run), so a rerun differs only in `runAt`; the week 1 files predate this and still carry it.
    - `--serve [--port 8129] [--host 0.0.0.0]` only serves the pages, for a manual run in a browser no script can drive.
    - The exit code is 1 when any check fails, so Firefox 129 and 131 exit 1 today because of D1.
 4. How Firefox is driven: the runner writes a fresh profile with the prefs above and starts `firefox --headless --no-remote --profile <tmp> --remote-debugging-port=0`, then talks WebDriver BiDi over Node's built-in `WebSocket`, with no npm package and no geckodriver. It sets `HOME` and `CFFIXED_USER_HOME` to a temporary folder: on macOS, Firefox reads and writes `~/Library/Application Support/Firefox` even with `--profile` and hangs at startup when it cannot. That is also why spike S1d's Playwright Firefox never launched in a sandboxed session: launched plainly, it fails here too ("Failed to launch the browser process"), and with the same two variables passed through `firefox.launch({ env })` it starts (checked with Firefox 157.0). Its build was driven over BiDi in this lane so that every Firefox ran through the same code path.
@@ -163,4 +186,5 @@ Zero-cost routes, checked 2026-10-14:
 - `pages/harness.js`: shared result recording, the on-page report and the JSON hand-off.
 - `pages/nesting.{html,js}`, `pages/halo-inverse.{html,js}`, `pages/overlay-entry.{html,js}`, `pages/paint.{html,js}`: the checks.
 - `run.ts`, `png.ts`, `tsconfig.json`: the runner (Node 24 type stripping) and a dependency-free PNG reader for the painted check.
-- `results/<browser>-<version>.json`: the runs reported above.
+- `results/<browser>-<version>.json`: the week 1 runs on `pages/plan-tokens.css`.
+- `results/w2-real-tokens/<browser>-<version>.json`: the week 2 runs on the built `tokens.css`.
