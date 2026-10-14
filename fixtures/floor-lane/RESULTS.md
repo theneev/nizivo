@@ -32,6 +32,34 @@ Each cell is passing checks over all checks, both OS schemes together.
 - **Chromium 156 and WebKit 27.2: 0 failures.**
 - No result moved between the plan sample and the real file, so the week 1 verdict, D1 to D3 and the Safari 17.5 gap below all stand for the shipped `tokens.css`.
 
+## Week 3: controls on the shipped CSS (2026-10-14)
+
+A new page, `pages/w3-controls.html` (`w3-controls.js`), renders the week 3 controls' server HTML (from `renderToStaticMarkup`) under the real `tokens.css` and the built `packages/react/dist/css` stylesheets, which `run.ts --react-css` serves under `react-css/`. It reads computed style for the CSS features week 3 ships near the floor. Results are in `results/w3-controls/`.
+
+```sh
+node fixtures/floor-lane/run.ts --firefox <Firefox 129.0.app> --tokens packages/tokens/dist/tokens.css --react-css packages/react/dist/css --pages w3-controls --results fixtures/floor-lane/results/w3-controls
+```
+
+| Check (both OS schemes)                                                                                                                                   | Firefox 129.0                                                                                    | Chromium 156.0.8078.4           | WebKit 27.2 (not Safari 17.5)   |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ | ------------------------------- | ------------------------------- |
+| All 10 stylesheets load                                                                                                                                   | pass                                                                                             | pass                            | pass                            |
+| Checkbox: `appearance: none`, `:checked` and `:indeterminate` paint the brand fill, the dash shows and the check hides                                    | pass                                                                                             | pass                            | pass                            |
+| `1lh`: the 20 px box is centred on the label's first line                                                                                                 | pass                                                                                             | pass                            | pass                            |
+| `:is([data-disabled], :has(> input:disabled))`: a fieldset-disabled Checkbox and Input dim                                                                | pass                                                                                             | pass                            | pass                            |
+| Switch: the thumb moves 16 px with `translate`; `:dir(rtl)` flips it to -16 px; the on track is the brand                                                 | pass                                                                                             | pass                            | pass                            |
+| Radio: the checked ring is the brand                                                                                                                      | pass                                                                                             | pass                            | pass                            |
+| SegmentedControl: `:has(> input:checked)` paints the thumb, `:has(> input:disabled)` dims an item, `min-inline-size: fit-content` keeps every label whole | pass                                                                                             | pass                            | pass                            |
+| nz.base nested-input rule, `:is(:has(> input:focus-visible), [data-focus-visible])`: an item marked `data-focus-visible` gets the solid outline           | pass                                                                                             | pass                            | pass                            |
+| NativeSelect: `:has(> option[value='']:checked)` greys the placeholder                                                                                    | pass                                                                                             | pass                            | pass                            |
+| Textarea: `rows` sets the height (rows 6 is 4 lines taller than rows 2)                                                                                   | pass                                                                                             | pass                            | pass                            |
+| Textarea: `field-sizing`                                                                                                                                  | not supported: the `@supports` block is skipped and an 8-line value keeps the rows height (pass) | supported: grows 6 lines (pass) | supported: grows 6 lines (pass) |
+| **Total**                                                                                                                                                 | **20/20 + 20/20**                                                                                | **20/20 + 20/20**               | **20/20 + 20/20**               |
+
+- **Firefox 129.0 passes every week 3 check.** Its only difference is the expected one: no `field-sizing`, so Textarea keeps its `rows` height and the user resizes it. Safari 17.5 has no `field-sizing` either and gets the same fallback; it is still not tested.
+- The page's own stylesheet sets `transition-duration: 0s` on the controls, so a state change can be read at once.
+- **Negative control:** the same page without `--react-css` fails 18 of 20 checks in Chromium (36 FAIL lines over both schemes), so the checks read the shipped CSS.
+- Not covered here: keyboard-driven `:focus-visible` (a driver-free page cannot press keys; the browser lane in `packages/react/test/browser` covers it in Chromium and WebKit) and forced colours.
+
 ## Browsers
 
 | Browser  | Exact version                  | Source                                                                                                                                                  | Driven by                                           | Role                                                                                |

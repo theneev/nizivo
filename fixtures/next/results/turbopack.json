@@ -253,9 +253,9 @@
         },
         "dialogDefaultOpen": {
           "ssrExpanded": "true",
-          "ssrDangling": "dialog-trigger aria-controls=react-aria-_R_15fivb_",
+          "ssrDangling": "dialog-trigger aria-controls=react-aria-_R_4lubtb_",
           "expanded": "true",
-          "controls": "react-aria-_R_15fivb_",
+          "controls": "react-aria-_R_4lubtb_",
           "controlsDialog": true,
           "title": "Edit product",
           "dangling": "",
@@ -298,8 +298,8 @@
           "ok": true
         },
         "tooltipDefaultOpen": {
-          "ssrDangling": "tooltip-trigger aria-describedby=react-aria-_R_15fivb_",
-          "describedBy": "react-aria-_R_15fivb_",
+          "ssrDangling": "tooltip-trigger aria-describedby=react-aria-_R_4lubtb_",
+          "describedBy": "react-aria-_R_4lubtb_",
           "describedByTooltip": true,
           "text": "Download the report as CSV",
           "dangling": "",
@@ -460,6 +460,139 @@
       },
       "chunks": 8,
       "markers": ["nzfm[alert/alert-dismiss.client]"],
+      "missing": [],
+      "unexpected": [],
+      "failures": []
+    },
+    "/forms": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "button button-label checkbox checkbox-indicator checkbox-input checkbox-label field field-description field-label field-required fieldset fieldset-content fieldset-legend fieldset-required heading input input-control native-select native-select-chevron native-select-trigger radio radio-group radio-input radio-label segmented-control segmented-control-input segmented-control-item segmented-control-label stack switch switch-input switch-label switch-thumb textarea",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "forms": {
+          "fields": "5",
+          "problems": "",
+          "danglingServerIdrefs": "",
+          "platform": "apple",
+          "inlineMessage": "Please fill out this field.",
+          "focused": "name",
+          "ariaInvalid": "true",
+          "stayed": true,
+          "ok": true
+        },
+        "nativeSubmit": {
+          "name": "Linen shirt",
+          "unit": "lb",
+          "terms": "on",
+          "range": "30d",
+          "billing": "invoices",
+          "shipping": "express",
+          "ok": true
+        }
+      },
+      "chunks": 8,
+      "markers": [
+        "nzfm[checkbox/checkbox.client]",
+        "nzfm[field/field-scope.client]",
+        "nzfm[input/input.client]",
+        "nzfm[radio-group/radio-group.client]",
+        "nzfm[segmented-control/segmented-control.client]",
+        "nzfm[switch/switch.client]",
+        "nzfm[textarea/textarea.client]"
+      ],
+      "missing": [],
+      "unexpected": [],
+      "failures": []
+    },
+    "/native-select": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "heading native-select native-select-chevron native-select-trigger",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        }
+      },
+      "chunks": 7,
+      "markers": [],
+      "missing": [],
+      "unexpected": [],
+      "failures": []
+    },
+    "/field-zero-js": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "field field-description field-label field-required heading native-select native-select-chevron native-select-trigger",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        }
+      },
+      "chunks": 8,
+      "markers": ["nzfm[field/field-scope.client]"],
+      "missing": [],
+      "unexpected": [],
+      "failures": []
+    },
+    "/icon-button": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "heading icon-button icon-button-icon",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        }
+      },
+      "chunks": 9,
+      "markers": [
+        "nzfm[_engines/react-aria/locale.client]",
+        "nzfm[_engines/react-aria/overlay.client]",
+        "nzfm[_engines/react-aria/tooltip.client]",
+        "nzfm[config/config.client]",
+        "nzfm[icon-button/icon-button.client]",
+        "nzfm[tooltip/tooltip.client]"
+      ],
+      "missing": [],
+      "unexpected": [],
+      "failures": []
+    },
+    "/icon-button-tooltip": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "heading icon-button icon-button-icon",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "iconButtonTooltip": {
+          "slot": "icon-button",
+          "text": "Bold ⌘BCtrl+B",
+          "describedByTooltip": false,
+          "ok": true
+        }
+      },
+      "chunks": 9,
+      "markers": [
+        "nzfm[_engines/react-aria/locale.client]",
+        "nzfm[_engines/react-aria/overlay.client]",
+        "nzfm[_engines/react-aria/tooltip.client]",
+        "nzfm[config/config.client]",
+        "nzfm[icon-button/icon-button.client]",
+        "nzfm[tooltip/tooltip.client]"
+      ],
       "missing": [],
       "unexpected": [],
       "failures": []

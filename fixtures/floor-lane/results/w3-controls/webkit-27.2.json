@@ -1,0 +1,61 @@
+{
+  "engine": "webkit",
+  "version": "27.2",
+  "driver": "Playwright 1.64.0 (emulated prefers-color-scheme), headless",
+  "runAt": "2026-10-14T19:08:15.788Z",
+  "tokens": "packages/tokens/dist/tokens.css",
+  "pages": {
+    "w3-controls.light": {
+      "page": "w3-controls",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Safari/605.1.15",
+      "osScheme": "light",
+      "reducedMotion": false,
+      "meta": {
+        "fieldSizing": true,
+        "hasSelector": true
+      },
+      "summary": {
+        "pass": 20,
+        "fail": 0,
+        "info": 0
+      },
+      "notPassed": [],
+      "passedByGroup": {
+        "setup": 1,
+        "checkbox": 6,
+        "switch": 3,
+        "radio": 1,
+        "segmented": 5,
+        "textarea": 2,
+        "input": 1,
+        "native-select": 1
+      }
+    },
+    "w3-controls.dark": {
+      "page": "w3-controls",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Safari/605.1.15",
+      "osScheme": "dark",
+      "reducedMotion": false,
+      "meta": {
+        "fieldSizing": true,
+        "hasSelector": true
+      },
+      "summary": {
+        "pass": 20,
+        "fail": 0,
+        "info": 0
+      },
+      "notPassed": [],
+      "passedByGroup": {
+        "setup": 1,
+        "checkbox": 6,
+        "switch": 3,
+        "radio": 1,
+        "segmented": 5,
+        "textarea": 2,
+        "input": 1,
+        "native-select": 1
+      }
+    }
+  }
+}

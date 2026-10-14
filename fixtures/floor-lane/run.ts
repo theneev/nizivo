@@ -10,6 +10,8 @@
 //            --results <dir> writes the results there instead of results/ (so a run on other tokens
 //            keeps the committed ones)
 //            --raw <dir> also writes every check (the committed results keep failures and notes only)
+//            --react-css <dir> serves a built packages/react/dist/css under react-css/ (w3-controls)
+//            --pages <names> runs only these pages (comma-separated keys of `pages` below)
 //
 // Firefox is driven over WebDriver BiDi with Node's own WebSocket, so it needs no npm package or driver.
 // Chromium and WebKit go through Playwright (this fixture's devDependency), loaded only when asked for.
@@ -32,6 +34,8 @@ const pages: Record<string, string> = {
   'overlay-entry': 'overlay-entry.html',
   'paint.html-none': 'paint.html?html=none',
   'paint.html-dark': 'paint.html?html=dark',
+  // Week 3: the shipped component stylesheets (needs --react-css).
+  'w3-controls': 'w3-controls.html',
 };
 const schemes = ['light', 'dark'] as const;
 type Scheme = (typeof schemes)[number];
@@ -146,6 +150,7 @@ async function serve(
   port: number,
   tokensFile: string | undefined,
   acceptResults: boolean,
+  reactCssDir: string | undefined,
 ): Promise<{ origin: string; close: () => void }> {
   const server = createServer((request, response) => {
     const path = new URL(request.url ?? '/', 'http://localhost').pathname;
@@ -168,8 +173,17 @@ async function serve(
       return;
     }
     const name = path === '/' ? 'index.html' : decodeURIComponent(path.slice(1));
-    const file = name === 'plan-tokens.css' && tokensFile ? tokensFile : resolve(pagesDir, name);
-    if (file !== tokensFile && !file.startsWith(pagesDir + sep)) {
+    const reactCss =
+      reactCssDir !== undefined && name.startsWith('react-css/')
+        ? resolve(reactCssDir, name.slice('react-css/'.length))
+        : undefined;
+    const file =
+      name === 'plan-tokens.css' && tokensFile ? tokensFile : (reactCss ?? resolve(pagesDir, name));
+    const allowed =
+      file === tokensFile ||
+      file.startsWith(pagesDir + sep) ||
+      (reactCssDir !== undefined && file.startsWith(reactCssDir + sep));
+    if (!allowed) {
       response.writeHead(404).end();
       return;
     }
@@ -469,6 +483,8 @@ const { values } = parseArgs({
     results: { type: 'string' },
     raw: { type: 'string' },
     serve: { type: 'boolean', default: false },
+    'react-css': { type: 'string' },
+    pages: { type: 'string' },
     port: { type: 'string', default: '0' },
     host: { type: 'string', default: '127.0.0.1' },
   },
@@ -478,6 +494,16 @@ const firefoxPath = values.firefox ?? process.env['NZ_FLOOR_FIREFOX'];
 const tokensFile = values.tokens ? resolve(values.tokens) : undefined;
 const outDir = values.results ? resolve(values.results) : resultsDir;
 const rawDir = values.raw;
+const reactCssDir = values['react-css'] ? resolve(values['react-css']) : undefined;
+const only = values.pages?.split(',').map((name) => name.trim());
+const selected = Object.entries(pages).filter(
+  ([name]) => only === undefined || only.includes(name),
+);
+if (only !== undefined && selected.length !== only.length) {
+  throw new Error(
+    `--pages: unknown page in ${values.pages ?? ''}; pages are ${Object.keys(pages).join(', ')}`,
+  );
+}
 
 // One browser and one page at a time: they share the loopback server, and timing checks need the machine.
 async function inSequence<T>(items: readonly T[], step: (item: T) => Promise<void>): Promise<void> {
@@ -517,7 +543,7 @@ async function runEngine(engine: string, origin: string): Promise<boolean> {
     run.version = session.version;
     run.driver = session.driver;
     try {
-      await inSequence(Object.entries(pages), async ([page, path]) => {
+      await inSequence(selected, async ([page, path]) => {
         const result = await session.read(`${origin}/${path}`);
         await samplePaint(session, result);
         if (result.osScheme !== scheme)
@@ -551,7 +577,7 @@ async function runEngine(engine: string, origin: string): Promise<boolean> {
   return failed;
 }
 
-const server = await serve(values.host, Number(values.port), tokensFile, values.serve);
+const server = await serve(values.host, Number(values.port), tokensFile, values.serve, reactCssDir);
 if (values.serve) {
   console.log(
     `Serving ${pagesDir} at ${server.origin}/ (listening on ${values.host}; Ctrl-C to stop)`,

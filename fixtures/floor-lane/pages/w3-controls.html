@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Floor lane: week 3 controls</title>
+    <link rel="stylesheet" href="plan-tokens.css" />
+    <!-- The shipped @nizivo/react stylesheets: run.ts serves packages/react/dist/css under react-css/
+         (--react-css). The markup below is the components' server HTML (renderToStaticMarkup). -->
+    <link rel="stylesheet" href="react-css/base.css" />
+    <link rel="stylesheet" href="react-css/checkbox.css" />
+    <link rel="stylesheet" href="react-css/switch.css" />
+    <link rel="stylesheet" href="react-css/radio-group.css" />
+    <link rel="stylesheet" href="react-css/fieldset.css" />
+    <link rel="stylesheet" href="react-css/inline-error.css" />
+    <link rel="stylesheet" href="react-css/segmented-control.css" />
+    <link rel="stylesheet" href="react-css/textarea.css" />
+    <link rel="stylesheet" href="react-css/input.css" />
+    <link rel="stylesheet" href="react-css/native-select.css" />
+    <link rel="stylesheet" href="report.css" />
+    <style>
+      /* computed style is read at once after a state change, so nothing may be mid-transition */
+      #controls * {
+        transition-duration: 0s !important;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Week 3 controls on the floor</h1>
+    <p>
+      The CSS features week 3 ships near the floor: <code>field-sizing</code> behind
+      <code>@supports</code> (Textarea), <code>:has()</code> inside <code>:is()</code> (states and
+      the nested-input focus rule), <code>1lh</code>, <code>:dir(rtl)</code> with
+      <code>translate</code> (Switch), <code>appearance: none</code> inputs painted by
+      <code>:checked</code> and <code>:indeterminate</code>, and
+      <code>min-inline-size: fit-content</code>.
+    </p>
+    <section id="controls" data-nz-theme="light">
+      <div>
+        <label data-slot="checkbox" class="nz-checkbox nz-hit-target"
+          ><input
+            id="cb-checked"
+            type="checkbox"
+            class="nz-checkbox-input"
+            data-slot="checkbox-input"
+            checked=""
+          /><span class="nz-checkbox-indicator" data-slot="checkbox-indicator" aria-hidden="true"
+            ><svg
+              class="nz-glyph nz-glyph-check"
+              viewBox="0 0 24 24"
+              width="1em"
+              height="1em"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.92"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path d="M20 6 9 17l-5-5"></path></svg
+            ><svg
+              class="nz-glyph nz-glyph-minus"
+              viewBox="0 0 24 24"
+              width="1em"
+              height="1em"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.92"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path d="M5 12h14"></path></svg></span
+          ><span class="nz-checkbox-label" data-slot="checkbox-label">Checked</span></label
+        >
+      </div>
+      <div>
+        <label data-slot="checkbox" class="nz-checkbox nz-hit-target"
+          ><input
+            id="cb-mixed"
+            type="checkbox"
+            class="nz-checkbox-input"
+            data-slot="checkbox-input"
+          /><span class="nz-checkbox-indicator" data-slot="checkbox-indicator" aria-hidden="true"
+            ><svg
+              class="nz-glyph nz-glyph-check"
+              viewBox="0 0 24 24"
+              width="1em"
+              height="1em"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.92"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path d="M20 6 9 17l-5-5"></path></svg
+            ><svg
+              class="nz-glyph nz-glyph-minus"
+              viewBox="0 0 24 24"
+              width="1em"
+              height="1em"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.92"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path d="M5 12h14"></path></svg></span
+          ><span class="nz-checkbox-label" data-slot="checkbox-label">Mixed</span></label
+        >
+      </div>
+      <div>
+        <fieldset disabled="">
+          <label data-slot="checkbox" class="nz-checkbox nz-hit-target"
+            ><input
+              id="cb-disabled"
+              type="checkbox"
+              class="nz-checkbox-input"
+              data-slot="checkbox-input"
+            /><span class="nz-checkbox-indicator" data-slot="checkbox-indicator" aria-hidden="true"
+              ><svg
+                class="nz-glyph nz-glyph-check"
+                viewBox="0 0 24 24"
+                width="1em"
+                height="1em"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.92"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path d="M20 6 9 17l-5-5"></path></svg
+              ><svg
+                class="nz-glyph nz-glyph-minus"
+                viewBox="0 0 24 24"
+                width="1em"
+                height="1em"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.92"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path d="M5 12h14"></path></svg></span
+            ><span class="nz-checkbox-label" data-slot="checkbox-label">Disabled</span></label
+          >
+        </fieldset>
+      </div>
+      <div>
+        <label data-slot="switch" class="nz-switch nz-hit-target"
+          ><input
+            id="sw-ltr"
+            type="checkbox"
+            role="switch"
+            class="nz-switch-input"
+            data-slot="switch-input"
+            checked=""
+          /><span class="nz-switch-thumb" data-slot="switch-thumb" aria-hidden="true"></span
+          ><span class="nz-switch-label" data-slot="switch-label">LTR</span></label
+        >
+      </div>
+      <div>
+        <div dir="rtl">
+          <label data-slot="switch" class="nz-switch nz-hit-target"
+            ><input
+              id="sw-rtl"
+              type="checkbox"
+              role="switch"
+              class="nz-switch-input"
+              data-slot="switch-input"
+              checked=""
+            /><span class="nz-switch-thumb" data-slot="switch-thumb" aria-hidden="true"></span
+            ><span class="nz-switch-label" data-slot="switch-label">RTL</span></label
+          >
+        </div>
+      </div>
+      <div>
+        <fieldset
+          data-slot="radio-group"
+          role="radiogroup"
+          data-orientation="vertical"
+          class="nz-fieldset nz-radio-group"
+        >
+          <legend class="nz-fieldset-legend" data-slot="fieldset-legend">R</legend>
+          <div class="nz-fieldset-content" data-slot="fieldset-content">
+            <label data-slot="radio" class="nz-radio nz-hit-target"
+              ><input
+                type="radio"
+                class="nz-radio-input"
+                data-slot="radio-input"
+                name="rg"
+                checked=""
+                value="a"
+              /><span class="nz-radio-label" data-slot="radio-label">A</span></label
+            ><label data-slot="radio" class="nz-radio nz-hit-target"
+              ><input
+                type="radio"
+                class="nz-radio-input"
+                data-slot="radio-input"
+                name="rg"
+                value="b"
+              /><span class="nz-radio-label" data-slot="radio-label">B</span></label
+            >
+          </div>
+        </fieldset>
+      </div>
+      <div style="inline-size: 30rem">
+        <div
+          data-slot="segmented-control"
+          data-size="md"
+          data-full-width=""
+          aria-label="Range"
+          role="radiogroup"
+          class="nz-segmented-control"
+        >
+          <label data-slot="segmented-control-item" class="nz-segmented-control-item"
+            ><input
+              type="radio"
+              class="nz-segmented-control-input"
+              data-slot="segmented-control-input"
+              name="r"
+              checked=""
+              value="7d"
+            /><span class="nz-segmented-control-label" data-slot="segmented-control-label"
+              ><span class="nz-segmented-control-text">7D</span
+              ><span class="nz-segmented-control-sizer" aria-hidden="true">7D</span></span
+            ></label
+          ><label data-slot="segmented-control-item" class="nz-segmented-control-item"
+            ><input
+              type="radio"
+              class="nz-segmented-control-input"
+              data-slot="segmented-control-input"
+              name="r"
+              value="30d"
+            /><span class="nz-segmented-control-label" data-slot="segmented-control-label"
+              ><span class="nz-segmented-control-text">30 days</span
+              ><span class="nz-segmented-control-sizer" aria-hidden="true">30 days</span></span
+            ></label
+          ><label
+            data-slot="segmented-control-item"
+            data-disabled=""
+            class="nz-segmented-control-item"
+            ><input
+              type="radio"
+              class="nz-segmented-control-input"
+              data-slot="segmented-control-input"
+              disabled=""
+              name="r"
+              value="x"
+            /><span class="nz-segmented-control-label" data-slot="segmented-control-label"
+              ><span class="nz-segmented-control-text">Off</span
+              ><span class="nz-segmented-control-sizer" aria-hidden="true">Off</span></span
+            ></label
+          >
+        </div>
+      </div>
+      <div>
+        <textarea
+          id="ta-2"
+          aria-label="a"
+          rows="2"
+          class="nz-textarea"
+          data-slot="textarea"
+        ></textarea
+        ><textarea
+          id="ta-6"
+          aria-label="b"
+          rows="6"
+          class="nz-textarea"
+          data-slot="textarea"
+        ></textarea
+        ><textarea id="ta-full" aria-label="c" rows="2" class="nz-textarea" data-slot="textarea">
+1
+2
+3
+4
+5
+6
+7
+8</textarea>
+      </div>
+      <div>
+        <fieldset disabled="">
+          <span data-slot="input" data-size="md" class="nz-input"
+            ><input
+              id="in-disabled"
+              aria-label="d"
+              type="text"
+              class="nz-input-control"
+              data-slot="input-control"
+          /></span>
+        </fieldset>
+      </div>
+      <div>
+        <span data-slot="native-select" data-size="md" class="nz-native-select"
+          ><select
+            id="ns"
+            aria-label="e"
+            class="nz-native-select-trigger"
+            data-slot="native-select-trigger"
+          >
+            <option value="" disabled="" selected="">Choose</option>
+            <option value="a">A</option></select
+          ><span
+            class="nz-native-select-chevron"
+            data-slot="native-select-chevron"
+            aria-hidden="true"
+            ><svg
+              class="nz-glyph nz-glyph-chevrons-up-down"
+              viewBox="0 0 24 24"
+              width="1em"
+              height="1em"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.92"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path d="m7 15 5 5 5-5"></path>
+              <path d="m7 9 5-5 5 5"></path></svg></span
+        ></span>
+      </div>
+    </section>
+    <div id="report"></div>
+    <pre id="result"></pre>
+    <script src="harness.js"></script>
+    <script src="w3-controls.js"></script>
+  </body>
+</html>

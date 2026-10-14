@@ -12,7 +12,19 @@ import { dirname, join, normalize } from 'node:path';
 import { chromium, type Browser, type Page } from 'playwright';
 import { REPO_ROOT } from './pack.ts';
 
-type Component = 'select' | 'dialog' | 'tooltip' | 'alert';
+type Component =
+  | 'select'
+  | 'dialog'
+  | 'tooltip'
+  | 'alert'
+  | 'field'
+  | 'input'
+  | 'textarea'
+  | 'checkbox'
+  | 'switch'
+  | 'radio-group'
+  | 'segmented-control'
+  | 'icon-button';
 
 /** Each rendered component's client leaf, as its dist path without `dist/` and `.js`. */
 const LEAF: Record<Component, string> = {
@@ -21,11 +33,28 @@ const LEAF: Record<Component, string> = {
   tooltip: 'tooltip/tooltip.client',
   // Alert is a T0 shell; only its dismiss button is a client leaf (§9.5 split).
   alert: 'alert/alert-dismiss.client',
+  // Field is a server shell around FieldScope; the controls are thin client leaves that read it.
+  field: 'field/field-scope.client',
+  input: 'input/input.client',
+  textarea: 'textarea/textarea.client',
+  checkbox: 'checkbox/checkbox.client',
+  switch: 'switch/switch.client',
+  // RadioGroup is a server shell (a Fieldset) around one client part.
+  'radio-group': 'radio-group/radio-group.client',
+  'segmented-control': 'segmented-control/segmented-control.client',
+  // IconButton is a server shell; its default tooltip is a client leaf over Tooltip.
+  'icon-button': 'icon-button/icon-button.client',
 };
 
 interface PageSpec {
   /** Components the page renders; their client leaves must ship, and no other client module may. */
   renders: Component[];
+  /**
+   * Components whose client leaf the page's server graph imports without rendering it (a shell
+   * that imports its leaf statically). Their modules may ship but need not: Turbopack and `next dev`
+   * ship them, production webpack drops them (week 3, fixtures/next/RESULTS.md).
+   */
+  imports?: Component[];
   /** The page imports through the root barrel, where webpack without optimizePackageImports leaks (S2c). */
   barrel?: true;
   dialog?: { trigger: string; close: string; role: 'dialog' | 'alertdialog' };
@@ -35,6 +64,10 @@ interface PageSpec {
   select?: { size?: string; parts?: string[] };
   /** Documented parts the server-rendered page must contain (the T0 set). */
   slots?: string[];
+  /** The week 3 forms page: Field wiring in the server HTML, validation, and a submit with no JS. */
+  forms?: true;
+  /** An IconButton whose tooltip shows its label (`label`) on focus. */
+  iconButtonTooltip?: string;
 }
 
 /** One documented part of each week 2 T0 component (§21.1 W2 "server-safe components"). */
@@ -93,6 +126,59 @@ export const PAGES: Record<string, PageSpec> = {
   '/t0-barrel': { renders: [], barrel: true, slots: T0_SLOTS },
   // A dismissible Alert: its dismiss leaf is the only client module the page may ship.
   '/alert-dismiss': { renders: ['alert'], slots: ['alert', 'alert-dismiss'] },
+  // Week 3: a server Field around each client control. FieldScope ships through the controls.
+  '/forms': {
+    renders: [
+      'field',
+      'input',
+      'textarea',
+      'checkbox',
+      'switch',
+      'radio-group',
+      'segmented-control',
+    ],
+    forms: true,
+    slots: [
+      'field',
+      'field-label',
+      'field-description',
+      'input',
+      'input-control',
+      'textarea',
+      'native-select',
+      'native-select-trigger',
+      'segmented-control',
+      'segmented-control-item',
+      'checkbox',
+      'checkbox-input',
+      'fieldset',
+      'switch',
+      'switch-input',
+      'switch-thumb',
+      'radio-group',
+      'radio',
+      'radio-input',
+    ],
+  },
+  // NativeSelect is server-safe: alone, it ships no client module.
+  '/native-select': { renders: [], slots: ['native-select', 'native-select-trigger'] },
+  // A Field function child runs no client code; field.tsx still imports FieldScope.
+  '/field-zero-js': {
+    renders: [],
+    imports: ['field'],
+    slots: ['field', 'field-label', 'field-description', 'native-select', 'native-select-trigger'],
+  },
+  // tooltip={false} runs no client code; icon-button.tsx still imports the tooltip leaf.
+  '/icon-button': {
+    renders: [],
+    imports: ['icon-button'],
+    slots: ['icon-button', 'icon-button-icon'],
+  },
+  '/icon-button-tooltip': {
+    renders: ['icon-button'],
+    iconButtonTooltip: 'Bold',
+    slots: ['icon-button', 'icon-button-icon'],
+  },
 };
 
 export interface PageResult {
@@ -489,6 +575,145 @@ async function checkSkeletonCircle(page: Page): Promise<Record<string, string | 
   return { sizes: JSON.stringify(sizes), ok: sizes.length > 0 && square };
 }
 
+/**
+ * Field wiring in the server's HTML, before any client code runs: every Field label names an element
+ * by `for` (a group Field has none, and its group points back with aria-labelledby), and every
+ * description id is in its control's aria-describedby. Then, after hydration, FieldScope's native
+ * validation: an empty required Input stops the submit, shows its message inline and takes focus.
+ */
+async function checkForms(page: Page, html: string): Promise<Record<string, string | boolean>> {
+  const wiring = await page.evaluate((source) => {
+    const doc = new DOMParser().parseFromString(source, 'text/html');
+    const problems: string[] = [];
+    const fields = [...doc.querySelectorAll('[data-slot="field"]')];
+    for (const field of fields) {
+      const label = field.querySelector(':scope > [data-slot="field-label"]');
+      const description = field.querySelector(':scope > [data-slot="field-description"]');
+      const forId = label?.getAttribute('for');
+      const group = field.querySelector('[role="radiogroup"]');
+      const control = forId === null || forId === undefined ? group : doc.getElementById(forId);
+      if (label === null) problems.push('a Field without its label');
+      else if (forId === null || forId === undefined) {
+        if (group?.getAttribute('aria-labelledby') !== label.id)
+          problems.push(`label ${label.id} has no for and names no group`);
+      } else if (!(control instanceof HTMLElement) || !control.matches('input, textarea, select'))
+        problems.push(`label for=${forId} names no form control`);
+      if (description !== null && control !== null) {
+        const ids = (control.getAttribute('aria-describedby') ?? '').split(/\s+/);
+        if (!ids.includes(description.id))
+          problems.push(`${description.id} is not in its control's aria-describedby`);
+      }
+    }
+    const name = doc.getElementById('name');
+    if (name?.getAttribute('required') === null) problems.push('#name is not required');
+    return { fields: fields.length, problems };
+  }, html);
+  const dangling = await danglingIdrefs(page, html);
+  const platform = (await page.locator('html').getAttribute('data-nz-platform')) ?? '';
+
+  // After hydration: an empty required Input blocks the submit and shows its message inline.
+  const before = page.url();
+  await page.getByRole('button', { name: 'Save product' }).click({ timeout: TIMEOUT });
+  const error = page.locator('[data-slot="field"]:has(#name) [data-slot="field-error"]');
+  await error.waitFor({ state: 'visible', timeout: TIMEOUT });
+  const message = ((await error.textContent()) ?? '').trim();
+  const focused = await page.evaluate(() => document.activeElement?.id ?? '');
+  const invalid = (await page.locator('#name').getAttribute('aria-invalid')) ?? '';
+  return {
+    fields: String(wiring.fields),
+    problems: wiring.problems.join('; '),
+    danglingServerIdrefs: dangling.join(', '),
+    platform,
+    inlineMessage: message,
+    focused,
+    ariaInvalid: invalid,
+    stayed: page.url() === before,
+    ok:
+      wiring.fields >= 5 &&
+      wiring.problems.length === 0 &&
+      dangling.length === 0 &&
+      (platform === 'apple' || platform === 'other') &&
+      message !== '' &&
+      focused === 'name' &&
+      invalid === 'true' &&
+      page.url() === before,
+  };
+}
+
+/**
+ * The forms page with JavaScript off: the server HTML alone is a working form. Fill it, submit it,
+ * and read what the browser sent from the next URL's query string.
+ */
+async function checkNativeSubmit(
+  browser: Browser,
+  url: string,
+): Promise<Record<string, string | boolean>> {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  try {
+    const page = await context.newPage();
+    await page.goto(url, { waitUntil: 'load', timeout: 60_000 });
+    await page.fill('#name', 'Linen shirt', { timeout: TIMEOUT });
+    await page.selectOption('#unit', 'lb');
+    await page.check('#terms');
+    // The segment's radio is visually hidden inside its label; check it as a click on the label would.
+    await page.check('input[name="range"][value="30d"]', { force: true });
+    await page.check('input[name="shipping"][value="express"]');
+    await Promise.all([
+      page.waitForURL(/\?/, { timeout: TIMEOUT }),
+      page.getByRole('button', { name: 'Save product' }).click(),
+    ]);
+    const query = new URL(page.url()).searchParams;
+    const sent = {
+      name: query.get('name') ?? '',
+      unit: query.get('unit') ?? '',
+      terms: query.get('terms') ?? '',
+      range: query.get('range') ?? '',
+      billing: query.getAll('billing').join(','),
+      shipping: query.get('shipping') ?? '',
+    };
+    return {
+      ...sent,
+      ok:
+        sent.name === 'Linen shirt' &&
+        sent.unit === 'lb' &&
+        sent.terms === 'on' &&
+        sent.range === '30d' &&
+        sent.billing === 'invoices' &&
+        sent.shipping === 'express',
+    };
+  } finally {
+    await context.close();
+  }
+}
+
+/**
+ * IconButton's default tooltip: named by `aria-label`, its label shown on keyboard focus, and not
+ * described by its own tooltip (which only repeats the name). Escape closes it.
+ */
+async function checkIconButtonTooltip(
+  page: Page,
+  label: string,
+): Promise<Record<string, string | boolean>> {
+  const button = page.getByRole('button', { name: label, exact: true });
+  const slot = (await button.getAttribute('data-slot', { timeout: TIMEOUT })) ?? '';
+  await page.locator('h1').click();
+  await page.keyboard.press('Tab');
+  const tooltip = page.getByRole('tooltip');
+  await tooltip.waitFor({ state: 'visible', timeout: TIMEOUT });
+  const text = ((await tooltip.textContent()) ?? '').trim();
+  const tooltipId = (await tooltip.getAttribute('id')) ?? '';
+  const describedBy = (await button.getAttribute('aria-describedby')) ?? '';
+  await page.keyboard.press('Escape');
+  await tooltip.waitFor({ state: 'detached', timeout: TIMEOUT });
+  const describedByTooltip = tooltipId !== '' && describedBy.split(' ').includes(tooltipId);
+  return {
+    slot,
+    text,
+    describedByTooltip,
+    ok: slot === 'icon-button' && text.startsWith(label) && !describedByTooltip,
+  };
+}
+
 /** Client JS the page references in its HTML (script tags and the flight payload) or loads. */
 function chunkUrls(html: string, base: string): string[] {
   const urls = new Set<string>();
@@ -589,6 +814,14 @@ async function runPage(
   if (failures.length === 0 && spec.slots?.includes('skeleton') === true) {
     steps.push(['skeletonCircle', () => checkSkeletonCircle(page)]);
   }
+  if (failures.length === 0 && spec.forms === true) {
+    steps.push(['forms', () => checkForms(page, html)]);
+    steps.push(['nativeSubmit', () => checkNativeSubmit(browser, base + path)]);
+  }
+  const iconButtonLabel = spec.iconButtonTooltip;
+  if (failures.length === 0 && iconButtonLabel !== undefined) {
+    steps.push(['iconButtonTooltip', () => checkIconButtonTooltip(page, iconButtonLabel)]);
+  }
   for (const [name, step] of steps) {
     try {
       interactions[name] = await step();
@@ -609,7 +842,7 @@ async function runPage(
     const source = await (await fetch(url)).text();
     for (const marker of markers.all.keys()) if (source.includes(marker)) found.add(marker);
   }
-  const allowed = markers.allowed(spec.renders);
+  const allowed = markers.allowed([...spec.renders, ...(spec.imports ?? [])]);
   const expectedLeaves = spec.renders.map((c) => `nzfm[${LEAF[c]}]`);
   const missing = expectedLeaves.filter((marker) => !found.has(marker));
   const unexpected = [...found].filter((marker) => !allowed.has(marker)).toSorted();

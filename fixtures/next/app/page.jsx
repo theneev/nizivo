@@ -14,6 +14,11 @@ const pages = [
   ['/t0', 'server-only: every T0 component through its subpath'],
   ['/t0-barrel', 'server-only: every T0 component through the @nizivo/react barrel'],
   ['/alert-dismiss', 'a dismissible Alert: the dismiss button is the only client leaf'],
+  ['/forms', 'a server Field around every client control; submits natively before hydration'],
+  ['/native-select', 'server-only: NativeSelect with no Field'],
+  ['/field-zero-js', 'a Field with a function child around a NativeSelect'],
+  ['/icon-button', 'IconButton with tooltip={false}'],
+  ['/icon-button-tooltip', 'IconButton with its default tooltip and a shortcut'],
 ];
 
 export default function Home() {

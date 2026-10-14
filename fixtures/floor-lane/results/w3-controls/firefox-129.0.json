@@ -1,0 +1,61 @@
+{
+  "engine": "firefox",
+  "version": "129.0",
+  "driver": "WebDriver BiDi (Node WebSocket), headless",
+  "runAt": "2026-10-14T19:08:16.761Z",
+  "tokens": "packages/tokens/dist/tokens.css",
+  "pages": {
+    "w3-controls.light": {
+      "page": "w3-controls",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:129.0) Gecko/20100101 Firefox/129.0",
+      "osScheme": "light",
+      "reducedMotion": false,
+      "meta": {
+        "fieldSizing": false,
+        "hasSelector": true
+      },
+      "summary": {
+        "pass": 20,
+        "fail": 0,
+        "info": 0
+      },
+      "notPassed": [],
+      "passedByGroup": {
+        "setup": 1,
+        "checkbox": 6,
+        "switch": 3,
+        "radio": 1,
+        "segmented": 5,
+        "textarea": 2,
+        "input": 1,
+        "native-select": 1
+      }
+    },
+    "w3-controls.dark": {
+      "page": "w3-controls",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:129.0) Gecko/20100101 Firefox/129.0",
+      "osScheme": "dark",
+      "reducedMotion": false,
+      "meta": {
+        "fieldSizing": false,
+        "hasSelector": true
+      },
+      "summary": {
+        "pass": 20,
+        "fail": 0,
+        "info": 0
+      },
+      "notPassed": [],
+      "passedByGroup": {
+        "setup": 1,
+        "checkbox": 6,
+        "switch": 3,
+        "radio": 1,
+        "segmented": 5,
+        "textarea": 2,
+        "input": 1,
+        "native-select": 1
+      }
+    }
+  }
+}
