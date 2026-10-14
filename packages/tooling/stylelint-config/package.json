@@ -1,0 +1,21 @@
+{
+  "name": "@nizivo/stylelint-config",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Shared stylelint rules for Nizivo CSS (minimal in week 1; the contract rules land in week 2)",
+  "license": "Apache-2.0",
+  "type": "module",
+  "exports": {
+    ".": "./index.js",
+    "./package.json": "./package.json"
+  },
+  "dependencies": {
+    "stylelint-use-logical": "catalog:"
+  },
+  "devDependencies": {
+    "stylelint": "catalog:"
+  },
+  "peerDependencies": {
+    "stylelint": "17.16.0"
+  }
+}

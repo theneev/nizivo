@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Nizivo Node tooling (run directly by Node 24 type stripping, never built)",
+  "extends": "./base.json",
+  "compilerOptions": {
+    "target": "es2024",
+    "lib": ["es2024"],
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "isolatedDeclarations": false,
+    "declaration": false,
+    "types": ["node"]
+  }
+}

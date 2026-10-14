@@ -1,0 +1,41 @@
+{
+  "name": "nizivo",
+  "private": true,
+  "description": "Nizivo UI monorepo: an open-source React design system by Neev Technologies",
+  "homepage": "https://nizivo.neevtechnologies.in",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theneev/nizivo.git"
+  },
+  "type": "module",
+  "scripts": {
+    "build": "turbo run build",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "lint": "oxlint --deny-warnings && oxfmt --check && turbo run lint",
+    "format": "oxfmt",
+    "changeset": "changeset"
+  },
+  "devDependencies": {
+    "@changesets/cli": "catalog:",
+    "@nizivo/tooling": "workspace:*",
+    "@typescript/typescript6": "catalog:",
+    "oxfmt": "catalog:",
+    "oxlint": "catalog:",
+    "oxlint-tsgolint": "catalog:",
+    "turbo": "catalog:",
+    "typescript": "catalog:"
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "12.11.2",
+      "onFail": "error"
+    }
+  },
+  "engines": {
+    "node": ">=24.16.0"
+  },
+  "packageManager": "pnpm@12.11.2"
+}

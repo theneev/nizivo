@@ -1,0 +1,79 @@
+{
+  "name": "@nizivo/react",
+  "version": "0.0.0",
+  "description": "Nizivo React components: server-first, accessible, themed by @nizivo/tokens",
+  "keywords": [
+    "components",
+    "design-system",
+    "nizivo",
+    "react",
+    "rsc"
+  ],
+  "homepage": "https://nizivo.neevtechnologies.in",
+  "bugs": "https://github.com/theneev/nizivo/issues",
+  "license": "Apache-2.0",
+  "author": "Neev Technologies",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theneev/nizivo.git",
+    "directory": "packages/react"
+  },
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsdown",
+    "typecheck": "tsc --noEmit -p .",
+    "test": "vitest run --passWithNoTests",
+    "lint": "stylelint \"src/**/*.css\" \"styles/**/*.css\" --allow-empty-input"
+  },
+  "dependencies": {
+    "@nizivo/tokens": "workspace:*",
+    "react-aria": "catalog:",
+    "react-aria-components": "catalog:"
+  },
+  "devDependencies": {
+    "@nizivo/stylelint-config": "workspace:*",
+    "@nizivo/tsconfig": "workspace:*",
+    "@nizivo/tsdown-preset": "workspace:*",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitest/browser-playwright": "catalog:",
+    "lightningcss": "catalog:",
+    "playwright": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "stylelint": "catalog:",
+    "tsdown": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:",
+    "vitest-browser-react": "catalog:"
+  },
+  "peerDependencies": {
+    "@types/react": "^19.2.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    }
+  },
+  "engines": {
+    "node": ">=22.12"
+  }
+}

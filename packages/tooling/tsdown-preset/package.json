@@ -1,0 +1,24 @@
+{
+  "name": "@nizivo/tsdown-preset",
+  "version": "0.0.0",
+  "private": true,
+  "description": "The one shared tsdown preset for Nizivo library packages",
+  "license": "Apache-2.0",
+  "type": "module",
+  "exports": {
+    ".": "./index.ts",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p ."
+  },
+  "devDependencies": {
+    "@nizivo/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "tsdown": "catalog:",
+    "typescript": "catalog:"
+  },
+  "peerDependencies": {
+    "tsdown": "0.23.1"
+  }
+}

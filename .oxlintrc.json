@@ -1,0 +1,67 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "react", "jsx-a11y", "import", "unicorn", "oxc", "vitest"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn",
+    "perf": "warn"
+  },
+  "options": {
+    "typeAware": true,
+    "reportUnusedDisableDirectives": "error"
+  },
+  "ignorePatterns": ["docs/**", "**/dist/**", "**/coverage/**"],
+  "rules": {
+    "react/rules-of-hooks": "error",
+    "react/exhaustive-deps": "error",
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": [
+          {
+            "group": ["gsap", "gsap/**", "@gsap/**"],
+            "message": "GSAP is banned: its licence is not OSI-approved (ARCHITECTURE.md §19.3)."
+          }
+        ]
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": ["packages/react/src/**"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": ["react-aria*", "react-aria*/**", "@react-aria/**", "@react-stately/**"],
+                "message": "Only src/_engines/** may import the behaviour engine (ARCHITECTURE.md §4.1 L4, §9.2)."
+              },
+              {
+                "group": ["gsap", "gsap/**", "@gsap/**"],
+                "message": "GSAP is banned: its licence is not OSI-approved (ARCHITECTURE.md §19.3)."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["packages/react/src/_engines/**"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": ["gsap", "gsap/**", "@gsap/**"],
+                "message": "GSAP is banned: its licence is not OSI-approved (ARCHITECTURE.md §19.3)."
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

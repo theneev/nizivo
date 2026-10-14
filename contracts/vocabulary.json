@@ -1,0 +1,320 @@
+{
+  "$comment": "The single source of the data-* and data-nz-* vocabulary (ARCHITECTURE.md §8.2, §8.3). It feeds stateAttrs(), the stylelint allowlist, the emitted-CSS check, engineDom() filtering and the docs page. Semver'd: removing or renaming an entry or a value is breaking. An entry with \"presence\": true is a presence attribute (data-open=\"\"); otherwise \"values\" lists the allowed values. \"values\": null means the value set is defined per component manifest. Engine sources (for example React Aria render state) live in each adapter, not here.",
+  "version": 1,
+  "state": [
+    {
+      "name": "data-open",
+      "presence": true,
+      "on": "triggers, positioners, popups, backdrops, disclosures",
+      "meaning": "Open"
+    },
+    {
+      "name": "data-entering",
+      "presence": true,
+      "on": "popups, backdrops, toasts",
+      "meaning": "Enter transition running; the node stays mounted until it ends"
+    },
+    {
+      "name": "data-exiting",
+      "presence": true,
+      "on": "popups, backdrops, toasts",
+      "meaning": "Exit transition running; the node stays mounted until it ends"
+    },
+    {
+      "name": "data-side",
+      "values": ["top", "right", "bottom", "left"],
+      "on": "positioned popups",
+      "meaning": "Resolved physical side after flip and RTL; the side prop takes logical values"
+    },
+    {
+      "name": "data-align",
+      "values": ["start", "center", "end"],
+      "on": "positioned popups",
+      "meaning": "Resolved alignment"
+    },
+    {
+      "name": "data-nested-open",
+      "presence": true,
+      "on": "dialog popup",
+      "meaning": "A child modal is open"
+    },
+    {
+      "name": "data-highlighted",
+      "presence": true,
+      "on": "collection items",
+      "meaning": "Keyboard or virtual focus, or pointer hover"
+    },
+    {
+      "name": "data-selected",
+      "presence": true,
+      "on": "items, rows, tabs, segments",
+      "meaning": "Selected"
+    },
+    {
+      "name": "data-checked",
+      "presence": true,
+      "on": "menu checkbox/radio items, select-all",
+      "meaning": "Checked, where no native input exists"
+    },
+    {
+      "name": "data-indeterminate",
+      "presence": true,
+      "on": "menu checkbox items, select-all",
+      "meaning": "Mixed, where no native input exists"
+    },
+    {
+      "name": "data-pressed",
+      "presence": true,
+      "on": "engine pressables",
+      "meaning": "Pointer or keyboard press (native parts use :active)"
+    },
+    {
+      "name": "data-focus-visible",
+      "presence": true,
+      "on": "parts with virtual or programmatic focus",
+      "meaning": "Focus is visible; elsewhere use :focus-visible"
+    },
+    {
+      "name": "data-disabled",
+      "presence": true,
+      "on": "control roots, items, non-native renders",
+      "meaning": "Mirrors the disabled attribute"
+    },
+    {
+      "name": "data-readonly",
+      "presence": true,
+      "on": "control roots, items, non-native renders",
+      "meaning": "Mirrors the readonly attribute"
+    },
+    {
+      "name": "data-required",
+      "presence": true,
+      "on": "control roots, items, non-native renders",
+      "meaning": "Mirrors the required attribute"
+    },
+    {
+      "name": "data-invalid",
+      "presence": true,
+      "on": "field, control",
+      "meaning": "An error message is currently presented (not \"fails constraints\"); always the Field's own state, never the engine's"
+    },
+    {
+      "name": "data-placeholder",
+      "presence": true,
+      "on": "select value",
+      "meaning": "No value chosen"
+    },
+    {
+      "name": "data-orientation",
+      "values": ["horizontal", "vertical"],
+      "on": "tabs, segmented control, separator",
+      "meaning": "Layout axis"
+    },
+    {
+      "name": "data-loading",
+      "presence": true,
+      "on": "data-display roots, rows",
+      "meaning": "Data lifecycle: loading (§16.5)"
+    },
+    {
+      "name": "data-pending",
+      "presence": true,
+      "on": "data-display roots, rows, Button, SubmitButton",
+      "meaning": "Data lifecycle: pending (§16.5); also an action in flight on Button and SubmitButton"
+    },
+    {
+      "name": "data-empty",
+      "presence": true,
+      "on": "data-display roots, rows",
+      "meaning": "Data lifecycle: empty (§16.5)"
+    },
+    {
+      "name": "data-error",
+      "presence": true,
+      "on": "data-display roots, rows",
+      "meaning": "Data lifecycle: error (§16.5)"
+    },
+    {
+      "name": "data-mirror",
+      "values": ["rtl"],
+      "on": "directional glyphs",
+      "meaning": "Mirror under :dir(rtl)"
+    }
+  ],
+  "presentational": [
+    {
+      "name": "data-slot",
+      "values": null,
+      "on": "every documented part",
+      "meaning": "The part's class minus the nz- prefix (data-slot=\"select-trigger\"); a part is documented when it has a data-slot"
+    },
+    {
+      "name": "data-variant",
+      "values": null,
+      "on": "component roots",
+      "meaning": "The variant prop; values are the lowercase Figma names in each component manifest"
+    },
+    {
+      "name": "data-size",
+      "values": null,
+      "on": "component roots",
+      "meaning": "The size prop; values in each component manifest"
+    },
+    {
+      "name": "data-tone",
+      "values": null,
+      "on": "component roots",
+      "meaning": "The tone prop; values in each component manifest"
+    }
+  ],
+  "local": [
+    {
+      "name": "data-sort",
+      "values": ["ascending", "descending"],
+      "on": "<th>",
+      "meaning": "Current sort direction of the column"
+    },
+    {
+      "name": "data-interactive",
+      "presence": true,
+      "on": "card, row with a stretched link",
+      "meaning": "The whole surface is interactive"
+    },
+    {
+      "name": "data-presentation",
+      "values": ["table", "list"],
+      "on": "DataView",
+      "meaning": "Current presentation"
+    },
+    {
+      "name": "data-collapsed",
+      "presence": true,
+      "on": "Sidebar rail",
+      "meaning": "Collapsed to the rail"
+    },
+    {
+      "name": "data-validate-on",
+      "values": ["submit", "blur"],
+      "on": "Field",
+      "meaning": "When validation messages are presented"
+    },
+    {
+      "name": "data-today",
+      "presence": true,
+      "on": "calendar cell",
+      "meaning": "Today's date"
+    },
+    {
+      "name": "data-outside-month",
+      "presence": true,
+      "on": "calendar cell",
+      "meaning": "Date outside the visible month"
+    },
+    {
+      "name": "data-unavailable",
+      "presence": true,
+      "on": "calendar cell",
+      "meaning": "Date cannot be selected"
+    },
+    {
+      "name": "data-range-start",
+      "presence": true,
+      "on": "calendar cell",
+      "meaning": "First date of the selected range"
+    },
+    {
+      "name": "data-range-end",
+      "presence": true,
+      "on": "calendar cell",
+      "meaning": "Last date of the selected range"
+    },
+    {
+      "name": "data-in-range",
+      "presence": true,
+      "on": "calendar cell",
+      "meaning": "Date inside the selected range"
+    },
+    {
+      "name": "data-platform",
+      "values": null,
+      "on": "Kbd glyph spans",
+      "meaning": "Platform the glyph is drawn for; value set fixed in the Kbd manifest"
+    },
+    {
+      "name": "data-x-direction",
+      "values": ["ltr", "rtl", "auto"],
+      "on": "chart plot",
+      "meaning": "The chart's xDirection prop: axes do not mirror by default (ltr); rtl and auto are opt-in (§14.1)"
+    },
+    {
+      "name": "data-focus-inset",
+      "presence": true,
+      "on": "interactive parts",
+      "meaning": "a11y-floor opt-out: draw the focus outline inside the part (outline-offset -2px), for clipped scrollers such as DialogBody and table cells (§8.5)"
+    },
+    {
+      "name": "data-hit-inset",
+      "presence": true,
+      "on": "interactive parts",
+      "meaning": "a11y-floor opt-out: no enlarged ::after hit area on this .nz-hit-target (§8.5)"
+    }
+  ],
+  "scope": [
+    {
+      "name": "data-nz-theme",
+      "values": ["light", "dark", "system"],
+      "setBy": "the app on <html>, or any subtree",
+      "meaning": "Colour scheme of the subtree"
+    },
+    {
+      "name": "data-nz-motion",
+      "values": ["reduce"],
+      "setBy": "the app (there is no \"full\")",
+      "meaning": "Force reduced motion in the subtree"
+    },
+    {
+      "name": "data-nz-scheme",
+      "values": ["inverse"],
+      "setBy": "Toast, Tooltip, Card tone=\"inverse\"",
+      "meaning": "Inverse surface scheme for the subtree"
+    },
+    {
+      "name": "data-nz-platform",
+      "values": ["apple", "other"],
+      "setBy": "ThemeScript (for Kbd)",
+      "meaning": "Keyboard platform"
+    },
+    {
+      "name": "data-nz-touch-targets",
+      "values": ["always"],
+      "setBy": "app opt-in for hybrid touch laptops",
+      "meaning": "Always use touch-size hit targets"
+    },
+    {
+      "name": "data-nz-bottom-bar",
+      "presence": true,
+      "setBy": "the shell, in a layout effect",
+      "meaning": "A bottom bar is present; offsets toasts and sticky bars"
+    },
+    {
+      "name": "data-nz-top-layer",
+      "presence": true,
+      "setBy": "toast region and live announcer (OverlayEngine.markTopLayer)",
+      "meaning": "Element stays interactive above modal overlays"
+    },
+    {
+      "name": "data-nz-brand",
+      "reserved": true,
+      "values": [],
+      "setBy": "—",
+      "meaning": "Reserved, no values in 0.x"
+    },
+    {
+      "name": "data-nz-density",
+      "reserved": true,
+      "values": [],
+      "setBy": "—",
+      "meaning": "Reserved, no values in 0.x"
+    }
+  ]
+}

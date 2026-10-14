@@ -1,0 +1,4 @@
+{
+  "extends": "@nizivo/tsconfig/base.json",
+  "include": ["src", "tsdown.config.ts"]
+}

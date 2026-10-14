@@ -1,0 +1,56 @@
+{
+  "name": "@nizivo/icons",
+  "version": "0.0.0",
+  "description": "Tree-shakable Lucide icons for Nizivo at the Figma stroke, plus brand glyphs",
+  "keywords": [
+    "icons",
+    "lucide",
+    "nizivo",
+    "react"
+  ],
+  "homepage": "https://nizivo.neevtechnologies.in",
+  "bugs": "https://github.com/theneev/nizivo/issues",
+  "license": "Apache-2.0",
+  "author": "Neev Technologies",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theneev/nizivo.git",
+    "directory": "packages/icons"
+  },
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsdown",
+    "typecheck": "tsc --noEmit -p .",
+    "test": "vitest run --passWithNoTests"
+  },
+  "devDependencies": {
+    "@nizivo/tsconfig": "workspace:*",
+    "@nizivo/tsdown-preset": "workspace:*",
+    "@types/react": "catalog:",
+    "lucide-static": "catalog:",
+    "react": "catalog:",
+    "tsdown": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "peerDependencies": {
+    "react": "^19.2.0"
+  },
+  "engines": {
+    "node": ">=22.12"
+  }
+}
