@@ -1,0 +1,56 @@
+---
+title: Tokens in JavaScript
+description: Typed var() references from @nizivo/tokens, and tokens.json with literal values for charts, canvas and tools.
+---
+
+CSS reads the tokens as custom properties (`tokens.css`). Code that needs them in JavaScript has two
+more outputs, built from the same declarations, so all three agree.
+
+## Typed references: `@nizivo/tokens`
+
+The package's main entry is plain constants: one named export per token group, each a `var()`
+reference, with the value in every theme in its doc comment. Use them in inline styles and CSS-in-JS;
+the browser still resolves the theme, so a reference follows `data-nz-theme` like the CSS does.
+
+```tsx
+import { color, radius, space, breakpoints, springs } from '@nizivo/tokens';
+
+<div style={{ background: color.bgSurface, padding: space[4], borderRadius: radius.lg }} />;
+window.matchMedia(breakpoints.lg); // '(width >= 80rem)'
+```
+
+Each group is its own export, so a bundler keeps only the groups you import. `typography` holds the
+parts of each text style, `breakpoints` the media queries, and `springs` the spring parameters (mass,
+stiffness, damping, velocity) for a JavaScript animation library. The keys come from the token ids,
+so a custom prefix (`NZ_TOKEN_PREFIX`) changes the values, never the keys. The types `CssVariable` and
+`TokenId` come with them.
+
+<JsRefGroups />
+
+## Literal values: `@nizivo/tokens/tokens.json`
+
+A chart, a canvas, an email or a native renderer needs the colour itself, not a `var()`.
+`tokens.json` has all <TokensJsonCount /> tokens, flat and keyed by the token id that `contract.json`
+uses. Each entry has its CSS variable, its value in the default context and where the value comes from
+(Figma, an accessibility override, a proposal or code). `modes` lists only the contexts where the
+value differs:
+
+<TokensJsonSummary />
+
+Read a value for a context as `(token.modes?.[modifier]?.[context] ?? token).value`. For example,
+`color.text.critical` is Figma's colour in light and an accessibility override in dark:
+
+<TokensJsonEntry id="color.text.critical" />
+
+```ts
+import data from '@nizivo/tokens/tokens.json' with { type: 'json' };
+import type { TokensJson } from '@nizivo/tokens';
+
+const tokens = data as TokensJson; // a JSON import widens string literals
+const critical = tokens.tokens['color.text.critical'];
+const dark = (critical.modes?.theme?.dark ?? critical).value; // '#e47962'
+```
+
+The file is not DTCG-shaped on purpose: its readers want literals, several values exist only in CSS
+(the dark elevation shadows, the focus halo, the font stacks), and DTCG has no value per mode. The
+reasoning and the full shape are in `packages/tokens/TOKENS-JSON.md`.

@@ -1,0 +1,60 @@
+---
+title: Icons
+description: Every Lucide icon as a server-safe React component at the Nizivo stroke, plus brand glyphs, from @nizivo/icons.
+---
+
+`@nizivo/icons` has <IconCount kind="icons" /> stroke icons, the full [Lucide](https://lucide.dev) set,
+and <IconCount kind="brands" /> brand glyph. Each icon is its own module with no `'use client'` and no
+hooks, so it renders in a Server Component and ships no JavaScript there. In a client component, only
+the icons you import are bundled.
+
+```tsx
+import { Calendar } from '@nizivo/icons/calendar'; // one module
+import { Bell, Search } from '@nizivo/icons'; // the barrel tree-shakes to the same bytes
+
+<Button leadingIcon={<Calendar />}>Period</Button>; // fills the slot: the default size is 1em
+<Bell size={20} />; // a standalone 20 px icon
+<Search label="Search" />; // role="img" with aria-label; without `label` an icon is aria-hidden
+```
+
+- `size`, default `'1em'`: width and height, a CSS length or a number of pixels. `1em` fills the icon
+  slots of Button, IconButton, Select and Menu, which size their glyphs with `font-size`.
+- `strokeWidth`, default `1.92`: on the 24-unit viewBox, 1.6 px at 20 px and 1.28 px at 16 px, as
+  Figma draws.
+- `absoluteStrokeWidth`, default `false`: keeps `strokeWidth` in CSS pixels at every size
+  (`vector-effect: non-scaling-stroke`).
+- `label`: the accessible name. Without it, or an `aria-label`, the icon is hidden from assistive
+  technology.
+- `mirror`, default `true`: directional icons carry `data-mirror="rtl"` and flip in right-to-left text
+  through `@nizivo/react/css/base.css`; `false` keeps one unflipped.
+
+Every other SVG prop, `className` and `ref` pass through to the `<svg>`. The colour is `currentColor`.
+
+An empty or blank `label` names nothing, so the icon stays hidden, and a `<title>` child is not a
+name either. In running text an icon sits on the text baseline, as an image does: centre it with
+`vertical-align: -0.125em`, or put it in a flex row. The icon slots of Button, IconButton, Select,
+Menu and Tabs are flex rows already.
+
+**Bundles:** in the Next.js fixture, a client component that imports three icons from the barrel
+ships exactly those three modules and the shared base, under Turbopack, webpack (with and without
+`optimizePackageImports`) and `next dev`; icons rendered by a Server Component ship nothing. Subpath
+imports (`@nizivo/icons/calendar`), or `experimental.optimizePackageImports: ['@nizivo/icons']` for
+barrel imports, let the bundler skip the barrel's 1,880 re-exports; the build-time saving is not
+measured yet.
+
+## All icons
+
+Search by the Lucide name (`arrow-left`) or the export (`ArrowLeft`). The subpath is the Lucide name.
+
+<IconGrid />
+
+## Brand glyphs
+
+Brand glyphs are filled, take no stroke props, and are only at `@nizivo/icons/brands/<name>`, so a
+brand mark is always a deliberate import. The Instagram glyph is only for "Connect" or "Follow on
+Instagram" links, per Instagram's brand guidelines; Instagram is a trademark of its owner.
+
+<BrandGrid />
+
+The drawings are Lucide's (ISC; icons derived from Feather are also under MIT) and simple-icons'
+(CC0-1.0); the notices ship in the package's `THIRD_PARTY_NOTICES`.

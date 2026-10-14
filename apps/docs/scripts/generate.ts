@@ -8,11 +8,14 @@
 //   its own example module, so a page loads only the client modules its examples render: the Badge
 //   page ships no Nizivo JavaScript and React Aria loads only where Select, Tooltip or Dialog render.
 //   One catch-all route for every component would put every example's client modules on every page,
-//   because Next builds one client bundle per route from all the client references it imports.
+//   because Next builds one client bundle per route from all the client references it imports;
+// - .generated/icons/: the Icons page's sprite and index, from the built @nizivo/icons
+//   (scripts/icons.ts).
 // `--check` exits 1 when a generated file is stale instead of writing.
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { ExampleError, generateExamples, reactExports, reactSubpaths } from './examples.ts';
+import { generateIcons } from './icons.ts';
 
 const docsRoot = join(import.meta.dirname, '..');
 const repoRoot = join(docsRoot, '..', '..');
@@ -76,7 +79,7 @@ function listFiles(dir: string): string[] {
     .map((e) => join(e.parentPath, e.name));
 }
 
-function main(): void {
+async function main(): Promise<void> {
   const check = process.argv.includes('--check');
   /** Absolute path → text. */
   const files = new Map<string, string>();
@@ -91,11 +94,17 @@ function main(): void {
         route(name, manifest[name] !== undefined),
       );
     }
+    const icons = await generateIcons(repoRoot);
+    files.set(join(docsRoot, '.generated', 'icons', 'sprite.svg'), icons.sprite);
+    files.set(
+      join(docsRoot, '.generated', 'icons', 'index.json'),
+      `${JSON.stringify(icons.index)}\n`,
+    );
     const count = Object.values(manifest).reduce((n, f) => n + f.examples.length, 0);
     if (!check) {
       console.log(
         `generate: ${count} examples from ${Object.keys(manifest).length} files, ` +
-          `${names.length} component routes, nizivo.css`,
+          `${names.length} component routes, nizivo.css, ${icons.index.length} icons`,
       );
     }
   } catch (error) {
@@ -125,4 +134,4 @@ function main(): void {
   }
 }
 
-main();
+await main();

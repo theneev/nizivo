@@ -118,6 +118,8 @@ const REPORT = [
   '/docs/components/menu/',
   '/docs/components/tabs/',
   '/docs/components/tab-nav/',
+  '/docs/icons/',
+  '/docs/foundations/javascript/',
 ];
 
 interface Js {
@@ -834,6 +836,9 @@ async function deviationsChecks(browser: Browser): Promise<void> {
   // Week 3: one row per item of docs/figma/12-w3-forms.md §5 (the build fails on a missing answer).
   const w3 = await rows('Week 3 builder-chosen values');
   check(w3 >= 29, `deviations: ${w3} week 3 builder-chosen values`);
+  // Week 4: one row per item of docs/figma/13-w4-menu-tabs.md §5.
+  const w4 = await rows('Week 4 builder-chosen values');
+  check(w4 >= 22, `deviations: ${w4} week 4 builder-chosen values`);
   await ctx.close();
 }
 

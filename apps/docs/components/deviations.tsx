@@ -6,12 +6,19 @@ import {
   builderDecision,
   builderItems,
   builderItemsW3,
+  builderItemsW4,
+  type BuilderItemW3,
   degradations,
   overrides,
   proposals,
   safariStatus,
 } from '../lib/deviations';
-import { builderChoice, builderChoiceW3 } from '../lib/builder-choices';
+import {
+  builderChoice,
+  builderChoiceW3,
+  builderChoiceW4,
+  type BuilderChoiceW3,
+} from '../lib/builder-choices';
 import { catalog } from '../lib/catalog';
 import { repoFileUrl } from '../lib/repo';
 import { InlineMd } from './inline-md';
@@ -204,17 +211,26 @@ export function BuilderChoices(): JSX.Element {
   );
 }
 
-/** Week 3: every §5 item of the forms facts file, with what ships. */
-export function BuilderChoicesW3(): JSX.Element {
-  const { file, items } = builderItemsW3();
+/** One week's §5 table of a Figma facts file, with what ships for every item. */
+function BuilderChoicesWeek({
+  week,
+  file,
+  items,
+  choiceFor,
+}: {
+  week: number;
+  file: string;
+  items: BuilderItemW3[];
+  choiceFor: (n: number) => BuilderChoiceW3;
+}): JSX.Element {
   const pages = new Map(catalog().map((e) => [e.title.toLowerCase(), e.url]));
   return (
     <>
       <p>
-        The week 3 Figma facts list {items.length} values that are off the scale, have no token or
-        are not drawn. The Chosen column is what ships, checked against the file it cites.
+        The week {week} Figma facts list {items.length} values that are off the scale, have no token
+        or are not drawn. The Chosen column is what ships, checked against the file it cites.
       </p>
-      <Table label="Week 3 builder-chosen values">
+      <Table label={`Week ${week} builder-chosen values`}>
         <thead>
           <tr>
             <th scope="col">#</th>
@@ -225,7 +241,7 @@ export function BuilderChoicesW3(): JSX.Element {
         </thead>
         <tbody>
           {items.map((it) => {
-            const choice = builderChoiceW3(it.n);
+            const choice = choiceFor(it.n);
             const first = it.component.split(/,\s*/)[0] ?? '';
             const url = pages.get(first.toLowerCase());
             return (
@@ -261,6 +277,18 @@ export function BuilderChoicesW3(): JSX.Element {
       <Source path={file} />
     </>
   );
+}
+
+/** Week 3: every §5 item of the forms facts file, with what ships. */
+export function BuilderChoicesW3(): JSX.Element {
+  const { file, items } = builderItemsW3();
+  return <BuilderChoicesWeek week={3} file={file} items={items} choiceFor={builderChoiceW3} />;
+}
+
+/** Week 4: every §5 item of the Menu and Tabs facts file, with what ships. */
+export function BuilderChoicesW4(): JSX.Element {
+  const { file, items } = builderItemsW4();
+  return <BuilderChoicesWeek week={4} file={file} items={items} choiceFor={builderChoiceW4} />;
 }
 
 export function Degradations(): JSX.Element {

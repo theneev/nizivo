@@ -1,5 +1,6 @@
-// What the week 2 and week 3 components actually chose for each value the Figma facts leave to the
-// builder (docs/figma/11-w2-server-safe-components.md, "builder decides"; docs/figma/12-w3-forms.md §5). The facts file states the
+// What the week 2, 3 and 4 components actually chose for each value the Figma facts leave to the
+// builder (docs/figma/11-w2-server-safe-components.md, "builder decides"; docs/figma/12-w3-forms.md
+// and 13-w4-menu-tabs.md §5). The facts file states the
 // question; this file states the answer, with the declaration that ships it. The docs build fails
 // when a "builder decides" item has no answer here, or when an answer's declaration is no longer in
 // its stylesheet, so the Deviations page cannot drift from the CSS.
@@ -317,23 +318,200 @@ const W3_CHOICES: Record<number, BuilderChoiceW3> = {
   },
 };
 
-/** The recorded week 3 choice for one §5 item; throws when there is none or it has drifted. */
-export function builderChoiceW3(n: number): BuilderChoiceW3 {
-  const choice = W3_CHOICES[n];
+const tsx = (path: string): string => `packages/react/src/${path}.tsx`;
+
+// docs/figma/13-w4-menu-tabs.md §5, the week 4 builders' answers (Menu, Tabs, TabNav, and the items
+// week 3 left open on Select, Tooltip and IconButton).
+const W4_CHOICES: Record<number, BuilderChoiceW3> = {
+  1: {
+    chosen:
+      'Menu rows have a `2.25rem` (36 px) minimum height around `--nz-space-1-5` (6 px) block padding, so a one-line row is 36 px. The shipped Select keeps its `--nz-space-2` rows until its visual pass (item 11).',
+    file: sheet('menu'),
+    declarations: ['min-block-size: 2.25rem;', 'padding-block: var(--nz-space-1-5);'],
+  },
+  2: {
+    chosen:
+      '`--nz-space-3` (12 px) inline padding, as the Select item, and `--nz-space-2` (8 px) between icon, label, shortcut and check; the group label starts at `--nz-space-3` too.',
+    file: sheet('menu'),
+    declarations: [
+      'padding-inline: var(--nz-space-3);',
+      'gap: var(--nz-space-2);',
+      'padding-inline-start: var(--nz-space-3);',
+    ],
+  },
+  3: {
+    chosen:
+      'A checked row is `--nz-bg-brand-subtle` with `--nz-text-brand`; under the pointer it swaps to the `--nz-bg-hover` fill and keeps `--nz-text-brand` (7.91:1 light, 5.87:1 dark), so a hovered checked row still answers the pointer. A critical item keeps `--nz-text-critical` on the `--nz-bg-hover` highlight. Disabled is `--nz-text-disabled`, its icon and shortcut included; in forced colours it is `GrayText`.',
+    file: sheet('menu'),
+    declarations: [
+      'background: var(--nz-bg-brand-subtle);',
+      '&[data-checked][data-highlighted] {',
+      'color: GrayText;',
+      'color: var(--nz-text-critical);',
+      'color: var(--nz-text-disabled);',
+    ],
+  },
+  4: {
+    chosen:
+      'The same trailing check as a checkbox item; no dot. A menu that mixes plain items with checkable ones reserves the check column on the plain items too, so every shortcut lines up.',
+    file: sheet('menu'),
+    declarations: [
+      '.nz-menu-list [data-checked] > .nz-menu-item-indicator {',
+      '.nz-menu-list:has(.nz-menu-item-indicator) .nz-menu-item {',
+    ],
+  },
+  5: {
+    chosen:
+      'The check sits at the end, after the shortcut, and the shortcut stays visible (`--nz-text-tertiary`, 5.71:1 light and 6.67:1 dark on `--nz-bg-brand-subtle`). Figma hides the shortcut on a selected row.',
+    file: sheet('menu'),
+    declarations: ['color: var(--nz-text-tertiary);', 'visibility: hidden;'],
+  },
+  6: {
+    chosen:
+      'The generated 2 px outline, drawn inside the row (`data-focus-inset`, offset −2 px) because rows sit 2 px apart in a scrolling list. It follows only the keyboard report from React Aria (`focusTarget: "engine"`), so the pointer never draws it, though the engine moves DOM focus to the hovered row. The `--nz-bg-hover` fill (1.07:1 light, 1.16:1 dark) is a pointer hint only.',
+    file: tsx('menu/menu.client'),
+    declarations: ['data-focus-inset=""'],
+  },
+  7: {
+    chosen: 'At least `12rem`, and never narrower than the trigger.',
+    file: sheet('menu'),
+    declarations: ['min-inline-size: max(12rem, var(--nz-trigger-width, 0px));'],
+  },
+  8: {
+    chosen:
+      'Both kept on Menu: the 1 px `--nz-border-subtle` border and `--nz-elevation-3`, so dark mode shows the double edge Figma draws; `--nz-menu-border` and `--nz-menu-shadow` change either. Select keeps its week 1 popup (no border, `--nz-elevation-4`) until its visual pass.',
+    hook: '--nz-menu-shadow',
+    file: sheet('menu'),
+    declarations: [
+      'border: var(--nz-border-width-default) solid var(--nz-menu-border, var(--nz-border-subtle));',
+      'box-shadow: var(--nz-menu-shadow, var(--nz-elevation-3));',
+    ],
+  },
+  9: {
+    chosen: '`side="bottom"`, `align="start"` and `sideOffset={8}`, as Select; each is a prop.',
+    file: tsx('menu/menu.client'),
+    declarations: ["side = 'bottom',", "align = 'start',", 'sideOffset = 8,'],
+  },
+  10: {
+    chosen:
+      'Instant: the highlight follows the keyboard and the pointer with no fade, so arrowing through a list never lags.',
+    file: sheet('menu'),
+    declarations: ['background: var(--nz-bg-hover);'],
+  },
+  11: {
+    chosen:
+      'Only the entry motion changed this week: the popup now enters on the spring pair with `--nz-scale-enter` and fades out, like Menu and Dialog (§12.2), so reduced motion keeps its fade. The radius, elevation, row gap, selected look, group label and separator wait for the `select.css` pass that shares the Menu item recipe.',
+    file: sheet('select'),
+    declarations: [
+      'scale: var(--nz-scale-enter);',
+      'scale var(--nz-duration-spring) var(--nz-easing-spring),',
+    ],
+  },
+  12: {
+    chosen: '`--nz-border-width-focus` (2 px); no new token.',
+    hook: '--nz-tabs-indicator',
+    file: sheet('tabs'),
+    declarations: ['block-size: var(--nz-border-width-focus);'],
+  },
+  13: {
+    chosen:
+      "Figma's stacking: the indicator sits on the tab's bottom edge, above the strip's 1 px `--nz-border-subtle` hairline, so a 40 px tab makes a 41 px strip. TabNav does the same.",
+    hook: '--nz-tabs-border',
+    file: sheet('tabs'),
+    declarations: ['inset-block-end: 0;', 'border-block-end: var(--nz-border-width-default) solid'],
+  },
+  14: {
+    chosen:
+      'Reserved, as SegmentedControl: a hidden copy of the label at the strong weight sizes the tab, so selecting never moves its neighbours.',
+    file: sheet('tabs'),
+    declarations: ['grid-area: 1 / 1;', 'font-weight: var(--nz-font-label-m-strong-font-weight);'],
+  },
+  15: {
+    chosen:
+      "Figma's 24 px gap becomes padding: 14 px a side (`--nz-space-3` + `--nz-space-0-5`) and 2 px at the strip's ends, so labels sit where Figma puts them and the space between two labels is target, not dead space. Tabs are 40 px tall; no `nz-hit-target`.",
+    file: sheet('tabs'),
+    declarations: ['--_nz-tabs-tab-start: calc(var(--nz-space-3) + var(--nz-space-0-5));'],
+  },
+  16: {
+    chosen:
+      'The generated 2 px outline, drawn inside the tab (`data-focus-inset`), because the scrolling strip would clip a 2 px offset. TabNav links do the same.',
+    file: tsx('tabs/tabs.client'),
+    declarations: ['data-focus-inset=""'],
+  },
+  17: {
+    chosen:
+      'The indicator is pinned to the bottom edge, and `--nz-space-1` (4 px) of bottom padding centres the 20 px label 8 px from the top, as in Figma; no token needed.',
+    file: sheet('tabs'),
+    declarations: ['padding-block: 0 var(--nz-space-1);'],
+  },
+  18: {
+    chosen:
+      'Disabled (`--nz-text-disabled`), a 16 px icon and a count pill (Label/S on `--nz-bg-subtle`) ship. An overflowing strip scrolls sideways, with no wrap, no fades and no other overflow cue: only the clipped last tab says more tabs exist (the fade techniques are outside the Safari 17.5 floor; a cue is a follow-up). Where scrollbars are classic (Windows, Linux), the scrollbar shows between the indicator and the hairline, because `scrollbar-width` is outside the floor too. No vertical orientation and no sizes: neither is drawn.',
+    hook: '--nz-tabs-count-bg',
+    file: sheet('tabs'),
+    declarations: [
+      'overflow: auto hidden;',
+      'background: var(--nz-tabs-count-bg, var(--nz-bg-subtle));',
+    ],
+  },
+  19: {
+    chosen:
+      "A `stateIndicator` fill: the current link's indicator paints `Highlight` in forced colours, as well as the strong weight. `tab-nav.css` repeats the generated rule, which loses to `nz.components` (§8.5).",
+    file: sheet('tab-nav'),
+    declarations: [".nz-tab-nav-link[aria-current='page']::before {", 'background: Highlight;'],
+  },
+  20: {
+    chosen:
+      'No arrow, as shipped in week 3 (week 3 item 28); the popup sits `sideOffset={8}` from its trigger.',
+    file: tsx('tooltip/tooltip.client'),
+    declarations: ['sideOffset = 8,'],
+  },
+  21: {
+    chosen:
+      "Not built. IconButton keeps Figma's Icon Button set (radius/md, no badge); the Top Bar's round bell with its unread dot stays a composition, rounded through the `--nz-icon-button-radius` hook.",
+    hook: '--nz-icon-button-radius',
+    file: sheet('icon-button'),
+    declarations: ['border-radius: var(--nz-icon-button-radius, var(--_nz-icon-button-radius));'],
+  },
+  22: {
+    chosen:
+      'Hover colour changes use `--nz-duration-fast` (Tabs and TabNav labels and indicators); the Menu highlight is instant (item 10). Nothing animates on click this week, so `--nz-duration-base` has no user yet.',
+    file: sheet('tabs'),
+    declarations: ['transition: color var(--nz-duration-fast) var(--nz-easing-standard);'],
+  },
+};
+
+/** The recorded choice for item `n` of a week's table; throws when there is none or it has drifted. */
+function weekChoice(
+  choices: Record<number, BuilderChoiceW3>,
+  facts: string,
+  n: number,
+): BuilderChoiceW3 {
+  const choice = choices[n];
   if (!choice) {
     throw new Error(
-      `docs: docs/figma/12-w3-forms.md §5 item ${n} is left to the builder, and apps/docs/lib/builder-choices.ts records no choice for it.`,
+      `docs: ${facts} §5 item ${n} is left to the builder, and apps/docs/lib/builder-choices.ts records no choice for it.`,
     );
   }
   const text = readRepoText(choice.file);
   for (const d of choice.declarations) {
     if (!text.includes(d)) {
       throw new Error(
-        `docs: ${choice.file} no longer contains "${d}", which apps/docs/lib/builder-choices.ts cites for week 3 item ${n}. Update the recorded choice.`,
+        `docs: ${choice.file} no longer contains "${d}", which apps/docs/lib/builder-choices.ts cites for ${facts} item ${n}. Update the recorded choice.`,
       );
     }
   }
   return choice;
+}
+
+/** The recorded week 3 choice for one §5 item; throws when there is none or it has drifted. */
+export function builderChoiceW3(n: number): BuilderChoiceW3 {
+  return weekChoice(W3_CHOICES, 'docs/figma/12-w3-forms.md', n);
+}
+
+/** The recorded week 4 choice for one §5 item; throws when there is none or it has drifted. */
+export function builderChoiceW4(n: number): BuilderChoiceW3 {
+  return weekChoice(W4_CHOICES, 'docs/figma/13-w4-menu-tabs.md', n);
 }
 
 /** The recorded choice for one facts-file item; throws when there is none or it has drifted. */

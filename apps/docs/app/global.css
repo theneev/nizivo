@@ -145,6 +145,44 @@
     white-space: nowrap;
   }
 
+  /* The Icons page grid (components/icons.tsx): one rule here instead of utility classes on each of
+     the 1,880 tiles, which the static HTML would carry twice (markup and RSC payload). */
+  .nz-docs-icons {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
+    gap: var(--nz-space-2);
+    margin-block: var(--nz-space-4);
+    padding: 0;
+    list-style: none;
+  }
+  .nz-docs-icons > li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--nz-space-2);
+    min-inline-size: 0;
+    margin: 0;
+    padding: var(--nz-space-3) var(--nz-space-2);
+    border: 1px solid var(--nz-border-subtle);
+    border-radius: var(--nz-radius-md);
+    background: var(--nz-bg-surface);
+    color: var(--nz-text-primary);
+    text-align: center;
+  }
+  /* 20 px, the size Figma draws at, so the 1.92 stroke previews at the product's 1.6 px */
+  .nz-docs-icons svg {
+    flex: none;
+    inline-size: 1.25rem;
+    block-size: 1.25rem;
+  }
+  .nz-docs-icons code {
+    max-inline-size: 100%;
+    background: transparent;
+    font-size: 0.75rem;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+  }
+
   /* Colour swatches: each cell is its own theme scope. */
   .nz-docs-swatch {
     display: flex;

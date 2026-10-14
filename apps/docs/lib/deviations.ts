@@ -3,9 +3,9 @@
 // - the a11y overrides, packages/tokens/src/code-owned/a11y/*.overrides.tokens.json (§15.3, §15.4);
 // - the proposals, packages/tokens/src/code-owned/proposals*.tokens.json (§7.6);
 // - the builder-chosen values: decision D-i in the plan's §23.4 table, and the "builder decides"
-//   items of docs/figma/11-w2-server-safe-components.md, each with the answer the stylesheet ships
-//   (lib/builder-choices.ts);
-// - the browser degradations D1 and D2, verbatim from the plan's §18.2, and the Safari 17.5 status
+//   items of docs/figma/11-w2-server-safe-components.md and the §5 tables of docs/figma/12 and 13,
+//   each with the answer the stylesheet ships (lib/builder-choices.ts);
+// - the browser degradations (D1, D2, …), verbatim from the plan's §18.2, and the Safari 17.5 status
 //   from fixtures/floor-lane/RESULTS.md.
 // packages/tokens/CONTRAST.md is generated from the same token files.
 import { readdirSync } from 'node:fs';
@@ -260,9 +260,8 @@ export interface BuilderItemW3 {
   options: string;
 }
 
-/** Every row of the week 3 Figma facts file's "Builder decides (consolidated)" table (§5). */
-export function builderItemsW3(): { file: string; items: BuilderItemW3[] } {
-  const file = 'docs/figma/12-w3-forms.md';
+/** Every row of a Figma facts file's "Builder decides (consolidated)" table (§5). */
+function builderItemsTable(file: string): { file: string; items: BuilderItemW3[] } {
   const lines = readRepoText(file).split('\n');
   const start = lines.findIndex((l) => l.startsWith('## 5. Builder decides'));
   if (start < 0) throw new Error(`docs: ${file} has no "## 5. Builder decides" section`);
@@ -276,6 +275,16 @@ export function builderItemsW3(): { file: string; items: BuilderItemW3[] } {
   }
   if (items.length === 0) throw new Error(`docs: ${file} §5 has no rows`);
   return { file, items };
+}
+
+/** Week 3: docs/figma/12-w3-forms.md §5. */
+export function builderItemsW3(): { file: string; items: BuilderItemW3[] } {
+  return builderItemsTable('docs/figma/12-w3-forms.md');
+}
+
+/** Week 4: docs/figma/13-w4-menu-tabs.md §5. */
+export function builderItemsW4(): { file: string; items: BuilderItemW3[] } {
+  return builderItemsTable('docs/figma/13-w4-menu-tabs.md');
 }
 
 /** The floor lane's Safari 17.5 status line (fixtures/floor-lane/RESULTS.md). */

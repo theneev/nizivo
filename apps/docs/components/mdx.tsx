@@ -7,6 +7,7 @@ import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 import {
   BuilderChoices,
   BuilderChoicesW3,
+  BuilderChoicesW4,
   Degradations,
   OverridesTable,
   ProposalsTable,
@@ -27,6 +28,8 @@ import {
   ZIndexScale,
 } from './foundations';
 import { ComponentIndex } from './component-index';
+import { BrandGrid, IconCount, IconGrid } from './icons';
+import { JsRefGroups, TokensJsonCount, TokensJsonEntry, TokensJsonSummary } from './js-tokens';
 import { TailwindMap, TailwindSample } from './tailwind';
 import { ThemeScopesDemo } from './theme-demo';
 
@@ -54,7 +57,15 @@ export const mdxComponents: MDXComponents = {
   ProposalsTable,
   BuilderChoices,
   BuilderChoicesW3,
+  BuilderChoicesW4,
   Degradations,
+  IconGrid,
+  BrandGrid,
+  IconCount,
+  JsRefGroups,
+  TokensJsonCount,
+  TokensJsonEntry,
+  TokensJsonSummary,
   ThemeScopesDemo,
   TailwindMap,
   TailwindSample,

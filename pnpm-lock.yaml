@@ -334,6 +334,9 @@ importers:
 
   apps/docs:
     dependencies:
+      '@nizivo/icons':
+        specifier: workspace:*
+        version: link:../../packages/icons
       '@nizivo/react':
         specifier: workspace:*
         version: link:../../packages/react

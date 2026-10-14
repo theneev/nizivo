@@ -26,6 +26,20 @@ non-text. The contrast matrix in `packages/tokens/CONTRAST.md` checks every pair
 
 <BuilderChoicesW3 />
 
+### Week 4: Menu, Tabs, TabNav and the overlays
+
+<BuilderChoicesW4 />
+
+Two week 4 behaviours differ from the APG patterns, and neither is in the Figma file:
+
+- Enter on a Menu checkbox item toggles it and keeps the menu open, as Space does. The APG menu
+  button closes the menu on Enter. Staying open lets a reader set several columns in one visit
+  (D-ag).
+- Tabs arrow keys follow the right-to-left `locale` set on `NizivoConfig`, not a `dir="rtl"`
+  attribute on the page: without the locale, ArrowRight moves to the tab on the left in a
+  right-to-left strip. Reading the direction from the DOM after hydration is open for the
+  maintainer.
+
 ## Browser degradations
 
 Found on the browser floor (Chrome/Edge 123, Firefox 129, Safari/iOS 17.5).
