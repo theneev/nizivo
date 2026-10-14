@@ -1,0 +1,25 @@
+{
+  "name": "alert",
+  "status": "stable",
+  "tier": "server",
+  "parts": [],
+  "exports": ["Alert", "AlertDismiss"],
+  "interactive": ["alert-dismiss"],
+  "focusTarget": "self",
+  "stateIndicator": [],
+  "cssDeps": ["base"],
+  "variants": {
+    "tone": ["info", "success", "warning", "critical"]
+  },
+  "figma": {
+    "canonical": ["7275:15091"],
+    "ghosts": ["756:868"],
+    "variantsSeen": ["756:825", "756:836", "756:846", "756:857"],
+    "related": []
+  },
+  "budget": {
+    "measuredKB": 0,
+    "limitKB": 0,
+    "source": "server-safe shell, no directive; only AlertDismiss is a client leaf (not yet measured)"
+  }
+}

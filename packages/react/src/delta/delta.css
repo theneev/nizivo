@@ -1,0 +1,56 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/delta.css (Figma Delta 7275:13743). Tones set ONLY --_nz-* privates; public
+   --nz-delta-* hooks are read once, at the property, and never assigned here. */
+@layer nz.components {
+  .nz-delta {
+    /* defaults = Figma Flat */
+    --_nz-delta-bg: var(--nz-bg-subtle);
+    --_nz-delta-fg: var(--nz-text-secondary);
+
+    display: inline-flex;
+    align-items: center;
+    gap: var(--nz-delta-gap, var(--nz-space-1));
+    /* Figma pads 8 on the icon side and 10 on the text side; 10 is off the scale, so both are 8 */
+    padding-block: var(--nz-space-1);
+    padding-inline: var(--nz-delta-padding-inline, var(--nz-space-2));
+    border-radius: var(--nz-delta-radius, var(--nz-radius-full));
+    background: var(--nz-delta-bg, var(--_nz-delta-bg));
+    color: var(--nz-delta-fg, var(--_nz-delta-fg));
+    font: var(--nz-delta-font, var(--nz-font-label-m-strong));
+    white-space: nowrap;
+  }
+
+  .nz-delta-icon {
+    display: inline-flex;
+    flex: none;
+    inline-size: var(--nz-size-icon-sm);
+    block-size: var(--nz-size-icon-sm);
+    /* internal glyphs are 1em: size them to the slot */
+    font-size: var(--nz-size-icon-sm);
+  }
+
+  /* §16.4: formatted numbers use tabular figures and are isolated from the surrounding direction */
+  .nz-delta-value {
+    font-variant-numeric: tabular-nums;
+    unicode-bidi: isolate;
+  }
+
+  .nz-delta[data-tone='success'] {
+    --_nz-delta-bg: var(--nz-bg-success-subtle);
+    --_nz-delta-fg: var(--nz-text-success);
+  }
+
+  .nz-delta[data-tone='critical'] {
+    --_nz-delta-bg: var(--nz-bg-critical-subtle);
+    --_nz-delta-fg: var(--nz-text-critical);
+  }
+
+  /* the sign in the text keeps the direction; the outline keeps the pill's edge */
+  @media (forced-colors: active) {
+    .nz-delta {
+      outline: 1px solid CanvasText;
+      outline-offset: -1px;
+    }
+  }
+}

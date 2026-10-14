@@ -1,0 +1,122 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/alert.css (Figma Alert 7275:15091). Tones set ONLY --_nz-* privates; public
+   --nz-alert-* hooks are read once, at the property, and never assigned here. */
+@layer nz.components {
+  .nz-alert {
+    /* defaults = Figma Info, with icon/info in place of Figma's icon/brand (§15.3) */
+    --_nz-alert-bg: var(--nz-bg-info-subtle);
+    --_nz-alert-icon-fg: var(--nz-icon-info);
+
+    display: flex;
+    align-items: flex-start;
+    gap: var(--nz-alert-gap, var(--nz-space-3));
+    /* Figma pads 14 / 16; 14 is off the scale and is snapped to 12 (figma/07 §8) */
+    padding-block: var(--nz-alert-padding-block, var(--nz-space-3));
+    padding-inline: var(--nz-alert-padding-inline, var(--nz-space-4));
+    border-radius: var(--nz-alert-radius, var(--nz-radius-lg));
+    background: var(--nz-alert-bg, var(--_nz-alert-bg));
+    color: var(--nz-text-primary);
+  }
+
+  /* 20 px, the height of the title's line, so the glyph sits on the first line */
+  .nz-alert-icon {
+    display: inline-flex;
+    flex: none;
+    inline-size: var(--nz-size-icon-md);
+    block-size: var(--nz-size-icon-md);
+    color: var(--nz-alert-icon-fg, var(--_nz-alert-icon-fg));
+    font-size: var(--nz-size-icon-md);
+
+    & > svg {
+      inline-size: 100%;
+      block-size: 100%;
+    }
+  }
+
+  /* Figma clips long copy; code wraps */
+  .nz-alert-content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: var(--nz-space-0-5);
+    min-inline-size: 0;
+  }
+
+  .nz-alert-title {
+    font: var(--nz-alert-title-font, var(--nz-font-label-m-strong));
+  }
+
+  .nz-alert-description {
+    color: var(--nz-text-secondary);
+    font: var(--nz-alert-description-font, var(--nz-font-body-m));
+  }
+
+  .nz-alert-action {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--nz-space-2);
+    margin-block-start: var(--nz-space-2);
+  }
+
+  /* a 24 px target around Figma's 16 px glyph (WCAG 2.5.8); the negative block margin keeps the
+     row at the title's 20 px line */
+  .nz-alert-dismiss {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    inline-size: calc(var(--nz-size-icon-sm) + 2 * var(--nz-space-1));
+    block-size: calc(var(--nz-size-icon-sm) + 2 * var(--nz-space-1));
+    margin-block: calc(-1 * var(--nz-space-0-5));
+    padding: 0;
+    border: 0;
+    border-radius: var(--nz-radius-sm);
+    background: transparent;
+    color: var(--nz-alert-dismiss-fg, var(--nz-icon-secondary));
+    cursor: pointer;
+    transition: color var(--nz-duration-fast) var(--nz-easing-standard);
+
+    @media (hover: hover) {
+      &:hover {
+        color: var(--nz-icon-primary);
+      }
+    }
+  }
+
+  .nz-alert-dismiss-icon {
+    display: inline-flex;
+    inline-size: var(--nz-size-icon-sm);
+    block-size: var(--nz-size-icon-sm);
+    /* internal glyphs are 1em: size them to the slot */
+    font-size: var(--nz-size-icon-sm);
+
+    & > svg {
+      inline-size: 100%;
+      block-size: 100%;
+    }
+  }
+
+  .nz-alert[data-tone='success'] {
+    --_nz-alert-bg: var(--nz-bg-success-subtle);
+    --_nz-alert-icon-fg: var(--nz-icon-success);
+  }
+
+  .nz-alert[data-tone='warning'] {
+    --_nz-alert-bg: var(--nz-bg-warning-subtle);
+    --_nz-alert-icon-fg: var(--nz-icon-warning);
+  }
+
+  .nz-alert[data-tone='critical'] {
+    --_nz-alert-bg: var(--nz-bg-critical-subtle);
+    --_nz-alert-icon-fg: var(--nz-icon-critical);
+  }
+
+  /* backgrounds are replaced: an outline keeps the alert's edge without changing its size */
+  @media (forced-colors: active) {
+    .nz-alert {
+      outline: 1px solid CanvasText;
+      outline-offset: -1px;
+    }
+  }
+}

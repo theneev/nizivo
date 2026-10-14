@@ -1,0 +1,86 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/progress-ring.css (Figma Progress Ring 7275:13545). Tones and sizes set ONLY
+   --_nz-* privates; public --nz-progress-ring-* hooks are read once, at the property. The ring's
+   thickness scales with it (7.2 units on the 72-unit viewBox). */
+@layer nz.components {
+  .nz-progress-ring {
+    /* defaults = Figma's only ring: 72 px, brand */
+    --_nz-progress-ring-size: 4.5rem;
+    --_nz-progress-ring-fill: var(--nz-chart-primary);
+
+    display: inline-grid;
+    place-items: center;
+    inline-size: var(--nz-progress-ring-size, var(--_nz-progress-ring-size));
+    block-size: var(--nz-progress-ring-size, var(--_nz-progress-ring-size));
+    color: var(--nz-text-primary);
+  }
+
+  /* the svg and the label share one cell, so the label sits in the centre */
+  .nz-progress-ring-svg,
+  .nz-progress-ring-label {
+    grid-area: 1 / 1;
+  }
+
+  .nz-progress-ring-svg {
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  .nz-progress-ring-track {
+    stroke: var(--nz-progress-ring-track-bg, var(--nz-chart-track));
+  }
+
+  /* flat ends, as Figma draws them (cap style is an open design question) */
+  .nz-progress-ring-fill {
+    stroke: var(--nz-progress-ring-fill, var(--_nz-progress-ring-fill));
+    stroke-linecap: butt;
+    transition: stroke-dasharray var(--nz-duration-base) var(--nz-easing-standard);
+  }
+
+  .nz-progress-ring-label {
+    font: var(--nz-progress-ring-label-font, var(--nz-font-label-m-strong));
+    font-variant-numeric: tabular-nums;
+    unicode-bidi: isolate;
+  }
+
+  .nz-progress-ring[data-size='sm'] {
+    --_nz-progress-ring-size: 3rem;
+  }
+
+  .nz-progress-ring[data-size='lg'] {
+    --_nz-progress-ring-size: 6rem;
+  }
+
+  .nz-progress-ring[data-tone='success'] {
+    --_nz-progress-ring-fill: var(--nz-icon-success);
+  }
+
+  .nz-progress-ring[data-tone='warning'] {
+    --_nz-progress-ring-fill: var(--nz-chart-warning);
+  }
+
+  .nz-progress-ring[data-tone='critical'] {
+    --_nz-progress-ring-fill: var(--nz-chart-critical);
+  }
+
+  .nz-progress-ring[data-tone='neutral'] {
+    /* chart/neutral is 1.4:1 on the track; icon/secondary reaches 3:1 there in both themes (1.4.11) */
+    --_nz-progress-ring-fill: var(--nz-icon-secondary);
+  }
+
+  /* fill and stroke are forced too, which would merge the track and the arc: keep two system colours */
+  @media (forced-colors: active) {
+    .nz-progress-ring-svg {
+      forced-color-adjust: none;
+    }
+
+    .nz-progress-ring-track {
+      stroke: GrayText;
+    }
+
+    .nz-progress-ring-fill {
+      stroke: Highlight;
+    }
+  }
+}

@@ -12,6 +12,15 @@
         "size": ["sm", "md", "lg"]
       }
     },
+    "744:315": {
+      "component": "badge",
+      "role": "ghost",
+      "import": "@nizivo/react/badge",
+      "export": "Badge",
+      "props": {
+        "tone": ["neutral", "success", "warning", "critical", "info", "brand"]
+      }
+    },
     "745:222": {
       "component": "select",
       "role": "ghost",
@@ -30,6 +39,59 @@
       "parts": ["Root", "Trigger", "Popup"],
       "props": {}
     },
+    "751:367": {
+      "component": "progress-bar",
+      "role": "ghost",
+      "import": "@nizivo/react/progress-bar",
+      "export": "ProgressBar",
+      "props": {
+        "tone": ["brand", "success", "warning", "critical", "neutral"]
+      }
+    },
+    "751:388": {
+      "component": "progress-ring",
+      "role": "ghost",
+      "import": "@nizivo/react/progress-ring",
+      "export": "ProgressRing",
+      "props": {
+        "tone": ["brand", "success", "warning", "critical", "neutral"],
+        "size": ["sm", "md", "lg"]
+      }
+    },
+    "752:269": {
+      "component": "delta",
+      "role": "ghost",
+      "import": "@nizivo/react/delta",
+      "export": "Delta",
+      "props": {
+        "tone": ["success", "critical", "neutral"]
+      }
+    },
+    "756:868": {
+      "component": "alert",
+      "role": "ghost",
+      "import": "@nizivo/react/alert",
+      "export": "Alert",
+      "props": {
+        "tone": ["info", "success", "warning", "critical"]
+      }
+    },
+    "756:1149": {
+      "component": "empty-state",
+      "role": "ghost",
+      "import": "@nizivo/react/empty-state",
+      "export": "EmptyState",
+      "props": {}
+    },
+    "756:1169": {
+      "component": "skeleton",
+      "role": "ghost",
+      "import": "@nizivo/react/skeleton",
+      "export": "Skeleton",
+      "props": {
+        "shape": ["line", "block", "circle"]
+      }
+    },
     "7275:11244": {
       "component": "button",
       "role": "canonical",
@@ -38,6 +100,15 @@
       "props": {
         "variant": ["primary", "secondary", "tertiary", "critical", "accent"],
         "size": ["sm", "md", "lg"]
+      }
+    },
+    "7275:11374": {
+      "component": "badge",
+      "role": "canonical",
+      "import": "@nizivo/react/badge",
+      "export": "Badge",
+      "props": {
+        "tone": ["neutral", "success", "warning", "critical", "info", "brand"]
       }
     },
     "7275:11438": {
@@ -50,6 +121,55 @@
         "size": ["sm", "md", "lg"]
       }
     },
+    "7275:13526": {
+      "component": "progress-bar",
+      "role": "canonical",
+      "import": "@nizivo/react/progress-bar",
+      "export": "ProgressBar",
+      "props": {
+        "tone": ["brand", "success", "warning", "critical", "neutral"]
+      }
+    },
+    "7275:13545": {
+      "component": "progress-ring",
+      "role": "canonical",
+      "import": "@nizivo/react/progress-ring",
+      "export": "ProgressRing",
+      "props": {
+        "tone": ["brand", "success", "warning", "critical", "neutral"],
+        "size": ["sm", "md", "lg"]
+      }
+    },
+    "7275:13743": {
+      "component": "delta",
+      "role": "canonical",
+      "import": "@nizivo/react/delta",
+      "export": "Delta",
+      "props": {
+        "tone": ["success", "critical", "neutral"]
+      }
+    },
+    "7275:13757": {
+      "component": "card",
+      "role": "canonical",
+      "import": "@nizivo/react/card",
+      "export": "Card",
+      "parts": ["Root", "Header", "Title", "Description", "Action", "Body", "Footer"],
+      "props": {
+        "tone": ["surface", "subtle", "inverse"],
+        "padding": ["sm", "md"],
+        "elevation": ["1"]
+      }
+    },
+    "7275:15091": {
+      "component": "alert",
+      "role": "canonical",
+      "import": "@nizivo/react/alert",
+      "export": "Alert",
+      "props": {
+        "tone": ["info", "success", "warning", "critical"]
+      }
+    },
     "7275:15139": {
       "component": "dialog",
       "role": "canonical",
@@ -58,6 +178,22 @@
       "parts": ["Root", "Trigger", "Popup", "Title", "Description", "Body", "Footer", "Close"],
       "props": {
         "size": ["sm", "md", "lg"]
+      }
+    },
+    "7275:15168": {
+      "component": "empty-state",
+      "role": "canonical",
+      "import": "@nizivo/react/empty-state",
+      "export": "EmptyState",
+      "props": {}
+    },
+    "7275:15181": {
+      "component": "skeleton",
+      "role": "canonical",
+      "import": "@nizivo/react/skeleton",
+      "export": "Skeleton",
+      "props": {
+        "shape": ["line", "block", "circle"]
       }
     }
   }

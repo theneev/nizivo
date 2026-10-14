@@ -1,0 +1,25 @@
+{
+  "name": "progress-bar",
+  "status": "stable",
+  "tier": "server",
+  "parts": [],
+  "stateIndicator": [
+    { "slot": "progress-bar-track", "state": "::-webkit-progress-value", "paint": "fill" },
+    { "slot": "progress-bar-track", "state": "::-moz-progress-bar", "paint": "fill" }
+  ],
+  "cssDeps": ["base"],
+  "variants": {
+    "tone": ["brand", "success", "warning", "critical", "neutral"]
+  },
+  "figma": {
+    "canonical": ["7275:13526"],
+    "ghosts": ["751:367"],
+    "variantsSeen": ["751:349", "751:355", "751:361"],
+    "related": []
+  },
+  "budget": {
+    "measuredKB": 0,
+    "limitKB": 0,
+    "source": "server-safe, no directive: 0 KB client JS under RSC"
+  }
+}

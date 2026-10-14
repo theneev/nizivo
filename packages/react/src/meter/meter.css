@@ -1,0 +1,131 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/meter.css. No Figma component: the look is Progress Bar's (7275:13526) with the
+   6 px track of the Discount and Ranked List compositions. Tones set ONLY --_nz-* privates; public
+   --nz-meter-* hooks are read once, at the property. The meter is a native <meter>: WebKit paints one
+   ::-webkit-meter-*-value per region, Firefox ::-moz-meter-bar with a region pseudo-class. */
+@layer nz.components {
+  .nz-meter {
+    /* default = brand */
+    --_nz-meter-fill: var(--nz-chart-primary);
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-meter-gap, var(--nz-space-2));
+  }
+
+  .nz-meter-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--nz-space-3);
+  }
+
+  .nz-meter-label {
+    min-inline-size: 0;
+    color: var(--nz-text-secondary);
+    font: var(--nz-meter-label-font, var(--nz-font-label-m));
+  }
+
+  .nz-meter-value {
+    flex: none;
+    color: var(--nz-text-primary);
+    font: var(--nz-font-numeric-m);
+    font-variant-numeric: tabular-nums;
+    unicode-bidi: isolate;
+  }
+
+  .nz-meter-track {
+    appearance: none;
+    display: block;
+    inline-size: 100%;
+    /* the compositions' 6 px track has no size token */
+    block-size: var(--nz-meter-height, var(--nz-space-1-5));
+    border: 0;
+    border-radius: var(--nz-meter-radius, var(--nz-radius-full));
+    overflow: hidden;
+    background: var(--nz-meter-track-bg, var(--nz-chart-track));
+  }
+
+  /* Chromium lays the bar in the middle half of a three-row grid: span every row */
+  .nz-meter-track::-webkit-meter-bar {
+    grid-row: 1 / -1;
+    block-size: 100%;
+    border: 0;
+    background: transparent;
+  }
+
+  .nz-meter-track::-webkit-meter-optimum-value {
+    border-radius: var(--nz-meter-radius, var(--nz-radius-full));
+    background: var(--nz-meter-fill, var(--_nz-meter-fill));
+  }
+
+  .nz-meter-track::-webkit-meter-suboptimum-value {
+    border-radius: var(--nz-meter-radius, var(--nz-radius-full));
+    background: var(--nz-chart-warning);
+  }
+
+  .nz-meter-track::-webkit-meter-even-less-good-value {
+    border-radius: var(--nz-meter-radius, var(--nz-radius-full));
+    background: var(--nz-chart-critical);
+  }
+
+  .nz-meter-track::-moz-meter-bar {
+    border-radius: var(--nz-meter-radius, var(--nz-radius-full));
+    background: var(--nz-meter-fill, var(--_nz-meter-fill));
+  }
+
+  .nz-meter-track:-moz-meter-sub-optimum::-moz-meter-bar {
+    background: var(--nz-chart-warning);
+  }
+
+  .nz-meter-track:-moz-meter-sub-sub-optimum::-moz-meter-bar {
+    background: var(--nz-chart-critical);
+  }
+
+  .nz-meter[data-tone='success'] {
+    --_nz-meter-fill: var(--nz-icon-success);
+  }
+
+  .nz-meter[data-tone='warning'] {
+    --_nz-meter-fill: var(--nz-chart-warning);
+  }
+
+  .nz-meter[data-tone='critical'] {
+    --_nz-meter-fill: var(--nz-chart-critical);
+  }
+
+  .nz-meter[data-tone='neutral'] {
+    /* chart/neutral is 1.4:1 on the track; icon/secondary reaches 3:1 there in both themes (1.4.11) */
+    --_nz-meter-fill: var(--nz-icon-secondary);
+  }
+
+  /* Backgrounds are replaced: the border shows the track's extent and every region's fill is a system
+     colour (the shown value still says how good it is). These repeat the generated nz.base rules, which
+     this layer's backgrounds would outrank. One vendor pseudo-element per rule. */
+  @media (forced-colors: active) {
+    .nz-meter-track {
+      border: 1px solid CanvasText;
+    }
+
+    .nz-meter-track::-webkit-meter-optimum-value {
+      background: Highlight;
+      forced-color-adjust: none;
+    }
+
+    .nz-meter-track::-webkit-meter-suboptimum-value {
+      background: Highlight;
+      forced-color-adjust: none;
+    }
+
+    .nz-meter-track::-webkit-meter-even-less-good-value {
+      background: Highlight;
+      forced-color-adjust: none;
+    }
+
+    .nz-meter-track::-moz-meter-bar {
+      background: Highlight;
+      forced-color-adjust: none;
+    }
+  }
+}

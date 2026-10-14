@@ -3,18 +3,28 @@ import { renderToString } from 'react-dom/server';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import vocabulary from '../../../../contracts/vocabulary.json' with { type: 'json' };
 import allowlist from '../../src/_engines/react-aria/dom-allowlist.json' with { type: 'json' };
+import { AlertDismissibleExample, AlertExample } from '../../src/alert/alert.example';
+import { BadgeExample } from '../../src/badge/badge.example';
 import { Button } from '../../src/button/index';
 import { ButtonExample } from '../../src/button/button.example';
+import { CardExample } from '../../src/card/card.example';
 import { ContainerExample } from '../../src/container/container.example';
+import { DeltaExample } from '../../src/delta/delta.example';
 import { DialogExample, DialogOpenExample } from '../../src/dialog/dialog.example';
+import { EmptyStateExample } from '../../src/empty-state/empty-state.example';
 import { GridExample } from '../../src/grid/grid.example';
 import { HeadingExample } from '../../src/heading/heading.example';
 import { ImageExample } from '../../src/image/image.example';
+import { InlineErrorExample } from '../../src/inline-error/inline-error.example';
 import { InlineExample } from '../../src/inline/inline.example';
 import { KbdExample } from '../../src/kbd/kbd.example';
+import { MeterExample } from '../../src/meter/meter.example';
+import { ProgressBarExample } from '../../src/progress-bar/progress-bar.example';
+import { ProgressRingExample } from '../../src/progress-ring/progress-ring.example';
 import { Select } from '../../src/select/index';
 import { SelectExample, SelectOpenExample } from '../../src/select/select.example';
 import { SeparatorExample } from '../../src/separator/separator.example';
+import { SkeletonExample } from '../../src/skeleton/skeleton.example';
 import { StackExample } from '../../src/stack/stack.example';
 import { TextExample } from '../../src/text/text.example';
 import { TooltipExample, TooltipOpenExample } from '../../src/tooltip/tooltip.example';
@@ -36,6 +46,17 @@ const examples: Record<string, () => JSX.Element> = {
   SeparatorExample,
   KbdExample,
   ImageExample,
+  AlertExample,
+  AlertDismissibleExample: () => <AlertDismissibleExample />,
+  BadgeExample,
+  CardExample,
+  DeltaExample,
+  EmptyStateExample,
+  InlineErrorExample,
+  MeterExample,
+  ProgressBarExample,
+  ProgressRingExample,
+  SkeletonExample,
 };
 
 const allowed = new Set([

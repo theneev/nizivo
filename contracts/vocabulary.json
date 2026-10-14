@@ -173,6 +173,24 @@
       "meaning": "The fullWidth prop: the control fills the inline size of its container"
     },
     {
+      "name": "data-padding",
+      "values": null,
+      "on": "component roots",
+      "meaning": "The padding prop; values in each component manifest (Card: sm, md)"
+    },
+    {
+      "name": "data-elevation",
+      "values": null,
+      "on": "component roots",
+      "meaning": "The elevation prop; values in each component manifest (Card: 1; absent at rest)"
+    },
+    {
+      "name": "data-shape",
+      "values": null,
+      "on": "component roots",
+      "meaning": "The shape prop; values in each component manifest (Skeleton: line, block, circle)"
+    },
+    {
       "name": "data-gap",
       "values": null,
       "on": "Stack, Inline, Grid",

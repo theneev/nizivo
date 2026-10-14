@@ -1,0 +1,21 @@
+{
+  "name": "delta",
+  "status": "stable",
+  "tier": "server",
+  "parts": [],
+  "cssDeps": ["base"],
+  "variants": {
+    "tone": ["success", "critical", "neutral"]
+  },
+  "figma": {
+    "canonical": ["7275:13743"],
+    "ghosts": ["752:269"],
+    "variantsSeen": ["752:255", "752:260", "752:265"],
+    "related": []
+  },
+  "budget": {
+    "measuredKB": 0,
+    "limitKB": 0,
+    "source": "server-safe, no directive: 0 KB client JS under RSC"
+  }
+}

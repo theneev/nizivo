@@ -1,0 +1,48 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/skeleton.css (Figma Skeleton 7275:15181, pulse specimen 7275:19743). */
+@layer nz.components {
+  .nz-skeleton {
+    /* Figma's radius 6 is off the scale: snapped to 4 */
+    --_nz-skeleton-radius: var(--nz-radius-xs);
+    --_nz-skeleton-width: 100%;
+
+    display: block;
+    inline-size: var(--nz-skeleton-width, var(--_nz-skeleton-width));
+    /* Figma's Line blocks are 14 px under 14 px text: one em of the surrounding font */
+    block-size: var(--nz-skeleton-height, 1em);
+    border-radius: var(--nz-skeleton-radius, var(--_nz-skeleton-radius));
+    background: var(--nz-skeleton-bg, var(--nz-bg-muted));
+    /* one cycle per --nz-duration-pulse; it is 0 ms under reduced motion, so the loop never runs and
+       the static style above is what shows (§13.2) */
+    animation: nz-skeleton-pulse var(--nz-duration-pulse) ease-in-out infinite;
+  }
+
+  .nz-skeleton[data-shape='block'] {
+    --_nz-skeleton-radius: var(--nz-radius-sm);
+  }
+
+  /* square: the height (one em unless set) also sets the width. The width is explicit, not auto, so a
+     flex column parent (Stack, Card) cannot stretch it to a bar. */
+  .nz-skeleton[data-shape='circle'] {
+    --_nz-skeleton-radius: var(--nz-radius-full);
+    --_nz-skeleton-width: var(--nz-skeleton-height, 1em);
+
+    aspect-ratio: 1;
+  }
+
+  /* 0% and 100% fall back to the element's own opacity, the resting look */
+  @keyframes nz-skeleton-pulse {
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  /* backgrounds are replaced: keep the placeholder visible as a system colour */
+  @media (forced-colors: active) {
+    .nz-skeleton {
+      background: GrayText;
+      forced-color-adjust: none;
+    }
+  }
+}

@@ -1,0 +1,90 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/card.css (Figma Card 7275:13757, ARCHITECTURE.md §10.5). Tones set ONLY --_nz-*
+   privates; public --nz-card-* hooks are read once, at the property, and never assigned here. */
+@layer nz.components {
+  .nz-card {
+    /* defaults = Figma Surface, with no shadow at rest (design question Q j) */
+    --_nz-card-bg: var(--nz-bg-surface);
+    --_nz-card-border: var(--nz-border-subtle);
+    --_nz-card-padding: var(--nz-space-6);
+    --_nz-card-shadow: none;
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-card-gap, var(--nz-space-5));
+    padding: var(--nz-card-padding, var(--_nz-card-padding));
+    /* every tone keeps the 1 px border box, as Figma's Surface does; Subtle and Inverse draw none */
+    border: var(--nz-border-width-default) solid var(--nz-card-border, var(--_nz-card-border));
+    border-radius: var(--nz-card-radius, var(--nz-radius-xl));
+    background: var(--nz-card-bg, var(--_nz-card-bg));
+    box-shadow: var(--nz-card-shadow, var(--_nz-card-shadow));
+    color: var(--nz-text-primary);
+  }
+
+  .nz-card[data-tone='subtle'] {
+    --_nz-card-bg: var(--nz-bg-subtle);
+    --_nz-card-border: transparent;
+  }
+
+  .nz-card[data-padding='sm'] {
+    --_nz-card-padding: var(--nz-space-5);
+  }
+
+  .nz-card[data-elevation='1'] {
+    --_nz-card-shadow: var(--nz-elevation-1);
+  }
+
+  /* bg/surface here resolves in the inverse scheme set by data-nz-scheme */
+  .nz-card[data-tone='inverse'] {
+    --_nz-card-border: transparent;
+  }
+
+  /* title and description in the first column; the action, when present, opens a second one */
+  .nz-card-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: center;
+    gap: var(--nz-space-1) var(--nz-space-3);
+  }
+
+  .nz-card-title {
+    grid-column: 1;
+    margin: 0;
+    font: var(--nz-card-title-font, var(--nz-font-heading-h4));
+    letter-spacing: var(--nz-tracking-heading-h4);
+  }
+
+  .nz-card-description {
+    grid-column: 1;
+    margin: 0;
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-body-m);
+  }
+
+  .nz-card-action {
+    display: flex;
+    grid-area: 1 / 2;
+    align-items: center;
+    gap: var(--nz-space-2);
+    color: var(--nz-icon-secondary);
+  }
+
+  .nz-card-body {
+    min-inline-size: 0;
+  }
+
+  .nz-card-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--nz-space-3);
+  }
+
+  /* backgrounds and shadows are replaced: the border carries the edge for every tone */
+  @media (forced-colors: active) {
+    .nz-card {
+      border-color: CanvasText;
+    }
+  }
+}

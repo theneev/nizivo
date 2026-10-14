@@ -1,4 +1,4 @@
-// Server-safety of the week 2 T0 components (ARCHITECTURE.md §9.5, §18.1 "server-safe entries
+// Server-safety of every week 2 T0 component (ARCHITECTURE.md §9.5, §18.1 "server-safe entries
 // load under react-server"): each entry loads, and its example renders, with React's react-server build.
 import { isValidElement, type JSX, type ReactNode } from 'react';
 import { describe, expect, test, vi } from 'vitest';
@@ -23,10 +23,22 @@ const COMPONENTS = [
   'separator',
   'kbd',
   'image',
+  'badge',
+  'card',
+  'delta',
+  'progress-bar',
+  'progress-ring',
+  'meter',
+  'skeleton',
+  'empty-state',
+  'inline-error',
+  'alert',
 ] as const;
 
 /** The client leaves a split component's subpath may reach (§9.5 "split"); none for the others. */
-const CLIENT_LEAVES: Partial<Record<(typeof COMPONENTS)[number], string[]>> = {};
+const CLIENT_LEAVES: Partial<Record<(typeof COMPONENTS)[number], string[]>> = {
+  alert: ['src/alert/alert-dismiss.client.tsx'],
+};
 
 /** Each entry, imported again by the react-server test. */
 const entries = {
@@ -39,6 +51,16 @@ const entries = {
   separator: () => import('../../src/separator/index'),
   kbd: () => import('../../src/kbd/index'),
   image: () => import('../../src/image/index'),
+  badge: () => import('../../src/badge/index'),
+  card: () => import('../../src/card/index'),
+  delta: () => import('../../src/delta/index'),
+  'progress-bar': () => import('../../src/progress-bar/index'),
+  'progress-ring': () => import('../../src/progress-ring/index'),
+  meter: () => import('../../src/meter/index'),
+  skeleton: () => import('../../src/skeleton/index'),
+  'empty-state': () => import('../../src/empty-state/index'),
+  'inline-error': () => import('../../src/inline-error/index'),
+  alert: () => import('../../src/alert/index'),
 } satisfies Record<(typeof COMPONENTS)[number], () => Promise<unknown>>;
 
 /** Each example, imported again by the react-server test. */
@@ -52,6 +74,20 @@ const exampleModules = {
   separator: async () => (await import('../../src/separator/separator.example')).SeparatorExample,
   kbd: async () => (await import('../../src/kbd/kbd.example')).KbdExample,
   image: async () => (await import('../../src/image/image.example')).ImageExample,
+  badge: async () => (await import('../../src/badge/badge.example')).BadgeExample,
+  card: async () => (await import('../../src/card/card.example')).CardExample,
+  delta: async () => (await import('../../src/delta/delta.example')).DeltaExample,
+  'progress-bar': async () =>
+    (await import('../../src/progress-bar/progress-bar.example')).ProgressBarExample,
+  'progress-ring': async () =>
+    (await import('../../src/progress-ring/progress-ring.example')).ProgressRingExample,
+  meter: async () => (await import('../../src/meter/meter.example')).MeterExample,
+  skeleton: async () => (await import('../../src/skeleton/skeleton.example')).SkeletonExample,
+  'empty-state': async () =>
+    (await import('../../src/empty-state/empty-state.example')).EmptyStateExample,
+  'inline-error': async () =>
+    (await import('../../src/inline-error/inline-error.example')).InlineErrorExample,
+  alert: async () => (await import('../../src/alert/alert.example')).AlertExample,
 } satisfies Record<(typeof COMPONENTS)[number], () => Promise<() => JSX.Element>>;
 
 const SRC = rekey(

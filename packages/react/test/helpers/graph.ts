@@ -75,3 +75,40 @@ export function graph(files: Map<string, string>, entry: string): Graph {
 export function isClient(text: string): boolean {
   return /^(?:\s*\/\/[^\n]*\n|\s*\/\*[\s\S]*?\*\/)*\s*['"]use client['"]/.test(text);
 }
+
+/** Value exports of React 19's `react-server` build; `useId` is the only hook a T0 part may call. */
+export const REACT_SERVER: ReadonlySet<string> = new Set([
+  'Children',
+  'Fragment',
+  'cloneElement',
+  'createElement',
+  'isValidElement',
+  'useId',
+]);
+
+/**
+ * Value imports from 'react' across `modules` (type-only imports are erased). A default or namespace
+ * import comes back as `default as X` or `* as X`, which no allowlist holds: `React.useState` would
+ * otherwise pass unseen.
+ */
+export function reactImports(files: Map<string, string>, modules: Iterable<string>): string[] {
+  const out: string[] = [];
+  for (const file of modules) {
+    const text = files.get(file) ?? '';
+    for (const [, clause = ''] of text.matchAll(/\bimport\s+([^'";]*?)\s*from\s*['"]react['"]/g)) {
+      if (/^type\s/.test(clause)) continue;
+      const bound = clause
+        .replace(/\{[^}]*\}/, '')
+        .replace(/,/g, ' ')
+        .trim();
+      if (bound !== '') out.push(bound.startsWith('*') ? bound : `default as ${bound}`);
+      for (const name of (/\{([^}]*)\}/.exec(clause)?.[1] ?? '').split(',')) {
+        const trimmed = name.trim();
+        if (trimmed !== '' && !trimmed.startsWith('type ')) {
+          out.push(trimmed.split(/\s+as\s+/)[0] ?? trimmed);
+        }
+      }
+    }
+  }
+  return out;
+}

@@ -1,0 +1,27 @@
+{
+  "name": "meter",
+  "status": "stable",
+  "tier": "server",
+  "parts": [],
+  "stateIndicator": [
+    { "slot": "meter-track", "state": "::-webkit-meter-optimum-value", "paint": "fill" },
+    { "slot": "meter-track", "state": "::-webkit-meter-suboptimum-value", "paint": "fill" },
+    { "slot": "meter-track", "state": "::-webkit-meter-even-less-good-value", "paint": "fill" },
+    { "slot": "meter-track", "state": "::-moz-meter-bar", "paint": "fill" }
+  ],
+  "cssDeps": ["base"],
+  "variants": {
+    "tone": ["brand", "success", "warning", "critical", "neutral"]
+  },
+  "figma": {
+    "canonical": [],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": ["7275:13526", "7275:14131", "752:444"]
+  },
+  "budget": {
+    "measuredKB": 0,
+    "limitKB": 0,
+    "source": "server-safe, no directive: 0 KB client JS under RSC"
+  }
+}

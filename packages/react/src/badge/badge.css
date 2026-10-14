@@ -1,0 +1,76 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/badge.css (Figma Badge 7275:11374). Tones set ONLY --_nz-* privates; public
+   --nz-badge-* hooks are read once, at the property, and never assigned here. */
+@layer nz.components {
+  .nz-badge {
+    /* defaults = Figma Neutral */
+    --_nz-badge-bg: var(--nz-bg-muted);
+    --_nz-badge-fg: var(--nz-text-secondary);
+    --_nz-badge-dot-bg: var(--nz-icon-secondary);
+
+    display: inline-flex;
+    align-items: center;
+    gap: var(--nz-badge-gap, var(--nz-space-1-5));
+    /* Figma pads 3 / 10, off the scale: snapped to 2 / 8, so the badge is 24 px tall, not 26 */
+    padding-block: var(--nz-space-0-5);
+    padding-inline: var(--nz-badge-padding-inline, var(--nz-space-2));
+    border-radius: var(--nz-badge-radius, var(--nz-radius-full));
+    background: var(--nz-badge-bg, var(--_nz-badge-bg));
+    color: var(--nz-badge-fg, var(--_nz-badge-fg));
+    font: var(--nz-badge-font, var(--nz-font-label-m));
+    white-space: nowrap;
+  }
+
+  .nz-badge-dot {
+    flex: none;
+    inline-size: var(--nz-space-1-5);
+    block-size: var(--nz-space-1-5);
+    border-radius: var(--nz-radius-full);
+    background: var(--nz-badge-dot-bg, var(--_nz-badge-dot-bg));
+  }
+
+  .nz-badge[data-tone='success'] {
+    --_nz-badge-bg: var(--nz-bg-success-subtle);
+    --_nz-badge-fg: var(--nz-text-success);
+    --_nz-badge-dot-bg: var(--nz-icon-success);
+  }
+
+  .nz-badge[data-tone='warning'] {
+    --_nz-badge-bg: var(--nz-bg-warning-subtle);
+    --_nz-badge-fg: var(--nz-text-warning);
+    --_nz-badge-dot-bg: var(--nz-icon-warning);
+  }
+
+  .nz-badge[data-tone='critical'] {
+    --_nz-badge-bg: var(--nz-bg-critical-subtle);
+    --_nz-badge-fg: var(--nz-text-critical);
+    --_nz-badge-dot-bg: var(--nz-icon-critical);
+  }
+
+  /* Figma draws the Info dot in text/info; icon/info is the code-owned proposal (§15.3) */
+  .nz-badge[data-tone='info'] {
+    --_nz-badge-bg: var(--nz-bg-info-subtle);
+    --_nz-badge-fg: var(--nz-text-info);
+    --_nz-badge-dot-bg: var(--nz-icon-info);
+  }
+
+  .nz-badge[data-tone='brand'] {
+    --_nz-badge-bg: var(--nz-bg-brand);
+    --_nz-badge-fg: var(--nz-text-on-brand);
+    --_nz-badge-dot-bg: var(--nz-text-on-brand);
+  }
+
+  /* backgrounds are replaced: an outline keeps the pill's edge without changing its size */
+  @media (forced-colors: active) {
+    .nz-badge {
+      outline: 1px solid CanvasText;
+      outline-offset: -1px;
+    }
+
+    .nz-badge-dot {
+      background: CanvasText;
+      forced-color-adjust: none;
+    }
+  }
+}

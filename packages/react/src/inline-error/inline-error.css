@@ -1,0 +1,31 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/inline-error.css. No Figma component: the message look is Input State=Error's help
+   text (7275:11422); the icon and its gap are builder choices (§15.1, §16.5). */
+@layer nz.components {
+  .nz-inline-error {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--nz-inline-error-gap, var(--nz-space-1-5));
+    color: var(--nz-inline-error-fg, var(--nz-text-critical));
+    font: var(--nz-inline-error-font, var(--nz-font-body-m));
+  }
+
+  /* one line box tall, so the mark centres on the first line of a wrapped message */
+  .nz-inline-error-icon {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    block-size: 1lh;
+    color: var(--nz-inline-error-icon-fg, var(--nz-icon-critical));
+
+    & > svg {
+      inline-size: var(--nz-size-icon-sm);
+      block-size: var(--nz-size-icon-sm);
+    }
+  }
+
+  .nz-inline-error-action {
+    flex: none;
+  }
+}

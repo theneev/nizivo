@@ -1,0 +1,21 @@
+{
+  "name": "skeleton",
+  "status": "stable",
+  "tier": "server",
+  "parts": [],
+  "cssDeps": ["base"],
+  "variants": {
+    "shape": ["line", "block", "circle"]
+  },
+  "figma": {
+    "canonical": ["7275:15181"],
+    "ghosts": ["756:1169"],
+    "variantsSeen": ["756:1154", "756:1158", "756:1162"],
+    "related": []
+  },
+  "budget": {
+    "measuredKB": 0,
+    "limitKB": 0,
+    "source": "server-safe, no directive: 0 KB client JS under RSC"
+  }
+}

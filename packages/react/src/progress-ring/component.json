@@ -1,0 +1,23 @@
+{
+  "name": "progress-ring",
+  "status": "stable",
+  "tier": "server",
+  "parts": [],
+  "stateIndicator": [],
+  "cssDeps": ["base"],
+  "variants": {
+    "tone": ["brand", "success", "warning", "critical", "neutral"],
+    "size": ["sm", "md", "lg"]
+  },
+  "figma": {
+    "canonical": ["7275:13545"],
+    "ghosts": ["751:388"],
+    "variantsSeen": ["751:368", "751:373", "751:378", "751:383"],
+    "related": []
+  },
+  "budget": {
+    "measuredKB": 0,
+    "limitKB": 0,
+    "source": "server-safe, no directive: 0 KB client JS under RSC"
+  }
+}

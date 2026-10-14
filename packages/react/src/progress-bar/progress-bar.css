@@ -1,0 +1,137 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/progress-bar.css (Figma Progress Bar 7275:13526). Tones set ONLY --_nz-* privates;
+   public --nz-progress-bar-* hooks are read once, at the property, and never assigned here. The bar is
+   a native <progress>: WebKit paints ::-webkit-progress-value, Firefox ::-moz-progress-bar. */
+@layer nz.components {
+  .nz-progress-bar {
+    /* default = Figma Brand */
+    --_nz-progress-bar-fill: var(--nz-chart-primary);
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-progress-bar-gap, var(--nz-space-2));
+  }
+
+  .nz-progress-bar-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--nz-space-3);
+  }
+
+  .nz-progress-bar-label {
+    min-inline-size: 0;
+    color: var(--nz-text-secondary);
+    font: var(--nz-progress-bar-label-font, var(--nz-font-label-m));
+  }
+
+  .nz-progress-bar-value {
+    flex: none;
+    color: var(--nz-text-primary);
+    font: var(--nz-font-numeric-m);
+    font-variant-numeric: tabular-nums;
+    unicode-bidi: isolate;
+  }
+
+  .nz-progress-bar-track {
+    appearance: none;
+    display: block;
+    inline-size: 100%;
+    /* Figma's 8 px track has no size token */
+    block-size: var(--nz-progress-bar-height, var(--nz-space-2));
+    border: 0;
+    border-radius: var(--nz-progress-bar-radius, var(--nz-radius-full));
+    overflow: hidden;
+    background: var(--nz-progress-bar-track-bg, var(--nz-chart-track));
+  }
+
+  .nz-progress-bar-track::-webkit-progress-bar {
+    background: transparent;
+  }
+
+  .nz-progress-bar-track::-webkit-progress-value {
+    border-radius: var(--nz-progress-bar-radius, var(--nz-radius-full));
+    background: var(--nz-progress-bar-fill, var(--_nz-progress-bar-fill));
+    transition: inline-size var(--nz-duration-base) var(--nz-easing-standard);
+  }
+
+  .nz-progress-bar-track::-moz-progress-bar {
+    border-radius: var(--nz-progress-bar-radius, var(--nz-radius-full));
+    background: var(--nz-progress-bar-fill, var(--_nz-progress-bar-fill));
+  }
+
+  /* No value: a soft segment sweeps the track. The loop is on --nz-duration-pulse, 0 ms under reduced
+     motion, so the static centred segment is what shows then (§13.2). */
+  .nz-progress-bar-track:indeterminate {
+    background-image: linear-gradient(
+      90deg,
+      transparent,
+      var(--nz-progress-bar-fill, var(--_nz-progress-bar-fill)),
+      transparent
+    );
+    background-position: 50% 0;
+    background-size: 40% 100%;
+    background-repeat: no-repeat;
+    animation: nz-progress-bar-sweep var(--nz-duration-pulse) ease-in-out infinite;
+
+    &:dir(rtl) {
+      animation-direction: reverse;
+    }
+  }
+
+  .nz-progress-bar-track:indeterminate::-moz-progress-bar {
+    background: transparent;
+  }
+
+  @keyframes nz-progress-bar-sweep {
+    from {
+      background-position: -66.67% 0;
+    }
+
+    to {
+      background-position: 166.67% 0;
+    }
+  }
+
+  .nz-progress-bar[data-tone='success'] {
+    --_nz-progress-bar-fill: var(--nz-icon-success);
+  }
+
+  .nz-progress-bar[data-tone='warning'] {
+    --_nz-progress-bar-fill: var(--nz-chart-warning);
+  }
+
+  .nz-progress-bar[data-tone='critical'] {
+    --_nz-progress-bar-fill: var(--nz-chart-critical);
+  }
+
+  .nz-progress-bar[data-tone='neutral'] {
+    /* chart/neutral is 1.4:1 on the track; icon/secondary reaches 3:1 there in both themes (1.4.11) */
+    --_nz-progress-bar-fill: var(--nz-icon-secondary);
+  }
+
+  /* Backgrounds are replaced: the border shows the track's extent and the fill is a system colour.
+     The fill rules repeat the generated nz.base ones, which this layer's backgrounds would outrank. */
+  @media (forced-colors: active) {
+    .nz-progress-bar-track {
+      border: 1px solid CanvasText;
+    }
+
+    .nz-progress-bar-track::-webkit-progress-value {
+      background: Highlight;
+      forced-color-adjust: none;
+    }
+
+    .nz-progress-bar-track::-moz-progress-bar {
+      background: Highlight;
+      forced-color-adjust: none;
+    }
+
+    .nz-progress-bar-track:indeterminate {
+      background-color: Canvas;
+      background-image: linear-gradient(90deg, Canvas, Highlight, Canvas);
+      forced-color-adjust: none;
+    }
+  }
+}

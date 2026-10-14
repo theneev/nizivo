@@ -1,0 +1,55 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/empty-state.css (Figma Empty State 7275:15168). Public --nz-empty-state-* hooks
+   are read once, at the property, and never assigned here. */
+@layer nz.components {
+  .nz-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--nz-empty-state-gap, var(--nz-space-4));
+    padding: var(--nz-empty-state-padding, var(--nz-space-8));
+    border-radius: var(--nz-empty-state-radius, var(--nz-radius-xl));
+    background: var(--nz-empty-state-bg, var(--nz-bg-subtle));
+    color: var(--nz-text-primary);
+    text-align: center;
+  }
+
+  /* Figma's 140 px render box has no size token */
+  .nz-empty-state-media {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: var(--nz-empty-state-media-size, 8.75rem);
+    block-size: var(--nz-empty-state-media-size, 8.75rem);
+
+    & > :is(img, svg, picture, video) {
+      max-inline-size: 100%;
+      max-block-size: 100%;
+      object-fit: contain;
+    }
+  }
+
+  /* the look is fixed at Heading/H3 whatever the level; long titles wrap and stay centred */
+  .nz-empty-state-title {
+    margin: 0;
+    font: var(--nz-empty-state-title-font, var(--nz-font-heading-h3));
+    letter-spacing: var(--nz-tracking-heading-h3);
+    text-wrap: balance;
+  }
+
+  .nz-empty-state-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--nz-space-3);
+  }
+
+  /* backgrounds are replaced: an outline keeps the panel's edge without changing its size */
+  @media (forced-colors: active) {
+    .nz-empty-state {
+      outline: 1px solid CanvasText;
+      outline-offset: -1px;
+    }
+  }
+}

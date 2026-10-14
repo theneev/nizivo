@@ -1,0 +1,21 @@
+{
+  "name": "badge",
+  "status": "stable",
+  "tier": "server",
+  "parts": [],
+  "cssDeps": ["base"],
+  "variants": {
+    "tone": ["neutral", "success", "warning", "critical", "info", "brand"]
+  },
+  "figma": {
+    "canonical": ["7275:11374"],
+    "ghosts": ["744:315"],
+    "variantsSeen": ["744:293", "744:296", "744:299", "744:302", "744:305", "744:308"],
+    "related": []
+  },
+  "budget": {
+    "measuredKB": 0,
+    "limitKB": 0,
+    "source": "server-safe, no directive: 0 KB client JS under RSC"
+  }
+}
