@@ -1,0 +1,194 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/menu.css (ARCHITECTURE.md §12.1, §12.3, §13.3; figma/13 §4.1–§4.2: Menu Item set
+   7275:11516, Dropdown Menu master 746:204). Builder choices where Figma is off the scale or silent
+   (figma/13 §5, listed on the Deviations page): 36 px rows as a minimum height around 6 px padding,
+   12 px inline padding and 8 px gaps (Figma's 10 is off the scale; 12 matches the Select item), the
+   focus ring inside the row, a 12 rem minimum width, an instant highlight, the check at the end with
+   the shortcut kept, and the same check for radio items. */
+@layer nz.components {
+  /* one overlay band, ordered by DOM (§12.1 L1). "Scale 0.96 → 1 + fade, easing/spring, origin =
+     trigger. Exit: fade 140 ms" (the Dropdown Menu master); the opacity reuses the spring's duration,
+     which stays 120 ms when reduced, so the fade survives and the scale does not travel. */
+  .nz-menu-popup {
+    z-index: var(--nz-z-overlay);
+    display: flex;
+    flex-direction: column;
+    min-inline-size: max(12rem, var(--nz-trigger-width, 0px));
+    max-block-size: var(--nz-available-height);
+    overflow: auto;
+    border: var(--nz-border-width-default) solid var(--nz-menu-border, var(--nz-border-subtle));
+    border-radius: var(--nz-menu-radius, var(--nz-radius-lg));
+    background: var(--nz-menu-bg, var(--nz-bg-surface-raised));
+    box-shadow: var(--nz-menu-shadow, var(--nz-elevation-3));
+    transform-origin: var(--nz-transform-origin);
+    transition:
+      scale var(--nz-duration-spring) var(--nz-easing-spring),
+      opacity var(--nz-duration-spring) var(--nz-easing-enter);
+
+    &[data-entering] {
+      opacity: 0;
+      scale: var(--nz-scale-enter);
+    }
+
+    &[data-exiting] {
+      opacity: 0;
+      transition: opacity var(--nz-duration-fade) var(--nz-easing-exit);
+    }
+  }
+
+  /* the role="menu" list: Figma's 6 px padding and 2 px between rows */
+  .nz-menu-list,
+  .nz-menu-group,
+  .nz-menu-radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-0-5);
+  }
+
+  .nz-menu-list {
+    padding: var(--nz-space-1-5);
+    outline: none;
+  }
+
+  .nz-menu-item,
+  .nz-menu-checkbox-item,
+  .nz-menu-radio-item {
+    display: flex;
+    align-items: center;
+    gap: var(--nz-space-2);
+    min-block-size: 2.25rem;
+    padding-block: var(--nz-space-1-5);
+    padding-inline: var(--nz-space-3);
+    border-radius: var(--nz-radius-sm);
+    color: var(--nz-text-primary);
+    font: var(--nz-font-body-m);
+    letter-spacing: var(--nz-tracking-body-m);
+    text-decoration: none;
+    cursor: default;
+
+    /* a pointer hint only (1.08:1 on the surface); keyboard focus is the generated ring */
+    &[data-highlighted] {
+      background: var(--nz-bg-hover);
+    }
+
+    &[data-tone='critical'] {
+      color: var(--nz-text-critical);
+    }
+
+    /* checked wins over highlighted: the selection stays visible under the pointer */
+    &[data-checked] {
+      background: var(--nz-bg-brand-subtle);
+      color: var(--nz-text-brand);
+    }
+
+    /* a checked row under the pointer swaps to the hover fill and keeps the brand label
+       (figma/13 §5 #3: text-brand on bg-hover, 7.91 / 5.87) */
+    &[data-checked][data-highlighted] {
+      background: var(--nz-bg-hover);
+    }
+
+    &[data-disabled] {
+      color: var(--nz-text-disabled);
+      cursor: not-allowed;
+    }
+  }
+
+  /* a menu that holds checkable items reserves their check column on plain items too, so every
+     shortcut lines up */
+  .nz-menu-list:has(.nz-menu-item-indicator) .nz-menu-item {
+    padding-inline-end: calc(var(--nz-space-3) + var(--nz-size-icon-sm) + var(--nz-space-2));
+  }
+
+  .nz-menu-item-icon,
+  .nz-menu-item-indicator {
+    display: inline-flex;
+    flex: none;
+    /* internal and @nizivo/icons glyphs are 1em: size them to the 16 px icon slot */
+    font-size: var(--nz-size-icon-sm);
+  }
+
+  .nz-menu-item-icon {
+    color: var(--nz-icon-secondary);
+  }
+
+  .nz-menu-item-label {
+    flex: 1;
+    min-inline-size: 0;
+  }
+
+  /* Figma draws the shortcut as plain Mono/M text, not a key box (the Tooltip precedent) */
+  .nz-menu-list .nz-menu-item-shortcut {
+    flex: none;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--nz-text-tertiary);
+  }
+
+  .nz-menu-item-indicator {
+    visibility: hidden;
+    color: var(--nz-icon-brand);
+  }
+
+  .nz-menu-list [data-checked] > .nz-menu-item-indicator {
+    visibility: visible;
+  }
+
+  .nz-menu-list [data-checked] > .nz-menu-item-icon {
+    color: var(--nz-icon-brand);
+  }
+
+  .nz-menu-list [data-tone='critical'] > .nz-menu-item-icon {
+    color: var(--nz-icon-critical);
+  }
+
+  .nz-menu-list [data-disabled] > :is(.nz-menu-item-icon, .nz-menu-item-shortcut) {
+    color: inherit;
+  }
+
+  .nz-menu-group-label {
+    padding-block: var(--nz-space-1-5) var(--nz-space-1);
+    padding-inline-start: var(--nz-space-3);
+    color: var(--nz-text-tertiary);
+    font: var(--nz-font-label-m);
+    letter-spacing: var(--nz-tracking-label-m);
+  }
+
+  /* inset by the list padding and spaced only by the 2 px gaps, as Figma draws it */
+  .nz-menu-separator {
+    flex: none;
+    block-size: var(--nz-border-width-default);
+    background: var(--nz-border-subtle);
+  }
+
+  @media (forced-colors: active) {
+    .nz-menu-popup {
+      border: 1px solid CanvasText;
+    }
+
+    /* base.css's [data-checked] floor (Highlight) loses to [data-highlighted]'s background above, a
+       later layer, so repeat it here, as select.css does for [data-selected] (§8.5) */
+    :is(.nz-menu-checkbox-item, .nz-menu-radio-item)[data-checked] {
+      background: Highlight;
+      color: HighlightText;
+      /* forced-color-adjust is inherited, so the inset ring and the glyphs would keep their token
+         colours on the Highlight fill */
+      outline-color: HighlightText;
+      forced-color-adjust: none;
+
+      & > :is(.nz-menu-item-icon, .nz-menu-item-shortcut, .nz-menu-item-indicator) {
+        color: HighlightText;
+      }
+    }
+
+    /* the items are divs with aria-disabled, which the browser does not grey out */
+    :is(.nz-menu-item, .nz-menu-checkbox-item, .nz-menu-radio-item)[data-disabled] {
+      color: GrayText;
+    }
+
+    .nz-menu-separator {
+      background: CanvasText;
+    }
+  }
+}

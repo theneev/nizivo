@@ -102,7 +102,7 @@ describe('focusTarget', () => {
       '"focusTarget" needs at least one "interactive" slot',
     ]);
     expect(errors({ ...select, focusTarget: 'virtual' })).toEqual([
-      '"focusTarget" must be one of "self", "nested-input", "within", or an object mapping each "interactive" slot to one',
+      '"focusTarget" must be one of "self", "engine", "nested-input", "within", or an object mapping each "interactive" slot to one',
     ]);
   });
 });

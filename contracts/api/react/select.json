@@ -770,7 +770,7 @@
           "presence": true
         }
       ],
-      "focusTarget": "self",
+      "focusTarget": "engine",
       "interactive": true,
       "part": true,
       "renderedBy": "Select.Item",

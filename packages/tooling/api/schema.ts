@@ -323,7 +323,7 @@ export interface SlotInfo {
   /** Listed in the manifest's `interactive`: it gets the nz.base focus outline (§8.5). */
   interactive: boolean;
   /** For an interactive slot: the manifest's `focusTarget` mode for it. */
-  focusTarget?: 'self' | 'nested-input' | 'within';
+  focusTarget?: 'self' | 'engine' | 'nested-input' | 'within';
   /**
    * The manifest's `stateIndicator` entries for this slot (§8.5, §15.1): what `nz.base` paints on
    * it in forced-colours mode, in manifest order. Empty for most slots.

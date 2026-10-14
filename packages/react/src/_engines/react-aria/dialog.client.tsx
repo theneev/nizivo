@@ -1,7 +1,7 @@
 'use client';
 // The ONLY Dialog module that imports the engine (ARCHITECTURE.md §9.2, §10.4). Behaviour only: no class names.
 // ModalOverlay → positioner (+ the backdrop element first), Modal → popup, Dialog → content (role).
-import { createElement, use, useRef } from 'react';
+import { createElement, use, useEffect, useRef, type RefObject } from 'react';
 import {
   Button,
   Dialog,
@@ -23,7 +23,11 @@ import type {
 } from '../../dialog/dialog.contract';
 import { defined, engineDom } from './dom';
 import { EngineLocale } from './locale.client';
-import { OverlayScope } from './overlay.client';
+import { OverlayScope, TOP_LAYER } from './overlay.client';
+import { ReturnFocus, useTriggerRef } from './popup.client';
+
+/** A box-less wrapper: popups portaled into it position against the positioner. */
+const NESTED_STYLE = { display: 'contents' } as const;
 
 export const Root: DialogEngine['Root'] = ({ open, defaultOpen, onOpenChange, children }) => (
   <EngineLocale>
@@ -57,6 +61,26 @@ export const Trigger: DialogEngine['Trigger'] = ({ render, children, ...dom }) =
   );
 };
 
+/**
+ * Moves focus to the leaf's initial-focus element. A child of the content element, so its effect runs
+ * before React Aria's own focus-the-dialog effect (a parent's), which then sees focus inside and
+ * leaves it; and after FocusScope recorded the trigger to return focus to.
+ */
+function InitialFocus({
+  content,
+  resolve,
+}: {
+  content: RefObject<HTMLElement | null>;
+  resolve: (content: HTMLElement) => HTMLElement | null;
+}): null {
+  useEffect(() => {
+    const element = content.current;
+    if (element === null || element.contains(element.ownerDocument.activeElement)) return;
+    resolve(element)?.focus();
+  }, [content, resolve]);
+  return null;
+}
+
 export const Popup: DialogEngine['Popup'] = ({
   role,
   backdrop,
@@ -64,6 +88,7 @@ export const Popup: DialogEngine['Popup'] = ({
   positioner,
   backdropProps,
   contentProps,
+  initialFocus,
   'aria-label': label,
   'aria-labelledby': labelledBy,
   'aria-describedby': describedBy,
@@ -71,7 +96,9 @@ export const Popup: DialogEngine['Popup'] = ({
   children,
   ...dom
 }) => {
-  const positionerRef = useRef<HTMLDivElement | null>(null);
+  const nestedRef = useRef<HTMLDivElement | null>(null);
+  const contentRef = useRef<HTMLElement | null>(null);
+  const trigger = useTriggerRef();
   return (
     <ModalOverlay
       // An alertdialog never closes on outside press (§12.3).
@@ -85,15 +112,20 @@ export const Popup: DialogEngine['Popup'] = ({
         });
         return createElement(
           'div',
-          mergeProps(engineDom(p), positioner, attrs, { ref: positionerRef }),
+          mergeProps(engineDom(p), positioner, attrs),
           backdrop
             ? createElement('div', mergeProps(backdropProps, attrs, { 'aria-hidden': true }))
             : null,
           p.children,
+          // The nested-portal container (§12.1 L2): last in the positioner, so nested overlays paint
+          // above the popup; never transformed and never clipping. The engine hides everything
+          // outside the modal popup, and a tooltip portaled here would be inert (unhoverable,
+          // WCAG 1.4.13), so the container carries the family's top-layer exemption (§12.2).
+          createElement('div', { ref: nestedRef, style: NESTED_STYLE, ...TOP_LAYER }),
         );
       }}
     >
-      <OverlayScope container={positionerRef}>
+      <OverlayScope container={nestedRef}>
         <Modal
           render={(p, rp) => {
             const s: DialogPopupState = { entering: rp.isEntering, exiting: rp.isExiting };
@@ -108,8 +140,12 @@ export const Popup: DialogEngine['Popup'] = ({
               'aria-labelledby': labelledBy,
               'aria-describedby': describedBy,
             })}
-            render={(p) => createElement('section', mergeProps(engineDom(p), contentProps))}
+            render={(p) =>
+              createElement('section', mergeProps(engineDom(p), contentProps, { ref: contentRef }))
+            }
           >
+            <InitialFocus content={contentRef} resolve={initialFocus} />
+            <ReturnFocus trigger={trigger} popup={contentRef} />
             {children}
           </Dialog>
         </Modal>

@@ -72,11 +72,12 @@ their neighbours. `::after` stays reserved for it.
 
 ## `focusTarget`
 
-| Mode           | Selector `base.css` gets                                          | Use for                                                                                                                                                                                                                                        |
-| -------------- | ----------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `self`         | `:where(…):is(:focus-visible, [data-focus-visible])`              | an element that takes focus itself: buttons, triggers, native inputs, and collection items whose focus the adapter reports through `data-focus-visible` (§8.3)                                                                                 |
-| `nested-input` | `:where(…):is(:has(> input:focus-visible), [data-focus-visible])` | a visible `<label>` wrapping a hidden native radio or checkbox: a SegmentedControl item, Chip, ChoiceCard. WebKit matches no `:focus-visible` on a radio reached by an arrow key, so the component sets `data-focus-visible` on the label then |
-| `within`       | `:where(…):focus-within`                                          | a group that draws the outline for the field inside it (the Input box); the inner field draws none                                                                                                                                             |
+| Mode           | Selector `base.css` gets                                                          | Use for                                                                                                                                                                                                                                                                                |
+| -------------- | --------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `self`         | `:where(…):is(:focus-visible, [data-focus-visible])`                              | an element that takes focus itself: buttons, triggers, native inputs                                                                                                                                                                                                                   |
+| `engine`       | `:where(…):focus-visible { outline: none }`, then `:where(…)[data-focus-visible]` | a collection item whose DOM focus the engine moves by script (to the list on open, to the item under the pointer): Select and Menu items. Chromium matches `:focus-visible` on that script focus after a pointer open, so only the adapter's `data-focus-visible` report (§8.3) counts |
+| `nested-input` | `:where(…):is(:has(> input:focus-visible), [data-focus-visible])`                 | a visible `<label>` wrapping a hidden native radio or checkbox: a SegmentedControl item, Chip, ChoiceCard. WebKit matches no `:focus-visible` on a radio reached by an arrow key, so the component sets `data-focus-visible` on the label then                                         |
+| `within`       | `:where(…):focus-within`                                                          | a group that draws the outline for the field inside it (the Input box); the inner field draws none                                                                                                                                                                                     |
 
 A string applies to every `interactive` slot. Mixed components map each slot, and the keys must be
 exactly the `interactive` slots: `{ "chip": "self", "chip-group": "within" }` (illustrative). Without
@@ -89,13 +90,13 @@ Forced colours replace backgrounds and drop shadows (§8.5, §15.1). List every 
 whose edge, is painted with a fill or a shadow. Each entry becomes one rule inside
 `@media (forced-colors: active)` in `@layer nz.base`: `.nz-<slot><state> { <paint> }`.
 
-| `paint`     | Declarations                                                             | For                                                                                                    |
-| ----------- | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
-| `border`    | `border: 1px solid CanvasText`                                           | an edge drawn by a fill or a shadow: overlay popups, a toast, native checkbox, radio and switch inputs |
-| `fill`      | `background: Highlight; forced-color-adjust: none`                       | a shape whose fill is the state: a checked input, progress and meter fills                             |
-| `highlight` | `background: Highlight; color: HighlightText; forced-color-adjust: none` | an item with text whose background marks the state: selected Select and Menu items                     |
-| `mark`      | `background: CanvasText; forced-color-adjust: none`                      | a shape that must stay visible on any background: the switch thumb                                     |
-| `outline`   | `outline: 2px solid Highlight`                                           | a selection drawn as a ring: the selected SegmentedControl item                                        |
+| `paint`     | Declarations                                                                                        | For                                                                                                    |
+| ----------- | --------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| `border`    | `border: 1px solid CanvasText`                                                                      | an edge drawn by a fill or a shadow: overlay popups, a toast, native checkbox, radio and switch inputs |
+| `fill`      | `background: Highlight; forced-color-adjust: none`                                                  | a shape whose fill is the state: a checked input, progress and meter fills                             |
+| `highlight` | `background: Highlight; color: HighlightText; outline-color: CanvasText; forced-color-adjust: none` | an item with text whose background marks the state: selected Select and Menu items                     |
+| `mark`      | `background: CanvasText; forced-color-adjust: none`                                                 | a shape that must stay visible on any background: the switch thumb                                     |
+| `outline`   | `outline: 2px solid Highlight`                                                                      | a selection drawn as a ring: the selected SegmentedControl item                                        |
 
 `state` is optional (absent for an at-rest rule such as a popup border). It is a compound-selector
 suffix appended to `.nz-<slot>`: it starts with `:` or `[` and has no `,` or braces. Use a vocabulary
@@ -118,7 +119,9 @@ must list its popup edge, `{ "slot": "<name>-popup", "paint": "border" }` with n
 | dialog    | `["dialog-trigger", "dialog-close"]` | `"self"`      | `{ "slot": "dialog-popup", "paint": "border" }`                                                                                |
 | tooltip   | `["tooltip-trigger"]`                | `"self"`      | `{ "slot": "tooltip-popup", "paint": "border" }`                                                                               |
 
-They should generate this (selector order and grouping are the generator's choice):
+They should generate this (selector order and grouping are the generator's choice). Since week 4 the
+shipped Select maps `select-item` to `engine` (`{ "select-trigger": "self", "select-item": "engine" }`),
+which moves `.nz-select-item` into a rule of its own, `:where(.nz-select-item)[data-focus-visible]`.
 
 ```css
 @layer nz.base {
@@ -150,6 +153,7 @@ They should generate this (selector order and grouping are the generator's choic
     :where(.nz-select-item)[data-selected] {
       background: Highlight;
       color: HighlightText;
+      outline-color: CanvasText;
       forced-color-adjust: none;
     }
   }

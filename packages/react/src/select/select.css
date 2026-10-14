@@ -56,7 +56,10 @@
     color: var(--nz-text-secondary);
   }
 
-  /* one overlay band, ordered by DOM (§12.1 L1) */
+  /* one overlay band, ordered by DOM (§12.1 L1). Popups enter on the spring pair from the trigger
+     side and exit on the fade (§12.2 Motion, §13.3; the Dropdown Menu master's "scale 0.96 → 1 +
+     fade"); the opacity reuses the spring's duration, which stays 120 ms when reduced, so the fade
+     survives reduced motion and the scale does not travel (--nz-scale-enter is 1). */
   .nz-select-popup {
     z-index: var(--nz-z-overlay);
     min-inline-size: var(--nz-trigger-width);
@@ -65,10 +68,13 @@
     background: var(--nz-bg-surface-raised);
     box-shadow: var(--nz-elevation-4);
     transform-origin: var(--nz-transform-origin);
-    transition: opacity var(--nz-duration-fast) var(--nz-easing-enter);
+    transition:
+      scale var(--nz-duration-spring) var(--nz-easing-spring),
+      opacity var(--nz-duration-spring) var(--nz-easing-enter);
 
     &[data-entering] {
       opacity: 0;
+      scale: var(--nz-scale-enter);
     }
 
     &[data-exiting] {
@@ -124,7 +130,14 @@
     .nz-select-item[data-selected] {
       background: Highlight;
       color: HighlightText;
+      /* forced-color-adjust is inherited: the outward ring needs a system colour against Canvas */
+      outline-color: CanvasText;
       forced-color-adjust: none;
+    }
+
+    /* the options are divs with aria-disabled, which the browser does not grey out */
+    .nz-select-item[data-disabled] {
+      color: GrayText;
     }
   }
 }

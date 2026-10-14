@@ -1,0 +1,23 @@
+---
+title: Menu
+description: A menu of actions or links opened from a button, with groups, separators, shortcuts, a critical tone, and checkbox and radio items. For choosing a form value, use Select; for navigation between views, use TabNav.
+apg: https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/
+keyboard:
+  - keys: Enter, Space, ArrowDown
+    action: On the trigger, opens the menu and focuses the first item.
+  - keys: ArrowUp
+    action: On the trigger, opens the menu and focuses the last item.
+  - keys: ArrowDown, ArrowUp
+    action: In the open menu, moves focus to the next or previous item, wrapping at the ends and skipping disabled items.
+  - keys: Home, End
+    action: In the open menu, moves focus to the first or last item.
+  - keys: Type a character
+    action: Moves focus to the next item whose label starts with what you typed.
+  - keys: Enter, Space
+    action: Activates the focused item and closes the menu, or follows it when it is a link. A checkbox item toggles and the menu stays open, on Enter as well as Space (APG closes on Enter; a builder choice on the Deviations page); a radio item is checked and the menu closes.
+  - keys: Escape
+    action: Closes the menu and returns focus to the trigger.
+  - keys: Tab, Shift+Tab
+    action: Closes the menu and moves focus to the element after the trigger, or with Shift+Tab to the element before it.
+keyboardSource: react-aria-components 1.22.1 `MenuTrigger`, `Popover` and `Menu` (react-aria 3.53.1 `useMenuTrigger`, `useMenu` and `useMenuItem`) through `_engines/react-aria/menu.client.tsx`. React Aria keeps Tab inside its modal popover, so the adapter closes the menu on Tab and Shift+Tab and moves focus past the trigger (`useTabOut`). React Aria also renders a visually hidden Dismiss button at each end of the popup for screen-reader users; its text is the engine's own string. The overlay lane (`test/overlay/menu.spec.tsx`) checks every key above in Chromium and WebKit.
+---

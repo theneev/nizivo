@@ -1,14 +1,20 @@
 'use client';
-// The react-aria family's OverlayEngine (ARCHITECTURE.md §12.2): portal container, placement and the
-// popup style contract. Inert, scroll lock, dismiss stack and focus return stay with React Aria.
+// The react-aria family's OverlayEngine (ARCHITECTURE.md §12.2; the interface is
+// _internal/overlay.ts): portal container, placement and the popup style contract. Inert (React Aria's
+// reference-counted `inert`), the one scroll lock (`usePreventScroll`), the dismiss stack (`useOverlay`)
+// and focus return (`FocusScope restoreFocus`; popup.client.tsx's `ReturnFocus` covers a popup that
+// opened with no focus origin) stay with React Aria. Adapters import the members by
+// name, which keeps the engine's own Placement type; `overlayEngine` is the family's typed whole.
 import type { CSSProperties, JSX, ReactNode, RefObject } from 'react';
+// Types only from the components barrel: Tooltip imports this module, and a value import here would
+// pull React Aria's Popover and Dialog modules into every Tooltip page (Turbopack measured +39 KB
+// gzip). The modal-popup helpers live in popup.client.tsx.
 import type { PopoverProps } from 'react-aria-components';
 import { UNSAFE_PortalProvider } from 'react-aria/PortalProvider';
-import type { OverlayEngine } from '../../_internal/overlay';
+import type { LogicalSide, OverlayEngine } from '../../_internal/overlay';
 import type { Align, Side } from '../../contracts/state';
 
 type Placement = NonNullable<PopoverProps['placement']>;
-export type LogicalSide = 'top' | 'bottom' | 'start' | 'end';
 
 /** Nested overlays rendered inside `children` portal into `container` (§12.1 L2). */
 export function OverlayScope({
@@ -29,13 +35,14 @@ export function OverlayScope({
   );
 }
 
+/** React Aria's inert exemption, as props for an element the adapter renders itself. */
+export const TOP_LAYER: Readonly<Record<string, string>> = { 'data-react-aria-top-layer': '' };
+
 /** Maps Nizivo's `data-nz-top-layer` to React Aria's inert exemption. */
 export function markTopLayer(element: Element): () => void {
   element.setAttribute('data-react-aria-top-layer', '');
   return () => element.removeAttribute('data-react-aria-top-layer');
 }
-
-export const overlayEngine: OverlayEngine = { Scope: OverlayScope, markTopLayer };
 
 /** Logical side + alignment → a React Aria placement. */
 export function toPlacement(side: LogicalSide, align: Align): Placement {
@@ -78,3 +85,15 @@ export function popupStyle(style: unknown): CSSProperties | undefined {
   if (typeof out['maxHeight'] === 'number') out['--nz-available-height'] = `${out['maxHeight']}px`;
   return out;
 }
+
+export const overlayEngine: OverlayEngine = {
+  Scope: OverlayScope,
+  markTopLayer,
+  toPlacement,
+  resolveSide,
+  popupStyle,
+  delegated: ['inert', 'scroll-lock', 'dismiss-stack', 'focus-return'],
+  // tab-out and return-focus: popup.client.tsx (useTabOut, ReturnFocus); initial-focus: the
+  // dialog adapter's initialFocus; nested-top-layer: TOP_LAYER on the dialog's nested container
+  completes: ['tab-out', 'return-focus', 'initial-focus', 'nested-top-layer'],
+};

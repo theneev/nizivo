@@ -23,6 +23,7 @@ type FocusMode = NonNullable<SlotInfo['focusTarget']>;
 
 const FOCUS_TEXT: Record<FocusMode, string> = {
   self: 'draws the focus outline itself on keyboard focus',
+  engine: 'draws the focus outline when the engine reports keyboard focus, not on pointer hover',
   'nested-input': 'draws the outline when the hidden input inside it has keyboard focus',
   within: 'draws the outline when the field inside it has focus',
 };

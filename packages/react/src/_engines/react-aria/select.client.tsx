@@ -1,6 +1,6 @@
 'use client';
 // The ONLY Select module that imports the engine (ARCHITECTURE.md §9.2). Behaviour only: no class names.
-import { createElement, use } from 'react';
+import { createElement, use, useRef } from 'react';
 import {
   Button,
   Header,
@@ -27,6 +27,7 @@ import type {
 import { defined, engineDom } from './dom';
 import { EngineLocale } from './locale.client';
 import { popupStyle, resolveSide, toPlacement } from './overlay.client';
+import { ReturnFocus, useTabOut, useTriggerRef } from './popup.client';
 
 export const Root: SelectEngine['Root'] = ({
   value,
@@ -128,6 +129,9 @@ export const Popup: SelectEngine['Popup'] = ({
   ...dom
 }) => {
   const { direction } = useLocale();
+  const popup = useRef<HTMLElement | null>(null);
+  const tabOut = useTabOut(popup);
+  const trigger = useTriggerRef();
   return (
     <Popover
       placement={toPlacement(side, align)}
@@ -141,10 +145,13 @@ export const Popup: SelectEngine['Popup'] = ({
         };
         const engine = { ...engineDom(p), style: popupStyle(p.style) };
         const attrs = stateAttrs({ open: !rp.isExiting, ...s, align });
-        return render(mergeProps(engine, dom, attrs), s);
+        return render(mergeProps(engine, dom, attrs, { ref: popup }), s);
       }}
     >
-      <ListBox render={(p) => createElement('div', mergeProps(engineDom(p), list))}>
+      <ReturnFocus trigger={trigger} popup={popup} />
+      <ListBox
+        render={(p) => createElement('div', mergeProps(engineDom(p), list, { onKeyDown: tabOut }))}
+      >
         {children}
       </ListBox>
     </Popover>
@@ -186,6 +193,13 @@ export const GroupLabel: SelectEngine['GroupLabel'] = ({ render, children, ...do
   <Header render={(p) => render(mergeProps(engineDom(p), dom), {})}>{children}</Header>
 );
 
+/** ARIA allows only option and group inside a listbox (axe aria-required-children), so the rule is
+ * presentational: React Aria's role="separator" and its orientation are dropped. */
+function presentational(props: object): Record<string, unknown> {
+  const { role: _role, 'aria-orientation': _orientation, ...rest } = engineDom(props);
+  return { ...rest, role: 'presentation' };
+}
+
 export const Separator: SelectEngine['Separator'] = ({ render, ...dom }) => (
-  <EngineSeparator render={(p) => render(mergeProps(engineDom(p), dom), {})} />
+  <EngineSeparator render={(p) => render(mergeProps(presentational(p), dom), {})} />
 );

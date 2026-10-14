@@ -114,7 +114,7 @@ describe('the contrast matrix on the built tokens.css', () => {
     );
     expect(weak).not.toBe(css);
     expect(check(weak, { today: TODAY }).errors).toEqual([
-      'light text-tertiary (text, needs 4.5:1): bg-canvas 4.00, bg-subtle 4.15, bg-surface 4.30, bg-surface-raised 4.30, bg-hover 4.00, bg-muted 3.75',
+      'light text-tertiary (text, needs 4.5:1): bg-canvas 4.00, bg-subtle 4.15, bg-surface 4.30, bg-surface-raised 4.30, bg-hover 4.00, bg-muted 3.75, bg-brand-subtle 3.79',
     ]);
   });
 });

@@ -119,6 +119,38 @@ export { Input } from './input/index';
 export type { InputProps, InputState, InputType } from './input/index';
 export { Kbd } from './kbd/index';
 export type { KbdPlatform, KbdProps } from './kbd/index';
+export {
+  Menu,
+  MenuRoot,
+  MenuTrigger,
+  MenuPopup,
+  MenuItem,
+  MenuCheckboxItem,
+  MenuRadioGroup,
+  MenuRadioItem,
+  MenuGroup,
+  MenuGroupLabel,
+  MenuSeparator,
+} from './menu/index';
+export type {
+  MenuCheckboxItemProps,
+  MenuCheckedReason,
+  MenuGroupLabelProps,
+  MenuGroupProps,
+  MenuItemProps,
+  MenuItemState,
+  MenuItemTone,
+  MenuLabels,
+  MenuPopupProps,
+  MenuPopupState,
+  MenuRadioGroupProps,
+  MenuRadioItemProps,
+  MenuRootProps,
+  MenuSeparatorProps,
+  MenuSide,
+  MenuTriggerProps,
+  MenuTriggerState,
+} from './menu/index';
 export { Meter } from './meter/index';
 export type { MeterProps, MeterState, MeterTone } from './meter/index';
 export { NativeSelect } from './native-select/index';

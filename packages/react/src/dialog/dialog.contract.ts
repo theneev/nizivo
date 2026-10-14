@@ -107,6 +107,11 @@ export interface DialogEngine {
       positioner: Record<string, unknown>;
       backdropProps: Record<string, unknown>;
       contentProps: Record<string, unknown>;
+      /**
+       * The element focused on open, given the content element (§12.2 Focus on open), or null for
+       * the engine's default (the popup itself). The leaf resolves it from the documented slots.
+       */
+      initialFocus: (content: HTMLElement) => HTMLElement | null;
     },
   ): ReactElement;
   Title(p: EnginePart<'h2', NoState, 'id'> & { level: DialogTitleLevel }): ReactElement;

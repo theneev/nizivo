@@ -19,5 +19,7 @@ keyboard:
     action: In the open list, selects the focused option and closes the list.
   - keys: Escape
     action: Closes the list without changing the selection and returns focus to the trigger.
-keyboardSource: react-aria-components 1.22.1 `Select` (react-aria 3.53.1 `useSelect`, `useMenuTrigger` and `useSelectableCollection`) through `_engines/react-aria/select.client.tsx`. apps/docs/scripts/smoke.ts checks ArrowDown opening on the selected option, ArrowDown and Enter choosing, Escape closing with focus back on the trigger, ArrowRight and ArrowLeft on the closed trigger, and typing on the trigger.
+  - keys: Tab, Shift+Tab
+    action: In the open list, closes it without changing the selection and moves focus to the next or previous element after the trigger.
+keyboardSource: react-aria-components 1.22.1 `Select` (react-aria 3.53.1 `useSelect`, `useMenuTrigger` and `useSelectableCollection`) through `_engines/react-aria/select.client.tsx`. apps/docs/scripts/smoke.ts checks ArrowDown opening on the selected option, ArrowDown and Enter choosing, Escape closing with focus back on the trigger, ArrowRight and ArrowLeft on the closed trigger, and typing on the trigger; the overlay lane (`test/overlay/select.spec.tsx`) checks Tab and Shift+Tab, which the adapter handles because React Aria keeps Tab inside its modal popover.
 ---

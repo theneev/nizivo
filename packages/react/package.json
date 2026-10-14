@@ -119,6 +119,10 @@
       "types": "./dist/kbd/index.d.ts",
       "default": "./dist/kbd/index.js"
     },
+    "./menu": {
+      "types": "./dist/menu/index.d.ts",
+      "default": "./dist/menu/index.js"
+    },
     "./meter": {
       "types": "./dist/meter/index.d.ts",
       "default": "./dist/meter/index.js"
@@ -199,6 +203,7 @@
     "./css/inline.css": "./dist/css/inline.css",
     "./css/input.css": "./dist/css/input.css",
     "./css/kbd.css": "./dist/css/kbd.css",
+    "./css/menu.css": "./dist/css/menu.css",
     "./css/meter.css": "./dist/css/meter.css",
     "./css/native-select.css": "./dist/css/native-select.css",
     "./css/progress-bar.css": "./dist/css/progress-bar.css",
@@ -223,6 +228,7 @@
     "typecheck": "tsc --noEmit -p . && tsc --noEmit -p scripts",
     "test": "vitest run --fsModuleCachePath node_modules/.vitest-cache",
     "test:browser": "vitest run --config test/browser/vitest.config.ts",
+    "test:overlay": "vitest run --config test/overlay/vitest.config.ts",
     "lint": "stylelint \"src/**/*.css\" \"styles/**/*.css\" --allow-empty-input",
     "check:dist": "tsdown && node scripts/build-css.ts && vitest run --config test/built/vitest.config.ts"
   },

@@ -23,16 +23,27 @@ const OUTLINE = [
 ];
 const FOCUS_SUFFIX: Record<FocusTarget, string> = {
   self: ':is(:focus-visible, [data-focus-visible])',
+  // a collection item whose DOM focus the engine moves by script (to the list on open, to the item
+  // under the pointer): Chromium matches :focus-visible on that script focus after a pointer open,
+  // so only the engine's own modality report counts (W4 review R2-01).
+  engine: '[data-focus-visible]',
   // [data-focus-visible]: WebKit matches no :focus-visible on a radio reached by an arrow key, so the
   // component reports it (SegmentedControl, W3).
   'nested-input': ':is(:has(> input:focus-visible), [data-focus-visible])',
   within: ':focus-within',
 };
-const FOCUS_ORDER: readonly FocusTarget[] = ['self', 'nested-input', 'within'];
+const FOCUS_ORDER: readonly FocusTarget[] = ['self', 'engine', 'nested-input', 'within'];
 const PAINT: Record<Paint, string[]> = {
   border: ['border: 1px solid CanvasText;'],
   fill: ['background: Highlight;', 'forced-color-adjust: none;'],
-  highlight: ['background: Highlight;', 'color: HighlightText;', 'forced-color-adjust: none;'],
+  // forced-color-adjust is inherited, so the focus ring would keep its token colour: CanvasText
+  // shows against the Canvas around an outward ring (an inset ring sets HighlightText itself)
+  highlight: [
+    'background: Highlight;',
+    'color: HighlightText;',
+    'outline-color: CanvasText;',
+    'forced-color-adjust: none;',
+  ],
   mark: ['background: CanvasText;', 'forced-color-adjust: none;'],
   outline: ['outline: 2px solid Highlight;'],
 };
@@ -124,7 +135,11 @@ export function baseCss(configs: readonly ComponentConfig[], layerStatement: str
   ];
   for (const mode of FOCUS_ORDER) {
     const slots = sorted(focus.get(mode) ?? []);
-    if (slots.length > 0) lines.push(...whereRule('  ', slots, FOCUS_SUFFIX[mode], OUTLINE));
+    if (slots.length === 0) continue;
+    // the browser's own ring would answer that script focus instead (Chromium: outline auto)
+    if (mode === 'engine')
+      lines.push(...whereRule('  ', slots, ':focus-visible', ['outline: none;']));
+    lines.push(...whereRule('  ', slots, FOCUS_SUFFIX[mode], OUTLINE));
   }
   lines.push(
     '  /* inside clipped scrollers (DialogBody, table cells) */',
@@ -134,7 +149,11 @@ export function baseCss(configs: readonly ComponentConfig[], layerStatement: str
     ...block('  ', '[data-focus-inset]:has(> input:focus-visible)', ['outline-offset: -2px;']),
   );
 
-  const pressable = sorted([...(focus.get('self') ?? []), ...(focus.get('nested-input') ?? [])]);
+  const pressable = sorted([
+    ...(focus.get('self') ?? []),
+    ...(focus.get('engine') ?? []),
+    ...(focus.get('nested-input') ?? []),
+  ]);
   if (pressable.length > 0) {
     lines.push(
       '  /* survives a blocked engine <style> under a strict CSP (gap report B §B1.3) */',

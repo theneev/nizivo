@@ -33,6 +33,38 @@ const NestingContext = createContext<Nesting | null>(null);
 const renderDiv = toRenderFn<unknown>(undefined, 'div');
 const renderP = toRenderFn<unknown>(undefined, 'p');
 
+const TABBABLE =
+  'a[href], button, input, select, textarea, summary, [tabindex], [contenteditable]:not([contenteditable="false"])';
+
+/**
+ * Focus on open (§12.2): an element the consumer marked `autoFocus` keeps it (the engine sees focus
+ * inside and leaves it); an alertdialog focuses its least destructive action, the first
+ * `Dialog.Close`; a dialog focuses the first tabbable element in its `Dialog.Body`; otherwise the
+ * engine focuses the popup itself, so a long text starts at its top.
+ */
+function initialFocus(
+  role: 'dialog' | 'alertdialog',
+): (content: HTMLElement) => HTMLElement | null {
+  return (content) => {
+    if (role === 'alertdialog') {
+      return content.querySelector<HTMLElement>('[data-slot="dialog-close"]:not(:disabled)');
+    }
+    const body = content.querySelector('[data-slot="dialog-body"]');
+    if (body === null) return null;
+    for (const element of body.querySelectorAll<HTMLElement>(TABBABLE)) {
+      if (
+        element.tabIndex >= 0 &&
+        !element.matches(':disabled') &&
+        element.getClientRects().length > 0
+      ) {
+        return element;
+      }
+    }
+    return null;
+  };
+}
+const INITIAL_FOCUS = { dialog: initialFocus('dialog'), alertdialog: initialFocus('alertdialog') };
+
 export function DialogRoot(props: DialogRootProps): JSX.Element {
   return <Engine.Root {...props} />;
 }
@@ -73,6 +105,7 @@ export function DialogPopup({
       positioner={{ className: 'nz-dialog-positioner', 'data-slot': 'dialog-positioner' }}
       backdropProps={{ className: 'nz-dialog-backdrop', 'data-slot': 'dialog-backdrop' }}
       contentProps={{ className: 'nz-dialog-content', 'data-slot': 'dialog-content' }}
+      initialFocus={INITIAL_FOCUS[role]}
       className={cx('nz-dialog-popup', className)}
       data-slot="dialog-popup"
       data-size={size}

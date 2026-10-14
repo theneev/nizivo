@@ -7,7 +7,7 @@
 export type Tier = 'server' | 'client' | 'engine' | 'own';
 
 /** How an `interactive` slot shows the nz.base focus outline (§8.5). */
-export type FocusTarget = 'self' | 'nested-input' | 'within';
+export type FocusTarget = 'self' | 'engine' | 'nested-input' | 'within';
 
 /** The forced-colours rule nz.base paints for a `stateIndicator` entry (§8.5, §15.1). */
 export type Paint = 'border' | 'fill' | 'highlight' | 'mark' | 'outline';
@@ -54,7 +54,7 @@ const FIGMA_ID = /^\d+:\d+$/;
 const STATE = /^[:[][^,{};]*$/;
 
 const TIERS: readonly Tier[] = ['server', 'client', 'engine', 'own'];
-const FOCUS_TARGETS: readonly FocusTarget[] = ['self', 'nested-input', 'within'];
+const FOCUS_TARGETS: readonly FocusTarget[] = ['self', 'engine', 'nested-input', 'within'];
 const PAINTS: readonly Paint[] = ['border', 'fill', 'highlight', 'mark', 'outline'];
 const INDICATOR_KEYS: readonly string[] = ['slot', 'state', 'paint'];
 const KEYS: readonly string[] = [

@@ -54,6 +54,27 @@
       "export": "Switch",
       "props": {}
     },
+    "746:203": {
+      "component": "menu",
+      "role": "ghost",
+      "import": "@nizivo/react/menu",
+      "export": "Menu",
+      "parts": [
+        "Root",
+        "Trigger",
+        "Popup",
+        "Item",
+        "CheckboxItem",
+        "RadioGroup",
+        "RadioItem",
+        "Group",
+        "GroupLabel",
+        "Separator"
+      ],
+      "props": {
+        "tone": ["neutral", "critical"]
+      }
+    },
     "746:262": {
       "component": "tooltip",
       "role": "ghost",
@@ -193,6 +214,27 @@
       "import": "@nizivo/react/switch",
       "export": "Switch",
       "props": {}
+    },
+    "7275:11516": {
+      "component": "menu",
+      "role": "canonical",
+      "import": "@nizivo/react/menu",
+      "export": "Menu",
+      "parts": [
+        "Root",
+        "Trigger",
+        "Popup",
+        "Item",
+        "CheckboxItem",
+        "RadioGroup",
+        "RadioItem",
+        "Group",
+        "GroupLabel",
+        "Separator"
+      ],
+      "props": {
+        "tone": ["neutral", "critical"]
+      }
     },
     "7275:13526": {
       "component": "progress-bar",

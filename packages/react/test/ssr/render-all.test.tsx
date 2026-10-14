@@ -18,6 +18,12 @@ import { ImageExample } from '../../src/image/image.example';
 import { InlineErrorExample } from '../../src/inline-error/inline-error.example';
 import { InlineExample } from '../../src/inline/inline.example';
 import { KbdExample } from '../../src/kbd/kbd.example';
+import {
+  MenuCheckboxExample,
+  MenuExample,
+  MenuOpenExample,
+  MenuRowActionsExample,
+} from '../../src/menu/menu.example';
 import { MeterExample } from '../../src/meter/meter.example';
 import { ProgressBarExample } from '../../src/progress-bar/progress-bar.example';
 import { ProgressRingExample } from '../../src/progress-ring/progress-ring.example';
@@ -57,6 +63,10 @@ const examples: Record<string, () => JSX.Element> = {
   ProgressBarExample,
   ProgressRingExample,
   SkeletonExample,
+  MenuExample,
+  MenuRowActionsExample,
+  MenuCheckboxExample,
+  MenuOpenExample,
 };
 
 const allowed = new Set([

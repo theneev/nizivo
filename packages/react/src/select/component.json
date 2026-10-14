@@ -6,7 +6,7 @@
   "overlay": true,
   "parts": ["Root", "Trigger", "Value", "Popup", "Item", "Group", "GroupLabel", "Separator"],
   "interactive": ["select-trigger", "select-item"],
-  "focusTarget": "self",
+  "focusTarget": { "select-trigger": "self", "select-item": "engine" },
   "stateIndicator": [
     { "slot": "select-popup", "paint": "border" },
     { "slot": "select-item", "state": "[data-selected]", "paint": "highlight" }

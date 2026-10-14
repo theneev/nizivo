@@ -89,6 +89,7 @@ describe('baseCss', () => {
     :where(.nz-select-item)[data-selected] {
       background: Highlight;
       color: HighlightText;
+      outline-color: CanvasText;
       forced-color-adjust: none;
     }
   }`);
@@ -153,6 +154,37 @@ describe('baseCss', () => {
     expect(css).not.toMatch(/nz-input-group[^{]*\{\s*touch-action/);
     expect(ruleOf(css, ':where(.nz-segmented-control-item):has(> input:checked)')).toContain(
       'outline: 2px solid Highlight;',
+    );
+  });
+
+  test('engine slots match the engine report only, never the native :focus-visible', () => {
+    const css = baseCss(
+      [
+        config({
+          name: 'menu',
+          tier: 'engine',
+          interactive: ['menu-trigger', 'menu-item'],
+          focusTarget: { 'menu-trigger': 'self', 'menu-item': 'engine' },
+          stateIndicator: [{ slot: 'menu-item', state: '[data-checked]', paint: 'highlight' }],
+        }),
+      ],
+      LAYERS,
+    );
+    expect(css).toContain(':where(.nz-menu-trigger):is(:focus-visible, [data-focus-visible]) {');
+    expect(ruleOf(css, ':where(.nz-menu-item)[data-focus-visible] {')).toContain(
+      'outline: var(--nz-border-width-focus) solid var(--nz-border-focus);',
+    );
+    expect(css).not.toMatch(/nz-menu-item\)?:is\(:focus-visible/);
+    // the native ring is off first, so only the engine report draws one
+    expect(ruleOf(css, ':where(.nz-menu-item):focus-visible {')).toContain('outline: none;');
+    expect(css.indexOf(':where(.nz-menu-item):focus-visible {')).toBeLessThan(
+      css.indexOf(':where(.nz-menu-item)[data-focus-visible] {'),
+    );
+    expect(ruleOf(css, ':where(.nz-menu-item, .nz-menu-trigger) {')).toContain(
+      'touch-action: pan-x pan-y pinch-zoom;',
+    );
+    expect(ruleOf(css, ':where(.nz-menu-item)[data-checked]')).toContain(
+      'outline-color: CanvasText;',
     );
   });
 
