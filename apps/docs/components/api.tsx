@@ -465,7 +465,12 @@ export function OtherExports({ exports }: { exports: OwnExport[] }): JSX.Element
             <p className="my-1">
               <Code>{e.import}</Code>
             </p>
-            {e.description !== undefined && <BlockMd text={e.description} />}
+            {e.description !== undefined && (
+              // a long code span (a CSP hash) wraps instead of running off a narrow screen
+              <div className="nz-docs-break">
+                <BlockMd text={e.description} />
+              </div>
+            )}
             {e.kind === 'type' && e.text !== undefined && (
               <p className="my-1">
                 <Code>{`type ${e.name}${e.typeParameters.length > 0 ? `<${e.typeParameters.join(', ')}>` : ''} = ${e.text}`}</Code>

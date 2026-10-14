@@ -1,0 +1,47 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/fieldset.css. No Figma component (Field anatomy, 7275:11397, for a group): a
+   native <fieldset> and <legend>, no border, legend Label/M, help Body/M text/tertiary. The legend
+   stays the native rendered legend; the rows are laid out in .nz-fieldset-content, because a
+   rendered legend is not a flex or grid item in every engine (WebKit ignores the float technique). */
+@layer nz.components {
+  .nz-fieldset {
+    --_nz-fieldset-legend-fg: var(--nz-text-primary);
+
+    min-inline-size: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .nz-fieldset:is(:disabled, [data-disabled]) {
+    --_nz-fieldset-legend-fg: var(--nz-text-disabled);
+  }
+
+  .nz-fieldset-legend {
+    padding: 0;
+    color: var(--nz-fieldset-legend-fg, var(--_nz-fieldset-legend-fg));
+    font: var(--nz-fieldset-legend-font, var(--nz-font-label-m));
+  }
+
+  /* decorative: the group's controls carry `required` */
+  .nz-fieldset-required {
+    margin-inline-start: var(--nz-space-0-5);
+    color: var(--nz-fieldset-required-fg, var(--nz-text-critical));
+  }
+
+  .nz-fieldset-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-fieldset-gap, var(--nz-space-3));
+  }
+
+  .nz-fieldset-legend + .nz-fieldset-content {
+    margin-block-start: var(--nz-fieldset-legend-gap, var(--nz-space-2));
+  }
+
+  .nz-fieldset-description {
+    color: var(--nz-fieldset-description-fg, var(--nz-text-tertiary));
+    font: var(--nz-fieldset-description-font, var(--nz-font-body-m));
+  }
+}

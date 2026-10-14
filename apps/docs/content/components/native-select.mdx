@@ -1,0 +1,15 @@
+---
+title: NativeSelect
+description: The browser's own select, styled like the Select trigger. Server-safe with no client code; use it where the native picker is the better choice, such as on phones or in Server Component forms.
+keyboard:
+  - keys: Tab
+    action: Moves focus to the select.
+  - keys: ArrowUp, ArrowDown, Space, Enter, Type a character
+    action: The browser's own select keyboard, which differs by platform; typing jumps to the next option that starts with what you typed.
+keyboardSource: a native `<select>` (`native-select.tsx`), which adds no key handling.
+---
+
+Placed directly inside a Field, or through a function child, a NativeSelect is wired as plain
+attributes with no client code. It keeps the browser's own validation bubble rather than the Field's
+inline message, so do not mix it with Field-wired client controls in one native-validated form (see
+[Field](/docs/components/field/#validation-in-mixed-forms)).

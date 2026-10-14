@@ -35,6 +35,13 @@ export type {
   CardTitleProps,
   CardTone,
 } from './card/index';
+export { Checkbox } from './checkbox/index';
+export type {
+  CheckboxChangeReason,
+  CheckboxCheckedState,
+  CheckboxProps,
+  CheckboxState,
+} from './checkbox/index';
 export { Container } from './container/index';
 export type { ContainerProps } from './container/index';
 export { Delta } from './delta/index';
@@ -70,6 +77,21 @@ export type {
 } from './dialog/index';
 export { EmptyState } from './empty-state/index';
 export type { EmptyStateProps, EmptyStateTitleLevel } from './empty-state/index';
+export { Field, useFieldControl } from './field/index';
+export type {
+  FieldControl,
+  FieldControlElementProps,
+  FieldControlOptions,
+  FieldValidatable,
+  FieldControlProps,
+  FieldIds,
+  FieldProps,
+  FieldState,
+  FieldValidateOn,
+  FieldValidityKey,
+} from './field/index';
+export { Fieldset } from './fieldset/index';
+export type { FieldsetProps, FieldsetState } from './fieldset/index';
 export { Grid, GridItem } from './grid/index';
 export type {
   GridItemProps,
@@ -87,10 +109,14 @@ export { Inline } from './inline/index';
 export type { InlineProps, InlineState } from './inline/index';
 export { InlineError } from './inline-error/index';
 export type { InlineErrorProps } from './inline-error/index';
+export { Input } from './input/index';
+export type { InputProps, InputState, InputType } from './input/index';
 export { Kbd } from './kbd/index';
 export type { KbdPlatform, KbdProps } from './kbd/index';
 export { Meter } from './meter/index';
 export type { MeterProps, MeterState, MeterTone } from './meter/index';
+export { NativeSelect } from './native-select/index';
+export type { NativeSelectProps, NativeSelectState } from './native-select/index';
 export { ProgressBar } from './progress-bar/index';
 export type { ProgressBarProps, ProgressBarState, ProgressBarTone } from './progress-bar/index';
 export { ProgressRing } from './progress-ring/index';
@@ -100,6 +126,13 @@ export type {
   ProgressRingState,
   ProgressRingTone,
 } from './progress-ring/index';
+export { RadioGroup, Radio } from './radio-group/index';
+export type {
+  RadioProps,
+  RadioState,
+  RadioGroupChangeReason,
+  RadioGroupProps,
+} from './radio-group/index';
 export {
   Select,
   SelectRoot,
@@ -134,8 +167,12 @@ export { Skeleton } from './skeleton/index';
 export type { SkeletonProps, SkeletonShape, SkeletonState } from './skeleton/index';
 export { Stack } from './stack/index';
 export type { LayoutGap, StackProps, StackState } from './stack/index';
+export { Switch } from './switch/index';
+export type { SwitchChangeReason, SwitchProps, SwitchState } from './switch/index';
 export { Text } from './text/index';
 export type { TextProps, TextState, TextTone, TextVariant } from './text/index';
+export { Textarea } from './textarea/index';
+export type { TextareaProps } from './textarea/index';
 export { Tooltip, TooltipRoot, TooltipTrigger, TooltipPopup } from './tooltip/index';
 export type {
   TooltipLabels,

@@ -1,0 +1,33 @@
+{
+  "name": "radio-group",
+  "status": "stable",
+  "tier": "client",
+  "parts": [],
+  "exports": ["RadioGroup", "Radio"],
+  "interactive": ["radio-input"],
+  "focusTarget": "self",
+  "stateIndicator": [
+    {
+      "slot": "radio-input",
+      "paint": "border"
+    },
+    {
+      "slot": "radio-input",
+      "state": ":checked",
+      "paint": "fill"
+    }
+  ],
+  "cssDeps": ["base", "fieldset", "inline-error"],
+  "variants": {},
+  "figma": {
+    "canonical": ["7275:11479"],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": []
+  },
+  "budget": {
+    "measuredKB": 0.63,
+    "limitKB": 1,
+    "source": "radio-group.client.js (RadioGroupScope and Radio), the only client code under RSC: 643 B own code: the client leaf in dist minified alone (esbuild 0.28.2 --minify, imports not counted) and piped through gzip; W3 fix pass. Bundled with its package imports (react external): 1,429 B. §17.2 caps an own input leaf at 1 KB"
+  }
+}

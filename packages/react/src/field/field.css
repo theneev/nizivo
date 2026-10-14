@@ -1,0 +1,39 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/field.css. No Figma component: the anatomy is the Input set's (7275:11397) —
+   label Label/M, help Body/M text/tertiary, 6 px between rows. The error is InlineError
+   (css/inline-error.css), below the help text, which stays visible (Q30, builder default). */
+@layer nz.components {
+  .nz-field {
+    --_nz-field-label-fg: var(--nz-text-primary);
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-field-gap, var(--nz-space-1-5));
+    min-inline-size: 0;
+  }
+
+  /* the Field's own flag, or a disabled Fieldset around it (which disables the control natively) */
+  .nz-field[data-disabled],
+  fieldset:disabled .nz-field {
+    --_nz-field-label-fg: var(--nz-text-disabled);
+  }
+
+  /* only as wide as its text, so a click beside it does not focus the control */
+  .nz-field-label {
+    align-self: flex-start;
+    color: var(--nz-field-label-fg, var(--_nz-field-label-fg));
+    font: var(--nz-field-label-font, var(--nz-font-label-m));
+  }
+
+  /* decorative: the control's native `required` is what assistive technology announces */
+  .nz-field-required {
+    margin-inline-start: var(--nz-space-0-5);
+    color: var(--nz-field-required-fg, var(--nz-text-critical));
+  }
+
+  .nz-field-description {
+    color: var(--nz-field-description-fg, var(--nz-text-tertiary));
+    font: var(--nz-field-description-font, var(--nz-font-body-m));
+  }
+}

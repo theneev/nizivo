@@ -1,0 +1,36 @@
+{
+  "name": "switch",
+  "status": "stable",
+  "tier": "client",
+  "parts": [],
+  "interactive": ["switch-input"],
+  "focusTarget": "self",
+  "stateIndicator": [
+    {
+      "slot": "switch-input",
+      "paint": "border"
+    },
+    {
+      "slot": "switch-input",
+      "state": ":checked",
+      "paint": "fill"
+    },
+    {
+      "slot": "switch-thumb",
+      "paint": "mark"
+    }
+  ],
+  "cssDeps": ["base"],
+  "variants": {},
+  "figma": {
+    "canonical": ["7275:11494"],
+    "ghosts": ["745:286"],
+    "variantsSeen": [],
+    "related": []
+  },
+  "budget": {
+    "measuredKB": 0.57,
+    "limitKB": 1,
+    "source": "585 B own code: the client leaf in dist minified alone (esbuild 0.28.2 --minify, imports not counted) and piped through gzip; W3 fix pass. Bundled with its package imports (react external): 1,708 B. §16.1 targets ~0.3 KB, §17.2 caps an own input leaf at 1 KB"
+  }
+}

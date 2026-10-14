@@ -21,6 +21,15 @@
         "tone": ["neutral", "success", "warning", "critical", "info", "brand"]
       }
     },
+    "745:187": {
+      "component": "input",
+      "role": "ghost",
+      "import": "@nizivo/react/input",
+      "export": "Input",
+      "props": {
+        "size": ["sm", "md", "lg"]
+      }
+    },
     "745:222": {
       "component": "select",
       "role": "ghost",
@@ -30,6 +39,20 @@
       "props": {
         "size": ["sm", "md", "lg"]
       }
+    },
+    "745:284": {
+      "component": "checkbox",
+      "role": "ghost",
+      "import": "@nizivo/react/checkbox",
+      "export": "Checkbox",
+      "props": {}
+    },
+    "745:286": {
+      "component": "switch",
+      "role": "ghost",
+      "import": "@nizivo/react/switch",
+      "export": "Switch",
+      "props": {}
     },
     "746:262": {
       "component": "tooltip",
@@ -111,6 +134,15 @@
         "tone": ["neutral", "success", "warning", "critical", "info", "brand"]
       }
     },
+    "7275:11397": {
+      "component": "input",
+      "role": "canonical",
+      "import": "@nizivo/react/input",
+      "export": "Input",
+      "props": {
+        "size": ["sm", "md", "lg"]
+      }
+    },
     "7275:11438": {
       "component": "select",
       "role": "canonical",
@@ -120,6 +152,27 @@
       "props": {
         "size": ["sm", "md", "lg"]
       }
+    },
+    "7275:11456": {
+      "component": "checkbox",
+      "role": "canonical",
+      "import": "@nizivo/react/checkbox",
+      "export": "Checkbox",
+      "props": {}
+    },
+    "7275:11479": {
+      "component": "radio-group",
+      "role": "canonical",
+      "import": "@nizivo/react/radio-group",
+      "export": "RadioGroup",
+      "props": {}
+    },
+    "7275:11494": {
+      "component": "switch",
+      "role": "canonical",
+      "import": "@nizivo/react/switch",
+      "export": "Switch",
+      "props": {}
     },
     "7275:13526": {
       "component": "progress-bar",

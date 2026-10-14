@@ -6,6 +6,7 @@ import {
   OFF_FLOOR_PROPERTIES,
   OFF_FLOOR_PSEUDOS,
   RULES,
+  SUPPORTS_GATED_PROPERTIES,
   TARGETS,
   UNMODELLED_PROPERTIES,
   VENDOR_PSEUDO_CLASSES,
@@ -155,7 +156,33 @@ export function guardCss(
   return [...new Set(problems)];
 }
 
-function walkRules(rules: unknown[], problems: string[]): void {
+/**
+ * The gated properties an `@supports` condition tests positively, so its block may use them
+ * (`SUPPORTS_GATED_PROPERTIES`). A condition under `not` gates nothing.
+ */
+function gatedBy(condition: unknown): string[] {
+  if (hasType(condition, 'not')) return [];
+  const found: string[] = [];
+  const visit = (node: unknown): void => {
+    if (Array.isArray(node)) {
+      for (const item of node) visit(item);
+    } else if (isRecord(node)) {
+      if (node.type === 'declaration' && isRecord(node.propertyId)) {
+        const name = text(node.propertyId.property);
+        if (SUPPORTS_GATED_PROPERTIES.has(name)) found.push(name);
+      }
+      for (const item of Object.values(node)) if (typeof item === 'object') visit(item);
+    }
+  };
+  visit(condition);
+  return found;
+}
+
+function walkRules(
+  rules: unknown[],
+  problems: string[],
+  gated: ReadonlySet<string> = new Set(),
+): void {
   for (const rule of rules) {
     if (!isRecord(rule) || !isRecord(rule.value)) continue;
     const type = text(rule.type);
@@ -183,15 +210,16 @@ function walkRules(rules: unknown[], problems: string[]): void {
       ...list(declarations?.declarations),
       ...list(declarations?.importantDeclarations),
     ]) {
-      checkDeclaration(declaration, problems);
+      checkDeclaration(declaration, problems, gated);
     }
     for (const keyframe of list(value.keyframes)) {
       if (!isRecord(keyframe) || !isRecord(keyframe.declarations)) continue;
       for (const declaration of list(keyframe.declarations.declarations)) {
-        checkDeclaration(declaration, problems);
+        checkDeclaration(declaration, problems, gated);
       }
     }
-    walkRules(list(value.rules), problems);
+    const inner = type === 'supports' ? new Set([...gated, ...gatedBy(value.condition)]) : gated;
+    walkRules(list(value.rules), problems, inner);
   }
 }
 
@@ -251,14 +279,24 @@ const isBlank = (tokens: unknown): boolean =>
     (token) => isRecord(token) && isRecord(token.value) && token.value.type === 'white-space',
   );
 
-function checkDeclaration(declaration: unknown, problems: string[]): void {
+function checkDeclaration(
+  declaration: unknown,
+  problems: string[],
+  gated: ReadonlySet<string>,
+): void {
   if (!isRecord(declaration)) return;
   const property = text(declaration.property);
   const value = declaration.value;
   if (property === 'custom' && isRecord(value)) {
     const name = text(value.name);
     if (!name.startsWith('--')) {
-      if (!UNMODELLED_PROPERTIES.has(name)) {
+      if (SUPPORTS_GATED_PROPERTIES.has(name)) {
+        if (!gated.has(name)) {
+          problems.push(
+            `"${name}" is outside the browser floor; use it only inside @supports (${name}: …) over a floor fallback`,
+          );
+        }
+      } else if (!UNMODELLED_PROPERTIES.has(name)) {
         problems.push(
           `"${name}" is not a property Lightning CSS knows or the floor list in scripts/css/floor.ts accepts`,
         );

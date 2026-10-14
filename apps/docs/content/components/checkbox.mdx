@@ -1,0 +1,11 @@
+---
+title: Checkbox
+description: A native checkbox with its label, including the indeterminate (mixed) state. It submits with the form before hydration; inside a Field it is labelled, described and validated by the Field.
+apg: https://www.w3.org/WAI/ARIA/apg/patterns/checkbox/
+keyboard:
+  - keys: Tab
+    action: Moves focus to the checkbox.
+  - keys: Space
+    action: Toggles it. A mixed checkbox becomes checked.
+keyboardSource: a native `<input type="checkbox">` (`checkbox.client.tsx`), which adds no key handling; the browser lane (`test/browser/toggles.spec.tsx`) checks the mixed state and form data.
+---

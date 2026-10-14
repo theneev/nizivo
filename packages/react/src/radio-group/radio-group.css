@@ -1,0 +1,111 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/radio-group.css (Figma Radio 7275:11479; ARCHITECTURE.md §8.5, §15.3). The group
+   is a Fieldset (css/fieldset.css). Each native radio is the 20 px circle (appearance: none); the
+   8 px dot is the background showing inside an inset ring of the fill, so it needs no pseudo-element.
+   States read native :checked and :disabled (a disabled fieldset disables the radios natively). */
+@layer nz.components {
+  .nz-radio-group[data-orientation='horizontal'] > .nz-fieldset-content {
+    flex-flow: row wrap;
+    column-gap: var(--nz-radio-group-gap, var(--nz-space-6));
+
+    & > :is(.nz-fieldset-description, .nz-fieldset-error) {
+      flex-basis: 100%;
+    }
+  }
+
+  .nz-radio {
+    --_nz-radio-size: 1.25rem;
+
+    display: inline-grid;
+    grid-template-columns: auto auto;
+    justify-content: start;
+    align-items: start;
+    column-gap: var(--nz-radio-gap, var(--nz-space-2));
+    color: var(--nz-text-primary);
+    font: var(--nz-font-body-m);
+    cursor: pointer;
+  }
+
+  .nz-radio-input {
+    --_nz-radio-bg: var(--nz-bg-surface);
+    --_nz-radio-border: var(--nz-border-control);
+    --_nz-radio-ring: transparent;
+
+    appearance: none;
+    box-sizing: border-box;
+    inline-size: var(--nz-radio-size, var(--_nz-radio-size));
+    block-size: var(--nz-radio-size, var(--_nz-radio-size));
+    margin: 0;
+    /* centred on the first line of the label, so a wrapping label stays top-aligned */
+    margin-block-start: calc((1lh - var(--nz-radio-size, var(--_nz-radio-size))) / 2);
+    border: var(--nz-border-width-default) solid var(--_nz-radio-border);
+    border-radius: var(--nz-radius-full);
+    background: var(--_nz-radio-bg);
+    /* the ring leaves the 8 px dot: (20 - 2 × 1 border - 8) / 2 = 5 px */
+    box-shadow: inset 0 0 0 0.3125rem var(--_nz-radio-ring);
+    font: inherit;
+    cursor: inherit;
+    transition:
+      background-color var(--nz-duration-fast) var(--nz-easing-standard),
+      border-color var(--nz-duration-fast) var(--nz-easing-standard),
+      box-shadow var(--nz-duration-fast) var(--nz-easing-standard);
+  }
+
+  .nz-radio-group[data-invalid] .nz-radio-input:not(:checked) {
+    --_nz-radio-border: var(--nz-border-critical);
+  }
+
+  .nz-radio-input:checked {
+    --_nz-radio-bg: var(--nz-text-on-brand);
+    --_nz-radio-border: var(--nz-radio-accent, var(--nz-bg-brand));
+    --_nz-radio-ring: var(--nz-radio-accent, var(--nz-bg-brand));
+  }
+
+  @media (hover: hover) {
+    .nz-radio:hover > .nz-radio-input:not(:disabled, :checked) {
+      --_nz-radio-border: var(--nz-border-control-hover);
+    }
+  }
+
+  .nz-radio-input:disabled {
+    --_nz-radio-bg: var(--nz-bg-disabled);
+    --_nz-radio-border: var(--nz-border-subtle);
+  }
+
+  /* Figma's white dot on bg/muted is 1.15:1; the dot takes the disabled text colour instead */
+  .nz-radio-input:disabled:checked {
+    --_nz-radio-bg: var(--nz-text-disabled);
+    --_nz-radio-border: var(--nz-bg-muted);
+    --_nz-radio-ring: var(--nz-bg-muted);
+  }
+
+  .nz-radio-label {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .nz-radio:is([data-disabled], :has(> .nz-radio-input:disabled)) {
+    color: var(--nz-text-disabled);
+    cursor: not-allowed;
+  }
+
+  /* The generated nz.base fill loses to the background above (§8.5 "Open (week 2)"), so the checked
+     state is repeated here in system colours: a Highlight ring around a HighlightText dot. */
+  @media (forced-colors: active) {
+    .nz-radio-input:checked {
+      --_nz-radio-ring: Highlight;
+
+      border-color: Highlight;
+      background: HighlightText;
+      forced-color-adjust: none;
+    }
+
+    .nz-radio-input:disabled:checked {
+      --_nz-radio-ring: GrayText;
+
+      border-color: GrayText;
+      background: Canvas;
+    }
+  }
+}

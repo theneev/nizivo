@@ -107,7 +107,7 @@
     {
       "name": "data-orientation",
       "values": ["horizontal", "vertical"],
-      "on": "tabs, segmented control, separator",
+      "on": "tabs, segmented control, radio group, separator",
       "meaning": "Layout axis"
     },
     {

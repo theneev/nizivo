@@ -110,6 +110,16 @@ describe('guardCss', () => {
     ['an unknown property', '.nz-x { colr: red; }', /"colr" is not a property/],
     ['a property beyond the floor', '.nz-x { field-sizing: content; }', /"field-sizing"/],
     [
+      'a gated property under a condition on another property',
+      '.nz-x { @supports (display: grid) { field-sizing: content; } }',
+      /"field-sizing" is outside the browser floor/,
+    ],
+    [
+      'a gated property under a negated condition',
+      '.nz-x { @supports not (field-sizing: content) { field-sizing: content; } }',
+      /"field-sizing" is outside the browser floor/,
+    ],
+    [
       'a modelled property beyond the floor',
       '.nz-x { view-transition-name: x; }',
       /outside the browser floor/,
@@ -150,6 +160,14 @@ describe('guardCss', () => {
         options,
       ),
     ).toEqual([expect.stringContaining('needs a rule of its own')]);
+  });
+
+  test('accepts a gated property inside @supports for that property, at any depth', () => {
+    expect(
+      guard(
+        '.nz-x { resize: vertical; @supports (field-sizing: content) { field-sizing: content; min-block-size: 3lh; } } @supports (field-sizing: content) { .nz-y { field-sizing: content; } }',
+      ),
+    ).toEqual([]);
   });
 
   test('accepts vendor pseudo-elements and floor properties Lightning CSS does not model', () => {

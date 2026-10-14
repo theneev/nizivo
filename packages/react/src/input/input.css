@@ -1,0 +1,119 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/input.css (ARCHITECTURE.md §16.1; Figma Input 7275:11397). The root .nz-input
+   is the bordered box; the native <input> inside it (.nz-input-control) is transparent and draws no
+   outline of its own (the 2 px focus outline is the root's, from nz.base, focusTarget "within"). Sizes set only privates;
+   public --nz-input-* hooks are read once, at the property. Invalid reads [data-invalid], set when
+   a message is presented, never :invalid (§8.3). */
+@layer nz.components {
+  .nz-input {
+    --_nz-input-height: var(--nz-size-control-md);
+    --_nz-input-radius: var(--nz-radius-md);
+    --_nz-input-gap: var(--nz-space-2);
+    --_nz-input-border: var(--nz-border-control);
+    --_nz-input-border-hover: var(--nz-border-control-hover);
+    --_nz-input-bg: var(--nz-bg-surface);
+    --_nz-input-halo: var(--nz-focus-halo);
+
+    display: inline-flex;
+    align-items: center;
+    gap: var(--nz-input-gap, var(--_nz-input-gap));
+    box-sizing: border-box;
+    min-inline-size: 0;
+    block-size: var(--nz-input-height, var(--_nz-input-height));
+    padding-inline: var(--nz-input-padding-inline, var(--nz-space-3));
+    border: var(--nz-border-width-default) solid var(--nz-input-border, var(--_nz-input-border));
+    border-radius: var(--nz-input-radius, var(--_nz-input-radius));
+    background: var(--nz-input-bg, var(--_nz-input-bg));
+    color: var(--nz-input-fg, var(--nz-text-primary));
+    font: var(--nz-input-font, var(--nz-font-body-m));
+    cursor: text;
+    transition:
+      border-color var(--nz-duration-fast) var(--nz-easing-standard),
+      box-shadow var(--nz-duration-fast) var(--nz-easing-standard);
+
+    @media (hover: hover) {
+      &:hover:not([data-disabled], :has(> .nz-input-control:disabled)) {
+        border-color: var(--nz-input-border-hover, var(--_nz-input-border-hover));
+      }
+    }
+
+    /* the outline lives in nz.base; this adds only the decorative halo, critical while invalid */
+    &:focus-within {
+      box-shadow: 0 0 0 calc(var(--nz-border-width-focus) + 4px) var(--_nz-input-halo);
+    }
+
+    &[data-invalid] {
+      --_nz-input-border: var(--nz-border-critical);
+      --_nz-input-border-hover: var(--nz-border-critical);
+      --_nz-input-halo: var(--nz-focus-halo-critical);
+    }
+
+    &[data-readonly] {
+      --_nz-input-bg: var(--nz-bg-subtle);
+    }
+
+    /* the Input's own flag, or a disabled Fieldset, which disables the <input> natively */
+    &:is([data-disabled], :has(> .nz-input-control:disabled)) {
+      --_nz-input-border: var(--nz-border-subtle);
+
+      background: var(--nz-input-bg-disabled, var(--nz-bg-disabled));
+      color: var(--nz-input-fg-disabled, var(--nz-text-disabled));
+      cursor: not-allowed;
+    }
+
+    &[data-size='sm'] {
+      --_nz-input-height: var(--nz-size-control-sm);
+      --_nz-input-radius: var(--nz-radius-sm);
+      --_nz-input-gap: var(--nz-space-1-5);
+    }
+
+    &[data-size='lg'] {
+      --_nz-input-height: var(--nz-size-control-lg);
+    }
+  }
+
+  .nz-input-control {
+    flex: 1 1 auto;
+    box-sizing: border-box;
+    min-inline-size: 0;
+    block-size: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    outline: none;
+    cursor: inherit;
+
+    &::placeholder {
+      color: var(--nz-input-placeholder-fg, var(--nz-text-tertiary));
+      opacity: 1;
+    }
+
+    &:disabled::placeholder {
+      color: var(--nz-text-disabled);
+    }
+  }
+
+  /* decorative; the 16 px glyph slot sizes 1em internal glyphs */
+  .nz-input-icon {
+    display: inline-flex;
+    flex: none;
+    color: var(--nz-input-icon-fg, var(--nz-icon-secondary));
+    font-size: var(--nz-size-icon-sm);
+  }
+
+  .nz-input-prefix,
+  .nz-input-suffix {
+    flex: none;
+    color: var(--nz-input-affix-fg, var(--nz-text-secondary));
+    white-space: nowrap;
+  }
+
+  .nz-input:is([data-disabled], :has(> .nz-input-control:disabled))
+    :is(.nz-input-icon, .nz-input-prefix, .nz-input-suffix) {
+    color: var(--nz-text-disabled);
+  }
+}

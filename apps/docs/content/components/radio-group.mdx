@@ -1,0 +1,19 @@
+---
+title: RadioGroup
+description: One choice from a short list of native radios, in a fieldset with a legend. The shell is server-rendered; one small client part passes the group's name and value to each radio.
+apg: https://www.w3.org/WAI/ARIA/apg/patterns/radio/
+keyboard:
+  - keys: Tab
+    action: Moves focus into the group, to the checked radio, or to the first one when none is checked; the next Tab leaves the group.
+  - keys: ArrowDown, ArrowRight
+    action: Checks the next radio and focuses it, skipping disabled ones.
+  - keys: ArrowUp, ArrowLeft
+    action: Checks the previous radio and focuses it, skipping disabled ones.
+  - keys: Space
+    action: Checks the focused radio when none is checked.
+keyboardSource: native `<input type="radio">` elements sharing one `name` (`radio-group.client.tsx`), which add no key handling; the browser lane (`test/browser/toggles.spec.tsx`) checks ArrowDown.
+---
+
+A required RadioGroup keeps the browser's own validation bubble; it does not show an inline message
+or set `aria-invalid` until you pass `error`. Mixing it with Field-wired controls in one
+native-validated form is covered on [Field](/docs/components/field/#validation-in-mixed-forms).

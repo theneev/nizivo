@@ -1,0 +1,20 @@
+{
+  "name": "field",
+  "status": "stable",
+  "tier": "server",
+  "parts": [],
+  "exports": ["Field", "useFieldControl"],
+  "cssDeps": ["base", "inline-error"],
+  "variants": {},
+  "figma": {
+    "canonical": [],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": ["7275:11397"]
+  },
+  "budget": {
+    "measuredKB": 1.01,
+    "limitKB": 1.1,
+    "source": "FieldScope, the one client leaf (the server shell ships none): 1,033 B own code: the client leaf in dist minified alone (esbuild 0.28.2 --minify, imports not counted) and piped through gzip; W3 fix pass. Bundled with its package imports (react external): 2,741 B. §16.1 targets ~0.5 KB; it owns native validation and renders the anatomy. Limit = measured + 10%"
+  }
+}

@@ -1,0 +1,131 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/checkbox.css (Figma Checkbox 7275:11456; ARCHITECTURE.md §8.5, §15.3). The native
+   input is the 20 px box (appearance: none), so :checked and :indeterminate paint it with no JS; the
+   glyph is a sibling in the same grid cell. The <label> root is the hit target (.nz-hit-target).
+   States read native :checked, :indeterminate and :disabled (a disabled Fieldset disables the input
+   natively) and [aria-invalid='true'], never :invalid (§8.3). */
+@layer nz.components {
+  .nz-checkbox {
+    --_nz-checkbox-size: 1.25rem;
+
+    display: inline-grid;
+    grid-template-columns: auto auto;
+    justify-content: start;
+    align-items: start;
+    column-gap: var(--nz-checkbox-gap, var(--nz-space-2));
+    color: var(--nz-text-primary);
+    font: var(--nz-font-body-m);
+    cursor: pointer;
+  }
+
+  .nz-checkbox-input,
+  .nz-checkbox-indicator {
+    grid-area: 1 / 1;
+    /* centred on the first line of the label, so a wrapping label stays top-aligned */
+    margin-block-start: calc((1lh - var(--nz-checkbox-size, var(--_nz-checkbox-size))) / 2);
+  }
+
+  .nz-checkbox-input {
+    --_nz-checkbox-bg: var(--nz-bg-surface);
+    --_nz-checkbox-border: var(--nz-border-control);
+
+    appearance: none;
+    box-sizing: border-box;
+    inline-size: var(--nz-checkbox-size, var(--_nz-checkbox-size));
+    block-size: var(--nz-checkbox-size, var(--_nz-checkbox-size));
+    margin-inline: 0;
+    margin-block-end: 0;
+    border: var(--nz-border-width-default) solid var(--_nz-checkbox-border);
+    border-radius: var(--nz-checkbox-radius, var(--nz-radius-xs));
+    background: var(--_nz-checkbox-bg);
+    font: inherit;
+    cursor: inherit;
+    transition:
+      background-color var(--nz-duration-fast) var(--nz-easing-standard),
+      border-color var(--nz-duration-fast) var(--nz-easing-standard);
+  }
+
+  .nz-checkbox-input[aria-invalid='true']:not(:checked, :indeterminate) {
+    --_nz-checkbox-border: var(--nz-border-critical);
+  }
+
+  .nz-checkbox-input:is(:checked, :indeterminate) {
+    --_nz-checkbox-bg: var(--nz-checkbox-accent, var(--nz-bg-brand));
+    --_nz-checkbox-border: transparent;
+  }
+
+  @media (hover: hover) {
+    .nz-checkbox:hover > .nz-checkbox-input:not(:disabled, :checked, :indeterminate) {
+      --_nz-checkbox-border: var(--nz-border-control-hover);
+    }
+  }
+
+  .nz-checkbox-input:disabled {
+    --_nz-checkbox-bg: var(--nz-bg-disabled);
+    --_nz-checkbox-border: var(--nz-border-subtle);
+  }
+
+  .nz-checkbox-input:disabled:is(:checked, :indeterminate) {
+    --_nz-checkbox-bg: var(--nz-bg-muted);
+    --_nz-checkbox-border: transparent;
+  }
+
+  /* the 14 px glyph in the 20 px box, as Figma draws it */
+  .nz-checkbox-indicator {
+    display: grid;
+    place-items: center;
+    inline-size: var(--nz-checkbox-size, var(--_nz-checkbox-size));
+    block-size: var(--nz-checkbox-size, var(--_nz-checkbox-size));
+    color: var(--nz-text-on-brand);
+    font-size: 0.875rem;
+    pointer-events: none;
+    visibility: hidden;
+
+    & > * {
+      grid-area: 1 / 1;
+    }
+  }
+
+  .nz-checkbox-input:is(:checked, :indeterminate) + .nz-checkbox-indicator {
+    visibility: visible;
+  }
+
+  /* mixed wins over checked, as the browser exposes it */
+  .nz-checkbox-input:indeterminate + .nz-checkbox-indicator > .nz-glyph-check,
+  .nz-checkbox-input:not(:indeterminate) + .nz-checkbox-indicator > .nz-glyph-minus {
+    display: none;
+  }
+
+  .nz-checkbox-input:disabled + .nz-checkbox-indicator {
+    color: var(--nz-text-disabled);
+  }
+
+  .nz-checkbox-label {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .nz-checkbox:is([data-disabled], :has(> .nz-checkbox-input:disabled)) {
+    color: var(--nz-text-disabled);
+    cursor: not-allowed;
+  }
+
+  /* The generated nz.base fill loses to the background above (a later layer; §8.5 "Open (week 2)"),
+     so the state rules are repeated here. */
+  @media (forced-colors: active) {
+    .nz-checkbox-input:is(:checked, :indeterminate) {
+      background: Highlight;
+      forced-color-adjust: none;
+    }
+
+    .nz-checkbox-input:disabled:is(:checked, :indeterminate) {
+      background: GrayText;
+    }
+
+    .nz-checkbox-indicator {
+      color: HighlightText;
+      forced-color-adjust: none;
+    }
+  }
+}

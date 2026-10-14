@@ -1,8 +1,27 @@
-// Server-safety of every week 2 T0 component (ARCHITECTURE.md §9.5, §18.1 "server-safe entries
-// load under react-server"): each entry loads, and its example renders, with React's react-server build.
-import { isValidElement, type JSX, type ReactNode } from 'react';
-import { describe, expect, test, vi } from 'vitest';
-import { graph, isClient, rekey } from '../helpers/graph';
+// Server-safety of every `tier: "server"` component (ARCHITECTURE.md §9.5, §18.1 "server-safe entries
+// load under react-server"): each entry loads, and every example renders, with React's react-server
+// build. A split component's client leaves are replaced by client references, as a bundler does, so
+// they are never evaluated on the server; the props that cross into them must serialise.
+// Client-tier controls (Input, Textarea, Checkbox, Switch, RadioGroup) are not
+// listed: their server-safety proof is their own test file in this folder.
+import { isValidElement, type JSX } from 'react';
+import { describe, expect, test } from 'vitest';
+import {
+  graph,
+  isClient,
+  reactImports,
+  REACT_SERVER,
+  rekey,
+  resolve,
+  specifiers,
+} from '../helpers/graph';
+import {
+  serverRender,
+  underReactServer,
+  unserialisable,
+  withDispatcher,
+  type ClientBoundary,
+} from '../helpers/rsc';
 import { Container } from '../../src/container/index';
 import { Grid, GridItem } from '../../src/grid/index';
 import { Heading } from '../../src/heading/index';
@@ -33,11 +52,31 @@ const COMPONENTS = [
   'empty-state',
   'inline-error',
   'alert',
+  'button',
+  'field',
+  'fieldset',
+  'native-select',
 ] as const;
+type Name = (typeof COMPONENTS)[number];
+
+const FIELD_SCOPE = 'src/field/field-scope.client.tsx';
 
 /** The client leaves a split component's subpath may reach (§9.5 "split"); none for the others. */
-const CLIENT_LEAVES: Partial<Record<(typeof COMPONENTS)[number], string[]>> = {
+const CLIENT_LEAVES: Partial<Record<Name, string[]>> = {
   alert: ['src/alert/alert-dismiss.client.tsx'],
+  field: [FIELD_SCOPE],
+};
+
+/** Packages other than react a subpath may import: only through its client leaves (the engine). */
+const EXTERNALS: Partial<Record<Name, RegExp>> = {};
+
+/** Each client module's exports, replaced by client references under react-server. */
+const CLIENT_EXPORTS: Record<string, string[]> = {
+  'src/alert/alert-dismiss.client.tsx': ['AlertDismiss'],
+  [FIELD_SCOPE]: ['FieldScope', 'useFieldControl'],
+  // client controls the Field and Fieldset examples compose
+  'src/input/input.client.tsx': ['Input'],
+  'src/checkbox/checkbox.client.tsx': ['Checkbox'],
 };
 
 /** Each entry, imported again by the react-server test. */
@@ -61,34 +100,41 @@ const entries = {
   'empty-state': () => import('../../src/empty-state/index'),
   'inline-error': () => import('../../src/inline-error/index'),
   alert: () => import('../../src/alert/index'),
-} satisfies Record<(typeof COMPONENTS)[number], () => Promise<unknown>>;
+  button: () => import('../../src/button/index'),
+  field: () => import('../../src/field/index'),
+  fieldset: () => import('../../src/fieldset/index'),
+  'native-select': () => import('../../src/native-select/index'),
+} satisfies Record<Name, () => Promise<unknown>>;
 
-/** Each example, imported again by the react-server test. */
+/** Each example module, imported again by the react-server test; every `*Example` export renders. */
 const exampleModules = {
-  text: async () => (await import('../../src/text/text.example')).TextExample,
-  heading: async () => (await import('../../src/heading/heading.example')).HeadingExample,
-  stack: async () => (await import('../../src/stack/stack.example')).StackExample,
-  inline: async () => (await import('../../src/inline/inline.example')).InlineExample,
-  grid: async () => (await import('../../src/grid/grid.example')).GridExample,
-  container: async () => (await import('../../src/container/container.example')).ContainerExample,
-  separator: async () => (await import('../../src/separator/separator.example')).SeparatorExample,
-  kbd: async () => (await import('../../src/kbd/kbd.example')).KbdExample,
-  image: async () => (await import('../../src/image/image.example')).ImageExample,
-  badge: async () => (await import('../../src/badge/badge.example')).BadgeExample,
-  card: async () => (await import('../../src/card/card.example')).CardExample,
-  delta: async () => (await import('../../src/delta/delta.example')).DeltaExample,
-  'progress-bar': async () =>
-    (await import('../../src/progress-bar/progress-bar.example')).ProgressBarExample,
-  'progress-ring': async () =>
-    (await import('../../src/progress-ring/progress-ring.example')).ProgressRingExample,
-  meter: async () => (await import('../../src/meter/meter.example')).MeterExample,
-  skeleton: async () => (await import('../../src/skeleton/skeleton.example')).SkeletonExample,
-  'empty-state': async () =>
-    (await import('../../src/empty-state/empty-state.example')).EmptyStateExample,
-  'inline-error': async () =>
-    (await import('../../src/inline-error/inline-error.example')).InlineErrorExample,
-  alert: async () => (await import('../../src/alert/alert.example')).AlertExample,
-} satisfies Record<(typeof COMPONENTS)[number], () => Promise<() => JSX.Element>>;
+  text: () => import('../../src/text/text.example'),
+  heading: () => import('../../src/heading/heading.example'),
+  stack: () => import('../../src/stack/stack.example'),
+  inline: () => import('../../src/inline/inline.example'),
+  grid: () => import('../../src/grid/grid.example'),
+  container: () => import('../../src/container/container.example'),
+  separator: () => import('../../src/separator/separator.example'),
+  kbd: () => import('../../src/kbd/kbd.example'),
+  image: () => import('../../src/image/image.example'),
+  badge: () => import('../../src/badge/badge.example'),
+  card: () => import('../../src/card/card.example'),
+  delta: () => import('../../src/delta/delta.example'),
+  'progress-bar': () => import('../../src/progress-bar/progress-bar.example'),
+  'progress-ring': () => import('../../src/progress-ring/progress-ring.example'),
+  meter: () => import('../../src/meter/meter.example'),
+  skeleton: () => import('../../src/skeleton/skeleton.example'),
+  'empty-state': () => import('../../src/empty-state/empty-state.example'),
+  'inline-error': () => import('../../src/inline-error/inline-error.example'),
+  alert: () => import('../../src/alert/alert.example'),
+  button: () => import('../../src/button/button.example'),
+  field: () => import('../../src/field/field.example'),
+  fieldset: () => import('../../src/fieldset/fieldset.example'),
+  'native-select': () => import('../../src/native-select/native-select.example'),
+} satisfies Record<Name, () => Promise<Record<string, unknown>>>;
+
+/** What the rendered examples must contain, where it is not the component's own part. */
+const RENDERS: Partial<Record<Name, string>> = {};
 
 const SRC = rekey(
   import.meta.glob('../../src/**/*.{ts,tsx,json}', {
@@ -99,75 +145,58 @@ const SRC = rekey(
   'src/',
 );
 
-/**
- * Imports `load` again with `react` resolved to its react-server build, the build a Server Component
- * bundle gets: no useState, useEffect, createContext or useRef. Vitest runs without that condition,
- * so the build is loaded by path. The JSX runtime stays the default one; it only creates elements.
- */
-async function underReactServer<T>(
-  load: () => Promise<T>,
-): Promise<{ loaded: T; react: Record<string, unknown> }> {
-  vi.resetModules();
-  const path = '../../node_modules/react/react.react-server.js';
-  const imported: unknown = await import(/* @vite-ignore */ path);
-  const server = isRecord(imported) && isRecord(imported['default']) ? imported['default'] : {};
-  expect(server).toHaveProperty('createElement');
-  vi.doMock('react', () => ({ ...server, default: server }));
-  try {
-    return { loaded: await load(), react: server };
-  } finally {
-    vi.doUnmock('react');
-    vi.resetModules();
-  }
-}
-
-/**
- * A Server Component render installs a hook dispatcher. This one serves `useId`, the only hook a T0
- * part may call; any other hook is missing from the react-server build and throws.
- */
-function withDispatcher<T>(react: Record<string, unknown>, render: () => T): T {
-  const internals = react['__SERVER_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE'];
-  if (!isRecord(internals)) throw new Error('the react-server build has no internals object');
-  let id = 0;
-  internals['H'] = { useId: () => `_r${(id += 1).toString()}_` };
-  try {
-    return render();
-  } finally {
-    internals['H'] = null;
-  }
-}
-
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null;
 }
 
-/** Calls function components until only host elements remain, as a Server Component render does. */
-function serverRender(node: ReactNode): unknown {
-  if (Array.isArray(node)) return node.map(serverRender);
-  if (!isValidElement<{ children?: ReactNode }>(node)) return node;
-  const { type, props } = node;
-  if (typeof type === 'function') {
-    const rendered: ReactNode = Reflect.apply(type, undefined, [props]);
-    return serverRender(rendered);
+/** The modules a subpath reaches before crossing into a 'use client' module: its server half. */
+function serverHalf(entry: string): string[] {
+  const reached = new Set<string>();
+  const queue = [entry];
+  while (queue.length > 0) {
+    const file = queue.pop() ?? '';
+    if (reached.has(file) || isClient(SRC.get(file) ?? '')) continue;
+    reached.add(file);
+    for (const specifier of specifiers(SRC.get(file) ?? '')) {
+      const target = specifier.startsWith('.') ? resolve(SRC, file, specifier) : undefined;
+      if (target !== undefined) queue.push(target);
+    }
   }
-  return { type, props: { ...props, children: serverRender(props.children) } };
+  return [...reached];
 }
+
+test('the list is every tier "server" manifest', () => {
+  const server = [...SRC]
+    .filter(([file]) => file.endsWith('/component.json'))
+    .flatMap(([, text]) => {
+      const manifest: unknown = JSON.parse(text);
+      return isRecord(manifest) && manifest['tier'] === 'server' ? [String(manifest['name'])] : [];
+    });
+  expect([...COMPONENTS].toSorted()).toEqual(server.toSorted());
+});
 
 describe('module graph', () => {
   for (const name of COMPONENTS) {
-    test(`${name}: no 'use client' module but its own leaves, and nothing imported but react`, () => {
+    test(`${name}: no 'use client' module but its own leaves; only react-server React before them`, () => {
       const { modules, externals } = graph(SRC, `src/${name}/index.ts`);
       expect(modules).toContain(`src/${name}/${name}.tsx`);
-      expect([...modules].filter((file) => isClient(SRC.get(file) ?? ''))).toEqual(
+      expect([...modules].filter((file) => isClient(SRC.get(file) ?? '')).toSorted()).toEqual(
         CLIENT_LEAVES[name] ?? [],
       );
-      expect([...externals].filter((external) => external !== 'react')).toEqual([]);
+      const allowed = EXTERNALS[name];
+      expect(
+        [...externals].filter(
+          (external) => external !== 'react' && !(allowed?.test(external) ?? false),
+        ),
+      ).toEqual([]);
+      const half = serverHalf(`src/${name}/index.ts`);
+      expect(reactImports(SRC, half).filter((n) => !REACT_SERVER.has(n))).toEqual([]);
     });
   }
 });
 
 describe('react-server build of React', () => {
-  test('the mock bites: a module that needs createContext fails to load', async () => {
+  test('the mock bites: a client module that is not replaced fails to load', async () => {
     await expect(underReactServer(() => import('../../src/config/config.client'))).rejects.toThrow(
       /createContext/,
     );
@@ -184,14 +213,40 @@ describe('react-server build of React', () => {
   });
 
   for (const name of COMPONENTS) {
-    test(`${name}: the entry loads and its example renders to host elements`, async () => {
+    test(`${name}: the entry loads and every example renders; boundary props serialise`, async () => {
+      // Every client module the entry or its examples reach (an example may compose a Field).
+      const reached = new Set<string>();
+      for (const file of [`src/${name}/index.ts`, `src/${name}/${name}.example.tsx`]) {
+        for (const module of graph(SRC, file).modules) reached.add(module);
+      }
+      const clients = [...reached].flatMap((file) => {
+        const exports = CLIENT_EXPORTS[file];
+        return exports === undefined
+          ? []
+          : [{ path: new URL(`../../${file}`, import.meta.url).pathname, exports }];
+      });
       const {
-        loaded: [entry, Example],
+        loaded: [entry, examples],
         react,
-      } = await underReactServer(() => Promise.all([entries[name](), exampleModules[name]()]));
+      } = await underReactServer(
+        () => Promise.all([entries[name](), exampleModules[name]()]),
+        clients,
+      );
       expect(Object.keys(entry).length).toBeGreaterThan(0);
-      const tree = JSON.stringify(withDispatcher(react, () => serverRender(Example())));
-      expect(tree).toContain(`"data-slot":"${name}"`);
+      const renders = Object.entries(examples).filter(
+        (pair): pair is [string, (props: object) => JSX.Element] =>
+          pair[0].endsWith('Example') && typeof pair[1] === 'function',
+      );
+      expect(renders.length).toBeGreaterThan(0);
+      const boundaries: ClientBoundary[] = [];
+      const tree = JSON.stringify(
+        renders.map(([, Example]) =>
+          withDispatcher(react, () => serverRender(Example({}), boundaries)),
+        ),
+      );
+      expect(tree).toContain(RENDERS[name] ?? `"data-slot":"${name}"`);
+      expect(boundaries.flatMap((b) => unserialisable(b.props, b.client))).toEqual([]);
+      for (const b of boundaries) expect(isValidElement(b)).toBe(false);
     });
   }
 });

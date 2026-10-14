@@ -77,6 +77,13 @@ export const UNMODELLED_PROPERTIES: ReadonlySet<string> = new Set([
   '-moz-osx-font-smoothing',
 ]);
 
+/**
+ * Properties beyond the floor that a stylesheet may use only inside `@supports (<property>: …)` (not
+ * under `not`), as an enhancement over a floor fallback outside the block: Textarea's auto-grow,
+ * `field-sizing: content` (Chrome 123 has it; Firefox 129 and Safari 17.5 keep `rows`).
+ */
+export const SUPPORTS_GATED_PROPERTIES: ReadonlySet<string> = new Set(['field-sizing']);
+
 /** Properties Lightning CSS models that at least one floor browser does not support. */
 export const OFF_FLOOR_PROPERTIES: ReadonlySet<string> = new Set([
   'animation-range',

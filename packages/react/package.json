@@ -51,6 +51,10 @@
       "types": "./dist/card/index.d.ts",
       "default": "./dist/card/index.js"
     },
+    "./checkbox": {
+      "types": "./dist/checkbox/index.d.ts",
+      "default": "./dist/checkbox/index.js"
+    },
     "./config": {
       "types": "./dist/config/index.d.ts",
       "default": "./dist/config/index.js"
@@ -75,6 +79,14 @@
       "types": "./dist/empty-state/index.d.ts",
       "default": "./dist/empty-state/index.js"
     },
+    "./field": {
+      "types": "./dist/field/index.d.ts",
+      "default": "./dist/field/index.js"
+    },
+    "./fieldset": {
+      "types": "./dist/fieldset/index.d.ts",
+      "default": "./dist/fieldset/index.js"
+    },
     "./grid": {
       "types": "./dist/grid/index.d.ts",
       "default": "./dist/grid/index.js"
@@ -95,6 +107,10 @@
       "types": "./dist/inline-error/index.d.ts",
       "default": "./dist/inline-error/index.js"
     },
+    "./input": {
+      "types": "./dist/input/index.d.ts",
+      "default": "./dist/input/index.js"
+    },
     "./kbd": {
       "types": "./dist/kbd/index.d.ts",
       "default": "./dist/kbd/index.js"
@@ -103,6 +119,10 @@
       "types": "./dist/meter/index.d.ts",
       "default": "./dist/meter/index.js"
     },
+    "./native-select": {
+      "types": "./dist/native-select/index.d.ts",
+      "default": "./dist/native-select/index.js"
+    },
     "./progress-bar": {
       "types": "./dist/progress-bar/index.d.ts",
       "default": "./dist/progress-bar/index.js"
@@ -110,6 +130,10 @@
     "./progress-ring": {
       "types": "./dist/progress-ring/index.d.ts",
       "default": "./dist/progress-ring/index.js"
+    },
+    "./radio-group": {
+      "types": "./dist/radio-group/index.d.ts",
+      "default": "./dist/radio-group/index.js"
     },
     "./select": {
       "types": "./dist/select/index.d.ts",
@@ -127,9 +151,17 @@
       "types": "./dist/stack/index.d.ts",
       "default": "./dist/stack/index.js"
     },
+    "./switch": {
+      "types": "./dist/switch/index.d.ts",
+      "default": "./dist/switch/index.js"
+    },
     "./text": {
       "types": "./dist/text/index.d.ts",
       "default": "./dist/text/index.js"
+    },
+    "./textarea": {
+      "types": "./dist/textarea/index.d.ts",
+      "default": "./dist/textarea/index.js"
     },
     "./tooltip": {
       "types": "./dist/tooltip/index.d.ts",
@@ -140,24 +172,32 @@
     "./css/base.css": "./dist/css/base.css",
     "./css/button.css": "./dist/css/button.css",
     "./css/card.css": "./dist/css/card.css",
+    "./css/checkbox.css": "./dist/css/checkbox.css",
     "./css/container.css": "./dist/css/container.css",
     "./css/delta.css": "./dist/css/delta.css",
     "./css/dialog.css": "./dist/css/dialog.css",
     "./css/empty-state.css": "./dist/css/empty-state.css",
+    "./css/field.css": "./dist/css/field.css",
+    "./css/fieldset.css": "./dist/css/fieldset.css",
     "./css/grid.css": "./dist/css/grid.css",
     "./css/heading.css": "./dist/css/heading.css",
     "./css/image.css": "./dist/css/image.css",
     "./css/inline-error.css": "./dist/css/inline-error.css",
     "./css/inline.css": "./dist/css/inline.css",
+    "./css/input.css": "./dist/css/input.css",
     "./css/kbd.css": "./dist/css/kbd.css",
     "./css/meter.css": "./dist/css/meter.css",
+    "./css/native-select.css": "./dist/css/native-select.css",
     "./css/progress-bar.css": "./dist/css/progress-bar.css",
     "./css/progress-ring.css": "./dist/css/progress-ring.css",
+    "./css/radio-group.css": "./dist/css/radio-group.css",
     "./css/select.css": "./dist/css/select.css",
     "./css/separator.css": "./dist/css/separator.css",
     "./css/skeleton.css": "./dist/css/skeleton.css",
     "./css/stack.css": "./dist/css/stack.css",
+    "./css/switch.css": "./dist/css/switch.css",
     "./css/text.css": "./dist/css/text.css",
+    "./css/textarea.css": "./dist/css/textarea.css",
     "./css/tooltip.css": "./dist/css/tooltip.css",
     "./package.json": "./package.json"
   },
@@ -168,6 +208,7 @@
     "build": "tsdown && node scripts/build-css.ts",
     "typecheck": "tsc --noEmit -p . && tsc --noEmit -p scripts",
     "test": "vitest run --fsModuleCachePath node_modules/.vitest-cache",
+    "test:browser": "vitest run --config test/browser/vitest.config.ts",
     "lint": "stylelint \"src/**/*.css\" \"styles/**/*.css\" --allow-empty-input",
     "check:dist": "tsdown && node scripts/build-css.ts && vitest run --config test/built/vitest.config.ts"
   },

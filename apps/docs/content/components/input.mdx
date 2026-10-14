@@ -1,0 +1,10 @@
+---
+title: Input
+description: A single-line native text input in a bordered box, with optional icons and text affixes. Inside a Field it is labelled, described and validated by the Field.
+keyboard:
+  - keys: Tab
+    action: Moves focus to the input. The whole box draws the focus outline; a press anywhere on the box, its icons or its affixes, focuses the input.
+  - keys: Enter
+    action: Submits the form the input belongs to (the browser's implicit submission). Inside a Field, a failed constraint shows its message under the input and focuses the first invalid control.
+keyboardSource: a native `<input>` (`input.client.tsx`); the box's mousedown handler forwards focus to it. The browser lane (`test/browser/text-controls.spec.tsx`) checks the focus outline, the hit area and inline validation on submit.
+---

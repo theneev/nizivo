@@ -1,0 +1,19 @@
+{
+  "name": "fieldset",
+  "status": "stable",
+  "tier": "server",
+  "parts": [],
+  "cssDeps": ["base", "inline-error"],
+  "variants": {},
+  "figma": {
+    "canonical": [],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": ["7275:11397"]
+  },
+  "budget": {
+    "measuredKB": 0,
+    "limitKB": 0,
+    "source": "server-safe, no directive: 0 KB client JS under RSC"
+  }
+}

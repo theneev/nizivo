@@ -1,0 +1,138 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/native-select.css (ARCHITECTURE.md §9.5). No Figma component of its own: the
+   Select trigger skin (7275:11438) as css/select.css ships it, so a NativeSelect and a Select in one
+   row have the same height, border, inline padding, gap, value font and chevron, and swapping one
+   for the other does not shift layout. It does not import select.css: the values are repeated here.
+   The native <select> (appearance: none) is the bordered box and takes the focus outline from
+   nz.base (focusTarget "self"); the icon and the chevron are siblings stacked over it in one grid
+   cell, with pointer-events: none, so every press lands on the <select>. */
+@layer nz.components {
+  .nz-native-select {
+    --_nz-native-select-height: var(--nz-size-control-md);
+    --_nz-native-select-radius: var(--nz-radius-md);
+    --_nz-native-select-border: var(--nz-border-control);
+    --_nz-native-select-border-hover: var(--nz-border-control-hover);
+    --_nz-native-select-bg: var(--nz-bg-surface);
+    --_nz-native-select-fg: var(--nz-text-primary);
+    --_nz-native-select-glyph: var(--nz-size-icon-sm);
+    --_nz-native-select-padding: var(--nz-space-3);
+    --_nz-native-select-gap: var(--nz-space-2);
+    --_nz-native-select-halo: var(--nz-focus-halo);
+    /* room for a glyph slot, its gap and the edge padding */
+    --_nz-native-select-slot: calc(
+      var(--_nz-native-select-padding) + var(--_nz-native-select-glyph) +
+        var(--_nz-native-select-gap)
+    );
+    --_nz-native-select-start: var(--_nz-native-select-padding);
+    /* the glyphs sit over the <select>, inside its border */
+    --_nz-native-select-inset: calc(
+      var(--_nz-native-select-padding) + var(--nz-border-width-default)
+    );
+
+    display: inline-grid;
+    align-items: center;
+    min-inline-size: 0;
+    vertical-align: middle;
+
+    &:has(> .nz-native-select-icon) {
+      --_nz-native-select-start: var(--_nz-native-select-slot);
+    }
+
+    &[data-invalid] {
+      --_nz-native-select-border: var(--nz-border-critical);
+      --_nz-native-select-border-hover: var(--nz-border-critical);
+      --_nz-native-select-halo: var(--nz-focus-halo-critical);
+    }
+
+    /* the NativeSelect's own flag, or a disabled Fieldset, which disables the <select> natively */
+    &:is([data-disabled], :has(> .nz-native-select-trigger:disabled)) {
+      --_nz-native-select-border: var(--nz-border-subtle);
+      --_nz-native-select-bg: var(--nz-bg-disabled);
+      --_nz-native-select-fg: var(--nz-text-disabled);
+    }
+
+    &[data-size='sm'] {
+      --_nz-native-select-height: var(--nz-size-control-sm);
+      --_nz-native-select-radius: var(--nz-radius-sm);
+    }
+
+    &[data-size='lg'] {
+      --_nz-native-select-height: var(--nz-size-control-lg);
+    }
+  }
+
+  .nz-native-select-trigger,
+  .nz-native-select-icon,
+  .nz-native-select-chevron {
+    grid-area: 1 / 1;
+  }
+
+  .nz-native-select-trigger {
+    appearance: none;
+    box-sizing: border-box;
+    min-inline-size: 0;
+    block-size: var(--nz-native-select-height, var(--_nz-native-select-height));
+    margin: 0;
+    padding-block: 0;
+    padding-inline: var(--_nz-native-select-start) var(--_nz-native-select-slot);
+    border: var(--nz-border-width-default) solid
+      var(--nz-native-select-border, var(--_nz-native-select-border));
+    border-radius: var(--nz-native-select-radius, var(--_nz-native-select-radius));
+    background: var(--nz-native-select-bg, var(--_nz-native-select-bg));
+    color: var(--_nz-native-select-fg);
+    font: var(--nz-native-select-font, var(--nz-font-label-m));
+    text-overflow: ellipsis;
+    cursor: pointer;
+    transition:
+      border-color var(--nz-duration-fast) var(--nz-easing-standard),
+      box-shadow var(--nz-duration-fast) var(--nz-easing-standard);
+
+    @media (hover: hover) {
+      &:hover:not(:disabled) {
+        border-color: var(--_nz-native-select-border-hover);
+      }
+    }
+
+    /* the outline lives in nz.base; this adds only the decorative halo, critical while invalid, as
+       on Input and Textarea */
+    &:focus-visible {
+      box-shadow: 0 0 0 calc(var(--nz-border-width-focus) + 4px) var(--_nz-native-select-halo);
+    }
+
+    /* the empty placeholder option is showing (a disabled select keeps its disabled colour) */
+    &:not(:disabled):has(> option[value='']:checked) {
+      color: var(--nz-text-tertiary);
+    }
+
+    &:disabled {
+      color: var(--_nz-native-select-fg);
+      cursor: not-allowed;
+    }
+  }
+
+  /* the open list is the platform's; keep its options readable whatever the closed box shows */
+  .nz-native-select-trigger :is(option, optgroup) {
+    color: var(--nz-text-primary);
+    background: var(--nz-bg-surface);
+  }
+
+  .nz-native-select-icon,
+  .nz-native-select-chevron {
+    display: inline-flex;
+    /* internal glyphs are 1em: size them to the 16 px icon slot, not to the value font */
+    font-size: var(--_nz-native-select-glyph);
+    color: var(--nz-native-select-icon-fg, var(--nz-text-secondary));
+    pointer-events: none;
+  }
+
+  .nz-native-select-icon {
+    justify-self: start;
+    margin-inline-start: var(--_nz-native-select-inset);
+  }
+
+  .nz-native-select-chevron {
+    justify-self: end;
+    margin-inline-end: var(--_nz-native-select-inset);
+  }
+}

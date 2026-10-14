@@ -1,0 +1,145 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/switch.css (Figma Switch 7275:11494; ARCHITECTURE.md §13.2, §15.3). The native
+   input is the 36 × 20 track (appearance: none) and .nz-switch-thumb is a sibling in the same grid
+   cell, so :checked moves it with no JS. Off track: --nz-border-control as a fill (3.56 light, 4.03
+   dark on bg/surface); thumb: --nz-bg-surface (Figma's white primitive is mode-blind). The thumb
+   travels on the spring pair; the track colour cross-fades on --nz-duration-fade, which keeps a
+   120 ms fade under reduced motion (the spring pair itself drops to 120 ms linear there). */
+@layer nz.components {
+  .nz-switch {
+    --_nz-switch-thumb-size: 1rem;
+    --_nz-switch-pad: var(--nz-space-0-5);
+    --_nz-switch-height: calc(var(--_nz-switch-thumb-size) + 2 * var(--_nz-switch-pad));
+    --_nz-switch-direction: 1;
+
+    display: inline-grid;
+    grid-template-columns: auto auto;
+    justify-content: start;
+    align-items: start;
+    column-gap: var(--nz-switch-gap, var(--nz-space-2));
+    color: var(--nz-text-primary);
+    font: var(--nz-font-body-m);
+    cursor: pointer;
+  }
+
+  .nz-switch:dir(rtl) {
+    --_nz-switch-direction: -1;
+  }
+
+  .nz-switch-input,
+  .nz-switch-thumb {
+    grid-area: 1 / 1;
+  }
+
+  .nz-switch-input {
+    --_nz-switch-bg: var(--nz-border-control);
+
+    appearance: none;
+    box-sizing: border-box;
+    inline-size: calc(2 * var(--_nz-switch-thumb-size) + 2 * var(--_nz-switch-pad));
+    block-size: var(--_nz-switch-height);
+    margin: 0;
+    /* centred on the first line of the label */
+    margin-block-start: calc((1lh - var(--_nz-switch-height)) / 2);
+    border: 0;
+    border-radius: var(--nz-radius-full);
+    background: var(--_nz-switch-bg);
+    font: inherit;
+    cursor: inherit;
+    transition: background-color var(--nz-duration-fade) var(--nz-easing-standard);
+  }
+
+  .nz-switch-input:checked {
+    --_nz-switch-bg: var(--nz-switch-accent, var(--nz-bg-brand));
+  }
+
+  .nz-switch-input[aria-invalid='true']:not(:checked) {
+    box-shadow: inset 0 0 0 var(--nz-border-width-strong) var(--nz-border-critical);
+  }
+
+  @media (hover: hover) {
+    .nz-switch:hover > .nz-switch-input:not(:disabled, :checked) {
+      --_nz-switch-bg: var(--nz-border-control-hover);
+    }
+  }
+
+  .nz-switch-input:disabled {
+    --_nz-switch-bg: var(--nz-bg-disabled);
+  }
+
+  .nz-switch-input:disabled:checked {
+    --_nz-switch-bg: var(--nz-bg-brand-muted);
+  }
+
+  .nz-switch-thumb {
+    justify-self: start;
+    inline-size: var(--_nz-switch-thumb-size);
+    block-size: var(--_nz-switch-thumb-size);
+    margin-block-start: calc((1lh - var(--_nz-switch-height)) / 2 + var(--_nz-switch-pad));
+    margin-inline-start: var(--_nz-switch-pad);
+    border-radius: var(--nz-radius-full);
+    background: var(--nz-switch-thumb-bg, var(--nz-bg-surface));
+    box-shadow: var(--nz-switch-thumb-shadow, var(--nz-elevation-1));
+    pointer-events: none;
+    transition: translate var(--nz-duration-spring) var(--nz-easing-spring);
+  }
+
+  .nz-switch-input:checked + .nz-switch-thumb {
+    translate: calc(var(--_nz-switch-thumb-size) * var(--_nz-switch-direction)) 0;
+  }
+
+  .nz-switch-input:disabled + .nz-switch-thumb {
+    box-shadow: none;
+  }
+
+  .nz-switch-label {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .nz-switch:is([data-disabled], :has(> .nz-switch-input:disabled)) {
+    color: var(--nz-text-disabled);
+    cursor: not-allowed;
+  }
+
+  /* The generated nz.base rules lose to the border and backgrounds above (a later layer; §8.5
+     "Open (week 2)"), so the edge and state rules are repeated here. */
+  @media (forced-colors: active) {
+    .nz-switch-input {
+      border: 1px solid CanvasText;
+    }
+
+    .nz-switch-input:checked {
+      background: Highlight;
+      forced-color-adjust: none;
+    }
+
+    .nz-switch-input:disabled {
+      border-color: GrayText;
+    }
+
+    .nz-switch-input:disabled:checked {
+      background: GrayText;
+    }
+
+    .nz-switch-thumb {
+      background: CanvasText;
+      forced-color-adjust: none;
+    }
+
+    /* on a Highlight track the mark is HighlightText, as the Checkbox glyph */
+    .nz-switch-input:checked + .nz-switch-thumb {
+      background: HighlightText;
+    }
+
+    .nz-switch-input:disabled + .nz-switch-thumb {
+      background: GrayText;
+    }
+
+    /* on a GrayText track a GrayText thumb would vanish */
+    .nz-switch-input:disabled:checked + .nz-switch-thumb {
+      background: Canvas;
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "name": "input",
+  "status": "stable",
+  "tier": "client",
+  "parts": [],
+  "interactive": ["input"],
+  "focusTarget": "within",
+  "stateIndicator": [],
+  "cssDeps": ["base"],
+  "variants": {
+    "size": ["sm", "md", "lg"]
+  },
+  "figma": {
+    "canonical": ["7275:11397"],
+    "ghosts": ["745:187"],
+    "variantsSeen": ["745:159"],
+    "related": []
+  },
+  "budget": {
+    "measuredKB": 0.71,
+    "limitKB": 1,
+    "source": "726 B own code: the client leaf in dist minified alone (esbuild 0.28.2 --minify, imports not counted) and piped through gzip; W3 fix pass. Bundled with its package imports (react external): 1,795 B (FieldScope and the Field helpers are shared with every Field control). §17.2 caps an own input leaf at 1 KB"
+  }
+}

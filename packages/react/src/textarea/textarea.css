@@ -1,0 +1,122 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/textarea.css (ARCHITECTURE.md §16.1). No Figma component: the Input skin
+   (7275:11397) on a native <textarea>, which is the bordered box itself and takes the 2 px focus
+   outline from nz.base (focusTarget "self"). Height is the native `rows`; the user resizes
+   vertically. Where field-sizing is supported (Chrome 123; not Firefox 129 or Safari 17.5) it also
+   grows with its content, never below its `rows`: field-sizing drops the rows height, so the
+   minimum is rebuilt from the attribute (rows 1 to 10; more fall back to 3) with no inline style.
+   Invalid reads [data-invalid], set when a message is presented (§8.3). */
+@layer nz.components {
+  .nz-textarea {
+    --_nz-textarea-border: var(--nz-border-control);
+    --_nz-textarea-border-hover: var(--nz-border-control-hover);
+    --_nz-textarea-bg: var(--nz-bg-surface);
+    --_nz-textarea-halo: var(--nz-focus-halo);
+
+    display: block;
+    box-sizing: border-box;
+    min-inline-size: 0;
+    margin: 0;
+    padding-block: var(--nz-textarea-padding-block, var(--nz-space-2));
+    padding-inline: var(--nz-textarea-padding-inline, var(--nz-space-3));
+    border: var(--nz-border-width-default) solid
+      var(--nz-textarea-border, var(--_nz-textarea-border));
+    border-radius: var(--nz-textarea-radius, var(--nz-radius-md));
+    background: var(--nz-textarea-bg, var(--_nz-textarea-bg));
+    color: var(--nz-textarea-fg, var(--nz-text-primary));
+    font: var(--nz-textarea-font, var(--nz-font-body-m));
+    resize: vertical;
+    transition:
+      border-color var(--nz-duration-fast) var(--nz-easing-standard),
+      box-shadow var(--nz-duration-fast) var(--nz-easing-standard);
+
+    @supports (field-sizing: content) {
+      field-sizing: content;
+      min-block-size: calc(
+        var(--_nz-textarea-rows, 3) * 1lh + 2 *
+          var(--nz-textarea-padding-block, var(--nz-space-2)) + 2 * var(--nz-border-width-default)
+      );
+    }
+
+    &::placeholder {
+      color: var(--nz-textarea-placeholder-fg, var(--nz-text-tertiary));
+      opacity: 1;
+    }
+
+    @media (hover: hover) {
+      &:hover:not(:disabled, [data-disabled]) {
+        border-color: var(--_nz-textarea-border-hover);
+      }
+    }
+
+    /* the outline lives in nz.base; this adds only the decorative halo, critical while invalid */
+    &:focus-visible {
+      box-shadow: 0 0 0 calc(var(--nz-border-width-focus) + 4px) var(--_nz-textarea-halo);
+    }
+
+    &[data-invalid] {
+      --_nz-textarea-border: var(--nz-border-critical);
+      --_nz-textarea-border-hover: var(--nz-border-critical);
+      --_nz-textarea-halo: var(--nz-focus-halo-critical);
+    }
+
+    &[data-readonly] {
+      --_nz-textarea-bg: var(--nz-bg-subtle);
+    }
+
+    &[rows='1'] {
+      --_nz-textarea-rows: 1;
+    }
+
+    &[rows='2'] {
+      --_nz-textarea-rows: 2;
+    }
+
+    &[rows='3'] {
+      --_nz-textarea-rows: 3;
+    }
+
+    &[rows='4'] {
+      --_nz-textarea-rows: 4;
+    }
+
+    &[rows='5'] {
+      --_nz-textarea-rows: 5;
+    }
+
+    &[rows='6'] {
+      --_nz-textarea-rows: 6;
+    }
+
+    &[rows='7'] {
+      --_nz-textarea-rows: 7;
+    }
+
+    &[rows='8'] {
+      --_nz-textarea-rows: 8;
+    }
+
+    &[rows='9'] {
+      --_nz-textarea-rows: 9;
+    }
+
+    &[rows='10'] {
+      --_nz-textarea-rows: 10;
+    }
+
+    /* the Textarea's own flag, or a disabled Fieldset, which disables it natively */
+    &:is(:disabled, [data-disabled]) {
+      --_nz-textarea-border: var(--nz-border-subtle);
+      --_nz-textarea-bg: var(--nz-bg-disabled);
+
+      color: var(--nz-text-disabled);
+      cursor: not-allowed;
+      resize: none;
+
+      &::placeholder {
+        color: var(--nz-text-disabled);
+      }
+    }
+  }
+}

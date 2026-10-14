@@ -55,14 +55,40 @@ const RGB = {
 };
 
 /** Client modules of @nizivo/react, recognised by a string only their code contains. */
-const NIZIVO_CLIENT_MARKERS = ['select-popup', 'tooltip-popup', 'dialog-popup', 'alert-dismiss'];
+const NIZIVO_CLIENT_MARKERS = [
+  'select-popup',
+  'tooltip-popup',
+  'dialog-popup',
+  'alert-dismiss',
+  // FieldScope (Field's client leaf)
+  'willValidate',
+  'input-prefix',
+  'nz-textarea',
+  'checkbox-indicator',
+  'switch-thumb',
+  'radio-input',
+];
 
-/** The pages whose examples render a client module, and the only markers they may load. */
+/**
+ * The pages whose examples import a client module, and the only markers they may load. The docs
+ * build with Turbopack, which ships a client module the page's server graph imports even when no
+ * example renders it, so this is "the client modules the examples import", not "render": FieldScope
+ * on the NativeSelect page (its Fields wire it with no client code), and wherever an example imports
+ * a control that reads it.
+ */
 const CLIENT_PAGES: Record<string, string[]> = {
   '/docs/components/select/': ['select-popup'],
   '/docs/components/tooltip/': ['tooltip-popup'],
   '/docs/components/dialog/': ['dialog-popup'],
   '/docs/components/alert/': ['alert-dismiss'],
+  '/docs/components/field/': ['input-prefix', 'willValidate'],
+  '/docs/components/fieldset/': ['checkbox-indicator', 'willValidate'],
+  '/docs/components/input/': ['input-prefix', 'willValidate'],
+  '/docs/components/textarea/': ['nz-textarea', 'willValidate'],
+  '/docs/components/native-select/': ['willValidate'],
+  '/docs/components/checkbox/': ['checkbox-indicator', 'willValidate'],
+  '/docs/components/switch/': ['switch-thumb', 'willValidate'],
+  '/docs/components/radio-group/': ['radio-input'],
 };
 
 /** Pages whose JavaScript the run prints. */
@@ -74,6 +100,10 @@ const REPORT = [
   '/docs/components/tooltip/',
   '/docs/components/select/',
   '/docs/components/dialog/',
+  '/docs/components/field/',
+  '/docs/components/native-select/',
+  '/docs/components/input/',
+  '/docs/components/radio-group/',
 ];
 
 interface Js {

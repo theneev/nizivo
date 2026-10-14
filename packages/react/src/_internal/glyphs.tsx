@@ -1,10 +1,13 @@
 // NO directive: server-safe. The few glyphs core draws itself, so @nizivo/react imports no icon
 // package (ARCHITECTURE.md §6, §14.2). Paths are Lucide's (ISC; notice in THIRD_PARTY_NOTICES).
 // Stroke follows settled 7: 1.92 on the 24 viewBox, non-absolute, so it renders 1.28 px in the 16 px
-// slots (Button icon, Select chevron) that size the glyph through font-size.
+// slots (Button icon, Select chevron) that size the glyph through font-size. `circle-x` (the error mark
+// of Field and Fieldset), and `check` and `minus` (Checkbox's checked mark and indeterminate dash) are
+// on Lucide's list of Feather-derived icons, so they also carry the Feather MIT notice in
+// THIRD_PARTY_NOTICES.
 import type { JSX } from 'react';
 
-export type GlyphName = 'spinner' | 'chevrons-up-down';
+export type GlyphName = 'spinner' | 'chevrons-up-down' | 'circle-x' | 'check' | 'minus';
 
 const PATHS: Record<GlyphName, JSX.Element> = {
   spinner: <path d="M21 12a9 9 0 1 1-6.219-8.56" />,
@@ -14,6 +17,15 @@ const PATHS: Record<GlyphName, JSX.Element> = {
       <path d="m7 9 5-5 5 5" />
     </>
   ),
+  'circle-x': (
+    <>
+      <circle cx="12" cy="12" r="10" />
+      <path d="m15 9-6 6" />
+      <path d="m9 9 6 6" />
+    </>
+  ),
+  check: <path d="M20 6 9 17l-5-5" />,
+  minus: <path d="M5 12h14" />,
 };
 
 export function Glyph({ name }: { name: GlyphName }): JSX.Element {

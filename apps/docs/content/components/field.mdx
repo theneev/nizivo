@@ -1,0 +1,15 @@
+---
+title: Field
+description: The label, help text and error around one form control. A server-safe shell; inside it, Nizivo controls pick up their id, name, flags and description wiring, and native validation messages show inline.
+---
+
+## Validation in mixed forms
+
+A Field shows the browser's validation message inline and moves focus to the first invalid control
+it wires. A NativeSelect and a RadioGroup keep the browser's own message bubble, and the browser
+moves focus to the first of those after the Field has moved it. In a form that mixes them, a failed
+submit shows both kinds of message and focus can land past an earlier inline error. Until one channel
+covers every control, keep a form on one kind, or validate on the server and pass `error`.
+
+`readOnly` on a Field reaches Input and Textarea. Checkbox, Switch, SegmentedControl and NativeSelect
+have no read-only state and ignore it, so the Field's `data-readonly` does not make them read-only.

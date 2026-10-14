@@ -8,12 +8,21 @@
   :where(
     .nz-alert-dismiss,
     .nz-button,
+    .nz-checkbox-input,
     .nz-dialog-close,
     .nz-dialog-trigger,
+    .nz-native-select-trigger,
+    .nz-radio-input,
     .nz-select-item,
     .nz-select-trigger,
+    .nz-switch-input,
+    .nz-textarea,
     .nz-tooltip-trigger
   ):is(:focus-visible, [data-focus-visible]) {
+    outline: var(--nz-border-width-focus) solid var(--nz-border-focus);
+    outline-offset: 2px;
+  }
+  :where(.nz-input):focus-within {
     outline: var(--nz-border-width-focus) solid var(--nz-border-focus);
     outline-offset: 2px;
   }
@@ -28,10 +37,15 @@
   :where(
     .nz-alert-dismiss,
     .nz-button,
+    .nz-checkbox-input,
     .nz-dialog-close,
     .nz-dialog-trigger,
+    .nz-native-select-trigger,
+    .nz-radio-input,
     .nz-select-item,
     .nz-select-trigger,
+    .nz-switch-input,
+    .nz-textarea,
     .nz-tooltip-trigger
   ) {
     touch-action: pan-x pan-y pinch-zoom;
@@ -61,8 +75,19 @@
   }
   /* forced colours drop backgrounds and shadows: system colours carry edges and state */
   @media (forced-colors: active) {
-    :where(.nz-dialog-popup, .nz-select-popup, .nz-tooltip-popup) {
+    :where(
+      .nz-checkbox-input,
+      .nz-dialog-popup,
+      .nz-radio-input,
+      .nz-select-popup,
+      .nz-switch-input,
+      .nz-tooltip-popup
+    ) {
       border: 1px solid CanvasText;
+    }
+    :where(.nz-switch-thumb) {
+      background: CanvasText;
+      forced-color-adjust: none;
     }
     :where(.nz-meter-track)::-moz-meter-bar {
       background: Highlight;
@@ -85,6 +110,14 @@
       forced-color-adjust: none;
     }
     :where(.nz-progress-bar-track)::-webkit-progress-value {
+      background: Highlight;
+      forced-color-adjust: none;
+    }
+    :where(.nz-checkbox-input, .nz-radio-input, .nz-switch-input):checked {
+      background: Highlight;
+      forced-color-adjust: none;
+    }
+    :where(.nz-checkbox-input):indeterminate {
       background: Highlight;
       forced-color-adjust: none;
     }
