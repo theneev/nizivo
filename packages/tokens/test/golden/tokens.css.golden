@@ -83,6 +83,7 @@
     --nz-elevation-highlight: transparent;
     --nz-elevation-ring: light-dark(transparent, rgb(255 255 255 / 0.08));
     --nz-focus-halo: color-mix(in oklab, var(--nz-border-focus) 28%, transparent);
+    --nz-focus-halo-critical: color-mix(in oklab, var(--nz-border-critical) 28%, transparent);
     --nz-focus-ring: 0 0 0 4px rgb(46 130 88 / 0.28);
     --nz-focus-ring-critical: 0 0 0 4px rgb(214 74 46 / 0.25);
     --nz-font-body-l: var(--nz-font-body-l-font-weight) var(--nz-font-body-l-font-size)/var(--nz-font-body-l-line-height) var(--nz-font-body-l-font-family);

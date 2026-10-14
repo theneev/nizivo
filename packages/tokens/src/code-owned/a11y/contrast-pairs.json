@@ -59,6 +59,18 @@
     },
     { "fg": "icon-brand", "on": ["surfaces", "bg-brand-subtle"], "role": "non-text" },
     {
+      "fg": "bg-brand",
+      "on": ["surfaces", "bg-brand-subtle"],
+      "role": "non-text",
+      "use": "Checkbox checked and indeterminate fill, Radio checked ring, Switch on track"
+    },
+    {
+      "fg": "bg-surface",
+      "on": ["border-control", "bg-brand"],
+      "role": "non-text",
+      "use": "Switch thumb on the off and on tracks"
+    },
+    {
       "fg": "icon-success",
       "on": ["surfaces", "bg-success-subtle", "chart-track"],
       "role": "non-text",
@@ -69,12 +81,17 @@
     { "fg": "icon-info", "on": ["surfaces", "bg-info-subtle"], "role": "non-text" },
     {
       "fg": "border-control",
-      "on": ["surfaces"],
+      "on": ["surfaces", "bg-brand-subtle"],
       "role": "non-text",
-      "use": "Input, Select trigger, Checkbox, Radio and Switch off-track boundaries"
+      "use": "Input, Textarea, Select and NativeSelect trigger, Checkbox and Radio boundaries (also in a selected row); Switch off track (fill); SegmentedControl selected ring"
     },
     { "fg": "border-control-hover", "on": ["surfaces"], "role": "non-text" },
-    { "fg": "border-brand", "on": ["surfaces"], "role": "non-text" },
+    {
+      "fg": "border-brand",
+      "on": ["surfaces", "bg-brand-subtle"],
+      "role": "non-text",
+      "use": "IconButton pressed (toggle) edge"
+    },
     { "fg": "border-warning", "on": ["surfaces", "bg-warning-subtle"], "role": "non-text" },
     { "fg": "border-critical", "on": ["surfaces", "bg-critical-subtle"], "role": "non-text" },
     {
@@ -104,6 +121,17 @@
     { "fg": "border-default", "on": ["panels"], "role": "decorative" },
     { "fg": "border-subtle", "on": ["panels"], "role": "decorative" },
     { "fg": "border-strong", "on": ["panels"], "role": "decorative" },
-    { "fg": "text-disabled", "on": ["surfaces"], "role": "disabled" }
+    {
+      "fg": "text-disabled",
+      "on": ["surfaces", "bg-disabled"],
+      "role": "disabled",
+      "use": "Disabled Input, Textarea and NativeSelect value; disabled checked glyph and radio dot"
+    },
+    {
+      "fg": "bg-surface",
+      "on": ["bg-disabled", "bg-brand-muted"],
+      "role": "disabled",
+      "use": "Disabled Switch thumb"
+    }
   ]
 }

@@ -81,7 +81,7 @@ describe('the contrast matrix on the built tokens.css', () => {
     expect(report.errors).toEqual([]);
     expect(report.warnings).toEqual([]);
     const checked = report.results.filter((r) => r.threshold !== undefined);
-    expect(checked.length).toBe(58);
+    expect(checked.length).toBe(62);
     expect(report.sources.overrides).toHaveLength(14);
     expect(report.sources.proposals).toHaveLength(19);
   });

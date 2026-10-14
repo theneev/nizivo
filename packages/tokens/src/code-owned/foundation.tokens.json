@@ -92,6 +92,11 @@
       "$type": "string",
       "$value": "color-mix(in oklab, {color.border.focus} 28%, transparent)",
       "$description": "Decoration around the focus outline; resolves per scope. Never the focus indicator on its own (1.45:1)"
+    },
+    "halo-critical": {
+      "$type": "string",
+      "$value": "color-mix(in oklab, {color.border.critical} 28%, transparent)",
+      "$description": "The focus halo of an invalid control (Figma Focus/Ring Critical, same formula as focus.halo). Decoration only, like focus.halo"
     }
   },
   "font": {

@@ -411,6 +411,11 @@
       "type": "string",
       "public": true
     },
+    "--nz-focus-halo-critical": {
+      "token": "focus.halo-critical",
+      "type": "string",
+      "public": true
+    },
     "--nz-focus-ring": {
       "token": "focus.ring",
       "type": "shadow",
