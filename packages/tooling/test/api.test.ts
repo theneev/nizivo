@@ -417,6 +417,33 @@ describe('nz api', () => {
     expect(result.output).toContain('./dist/chip/index.d.ts is missing; build @nizivo/react first');
   });
 
+  test('the root is found through a same-file builder and through a wrapper around {renderElement(…)}', () => {
+    const builder = copyFixture();
+    edit(join(builder, 'packages/react/src/chip/chip.tsx'), (text) =>
+      text.replace(
+        '}: ChipProps): ReactElement {\n  return renderElement(',
+        "}: ChipProps): ReactElement {\n  return chipElement(render, tone, size, variant, title, className, rest);\n}\n\nfunction chipElement(\n  render: ChipProps['render'],\n  tone: ChipTone,\n  size: ChipSize | undefined,\n  variant: ChipVariant,\n  title: ReactNode,\n  className: string | undefined,\n  rest: object,\n): ReactElement {\n  return renderElement(",
+      ),
+    );
+    const chip = reactFile(generated(builder), 'react/chip.json');
+    expect(chip.slots.find((slot) => slot.slot === 'chip')).toMatchObject({ part: true });
+
+    const wrapper = copyFixture();
+    edit(join(wrapper, 'packages/react/src/chip/chip.tsx'), (text) =>
+      text
+        .replace(
+          '}: ChipProps): ReactElement {\n  return renderElement(',
+          '}: ChipProps): ReactElement {\n  return (\n    <>\n      {renderElement(',
+        )
+        .replace(
+          '      children: title === undefined ? null : text(title),\n    },\n  );\n}',
+          '      children: title === undefined ? null : text(title),\n    },\n  )}\n    </>\n  );\n}',
+        ),
+    );
+    const wrapped = reactFile(generated(wrapper), 'react/chip.json');
+    expect(wrapped.slots.find((slot) => slot.slot === 'chip')).toMatchObject({ part: true });
+  });
+
   test('an attribute outside the vocabulary, a slot without its class, a misnamed root', () => {
     const root = copyFixture();
     edit(join(root, 'packages/react/src/chip/chip.tsx'), (text) =>

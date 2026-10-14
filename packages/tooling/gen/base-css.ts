@@ -23,7 +23,9 @@ const OUTLINE = [
 ];
 const FOCUS_SUFFIX: Record<FocusTarget, string> = {
   self: ':is(:focus-visible, [data-focus-visible])',
-  'nested-input': ':has(> input:focus-visible)',
+  // [data-focus-visible]: WebKit matches no :focus-visible on a radio reached by an arrow key, so the
+  // component reports it (SegmentedControl, W3).
+  'nested-input': ':is(:has(> input:focus-visible), [data-focus-visible])',
   within: ':focus-within',
 };
 const FOCUS_ORDER: readonly FocusTarget[] = ['self', 'nested-input', 'within'];

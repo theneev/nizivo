@@ -210,7 +210,8 @@ function scanFile(
     occurrences.push({
       slot,
       component,
-      root: components.has(enclosing) && rootOf(enclosing) === node,
+      // the component's root, whether written in it or in a same-file builder it returns
+      root: rootOf(component) === node,
       attributes: [...attributes].toSorted(),
     });
   }
@@ -335,8 +336,14 @@ function helperOwners(
   return owners;
 }
 
-/** The `data-slot` node of the element a component renders as its root, if any. */
-function rootSlotNode(fn: FunctionLike): Node | undefined {
+/**
+ * The `data-slot` node of the element a component renders as its root, if any. It follows a JSX
+ * wrapper's children (a context provider around `{renderElement(…)}`) and a call to a function in
+ * the same file that builds the element (`return iconButtonElement(props)`).
+ */
+function rootSlotNode(fn: FunctionLike, seen: Set<FunctionLike> = new Set()): Node | undefined {
+  if (seen.has(fn)) return undefined;
+  seen.add(fn);
   const body = fn.getBody();
   const expressions: Node[] = [];
   if (body !== undefined && !Node.isBlock(body)) expressions.push(body);
@@ -351,14 +358,14 @@ function rootSlotNode(fn: FunctionLike): Node | undefined {
     if (owner === fn && expression !== undefined) expressions.push(expression);
   }
   for (const expression of expressions) {
-    const found = rootIn(expression);
+    const found = rootIn(expression, seen);
     if (found !== undefined) return found;
   }
   return undefined;
 }
 
-function rootIn(node: Node): Node | undefined {
-  if (Node.isParenthesizedExpression(node)) return rootIn(node.getExpression());
+function rootIn(node: Node, seen: Set<FunctionLike>): Node | undefined {
+  if (Node.isParenthesizedExpression(node)) return rootIn(node.getExpression(), seen);
   if (Node.isJsxElement(node) || Node.isJsxSelfClosingElement(node)) {
     const opening = Node.isJsxElement(node) ? node.getOpeningElement() : node;
     const attribute = opening
@@ -369,26 +376,36 @@ function rootIn(node: Node): Node | undefined {
       );
     if (attribute !== undefined) return attribute;
     if (Node.isJsxSelfClosingElement(node)) return undefined;
-    return firstChildRoot(node.getJsxChildren());
+    return firstChildRoot(node.getJsxChildren(), seen);
   }
-  if (Node.isJsxFragment(node)) return firstChildRoot(node.getJsxChildren());
-  if (Node.isCallExpression(node) && node.getExpression().getText() === 'renderElement') {
-    const props = node.getArguments()[3];
-    if (props !== undefined && Node.isObjectLiteralExpression(props)) {
-      return props.getProperties().find((property) => propertyName(property) === 'data-slot');
+  if (Node.isJsxFragment(node)) return firstChildRoot(node.getJsxChildren(), seen);
+  if (Node.isCallExpression(node)) {
+    const callee = node.getExpression().getText();
+    if (callee === 'renderElement') {
+      const props = node.getArguments()[3];
+      if (props !== undefined && Node.isObjectLiteralExpression(props)) {
+        return props.getProperties().find((property) => propertyName(property) === 'data-slot');
+      }
+      return undefined;
     }
+    // A same-file builder: its own root is the component's.
+    const builder = topLevelFunctions(node.getSourceFile()).get(callee);
+    if (builder !== undefined) return rootSlotNode(builder, seen);
   }
   return undefined;
 }
 
-function firstChildRoot(children: Node[]): Node | undefined {
+function firstChildRoot(children: Node[], seen: Set<FunctionLike>): Node | undefined {
   for (const child of children) {
+    const inner = Node.isJsxExpression(child) ? child.getExpression() : child;
     if (
-      Node.isJsxElement(child) ||
-      Node.isJsxSelfClosingElement(child) ||
-      Node.isJsxFragment(child)
+      inner !== undefined &&
+      (Node.isJsxElement(inner) ||
+        Node.isJsxSelfClosingElement(inner) ||
+        Node.isJsxFragment(inner) ||
+        Node.isCallExpression(inner))
     ) {
-      const found = rootIn(child);
+      const found = rootIn(inner, seen);
       if (found !== undefined) return found;
     }
   }

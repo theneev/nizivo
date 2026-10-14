@@ -72,14 +72,14 @@ their neighbours. `::after` stays reserved for it.
 
 ## `focusTarget`
 
-| Mode           | Selector `base.css` gets                             | Use for                                                                                                                                                        |
-| -------------- | ---------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `self`         | `:where(…):is(:focus-visible, [data-focus-visible])` | an element that takes focus itself: buttons, triggers, native inputs, and collection items whose focus the adapter reports through `data-focus-visible` (§8.3) |
-| `nested-input` | `:where(…):has(> input:focus-visible)`               | a visible `<label>` wrapping a hidden native radio or checkbox: a SegmentedControl item, Chip, ChoiceCard                                                      |
-| `within`       | `:where(…):focus-within`                             | a group that draws the outline for the field inside it (an Input or Textarea group); the inner field draws none                                                |
+| Mode           | Selector `base.css` gets                                          | Use for                                                                                                                                                                                                                                        |
+| -------------- | ----------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `self`         | `:where(…):is(:focus-visible, [data-focus-visible])`              | an element that takes focus itself: buttons, triggers, native inputs, and collection items whose focus the adapter reports through `data-focus-visible` (§8.3)                                                                                 |
+| `nested-input` | `:where(…):is(:has(> input:focus-visible), [data-focus-visible])` | a visible `<label>` wrapping a hidden native radio or checkbox: a SegmentedControl item, Chip, ChoiceCard. WebKit matches no `:focus-visible` on a radio reached by an arrow key, so the component sets `data-focus-visible` on the label then |
+| `within`       | `:where(…):focus-within`                                          | a group that draws the outline for the field inside it (the Input box); the inner field draws none                                                                                                                                             |
 
 A string applies to every `interactive` slot. Mixed components map each slot, and the keys must be
-exactly the `interactive` slots: `{ "input": "self", "input-group": "within" }`. Without
+exactly the `interactive` slots: `{ "chip": "self", "chip-group": "within" }` (illustrative). Without
 `interactive`, `focusTarget` is an error. `focusTargetOf(config, slot)` in `gen/schema.ts` resolves a
 slot's mode.
 
@@ -167,8 +167,10 @@ Illustrative; the component's own markup decides its slot names.
 - **Switch**: as Checkbox, plus `{ "slot": "switch-thumb", "paint": "mark" }`.
 - **SegmentedControl**: `interactive: ["segmented-control-item"]`, `focusTarget: "nested-input"`,
   `{ "slot": "segmented-control-item", "state": ":has(> input:checked)", "paint": "outline" }`.
-- **Input**: `interactive: ["input", "input-group"]`,
-  `focusTarget: { "input": "self", "input-group": "within" }`.
+- **Input**: the root is the bordered box, so it carries the component's own slot (§8.2):
+  `interactive: ["input"]`, `focusTarget: "within"` on `.nz-input`, around the native
+  `input.nz-input-control`, which draws no outline. **Textarea** and **NativeSelect** have no group:
+  the native element is the box (`focusTarget: "self"`).
 - **ProgressBar and Meter** (`server`, one subpath each): `{ "slot": "progress-bar-fill", "paint": "fill" }`
   for a drawn fill; on a native `<progress>` or `<meter>`, the pseudo-elements as `state` on the
   element's slot, one entry each (week 2 ships `progress-bar-track` and `meter-track` this way).

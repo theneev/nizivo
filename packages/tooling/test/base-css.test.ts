@@ -143,7 +143,9 @@ describe('baseCss', () => {
       LAYERS,
     );
     expect(css).toContain(':where(.nz-input):is(:focus-visible, [data-focus-visible]) {');
-    expect(css).toContain(':where(.nz-segmented-control-item):has(> input:focus-visible) {');
+    expect(css).toContain(
+      ':where(.nz-segmented-control-item):is(:has(> input:focus-visible), [data-focus-visible]) {',
+    );
     expect(css).toContain(':where(.nz-input-group):focus-within {');
     expect(ruleOf(css, ':where(.nz-input, .nz-segmented-control-item) {')).toContain(
       'touch-action: pan-x pan-y pinch-zoom;',
