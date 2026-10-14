@@ -1,0 +1,13 @@
+---
+title: SegmentedControl
+description: A compact single choice between a few options, such as a chart's time range. Native radios inside labels, so it submits, resets and works before hydration. Inside a Field, give the Field `group`.
+apg: https://www.w3.org/WAI/ARIA/apg/patterns/radio/
+keyboard:
+  - keys: Tab
+    action: Moves focus into the control, to the selected item; the next Tab leaves it.
+  - keys: ArrowRight, ArrowDown
+    action: Selects the next item and focuses it, skipping disabled ones.
+  - keys: ArrowLeft, ArrowUp
+    action: Selects the previous item and focuses it, skipping disabled ones.
+keyboardSource: native `<input type="radio">` elements inside `<label>`s (`segmented-control.client.tsx`); its only key handler marks the item `data-focus-visible`, because WebKit matches no `:focus-visible` on a radio reached by an arrow key. The browser lane (`test/browser/segmented-control.spec.tsx`) checks Tab entry, arrows and skipping a disabled item.
+---

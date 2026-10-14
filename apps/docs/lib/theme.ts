@@ -6,9 +6,10 @@
 // - the `light` or `dark` class, which Fumadocs' styles key on;
 // - `data-nz-theme="light"` or `"dark"`, Nizivo's own theme scope;
 // - `style.colorScheme`, so form controls and scrollbars match.
-// It also sets `data-nz-platform` (`apple` or `other`), which Kbd reads to spell `mod` as ⌘ or Ctrl
-// (contracts/vocabulary.json).
-// Nizivo's `ThemeScript` does this job for apps once it ships; it is not in @nizivo/react yet.
+// Then Nizivo's own `themeScript` (@nizivo/react/theme-script) sets `data-nz-platform` (`apple` or
+// `other`), which Kbd reads to spell `mod` as ⌘ or Ctrl (contracts/vocabulary.json). The theme half
+// stays here until ThemeScript persists the theme choice too (§7.4).
+import { themeScript } from '@nizivo/react/theme-script';
 
 /** Both attributes the theme switch writes on <html>. */
 export const THEME_ATTRIBUTES = ['class', 'data-nz-theme'] as const;
@@ -16,4 +17,4 @@ export const THEME_STORAGE_KEY = 'theme';
 
 export const THEME_SCRIPT = `(function(){var d=document.documentElement,t;try{t=localStorage.getItem(${JSON.stringify(
   THEME_STORAGE_KEY,
-)})}catch(e){}if(t!=="light"&&t!=="dark")t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";d.classList.remove("light","dark");d.classList.add(t);d.setAttribute("data-nz-theme",t);d.style.colorScheme=t;var n=navigator,p=(n.userAgentData&&n.userAgentData.platform)||n.platform||"";d.setAttribute("data-nz-platform",/mac|iphone|ipad|ipod/i.test(p)?"apple":"other")})()`;
+)})}catch(e){}if(t!=="light"&&t!=="dark")t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";d.classList.remove("light","dark");d.classList.add(t);d.setAttribute("data-nz-theme",t);d.style.colorScheme=t})();${themeScript}`;

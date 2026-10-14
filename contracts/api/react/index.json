@@ -603,6 +603,30 @@
       "name": "HeadingVariant"
     },
     {
+      "definedIn": "./icon-button",
+      "import": "import { IconButton } from '@nizivo/react'",
+      "kind": "component",
+      "name": "IconButton"
+    },
+    {
+      "definedIn": "./icon-button",
+      "import": "import type { IconButtonProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "IconButtonProps"
+    },
+    {
+      "definedIn": "./icon-button",
+      "import": "import type { IconButtonState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "IconButtonState"
+    },
+    {
+      "definedIn": "./icon-button",
+      "import": "import type { IconButtonTooltipOptions } from '@nizivo/react'",
+      "kind": "type",
+      "name": "IconButtonTooltipOptions"
+    },
+    {
       "definedIn": "./image",
       "import": "import { Image } from '@nizivo/react'",
       "kind": "component",
@@ -841,6 +865,54 @@
       "import": "import type { RadioState } from '@nizivo/react'",
       "kind": "type",
       "name": "RadioState"
+    },
+    {
+      "definedIn": "./segmented-control",
+      "import": "import { SegmentedControl } from '@nizivo/react'",
+      "kind": "namespace",
+      "name": "SegmentedControl"
+    },
+    {
+      "definedIn": "./segmented-control",
+      "import": "import type { SegmentedControlChangeReason } from '@nizivo/react'",
+      "kind": "type",
+      "name": "SegmentedControlChangeReason"
+    },
+    {
+      "definedIn": "./segmented-control",
+      "import": "import { SegmentedControlItem } from '@nizivo/react'",
+      "kind": "part",
+      "name": "SegmentedControlItem"
+    },
+    {
+      "definedIn": "./segmented-control",
+      "import": "import type { SegmentedControlItemProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "SegmentedControlItemProps"
+    },
+    {
+      "definedIn": "./segmented-control",
+      "import": "import type { SegmentedControlItemState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "SegmentedControlItemState"
+    },
+    {
+      "definedIn": "./segmented-control",
+      "import": "import { SegmentedControlRoot } from '@nizivo/react'",
+      "kind": "part",
+      "name": "SegmentedControlRoot"
+    },
+    {
+      "definedIn": "./segmented-control",
+      "import": "import type { SegmentedControlRootProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "SegmentedControlRootProps"
+    },
+    {
+      "definedIn": "./segmented-control",
+      "import": "import type { SegmentedControlRootState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "SegmentedControlRootState"
     },
     {
       "definedIn": "./select",
@@ -1113,6 +1185,18 @@
       "name": "TextareaProps"
     },
     {
+      "definedIn": "./theme-script",
+      "import": "import { ThemeScript } from '@nizivo/react'",
+      "kind": "component",
+      "name": "ThemeScript"
+    },
+    {
+      "definedIn": "./theme-script",
+      "import": "import type { ThemeScriptProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "ThemeScriptProps"
+    },
+    {
       "definedIn": "./tooltip",
       "import": "import { Tooltip } from '@nizivo/react'",
       "kind": "namespace",
@@ -1177,6 +1261,12 @@
       "import": "import type { TooltipTriggerState } from '@nizivo/react'",
       "kind": "type",
       "name": "TooltipTriggerState"
+    },
+    {
+      "definedIn": "./theme-script",
+      "import": "import { themeScript } from '@nizivo/react'",
+      "kind": "constant",
+      "name": "themeScript"
     },
     {
       "definedIn": "./field",

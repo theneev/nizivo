@@ -2,13 +2,15 @@
 import type { ComponentPropsWithRef, ReactElement, ReactNode } from 'react';
 import { renderElement, type RenderProp } from '../contracts/render';
 import { cx } from '../_internal/cx';
+import { Glyph } from '../_internal/glyphs';
 
 export interface InlineErrorProps extends ComponentPropsWithRef<'div'> {
   /**
    * The error mark, decorative: the message carries the meaning, and the mark keeps the error from
-   * being colour-only (§15.1). Required until the internal error glyph ships in `_internal/glyphs`.
+   * being colour-only (§15.1). Defaults to the internal `circle-x` glyph; pass your icon set's glyph
+   * to replace it.
    */
-  icon: ReactNode;
+  icon?: ReactNode;
   /** A recovery control after the message, for example `<Button size="sm">Retry</Button>` (§16.5). */
   action?: ReactNode;
   render?: RenderProp<Record<string, never>>;
@@ -34,7 +36,7 @@ export function InlineError({
       children: (
         <>
           <span className="nz-inline-error-icon" data-slot="inline-error-icon" aria-hidden="true">
-            {icon}
+            {icon ?? <Glyph name="circle-x" />}
           </span>
           <span className="nz-inline-error-message" data-slot="inline-error-message">
             {children}

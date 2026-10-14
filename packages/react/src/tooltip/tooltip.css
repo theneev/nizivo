@@ -1,28 +1,66 @@
 @layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
 
-/* @nizivo/react/css/tooltip.css (ARCHITECTURE.md §12.1, §12.3). Skeleton. The popup carries
-   data-nz-scheme="inverse", so surface and text tokens resolve to the opposite theme (§7.4). */
+/* @nizivo/react/css/tooltip.css (ARCHITECTURE.md §12.1, §12.3; figma/12 §4.10, master 746:262). The
+   popup carries data-nz-scheme="inverse", so surface and text tokens resolve to the opposite theme
+   (§7.4): the shortcut's --nz-text-tertiary is the other theme's, which passes on the inverse surface.
+   Week 3 aligns the W1 skeleton with the master: 8 / 12 padding, Label/M, Elevation/3, a gap before
+   the shortcut, and Figma's "fade + 4px rise". The 12 × 7 arrow is not drawn (a Deviations entry). */
 @layer nz.components {
   .nz-tooltip-popup {
     z-index: var(--nz-z-overlay);
+    display: flex;
+    align-items: center;
+    gap: var(--nz-space-2);
     max-inline-size: 20rem;
-    padding-block: var(--nz-space-1-5);
-    padding-inline: var(--nz-space-2);
+    padding-block: var(--nz-space-2);
+    padding-inline: var(--nz-space-3);
     border-radius: var(--nz-tooltip-radius, var(--nz-radius-sm));
     background: var(--nz-tooltip-bg, var(--nz-bg-surface-raised));
+    box-shadow: var(--nz-tooltip-shadow, var(--nz-elevation-3));
     color: var(--nz-tooltip-fg, var(--nz-text-primary));
-    font: var(--nz-font-label-s);
+    font: var(--nz-font-label-m);
+    letter-spacing: var(--nz-tracking-label-m);
     transform-origin: var(--nz-transform-origin);
-    transition: opacity var(--nz-duration-fast) var(--nz-easing-enter);
+    /* opacity on --nz-duration-fade (120 ms when reduced, so the fade survives); the rise on
+       --nz-duration-fast and --nz-distance-lift, both 0 when reduced (§13.3) */
+    transition:
+      opacity var(--nz-duration-fade) var(--nz-easing-enter),
+      translate var(--nz-duration-fast) var(--nz-easing-enter);
 
     &[data-entering] {
       opacity: 0;
+    }
+
+    /* it rises toward its trigger: from below when above it, and so on */
+    &[data-entering][data-side='top'] {
+      translate: 0 var(--nz-distance-lift);
+    }
+
+    &[data-entering][data-side='bottom'] {
+      translate: 0 calc(-1 * var(--nz-distance-lift));
+    }
+
+    &[data-entering][data-side='left'] {
+      translate: var(--nz-distance-lift) 0;
+    }
+
+    &[data-entering][data-side='right'] {
+      translate: calc(-1 * var(--nz-distance-lift)) 0;
     }
 
     &[data-exiting] {
       opacity: 0;
       transition: opacity var(--nz-duration-fade) var(--nz-easing-exit);
     }
+  }
+
+  /* Figma draws the shortcut as plain Mono/M text, not a key box, so the Kbd frame is reset here */
+  .nz-tooltip-popup .nz-tooltip-shortcut {
+    flex: none;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--nz-tooltip-shortcut-fg, var(--nz-text-tertiary));
   }
 
   @media (forced-colors: active) {

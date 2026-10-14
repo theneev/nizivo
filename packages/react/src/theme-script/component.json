@@ -1,0 +1,20 @@
+{
+  "name": "theme-script",
+  "status": "stable",
+  "tier": "server",
+  "parts": [],
+  "exports": ["ThemeScript", "themeScript"],
+  "cssDeps": [],
+  "variants": {},
+  "figma": {
+    "canonical": [],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": []
+  },
+  "budget": {
+    "measuredKB": 0,
+    "limitKB": 0,
+    "source": "server-safe, no directive: 0 KB client JS; one inline script in <head>"
+  }
+}

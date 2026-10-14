@@ -21,6 +21,14 @@ export interface TooltipRootProps {
   /** Hover delay before opening, in ms (Figma: 400). Keyboard focus opens immediately. @default 400 */
   delay?: number;
   disabled?: boolean;
+  /**
+   * Convenience for the common case: renders a `Tooltip.Popup` with this content after `children`, so
+   * `<Tooltip.Root content="Export">` needs no Popup part. Leave it out to compose `Tooltip.Popup`
+   * yourself (for `side`, `align` or `sideOffset`).
+   */
+  content?: ReactNode;
+  /** A shortcut for `content`, drawn by `Kbd` (`"mod+s"` is ⌘S on Apple platforms, Ctrl+S elsewhere). */
+  shortcut?: string;
   children: ReactNode;
 }
 
@@ -49,12 +57,20 @@ export interface TooltipPopupProps extends Omit<ComponentPropsWithRef<'div'>, 'c
   sideOffset?: number;
   /** Portal container. Defaults to the parent overlay, else `document.body` (§12.1 L2). */
   container?: Element | null;
+  /**
+   * A keyboard shortcut drawn after the text with `Kbd`, in the keys syntax `Kbd` takes (`"mod+k"`,
+   * `"mod+shift+d"`). It shows the Apple spelling where `ThemeScript` sets `data-nz-platform="apple"`.
+   * It is a visual hint: the app implements the shortcut itself.
+   */
+  shortcut?: string;
   children: ReactNode;
 }
 
 /** What every Tooltip adapter implements (the RAC components adapter now, a hooks adapter in v0.2). */
 export interface TooltipEngine {
-  Root(p: Omit<TooltipRootProps, 'delay'> & { delay: number }): ReactElement;
+  Root(
+    p: Omit<TooltipRootProps, 'delay' | 'content' | 'shortcut'> & { delay: number },
+  ): ReactElement;
   Trigger(p: EnginePart<'button', TooltipTriggerState>): ReactElement;
   Popup(
     p: EnginePart<'div', TooltipPopupState, 'role'> & {

@@ -8,7 +8,7 @@
   "interactive": ["tooltip-trigger"],
   "focusTarget": "self",
   "stateIndicator": [{ "slot": "tooltip-popup", "paint": "border" }],
-  "cssDeps": ["base"],
+  "cssDeps": ["base", "kbd"],
   "variants": {},
   "figma": {
     "canonical": [],

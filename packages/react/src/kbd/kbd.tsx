@@ -2,6 +2,7 @@
 import type { ComponentPropsWithRef, ReactElement, ReactNode } from 'react';
 import { renderElement, type RenderProp } from '../contracts/render';
 import { cx } from '../_internal/cx';
+import { splitKeys } from '../_internal/keys';
 
 /** The `data-platform` values of the glyph spans; they match `data-nz-platform` (§8.3). */
 export type KbdPlatform = 'apple' | 'other';
@@ -44,24 +45,6 @@ const KEYS: Record<string, readonly [string, string]> = {
   left: ['←', '←'],
   right: ['→', '→'],
 };
-
-/**
- * `"mod+shift+d"` → `["mod", "shift", "d"]`. The plus key is `plus`, or a `+` where a key is due:
- * `"mod++"` and `"mod+plus"` are both ⌘ and +.
- */
-function splitKeys(keys: string): string[] {
-  const parts = keys.split('+').map((part) => part.trim());
-  const out: string[] = [];
-  for (let index = 0; index < parts.length; index += 1) {
-    const part = parts[index] ?? '';
-    if (part !== '') out.push(part);
-    else if (parts[index + 1] === '') {
-      out.push('+');
-      index += 1;
-    }
-  }
-  return out;
-}
 
 /** `"mod+shift+d"` → `["⌘⇧D", "Ctrl+Shift+D"]`: Apple glyphs run together, others join with `+`. */
 function formatKeys(keys: string): [apple: string, other: string] {

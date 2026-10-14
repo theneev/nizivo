@@ -71,7 +71,7 @@
     {
       "name": "data-focus-visible",
       "presence": true,
-      "on": "parts with virtual or programmatic focus",
+      "on": "parts with virtual or programmatic focus; the segmented control item (WebKit misses :focus-visible on an arrow-key radio)",
       "meaning": "Focus is visible; elsewhere use :focus-visible"
     },
     {

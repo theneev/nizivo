@@ -103,6 +103,12 @@ export type {
 } from './grid/index';
 export { Heading } from './heading/index';
 export type { HeadingLevel, HeadingProps, HeadingState, HeadingVariant } from './heading/index';
+export { IconButton } from './icon-button/index';
+export type {
+  IconButtonProps,
+  IconButtonState,
+  IconButtonTooltipOptions,
+} from './icon-button/index';
 export { Image } from './image/index';
 export type { ImageProps, ImageRatio, ImageState } from './image/index';
 export { Inline } from './inline/index';
@@ -133,6 +139,18 @@ export type {
   RadioGroupChangeReason,
   RadioGroupProps,
 } from './radio-group/index';
+export {
+  SegmentedControl,
+  SegmentedControlRoot,
+  SegmentedControlItem,
+} from './segmented-control/index';
+export type {
+  SegmentedControlChangeReason,
+  SegmentedControlItemProps,
+  SegmentedControlItemState,
+  SegmentedControlRootProps,
+  SegmentedControlRootState,
+} from './segmented-control/index';
 export {
   Select,
   SelectRoot,
@@ -173,6 +191,8 @@ export { Text } from './text/index';
 export type { TextProps, TextState, TextTone, TextVariant } from './text/index';
 export { Textarea } from './textarea/index';
 export type { TextareaProps } from './textarea/index';
+export { ThemeScript, themeScript } from './theme-script/index';
+export type { ThemeScriptProps } from './theme-script/index';
 export { Tooltip, TooltipRoot, TooltipTrigger, TooltipPopup } from './tooltip/index';
 export type {
   TooltipLabels,

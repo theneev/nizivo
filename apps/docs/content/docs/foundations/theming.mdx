@@ -42,8 +42,10 @@ rule out a flash. Fumadocs' colour variables are mapped onto Nizivo's
 tokens (`--color-fd-background: var(--nz-bg-canvas)` and so on), so the docs chrome and every live
 example change together, with no flash on load.
 
-Nizivo's own `ThemeScript`, a small server-safe script that persists the user's choice the same way, is
-planned and is not in the package yet.
+Nizivo's own `ThemeScript` (`@nizivo/react/theme-script`) ships the platform half today: it sets
+`data-nz-platform` (`apple` or `other`) before first paint, so `Kbd` spells `mod` as ⌘ or Ctrl from the
+first frame. This site appends its `themeScript` string to the theme script above. Persisting the
+theme choice in `ThemeScript` itself is planned.
 
 ## Rebrand with tokens
 

@@ -1,0 +1,27 @@
+{
+  "name": "icon-button",
+  "status": "stable",
+  "tier": "server",
+  "parts": [],
+  "interactive": ["icon-button"],
+  "focusTarget": "self",
+  "stateIndicator": [
+    { "slot": "icon-button", "state": "[aria-pressed='true']", "paint": "highlight" }
+  ],
+  "cssDeps": ["base", "tooltip", "kbd"],
+  "variants": {
+    "variant": ["primary", "secondary", "tertiary", "critical", "accent"],
+    "size": ["sm", "md", "lg"]
+  },
+  "figma": {
+    "canonical": ["7275:11357"],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": []
+  },
+  "budget": {
+    "measuredKB": 17.04,
+    "limitKB": 18.7,
+    "source": "the default tooltip path: the subpath bundled with React Aria, react external (esbuild 0.28.2 --bundle --minify, gzip): 17,451 B, 1.1 KB over Tooltip alone (16,365 B by the same method); the leaf's own code is 383 B. tooltip={false} runs no client code (Turbopack still ships the chain, §9.5). Limit = measured + 10%"
+  }
+}

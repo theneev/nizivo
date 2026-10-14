@@ -90,6 +90,16 @@
         "tone": ["success", "critical", "neutral"]
       }
     },
+    "755:982": {
+      "component": "segmented-control",
+      "role": "ghost",
+      "import": "@nizivo/react/segmented-control",
+      "export": "SegmentedControl",
+      "parts": ["Root", "Item"],
+      "props": {
+        "size": ["sm", "md", "lg"]
+      }
+    },
     "756:868": {
       "component": "alert",
       "role": "ghost",
@@ -120,6 +130,16 @@
       "role": "canonical",
       "import": "@nizivo/react/button",
       "export": "Button",
+      "props": {
+        "variant": ["primary", "secondary", "tertiary", "critical", "accent"],
+        "size": ["sm", "md", "lg"]
+      }
+    },
+    "7275:11357": {
+      "component": "icon-button",
+      "role": "canonical",
+      "import": "@nizivo/react/icon-button",
+      "export": "IconButton",
       "props": {
         "variant": ["primary", "secondary", "tertiary", "critical", "accent"],
         "size": ["sm", "md", "lg"]
@@ -212,6 +232,16 @@
         "tone": ["surface", "subtle", "inverse"],
         "padding": ["sm", "md"],
         "elevation": ["1"]
+      }
+    },
+    "7275:14797": {
+      "component": "segmented-control",
+      "role": "canonical",
+      "import": "@nizivo/react/segmented-control",
+      "export": "SegmentedControl",
+      "parts": ["Root", "Item"],
+      "props": {
+        "size": ["sm", "md", "lg"]
       }
     },
     "7275:15091": {

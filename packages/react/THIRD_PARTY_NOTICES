@@ -6,13 +6,14 @@ Lucide (https://lucide.dev), lucide-static 1.56.0
 The internal glyphs in dist/_internal/glyphs.js reuse the SVG path data of these
 Lucide icons:
 
-  loader-circle      (the Button pending spinner)
+  loader-circle      (the Button and IconButton pending spinner)
   chevrons-up-down   (the Select trigger indicator)
-  circle-x           (the Field and Fieldset error mark)
+  circle-x           (the Field, Fieldset and InlineError error mark)
+  x                  (the AlertDismiss close mark)
   check              (the Checkbox checked mark)
   minus              (the Checkbox indeterminate dash)
 
-Lucide's licence covers all five:
+Lucide's licence covers all six:
 
 ISC License
 
@@ -33,7 +34,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 --------------------------------------------------------------------------------
 Feather (https://feathericons.com)
 
-circle-x (Feather's x-circle), check and minus are on Lucide's list of icons
+circle-x (Feather's x-circle), x, check and minus are on Lucide's list of icons
 derived from the Feather project, so their path data is also under Feather's
 licence:
 

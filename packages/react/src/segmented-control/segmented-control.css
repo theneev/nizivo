@@ -1,0 +1,174 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/segmented-control.css (figma/12 §4.7; Segment 7275:14797, track frames 7275:14802
+   and 7275:18903). Sizes set ONLY --_nz-* privates; public --nz-segmented-control-* hooks are read
+   once, at the property. The track is a control height (Figma's 38 px track sits between two steps):
+   md is 40 with a 4 px inset, so the item is Figma's 32 px and its 8 px radius is concentric with the
+   track's 12 (radius/md). Figma's 3 px inset, 10 px radius and 14 px item padding are off-scale. */
+@layer nz.components {
+  .nz-segmented-control {
+    --_nz-segmented-control-height: var(--nz-size-control-md);
+    --_nz-segmented-control-inset: var(--nz-space-1);
+    --_nz-segmented-control-radius: var(--nz-radius-md);
+    --_nz-segmented-control-item-padding-inline: var(--nz-space-3);
+    --_nz-segmented-control-font: var(--nz-font-label-m);
+
+    display: inline-flex;
+    gap: var(--nz-segmented-control-gap, var(--nz-space-0-5));
+    box-sizing: border-box;
+    /* hugs its items: a stretching parent (a Field, a Stack column) must not widen the track */
+    inline-size: fit-content;
+    max-inline-size: 100%;
+    block-size: var(--nz-segmented-control-height, var(--_nz-segmented-control-height));
+    padding: var(--_nz-segmented-control-inset);
+    border-radius: var(--nz-segmented-control-radius, var(--_nz-segmented-control-radius));
+    background: var(--nz-segmented-control-bg, var(--nz-bg-subtle));
+    font: var(--_nz-segmented-control-font);
+    vertical-align: middle;
+
+    &[data-full-width] {
+      display: flex;
+      inline-size: 100%;
+    }
+
+    /* invalid, as Input's invalid-at-rest edge (figma/12 §5 #15): a 1 px critical ring on the track */
+    &[data-invalid] {
+      box-shadow: inset 0 0 0 var(--nz-border-width-default) var(--nz-border-critical);
+    }
+  }
+
+  .nz-segmented-control[data-size='sm'] {
+    --_nz-segmented-control-height: var(--nz-size-control-sm);
+    --_nz-segmented-control-inset: var(--nz-space-0-5);
+    --_nz-segmented-control-radius: var(--nz-radius-sm);
+    --_nz-segmented-control-item-padding-inline: var(--nz-space-2);
+  }
+
+  .nz-segmented-control[data-size='lg'] {
+    --_nz-segmented-control-height: var(--nz-size-control-lg);
+    --_nz-segmented-control-item-padding-inline: var(--nz-space-4);
+    --_nz-segmented-control-font: var(--nz-font-label-l);
+  }
+
+  .nz-segmented-control-item {
+    position: relative;
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    gap: var(--nz-space-1-5);
+    box-sizing: border-box;
+    min-inline-size: 0;
+    padding-inline: var(--_nz-segmented-control-item-padding-inline);
+    /* concentric with the track */
+    border-radius: calc(
+      var(--nz-segmented-control-radius, var(--_nz-segmented-control-radius)) -
+        var(--_nz-segmented-control-inset)
+    );
+    color: var(--nz-segmented-control-fg, var(--nz-text-secondary));
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    transition:
+      background-color var(--nz-duration-fast) var(--nz-easing-standard),
+      box-shadow var(--nz-duration-fast) var(--nz-easing-standard),
+      color var(--nz-duration-fast) var(--nz-easing-standard);
+
+    @media (hover: hover) {
+      &:hover:not(:has(> input:disabled)) {
+        color: var(--nz-text-primary);
+      }
+    }
+
+    /* The thumb. Against the track it is 1.04:1 (light) and 1.03:1 (dark), and Elevation/1 vanishes
+       in dark, so a 1 px border/control ring and the Strong weight carry the selection (§15.3). */
+    &:has(> input:checked) {
+      background: var(--nz-segmented-control-thumb-bg, var(--nz-bg-surface));
+      box-shadow:
+        inset 0 0 0 var(--nz-border-width-default) var(--nz-border-control),
+        var(--nz-elevation-1);
+      color: var(--nz-segmented-control-fg-selected, var(--nz-text-primary));
+    }
+
+    /* a disabled group, item or fieldset */
+    &:has(> input:disabled) {
+      color: var(--nz-text-disabled);
+      cursor: not-allowed;
+    }
+
+    /* selected but disabled: the quiet edge every disabled control uses (figma/12 §5 #19), no lift */
+    &:has(> input:checked:disabled) {
+      box-shadow: inset 0 0 0 var(--nz-border-width-default) var(--nz-border-subtle);
+    }
+  }
+
+  /* The focus outline is nz.base's nested-input rule: :has(> input:focus-visible), or
+     [data-focus-visible], which the item sets because WebKit matches no :focus-visible on a radio
+     reached by an arrow key. */
+
+  /* equal shares of the width, but never narrower than the item's own text */
+  .nz-segmented-control[data-full-width] > .nz-segmented-control-item {
+    flex: 1 1 0;
+    min-inline-size: fit-content;
+  }
+
+  /* Hidden but in place: it takes focus (the outline lands on the item, nz.base) and anchors the
+     browser's validation bubble. display: none would make it unfocusable. */
+  .nz-segmented-control-input {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    opacity: 0;
+    appearance: none;
+    cursor: inherit;
+  }
+
+  .nz-segmented-control-icon {
+    display: inline-flex;
+    flex: none;
+    inline-size: var(--nz-size-icon-sm);
+    block-size: var(--nz-size-icon-sm);
+    /* internal glyphs are 1em: size them to the slot */
+    font-size: var(--nz-size-icon-sm);
+
+    & > svg {
+      inline-size: 100%;
+      block-size: 100%;
+    }
+  }
+
+  /* The text and an invisible copy at the selected weight share one cell, so the item is always as
+     wide as its selected self (Label/M 500 → Label/M Strong 600 grows "30D" by 1 px in Figma). */
+  .nz-segmented-control-label {
+    display: inline-grid;
+    min-inline-size: 0;
+  }
+
+  .nz-segmented-control-text,
+  .nz-segmented-control-sizer {
+    grid-area: 1 / 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .nz-segmented-control-sizer,
+  .nz-segmented-control-item:has(> input:checked) .nz-segmented-control-text {
+    font-weight: var(--nz-font-label-m-strong-font-weight);
+  }
+
+  .nz-segmented-control-sizer {
+    visibility: hidden;
+  }
+
+  @media (forced-colors: active) {
+    /* the track's fill is dropped: an edge keeps the group visible; the selected item's outline is
+       generated in nz.base from stateIndicator */
+    .nz-segmented-control {
+      outline: 1px solid CanvasText;
+    }
+
+    .nz-segmented-control-item:has(> input:disabled) {
+      color: GrayText;
+    }
+  }
+}

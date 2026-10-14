@@ -95,6 +95,10 @@
       "types": "./dist/heading/index.d.ts",
       "default": "./dist/heading/index.js"
     },
+    "./icon-button": {
+      "types": "./dist/icon-button/index.d.ts",
+      "default": "./dist/icon-button/index.js"
+    },
     "./image": {
       "types": "./dist/image/index.d.ts",
       "default": "./dist/image/index.js"
@@ -135,6 +139,10 @@
       "types": "./dist/radio-group/index.d.ts",
       "default": "./dist/radio-group/index.js"
     },
+    "./segmented-control": {
+      "types": "./dist/segmented-control/index.d.ts",
+      "default": "./dist/segmented-control/index.js"
+    },
     "./select": {
       "types": "./dist/select/index.d.ts",
       "default": "./dist/select/index.js"
@@ -163,6 +171,10 @@
       "types": "./dist/textarea/index.d.ts",
       "default": "./dist/textarea/index.js"
     },
+    "./theme-script": {
+      "types": "./dist/theme-script/index.d.ts",
+      "default": "./dist/theme-script/index.js"
+    },
     "./tooltip": {
       "types": "./dist/tooltip/index.d.ts",
       "default": "./dist/tooltip/index.js"
@@ -181,6 +193,7 @@
     "./css/fieldset.css": "./dist/css/fieldset.css",
     "./css/grid.css": "./dist/css/grid.css",
     "./css/heading.css": "./dist/css/heading.css",
+    "./css/icon-button.css": "./dist/css/icon-button.css",
     "./css/image.css": "./dist/css/image.css",
     "./css/inline-error.css": "./dist/css/inline-error.css",
     "./css/inline.css": "./dist/css/inline.css",
@@ -191,6 +204,7 @@
     "./css/progress-bar.css": "./dist/css/progress-bar.css",
     "./css/progress-ring.css": "./dist/css/progress-ring.css",
     "./css/radio-group.css": "./dist/css/radio-group.css",
+    "./css/segmented-control.css": "./dist/css/segmented-control.css",
     "./css/select.css": "./dist/css/select.css",
     "./css/separator.css": "./dist/css/separator.css",
     "./css/skeleton.css": "./dist/css/skeleton.css",

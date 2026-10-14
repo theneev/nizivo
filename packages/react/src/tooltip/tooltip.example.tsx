@@ -11,6 +11,18 @@ export function TooltipExample(): JSX.Element {
   );
 }
 
+/**
+ * `content` renders the Popup for you, and `shortcut` draws the keys with Kbd: ⌘E on Apple devices
+ * once `ThemeScript` has run, Ctrl+E elsewhere.
+ */
+export function TooltipShortcutExample(): JSX.Element {
+  return (
+    <Tooltip.Root content="Export the report" shortcut="mod+e">
+      <Tooltip.Trigger render={<Button variant="secondary">Export</Button>} />
+    </Tooltip.Root>
+  );
+}
+
 export function TooltipOpenExample(): JSX.Element {
   return (
     <Tooltip.Root defaultOpen delay={0}>

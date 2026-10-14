@@ -67,6 +67,7 @@ const NIZIVO_CLIENT_MARKERS = [
   'checkbox-indicator',
   'switch-thumb',
   'radio-input',
+  'segmented-control-input',
 ];
 
 /**
@@ -81,6 +82,7 @@ const CLIENT_PAGES: Record<string, string[]> = {
   '/docs/components/tooltip/': ['tooltip-popup'],
   '/docs/components/dialog/': ['dialog-popup'],
   '/docs/components/alert/': ['alert-dismiss'],
+  '/docs/components/icon-button/': ['tooltip-popup'],
   '/docs/components/field/': ['input-prefix', 'willValidate'],
   '/docs/components/fieldset/': ['checkbox-indicator', 'willValidate'],
   '/docs/components/input/': ['input-prefix', 'willValidate'],
@@ -89,6 +91,7 @@ const CLIENT_PAGES: Record<string, string[]> = {
   '/docs/components/checkbox/': ['checkbox-indicator', 'willValidate'],
   '/docs/components/switch/': ['switch-thumb', 'willValidate'],
   '/docs/components/radio-group/': ['radio-input'],
+  '/docs/components/segmented-control/': ['segmented-control-input', 'willValidate'],
 };
 
 /** Pages whose JavaScript the run prints. */
@@ -104,6 +107,8 @@ const REPORT = [
   '/docs/components/native-select/',
   '/docs/components/input/',
   '/docs/components/radio-group/',
+  '/docs/components/segmented-control/',
+  '/docs/components/icon-button/',
 ];
 
 interface Js {

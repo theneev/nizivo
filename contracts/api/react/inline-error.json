@@ -33,9 +33,9 @@
           "type": "ReactNode"
         },
         {
-          "description": "The error mark, decorative: the message carries the meaning, and the mark keeps the error from being colour-only (§15.1). Required until the internal error glyph ships in `_internal/glyphs`.",
+          "description": "The error mark, decorative: the message carries the meaning, and the mark keeps the error from being colour-only (§15.1). Defaults to the internal `circle-x` glyph; pass your icon set's glyph to replace it.",
           "name": "icon",
-          "required": true,
+          "required": false,
           "type": "ReactNode"
         },
         {

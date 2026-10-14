@@ -101,9 +101,9 @@
       "name": "AlertDismiss",
       "props": [
         {
-          "description": "The close glyph, decorative. Required until the internal close glyph ships in `_internal/glyphs`.",
+          "description": "The close glyph, decorative. Defaults to the internal `close` glyph (Lucide's `x`).",
           "name": "children",
-          "required": true,
+          "required": false,
           "type": "ReactNode"
         },
         {

@@ -2,7 +2,7 @@
 // load under react-server"): each entry loads, and every example renders, with React's react-server
 // build. A split component's client leaves are replaced by client references, as a bundler does, so
 // they are never evaluated on the server; the props that cross into them must serialise.
-// Client-tier controls (Input, Textarea, Checkbox, Switch, RadioGroup) are not
+// Client-tier controls (Input, Textarea, Checkbox, Switch, RadioGroup, SegmentedControl) are not
 // listed: their server-safety proof is their own test file in this folder.
 import { isValidElement, type JSX } from 'react';
 import { describe, expect, test } from 'vitest';
@@ -56,24 +56,38 @@ const COMPONENTS = [
   'field',
   'fieldset',
   'native-select',
+  'icon-button',
+  'theme-script',
 ] as const;
 type Name = (typeof COMPONENTS)[number];
 
 const FIELD_SCOPE = 'src/field/field-scope.client.tsx';
+const TOOLTIP_LEAVES = [
+  'src/icon-button/icon-button.client.tsx',
+  'src/tooltip/tooltip.client.tsx',
+  'src/_engines/react-aria/tooltip.client.tsx',
+  'src/_engines/react-aria/overlay.client.tsx',
+  'src/_engines/react-aria/locale.client.tsx',
+  'src/config/config.client.tsx',
+].toSorted();
 
 /** The client leaves a split component's subpath may reach (§9.5 "split"); none for the others. */
 const CLIENT_LEAVES: Partial<Record<Name, string[]>> = {
   alert: ['src/alert/alert-dismiss.client.tsx'],
   field: [FIELD_SCOPE],
+  'icon-button': TOOLTIP_LEAVES,
 };
 
 /** Packages other than react a subpath may import: only through its client leaves (the engine). */
-const EXTERNALS: Partial<Record<Name, RegExp>> = {};
+const EXTERNALS: Partial<Record<Name, RegExp>> = {
+  'icon-button': /^react-aria(-components)?(\/|$)/,
+};
 
 /** Each client module's exports, replaced by client references under react-server. */
 const CLIENT_EXPORTS: Record<string, string[]> = {
   'src/alert/alert-dismiss.client.tsx': ['AlertDismiss'],
   [FIELD_SCOPE]: ['FieldScope', 'useFieldControl'],
+  'src/icon-button/icon-button.client.tsx': ['IconButtonTooltip'],
   // client controls the Field and Fieldset examples compose
   'src/input/input.client.tsx': ['Input'],
   'src/checkbox/checkbox.client.tsx': ['Checkbox'],
@@ -104,6 +118,8 @@ const entries = {
   field: () => import('../../src/field/index'),
   fieldset: () => import('../../src/fieldset/index'),
   'native-select': () => import('../../src/native-select/index'),
+  'icon-button': () => import('../../src/icon-button/index'),
+  'theme-script': () => import('../../src/theme-script/index'),
 } satisfies Record<Name, () => Promise<unknown>>;
 
 /** Each example module, imported again by the react-server test; every `*Example` export renders. */
@@ -131,10 +147,15 @@ const exampleModules = {
   field: () => import('../../src/field/field.example'),
   fieldset: () => import('../../src/fieldset/fieldset.example'),
   'native-select': () => import('../../src/native-select/native-select.example'),
+  'icon-button': () => import('../../src/icon-button/icon-button.example'),
+  'theme-script': () => import('../../src/theme-script/theme-script.example'),
 } satisfies Record<Name, () => Promise<Record<string, unknown>>>;
 
-/** What the rendered examples must contain, where it is not the component's own part. */
-const RENDERS: Partial<Record<Name, string>> = {};
+/**
+ * What the rendered examples must contain: the component's own part, except ThemeScript, which
+ * renders a bare `<script>` (no part to style).
+ */
+const RENDERS: Partial<Record<Name, string>> = { 'theme-script': '"type":"script"' };
 
 const SRC = rekey(
   import.meta.glob('../../src/**/*.{ts,tsx,json}', {

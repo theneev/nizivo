@@ -11,6 +11,7 @@
     .nz-checkbox-input,
     .nz-dialog-close,
     .nz-dialog-trigger,
+    .nz-icon-button,
     .nz-native-select-trigger,
     .nz-radio-input,
     .nz-select-item,
@@ -19,6 +20,10 @@
     .nz-textarea,
     .nz-tooltip-trigger
   ):is(:focus-visible, [data-focus-visible]) {
+    outline: var(--nz-border-width-focus) solid var(--nz-border-focus);
+    outline-offset: 2px;
+  }
+  :where(.nz-segmented-control-item):is(:has(> input:focus-visible), [data-focus-visible]) {
     outline: var(--nz-border-width-focus) solid var(--nz-border-focus);
     outline-offset: 2px;
   }
@@ -40,8 +45,10 @@
     .nz-checkbox-input,
     .nz-dialog-close,
     .nz-dialog-trigger,
+    .nz-icon-button,
     .nz-native-select-trigger,
     .nz-radio-input,
+    .nz-segmented-control-item,
     .nz-select-item,
     .nz-select-trigger,
     .nz-switch-input,
@@ -117,8 +124,16 @@
       background: Highlight;
       forced-color-adjust: none;
     }
+    :where(.nz-segmented-control-item):has(> input:checked) {
+      outline: 2px solid Highlight;
+    }
     :where(.nz-checkbox-input):indeterminate {
       background: Highlight;
+      forced-color-adjust: none;
+    }
+    :where(.nz-icon-button)[aria-pressed='true'] {
+      background: Highlight;
+      color: HighlightText;
       forced-color-adjust: none;
     }
     :where(.nz-select-item)[data-selected] {

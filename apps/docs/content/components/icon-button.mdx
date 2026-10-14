@@ -1,0 +1,12 @@
+---
+title: IconButton
+description: A square button that shows only an icon. Its required label is the button's accessible name and, by default, the text of a tooltip shown on hover and keyboard focus.
+keyboard:
+  - keys: Tab
+    action: Moves focus to the button and shows its tooltip at once. The tooltip repeats the name, so the button is not described by it.
+  - keys: Enter, Space
+    action: Activates the button. A pending button stays focusable and swallows the activation.
+  - keys: Escape
+    action: Hides the tooltip; focus stays on the button.
+keyboardSource: a native `<button>` (`icon-button.tsx`); the tooltip is react-aria-components 1.22.1 `TooltipTrigger` through Nizivo's Tooltip (`icon-button.client.tsx`). The Next fixture and the browser lane (`test/browser/icon-button.spec.tsx`) check showing on focus, Escape and the missing aria-describedby.
+---

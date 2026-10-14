@@ -1,0 +1,26 @@
+{
+  "name": "segmented-control",
+  "status": "stable",
+  "tier": "client",
+  "parts": ["Root", "Item"],
+  "interactive": ["segmented-control-item"],
+  "focusTarget": "nested-input",
+  "stateIndicator": [
+    { "slot": "segmented-control-item", "state": ":has(> input:checked)", "paint": "outline" }
+  ],
+  "cssDeps": ["base"],
+  "variants": {
+    "size": ["sm", "md", "lg"]
+  },
+  "figma": {
+    "canonical": ["7275:14797"],
+    "ghosts": ["755:982"],
+    "variantsSeen": ["755:978", "755:980"],
+    "related": ["7275:14802", "7275:18903"]
+  },
+  "budget": {
+    "measuredKB": 1.18,
+    "limitKB": 1.3,
+    "source": "1,206 B own code: the client leaf in dist minified alone (esbuild 0.28.2 --minify, imports not counted) and piped through gzip; W3 fix pass. Bundled with its package imports (react external): 2,249 B. Over §17.2's 1 KB own-leaf cap, recorded as an exception (ARCHITECTURE.md §23.4 D-ab). Limit = measured + 10%"
+  }
+}

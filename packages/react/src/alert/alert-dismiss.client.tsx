@@ -3,6 +3,7 @@
 import type { ComponentPropsWithRef, MouseEvent, ReactElement, ReactNode } from 'react';
 import { renderElement, type RenderProp } from '../contracts/render';
 import { cx } from '../_internal/cx';
+import { Glyph } from '../_internal/glyphs';
 
 /** Strings this part renders (§16.4). */
 export interface AlertDismissLabels {
@@ -17,8 +18,8 @@ export interface AlertDismissProps extends Omit<ComponentPropsWithRef<'button'>,
    */
   onDismiss?: () => void;
   labels?: Partial<AlertDismissLabels>;
-  /** The close glyph, decorative. Required until the internal close glyph ships in `_internal/glyphs`. */
-  children: ReactNode;
+  /** The close glyph, decorative. Defaults to the internal `close` glyph (Lucide's `x`). */
+  children?: ReactNode;
   /** Composition, for example an IconButton; it must render a `<button>`. */
   render?: RenderProp<Record<string, never>>;
 }
@@ -52,7 +53,7 @@ export function AlertDismiss({
       },
       children: (
         <span className="nz-alert-dismiss-icon" data-slot="alert-dismiss-icon" aria-hidden="true">
-          {children}
+          {children ?? <Glyph name="close" />}
         </span>
       ),
     },

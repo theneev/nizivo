@@ -79,11 +79,17 @@ Nizivo is light unless you opt in. Set `data-nz-theme` on `<html>`:
 Any element with `data-nz-theme` starts a nested scope. See [Theming](/docs/foundations/theming/).
 
 A theme switch that remembers the user's choice must set the attribute before first paint. Nizivo's
-own `ThemeScript` for this is planned and is not in the package yet. Until then, set the attribute from
-your own inline script in `<head>`, and put `suppressHydrationWarning` on `<html>`, because the script
-changes an attribute React rendered:
+own `ThemeScript` does not persist the theme yet; today it sets `data-nz-platform` (`apple` or
+`other`) so `Kbd` and shortcuts show ⌘ or Ctrl from the first frame. Render it in `<head>`, set the
+theme from your own inline script beside it, and put `suppressHydrationWarning` on `<html>`, because
+both scripts change attributes React rendered. Under a strict CSP, pass the request's nonce to
+`ThemeScript` (`<ThemeScript nonce={nonce} />`) or allow its script by hash,
+`'sha256-HZHIu/4RWssbJrteyX51NbvdyR6ZSlZlY4BPl3yXw+I='` (a test pins it; a change to the script is
+called out in the changelog):
 
 ```tsx title="app/layout.tsx"
+import { ThemeScript } from '@nizivo/react/theme-script';
+
 const theme = `(function(){var t;try{t=localStorage.getItem('theme')}catch(e){}
 if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
 document.documentElement.setAttribute('data-nz-theme',t)})()`;
@@ -91,6 +97,7 @@ document.documentElement.setAttribute('data-nz-theme',t)})()`;
 <html lang="en" suppressHydrationWarning>
   <head>
     <script dangerouslySetInnerHTML={{ __html: theme }} />
+    <ThemeScript />
   </head>
 ```
 
