@@ -1,0 +1,20 @@
+{
+  "name": "select",
+  "status": "stable",
+  "tier": "engine",
+  "engine": "react-aria",
+  "overlay": true,
+  "parts": ["Root", "Trigger", "Value", "Popup", "Item", "Group", "GroupLabel", "Separator"],
+  "interactive": ["trigger"],
+  "focusTarget": "self",
+  "stateIndicator": ["item[data-selected]"],
+  "cssDeps": ["base", "field", "popover"],
+  "variants": { "size": ["sm", "md", "lg"] },
+  "figma": {
+    "canonical": ["7275:11438"],
+    "ghosts": ["745:222"],
+    "variantsSeen": ["745:188"],
+    "related": ["746:204"]
+  },
+  "budget": { "measuredKB": 59.5, "limitKB": 66, "source": "r3 §3.1, RAC Select standalone" }
+}

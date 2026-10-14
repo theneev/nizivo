@@ -1,4 +1,5 @@
 {
   "extends": "@nizivo/tsconfig/node.json",
-  "include": ["bin", "gen", "test"]
+  "include": ["bin", "gen", "spring", "test"],
+  "exclude": ["test/fixtures"]
 }

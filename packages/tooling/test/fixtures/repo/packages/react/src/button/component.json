@@ -1,0 +1,12 @@
+{
+  "name": "button",
+  "status": "stable",
+  "tier": "server",
+  "interactive": ["root"],
+  "cssDeps": ["base"],
+  "variants": {
+    "variant": ["primary", "secondary", "tertiary", "critical", "accent"],
+    "size": ["sm", "md", "lg"]
+  },
+  "figma": { "canonical": ["7275:10920"], "ghosts": ["745:101"] }
+}
