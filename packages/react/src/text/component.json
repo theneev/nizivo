@@ -1,0 +1,58 @@
+{
+  "name": "text",
+  "status": "stable",
+  "tier": "server",
+  "parts": [],
+  "cssDeps": ["base"],
+  "variants": {
+    "variant": [
+      "display-l",
+      "display-m",
+      "heading-h1",
+      "heading-h2",
+      "heading-h3",
+      "heading-h4",
+      "body-l",
+      "body-m",
+      "body-m-strong",
+      "body-s",
+      "label-l",
+      "label-m",
+      "label-m-strong",
+      "label-s",
+      "numeric-display",
+      "numeric-kpi",
+      "numeric-l",
+      "numeric-m",
+      "mono-m",
+      "mono-m-strong"
+    ],
+    "tone": [
+      "primary",
+      "secondary",
+      "tertiary",
+      "disabled",
+      "inverse",
+      "on-brand",
+      "on-accent",
+      "on-critical",
+      "brand",
+      "accent",
+      "success",
+      "warning",
+      "critical",
+      "info"
+    ]
+  },
+  "figma": {
+    "canonical": [],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": ["7275:12385"]
+  },
+  "budget": {
+    "measuredKB": 0,
+    "limitKB": 0,
+    "source": "server-safe, no directive: 0 KB client JS under RSC (spike S2c)"
+  }
+}

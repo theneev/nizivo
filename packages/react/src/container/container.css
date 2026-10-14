@@ -1,0 +1,13 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/container.css (figma/08 §6.1). layout/content-max is the content width, without
+   the margins (mobile 358 = 390 - 2 × 16), so the box is content-box whatever the app's reset says.
+   Public hooks are read once, at the property, and never assigned here. */
+@layer nz.components {
+  .nz-container {
+    box-sizing: content-box;
+    max-inline-size: var(--nz-container-max-width, var(--nz-layout-content-max));
+    margin-inline: auto;
+    padding-inline: var(--nz-container-padding-inline, var(--nz-grid-margin));
+  }
+}

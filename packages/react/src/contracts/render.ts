@@ -23,6 +23,11 @@ export const PART_OWNED: readonly string[] = [
   'data-size',
   'data-tone',
   'data-full-width',
+  'data-gap',
+  'data-span',
+  'data-span-sm',
+  'data-span-lg',
+  'data-ratio',
 ];
 
 /**

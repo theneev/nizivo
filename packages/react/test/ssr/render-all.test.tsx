@@ -5,9 +5,18 @@ import vocabulary from '../../../../contracts/vocabulary.json' with { type: 'jso
 import allowlist from '../../src/_engines/react-aria/dom-allowlist.json' with { type: 'json' };
 import { Button } from '../../src/button/index';
 import { ButtonExample } from '../../src/button/button.example';
+import { ContainerExample } from '../../src/container/container.example';
 import { DialogExample, DialogOpenExample } from '../../src/dialog/dialog.example';
+import { GridExample } from '../../src/grid/grid.example';
+import { HeadingExample } from '../../src/heading/heading.example';
+import { ImageExample } from '../../src/image/image.example';
+import { InlineExample } from '../../src/inline/inline.example';
+import { KbdExample } from '../../src/kbd/kbd.example';
 import { Select } from '../../src/select/index';
 import { SelectExample, SelectOpenExample } from '../../src/select/select.example';
+import { SeparatorExample } from '../../src/separator/separator.example';
+import { StackExample } from '../../src/stack/stack.example';
+import { TextExample } from '../../src/text/text.example';
 import { TooltipExample, TooltipOpenExample } from '../../src/tooltip/tooltip.example';
 
 const examples: Record<string, () => JSX.Element> = {
@@ -18,6 +27,15 @@ const examples: Record<string, () => JSX.Element> = {
   DialogOpenExample,
   TooltipExample,
   TooltipOpenExample,
+  TextExample,
+  HeadingExample,
+  StackExample,
+  InlineExample,
+  GridExample,
+  ContainerExample,
+  SeparatorExample,
+  KbdExample,
+  ImageExample,
 };
 
 const allowed = new Set([

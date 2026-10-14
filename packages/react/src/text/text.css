@@ -1,0 +1,180 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/text.css (ARCHITECTURE.md §7.2, §14.4). Variants and tones set ONLY --_nz-* privates.
+   Text reads no public hooks: --nz-text-* is the text colour token family, so restyle it through tokens,
+   className or a render element. Without a tone the colour is inherited from the surface. */
+@layer nz.components {
+  .nz-text {
+    /* default = Body/M, the body copy style across the Figma file */
+    --_nz-text-font: var(--nz-font-body-m);
+    --_nz-text-tracking: var(--nz-tracking-body-m);
+    --_nz-text-numeric: normal;
+
+    margin: 0;
+    font: var(--_nz-text-font);
+    /* after the shorthand, which resets it */
+    font-variant-numeric: var(--_nz-text-numeric);
+    letter-spacing: var(--_nz-text-tracking);
+  }
+
+  .nz-text[data-tone] {
+    color: var(--_nz-text-fg);
+  }
+
+  .nz-text[data-variant='display-l'] {
+    --_nz-text-font: var(--nz-font-display-l);
+    --_nz-text-tracking: var(--nz-tracking-display-l);
+  }
+
+  .nz-text[data-variant='display-m'] {
+    --_nz-text-font: var(--nz-font-display-m);
+    --_nz-text-tracking: var(--nz-tracking-display-m);
+  }
+
+  .nz-text[data-variant='heading-h1'] {
+    --_nz-text-font: var(--nz-font-heading-h1);
+    --_nz-text-tracking: var(--nz-tracking-heading-h1);
+  }
+
+  .nz-text[data-variant='heading-h2'] {
+    --_nz-text-font: var(--nz-font-heading-h2);
+    --_nz-text-tracking: var(--nz-tracking-heading-h2);
+  }
+
+  .nz-text[data-variant='heading-h3'] {
+    --_nz-text-font: var(--nz-font-heading-h3);
+    --_nz-text-tracking: var(--nz-tracking-heading-h3);
+  }
+
+  .nz-text[data-variant='heading-h4'] {
+    --_nz-text-font: var(--nz-font-heading-h4);
+    --_nz-text-tracking: var(--nz-tracking-heading-h4);
+  }
+
+  .nz-text[data-variant='body-l'] {
+    --_nz-text-font: var(--nz-font-body-l);
+    --_nz-text-tracking: var(--nz-tracking-body-l);
+  }
+
+  .nz-text[data-variant='body-m-strong'] {
+    --_nz-text-font: var(--nz-font-body-m-strong);
+    --_nz-text-tracking: var(--nz-tracking-body-m-strong);
+  }
+
+  /* 12 px: only through the Body/S and Label/S proposals (§15.1) */
+  .nz-text[data-variant='body-s'] {
+    --_nz-text-font: var(--nz-font-body-s);
+    --_nz-text-tracking: var(--nz-tracking-body-s);
+  }
+
+  .nz-text[data-variant='label-l'] {
+    --_nz-text-font: var(--nz-font-label-l);
+    --_nz-text-tracking: var(--nz-tracking-label-l);
+  }
+
+  .nz-text[data-variant='label-m'] {
+    --_nz-text-font: var(--nz-font-label-m);
+    --_nz-text-tracking: var(--nz-tracking-label-m);
+  }
+
+  .nz-text[data-variant='label-m-strong'] {
+    --_nz-text-font: var(--nz-font-label-m-strong);
+    --_nz-text-tracking: var(--nz-tracking-label-m-strong);
+  }
+
+  .nz-text[data-variant='label-s'] {
+    --_nz-text-font: var(--nz-font-label-s);
+    --_nz-text-tracking: var(--nz-tracking-label-s);
+  }
+
+  /* Numeric/*: tabular figures, which Figma describes but does not render (§14.4) */
+  .nz-text[data-variant='numeric-display'] {
+    --_nz-text-font: var(--nz-font-numeric-display);
+    --_nz-text-tracking: var(--nz-tracking-numeric-display);
+    --_nz-text-numeric: tabular-nums;
+  }
+
+  .nz-text[data-variant='numeric-kpi'] {
+    --_nz-text-font: var(--nz-font-numeric-kpi);
+    --_nz-text-tracking: var(--nz-tracking-numeric-kpi);
+    --_nz-text-numeric: tabular-nums;
+  }
+
+  .nz-text[data-variant='numeric-l'] {
+    --_nz-text-font: var(--nz-font-numeric-l);
+    --_nz-text-tracking: var(--nz-tracking-numeric-l);
+    --_nz-text-numeric: tabular-nums;
+  }
+
+  .nz-text[data-variant='numeric-m'] {
+    --_nz-text-font: var(--nz-font-numeric-m);
+    --_nz-text-tracking: var(--nz-tracking-numeric-m);
+    --_nz-text-numeric: tabular-nums;
+  }
+
+  .nz-text[data-variant='mono-m'] {
+    --_nz-text-font: var(--nz-font-mono-m);
+    --_nz-text-tracking: var(--nz-tracking-mono-m);
+  }
+
+  .nz-text[data-variant='mono-m-strong'] {
+    --_nz-text-font: var(--nz-font-mono-m-strong);
+    --_nz-text-tracking: var(--nz-tracking-mono-m-strong);
+  }
+
+  .nz-text[data-tone='primary'] {
+    --_nz-text-fg: var(--nz-text-primary);
+  }
+
+  .nz-text[data-tone='secondary'] {
+    --_nz-text-fg: var(--nz-text-secondary);
+  }
+
+  .nz-text[data-tone='tertiary'] {
+    --_nz-text-fg: var(--nz-text-tertiary);
+  }
+
+  .nz-text[data-tone='disabled'] {
+    --_nz-text-fg: var(--nz-text-disabled);
+  }
+
+  .nz-text[data-tone='inverse'] {
+    --_nz-text-fg: var(--nz-text-inverse);
+  }
+
+  .nz-text[data-tone='on-brand'] {
+    --_nz-text-fg: var(--nz-text-on-brand);
+  }
+
+  .nz-text[data-tone='on-accent'] {
+    --_nz-text-fg: var(--nz-text-on-accent);
+  }
+
+  .nz-text[data-tone='on-critical'] {
+    --_nz-text-fg: var(--nz-text-on-critical);
+  }
+
+  .nz-text[data-tone='brand'] {
+    --_nz-text-fg: var(--nz-text-brand);
+  }
+
+  .nz-text[data-tone='accent'] {
+    --_nz-text-fg: var(--nz-text-accent);
+  }
+
+  .nz-text[data-tone='success'] {
+    --_nz-text-fg: var(--nz-text-success);
+  }
+
+  .nz-text[data-tone='warning'] {
+    --_nz-text-fg: var(--nz-text-warning);
+  }
+
+  .nz-text[data-tone='critical'] {
+    --_nz-text-fg: var(--nz-text-critical);
+  }
+
+  .nz-text[data-tone='info'] {
+    --_nz-text-fg: var(--nz-text-info);
+  }
+}

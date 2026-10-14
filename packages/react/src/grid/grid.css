@@ -1,0 +1,242 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/grid.css (ARCHITECTURE.md §7.6; figma/08 §6.1): 4, 8 and 12 columns with 16, 20
+   and 24 px gutters, all from the responsive tokens. Grid reads no public --nz-grid-* hooks: that
+   prefix is the grid token family (--nz-grid-columns, --nz-grid-gutter, --nz-grid-margin).
+   Spans are clamped to the columns available, so an 8-column item fills a 4-column mobile grid. */
+@layer nz.components {
+  .nz-grid {
+    --_nz-grid-gap: var(--nz-grid-gutter);
+
+    display: grid;
+    grid-template-columns: repeat(var(--nz-grid-columns), minmax(0, 1fr));
+    gap: var(--_nz-grid-gap);
+  }
+
+  .nz-grid[data-gap='0'] {
+    --_nz-grid-gap: var(--nz-space-0);
+  }
+
+  .nz-grid[data-gap='0-5'] {
+    --_nz-grid-gap: var(--nz-space-0-5);
+  }
+
+  .nz-grid[data-gap='1'] {
+    --_nz-grid-gap: var(--nz-space-1);
+  }
+
+  .nz-grid[data-gap='1-5'] {
+    --_nz-grid-gap: var(--nz-space-1-5);
+  }
+
+  .nz-grid[data-gap='2'] {
+    --_nz-grid-gap: var(--nz-space-2);
+  }
+
+  .nz-grid[data-gap='3'] {
+    --_nz-grid-gap: var(--nz-space-3);
+  }
+
+  .nz-grid[data-gap='4'] {
+    --_nz-grid-gap: var(--nz-space-4);
+  }
+
+  .nz-grid[data-gap='5'] {
+    --_nz-grid-gap: var(--nz-space-5);
+  }
+
+  .nz-grid[data-gap='6'] {
+    --_nz-grid-gap: var(--nz-space-6);
+  }
+
+  .nz-grid[data-gap='8'] {
+    --_nz-grid-gap: var(--nz-space-8);
+  }
+
+  .nz-grid[data-gap='10'] {
+    --_nz-grid-gap: var(--nz-space-10);
+  }
+
+  .nz-grid[data-gap='12'] {
+    --_nz-grid-gap: var(--nz-space-12);
+  }
+
+  .nz-grid[data-gap='16'] {
+    --_nz-grid-gap: var(--nz-space-16);
+  }
+
+  .nz-grid[data-gap='20'] {
+    --_nz-grid-gap: var(--nz-space-20);
+  }
+
+  .nz-grid[data-gap='24'] {
+    --_nz-grid-gap: var(--nz-space-24);
+  }
+
+  .nz-grid-item {
+    --_nz-grid-item-span: 1;
+
+    grid-column: span min(var(--_nz-grid-item-span), var(--nz-grid-columns));
+    min-inline-size: 0;
+  }
+
+  .nz-grid-item[data-span='1'] {
+    --_nz-grid-item-span: 1;
+  }
+
+  .nz-grid-item[data-span='2'] {
+    --_nz-grid-item-span: 2;
+  }
+
+  .nz-grid-item[data-span='3'] {
+    --_nz-grid-item-span: 3;
+  }
+
+  .nz-grid-item[data-span='4'] {
+    --_nz-grid-item-span: 4;
+  }
+
+  .nz-grid-item[data-span='5'] {
+    --_nz-grid-item-span: 5;
+  }
+
+  .nz-grid-item[data-span='6'] {
+    --_nz-grid-item-span: 6;
+  }
+
+  .nz-grid-item[data-span='7'] {
+    --_nz-grid-item-span: 7;
+  }
+
+  .nz-grid-item[data-span='8'] {
+    --_nz-grid-item-span: 8;
+  }
+
+  .nz-grid-item[data-span='9'] {
+    --_nz-grid-item-span: 9;
+  }
+
+  .nz-grid-item[data-span='10'] {
+    --_nz-grid-item-span: 10;
+  }
+
+  .nz-grid-item[data-span='11'] {
+    --_nz-grid-item-span: 11;
+  }
+
+  .nz-grid-item[data-span='12'] {
+    --_nz-grid-item-span: 12;
+  }
+
+  .nz-grid-item[data-span='full'] {
+    --_nz-grid-item-span: var(--nz-grid-columns);
+  }
+
+  @media (--nz-sm) {
+    .nz-grid-item[data-span-sm='1'] {
+      --_nz-grid-item-span: 1;
+    }
+
+    .nz-grid-item[data-span-sm='2'] {
+      --_nz-grid-item-span: 2;
+    }
+
+    .nz-grid-item[data-span-sm='3'] {
+      --_nz-grid-item-span: 3;
+    }
+
+    .nz-grid-item[data-span-sm='4'] {
+      --_nz-grid-item-span: 4;
+    }
+
+    .nz-grid-item[data-span-sm='5'] {
+      --_nz-grid-item-span: 5;
+    }
+
+    .nz-grid-item[data-span-sm='6'] {
+      --_nz-grid-item-span: 6;
+    }
+
+    .nz-grid-item[data-span-sm='7'] {
+      --_nz-grid-item-span: 7;
+    }
+
+    .nz-grid-item[data-span-sm='8'] {
+      --_nz-grid-item-span: 8;
+    }
+
+    .nz-grid-item[data-span-sm='9'] {
+      --_nz-grid-item-span: 9;
+    }
+
+    .nz-grid-item[data-span-sm='10'] {
+      --_nz-grid-item-span: 10;
+    }
+
+    .nz-grid-item[data-span-sm='11'] {
+      --_nz-grid-item-span: 11;
+    }
+
+    .nz-grid-item[data-span-sm='12'] {
+      --_nz-grid-item-span: 12;
+    }
+
+    .nz-grid-item[data-span-sm='full'] {
+      --_nz-grid-item-span: var(--nz-grid-columns);
+    }
+  }
+
+  @media (--nz-lg) {
+    .nz-grid-item[data-span-lg='1'] {
+      --_nz-grid-item-span: 1;
+    }
+
+    .nz-grid-item[data-span-lg='2'] {
+      --_nz-grid-item-span: 2;
+    }
+
+    .nz-grid-item[data-span-lg='3'] {
+      --_nz-grid-item-span: 3;
+    }
+
+    .nz-grid-item[data-span-lg='4'] {
+      --_nz-grid-item-span: 4;
+    }
+
+    .nz-grid-item[data-span-lg='5'] {
+      --_nz-grid-item-span: 5;
+    }
+
+    .nz-grid-item[data-span-lg='6'] {
+      --_nz-grid-item-span: 6;
+    }
+
+    .nz-grid-item[data-span-lg='7'] {
+      --_nz-grid-item-span: 7;
+    }
+
+    .nz-grid-item[data-span-lg='8'] {
+      --_nz-grid-item-span: 8;
+    }
+
+    .nz-grid-item[data-span-lg='9'] {
+      --_nz-grid-item-span: 9;
+    }
+
+    .nz-grid-item[data-span-lg='10'] {
+      --_nz-grid-item-span: 10;
+    }
+
+    .nz-grid-item[data-span-lg='11'] {
+      --_nz-grid-item-span: 11;
+    }
+
+    .nz-grid-item[data-span-lg='12'] {
+      --_nz-grid-item-span: 12;
+    }
+
+    .nz-grid-item[data-span-lg='full'] {
+      --_nz-grid-item-span: var(--nz-grid-columns);
+    }
+  }
+}

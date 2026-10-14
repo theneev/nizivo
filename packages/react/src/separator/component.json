@@ -1,0 +1,21 @@
+{
+  "name": "separator",
+  "status": "stable",
+  "tier": "server",
+  "parts": [],
+  "cssDeps": ["base"],
+  "variants": {
+    "orientation": ["horizontal", "vertical"]
+  },
+  "figma": {
+    "canonical": [],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": ["746:249", "754:926", "754:939", "756:1002", "756:1099"]
+  },
+  "budget": {
+    "measuredKB": 0,
+    "limitKB": 0,
+    "source": "server-safe, no directive: 0 KB client JS under RSC (spike S2c)"
+  }
+}

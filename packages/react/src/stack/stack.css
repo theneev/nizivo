@@ -1,0 +1,73 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/stack.css. data-gap sets ONLY the private; the public --nz-stack-gap hook is read
+   once, at the property, and never assigned here. */
+@layer nz.components {
+  .nz-stack {
+    --_nz-stack-gap: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-stack-gap, var(--_nz-stack-gap));
+  }
+
+  .nz-stack[data-gap='0'] {
+    --_nz-stack-gap: var(--nz-space-0);
+  }
+
+  .nz-stack[data-gap='0-5'] {
+    --_nz-stack-gap: var(--nz-space-0-5);
+  }
+
+  .nz-stack[data-gap='1'] {
+    --_nz-stack-gap: var(--nz-space-1);
+  }
+
+  .nz-stack[data-gap='1-5'] {
+    --_nz-stack-gap: var(--nz-space-1-5);
+  }
+
+  .nz-stack[data-gap='2'] {
+    --_nz-stack-gap: var(--nz-space-2);
+  }
+
+  .nz-stack[data-gap='3'] {
+    --_nz-stack-gap: var(--nz-space-3);
+  }
+
+  .nz-stack[data-gap='4'] {
+    --_nz-stack-gap: var(--nz-space-4);
+  }
+
+  .nz-stack[data-gap='5'] {
+    --_nz-stack-gap: var(--nz-space-5);
+  }
+
+  .nz-stack[data-gap='6'] {
+    --_nz-stack-gap: var(--nz-space-6);
+  }
+
+  .nz-stack[data-gap='8'] {
+    --_nz-stack-gap: var(--nz-space-8);
+  }
+
+  .nz-stack[data-gap='10'] {
+    --_nz-stack-gap: var(--nz-space-10);
+  }
+
+  .nz-stack[data-gap='12'] {
+    --_nz-stack-gap: var(--nz-space-12);
+  }
+
+  .nz-stack[data-gap='16'] {
+    --_nz-stack-gap: var(--nz-space-16);
+  }
+
+  .nz-stack[data-gap='20'] {
+    --_nz-stack-gap: var(--nz-space-20);
+  }
+
+  .nz-stack[data-gap='24'] {
+    --_nz-stack-gap: var(--nz-space-24);
+  }
+}

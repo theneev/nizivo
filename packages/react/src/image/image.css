@@ -1,0 +1,30 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/image.css (ARCHITECTURE.md §14.3). The width and height attributes reserve the
+   box; CSS only scales it down. Figma draws renders at radius 0 and photos at radius/lg, so the
+   radius is a hook, not a prop. Public hooks are read once, at the property. */
+@layer nz.components {
+  .nz-image {
+    display: block;
+    max-inline-size: 100%;
+    block-size: auto;
+    border-radius: var(--nz-image-radius, var(--nz-radius-none));
+    object-fit: var(--nz-image-fit, cover);
+  }
+
+  .nz-image[data-ratio='1/1'] {
+    aspect-ratio: 1 / 1;
+  }
+
+  .nz-image[data-ratio='4/5'] {
+    aspect-ratio: 4 / 5;
+  }
+
+  .nz-image[data-ratio='3/2'] {
+    aspect-ratio: 3 / 2;
+  }
+
+  .nz-image[data-ratio='16/9'] {
+    aspect-ratio: 16 / 9;
+  }
+}

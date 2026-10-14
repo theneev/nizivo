@@ -43,6 +43,10 @@
       "types": "./dist/config/index.d.ts",
       "default": "./dist/config/index.js"
     },
+    "./container": {
+      "types": "./dist/container/index.d.ts",
+      "default": "./dist/container/index.js"
+    },
     "./contracts": {
       "types": "./dist/contracts/index.d.ts",
       "default": "./dist/contracts/index.js"
@@ -51,9 +55,41 @@
       "types": "./dist/dialog/index.d.ts",
       "default": "./dist/dialog/index.js"
     },
+    "./grid": {
+      "types": "./dist/grid/index.d.ts",
+      "default": "./dist/grid/index.js"
+    },
+    "./heading": {
+      "types": "./dist/heading/index.d.ts",
+      "default": "./dist/heading/index.js"
+    },
+    "./image": {
+      "types": "./dist/image/index.d.ts",
+      "default": "./dist/image/index.js"
+    },
+    "./inline": {
+      "types": "./dist/inline/index.d.ts",
+      "default": "./dist/inline/index.js"
+    },
+    "./kbd": {
+      "types": "./dist/kbd/index.d.ts",
+      "default": "./dist/kbd/index.js"
+    },
     "./select": {
       "types": "./dist/select/index.d.ts",
       "default": "./dist/select/index.js"
+    },
+    "./separator": {
+      "types": "./dist/separator/index.d.ts",
+      "default": "./dist/separator/index.js"
+    },
+    "./stack": {
+      "types": "./dist/stack/index.d.ts",
+      "default": "./dist/stack/index.js"
+    },
+    "./text": {
+      "types": "./dist/text/index.d.ts",
+      "default": "./dist/text/index.js"
     },
     "./tooltip": {
       "types": "./dist/tooltip/index.d.ts",
@@ -61,8 +97,17 @@
     },
     "./css/base.css": "./dist/css/base.css",
     "./css/button.css": "./dist/css/button.css",
+    "./css/container.css": "./dist/css/container.css",
     "./css/dialog.css": "./dist/css/dialog.css",
+    "./css/grid.css": "./dist/css/grid.css",
+    "./css/heading.css": "./dist/css/heading.css",
+    "./css/image.css": "./dist/css/image.css",
+    "./css/inline.css": "./dist/css/inline.css",
+    "./css/kbd.css": "./dist/css/kbd.css",
     "./css/select.css": "./dist/css/select.css",
+    "./css/separator.css": "./dist/css/separator.css",
+    "./css/stack.css": "./dist/css/stack.css",
+    "./css/text.css": "./dist/css/text.css",
     "./css/tooltip.css": "./dist/css/tooltip.css",
     "./package.json": "./package.json"
   },

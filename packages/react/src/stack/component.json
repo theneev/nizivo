@@ -1,0 +1,21 @@
+{
+  "name": "stack",
+  "status": "stable",
+  "tier": "server",
+  "parts": [],
+  "cssDeps": ["base"],
+  "variants": {
+    "gap": ["0", "0-5", "1", "1-5", "2", "3", "4", "5", "6", "8", "10", "12", "16", "20", "24"]
+  },
+  "figma": {
+    "canonical": [],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": []
+  },
+  "budget": {
+    "measuredKB": 0,
+    "limitKB": 0,
+    "source": "server-safe, no directive: 0 KB client JS under RSC (spike S2c)"
+  }
+}

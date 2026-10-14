@@ -171,6 +171,36 @@
       "presence": true,
       "on": "Button",
       "meaning": "The fullWidth prop: the control fills the inline size of its container"
+    },
+    {
+      "name": "data-gap",
+      "values": null,
+      "on": "Stack, Inline, Grid",
+      "meaning": "The gap prop: a --nz-space-* step; values in each component manifest"
+    },
+    {
+      "name": "data-span",
+      "values": null,
+      "on": "GridItem",
+      "meaning": "The span prop: columns spanned, mobile first and clamped to --nz-grid-columns; values in the Grid manifest"
+    },
+    {
+      "name": "data-span-sm",
+      "values": null,
+      "on": "GridItem",
+      "meaning": "The span prop's value from --nz-sm; values in the Grid manifest"
+    },
+    {
+      "name": "data-span-lg",
+      "values": null,
+      "on": "GridItem",
+      "meaning": "The span prop's value from --nz-lg (provisional); values in the Grid manifest"
+    },
+    {
+      "name": "data-ratio",
+      "values": null,
+      "on": "Image",
+      "meaning": "The ratio prop: an aspect-ratio preset (§14.3); values in the Image manifest"
     }
   ],
   "local": [

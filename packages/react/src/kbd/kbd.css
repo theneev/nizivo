@@ -1,0 +1,41 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/kbd.css (figma/11 §4.8): the hand-built Kbd frame, one box per chord.
+   Public hooks are read once, at the property, and never assigned here. */
+@layer nz.components {
+  .nz-kbd {
+    display: inline-flex;
+    align-items: center;
+    /* Figma's 1 px (off-scale) keeps the 24 px box: 14 × 1.4 text + 2 + 2 border */
+    padding-block: 1px;
+    padding-inline: var(--nz-space-1-5);
+    border: var(--nz-border-width-default) solid var(--nz-kbd-border, var(--nz-border-default));
+    /* Figma's 6 is off-scale; radius/xs (4), as figma/06 §9.2 suggests */
+    border-radius: var(--nz-kbd-radius, var(--nz-radius-xs));
+    background: var(--nz-kbd-bg, var(--nz-bg-subtle));
+    color: var(--nz-kbd-fg, var(--nz-text-secondary));
+    font: var(--nz-font-mono-m);
+    letter-spacing: var(--nz-tracking-mono-m);
+    white-space: nowrap;
+  }
+
+  /* Without ThemeScript's data-nz-platform the "other" spelling shows (Ctrl+K). The hidden span is
+     display: none, so assistive technology reads one spelling only. */
+  .nz-kbd-glyphs[data-platform='apple'] {
+    display: none;
+  }
+
+  :where([data-nz-platform='apple']) .nz-kbd-glyphs[data-platform='apple'] {
+    display: inline;
+  }
+
+  :where([data-nz-platform='apple']) .nz-kbd-glyphs[data-platform='other'] {
+    display: none;
+  }
+
+  @media (forced-colors: active) {
+    .nz-kbd {
+      border-color: CanvasText;
+    }
+  }
+}

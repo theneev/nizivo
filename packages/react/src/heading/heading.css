@@ -1,0 +1,99 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/heading.css (ARCHITECTURE.md §7.2). The look follows data-variant, never the
+   level. Variants and tones set ONLY --_nz-* privates; without a tone the colour is inherited. */
+@layer nz.components {
+  .nz-heading {
+    --_nz-heading-font: var(--nz-font-heading-h2);
+    --_nz-heading-tracking: var(--nz-tracking-heading-h2);
+
+    margin: 0;
+    font: var(--_nz-heading-font);
+    letter-spacing: var(--_nz-heading-tracking);
+  }
+
+  .nz-heading[data-tone] {
+    color: var(--_nz-heading-fg);
+  }
+
+  .nz-heading[data-variant='display-l'] {
+    --_nz-heading-font: var(--nz-font-display-l);
+    --_nz-heading-tracking: var(--nz-tracking-display-l);
+  }
+
+  .nz-heading[data-variant='display-m'] {
+    --_nz-heading-font: var(--nz-font-display-m);
+    --_nz-heading-tracking: var(--nz-tracking-display-m);
+  }
+
+  .nz-heading[data-variant='heading-h1'] {
+    --_nz-heading-font: var(--nz-font-heading-h1);
+    --_nz-heading-tracking: var(--nz-tracking-heading-h1);
+  }
+
+  .nz-heading[data-variant='heading-h3'] {
+    --_nz-heading-font: var(--nz-font-heading-h3);
+    --_nz-heading-tracking: var(--nz-tracking-heading-h3);
+  }
+
+  .nz-heading[data-variant='heading-h4'] {
+    --_nz-heading-font: var(--nz-font-heading-h4);
+    --_nz-heading-tracking: var(--nz-tracking-heading-h4);
+  }
+
+  .nz-heading[data-tone='primary'] {
+    --_nz-heading-fg: var(--nz-text-primary);
+  }
+
+  .nz-heading[data-tone='secondary'] {
+    --_nz-heading-fg: var(--nz-text-secondary);
+  }
+
+  .nz-heading[data-tone='tertiary'] {
+    --_nz-heading-fg: var(--nz-text-tertiary);
+  }
+
+  .nz-heading[data-tone='disabled'] {
+    --_nz-heading-fg: var(--nz-text-disabled);
+  }
+
+  .nz-heading[data-tone='inverse'] {
+    --_nz-heading-fg: var(--nz-text-inverse);
+  }
+
+  .nz-heading[data-tone='on-brand'] {
+    --_nz-heading-fg: var(--nz-text-on-brand);
+  }
+
+  .nz-heading[data-tone='on-accent'] {
+    --_nz-heading-fg: var(--nz-text-on-accent);
+  }
+
+  .nz-heading[data-tone='on-critical'] {
+    --_nz-heading-fg: var(--nz-text-on-critical);
+  }
+
+  .nz-heading[data-tone='brand'] {
+    --_nz-heading-fg: var(--nz-text-brand);
+  }
+
+  .nz-heading[data-tone='accent'] {
+    --_nz-heading-fg: var(--nz-text-accent);
+  }
+
+  .nz-heading[data-tone='success'] {
+    --_nz-heading-fg: var(--nz-text-success);
+  }
+
+  .nz-heading[data-tone='warning'] {
+    --_nz-heading-fg: var(--nz-text-warning);
+  }
+
+  .nz-heading[data-tone='critical'] {
+    --_nz-heading-fg: var(--nz-text-critical);
+  }
+
+  .nz-heading[data-tone='info'] {
+    --_nz-heading-fg: var(--nz-text-info);
+  }
+}
