@@ -5,9 +5,9 @@
   "engine": "react-aria",
   "overlay": true,
   "parts": ["Root", "Trigger", "Popup"],
-  "interactive": ["trigger"],
+  "interactive": ["tooltip-trigger"],
   "focusTarget": "self",
-  "stateIndicator": [],
+  "stateIndicator": [{ "slot": "tooltip-popup", "paint": "border" }],
   "cssDeps": ["base"],
   "variants": {},
   "figma": {

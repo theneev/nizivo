@@ -2,7 +2,7 @@
   "name": "button",
   "status": "stable",
   "tier": "server",
-  "interactive": ["root"],
+  "interactive": ["button"],
   "cssDeps": ["base"],
   "variants": {
     "variant": ["primary", "secondary", "tertiary", "critical", "accent"],

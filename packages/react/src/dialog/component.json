@@ -5,9 +5,9 @@
   "engine": "react-aria",
   "overlay": true,
   "parts": ["Root", "Trigger", "Popup", "Title", "Description", "Body", "Footer", "Close"],
-  "interactive": ["trigger", "close"],
+  "interactive": ["dialog-trigger", "dialog-close"],
   "focusTarget": "self",
-  "stateIndicator": [],
+  "stateIndicator": [{ "slot": "dialog-popup", "paint": "border" }],
   "cssDeps": ["base"],
   "variants": { "size": ["sm", "md", "lg"] },
   "figma": {

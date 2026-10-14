@@ -42,14 +42,15 @@ test('gen --check fails and lists every file that would change, then passes afte
   const before = nz('gen', '--check', '--root', root);
   expect(before.status).toBe(1);
   expect(before.output).toBe(
-    'nz gen --check: 7 file(s) out of date; run `pnpm nz gen`\n' +
+    'nz gen --check: 8 file(s) out of date; run `pnpm nz gen`\n' +
       '  design/component-map.json\n' +
       '  packages/react/package.json\n' +
       '  packages/react/src/button/index.ts\n' +
       '  packages/react/src/index.ts\n' +
       '  packages/react/src/select/engine.ts\n' +
       '  packages/react/src/select/index.ts\n' +
-      '  packages/react/src/select/select.parts.ts\n',
+      '  packages/react/src/select/select.parts.ts\n' +
+      '  packages/react/styles/base.css\n',
   );
 
   expect(nz('gen', '--root', root).status).toBe(0);

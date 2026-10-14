@@ -1,9 +1,24 @@
 /**
  * The `component.json` schema (ARCHITECTURE.md §6), written as code so every error names the file,
- * the field and what was expected.
+ * the field and what was expected. packages/tooling/gen/COMPONENT-JSON.md is the field reference.
  */
 
+/** §9.5 tiers: T0 server-safe (incl. split), T0 in thin client leaves, T1 engine, T2 own code. */
 export type Tier = 'server' | 'client' | 'engine' | 'own';
+
+/** How an `interactive` slot shows the nz.base focus outline (§8.5). */
+export type FocusTarget = 'self' | 'nested-input' | 'within';
+
+/** The forced-colours rule nz.base paints for a `stateIndicator` entry (§8.5, §15.1). */
+export type Paint = 'border' | 'fill' | 'highlight' | 'mark' | 'outline';
+
+export interface StateIndicator {
+  /** A documented slot: its `data-slot` value, which is the class minus `nz-`. */
+  slot: string;
+  /** Selector suffix for the state (`[data-selected]`, `:checked`); absent for an at-rest rule. */
+  state?: string;
+  paint: Paint;
+}
 
 export interface FigmaIds {
   canonical?: string[];
@@ -20,9 +35,11 @@ export interface ComponentConfig {
   overlay?: boolean;
   parts?: string[];
   exports?: string[];
+  /** `data-slot` values of the parts that get the nz.base focus outline and `touch-action`. */
   interactive?: string[];
-  focusTarget?: 'self' | 'nested-input';
-  stateIndicator?: string[];
+  /** One mode for every interactive slot, or one per slot; "self" when absent. */
+  focusTarget?: FocusTarget | Record<string, FocusTarget>;
+  stateIndicator?: StateIndicator[];
   cssDeps?: string[];
   variants?: Record<string, string[]>;
   figma?: FigmaIds;
@@ -33,8 +50,13 @@ const KEBAB = /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/;
 const PASCAL = /^[A-Z][A-Za-z0-9]*$/;
 const IDENTIFIER = /^[A-Za-z_$][A-Za-z0-9_$]*$/;
 const FIGMA_ID = /^\d+:\d+$/;
+/** A compound-selector suffix: starts with `:` or `[`, and no list, block or declaration syntax. */
+const STATE = /^[:[][^,{};]*$/;
 
 const TIERS: readonly Tier[] = ['server', 'client', 'engine', 'own'];
+const FOCUS_TARGETS: readonly FocusTarget[] = ['self', 'nested-input', 'within'];
+const PAINTS: readonly Paint[] = ['border', 'fill', 'highlight', 'mark', 'outline'];
+const INDICATOR_KEYS: readonly string[] = ['slot', 'state', 'paint'];
 const KEYS: readonly string[] = [
   '$schema',
   '$comment',
@@ -76,8 +98,175 @@ function isStatus(value: unknown): value is ComponentConfig['status'] {
   return value === 'stable' || value === 'unstable';
 }
 
-function isFocusTarget(value: unknown): value is NonNullable<ComponentConfig['focusTarget']> {
-  return value === 'self' || value === 'nested-input';
+function isFocusTarget(value: unknown): value is FocusTarget {
+  return FOCUS_TARGETS.some((target) => target === value);
+}
+
+function isFocusTargetMap(value: unknown): value is Record<string, FocusTarget> {
+  return isRecord(value) && Object.values(value).every(isFocusTarget);
+}
+
+function isPaint(value: unknown): value is Paint {
+  return PAINTS.some((paint) => paint === value);
+}
+
+/** `ProgressBar` → `progress-bar`. */
+export function kebabCase(pascal: string): string {
+  return pascal.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
+}
+
+/**
+ * The slot prefixes a component may use: its name, plus each `exports` member for a family subpath
+ * (`progress` lists Meter, so `meter-fill` is one of its slots).
+ */
+export function slotPrefixes(name: string, exports: readonly string[] = []): string[] {
+  return [...new Set([name, ...exports.map(kebabCase)])];
+}
+
+/** The focus mode of one interactive slot: its map entry, the shared mode, or "self". */
+export function focusTargetOf(config: ComponentConfig, slot: string): FocusTarget {
+  const { focusTarget } = config;
+  if (focusTarget === undefined) return 'self';
+  return typeof focusTarget === 'string' ? focusTarget : (focusTarget[slot] ?? 'self');
+}
+
+type A11yFields = Pick<ComponentConfig, 'interactive' | 'focusTarget' | 'stateIndicator'>;
+
+/**
+ * `interactive`, `focusTarget` and `stateIndicator`, the inputs of the generated nz.base selector
+ * lists (§8.5). Each slot is a full `data-slot` value of this component.
+ */
+function validateA11y(
+  raw: Record<string, unknown>,
+  prefixes: string[],
+  overlayPopup: string | undefined,
+  errors: string[],
+): A11yFields {
+  const fields: A11yFields = {};
+  const expected = prefixes.map((prefix) => `"${prefix}"`).join(' or ');
+  const badSlot = (where: string, slot: unknown): boolean => {
+    const ok =
+      typeof slot === 'string' &&
+      KEBAB.test(slot) &&
+      prefixes.some((prefix) => slot === prefix || slot.startsWith(`${prefix}-`));
+    if (!ok) {
+      errors.push(
+        `${where} ${JSON.stringify(slot)} is not a data-slot of this component (expected ${expected}, alone or followed by "-<part>")`,
+      );
+    }
+    return !ok;
+  };
+
+  const { interactive, focusTarget, stateIndicator } = raw;
+  if (interactive !== undefined) {
+    if (!Array.isArray(interactive)) {
+      errors.push('"interactive" must be an array of data-slot values');
+    } else {
+      let bad = false;
+      for (const slot of interactive) if (badSlot('"interactive":', slot)) bad = true;
+      if (!bad && isStringArray(interactive)) {
+        if (duplicates(interactive).length > 0) {
+          errors.push(`"interactive" repeats ${duplicates(interactive).join(', ')}`);
+        } else {
+          fields.interactive = interactive;
+        }
+      }
+    }
+  }
+
+  if (focusTarget !== undefined) {
+    const slots = isStringArray(interactive) ? interactive : [];
+    if (slots.length === 0) {
+      errors.push('"focusTarget" needs at least one "interactive" slot');
+    } else if (isFocusTarget(focusTarget)) {
+      fields.focusTarget = focusTarget;
+    } else if (isFocusTargetMap(focusTarget)) {
+      const keys = Object.keys(focusTarget);
+      const missing = slots.filter((slot) => !keys.includes(slot));
+      const extra = keys.filter((key) => !slots.includes(key));
+      if (missing.length > 0 || extra.length > 0) {
+        const detail = [
+          missing.length > 0 ? `missing ${missing.join(', ')}` : '',
+          extra.length > 0 ? `not interactive: ${extra.join(', ')}` : '',
+        ];
+        errors.push(
+          `"focusTarget" must map exactly the "interactive" slots (${detail.filter(Boolean).join('; ')})`,
+        );
+      } else {
+        fields.focusTarget = focusTarget;
+      }
+    } else {
+      const modes = FOCUS_TARGETS.map((mode) => `"${mode}"`).join(', ');
+      errors.push(
+        `"focusTarget" must be one of ${modes}, or an object mapping each "interactive" slot to one`,
+      );
+    }
+  }
+
+  if (stateIndicator !== undefined) {
+    if (!Array.isArray(stateIndicator)) {
+      errors.push('"stateIndicator" must be an array of { "slot", "state"?, "paint" } objects');
+    } else {
+      const indicators: StateIndicator[] = [];
+      for (const [index, entry] of stateIndicator.entries()) {
+        const at = `"stateIndicator[${index}]"`;
+        if (!isRecord(entry)) {
+          errors.push(`${at} must be an object { "slot", "state"?, "paint" }`);
+          continue;
+        }
+        let ok = true;
+        for (const key of Object.keys(entry)) {
+          if (!INDICATOR_KEYS.includes(key)) {
+            errors.push(
+              `unknown key "stateIndicator[${index}].${key}" (allowed: ${INDICATOR_KEYS.join(', ')})`,
+            );
+            ok = false;
+          }
+        }
+        const { slot, state, paint } = entry;
+        if (badSlot(`${at} slot`, slot)) ok = false;
+        if (state !== undefined && (typeof state !== 'string' || !STATE.test(state))) {
+          errors.push(
+            `${at} state must be a selector suffix starting with ":" or "[" (for example "[data-selected]" or ":checked"), with no "," or braces`,
+          );
+          ok = false;
+        }
+        if (!isPaint(paint)) {
+          errors.push(`${at} paint must be one of ${PAINTS.join(', ')}`);
+          ok = false;
+        }
+        if (ok && typeof slot === 'string' && isPaint(paint)) {
+          indicators.push(typeof state === 'string' ? { slot, state, paint } : { slot, paint });
+        }
+      }
+      const seen = new Set<string>();
+      for (const { slot, state = '', paint } of indicators) {
+        const key = `${slot}${state} ${paint}`;
+        if (seen.has(key)) errors.push(`"stateIndicator" repeats ${slot}${state} (${paint})`);
+        seen.add(key);
+      }
+      if (indicators.length === stateIndicator.length) fields.stateIndicator = indicators;
+    }
+  }
+
+  // An overlay popup's edge is a shadow, which forced colours drop, so it must be listed (§8.5).
+  if (overlayPopup !== undefined) {
+    const listed = Array.isArray(stateIndicator)
+      ? stateIndicator.some(
+          (entry) =>
+            isRecord(entry) &&
+            entry.slot === overlayPopup &&
+            entry.paint === 'border' &&
+            entry.state === undefined,
+        )
+      : false;
+    if (!listed) {
+      errors.push(
+        `"overlay": true needs { "slot": "${overlayPopup}", "paint": "border" } in "stateIndicator" (the popup's forced-colours edge)`,
+      );
+    }
+  }
+  return fields;
 }
 
 function isVariants(value: unknown): value is Record<string, string[]> {
@@ -154,12 +343,12 @@ export function validateComponentConfig(
     }
   }
 
-  for (const key of ['interactive', 'stateIndicator', 'cssDeps'] as const) {
-    if (raw[key] !== undefined && !isStringArray(raw[key])) fail(key, 'an array of strings');
-  }
-  if (raw.focusTarget !== undefined && !isFocusTarget(raw.focusTarget)) {
-    fail('focusTarget', '"self" or "nested-input"');
-  }
+  // Slots derive from the folder, which "name" must equal, so a bad name reports once.
+  const prefixes = slotPrefixes(folder, isStringArray(exports, IDENTIFIER) ? exports : []);
+  const overlayPopup = overlay === true ? `${folder}-popup` : undefined;
+  const a11y = validateA11y(raw, prefixes, overlayPopup, errors);
+  if (raw.cssDeps !== undefined && !isStringArray(raw.cssDeps))
+    fail('cssDeps', 'an array of strings');
   if (raw.variants !== undefined && !isVariants(raw.variants)) {
     fail('variants', 'an object mapping each prop to an array of string values');
   }
@@ -203,9 +392,7 @@ export function validateComponentConfig(
   if (typeof overlay === 'boolean') config.overlay = overlay;
   if (isStringArray(parts)) config.parts = parts;
   if (isStringArray(exports)) config.exports = exports;
-  if (isStringArray(raw.interactive)) config.interactive = raw.interactive;
-  if (isFocusTarget(raw.focusTarget)) config.focusTarget = raw.focusTarget;
-  if (isStringArray(raw.stateIndicator)) config.stateIndicator = raw.stateIndicator;
+  Object.assign(config, a11y);
   if (isStringArray(raw.cssDeps)) config.cssDeps = raw.cssDeps;
   if (isVariants(raw.variants)) config.variants = raw.variants;
   if (raw.figma !== undefined) config.figma = figma;

@@ -1,12 +1,14 @@
 /**
  * `nz gen [--check] [--root <dir>]`: derives barrels, `engine.ts`, `*.parts.ts`, the @nizivo/react
- * exports map and design/component-map.json from each `component.json` (ARCHITECTURE.md §6).
+ * exports map, design/component-map.json and styles/base.css from each `component.json`
+ * (ARCHITECTURE.md §6, §8.5).
  * `--check` writes nothing and exits 1 when any file would change (the CI drift check).
  */
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
+import { generateBaseCss } from './base-css.ts';
 import { generate, type GenResult } from './generate.ts';
 
 const REPO_ROOT = fileURLToPath(new URL('../../../', import.meta.url));
@@ -27,6 +29,10 @@ export function gen(args: string[]): number {
   let result: GenResult;
   try {
     result = generate(root);
+    if (result.errors.length === 0) {
+      const base = generateBaseCss(root);
+      result.files.set(base.file, base.content);
+    }
   } catch (error) {
     console.error(`nz gen: ${error instanceof Error ? error.message : String(error)}`);
     return 1;

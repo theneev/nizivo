@@ -3,7 +3,7 @@
   "status": "stable",
   "tier": "server",
   "parts": [],
-  "interactive": ["root"],
+  "interactive": ["button"],
   "focusTarget": "self",
   "stateIndicator": [],
   "cssDeps": ["base"],
