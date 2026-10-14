@@ -22,10 +22,14 @@ export interface ButtonProps extends Omit<ComponentPropsWithRef<'button'>, 'chil
   size?: ControlSize;
   leadingIcon?: ReactNode;
   trailingIcon?: ReactNode;
-  /** An action is in flight: the button stays focusable with `aria-disabled` and swallows clicks. */
+  /**
+   * An action is in flight: the button stays focusable with `aria-disabled` and swallows clicks.
+   * @default false
+   */
   pending?: boolean;
   /** Replaces the internal spinner glyph. */
   pendingIndicator?: ReactNode;
+  /** Fills the width of its container. @default false */
   fullWidth?: boolean;
   /** Composition, for example `render={<Link href="/orders" />}`. */
   render?: RenderProp<ButtonState>;

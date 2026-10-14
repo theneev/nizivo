@@ -72,9 +72,43 @@
     border-radius: inherit;
   }
 
+  /* Minimum spacing from the Figma Modal (docs/figma/07 §4.4): 24 px sides, 16 px between the title,
+     the description and the body, 24 px above the footer, whose actions sit at the end, 12 px apart,
+     on bg/subtle. Each part pads 8 px above and below, so any of them can be left out. */
+  .nz-dialog-title {
+    margin: 0;
+    padding: var(--nz-space-5) var(--nz-space-6) var(--nz-space-2);
+    color: var(--nz-text-primary);
+    font: var(--nz-font-heading-h3);
+    letter-spacing: var(--nz-tracking-heading-h3);
+  }
+
+  .nz-dialog-description {
+    margin: 0;
+    padding: var(--nz-space-2) var(--nz-space-6);
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-body-l);
+  }
+
   /* the only scroller */
   .nz-dialog-body {
     overflow: auto;
+    padding: var(--nz-space-2) var(--nz-space-6);
+  }
+
+  .nz-dialog-description:last-child,
+  .nz-dialog-body:last-child {
+    padding-block-end: var(--nz-space-6);
+  }
+
+  .nz-dialog-footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: var(--nz-space-3);
+    margin-block-start: var(--nz-space-4);
+    padding: var(--nz-space-4) var(--nz-space-6);
+    background: var(--nz-bg-subtle);
   }
 
   @media (forced-colors: active) {

@@ -91,7 +91,9 @@ export interface SelectValueProps extends Omit<ComponentPropsWithRef<'span'>, 'c
 }
 
 export interface SelectPopupProps {
+  /** @default 'bottom' */
   side?: 'top' | 'bottom';
+  /** @default 'start' */
   align?: Align;
   /** Distance from the trigger in px. @default 8 */
   sideOffset?: number;

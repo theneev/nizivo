@@ -117,5 +117,14 @@
     .nz-select-popup {
       border: 1px solid CanvasText;
     }
+
+    /* base.css's [data-selected] floor (Highlight) loses to [data-highlighted]'s background above,
+       a later layer, and its forced-color-adjust: none would then leave HighlightText on the hover
+       token. Keyboard focus opens on the selected item, so repeat the floor here (§8.5). */
+    .nz-select-item[data-selected] {
+      background: Highlight;
+      color: HighlightText;
+      forced-color-adjust: none;
+    }
   }
 }
