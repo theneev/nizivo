@@ -1,0 +1,9 @@
+{
+  "color": {
+    "$type": "color",
+    "p": {
+      "neutral-0":   { "$value": { "colorSpace": "srgb", "components": [1, 1, 1], "hex": "#ffffff" } },
+      "neutral-900": { "$value": { "colorSpace": "srgb", "components": [0.0941, 0.1059, 0.098], "hex": "#181b19" } }
+    }
+  }
+}

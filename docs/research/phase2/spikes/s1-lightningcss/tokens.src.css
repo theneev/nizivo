@@ -1,0 +1,9 @@
+:root {
+  --nz-bg-surface: light-dark(#ffffff, #181b19);
+  --nz-text: light-dark(rgb(16 19 17), rgb(240 242 241));
+  color-scheme: light dark;
+}
+[data-theme="dark"] { color-scheme: dark; }
+[data-theme="light"] { color-scheme: light; }
+.direct { color: light-dark(#ffffff, #181b19); }
+.probe { background-color: var(--nz-bg-surface); color: var(--nz-text); }

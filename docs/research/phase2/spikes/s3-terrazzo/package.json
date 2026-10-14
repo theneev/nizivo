@@ -1,0 +1,20 @@
+{
+  "name": "s3-terrazzo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.3",
+    "@terrazzo/cli": "^2.8.0",
+    "@terrazzo/plugin-css": "^2.8.0",
+    "@terrazzo/plugin-tailwind": "^2.8.0",
+    "tailwindcss": "^4.3.3"
+  }
+}

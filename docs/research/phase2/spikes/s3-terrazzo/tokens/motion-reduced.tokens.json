@@ -1,0 +1,1 @@
+{ "duration": { "$type": "duration", "fast": { "$value": { "value": 0, "unit": "ms" } } } }

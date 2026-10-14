@@ -1,0 +1,6 @@
+@import "tailwindcss";
+@theme inline {
+  --color-bg-surface: var(--nz-bg-surface);
+  --color-text-primary: var(--nz-text-primary);
+}
+@source "../twsrc";

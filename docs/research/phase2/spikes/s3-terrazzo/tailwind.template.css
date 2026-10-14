@@ -1,0 +1,8 @@
+@import "tailwindcss";
+@theme inline {
+  @tz (theme: "light", motion: "default");
+}
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+@variant dark {
+  @tz (theme: "dark");
+}

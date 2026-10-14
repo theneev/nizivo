@@ -1,0 +1,7 @@
+{
+  "color": {
+    "$type": "color",
+    "bg":   { "surface": { "$value": "{color.p.neutral-0}" } },
+    "text": { "primary": { "$value": "{color.p.neutral-900}" } }
+  }
+}

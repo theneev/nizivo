@@ -1,0 +1,18 @@
+from colorlib import *
+P.update(n450='#828a81', n550='#666d65', n450d='#929a90')
+LBG=['n0','n25','n50','n100']; DBG=['n950','n900','n850','n800']
+def line(lab,fg,bgs): print(f"  {lab:<36} {P[fg]} "+' '.join(f"{b}={cr(fg,b):.2f}" for b in bgs)+f"  min={min(cr(fg,b) for b in bgs):.2f}")
+def gap(lab,a,b): print(f"  {lab:<36} CR={cr(a,b):.2f}  dOKLCH-L={abs(oklch(P[a])[0]-oklch(P[b])[0]):.3f}  dL*={abs(lab_L(P[a])-lab_L(P[b])):.1f}")
+print("Option A (re-space, existing primitives)")
+line("L primary n900",'n900',LBG); line("L secondary n700",'n700',LBG); line("L tertiary n600",'n600',LBG)
+line("D primary n50",'n50',DBG); line("D secondary n300",'n300',DBG); line("D tertiary n400",'n400',DBG)
+gap("L primary/secondary",'n900','n700'); gap("L secondary/tertiary",'n700','n600'); gap("D primary/secondary",'n50','n300'); gap("D secondary/tertiary",'n300','n400')
+print("Option B (minimal: keep secondary, new tertiary steps)")
+line("L tertiary n550 new",'n550',LBG); line("D tertiary n450d new",'n450d',DBG)
+gap("L primary/secondary (n900/n600)",'n900','n600'); gap("L secondary/tertiary (n600/n550)",'n600','n550'); gap("D primary/secondary (n50/n400)",'n50','n400'); gap("D secondary/tertiary (n400/#929a90)",'n400','n450d')
+print("Today (failing) for reference")
+gap("L secondary/tertiary (n600/n500)",'n600','n500'); gap("D secondary/tertiary (n400/n500)",'n400','n500')
+print("border/control light candidates")
+line("new n450 #828a81",'n450',LBG); line("n500",'n500',LBG)
+print("dark tertiary option-A n400 vs dark disabled n600 ordering:", round(cr('n400','n900'),2), round(cr('n600','n900'),2))
+print("light disabled n400 vs tertiary n600:", round(cr('n400','n0'),2), round(cr('n600','n0'),2))

@@ -1,0 +1,35 @@
+:root {
+  --nz-bg-surface: var(--lightningcss-light, #fff) var(--lightningcss-dark, #181b19);
+  --nz-text: var(--lightningcss-light, #101311) var(--lightningcss-dark, #f0f2f1);
+  --lightningcss-light: initial;
+  --lightningcss-dark: ;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --lightningcss-light: ;
+    --lightningcss-dark: initial;
+  }
+}
+
+[data-theme="dark"] {
+  --lightningcss-light: ;
+  --lightningcss-dark: initial;
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  --lightningcss-light: initial;
+  --lightningcss-dark: ;
+  color-scheme: light;
+}
+
+.direct {
+  color: var(--lightningcss-light, #fff) var(--lightningcss-dark, #181b19);
+}
+
+.probe {
+  background-color: var(--nz-bg-surface);
+  color: var(--nz-text);
+}
