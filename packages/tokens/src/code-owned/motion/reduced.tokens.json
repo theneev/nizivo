@@ -1,0 +1,18 @@
+{
+  "duration": {
+    "spring": {
+      "$type": "duration",
+      "$value": {
+        "value": 120,
+        "unit": "ms"
+      }
+    },
+    "spring-soft": {
+      "$type": "duration",
+      "$value": {
+        "value": 120,
+        "unit": "ms"
+      }
+    }
+  }
+}

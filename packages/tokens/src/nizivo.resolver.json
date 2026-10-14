@@ -1,7 +1,7 @@
 {
   "name": "Nizivo",
   "version": "2025.10",
-  "description": "Nizivo design tokens: the Figma-owned sets and modes. Code-owned sources join in week 2.",
+  "description": "Nizivo design tokens: the Figma-owned sets and modes, then the code-owned sources (plan §7.6). Within a context, later sources win; the a11y overrides are always last (§15.4).",
   "sets": {
     "primitives": {
       "sources": [{ "$ref": "figma-owned/primitives.tokens.json" }]
@@ -10,7 +10,9 @@
       "sources": [
         { "$ref": "figma-owned/foundation.tokens.json" },
         { "$ref": "figma-owned/typography.tokens.json" },
-        { "$ref": "figma-owned/effects.tokens.json" }
+        { "$ref": "figma-owned/effects.tokens.json" },
+        { "$ref": "code-owned/foundation.tokens.json" },
+        { "$ref": "code-owned/proposals.tokens.json" }
       ]
     }
   },
@@ -18,16 +20,34 @@
     "theme": {
       "description": "Figma Color collection modes (Light, Dark)",
       "contexts": {
-        "light": [{ "$ref": "figma-owned/color/light.tokens.json" }],
-        "dark": [{ "$ref": "figma-owned/color/dark.tokens.json" }]
+        "light": [
+          { "$ref": "figma-owned/color/light.tokens.json" },
+          { "$ref": "code-owned/color/light.tokens.json" },
+          { "$ref": "code-owned/proposals/color/light.tokens.json" },
+          { "$ref": "code-owned/a11y/light.overrides.tokens.json" }
+        ],
+        "dark": [
+          { "$ref": "figma-owned/color/dark.tokens.json" },
+          { "$ref": "code-owned/color/dark.tokens.json" },
+          { "$ref": "code-owned/proposals/color/dark.tokens.json" },
+          { "$ref": "code-owned/a11y/dark.overrides.tokens.json" }
+        ]
       },
       "default": "light"
     },
     "motion": {
       "description": "Figma Motion collection modes (Default, Reduced)",
       "contexts": {
-        "default": [{ "$ref": "figma-owned/motion/default.tokens.json" }],
-        "reduced": [{ "$ref": "figma-owned/motion/reduced.tokens.json" }]
+        "default": [
+          { "$ref": "figma-owned/motion/default.tokens.json" },
+          { "$ref": "code-owned/motion-derived.tokens.json" },
+          { "$ref": "code-owned/proposals/motion/default.tokens.json" }
+        ],
+        "reduced": [
+          { "$ref": "figma-owned/motion/reduced.tokens.json" },
+          { "$ref": "code-owned/motion/reduced.tokens.json" },
+          { "$ref": "code-owned/proposals/motion/reduced.tokens.json" }
+        ]
       },
       "default": "default"
     },

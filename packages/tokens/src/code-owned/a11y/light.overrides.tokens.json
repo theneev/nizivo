@@ -1,0 +1,78 @@
+{
+  "color": {
+    "text": {
+      "secondary": {
+        "$type": "color",
+        "$value": "{color.p.neutral.700}",
+        "$extensions": {
+          "app.nizivo.override": {
+            "figmaVariableId": "VariableID:737:137",
+            "figmaVariable": "Grove Color/text/secondary (Light)",
+            "figmaValueAtOverride": "{color.p.neutral.600}",
+            "kind": "ladder",
+            "reason": "Option A text ladder (decision 8e): one step deeper so text/tertiary can move up and keep its step below secondary. Figma n600 passes on its own (5.65:1 on bg/muted)",
+            "wcag": [],
+            "issue": null,
+            "approvedBy": ["maintainer"],
+            "expires": "2027-01-31"
+          }
+        }
+      },
+      "tertiary": {
+        "$type": "color",
+        "$value": "{color.p.neutral.600}",
+        "$extensions": {
+          "app.nizivo.override": {
+            "figmaVariableId": "VariableID:737:138",
+            "figmaVariable": "Grove Color/text/tertiary (Light)",
+            "figmaValueAtOverride": "{color.p.neutral.500}",
+            "kind": "contrast",
+            "reason": "n500 is 4.31:1 on bg/surface and 3.76:1 on bg/muted (WCAG 1.4.3, 4.5:1)",
+            "wcag": ["1.4.3"],
+            "issue": null,
+            "approvedBy": ["maintainer"],
+            "expires": "2027-01-31"
+          }
+        }
+      }
+    },
+    "icon": {
+      "warning": {
+        "$type": "color",
+        "$value": "{color.p.amber.600}",
+        "$extensions": {
+          "app.nizivo.override": {
+            "figmaVariableId": "VariableID:737:160",
+            "figmaVariable": "Grove Color/icon/warning (Light)",
+            "figmaValueAtOverride": "{color.p.amber.500}",
+            "kind": "contrast",
+            "reason": "amber/500 is 2.45:1 on bg/surface and 2.13:1 on bg/muted (WCAG 1.4.11, 3:1)",
+            "wcag": ["1.4.11"],
+            "issue": null,
+            "approvedBy": ["maintainer"],
+            "expires": "2027-01-31"
+          }
+        }
+      }
+    },
+    "border": {
+      "warning": {
+        "$type": "color",
+        "$value": "{color.p.amber.600}",
+        "$extensions": {
+          "app.nizivo.override": {
+            "figmaVariableId": "VariableID:737:154",
+            "figmaVariable": "Grove Color/border/warning (Light)",
+            "figmaValueAtOverride": "{color.p.amber.500}",
+            "kind": "contrast",
+            "reason": "amber/500 is 2.45:1 on bg/surface and 2.13:1 on bg/muted (WCAG 1.4.11, 3:1)",
+            "wcag": ["1.4.11"],
+            "issue": null,
+            "approvedBy": ["maintainer"],
+            "expires": "2027-01-31"
+          }
+        }
+      }
+    }
+  }
+}

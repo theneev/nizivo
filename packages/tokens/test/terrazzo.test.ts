@@ -1,5 +1,6 @@
-// The week 1 Terrazzo dry run (plan §7.1): the real export validates through the resolver, and the
-// emitted names and scoped blocks are what the plan expects. Runs the pinned CLI as `tz` would.
+// The Terrazzo build (plan §7.1–§7.5) on the real export: the resolver validates, the emitted names
+// are the plan's, and each scoped block holds only its own modifier's tokens. Runs the pinned CLI as
+// `pnpm tokens:build` would. test/build.test.ts pins the bytes.
 import { spawnSync } from 'node:child_process';
 import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -19,16 +20,18 @@ function tz(args: string[], env: Record<string, string> = {}) {
   });
 }
 
-/** Custom properties declared between `header` and the next top-level block. */
+/** Custom properties declared directly in the block that `header` opens. */
 function declared(css: string, header: string): string[] {
   const start = css.indexOf(`${header} {`);
   if (start === -1) throw new Error(`no block ${header}`);
-  const next = css.slice(start + header.length).search(/\n(?:@media|\[|:root)/);
-  const body = next === -1 ? css.slice(start) : css.slice(start, start + header.length + next);
-  return [...body.matchAll(/(--nz-[a-z0-9-]+):/g)].map((match) => match[1] ?? '');
+  const indent = /[ ]*$/.exec(css.slice(0, start))?.[0] ?? '';
+  const end = css.indexOf(`\n${indent}}`, start);
+  return [...css.slice(start, end).matchAll(/^\s*(--nz-[a-z0-9-]+):/gm)].map(
+    (match) => match[1] ?? '',
+  );
 }
 
-const SEMANTIC = /^--nz-(?:bg|text|border|icon|chart)-/;
+const SEMANTIC = /^--nz-(?:bg|text|border|icon|chart)-(?!width-)/;
 const MOTION = /^--nz-(?:duration|easing|distance|scale|tilt|stagger|magnetic)-/;
 const VIEWPORT = /^--nz-(?:grid|layout|type|section)-/;
 
@@ -36,7 +39,7 @@ let outDir = '';
 let css = '';
 
 beforeAll(() => {
-  outDir = mkdtempSync(join(tmpdir(), 'nz-tz-dry-run-'));
+  outDir = mkdtempSync(join(tmpdir(), 'nz-tz-build-'));
   const build = tz(['build', '-c', CONFIG], { NZ_TOKENS_OUT_DIR: outDir });
   if (build.status !== 0) throw new Error(`tz build failed:\n${build.stdout}${build.stderr}`);
   css = readFileSync(join(outDir, 'tokens.css'), 'utf8');
@@ -46,27 +49,29 @@ afterAll(() => {
   rmSync(outDir, { recursive: true, force: true });
 });
 
-describe('Terrazzo 2.8.0 dry run', () => {
-  test('tz check passes on the resolver (every set and context)', () => {
+describe('Terrazzo 2.8.0 token build', () => {
+  test('tz check passes on the resolver (every set and context, code-owned sources included)', () => {
     const check = tz(['check', '-c', CONFIG]);
     expect(check.stderr).toBe('');
     expect(check.status).toBe(0);
   }, 60_000);
 
-  test('a text style emits a font shorthand plus one variable per sub-value', () => {
+  test('a text style emits a font shorthand of var() sub-values, a family alias and em tracking', () => {
     expect(css).toContain(
       '--nz-font-label-m: var(--nz-font-label-m-font-weight) var(--nz-font-label-m-font-size)/var(--nz-font-label-m-line-height) var(--nz-font-label-m-font-family);',
     );
     const fonts = declared(css, ':root').filter((name) => name.startsWith('--nz-font-'));
-    // 18 text styles, each a shorthand plus five sub-values; no font-style (normal is dropped).
-    expect(fonts).toHaveLength(18 * 6);
     const styles = fonts.filter(
-      (name) => !/-(font-family|font-size|font-weight|letter-spacing|line-height)$/.test(name),
+      (name) =>
+        !/-(font-family|font-size|font-weight|line-height)$/.test(name) &&
+        !name.startsWith('--nz-font-family-'),
     );
+    // 18 Figma text styles plus the Body/S and Label/S proposals (decision 8c).
     expect(styles).toEqual([
       '--nz-font-body-l',
       '--nz-font-body-m',
       '--nz-font-body-m-strong',
+      '--nz-font-body-s',
       '--nz-font-display-l',
       '--nz-font-display-m',
       '--nz-font-heading-h1',
@@ -76,6 +81,7 @@ describe('Terrazzo 2.8.0 dry run', () => {
       '--nz-font-label-l',
       '--nz-font-label-m',
       '--nz-font-label-m-strong',
+      '--nz-font-label-s',
       '--nz-font-mono-m',
       '--nz-font-mono-m-strong',
       '--nz-font-numeric-display',
@@ -83,40 +89,62 @@ describe('Terrazzo 2.8.0 dry run', () => {
       '--nz-font-numeric-l',
       '--nz-font-numeric-m',
     ]);
+    // Each style: the shorthand, four sub-values and its tracking; plus the two family tokens.
+    expect(fonts).toHaveLength(styles.length * 5 + 2);
     for (const style of styles) {
-      for (const sub of [
-        'font-family',
-        'font-size',
-        'font-weight',
-        'letter-spacing',
-        'line-height',
-      ]) {
+      for (const sub of ['font-family', 'font-size', 'font-weight', 'line-height']) {
         expect(fonts).toContain(`${style}-${sub}`);
       }
+      expect(css).toContain(`${style.replace('--nz-font-', '--nz-tracking-')}: `);
     }
-    expect(css).toContain('--nz-font-label-m-font-size: 0.875rem;');
-    expect(css).toContain('--nz-font-display-l-letter-spacing: -0.105rem;');
-    expect(css).not.toMatch(/--nz-tracking-/);
+    expect(css).not.toMatch(/-letter-spacing:/);
+    expect(css).toContain('--nz-font-label-m-font-family: var(--nz-font-family-sans);');
+    expect(css).toContain('--nz-font-mono-m-font-family: var(--nz-font-family-mono);');
+    expect(css).toContain('--nz-font-label-s-font-size: 0.75rem;');
+    expect(css).toContain('--nz-tracking-display-l: -0.03em;');
+    expect(css).toContain('--nz-tracking-label-m: 0em;');
+    expect(css).toContain(
+      '--nz-font-family-sans: var(--font-geist-sans, "Geist"), ui-sans-serif, system-ui, sans-serif;',
+    );
+    expect(css).not.toMatch(/"Geist";/);
   });
 
-  test('colours drop the color group and layout.viewport is not emitted', () => {
+  test('colours drop the color group and layout.viewport and breakpoints are not variables', () => {
     expect(css).not.toMatch(/--nz-color-/);
     expect(css).not.toMatch(/--nz-layout-viewport/);
-    expect(css).toContain('--nz-bg-surface: var(--nz-p-neutral-0);');
-    expect(css).toContain('--nz-elevation-1: 0px 1px 2px #1013110a, 0px 1px 1px #10131108;');
+    expect(css).not.toMatch(/--nz-breakpoint-/);
+    expect(css).toContain(
+      '--nz-bg-surface: light-dark(var(--nz-p-neutral-0), var(--nz-p-neutral-900));',
+    );
+    expect(css).toContain('--nz-text-on-accent: var(--nz-p-green-950);');
+    expect(css).toContain(
+      '--nz-elevation-1: 0 0 0 1px var(--nz-elevation-ring), 0 1px 2px 0 light-dark(rgb(16 19 17 / 0.04), rgb(0 0 0 / 0.24)), 0 1px 1px 0 light-dark(rgb(16 19 17 / 0.03), rgb(0 0 0 / 0.18));',
+    );
   });
 
-  test('each scoped block re-declares only its own modifier tokens (S3a include recipe)', () => {
-    const dark = declared(css, '[data-nz-theme="dark"]');
-    expect(dark).toHaveLength(58);
-    expect(dark.filter((name) => !SEMANTIC.test(name))).toEqual([]);
+  test('the theme is one light-dark() declaration per semantic colour, with no dark block', () => {
+    const root = declared(css, ':root');
+    expect(new Set(root).size).toBe(root.length);
+    expect(css).not.toContain('[data-nz-theme="dark"] {\n    --nz-bg');
+    const semantic = root.filter((name) => SEMANTIC.test(name));
+    // 58 Figma semantic colours and 10 proposals.
+    expect(semantic).toHaveLength(68);
+    for (const name of declared(css, '[data-nz-theme="dark"]'))
+      expect(name).toBe('--nz-scheme-inverse');
+  });
 
+  test('each scoped block re-declares only its own modifier tokens (S3a recipe, sets left out)', () => {
+    expect(declared(css, '[data-nz-motion="reduce"]')).toEqual(
+      declared(css, '@media (prefers-reduced-motion: reduce)'),
+    );
     for (const header of ['@media (prefers-reduced-motion: reduce)', '[data-nz-motion="reduce"]']) {
       const reduced = declared(css, header);
-      expect(reduced).toHaveLength(20);
+      // 20 Figma motion tokens, the 2 derived spring durations and the 3 motion proposals.
+      expect(reduced).toHaveLength(25);
       expect(reduced.filter((name) => !MOTION.test(name))).toEqual([]);
+      expect(reduced).not.toContain('--nz-duration-spin');
     }
-    for (const header of ['@media (--nz-sm)', '@media (--nz-lg)']) {
+    for (const header of ['@media (width >= 40rem)', '@media (width >= 80rem)']) {
       const viewport = declared(css, header);
       expect(viewport).toHaveLength(9);
       expect(viewport.filter((name) => !VIEWPORT.test(name))).toEqual([]);

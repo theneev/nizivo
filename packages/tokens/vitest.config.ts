@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitest/config';
 
-// Node only: the normalizer and the Terrazzo dry run. test/golden/** holds no test files yet.
+// Node only: the normalizer, the Terrazzo build and the a11y gate. test/golden/** holds the dist
+// goldens, not tests.
 export default defineConfig({
   test: {
     environment: 'node',

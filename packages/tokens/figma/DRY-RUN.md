@@ -7,20 +7,24 @@ Toolchain: `@terrazzo/cli` and `@terrazzo/plugin-css` 2.8.0, Node 24.
 This is a dry run (plan §21.1, W1). It stops before the real `tokens.css`: no `light-dark()`
 transform, no a11y overrides, no proposals, no Tailwind or contract plugin. Those are week 2.
 
+**Week 2 (2026-10-14): the real build replaced the dry run;** `../BUILD.md` describes it. The
+sections below stay as the week 1 record of the export and the normalizer. "Emitted CSS names" is
+kept current, and the open items say which week 2 closed.
+
 ## Reproduce
 
 Run from `packages/tokens`:
 
-| Step      | Command                                                      | Result                                                                                   |
-| --------- | ------------------------------------------------------------ | ---------------------------------------------------------------------------------------- |
-| Normalize | `pnpm tokens:normalize`                                      | 11 files in `src/figma-owned/`, 298 tokens (200 distinct ids)                            |
-| Invariant | `pnpm tokens:normalize:check`                                | `src/figma-owned matches normalize(figma/raw): 11 files`                                 |
-| Validate  | `pnpm tokens:check` (`tz check -c build/terrazzo.config.ts`) | `No errors`, recommended lint rules on                                                   |
-| Build     | `NZ_TOKENS_OUT_DIR=<dir> pnpm tokens:dry-run`                | `200 tokens built`, one `tokens.css` (21.7 KB, unminified)                               |
-| Tests     | `pnpm test`                                                  | 23 tests: golden, both prefixes, id identity, determinism, `--check`, the Terrazzo build |
+| Step      | Command                                                            | Result                                                                                   |
+| --------- | ------------------------------------------------------------------ | ---------------------------------------------------------------------------------------- |
+| Normalize | `pnpm tokens:normalize`                                            | 11 files in `src/figma-owned/`, 298 tokens (200 distinct ids)                            |
+| Invariant | `pnpm tokens:normalize:check`                                      | `src/figma-owned matches normalize(figma/raw): 11 files`                                 |
+| Validate  | `pnpm tokens:check` (`tz check -c build/terrazzo.config.ts`)       | `No errors`, recommended lint rules on                                                   |
+| Build     | `NZ_TOKENS_OUT_DIR=<dir> pnpm tokens:build` (W1: `tokens:dry-run`) | `200 tokens built`, one `tokens.css` (21.7 KB, unminified) in W1                         |
+| Tests     | `pnpm test`                                                        | 23 tests: golden, both prefixes, id identity, determinism, `--check`, the Terrazzo build |
 
-Without `NZ_TOKENS_OUT_DIR` the dry-run CSS goes to `node_modules/.cache/tokens-dry-run/`, so it is
-never committed or published.
+In week 1 the dry-run CSS went to `node_modules/.cache/tokens-dry-run/`. Since week 2 the build
+writes `dist/` (published) unless `NZ_TOKENS_OUT_DIR` is set.
 
 ## Verdict
 
@@ -110,46 +114,47 @@ It also passes things it should not: durations, scales and grid columns all arri
   `--nz-surface-inner-highlight`.
 
 **Typography from text styles** (the open question of plan §7.1 and §7.6). Each text style emits a
-shorthand plus five sub-values; for `Grove/Label/M`:
+shorthand plus five sub-values; for `Grove/Label/M`, as built since week 2 (week 1 emitted the family
+as `"Geist"` and the fifth sub-value as `--nz-font-label-m-letter-spacing: 0rem`):
 
 ```text
 --nz-font-label-m: var(--nz-font-label-m-font-weight) var(--nz-font-label-m-font-size)/var(--nz-font-label-m-line-height) var(--nz-font-label-m-font-family);
---nz-font-label-m-font-family: "Geist";
+--nz-font-label-m-font-family: var(--nz-font-family-sans);
 --nz-font-label-m-font-size: 0.875rem;
 --nz-font-label-m-font-weight: 500;
---nz-font-label-m-letter-spacing: 0rem;
 --nz-font-label-m-line-height: 1.4;
+--nz-tracking-label-m: 0em;
 ```
 
 The 18 shorthands: `--nz-font-display-l`, `-display-m`, `-heading-h1` … `-h4`, `-body-l`, `-body-m`,
 `-body-m-strong`, `-label-l`, `-label-m`, `-label-m-strong`, `-numeric-display`, `-numeric-kpi`,
-`-numeric-l`, `-numeric-m`, `-mono-m`, `-mono-m-strong`.
+`-numeric-l`, `-numeric-m`, `-mono-m`, `-mono-m-strong`. Week 2 adds the proposals `--nz-font-body-s`
+and `--nz-font-label-s`, and a `--nz-tracking-<style>` for each of the 20.
 
-| Plan name                                                 | Emitted                                  | Verdict                                                                                                                                                                                                                         |
-| --------------------------------------------------------- | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `--nz-font-label-m` (a `font` shorthand)                  | `--nz-font-label-m`                      | **matches** (its value is var() references, not literals)                                                                                                                                                                       |
-| `--nz-font-body-s`, `--nz-font-label-s` (12 px proposals) | `--nz-font-body-s`, `--nz-font-label-s`  | **match, no rename needed**, if the proposals are `typography` tokens at `font.body.s` / `font.label.s` (built in a scratch copy: same shorthand and sub-values). Figma styles `Body/S` and `Label/S` normalize to the same ids |
-| `--nz-tracking-label-m`                                   | `--nz-font-label-m-letter-spacing` (rem) | **differs.** plugin-css's `subValueVariableName` renames it to `--nz-tracking-label-m` (tried in a scratch build; the shorthand is unaffected). The `em` value needs a week 2 transform from `letterSpacingPercent`             |
-| `--nz-font-family-sans`, `--nz-font-family-mono`          | not emitted                              | text styles only carry `"Geist"` / `"Geist Mono"`; the family tokens and the stack are code-owned (week 2)                                                                                                                      |
+| Plan name                                                 | Emitted                                          | Verdict                                                                                                                                                                             |
+| --------------------------------------------------------- | ------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--nz-font-label-m` (a `font` shorthand)                  | `--nz-font-label-m`                              | **matches** (its value is var() references, not literals)                                                                                                                           |
+| `--nz-font-body-s`, `--nz-font-label-s` (12 px proposals) | `--nz-font-body-s`, `--nz-font-label-s`          | **match** (W2: built from the proposals at `font.body.s` / `font.label.s` in `src/code-owned/proposals.tokens.json`). Figma styles `Body/S` and `Label/S` normalize to the same ids |
+| `--nz-tracking-label-m`                                   | `--nz-tracking-label-m` (em)                     | **matches since W2.** W1 emitted `--nz-font-label-m-letter-spacing` in rem; W2 renames it through `subValueVariableName` and emits `em` from `letterSpacingPercent`                 |
+| `--nz-font-family-sans`, `--nz-font-family-mono`          | `--nz-font-family-sans`, `--nz-font-family-mono` | **match since W2:** code-owned in `src/code-owned/foundation.tokens.json`; every style's family sub-value points at one of them                                                     |
 
 ## Problems and open items
 
 1. `Grove/Surface/Glass` arrives as `$type: "blur"` (24 px background blur, no DTCG type) and is
    skipped; its drop shadow was already lost by TokensBrücke, and `Surface/Liquid Glass` is not
-   exported at all. Week 2 decides on a code-owned backdrop token.
+   exported at all. Week 2 decides on a code-owned backdrop token. **Still open after week 2.**
 2. TokensBrücke exports no style id for effect styles, so effect tokens are identified by name only.
    Text styles have `styleId`.
-3. `--nz-easing-spring` is `cubic-bezier(0.3, 0, 0, 1)` until the week 2 transform emits the spring
-   generator's `linear()`. Reduced easings print as `cubic-bezier(0, 0, 1, 1)`, equivalent to the
-   plan's `linear`.
-4. Shorthand families are the literal `"Geist"`; plan §7.5 wants `var(--nz-font-family-sans)`.
-   Letter spacing is in rem, so it does not follow a changed font size; the plan's `em` tracking
-   needs the transform above.
+3. ~~`--nz-easing-spring` is `cubic-bezier(0.3, 0, 0, 1)` until the week 2 transform emits the spring
+   generator's `linear()`.~~ **Closed in week 2:** `src/code-owned/motion-derived.tokens.json`
+   (generated) carries the `linear()` easings and their durations. Reduced easings print as `linear`.
+4. ~~Shorthand families are the literal `"Geist"`; letter spacing is in rem.~~ **Closed in week 2:**
+   families are `var(--nz-font-family-sans|mono)` and tracking is `--nz-tracking-<style>` in `em`.
 5. `--nz-radius-full` becomes `62.4375rem` (999 px ÷ 16). `--nz-tilt-max-deg` is a unitless `6`.
-6. Descriptions are copied verbatim, so `&quot;Other&quot;` from Figma reaches CSS comments, and a
-   text style's description is repeated on all six of its declarations.
-7. The `[data-nz-theme="dark"]` block exists only to prove the Dark context resolves. Week 2 replaces
-   it with `light-dark()` on `:root` (plan §7.4). `@media (--nz-sm)` / `(--nz-lg)` are custom media
-   placeholders that need `custom-media.css`.
-8. The raw files are not `oxfmt`-clean (the extract track's open item): add
-   `packages/tokens/figma/raw/**` to `.oxfmtrc.json` `ignorePatterns`.
+6. Descriptions are copied verbatim, so `&quot;Other&quot;` from Figma reaches the token JSON. Since
+   week 2 `tokens.css` carries no description comments.
+7. ~~The `[data-nz-theme="dark"]` block; `@media (--nz-sm)` / `(--nz-lg)` placeholders.~~ **Closed in
+   week 2:** colours are `light-dark()` on `:root`; the media queries are substituted from the
+   code-owned breakpoints, and `custom-media.css` publishes them.
+8. ~~The raw files are not `oxfmt`-clean.~~ **Closed:** `packages/tokens/figma/raw/**` is in
+   `.oxfmtrc.json` `ignorePatterns`.

@@ -1,0 +1,109 @@
+{
+  "$comment": "Every foreground/background pair components use (plan §15.4 CI rule 1), evaluated in both themes on the built tokens.css. Names are CSS variables without the prefix. Roles: text 4.5:1 (also 12 px text, decision 8c), large-text and non-text 3:1 (WCAG 1.4.3, 1.4.11), focus 3:1, decorative and disabled are reported only. Inverse surfaces (Toast, Tooltip) use the other theme's tokens, so the other theme's rows cover them.",
+  "groups": {
+    "surfaces": [
+      "bg-canvas",
+      "bg-subtle",
+      "bg-surface",
+      "bg-surface-raised",
+      "bg-hover",
+      "bg-muted"
+    ],
+    "panels": ["bg-canvas", "bg-subtle", "bg-surface", "bg-surface-raised"],
+    "status-subtle": [
+      "bg-critical-subtle",
+      "bg-info-subtle",
+      "bg-success-subtle",
+      "bg-warning-subtle"
+    ]
+  },
+  "pairs": [
+    {
+      "fg": "text-primary",
+      "on": ["surfaces", "status-subtle", "bg-pressed"],
+      "role": "text",
+      "use": "Alert body, Button secondary pressed"
+    },
+    {
+      "fg": "text-secondary",
+      "on": ["surfaces", "status-subtle"],
+      "role": "text",
+      "use": "Alert description"
+    },
+    { "fg": "text-tertiary", "on": ["surfaces"], "role": "text" },
+    { "fg": "text-brand", "on": ["surfaces", "bg-brand-subtle"], "role": "text" },
+    { "fg": "text-accent", "on": ["panels"], "role": "text", "use": "Toast action" },
+    { "fg": "text-success", "on": ["surfaces", "bg-success-subtle"], "role": "text" },
+    { "fg": "text-warning", "on": ["surfaces", "bg-warning-subtle"], "role": "text" },
+    { "fg": "text-critical", "on": ["surfaces", "bg-critical-subtle"], "role": "text" },
+    { "fg": "text-info", "on": ["surfaces", "bg-info-subtle"], "role": "text" },
+    {
+      "fg": "text-on-brand",
+      "on": ["bg-brand", "bg-brand-hover", "bg-brand-pressed"],
+      "role": "text"
+    },
+    { "fg": "text-on-accent", "on": ["bg-accent", "bg-accent-hover"], "role": "text" },
+    { "fg": "text-on-critical", "on": ["bg-critical", "bg-critical-hover"], "role": "text" },
+    { "fg": "text-inverse", "on": ["bg-inverse", "bg-inverse-elevated"], "role": "text" },
+    {
+      "fg": "icon-primary",
+      "on": ["surfaces", "status-subtle"],
+      "role": "non-text",
+      "use": "Alert dismiss on hover"
+    },
+    {
+      "fg": "icon-secondary",
+      "on": ["surfaces", "status-subtle", "chart-track"],
+      "role": "non-text",
+      "use": "Alert dismiss; ProgressBar, Meter and ProgressRing neutral fill"
+    },
+    { "fg": "icon-brand", "on": ["surfaces", "bg-brand-subtle"], "role": "non-text" },
+    {
+      "fg": "icon-success",
+      "on": ["surfaces", "bg-success-subtle", "chart-track"],
+      "role": "non-text",
+      "use": "ProgressBar, Meter and ProgressRing success fill"
+    },
+    { "fg": "icon-warning", "on": ["surfaces", "bg-warning-subtle"], "role": "non-text" },
+    { "fg": "icon-critical", "on": ["surfaces", "bg-critical-subtle"], "role": "non-text" },
+    { "fg": "icon-info", "on": ["surfaces", "bg-info-subtle"], "role": "non-text" },
+    {
+      "fg": "border-control",
+      "on": ["surfaces"],
+      "role": "non-text",
+      "use": "Input, Select trigger, Checkbox, Radio and Switch off-track boundaries"
+    },
+    { "fg": "border-control-hover", "on": ["surfaces"], "role": "non-text" },
+    { "fg": "border-brand", "on": ["surfaces"], "role": "non-text" },
+    { "fg": "border-warning", "on": ["surfaces", "bg-warning-subtle"], "role": "non-text" },
+    { "fg": "border-critical", "on": ["surfaces", "bg-critical-subtle"], "role": "non-text" },
+    {
+      "fg": "chart-primary",
+      "on": ["panels", "chart-track"],
+      "role": "non-text",
+      "use": "ProgressBar, Meter and ProgressRing brand fill"
+    },
+    {
+      "fg": "chart-warning",
+      "on": ["panels", "chart-track"],
+      "role": "non-text",
+      "use": "ProgressBar, Meter and ProgressRing warning fill"
+    },
+    {
+      "fg": "chart-critical",
+      "on": ["panels", "chart-track"],
+      "role": "non-text",
+      "use": "ProgressBar, Meter and ProgressRing critical fill"
+    },
+    {
+      "fg": "border-focus",
+      "on": ["surfaces", "bg-brand-subtle", "status-subtle"],
+      "role": "focus",
+      "use": "2 px focus outline, also on the Alert dismiss"
+    },
+    { "fg": "border-default", "on": ["panels"], "role": "decorative" },
+    { "fg": "border-subtle", "on": ["panels"], "role": "decorative" },
+    { "fg": "border-strong", "on": ["panels"], "role": "decorative" },
+    { "fg": "text-disabled", "on": ["surfaces"], "role": "disabled" }
+  ]
+}

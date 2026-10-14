@@ -29,13 +29,17 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
+    "./contract.json": "./dist/contract.json",
+    "./custom-media.css": "./dist/custom-media.css",
+    "./tailwind.css": "./dist/tailwind.css",
+    "./tokens.css": "./dist/tokens.css",
     "./package.json": "./package.json"
   },
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
-    "build": "tsdown",
+    "build": "tsdown && tz build -c build/terrazzo.config.ts && node scripts/a11y.ts",
     "typecheck": "tsc --noEmit -p . && tsc --noEmit -p tsconfig.scripts.json && tsc --noEmit -p test",
     "test": "vitest run --fsModuleCachePath node_modules/.vitest-cache",
     "tokens:pull:agent": "node scripts/figma/pull-agent.ts",
@@ -43,8 +47,11 @@
     "tokens:codesyntax": "node scripts/figma/codesyntax-rewrite.ts",
     "tokens:normalize": "node scripts/normalize.ts",
     "tokens:normalize:check": "node scripts/normalize.ts --check",
+    "tokens:spring": "node scripts/spring.ts",
+    "tokens:spring:check": "node scripts/spring.ts --check",
     "tokens:check": "tz check -c build/terrazzo.config.ts",
-    "tokens:dry-run": "tz build -c build/terrazzo.config.ts"
+    "tokens:build": "tz build -c build/terrazzo.config.ts",
+    "tokens:contrast": "tz build -c build/terrazzo.config.ts && node scripts/a11y.ts --write"
   },
   "devDependencies": {
     "@nizivo/tooling": "workspace:*",

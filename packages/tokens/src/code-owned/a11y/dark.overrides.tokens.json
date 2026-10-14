@@ -1,0 +1,182 @@
+{
+  "color": {
+    "text": {
+      "secondary": {
+        "$type": "color",
+        "$value": "{color.p.neutral.300}",
+        "$extensions": {
+          "app.nizivo.override": {
+            "figmaVariableId": "VariableID:737:137",
+            "figmaVariable": "Grove Color/text/secondary (Dark)",
+            "figmaValueAtOverride": "{color.p.neutral.400}",
+            "kind": "ladder",
+            "reason": "Option A text ladder (decision 8e): one step lighter so text/tertiary can move up and keep its step below secondary. Figma n400 passes on its own (5.32:1 on bg/hover)",
+            "wcag": [],
+            "issue": null,
+            "approvedBy": ["maintainer"],
+            "expires": "2027-01-31"
+          }
+        }
+      },
+      "tertiary": {
+        "$type": "color",
+        "$value": "{color.p.neutral.400}",
+        "$extensions": {
+          "app.nizivo.override": {
+            "figmaVariableId": "VariableID:737:138",
+            "figmaVariable": "Grove Color/text/tertiary (Dark)",
+            "figmaValueAtOverride": "{color.p.neutral.500}",
+            "kind": "contrast",
+            "reason": "n500 is 4.03:1 on bg/surface and 3.12:1 on bg/hover (WCAG 1.4.3, 4.5:1)",
+            "wcag": ["1.4.3"],
+            "issue": null,
+            "approvedBy": ["maintainer"],
+            "expires": "2027-01-31"
+          }
+        }
+      },
+      "critical": {
+        "$type": "color",
+        "$value": "{color.p.red.400}",
+        "$extensions": {
+          "app.nizivo.override": {
+            "figmaVariableId": "VariableID:737:146",
+            "figmaVariable": "Grove Color/text/critical (Dark)",
+            "figmaValueAtOverride": "{color.p.red.500}",
+            "kind": "contrast",
+            "reason": "red/500 is 4.01:1 on bg/surface and 3.11:1 on bg/hover (WCAG 1.4.3, 4.5:1)",
+            "wcag": ["1.4.3"],
+            "issue": null,
+            "approvedBy": ["maintainer"],
+            "expires": "2027-01-31"
+          }
+        }
+      },
+      "info": {
+        "$type": "color",
+        "$value": "{color.p.blue.400}",
+        "$extensions": {
+          "app.nizivo.override": {
+            "figmaVariableId": "VariableID:737:147",
+            "figmaVariable": "Grove Color/text/info (Dark)",
+            "figmaValueAtOverride": "{color.p.blue.500}",
+            "kind": "contrast",
+            "reason": "blue/500 is 3.63:1 on bg/surface and 2.81:1 on bg/hover (WCAG 1.4.3, 4.5:1)",
+            "wcag": ["1.4.3"],
+            "issue": null,
+            "approvedBy": ["maintainer"],
+            "expires": "2027-01-31"
+          }
+        }
+      }
+    },
+    "bg": {
+      "critical": {
+        "$type": "color",
+        "$value": "{color.p.red.600}",
+        "$extensions": {
+          "app.nizivo.override": {
+            "figmaVariableId": "VariableID:737:134",
+            "figmaVariable": "Grove Color/bg/critical (Dark)",
+            "figmaValueAtOverride": "{color.p.red.500}",
+            "kind": "contrast",
+            "reason": "No foreground reaches 4.5:1 on red/500 (white 4.33:1, n900 4.01:1); red/600 as in light gives white 5.69:1 (WCAG 1.4.3)",
+            "wcag": ["1.4.3"],
+            "issue": null,
+            "approvedBy": ["maintainer"],
+            "expires": "2027-01-31"
+          }
+        }
+      },
+      "subtle": {
+        "$type": "color",
+        "$value": "{color.p.neutral.925}",
+        "$extensions": {
+          "app.nizivo.override": {
+            "figmaVariableId": "VariableID:737:117",
+            "figmaVariable": "Grove Color/bg/subtle (Dark)",
+            "figmaValueAtOverride": "{color.p.neutral.900}",
+            "kind": "ladder",
+            "reason": "Dark surface ladder (gap report C §2.3): n900 equals bg/surface, so the subtle band disappears; n925 restores the light step (1.03:1)",
+            "wcag": [],
+            "issue": null,
+            "approvedBy": ["maintainer"],
+            "expires": "2027-01-31"
+          }
+        }
+      }
+    },
+    "icon": {
+      "critical": {
+        "$type": "color",
+        "$value": "{color.p.red.400}",
+        "$extensions": {
+          "app.nizivo.override": {
+            "figmaVariableId": "VariableID:737:161",
+            "figmaVariable": "Grove Color/icon/critical (Dark)",
+            "figmaValueAtOverride": "{color.p.red.500}",
+            "kind": "pairing",
+            "reason": "Keeps the critical icon on the same red as text/critical (red/400). Figma red/500 passes 3:1 on its own (3.11:1 on bg/hover), so this is not a contrast fix",
+            "wcag": [],
+            "issue": null,
+            "approvedBy": ["maintainer"],
+            "expires": "2027-01-31"
+          }
+        }
+      }
+    },
+    "border": {
+      "subtle": {
+        "$type": "color",
+        "$value": "{color.p.neutral.800}",
+        "$extensions": {
+          "app.nizivo.override": {
+            "figmaVariableId": "VariableID:737:149",
+            "figmaVariable": "Grove Color/border/subtle (Dark)",
+            "figmaValueAtOverride": "{color.p.neutral.850}",
+            "kind": "ladder",
+            "reason": "Dark border ladder (gap report C §2.3): n850 equals bg/surface-raised, so separators vanish on overlays; n800 gives 1.17:1",
+            "wcag": [],
+            "issue": null,
+            "approvedBy": ["maintainer"],
+            "expires": "2027-01-31"
+          }
+        }
+      },
+      "default": {
+        "$type": "color",
+        "$value": "{color.p.neutral.700}",
+        "$extensions": {
+          "app.nizivo.override": {
+            "figmaVariableId": "VariableID:737:148",
+            "figmaVariable": "Grove Color/border/default (Dark)",
+            "figmaValueAtOverride": "{color.p.neutral.800}",
+            "kind": "ladder",
+            "reason": "Dark border ladder (gap report C §2.3): card and section edges on bg/surface-raised go from 1.17:1 to 1.65:1, since shadows carry little in dark",
+            "wcag": [],
+            "issue": null,
+            "approvedBy": ["maintainer"],
+            "expires": "2027-01-31"
+          }
+        }
+      },
+      "strong": {
+        "$type": "color",
+        "$value": "{color.p.neutral.600}",
+        "$extensions": {
+          "app.nizivo.override": {
+            "figmaVariableId": "VariableID:737:150",
+            "figmaVariable": "Grove Color/border/strong (Dark)",
+            "figmaValueAtOverride": "{color.p.neutral.700}",
+            "kind": "ladder",
+            "reason": "Dark border ladder (gap report C §2.3): keeps subtle < default < strong < control (n500) < control-hover (n400)",
+            "wcag": [],
+            "issue": null,
+            "approvedBy": ["maintainer"],
+            "expires": "2027-01-31"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,156 @@
+{
+  "breakpoint": {
+    "sm": {
+      "$type": "dimension",
+      "$value": {
+        "value": 40,
+        "unit": "rem"
+      },
+      "$description": "Below 640px the sidebar becomes a five-tab bar (designer, page 08). Emitted as @custom-media --nz-sm, never as a variable"
+    },
+    "lg": {
+      "$type": "dimension",
+      "$value": {
+        "value": 80,
+        "unit": "rem"
+      },
+      "$description": "No designer threshold yet (decision 8a); the Desktop values are designer-authored. Outside semver while provisional",
+      "$extensions": {
+        "app.nizivo.status": "provisional"
+      }
+    }
+  },
+  "duration": {
+    "spin": {
+      "$type": "duration",
+      "$value": {
+        "value": 1000,
+        "unit": "ms"
+      },
+      "$description": "Pending spinner, one turn. Kept in Reduced mode: essential status feedback"
+    }
+  },
+  "elevation": {
+    "button": {
+      "$type": "shadow",
+      "$value": [
+        {
+          "color": {
+            "colorSpace": "srgb",
+            "components": [1, 1, 1],
+            "alpha": 0.16,
+            "hex": "#ffffff"
+          },
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": 1,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 0,
+            "unit": "px"
+          },
+          "spread": {
+            "value": 0,
+            "unit": "px"
+          },
+          "inset": true
+        },
+        {
+          "color": {
+            "colorSpace": "srgb",
+            "components": [0.0392156862745098, 0.12941176470588237, 0.10196078431372549],
+            "alpha": 0.18,
+            "hex": "#0a211a"
+          },
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": 1,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 2,
+            "unit": "px"
+          },
+          "spread": {
+            "value": 0,
+            "unit": "px"
+          }
+        }
+      ],
+      "$description": "Figma hard-codes this Primary button effect (page 02) until design creates Elevation/Button"
+    }
+  },
+  "focus": {
+    "halo": {
+      "$type": "string",
+      "$value": "color-mix(in oklab, {color.border.focus} 28%, transparent)",
+      "$description": "Decoration around the focus outline; resolves per scope. Never the focus indicator on its own (1.45:1)"
+    }
+  },
+  "font": {
+    "family": {
+      "mono": {
+        "$type": "fontFamily",
+        "$value": [
+          "Geist Mono",
+          "ui-monospace",
+          "SFMono-Regular",
+          "Menlo",
+          "Consolas",
+          "monospace"
+        ],
+        "$extensions": {
+          "app.nizivo.font": {
+            "variable": "--font-geist-mono"
+          }
+        }
+      },
+      "sans": {
+        "$type": "fontFamily",
+        "$value": ["Geist", "ui-sans-serif", "system-ui", "sans-serif"],
+        "$extensions": {
+          "app.nizivo.font": {
+            "variable": "--font-geist-sans"
+          }
+        }
+      }
+    }
+  },
+  "scheme": {
+    "inverse": {
+      "$type": "string",
+      "$value": "dark",
+      "$description": "The colour scheme of data-nz-scheme=\"inverse\" surfaces; each theme scope sets it"
+    }
+  },
+  "z": {
+    "raised": {
+      "$type": "number",
+      "$value": 1
+    },
+    "sticky": {
+      "$type": "number",
+      "$value": 100
+    },
+    "chrome": {
+      "$type": "number",
+      "$value": 200
+    },
+    "overlay": {
+      "$type": "number",
+      "$value": 1000
+    },
+    "toast": {
+      "$type": "number",
+      "$value": 1100,
+      "$description": "Only when the Popover API is unavailable"
+    }
+  }
+}
