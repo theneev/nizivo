@@ -4,7 +4,13 @@ import defaultMdxComponents from 'fumadocs-ui/mdx';
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Step, Steps } from 'fumadocs-ui/components/steps';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
-import { BuilderChoices, Degradations, OverridesTable, ProposalsTable } from './deviations';
+import {
+  BuilderChoices,
+  BuilderChoicesW3,
+  Degradations,
+  OverridesTable,
+  ProposalsTable,
+} from './deviations';
 import {
   ColourSwatches,
   ElevationScale,
@@ -47,6 +53,7 @@ export const mdxComponents: MDXComponents = {
   OverridesTable,
   ProposalsTable,
   BuilderChoices,
+  BuilderChoicesW3,
   Degradations,
   ThemeScopesDemo,
   TailwindMap,

@@ -252,6 +252,32 @@ export function builderItems(): { file: string; items: BuilderItem[] } {
   return { file, items };
 }
 
+export interface BuilderItemW3 {
+  /** The item's number in the facts file's §5 table. */
+  n: number;
+  component: string;
+  figma: string;
+  options: string;
+}
+
+/** Every row of the week 3 Figma facts file's "Builder decides (consolidated)" table (§5). */
+export function builderItemsW3(): { file: string; items: BuilderItemW3[] } {
+  const file = 'docs/figma/12-w3-forms.md';
+  const lines = readRepoText(file).split('\n');
+  const start = lines.findIndex((l) => l.startsWith('## 5. Builder decides'));
+  if (start < 0) throw new Error(`docs: ${file} has no "## 5. Builder decides" section`);
+  const items: BuilderItemW3[] = [];
+  for (const line of lines.slice(start + 1)) {
+    if (line.startsWith('## ')) break;
+    const cells = line.split(' | ').map((c) => c.replace(/^\|\s*|\s*\|$/g, '').trim());
+    const n = Number(cells[0]);
+    if (!line.startsWith('|') || !Number.isInteger(n) || n <= 0) continue;
+    items.push({ n, component: cells[1] ?? '', figma: cells[2] ?? '', options: cells[3] ?? '' });
+  }
+  if (items.length === 0) throw new Error(`docs: ${file} §5 has no rows`);
+  return { file, items };
+}
+
 /** The floor lane's Safari 17.5 status line (fixtures/floor-lane/RESULTS.md). */
 export function safariStatus(): { file: string; text: string } {
   const file = 'fixtures/floor-lane/RESULTS.md';

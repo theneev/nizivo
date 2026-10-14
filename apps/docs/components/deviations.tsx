@@ -5,12 +5,13 @@ import type { JSX } from 'react';
 import {
   builderDecision,
   builderItems,
+  builderItemsW3,
   degradations,
   overrides,
   proposals,
   safariStatus,
 } from '../lib/deviations';
-import { builderChoice } from '../lib/builder-choices';
+import { builderChoice, builderChoiceW3 } from '../lib/builder-choices';
 import { catalog } from '../lib/catalog';
 import { repoFileUrl } from '../lib/repo';
 import { InlineMd } from './inline-md';
@@ -184,6 +185,65 @@ export function BuilderChoices(): JSX.Element {
                   <p className="my-0 text-fd-muted-foreground">
                     <InlineMd text={it.note} base={file} />
                   </p>
+                </td>
+                <td>
+                  <InlineMd text={choice.chosen} />
+                  {choice.hook !== undefined && (
+                    <div className="text-fd-muted-foreground">
+                      Hook: <code>{choice.hook}</code>
+                    </div>
+                  )}
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </Table>
+      <Source path={file} />
+    </>
+  );
+}
+
+/** Week 3: every §5 item of the forms facts file, with what ships. */
+export function BuilderChoicesW3(): JSX.Element {
+  const { file, items } = builderItemsW3();
+  const pages = new Map(catalog().map((e) => [e.title.toLowerCase(), e.url]));
+  return (
+    <>
+      <p>
+        The week 3 Figma facts list {items.length} values that are off the scale, have no token or
+        are not drawn. The Chosen column is what ships, checked against the file it cites.
+      </p>
+      <Table label="Week 3 builder-chosen values">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Component</th>
+            <th scope="col">Figma</th>
+            <th scope="col">Chosen</th>
+          </tr>
+        </thead>
+        <tbody>
+          {items.map((it) => {
+            const choice = builderChoiceW3(it.n);
+            const first = it.component.split(/,\s*/)[0] ?? '';
+            const url = pages.get(first.toLowerCase());
+            return (
+              <tr key={it.n}>
+                <th scope="row" className="font-normal">
+                  {it.n}
+                </th>
+                <td>
+                  {url ? (
+                    <a href={choice.hook === undefined ? url : `${url}#css-hooks`}>
+                      {it.component}
+                    </a>
+                  ) : (
+                    it.component
+                  )}
+                </td>
+                <td>
+                  <InlineMd text={it.figma} base={file} />
                 </td>
                 <td>
                   <InlineMd text={choice.chosen} />

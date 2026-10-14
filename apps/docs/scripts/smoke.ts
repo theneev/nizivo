@@ -75,7 +75,8 @@ const NIZIVO_CLIENT_MARKERS = [
  * build with Turbopack, which ships a client module the page's server graph imports even when no
  * example renders it, so this is "the client modules the examples import", not "render": FieldScope
  * on the NativeSelect page (its Fields wire it with no client code), and wherever an example imports
- * a control that reads it.
+ * a control that reads it. A narrower, render-only check waits on client-import-free entries for the
+ * zero-JS paths (ARCHITECTURE.md §23.4 D-aa).
  */
 const CLIENT_PAGES: Record<string, string[]> = {
   '/docs/components/select/': ['select-popup'],
@@ -822,6 +823,9 @@ async function deviationsChecks(browser: Browser): Promise<void> {
     chosen > 0 && (header ?? '').includes('Chosen'),
     `deviations: ${chosen} builder-chosen values, each with the value that ships`,
   );
+  // Week 3: one row per item of docs/figma/12-w3-forms.md §5 (the build fails on a missing answer).
+  const w3 = await rows('Week 3 builder-chosen values');
+  check(w3 >= 29, `deviations: ${w3} week 3 builder-chosen values`);
   await ctx.close();
 }
 
