@@ -16,7 +16,8 @@
     "lint": "oxlint --deny-warnings && oxfmt --check && turbo run lint",
     "gen:check": "nz gen --check",
     "test:dist": "pnpm --filter @nizivo/react exec vitest run --config test/built/vitest.config.ts",
-    "check": "pnpm install --frozen-lockfile && pnpm typecheck && pnpm lint && pnpm gen:check && pnpm test && pnpm build && pnpm test:dist",
+    "check:release": "node packages/tooling/release/check.ts",
+    "check": "pnpm install --frozen-lockfile && pnpm typecheck && pnpm lint && pnpm gen:check && pnpm test && pnpm build && pnpm test:dist && pnpm check:release",
     "format": "oxfmt",
     "changeset": "changeset"
   },

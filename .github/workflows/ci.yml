@@ -58,3 +58,6 @@ jobs:
 
       - name: Dist seam checks (directives, namespace objects, .d.ts walk from the exports map)
         run: pnpm test:dist
+
+      - name: Packed tarballs (allowlist, publint, attw, directive guard, export * as lint)
+        run: pnpm check:release

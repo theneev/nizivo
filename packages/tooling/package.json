@@ -13,7 +13,7 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "typecheck": "tsc --noEmit -p . && tsc --noEmit -p test/fixtures",
+    "typecheck": "tsc --noEmit -p . && tsc --noEmit -p test/fixtures && tsc --noEmit -p release",
     "test": "vitest run --fsModuleCachePath node_modules/.vitest-cache"
   },
   "devDependencies": {

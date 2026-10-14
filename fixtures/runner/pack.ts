@@ -11,6 +11,9 @@
 // changes. The marker is a side effect, so a minifier keeps it whenever the bundler keeps the module;
 // spec.ts greps a page's client chunks for it to see which client modules the page ships (§21.1 exit
 // criterion 2). The marker map is written to <fixture>/.packed/markers.json.
+//
+// `pack` and `unpack` are also the pack step of the release checks (packages/tooling/release), which
+// lint the tarballs themselves and never plant markers.
 import { spawnSync } from 'node:child_process';
 import { mkdirSync, readdirSync, readFileSync, renameSync, rmSync, writeFileSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
@@ -43,8 +46,8 @@ function files(dir: string): string[] {
     .map((entry) => join(entry.parentPath, entry.name));
 }
 
-/** Packs one package into `stage` and returns the tarball path. */
-function pack(packageDir: string, stage: string): string {
+/** Packs one package (a folder relative to the repo root) into `stage`; returns the tarball path. */
+export function pack(packageDir: string, stage: string): string {
   const before = new Set(readdirSync(stage));
   pnpm(['pack', '--pack-destination', stage], join(REPO_ROOT, packageDir));
   const made = readdirSync(stage).filter((name) => name.endsWith('.tgz') && !before.has(name));
@@ -55,7 +58,7 @@ function pack(packageDir: string, stage: string): string {
 }
 
 /** Unpacks a tarball's `package/` folder to `to`. */
-function unpack(tarball: string, to: string): string {
+export function unpack(tarball: string, to: string): string {
   const scratch = `${tarball}.unpacked`;
   mkdirSync(scratch);
   run('tar', ['-xzf', tarball, '-C', scratch], REPO_ROOT);
