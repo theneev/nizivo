@@ -12,7 +12,15 @@ import { afterAll, beforeAll, describe, expect, test } from 'vitest';
 
 const PACKAGE = fileURLToPath(new URL('..', import.meta.url));
 const TZ = join(PACKAGE, 'node_modules/@terrazzo/cli/bin/cli.js');
-const FILES = ['tokens.css', 'custom-media.css', 'tailwind.css', 'contract.json'] as const;
+const FILES = [
+  'tokens.css',
+  'custom-media.css',
+  'tailwind.css',
+  'contract.json',
+  'tokens.json',
+  'index.js',
+  'index.d.ts',
+] as const;
 const CSS_FILES = FILES.filter((file) => file.endsWith('.css'));
 const { version }: { version: string } = JSON.parse(
   readFileSync(join(PACKAGE, 'package.json'), 'utf8'),
@@ -182,9 +190,17 @@ describe('tokens.css', () => {
 
   test('NZ_TOKEN_PREFIX renames every variable and custom media (plan §7.3)', () => {
     for (const name of FILES) {
-      expect(acme.files[name]).not.toMatch(/--nz-/);
+      // Token descriptions are source prose (breakpoint.sm's names `--nz-sm`); they are not renamed.
+      const text = (acme.files[name] ?? '').replaceAll(/^ *"description": .*$/gm, '');
+      expect(text).not.toMatch(/--nz-/);
     }
     expect(acme.files['tokens.css']).toContain('--acme-tracking-label-m: 0em;');
+    // The JS keys come from token ids, so a prefix changes the values only.
+    expect(acme.files['index.js']).toContain('  bgSurface: "var(--acme-bg-surface)",\n');
+    expect(JSON.parse(acme.files['tokens.json'] ?? '{}')).toMatchObject({
+      prefix: 'acme',
+      tokens: { 'color.bg.surface': { cssVariable: '--acme-bg-surface' } },
+    });
     expect(acme.files['tokens.css']).toContain(
       '--acme-focus-halo: color-mix(in oklab, var(--acme-border-focus) 28%',
     );

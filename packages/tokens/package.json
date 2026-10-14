@@ -33,6 +33,7 @@
     "./custom-media.css": "./dist/custom-media.css",
     "./tailwind.css": "./dist/tailwind.css",
     "./tokens.css": "./dist/tokens.css",
+    "./tokens.json": "./dist/tokens.json",
     "./package.json": "./package.json"
   },
   "publishConfig": {

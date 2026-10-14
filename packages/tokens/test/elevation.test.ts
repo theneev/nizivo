@@ -73,7 +73,14 @@ beforeAll(() => {
     env: { ...process.env, NZ_TOKENS_OUT_DIR: dist },
   });
   if (result.status !== 0) throw new Error(`tz build failed:\n${result.stdout}${result.stderr}`);
-  for (const name of ['tokens.css', 'tailwind.css', 'contract.json']) {
+  for (const name of [
+    'tokens.css',
+    'tailwind.css',
+    'contract.json',
+    'tokens.json',
+    'index.js',
+    'index.d.ts',
+  ]) {
     out[name] = readFileSync(join(dist, name), 'utf8');
   }
 }, 60_000);
@@ -119,6 +126,39 @@ describe('the Figma elevation.0 (one invisible layer) through the build', () => 
     delete contract.variables['--nz-elevation-0'];
     delete expected.variables['--nz-elevation-0'];
     expect(contract).toEqual(expected);
+  });
+});
+
+/** Drops every line that names elevation 0: its ref, its doc comment and its union members. */
+const withoutLevel0Lines = (text: string): string =>
+  text
+    .split('\n')
+    .filter((line) => !/elevation[-.]0\b/.test(line))
+    .join('\n');
+
+describe('the elevation.0 sync in tokens.json and the js-refs entry', () => {
+  test('tokens.json gains elevation.0, flat in both themes, and nothing else', () => {
+    type Json = { tokens: Record<string, unknown> };
+    const json: Json = JSON.parse(out['tokens.json'] ?? '');
+    const expected: Json = JSON.parse(golden('tokens.json'));
+    expect(json.tokens['elevation.0']).toEqual({
+      type: 'shadow',
+      cssVariable: '--nz-elevation-0',
+      public: true,
+      value: '0 0 0 0 transparent',
+      provenance: 'figma',
+      figma: { name: 'Elevation/0 Flat' },
+    });
+    delete json.tokens['elevation.0'];
+    delete expected.tokens['elevation.0'];
+    expect(json).toEqual(expected);
+  });
+
+  test('index.js and index.d.ts gain only elevation[0] and its names', () => {
+    expect(out['index.js']).toContain('  "0": "var(--nz-elevation-0)",\n');
+    for (const name of ['index.js', 'index.d.ts']) {
+      expect(withoutLevel0Lines(out[name] ?? '')).toBe(withoutLevel0Lines(golden(name)));
+    }
   });
 });
 

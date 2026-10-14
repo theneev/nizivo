@@ -7,16 +7,16 @@ of the export and the names Terrazzo emits). Plan: ARCHITECTURE.md §7, §13.1, 
 
 Run from `packages/tokens`:
 
-| Command                 | What it does                                                                                 |
-| ----------------------- | -------------------------------------------------------------------------------------------- |
-| `pnpm build`            | tsdown (`dist/index.js`), then `tz build`, then the a11y gate (`scripts/a11y.ts`)            |
-| `pnpm tokens:build`     | `tz build -c build/terrazzo.config.ts` only; `NZ_TOKENS_OUT_DIR=<dir>` moves the output      |
-| `pnpm tokens:check`     | `tz check`: the resolver and every source validate                                           |
-| `pnpm tokens:normalize` | `figma/raw/**` → `src/figma-owned/**` (`:check` is the invariant; unchanged from week 1)     |
-| `pnpm tokens:spring`    | Figma `spring()` easings → `src/code-owned/motion-derived.tokens.json` (`:check` compares)   |
-| `pnpm tokens:contrast`  | builds, then rewrites `CONTRAST.md` from the built `tokens.css`                              |
-| `pnpm test`             | goldens, the D1 rule, the floor guard, the matrix, the override checks, the spring invariant |
-| `pnpm test -u`          | rewrites `test/golden/*.golden` after an intended change; review the diff                    |
+| Command                 | What it does                                                                                                                                                                     |
+| ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `pnpm build`            | tsdown (a placeholder `dist/index.js`), then `tz build` (which writes the real `.` entry), then the a11y gate (`scripts/a11y.ts`)                                                |
+| `pnpm tokens:build`     | `tz build -c build/terrazzo.config.ts` only; `NZ_TOKENS_OUT_DIR=<dir>` moves the output                                                                                          |
+| `pnpm tokens:check`     | `tz check`: the resolver and every source validate                                                                                                                               |
+| `pnpm tokens:normalize` | `figma/raw/**` → `src/figma-owned/**` (`:check` is the invariant; unchanged from week 1)                                                                                         |
+| `pnpm tokens:spring`    | Figma `spring()` easings → `src/code-owned/motion-derived.tokens.json` (`:check` compares)                                                                                       |
+| `pnpm tokens:contrast`  | builds, then rewrites `CONTRAST.md` from the built `tokens.css`                                                                                                                  |
+| `pnpm test`             | goldens, the D1 rule, the floor guard, the matrix, the override checks, the spring invariant, `tokens.json` and the js-refs entry against `tokens.css` and a consumer type check |
+| `pnpm test -u`          | rewrites `test/golden/*.golden` after an intended change; review the diff                                                                                                        |
 
 `NZ_TOKEN_PREFIX=acme` rebuilds every variable and custom media name with another prefix (§7.3).
 Published packages always use `nz`.
@@ -55,12 +55,14 @@ overrides are always the last source of their theme context (§15.4).
 
 ## Outputs (`dist/`, exported from `package.json`)
 
-| File               | Content                                                                                                                            |
-| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------- |
-| `tokens.css`       | the layer statement, then `@layer nz.tokens`: `:root`, theme scopes, reduced motion, `width >= 40rem`, `>= 80rem`                  |
-| `custom-media.css` | `@custom-media --nz-sm (width >= 40rem)` and `--nz-lg (width >= 80rem)` (provisional)                                              |
-| `tailwind.css`     | `@theme inline`: `--color-nz-*`, `--radius-nz-*`, `--shadow-nz-*`, `--ease-nz-*` → semantic variables; literal `--breakpoint-nz-*` |
-| `contract.json`    | prefix, layers, custom media, and every declared variable with its token id, type, `public` and sub-value part                     |
+| File                     | Content                                                                                                                                                      |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `tokens.css`             | the layer statement, then `@layer nz.tokens`: `:root`, theme scopes, reduced motion, `width >= 40rem`, `>= 80rem`                                            |
+| `custom-media.css`       | `@custom-media --nz-sm (width >= 40rem)` and `--nz-lg (width >= 80rem)` (provisional)                                                                        |
+| `tailwind.css`           | `@theme inline`: `--color-nz-*`, `--radius-nz-*`, `--shadow-nz-*`, `--ease-nz-*` → semantic variables; literal `--breakpoint-nz-*`                           |
+| `contract.json`          | prefix, layers, custom media, and every declared variable with its token id, type, `public` and sub-value part                                               |
+| `tokens.json`            | every token's literal value per context, with provenance, alias and Figma identity (week 4; the shape is in `TOKENS-JSON.md`)                                |
+| `index.js`, `index.d.ts` | the `.` entry: typed `var()` references per token group, `typography` parts, `breakpoints`, `springs` and the `tokens.json` types (week 4; `TOKENS-JSON.md`) |
 
 `tokens.css`, built by `@terrazzo/plugin-css` with `build/css.ts`:
 
@@ -94,6 +96,9 @@ overrides are always the last source of their theme context (§15.4).
   descriptions are not copied into the CSS. `--nz-css-version` carries the package version.
 
 Sizes on 2026-10-14: `tokens.css` 22.6 KB (3.9 KB gzip), 334 declared names; `tailwind.css` 4.5 KB.
+
+Week 4 (2026-10-15): `tokens.json` 99.8 KB (8.9 KB gzip, 237 tokens); `index.js` 13.2 KB (2.4 KB gzip);
+`index.d.ts` 49.6 KB (types only).
 
 ## The a11y gate (`scripts/a11y.ts`, `build/a11y.ts`)
 

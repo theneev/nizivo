@@ -274,6 +274,9 @@ const values = (declarations: string): string =>
 
 const v = (name: string): string => `--${PREFIX}-${name}`;
 
+/** `--nz-scheme-inverse` per theme: the theme scopes below and tokens.json both read it. */
+export const INVERSE_SCHEME = { light: 'dark', dark: 'light' } as const;
+
 /**
  * Theme scopes set only `color-scheme`, so :root (none) renders light until the app opts in
  * (plan §7.4). Inverse surfaces flip to the opposite scheme; an inverse inside an inverse stays
@@ -281,19 +284,19 @@ const v = (name: string): string => `--${PREFIX}-${name}`;
  */
 const THEME_SCOPES = `[data-nz-theme="light"] {
     color-scheme: light;
-    ${v('scheme-inverse')}: dark;
+    ${v('scheme-inverse')}: ${INVERSE_SCHEME.light};
   }
   [data-nz-theme="dark"] {
     color-scheme: dark;
-    ${v('scheme-inverse')}: light;
+    ${v('scheme-inverse')}: ${INVERSE_SCHEME.dark};
   }
   [data-nz-theme="system"] {
     color-scheme: light dark;
-    ${v('scheme-inverse')}: dark;
+    ${v('scheme-inverse')}: ${INVERSE_SCHEME.light};
   }
   @media (prefers-color-scheme: dark) {
     [data-nz-theme="system"] {
-      ${v('scheme-inverse')}: light;
+      ${v('scheme-inverse')}: ${INVERSE_SCHEME.dark};
     }
   }
   [data-nz-scheme="inverse"] {

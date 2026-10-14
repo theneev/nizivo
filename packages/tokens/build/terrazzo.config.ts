@@ -1,5 +1,6 @@
 // Terrazzo 2.8.0 config: the token build (plan §7.1, §7.3). `pnpm build` runs it after tsdown and
-// writes dist/tokens.css, dist/custom-media.css, dist/tailwind.css and dist/contract.json.
+// writes dist/tokens.css, dist/custom-media.css, dist/tailwind.css, dist/contract.json, dist/tokens.json
+// and the js-refs entry (dist/index.js and dist/index.d.ts, replacing tsdown's placeholder).
 //
 // Run from packages/tokens: `pnpm tokens:check` (tz check) and `pnpm tokens:build` (tz build).
 // NZ_TOKENS_OUT_DIR moves the output (tests build into a temporary folder); NZ_TOKEN_PREFIX
@@ -15,6 +16,7 @@ import {
   tokenValue,
   variableName,
 } from './css.ts';
+import { jsRefs, tokensJson } from './js.ts';
 import { contract, customMedia, tailwind } from './plugins.ts';
 
 export { MOTION_GROUPS, VIEWPORT_GROUPS, variableName } from './css.ts';
@@ -39,5 +41,7 @@ export default defineConfig({
     customMedia({ filename: 'custom-media.css' }),
     tailwind({ filename: 'tailwind.css' }),
     contract({ filename: 'contract.json' }),
+    tokensJson({ filename: 'tokens.json' }),
+    jsRefs({ filename: 'index.js' }),
   ],
 });
