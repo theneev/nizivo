@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Floor lane: overlay entry with @starting-style</title>
+    <link rel="stylesheet" href="plan-tokens.css" />
+    <link rel="stylesheet" href="report.css" />
+    <style>
+      /* The §13.3 overlay motion: scale on the spring pair, opacity on the fade duration, plus the
+         discrete display and overlay transitions that let an element animate in from display: none.
+         Every case gets its own rules, so a selector one engine rejects cannot drop the others. */
+      .nzf-anim {
+        opacity: 0;
+        scale: var(--nz-scale-enter);
+        transition:
+          opacity var(--nz-duration-fade) var(--nz-easing-standard),
+          scale var(--nz-duration-spring) var(--nz-easing-spring),
+          display var(--nz-duration-spring) allow-discrete,
+          overlay var(--nz-duration-spring) allow-discrete;
+      }
+      .nzf-data,
+      .nzf-nested,
+      .nzf-control {
+        display: none;
+      }
+      .nzf-data[data-open],
+      .nzf-nested[data-open],
+      .nzf-control[data-open] {
+        display: block;
+      }
+
+      /* Native popover and dialog. :popover-open and [open] are fixture-only selectors here: they are
+         not shipped vocabulary (§8.3 rule 2), but they are how a native overlay enters from display: none. */
+      .nzf-popover:popover-open {
+        opacity: 1;
+        scale: 1;
+      }
+      @starting-style {
+        .nzf-popover:popover-open {
+          opacity: 0;
+          scale: var(--nz-scale-enter);
+        }
+      }
+      .nzf-dialog[open] {
+        opacity: 1;
+        scale: 1;
+      }
+      @starting-style {
+        .nzf-dialog[open] {
+          opacity: 0;
+          scale: var(--nz-scale-enter);
+        }
+      }
+
+      /* A CSS-only component opened through the data-* vocabulary (§8.3, §13.2 rule 4). */
+      .nzf-data[data-open] {
+        opacity: 1;
+        scale: 1;
+      }
+      @starting-style {
+        .nzf-data[data-open] {
+          opacity: 0;
+          scale: var(--nz-scale-enter);
+        }
+      }
+
+      /* A node inserted already open, as an engine portal mounts a popup. */
+      .nzf-inserted[data-open] {
+        opacity: 1;
+        scale: 1;
+      }
+      @starting-style {
+        .nzf-inserted[data-open] {
+          opacity: 0;
+          scale: var(--nz-scale-enter);
+        }
+      }
+
+      /* The same as .nzf-data, with @starting-style nested inside the style rule. */
+      .nzf-nested[data-open] {
+        opacity: 1;
+        scale: 1;
+        @starting-style {
+          opacity: 0;
+          scale: var(--nz-scale-enter);
+        }
+      }
+
+      /* Control: no @starting-style, so no entry transition may start. */
+      .nzf-control[data-open] {
+        opacity: 1;
+        scale: 1;
+      }
+
+      /* Exit alternative: hide with visibility instead of display: none, so the fade can run where
+         display is not animatable. */
+      .nzf-visibility {
+        visibility: hidden;
+        opacity: 0;
+        transition:
+          opacity var(--nz-duration-fade) var(--nz-easing-exit),
+          visibility var(--nz-duration-fade) allow-discrete;
+      }
+      .nzf-visibility[data-open] {
+        visibility: visible;
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Overlay entry with @starting-style and transition-behavior (§13.2 rule 4)</h1>
+    <div class="nzf-fixture" id="fixture">
+      <div class="nzf-anim nzf-popover" id="case-popover" popover="manual">native popover</div>
+      <dialog class="nzf-anim nzf-dialog" id="case-dialog">native modal dialog</dialog>
+      <div class="nzf-anim nzf-data" id="case-data">data-open</div>
+      <div class="nzf-anim nzf-nested" id="case-nested">nested @starting-style</div>
+      <div class="nzf-anim nzf-control" id="case-control">control</div>
+      <div class="nzf-visibility" id="case-visibility">visibility exit</div>
+    </div>
+    <section id="report"></section>
+    <pre id="result"></pre>
+    <script src="harness.js"></script>
+    <script src="overlay-entry.js"></script>
+  </body>
+</html>

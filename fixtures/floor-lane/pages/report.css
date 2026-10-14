@@ -1,0 +1,48 @@
+/* Report chrome only. Nothing here sets color-scheme or touches the probe classes. */
+body {
+  margin: 1rem;
+  font:
+    14px/1.4 ui-sans-serif,
+    system-ui,
+    sans-serif;
+  background: #ffffff;
+  color: #181b19;
+}
+.nzf-fixture {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-block-end: 1rem;
+}
+.nzf-verdict {
+  font-size: 48px;
+  font-weight: 700;
+  margin-block: 0.5rem;
+}
+.nzf-pass > td:nth-child(3),
+.nzf-verdict.nzf-pass {
+  color: #1a573a;
+}
+.nzf-fail > td:nth-child(3),
+.nzf-verdict.nzf-fail {
+  color: #b93a23;
+}
+.nzf-ua {
+  font-family: ui-monospace, monospace;
+}
+table {
+  border-collapse: collapse;
+  font-size: 12px;
+}
+th,
+td {
+  border: 1px solid #cbd0c8;
+  padding: 2px 6px;
+  text-align: start;
+  vertical-align: top;
+}
+#result {
+  white-space: pre-wrap;
+  word-break: break-all;
+  font-size: 10px;
+}

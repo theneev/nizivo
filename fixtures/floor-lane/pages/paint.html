@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Floor lane: painted light-dark()</title>
+    <script>
+      // ?html=dark|light|system puts that theme on <html> before first paint.
+      const nzfTheme = new URLSearchParams(location.search).get('html');
+      if (nzfTheme && nzfTheme !== 'none')
+        document.documentElement.setAttribute('data-theme', nzfTheme);
+    </script>
+    <link rel="stylesheet" href="report.css" />
+    <style>
+      /* Red means light, blue means dark. Squares are big enough to sample from a screenshot. */
+      :root {
+        --paint: light-dark(rgb(255 0 0), rgb(0 0 255));
+        --paint-light: rgb(255 0 0);
+        --paint-dark: rgb(0 0 255);
+      }
+      [data-theme='light'] {
+        color-scheme: light;
+      }
+      [data-theme='dark'] {
+        color-scheme: dark;
+      }
+      [data-theme='normal'] {
+        color-scheme: normal;
+      }
+      [data-theme='system'] {
+        color-scheme: light dark;
+      }
+      .nzf-row {
+        display: flex;
+        gap: 4px;
+        align-items: center;
+        block-size: 32px;
+        margin-block-end: 2px;
+        font-size: 11px;
+      }
+      .nzf-row > div {
+        inline-size: 28px;
+        block-size: 28px;
+      }
+      .nzf-row > span {
+        inline-size: 120px;
+      }
+      .bg-var {
+        background-color: var(--paint);
+      }
+      .bg-direct {
+        background-color: light-dark(rgb(255 0 0), rgb(0 0 255));
+      }
+      .bg-mix-direct {
+        background-color: color-mix(
+          in srgb,
+          light-dark(rgb(255 0 0), rgb(0 0 255)) 100%,
+          transparent
+        );
+      }
+      .bg-direct-var-args {
+        background-color: light-dark(var(--paint-light), var(--paint-dark));
+      }
+      .text-direct {
+        color: light-dark(rgb(255 0 0), rgb(0 0 255));
+        background-color: currentColor;
+      }
+      .shadow-var {
+        box-shadow: inset 0 0 0 14px var(--paint);
+      }
+      .shadow-direct {
+        box-shadow: inset 0 0 0 14px light-dark(rgb(255 0 0), rgb(0 0 255));
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Rows are filled in by paint.js; data-scopes lists the color-scheme values above each row. -->
+    <div id="fixture">
+      <div class="nzf-row" data-scopes=""></div>
+      <div data-theme="dark">
+        <div class="nzf-row" data-scopes="dark"></div>
+        <div data-theme="light"><div class="nzf-row" data-scopes="dark light"></div></div>
+        <div data-theme="normal"><div class="nzf-row" data-scopes="dark normal"></div></div>
+      </div>
+      <div data-theme="light">
+        <div class="nzf-row" data-scopes="light"></div>
+        <div data-theme="dark"><div class="nzf-row" data-scopes="light dark"></div></div>
+      </div>
+      <div data-theme="system"><div class="nzf-row" data-scopes="system"></div></div>
+    </div>
+    <section id="report"></section>
+    <pre id="result"></pre>
+    <script src="harness.js"></script>
+    <script src="paint.js"></script>
+  </body>
+</html>

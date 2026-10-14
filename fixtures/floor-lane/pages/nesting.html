@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Floor lane: S1 nesting matrix</title>
+    <link rel="stylesheet" href="report.css" />
+    <style>
+      .probe,
+      .direct {
+        inline-size: 24px;
+        block-size: 24px;
+      }
+    </style>
+    <style id="variant"></style>
+  </head>
+  <body>
+    <h1>S1 nesting matrix (light-dark() in nested color-scheme scopes)</h1>
+    <!-- Probe tree copied from docs/research/phase2/spikes/s1-lightningcss/matrix.mjs -->
+    <div class="nzf-fixture" id="fixture">
+      <div class="probe" id="root"></div>
+      <div class="direct" id="direct-root"></div>
+      <div data-theme="dark">
+        <div class="probe" id="d1"></div>
+        <div class="direct" id="direct-d1"></div>
+        <div data-theme="light">
+          <div class="probe" id="d1-l2"></div>
+          <div class="direct" id="direct-d1-l2"></div>
+          <div data-theme="dark"><div class="probe" id="d1-l2-d3"></div></div>
+        </div>
+        <div data-theme="normal">
+          <div class="probe" id="d1-normal"></div>
+          <div class="direct" id="direct-d1-normal"></div>
+        </div>
+      </div>
+    </div>
+    <section id="report"></section>
+    <pre id="result"></pre>
+    <script src="harness.js"></script>
+    <script src="nesting.js"></script>
+  </body>
+</html>

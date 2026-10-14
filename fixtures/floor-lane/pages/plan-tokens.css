@@ -1,0 +1,163 @@
+/* Floor-lane copy of the ARCHITECTURE.md §7.5 tokens.css sample: the declarations the checks read, copied
+   verbatim (primitives limited to the ones referenced). Replace with the generated tokens.css once
+   @nizivo/tokens emits it: run.ts --tokens <path> serves that file under this name. */
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+@layer nz.tokens {
+  :root {
+    --nz-p-neutral-0: #ffffff;
+    --nz-p-neutral-25: #fbfbf9;
+    --nz-p-neutral-50: #f6f7f4;
+    --nz-p-neutral-200: #e2e5df;
+    --nz-p-neutral-300: #cbd0c8;
+    --nz-p-neutral-400: #9ea59c;
+    --nz-p-neutral-500: #747c73;
+    --nz-p-neutral-600: #596058;
+    --nz-p-neutral-700: #414741;
+    --nz-p-neutral-850: #202421;
+    --nz-p-neutral-900: #181b19;
+    --nz-p-neutral-950: #101311;
+    --nz-p-neutral-450: #828a81;
+    --nz-p-neutral-925: #151816;
+    --nz-p-green-300: #79b993;
+    --nz-p-green-400: #4c9e71;
+    --nz-p-green-500: #2e8358;
+    --nz-p-green-700: #1a573a;
+    --nz-p-green-950: #0a211a;
+    --nz-p-lime-300: #c6e06a;
+    --nz-p-lime-400: #afd146;
+    --nz-p-red-600: #b93a23;
+
+    --nz-bg-canvas: light-dark(var(--nz-p-neutral-50), var(--nz-p-neutral-950));
+    --nz-bg-surface: light-dark(var(--nz-p-neutral-0), var(--nz-p-neutral-900));
+    --nz-bg-surface-raised: light-dark(var(--nz-p-neutral-0), var(--nz-p-neutral-850));
+    --nz-bg-subtle: light-dark(var(--nz-p-neutral-25), var(--nz-p-neutral-925));
+    --nz-bg-brand: light-dark(var(--nz-p-green-700), var(--nz-p-green-400));
+    --nz-bg-accent: light-dark(var(--nz-p-lime-300), var(--nz-p-lime-400));
+    --nz-bg-accent-hover: light-dark(var(--nz-p-lime-400), var(--nz-p-lime-300));
+    --nz-bg-critical: var(--nz-p-red-600);
+    --nz-text-primary: light-dark(var(--nz-p-neutral-900), var(--nz-p-neutral-50));
+    --nz-text-secondary: light-dark(var(--nz-p-neutral-700), var(--nz-p-neutral-300));
+    --nz-text-tertiary: light-dark(var(--nz-p-neutral-600), var(--nz-p-neutral-400));
+    --nz-text-on-accent: var(--nz-p-green-950);
+    --nz-text-on-critical: var(--nz-p-neutral-0);
+    --nz-border-default: light-dark(var(--nz-p-neutral-200), var(--nz-p-neutral-700));
+    --nz-border-control: light-dark(var(--nz-p-neutral-450), var(--nz-p-neutral-500));
+    --nz-border-focus: light-dark(var(--nz-p-green-500), var(--nz-p-green-300));
+
+    --nz-bg-scrim: light-dark(rgb(24 27 25 / 0.32), rgb(0 0 0 / 0.6));
+    --nz-focus-halo: color-mix(in oklab, var(--nz-border-focus) 28%, transparent);
+    --nz-elevation-ring: light-dark(transparent, rgb(255 255 255 / 0.08));
+    --nz-elevation-highlight: transparent;
+    --nz-elevation-1:
+      0 0 0 1px var(--nz-elevation-ring),
+      0 1px 2px 0 light-dark(rgb(16 19 17 / 0.04), rgb(0 0 0 / 0.24)),
+      0 1px 1px 0 light-dark(rgb(16 19 17 / 0.03), rgb(0 0 0 / 0.18));
+    --nz-elevation-button:
+      inset 0 1px 0 0 rgb(255 255 255 / 0.16), 0 1px 2px 0 rgb(10 33 26 / 0.18);
+    --nz-scheme-inverse: dark;
+    --nz-z-raised: 1;
+    --nz-z-sticky: 100;
+    --nz-z-chrome: 200;
+    --nz-z-overlay: 1000;
+    --nz-z-toast: 1100;
+
+    --nz-duration-instant: 80ms;
+    --nz-duration-fast: 140ms;
+    --nz-duration-base: 220ms;
+    --nz-duration-chart-draw: 700ms;
+    --nz-duration-fade: 140ms;
+    --nz-duration-pulse: 2000ms;
+    --nz-duration-spin: 1000ms;
+    --nz-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+    --nz-easing-enter: cubic-bezier(0, 0, 0, 1);
+    --nz-easing-exit: cubic-bezier(0.3, 0, 1, 1);
+    --nz-easing-spring: linear(
+      0,
+      0.007 1.5%,
+      0.027 3.1%,
+      0.06 4.8%,
+      0.108 6.7%,
+      0.211 10%,
+      0.559 20.2%,
+      0.658 23.5%,
+      0.742 26.7%,
+      0.811 29.8%,
+      0.868 32.9%,
+      0.916 36.1%,
+      0.954 39.4%,
+      0.985 43%,
+      1.007 46.9%,
+      1.022 51.1%,
+      1.029 55.9%,
+      1.029 63.7%,
+      1
+    );
+    --nz-easing-spring-soft: linear(
+      0,
+      0.006 1.2%,
+      0.021 2.4%,
+      0.083 5.2%,
+      0.161 7.8%,
+      0.462 17%,
+      0.555 20.3%,
+      0.637 23.6%,
+      0.706 26.9%,
+      0.766 30.3%,
+      0.817 33.9%,
+      0.86 37.7%,
+      0.898 42.1%,
+      0.929 47%,
+      0.953 52.5%,
+      0.971 58.7%,
+      0.991 73.9%,
+      1
+    );
+    --nz-duration-spring: 493ms;
+    --nz-duration-spring-soft: 702ms;
+    --nz-distance-lift: 0.25rem;
+    --nz-scale-press: 0.98;
+    --nz-scale-enter: 0.96;
+  }
+
+  [data-nz-theme='light'] {
+    color-scheme: light;
+    --nz-scheme-inverse: dark;
+  }
+  [data-nz-theme='dark'] {
+    color-scheme: dark;
+    --nz-scheme-inverse: light;
+  }
+  [data-nz-theme='system'] {
+    color-scheme: light dark;
+    --nz-scheme-inverse: dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    [data-nz-theme='system'] {
+      --nz-scheme-inverse: light;
+    }
+  }
+  [data-nz-scheme='inverse'] {
+    color-scheme: var(--nz-scheme-inverse);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :root {
+      --nz-duration-instant: 0ms;
+      --nz-duration-fast: 0ms;
+      --nz-duration-base: 120ms;
+      --nz-duration-chart-draw: 0ms;
+      --nz-duration-fade: 120ms;
+      --nz-duration-pulse: 0ms;
+      --nz-easing-standard: linear;
+      --nz-easing-enter: linear;
+      --nz-easing-exit: linear;
+      --nz-easing-spring: linear;
+      --nz-duration-spring: 120ms;
+      --nz-easing-spring-soft: linear;
+      --nz-duration-spring-soft: 120ms;
+      --nz-distance-lift: 0px;
+      --nz-scale-press: 1;
+      --nz-scale-enter: 1;
+    }
+  }
+}

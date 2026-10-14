@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Nizivo floor lane</title>
+    <link rel="stylesheet" href="report.css" />
+  </head>
+  <body>
+    <h1>Nizivo browser floor lane</h1>
+    <p>
+      Each page measures itself and shows PASS or FAIL. Open each one twice: once with the OS in
+      light mode and once in dark mode. Served by <code>run.ts --serve</code>, each page posts its
+      result to <code>results/manual/</code>; opened from disk, copy the JSON at the bottom of the
+      page instead.
+    </p>
+    <ul>
+      <li>
+        <a href="nesting.html?report">S1 nesting matrix</a> (light-dark() in nested color-scheme
+        scopes)
+      </li>
+      <li>
+        <a href="halo-inverse.html?report">Halo, elevation and inverse scopes</a> (§7.4, §7.5)
+      </li>
+      <li>
+        <a href="overlay-entry.html?report">Overlay entry with @starting-style</a> (§13.2 rule 4)
+      </li>
+      <li>
+        Painted light-dark(): <a href="paint.html?html=none&amp;report">unthemed root</a>,
+        <a href="paint.html?html=dark&amp;report">dark root</a> (compare each square with its label)
+      </li>
+    </ul>
+  </body>
+</html>

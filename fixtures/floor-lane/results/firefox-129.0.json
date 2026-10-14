@@ -1,0 +1,2588 @@
+{
+  "engine": "firefox",
+  "version": "129.0",
+  "driver": "WebDriver BiDi (Node WebSocket), headless",
+  "runAt": "2026-10-14T05:22:51.651Z",
+  "pages": {
+    "nesting.light": {
+      "page": "nesting",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:129.0) Gecko/20100101 Firefox/129.0",
+      "osScheme": "light",
+      "reducedMotion": false,
+      "meta": {},
+      "summary": {
+        "pass": 138,
+        "fail": 24,
+        "info": 0
+      },
+      "notPassed": [
+        {
+          "group": "literal | root=light dark | html=none",
+          "id": "direct-d1",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "literal | root=light dark | html=dark",
+          "id": "direct-d1-l2",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "literal | root=light dark | html=dark",
+          "id": "direct-d1-normal",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "literal | root=light dark | html=light",
+          "id": "direct-d1",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "literal | root=unset | html=none",
+          "id": "direct-d1",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "literal | root=unset | html=dark",
+          "id": "direct-d1-l2",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "literal | root=unset | html=dark",
+          "id": "direct-d1-normal",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "literal | root=unset | html=light",
+          "id": "direct-d1",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "literal | root=normal | html=none",
+          "id": "direct-d1",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "literal | root=normal | html=dark",
+          "id": "direct-d1-l2",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "literal | root=normal | html=dark",
+          "id": "direct-d1-normal",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "literal | root=normal | html=light",
+          "id": "direct-d1",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "var-inside | root=light dark | html=none",
+          "id": "direct-d1",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "var-inside | root=light dark | html=dark",
+          "id": "direct-d1-l2",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "var-inside | root=light dark | html=dark",
+          "id": "direct-d1-normal",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "var-inside | root=light dark | html=light",
+          "id": "direct-d1",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "var-inside | root=unset | html=none",
+          "id": "direct-d1",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "var-inside | root=unset | html=dark",
+          "id": "direct-d1-l2",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "var-inside | root=unset | html=dark",
+          "id": "direct-d1-normal",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "var-inside | root=unset | html=light",
+          "id": "direct-d1",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "var-inside | root=normal | html=none",
+          "id": "direct-d1",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "var-inside | root=normal | html=dark",
+          "id": "direct-d1-l2",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "var-inside | root=normal | html=dark",
+          "id": "direct-d1-normal",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "var-inside | root=normal | html=light",
+          "id": "direct-d1",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        }
+      ],
+      "passedByGroup": {
+        "literal | root=light dark | html=none": 8,
+        "literal | root=light dark | html=dark": 7,
+        "literal | root=light dark | html=light": 8,
+        "literal | root=unset | html=none": 8,
+        "literal | root=unset | html=dark": 7,
+        "literal | root=unset | html=light": 8,
+        "literal | root=normal | html=none": 8,
+        "literal | root=normal | html=dark": 7,
+        "literal | root=normal | html=light": 8,
+        "var-inside | root=light dark | html=none": 8,
+        "var-inside | root=light dark | html=dark": 7,
+        "var-inside | root=light dark | html=light": 8,
+        "var-inside | root=unset | html=none": 8,
+        "var-inside | root=unset | html=dark": 7,
+        "var-inside | root=unset | html=light": 8,
+        "var-inside | root=normal | html=none": 8,
+        "var-inside | root=normal | html=dark": 7,
+        "var-inside | root=normal | html=light": 8
+      }
+    },
+    "halo-inverse.light": {
+      "page": "halo-inverse",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:129.0) Gecko/20100101 Firefox/129.0",
+      "osScheme": "light",
+      "reducedMotion": false,
+      "meta": {
+        "references": {
+          "bg": {
+            "light": "rgb(255, 255, 255)",
+            "dark": "rgb(24, 27, 25)"
+          },
+          "text": {
+            "light": "rgb(24, 27, 25)",
+            "dark": "rgb(246, 247, 244)"
+          },
+          "border": {
+            "light": "rgb(46, 131, 88)",
+            "dark": "rgb(121, 185, 147)"
+          },
+          "halo": {
+            "light": "oklab(0.547003 -0.0981988 0.0402978 / 0.28)",
+            "dark": "oklab(0.731806 -0.0795538 0.0331224 / 0.28)"
+          },
+          "halo-direct": {
+            "light": "oklab(0.547003 -0.0981988 0.0402978 / 0.28)",
+            "dark": "oklab(0.731806 -0.0795538 0.0331224 / 0.28)"
+          },
+          "shadow": {
+            "light": "rgba(0, 0, 0, 0) 0px 0px 0px 1px, rgba(16, 19, 17, 0.04) 0px 1px 2px 0px, rgba(16, 19, 17, 0.03) 0px 1px 1px 0px",
+            "dark": "rgba(255, 255, 255, 0.08) 0px 0px 0px 1px, rgba(0, 0, 0, 0.24) 0px 1px 2px 0px, rgba(0, 0, 0, 0.18) 0px 1px 1px 0px"
+          },
+          "shadow-direct": {
+            "light": "rgba(16, 19, 17, 0.04) 0px 1px 2px 0px",
+            "dark": "rgba(0, 0, 0, 0.24) 0px 1px 2px 0px"
+          },
+          "scrim": {
+            "light": "rgba(24, 27, 25, 0.32)",
+            "dark": "rgba(0, 0, 0, 0.6)"
+          }
+        }
+      },
+      "summary": {
+        "pass": 375,
+        "fail": 20,
+        "info": 32
+      },
+      "notPassed": [
+        {
+          "group": "html=none | g-root-inv",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "html=none | g-light-inv",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "html=none | g-dark",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "html=none | g-dark-light-inv",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "html=none | g-light-system-inv",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "html=none | g-dark-inv-inv",
+          "id": "bg",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=none | g-dark-inv-inv",
+          "id": "text",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=none | g-dark-inv-inv",
+          "id": "border",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=none | g-dark-inv-inv",
+          "id": "halo",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=none | g-dark-inv-inv",
+          "id": "halo-direct",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=none | g-dark-inv-inv",
+          "id": "shadow",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=none | g-dark-inv-inv",
+          "id": "shadow-direct",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=none | g-dark-inv-inv",
+          "id": "scrim",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=light | g-root-inv",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "html=light | g-light-inv",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "html=light | g-dark",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "html=light | g-dark-light-inv",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "html=light | g-light-system-inv",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "html=light | g-dark-inv-inv",
+          "id": "bg",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=light | g-dark-inv-inv",
+          "id": "text",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=light | g-dark-inv-inv",
+          "id": "border",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=light | g-dark-inv-inv",
+          "id": "halo",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=light | g-dark-inv-inv",
+          "id": "halo-direct",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=light | g-dark-inv-inv",
+          "id": "shadow",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=light | g-dark-inv-inv",
+          "id": "shadow-direct",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=light | g-dark-inv-inv",
+          "id": "scrim",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=dark | g-root-inv",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "html=dark | g-light-inv",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "html=dark | g-dark-inv",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "html=dark | g-dark-light-inv",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "html=dark | g-light-system-inv",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "html=dark | g-dark-inv-inv",
+          "id": "bg",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=dark | g-dark-inv-inv",
+          "id": "text",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=dark | g-dark-inv-inv",
+          "id": "border",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=dark | g-dark-inv-inv",
+          "id": "halo",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=dark | g-dark-inv-inv",
+          "id": "halo-direct",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=dark | g-dark-inv-inv",
+          "id": "shadow",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=dark | g-dark-inv-inv",
+          "id": "shadow-direct",
+          "status": "info",
+          "observed": "D",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=dark | g-dark-inv-inv",
+          "id": "scrim",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=system | g-root-inv",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "html=system | g-light-inv",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "html=system | g-dark-inv",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "html=system | g-dark-light-inv",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "html=system | g-light-system-inv",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "html=system | g-dark-inv-inv",
+          "id": "bg",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=system | g-dark-inv-inv",
+          "id": "text",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=system | g-dark-inv-inv",
+          "id": "border",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=system | g-dark-inv-inv",
+          "id": "halo",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=system | g-dark-inv-inv",
+          "id": "halo-direct",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=system | g-dark-inv-inv",
+          "id": "shadow",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=system | g-dark-inv-inv",
+          "id": "shadow-direct",
+          "status": "info",
+          "observed": "D",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=system | g-dark-inv-inv",
+          "id": "scrim",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        }
+      ],
+      "passedByGroup": {
+        "references": 8,
+        "CSS.supports": 3,
+        "html=none | g-root": 8,
+        "html=none | g-root-inv": 7,
+        "html=none | g-light": 8,
+        "html=none | g-light-inv": 7,
+        "html=none | g-dark": 7,
+        "html=none | g-dark-inv": 8,
+        "html=none | g-system": 8,
+        "html=none | g-system-inv": 8,
+        "html=none | g-dark-light": 8,
+        "html=none | g-dark-light-inv": 7,
+        "html=none | g-light-system": 8,
+        "html=none | g-light-system-inv": 7,
+        "html=light | g-root": 8,
+        "html=light | g-root-inv": 7,
+        "html=light | g-light": 8,
+        "html=light | g-light-inv": 7,
+        "html=light | g-dark": 7,
+        "html=light | g-dark-inv": 8,
+        "html=light | g-system": 8,
+        "html=light | g-system-inv": 8,
+        "html=light | g-dark-light": 8,
+        "html=light | g-dark-light-inv": 7,
+        "html=light | g-light-system": 8,
+        "html=light | g-light-system-inv": 7,
+        "html=dark | g-root": 8,
+        "html=dark | g-root-inv": 7,
+        "html=dark | g-light": 8,
+        "html=dark | g-light-inv": 7,
+        "html=dark | g-dark": 8,
+        "html=dark | g-dark-inv": 7,
+        "html=dark | g-system": 8,
+        "html=dark | g-system-inv": 8,
+        "html=dark | g-dark-light": 8,
+        "html=dark | g-dark-light-inv": 7,
+        "html=dark | g-light-system": 8,
+        "html=dark | g-light-system-inv": 7,
+        "html=system | g-root": 8,
+        "html=system | g-root-inv": 7,
+        "html=system | g-light": 8,
+        "html=system | g-light-inv": 7,
+        "html=system | g-dark": 8,
+        "html=system | g-dark-inv": 7,
+        "html=system | g-system": 8,
+        "html=system | g-system-inv": 8,
+        "html=system | g-dark-light": 8,
+        "html=system | g-dark-light-inv": 7,
+        "html=system | g-light-system": 8,
+        "html=system | g-light-system-inv": 7
+      }
+    },
+    "overlay-entry.light": {
+      "page": "overlay-entry",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:129.0) Gecko/20100101 Firefox/129.0",
+      "osScheme": "light",
+      "reducedMotion": false,
+      "meta": {
+        "animationFramesIn300ms": 19
+      },
+      "summary": {
+        "pass": 19,
+        "fail": 0,
+        "info": 15
+      },
+      "notPassed": [
+        {
+          "group": "features",
+          "id": "@starting-style (CSSStartingStyleRule interface)",
+          "status": "info",
+          "observed": true,
+          "expected": null,
+          "note": null
+        },
+        {
+          "group": "features",
+          "id": "overlay property (§12.4 gate 1)",
+          "status": "info",
+          "observed": false,
+          "expected": null,
+          "note": null
+        },
+        {
+          "group": "features",
+          "id": "popover API",
+          "status": "info",
+          "observed": true,
+          "expected": null,
+          "note": null
+        },
+        {
+          "group": "features",
+          "id": ":popover-open selector",
+          "status": "info",
+          "observed": true,
+          "expected": null,
+          "note": null
+        },
+        {
+          "group": "native popover",
+          "id": "entry: display transition object",
+          "status": "info",
+          "observed": false,
+          "expected": null,
+          "note": null
+        },
+        {
+          "group": "native popover",
+          "id": "exit (allow-discrete keeps display until the fade ends)",
+          "status": "info",
+          "observed": {
+            "displayRightAfterClose": "none",
+            "opacityTransition": false,
+            "displayAfterSettle": "none"
+          },
+          "expected": null,
+          "note": null
+        },
+        {
+          "group": "native modal dialog",
+          "id": "entry: display transition object",
+          "status": "info",
+          "observed": false,
+          "expected": null,
+          "note": null
+        },
+        {
+          "group": "native modal dialog",
+          "id": "exit (allow-discrete keeps display until the fade ends)",
+          "status": "info",
+          "observed": {
+            "displayRightAfterClose": "none",
+            "opacityTransition": false,
+            "displayAfterSettle": "none"
+          },
+          "expected": null,
+          "note": null
+        },
+        {
+          "group": "data-open toggle",
+          "id": "entry: display transition object",
+          "status": "info",
+          "observed": false,
+          "expected": null,
+          "note": null
+        },
+        {
+          "group": "data-open toggle",
+          "id": "exit (allow-discrete keeps display until the fade ends)",
+          "status": "info",
+          "observed": {
+            "displayRightAfterClose": "none",
+            "opacityTransition": false,
+            "displayAfterSettle": "none"
+          },
+          "expected": null,
+          "note": null
+        },
+        {
+          "group": "nested @starting-style",
+          "id": "entry: display transition object",
+          "status": "info",
+          "observed": false,
+          "expected": null,
+          "note": null
+        },
+        {
+          "group": "nested @starting-style",
+          "id": "exit (allow-discrete keeps display until the fade ends)",
+          "status": "info",
+          "observed": {
+            "displayRightAfterClose": "none",
+            "opacityTransition": false,
+            "displayAfterSettle": "none"
+          },
+          "expected": null,
+          "note": null
+        },
+        {
+          "group": "inserted open (portal mount)",
+          "id": "entry: display transition object",
+          "status": "info",
+          "observed": false,
+          "expected": null,
+          "note": null
+        },
+        {
+          "group": "inserted open (portal mount)",
+          "id": "exit (allow-discrete keeps display until the fade ends)",
+          "status": "info",
+          "observed": {
+            "displayRightAfterClose": "block",
+            "opacityTransition": true,
+            "displayAfterSettle": "block"
+          },
+          "expected": null,
+          "note": null
+        },
+        {
+          "group": "visibility exit",
+          "id": "exit fades when hidden with visibility",
+          "status": "info",
+          "observed": {
+            "visibilityRightAfterClose": "visible",
+            "opacityTransition": true,
+            "visibilityAfterSettle": "hidden"
+          },
+          "expected": null,
+          "note": null
+        }
+      ],
+      "passedByGroup": {
+        "features": 3,
+        "native popover": 3,
+        "native modal dialog": 3,
+        "data-open toggle": 3,
+        "nested @starting-style": 3,
+        "inserted open (portal mount)": 3,
+        "control (no @starting-style)": 1
+      }
+    },
+    "paint.html-none.light": {
+      "page": "paint",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:129.0) Gecko/20100101 Firefox/129.0",
+      "osScheme": "light",
+      "reducedMotion": false,
+      "meta": {
+        "htmlTheme": "none",
+        "devicePixelRatio": 1
+      },
+      "summary": {
+        "pass": 100,
+        "fail": 12,
+        "info": 0
+      },
+      "notPassed": [
+        {
+          "group": "computed | html=none | dark",
+          "id": "bg-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "computed | html=none | dark",
+          "id": "bg-mix-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "computed | html=none | dark",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "computed | html=none | light dark",
+          "id": "bg-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "computed | html=none | light dark",
+          "id": "bg-mix-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "computed | html=none | light dark",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "painted | html=none | dark",
+          "id": "bg-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "painted | html=none | dark",
+          "id": "bg-mix-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "painted | html=none | dark",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "painted | html=none | light dark",
+          "id": "bg-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "painted | html=none | light dark",
+          "id": "bg-mix-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "painted | html=none | light dark",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        }
+      ],
+      "passedByGroup": {
+        "computed | html=none | (root)": 8,
+        "computed | html=none | dark": 5,
+        "computed | html=none | dark light": 8,
+        "computed | html=none | dark normal": 8,
+        "computed | html=none | light": 8,
+        "computed | html=none | light dark": 5,
+        "computed | html=none | system": 8,
+        "painted | html=none | (root)": 8,
+        "painted | html=none | dark": 5,
+        "painted | html=none | dark light": 8,
+        "painted | html=none | dark normal": 8,
+        "painted | html=none | light": 8,
+        "painted | html=none | light dark": 5,
+        "painted | html=none | system": 8
+      }
+    },
+    "paint.html-dark.light": {
+      "page": "paint",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:129.0) Gecko/20100101 Firefox/129.0",
+      "osScheme": "light",
+      "reducedMotion": false,
+      "meta": {
+        "htmlTheme": "dark",
+        "devicePixelRatio": 1
+      },
+      "summary": {
+        "pass": 88,
+        "fail": 24,
+        "info": 0
+      },
+      "notPassed": [
+        {
+          "group": "computed | html=dark | dark light",
+          "id": "bg-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "computed | html=dark | dark light",
+          "id": "bg-mix-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "computed | html=dark | dark light",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "computed | html=dark | dark normal",
+          "id": "bg-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "computed | html=dark | dark normal",
+          "id": "bg-mix-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "computed | html=dark | dark normal",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "computed | html=dark | light",
+          "id": "bg-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "computed | html=dark | light",
+          "id": "bg-mix-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "computed | html=dark | light",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "computed | html=dark | system",
+          "id": "bg-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "computed | html=dark | system",
+          "id": "bg-mix-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "computed | html=dark | system",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "painted | html=dark | dark light",
+          "id": "bg-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "painted | html=dark | dark light",
+          "id": "bg-mix-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "painted | html=dark | dark light",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "painted | html=dark | dark normal",
+          "id": "bg-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "painted | html=dark | dark normal",
+          "id": "bg-mix-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "painted | html=dark | dark normal",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "painted | html=dark | light",
+          "id": "bg-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "painted | html=dark | light",
+          "id": "bg-mix-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "painted | html=dark | light",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "painted | html=dark | system",
+          "id": "bg-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "painted | html=dark | system",
+          "id": "bg-mix-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "painted | html=dark | system",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        }
+      ],
+      "passedByGroup": {
+        "computed | html=dark | (root)": 8,
+        "computed | html=dark | dark": 8,
+        "computed | html=dark | dark light": 5,
+        "computed | html=dark | dark normal": 5,
+        "computed | html=dark | light": 5,
+        "computed | html=dark | light dark": 8,
+        "computed | html=dark | system": 5,
+        "painted | html=dark | (root)": 8,
+        "painted | html=dark | dark": 8,
+        "painted | html=dark | dark light": 5,
+        "painted | html=dark | dark normal": 5,
+        "painted | html=dark | light": 5,
+        "painted | html=dark | light dark": 8,
+        "painted | html=dark | system": 5
+      }
+    },
+    "nesting.dark": {
+      "page": "nesting",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:129.0) Gecko/20100101 Firefox/129.0",
+      "osScheme": "dark",
+      "reducedMotion": false,
+      "meta": {},
+      "summary": {
+        "pass": 136,
+        "fail": 26,
+        "info": 0
+      },
+      "notPassed": [
+        {
+          "group": "literal | root=light dark | html=none",
+          "id": "direct-d1-l2",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "literal | root=light dark | html=none",
+          "id": "direct-d1-normal",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "literal | root=light dark | html=dark",
+          "id": "direct-d1-l2",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "literal | root=light dark | html=dark",
+          "id": "direct-d1-normal",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "literal | root=light dark | html=light",
+          "id": "direct-d1",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "literal | root=unset | html=none",
+          "id": "direct-d1",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "literal | root=unset | html=dark",
+          "id": "direct-d1-l2",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "literal | root=unset | html=dark",
+          "id": "direct-d1-normal",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "literal | root=unset | html=light",
+          "id": "direct-d1",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "literal | root=normal | html=none",
+          "id": "direct-d1",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "literal | root=normal | html=dark",
+          "id": "direct-d1-l2",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "literal | root=normal | html=dark",
+          "id": "direct-d1-normal",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "literal | root=normal | html=light",
+          "id": "direct-d1",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "var-inside | root=light dark | html=none",
+          "id": "direct-d1-l2",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "var-inside | root=light dark | html=none",
+          "id": "direct-d1-normal",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "var-inside | root=light dark | html=dark",
+          "id": "direct-d1-l2",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "var-inside | root=light dark | html=dark",
+          "id": "direct-d1-normal",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "var-inside | root=light dark | html=light",
+          "id": "direct-d1",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "var-inside | root=unset | html=none",
+          "id": "direct-d1",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "var-inside | root=unset | html=dark",
+          "id": "direct-d1-l2",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "var-inside | root=unset | html=dark",
+          "id": "direct-d1-normal",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "var-inside | root=unset | html=light",
+          "id": "direct-d1",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "var-inside | root=normal | html=none",
+          "id": "direct-d1",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "var-inside | root=normal | html=dark",
+          "id": "direct-d1-l2",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "var-inside | root=normal | html=dark",
+          "id": "direct-d1-normal",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "var-inside | root=normal | html=light",
+          "id": "direct-d1",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        }
+      ],
+      "passedByGroup": {
+        "literal | root=light dark | html=none": 7,
+        "literal | root=light dark | html=dark": 7,
+        "literal | root=light dark | html=light": 8,
+        "literal | root=unset | html=none": 8,
+        "literal | root=unset | html=dark": 7,
+        "literal | root=unset | html=light": 8,
+        "literal | root=normal | html=none": 8,
+        "literal | root=normal | html=dark": 7,
+        "literal | root=normal | html=light": 8,
+        "var-inside | root=light dark | html=none": 7,
+        "var-inside | root=light dark | html=dark": 7,
+        "var-inside | root=light dark | html=light": 8,
+        "var-inside | root=unset | html=none": 8,
+        "var-inside | root=unset | html=dark": 7,
+        "var-inside | root=unset | html=light": 8,
+        "var-inside | root=normal | html=none": 8,
+        "var-inside | root=normal | html=dark": 7,
+        "var-inside | root=normal | html=light": 8
+      }
+    },
+    "halo-inverse.dark": {
+      "page": "halo-inverse",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:129.0) Gecko/20100101 Firefox/129.0",
+      "osScheme": "dark",
+      "reducedMotion": false,
+      "meta": {
+        "references": {
+          "bg": {
+            "light": "rgb(255, 255, 255)",
+            "dark": "rgb(24, 27, 25)"
+          },
+          "text": {
+            "light": "rgb(24, 27, 25)",
+            "dark": "rgb(246, 247, 244)"
+          },
+          "border": {
+            "light": "rgb(46, 131, 88)",
+            "dark": "rgb(121, 185, 147)"
+          },
+          "halo": {
+            "light": "oklab(0.547003 -0.0981988 0.0402978 / 0.28)",
+            "dark": "oklab(0.731806 -0.0795538 0.0331224 / 0.28)"
+          },
+          "halo-direct": {
+            "light": "oklab(0.547003 -0.0981988 0.0402978 / 0.28)",
+            "dark": "oklab(0.731806 -0.0795538 0.0331224 / 0.28)"
+          },
+          "shadow": {
+            "light": "rgba(0, 0, 0, 0) 0px 0px 0px 1px, rgba(16, 19, 17, 0.04) 0px 1px 2px 0px, rgba(16, 19, 17, 0.03) 0px 1px 1px 0px",
+            "dark": "rgba(255, 255, 255, 0.08) 0px 0px 0px 1px, rgba(0, 0, 0, 0.24) 0px 1px 2px 0px, rgba(0, 0, 0, 0.18) 0px 1px 1px 0px"
+          },
+          "shadow-direct": {
+            "light": "rgba(16, 19, 17, 0.04) 0px 1px 2px 0px",
+            "dark": "rgba(0, 0, 0, 0.24) 0px 1px 2px 0px"
+          },
+          "scrim": {
+            "light": "rgba(24, 27, 25, 0.32)",
+            "dark": "rgba(0, 0, 0, 0.6)"
+          }
+        }
+      },
+      "summary": {
+        "pass": 371,
+        "fail": 24,
+        "info": 32
+      },
+      "notPassed": [
+        {
+          "group": "html=none | g-root-inv",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "html=none | g-light-inv",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "html=none | g-dark",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "html=none | g-system",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "html=none | g-dark-light-inv",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "html=none | g-light-system",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "html=none | g-dark-inv-inv",
+          "id": "bg",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=none | g-dark-inv-inv",
+          "id": "text",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=none | g-dark-inv-inv",
+          "id": "border",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=none | g-dark-inv-inv",
+          "id": "halo",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=none | g-dark-inv-inv",
+          "id": "halo-direct",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=none | g-dark-inv-inv",
+          "id": "shadow",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=none | g-dark-inv-inv",
+          "id": "shadow-direct",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=none | g-dark-inv-inv",
+          "id": "scrim",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=light | g-root-inv",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "html=light | g-light-inv",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "html=light | g-dark",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "html=light | g-system",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "html=light | g-dark-light-inv",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "html=light | g-light-system",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "html=light | g-dark-inv-inv",
+          "id": "bg",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=light | g-dark-inv-inv",
+          "id": "text",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=light | g-dark-inv-inv",
+          "id": "border",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=light | g-dark-inv-inv",
+          "id": "halo",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=light | g-dark-inv-inv",
+          "id": "halo-direct",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=light | g-dark-inv-inv",
+          "id": "shadow",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=light | g-dark-inv-inv",
+          "id": "shadow-direct",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=light | g-dark-inv-inv",
+          "id": "scrim",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=dark | g-root-inv",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "html=dark | g-light-inv",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "html=dark | g-dark-inv",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "html=dark | g-system-inv",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "html=dark | g-dark-light-inv",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "html=dark | g-light-system",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "html=dark | g-dark-inv-inv",
+          "id": "bg",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=dark | g-dark-inv-inv",
+          "id": "text",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=dark | g-dark-inv-inv",
+          "id": "border",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=dark | g-dark-inv-inv",
+          "id": "halo",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=dark | g-dark-inv-inv",
+          "id": "halo-direct",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=dark | g-dark-inv-inv",
+          "id": "shadow",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=dark | g-dark-inv-inv",
+          "id": "shadow-direct",
+          "status": "info",
+          "observed": "D",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=dark | g-dark-inv-inv",
+          "id": "scrim",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=system | g-root-inv",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "html=system | g-light-inv",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "html=system | g-dark-inv",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "html=system | g-system-inv",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "html=system | g-dark-light-inv",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "html=system | g-light-system-inv",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "html=system | g-dark-inv-inv",
+          "id": "bg",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=system | g-dark-inv-inv",
+          "id": "text",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=system | g-dark-inv-inv",
+          "id": "border",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=system | g-dark-inv-inv",
+          "id": "halo",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=system | g-dark-inv-inv",
+          "id": "halo-direct",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=system | g-dark-inv-inv",
+          "id": "shadow",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=system | g-dark-inv-inv",
+          "id": "shadow-direct",
+          "status": "info",
+          "observed": "D",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        },
+        {
+          "group": "html=system | g-dark-inv-inv",
+          "id": "scrim",
+          "status": "info",
+          "observed": "L",
+          "expected": null,
+          "note": "plan is silent on inverse inside inverse"
+        }
+      ],
+      "passedByGroup": {
+        "references": 8,
+        "CSS.supports": 3,
+        "html=none | g-root": 8,
+        "html=none | g-root-inv": 7,
+        "html=none | g-light": 8,
+        "html=none | g-light-inv": 7,
+        "html=none | g-dark": 7,
+        "html=none | g-dark-inv": 8,
+        "html=none | g-system": 7,
+        "html=none | g-system-inv": 8,
+        "html=none | g-dark-light": 8,
+        "html=none | g-dark-light-inv": 7,
+        "html=none | g-light-system": 7,
+        "html=none | g-light-system-inv": 8,
+        "html=light | g-root": 8,
+        "html=light | g-root-inv": 7,
+        "html=light | g-light": 8,
+        "html=light | g-light-inv": 7,
+        "html=light | g-dark": 7,
+        "html=light | g-dark-inv": 8,
+        "html=light | g-system": 7,
+        "html=light | g-system-inv": 8,
+        "html=light | g-dark-light": 8,
+        "html=light | g-dark-light-inv": 7,
+        "html=light | g-light-system": 7,
+        "html=light | g-light-system-inv": 8,
+        "html=dark | g-root": 8,
+        "html=dark | g-root-inv": 7,
+        "html=dark | g-light": 8,
+        "html=dark | g-light-inv": 7,
+        "html=dark | g-dark": 8,
+        "html=dark | g-dark-inv": 7,
+        "html=dark | g-system": 8,
+        "html=dark | g-system-inv": 7,
+        "html=dark | g-dark-light": 8,
+        "html=dark | g-dark-light-inv": 7,
+        "html=dark | g-light-system": 7,
+        "html=dark | g-light-system-inv": 8,
+        "html=system | g-root": 8,
+        "html=system | g-root-inv": 7,
+        "html=system | g-light": 8,
+        "html=system | g-light-inv": 7,
+        "html=system | g-dark": 8,
+        "html=system | g-dark-inv": 7,
+        "html=system | g-system": 8,
+        "html=system | g-system-inv": 7,
+        "html=system | g-dark-light": 8,
+        "html=system | g-dark-light-inv": 7,
+        "html=system | g-light-system": 8,
+        "html=system | g-light-system-inv": 7
+      }
+    },
+    "overlay-entry.dark": {
+      "page": "overlay-entry",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:129.0) Gecko/20100101 Firefox/129.0",
+      "osScheme": "dark",
+      "reducedMotion": false,
+      "meta": {
+        "animationFramesIn300ms": 19
+      },
+      "summary": {
+        "pass": 19,
+        "fail": 0,
+        "info": 15
+      },
+      "notPassed": [
+        {
+          "group": "features",
+          "id": "@starting-style (CSSStartingStyleRule interface)",
+          "status": "info",
+          "observed": true,
+          "expected": null,
+          "note": null
+        },
+        {
+          "group": "features",
+          "id": "overlay property (§12.4 gate 1)",
+          "status": "info",
+          "observed": false,
+          "expected": null,
+          "note": null
+        },
+        {
+          "group": "features",
+          "id": "popover API",
+          "status": "info",
+          "observed": true,
+          "expected": null,
+          "note": null
+        },
+        {
+          "group": "features",
+          "id": ":popover-open selector",
+          "status": "info",
+          "observed": true,
+          "expected": null,
+          "note": null
+        },
+        {
+          "group": "native popover",
+          "id": "entry: display transition object",
+          "status": "info",
+          "observed": false,
+          "expected": null,
+          "note": null
+        },
+        {
+          "group": "native popover",
+          "id": "exit (allow-discrete keeps display until the fade ends)",
+          "status": "info",
+          "observed": {
+            "displayRightAfterClose": "none",
+            "opacityTransition": false,
+            "displayAfterSettle": "none"
+          },
+          "expected": null,
+          "note": null
+        },
+        {
+          "group": "native modal dialog",
+          "id": "entry: display transition object",
+          "status": "info",
+          "observed": false,
+          "expected": null,
+          "note": null
+        },
+        {
+          "group": "native modal dialog",
+          "id": "exit (allow-discrete keeps display until the fade ends)",
+          "status": "info",
+          "observed": {
+            "displayRightAfterClose": "none",
+            "opacityTransition": false,
+            "displayAfterSettle": "none"
+          },
+          "expected": null,
+          "note": null
+        },
+        {
+          "group": "data-open toggle",
+          "id": "entry: display transition object",
+          "status": "info",
+          "observed": false,
+          "expected": null,
+          "note": null
+        },
+        {
+          "group": "data-open toggle",
+          "id": "exit (allow-discrete keeps display until the fade ends)",
+          "status": "info",
+          "observed": {
+            "displayRightAfterClose": "none",
+            "opacityTransition": false,
+            "displayAfterSettle": "none"
+          },
+          "expected": null,
+          "note": null
+        },
+        {
+          "group": "nested @starting-style",
+          "id": "entry: display transition object",
+          "status": "info",
+          "observed": false,
+          "expected": null,
+          "note": null
+        },
+        {
+          "group": "nested @starting-style",
+          "id": "exit (allow-discrete keeps display until the fade ends)",
+          "status": "info",
+          "observed": {
+            "displayRightAfterClose": "none",
+            "opacityTransition": false,
+            "displayAfterSettle": "none"
+          },
+          "expected": null,
+          "note": null
+        },
+        {
+          "group": "inserted open (portal mount)",
+          "id": "entry: display transition object",
+          "status": "info",
+          "observed": false,
+          "expected": null,
+          "note": null
+        },
+        {
+          "group": "inserted open (portal mount)",
+          "id": "exit (allow-discrete keeps display until the fade ends)",
+          "status": "info",
+          "observed": {
+            "displayRightAfterClose": "block",
+            "opacityTransition": true,
+            "displayAfterSettle": "block"
+          },
+          "expected": null,
+          "note": null
+        },
+        {
+          "group": "visibility exit",
+          "id": "exit fades when hidden with visibility",
+          "status": "info",
+          "observed": {
+            "visibilityRightAfterClose": "visible",
+            "opacityTransition": true,
+            "visibilityAfterSettle": "hidden"
+          },
+          "expected": null,
+          "note": null
+        }
+      ],
+      "passedByGroup": {
+        "features": 3,
+        "native popover": 3,
+        "native modal dialog": 3,
+        "data-open toggle": 3,
+        "nested @starting-style": 3,
+        "inserted open (portal mount)": 3,
+        "control (no @starting-style)": 1
+      }
+    },
+    "paint.html-none.dark": {
+      "page": "paint",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:129.0) Gecko/20100101 Firefox/129.0",
+      "osScheme": "dark",
+      "reducedMotion": false,
+      "meta": {
+        "htmlTheme": "none",
+        "devicePixelRatio": 1
+      },
+      "summary": {
+        "pass": 94,
+        "fail": 18,
+        "info": 0
+      },
+      "notPassed": [
+        {
+          "group": "computed | html=none | dark",
+          "id": "bg-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "computed | html=none | dark",
+          "id": "bg-mix-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "computed | html=none | dark",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "computed | html=none | light dark",
+          "id": "bg-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "computed | html=none | light dark",
+          "id": "bg-mix-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "computed | html=none | light dark",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "computed | html=none | system",
+          "id": "bg-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "computed | html=none | system",
+          "id": "bg-mix-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "computed | html=none | system",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "painted | html=none | dark",
+          "id": "bg-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "painted | html=none | dark",
+          "id": "bg-mix-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "painted | html=none | dark",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "painted | html=none | light dark",
+          "id": "bg-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "painted | html=none | light dark",
+          "id": "bg-mix-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "painted | html=none | light dark",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "painted | html=none | system",
+          "id": "bg-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "painted | html=none | system",
+          "id": "bg-mix-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        },
+        {
+          "group": "painted | html=none | system",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "L",
+          "expected": "D",
+          "note": null
+        }
+      ],
+      "passedByGroup": {
+        "computed | html=none | (root)": 8,
+        "computed | html=none | dark": 5,
+        "computed | html=none | dark light": 8,
+        "computed | html=none | dark normal": 8,
+        "computed | html=none | light": 8,
+        "computed | html=none | light dark": 5,
+        "computed | html=none | system": 5,
+        "painted | html=none | (root)": 8,
+        "painted | html=none | dark": 5,
+        "painted | html=none | dark light": 8,
+        "painted | html=none | dark normal": 8,
+        "painted | html=none | light": 8,
+        "painted | html=none | light dark": 5,
+        "painted | html=none | system": 5
+      }
+    },
+    "paint.html-dark.dark": {
+      "page": "paint",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:129.0) Gecko/20100101 Firefox/129.0",
+      "osScheme": "dark",
+      "reducedMotion": false,
+      "meta": {
+        "htmlTheme": "dark",
+        "devicePixelRatio": 1
+      },
+      "summary": {
+        "pass": 94,
+        "fail": 18,
+        "info": 0
+      },
+      "notPassed": [
+        {
+          "group": "computed | html=dark | dark light",
+          "id": "bg-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "computed | html=dark | dark light",
+          "id": "bg-mix-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "computed | html=dark | dark light",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "computed | html=dark | dark normal",
+          "id": "bg-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "computed | html=dark | dark normal",
+          "id": "bg-mix-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "computed | html=dark | dark normal",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "computed | html=dark | light",
+          "id": "bg-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "computed | html=dark | light",
+          "id": "bg-mix-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "computed | html=dark | light",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "painted | html=dark | dark light",
+          "id": "bg-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "painted | html=dark | dark light",
+          "id": "bg-mix-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "painted | html=dark | dark light",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "painted | html=dark | dark normal",
+          "id": "bg-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "painted | html=dark | dark normal",
+          "id": "bg-mix-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "painted | html=dark | dark normal",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "painted | html=dark | light",
+          "id": "bg-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "painted | html=dark | light",
+          "id": "bg-mix-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        },
+        {
+          "group": "painted | html=dark | light",
+          "id": "shadow-direct",
+          "status": "fail",
+          "observed": "D",
+          "expected": "L",
+          "note": null
+        }
+      ],
+      "passedByGroup": {
+        "computed | html=dark | (root)": 8,
+        "computed | html=dark | dark": 8,
+        "computed | html=dark | dark light": 5,
+        "computed | html=dark | dark normal": 5,
+        "computed | html=dark | light": 5,
+        "computed | html=dark | light dark": 8,
+        "computed | html=dark | system": 8,
+        "painted | html=dark | (root)": 8,
+        "painted | html=dark | dark": 8,
+        "painted | html=dark | dark light": 5,
+        "painted | html=dark | dark normal": 5,
+        "painted | html=dark | light": 5,
+        "painted | html=dark | light dark": 8,
+        "painted | html=dark | system": 8
+      }
+    }
+  }
+}

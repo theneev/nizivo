@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Floor lane: halo, elevation and inverse scopes</title>
+    <link rel="stylesheet" href="report.css" />
+    <link rel="stylesheet" href="plan-tokens.css" />
+    <style>
+      .nzf-group {
+        display: flex;
+        gap: 2px;
+        padding: 2px;
+      }
+      .nzf-group > div,
+      .nzf-ref {
+        inline-size: 16px;
+        block-size: 16px;
+      }
+      /* Probes read the §7.5 tokens exactly as component CSS would. */
+      .p-bg {
+        background-color: var(--nz-bg-surface);
+      }
+      .p-text {
+        color: var(--nz-text-primary);
+      }
+      .p-border {
+        border-block-start: 2px solid var(--nz-border-focus);
+      }
+      .p-halo {
+        background-color: var(--nz-focus-halo);
+      }
+      .p-halo-direct {
+        background-color: color-mix(
+          in oklab,
+          light-dark(var(--nz-p-green-500), var(--nz-p-green-300)) 28%,
+          transparent
+        );
+      }
+      .p-shadow {
+        box-shadow: var(--nz-elevation-1);
+      }
+      .p-shadow-direct {
+        box-shadow: 0 1px 2px 0 light-dark(rgb(16 19 17 / 0.04), rgb(0 0 0 / 0.24));
+      }
+      .p-scrim {
+        background-color: var(--nz-bg-scrim);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Halo, elevation and inverse scopes (§7.4, §7.5 tokens)</h1>
+    <!-- Probe groups are filled in by halo-inverse.js. Each id names its scope path. -->
+    <div class="nzf-fixture" id="fixture">
+      <div class="nzf-group" id="g-root"></div>
+      <div class="nzf-group" data-nz-scheme="inverse" id="g-root-inv"></div>
+      <div data-nz-theme="light">
+        <div class="nzf-group" id="g-light"></div>
+        <div class="nzf-group" data-nz-scheme="inverse" id="g-light-inv"></div>
+      </div>
+      <div data-nz-theme="dark">
+        <div class="nzf-group" id="g-dark"></div>
+        <div class="nzf-group" data-nz-scheme="inverse" id="g-dark-inv"></div>
+      </div>
+      <div data-nz-theme="system">
+        <div class="nzf-group" id="g-system"></div>
+        <div class="nzf-group" data-nz-scheme="inverse" id="g-system-inv"></div>
+      </div>
+      <div data-nz-theme="dark">
+        <div data-nz-theme="light">
+          <div class="nzf-group" id="g-dark-light"></div>
+          <div class="nzf-group" data-nz-scheme="inverse" id="g-dark-light-inv"></div>
+        </div>
+      </div>
+      <div data-nz-theme="light">
+        <div data-nz-theme="system">
+          <div class="nzf-group" id="g-light-system"></div>
+          <div class="nzf-group" data-nz-scheme="inverse" id="g-light-system-inv"></div>
+        </div>
+      </div>
+      <div data-nz-theme="dark">
+        <div data-nz-scheme="inverse">
+          <div class="nzf-group" data-nz-scheme="inverse" id="g-dark-inv-inv"></div>
+        </div>
+      </div>
+    </div>
+    <div class="nzf-fixture" id="refs"></div>
+    <section id="report"></section>
+    <pre id="result"></pre>
+    <script src="harness.js"></script>
+    <script src="halo-inverse.js"></script>
+  </body>
+</html>
