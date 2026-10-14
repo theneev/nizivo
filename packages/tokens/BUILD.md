@@ -72,7 +72,13 @@ overrides are always the last source of their theme context (§15.4).
   `[data-nz-scheme="inverse"]` takes `color-scheme: var(--nz-scheme-inverse)`.
 - **Elevation 1–4:** a `0 0 0 1px var(--nz-elevation-ring)` layer (levels 3–4 also the inset
   `--nz-elevation-highlight`), then Figma's layers with each colour as `light-dark(<Figma>, black at
-  min(0.6, 6 × alpha))` (gap report C §2.3).
+  min(0.6, 6 × alpha))` (gap report C §2.3; one colour when the two are equal).
+- **Flat elevations:** an `elevation.<n>` whose every layer has alpha 0 paints nothing in either
+  theme, so it takes no ring and no highlight: only Figma's layers, or `0 0 0 0 transparent` when
+  it has none. The rule reads the layers, not the level. Figma's `Elevation/0 Flat` (one invisible
+  drop shadow since 2026-10-14) arrives with the next export and builds as
+  `--nz-elevation-0: 0 0 0 0 transparent`; `test/elevation.test.ts` builds a copy of `src/` with it
+  and checks that the three goldens change only by that token.
 - **Typography:** `--nz-font-<style>` is the shorthand of its `var()` sub-values; `-font-family`
   is `var(--nz-font-family-sans|mono)`; letter spacing is renamed by `subValueVariableName` to
   `--nz-tracking-<style>` in `em` (Figma's percent ÷ 100). `--nz-font-family-sans` is

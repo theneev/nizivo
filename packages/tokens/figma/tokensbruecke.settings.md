@@ -66,10 +66,27 @@ tell engineering.
    case: the `Grove …` files stay next to the new `Nizivo …` ones, and the normalizer stops (one
    collection under both prefixes is an error) until they are removed.
 
-CI then builds the tokens and comments on the pull request with what changed. An engineer reviews
-the code side, you review the visual diff.
+For now nothing runs on the pull request by itself, because GitHub Actions is switched off. An
+engineer checks out your branch, rebuilds the tokens from your files, runs `pnpm check` on their own
+computer and writes in the pull request what changed. Once Actions is back on, CI runs the same
+checks on the pull request instead. Either way, an engineer reviews the code side and you confirm
+that what changed is what you meant.
 
 If GitHub says you cannot create a branch, you do not have write access yet; ask engineering.
+
+## For engineering: checking a sync branch
+
+While GitHub Actions is off (plan §1, the standing constraint), this is the only gate a sync gets;
+once Actions is back on, CI runs the same checks on the pull request (`ci.yml` runs the steps of
+`pnpm check` one by one).
+
+1. Check out the branch and delete any stale raw files (upload step 5).
+2. In `packages/tokens`, run `pnpm tokens:normalize`, then `pnpm tokens:spring` if a `spring()`
+   easing changed and `pnpm tokens:contrast` if a colour changed (`BUILD.md`, Commands).
+3. Still there, `pnpm test -u` rewrites the goldens; review that diff. A test that pins a count or a
+   value the sync changed (for example `test/normalize.test.ts`) is updated by hand.
+4. From the repository root, run `pnpm check`. When it passes, commit to the branch and write in the
+   pull request what changed; a removed or renamed public name is breaking.
 
 ## For engineering: known differences from the CLI export
 

@@ -135,18 +135,29 @@ function shadowLayer(layer: ShadowValueNormalized, color: string): string {
   return [...(layer.inset ? ['inset'] : []), ...geometry, color].join(' ');
 }
 
+/** A no-op layer: a flat elevation with no layers still composes in a comma-separated shadow list. */
+const NO_SHADOW = '0 0 0 0 transparent';
+
 /**
- * `elevation.<n>`: Figma's light layers, each colour paired with its dark value in `light-dark()`,
- * behind a hairline ring that is transparent in light; levels 3 and 4 also take the inner highlight
- * (gap report C §2.3, plan §7.5).
+ * `elevation.<n>`: Figma's light layers, each colour paired with its dark value in `light-dark()`
+ * (one colour when the two are equal), behind a hairline ring that is transparent in light; levels 3
+ * and 4 also take the inner highlight (gap report C §2.3, plan §7.5).
+ *
+ * A flat elevation, one whose every layer is fully transparent, takes neither: the ring stands in for
+ * shadows that dark surfaces swallow, and a layer at alpha 0 paints nothing at any size, in light or
+ * in dark (its dark alpha is 6 × 0). Figma's `Elevation/0 Flat` is such a style since 2026-10-14
+ * (one invisible drop shadow). The rule reads the layers, not the level, so a visible level 0 would
+ * take the ring like any raised surface.
  */
-function elevation(id: string, layers: ShadowValueNormalized[]): string {
+export function elevation(id: string, layers: ShadowValueNormalized[]): string {
   const level = Number(id.split('.')[1]);
   const themed = layers.map((layer) => {
     const alpha = Math.min(DARK_SHADOW_MAX, round(layer.color.alpha * DARK_SHADOW_FACTOR, 3));
+    const light = colorCss(layer.color);
     const dark = translucent({ colorSpace: 'srgb', components: [0, 0, 0], alpha }) ?? '#000';
-    return shadowLayer(layer, `light-dark(${colorCss(layer.color)}, ${dark})`);
+    return shadowLayer(layer, light === dark ? light : `light-dark(${light}, ${dark})`);
   });
+  if (layers.every((layer) => layer.color.alpha === 0)) return themed.join(', ') || NO_SHADOW;
   const ring = `0 0 0 1px var(${variableName({ id: 'color.elevation.ring' })})`;
   const highlight = `inset 0 1px 0 0 var(${variableName({ id: 'color.elevation.highlight' })})`;
   return [...(level >= 3 ? [highlight] : []), ring, ...themed].join(', ');

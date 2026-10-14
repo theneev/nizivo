@@ -181,8 +181,10 @@ and `--nz-font-label-s`, and a `--nz-tracking-<style>` for each of the 20.
    (the CLI's layer added to the renamed export). Keep the empty-effects filter in `raw.ts` until a
    fresh export proves it unnecessary. When the token lands:
    - `test/normalize.test.ts` expects elevation keys `1`–`4` and 7 effect tokens;
-   - `elevation()` in `build/css.ts` puts the `--nz-elevation-ring` layer on every `elevation.<n>`,
-     so `--nz-elevation-0` would draw a 1 px ring in dark (white at 8 %); decide whether level 0
-     skips it;
+   - ~~`elevation()` in `build/css.ts` puts the `--nz-elevation-ring` layer on every
+     `elevation.<n>`, so `--nz-elevation-0` would draw a 1 px ring in dark (white at 8 %).~~
+     **Decided 2026-10-14:** an elevation whose every layer has alpha 0 takes no ring and no
+     highlight, so the token builds as `--nz-elevation-0: 0 0 0 0 transparent`
+     (`test/elevation.test.ts`; `BUILD.md`, flat elevations);
    - the `tokens.css`, `tailwind.css` (`--shadow-nz-0`) and `contract.json` goldens gain the
      token.
