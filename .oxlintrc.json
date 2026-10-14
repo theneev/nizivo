@@ -41,6 +41,10 @@
                 "message": "Only src/_engines/** may import the behaviour engine (ARCHITECTURE.md §4.1 L4, §9.2)."
               },
               {
+                "group": ["@nizivo/icons", "@nizivo/icons/**", "lucide*", "lucide*/**"],
+                "message": "Core imports no icon package: inline a glyph in _internal/glyphs.tsx behind a slot prop, and let consumers pass @nizivo/icons (ARCHITECTURE.md §4.1 L6, §14.2)."
+              },
+              {
                 "group": ["gsap", "gsap/**", "@gsap/**"],
                 "message": "GSAP is banned: its licence is not OSI-approved (ARCHITECTURE.md §19.3)."
               }
@@ -56,6 +60,10 @@
           "error",
           {
             "patterns": [
+              {
+                "group": ["@nizivo/icons", "@nizivo/icons/**", "lucide*", "lucide*/**"],
+                "message": "Core imports no icon package (ARCHITECTURE.md §4.1 L6, §14.2)."
+              },
               {
                 "group": ["gsap", "gsap/**", "@gsap/**"],
                 "message": "GSAP is banned: its licence is not OSI-approved (ARCHITECTURE.md §19.3)."

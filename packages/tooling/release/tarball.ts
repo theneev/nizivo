@@ -23,6 +23,12 @@ export const POLICIES: Record<string, TarballPolicy> = {
     optional: ['README.md'],
     dist: ['.js', '.d.ts', '.css', '.json'],
   },
+  '@nizivo/icons': {
+    // THIRD_PARTY_NOTICES: Lucide ISC + Feather MIT, Simple Icons CC0 and the Instagram rule (§14.2).
+    required: ['LICENSE', 'THIRD_PARTY_NOTICES'],
+    optional: ['README.md'],
+    dist: ['.js', '.d.ts'],
+  },
 };
 
 /** npm lifecycle scripts that run on a consumer's machine or around a publish. */

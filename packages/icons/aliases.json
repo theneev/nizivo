@@ -1,0 +1,4 @@
+{
+  "$comment": "Old export name (kebab-case) → current Lucide name. When a Lucide upgrade renames or removes an icon that @nizivo/icons has shipped, add its old name here so the export keeps working (ARCHITECTURE.md §14.2); test/generate.test.ts fails on a shipped name that disappears. Empty at 0.1.0: Lucide's own deprecated aliases are not shipped, so the public surface starts at Lucide's current names.",
+  "icons": {}
+}

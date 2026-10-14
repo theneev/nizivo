@@ -1,0 +1,6 @@
+# Written by scripts/generate.ts on every build, typecheck and test (ARCHITECTURE.md §14.2).
+# manifest.json and THIRD_PARTY_NOTICES are generated too, but committed.
+/src/index.ts
+/src/icons/
+/src/brands/
+/src/.generated

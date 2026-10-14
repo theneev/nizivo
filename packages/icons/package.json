@@ -18,7 +18,8 @@
     "directory": "packages/icons"
   },
   "files": [
-    "dist"
+    "dist",
+    "THIRD_PARTY_NOTICES"
   ],
   "type": "module",
   "sideEffects": false,
@@ -27,28 +28,48 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
+    "./brands/*": {
+      "types": "./dist/brands/*.d.ts",
+      "default": "./dist/brands/*.js"
+    },
+    "./*": {
+      "types": "./dist/icons/*.d.ts",
+      "default": "./dist/icons/*.js"
+    },
     "./package.json": "./package.json"
   },
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
-    "build": "tsdown",
-    "typecheck": "tsc --noEmit -p .",
-    "test": "vitest run --fsModuleCachePath node_modules/.vitest-cache --passWithNoTests"
+    "generate": "node scripts/generate.ts",
+    "build": "node scripts/generate.ts && tsdown",
+    "typecheck": "node scripts/generate.ts && tsc --noEmit -p . && tsc --noEmit -p scripts && tsc --noEmit -p test",
+    "test": "node scripts/generate.ts && vitest run --fsModuleCachePath node_modules/.vitest-cache"
   },
   "devDependencies": {
     "@nizivo/tsconfig": "workspace:*",
     "@nizivo/tsdown-preset": "workspace:*",
+    "@types/node": "catalog:",
     "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
     "lucide-static": "catalog:",
     "react": "catalog:",
+    "react-dom": "catalog:",
+    "simple-icons": "catalog:",
+    "svgo": "catalog:",
     "tsdown": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"
   },
   "peerDependencies": {
+    "@types/react": "^19.2.0",
     "react": "^19.2.0"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    }
   },
   "engines": {
     "node": ">=22.12"

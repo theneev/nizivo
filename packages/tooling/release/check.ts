@@ -1,5 +1,6 @@
-// `pnpm check:release`: release hygiene on the PACKED tarballs of @nizivo/tokens and @nizivo/react
-// (ARCHITECTURE.md §18.1 "Package correctness", §19.3, §21.1 exit criterion 3). Run after `pnpm build`.
+// `pnpm check:release`: release hygiene on the PACKED tarballs of @nizivo/tokens, @nizivo/react and
+// @nizivo/icons (ARCHITECTURE.md §18.1 "Package correctness", §19.3, §21.1 exit criterion 3). Run
+// after `pnpm build`.
 //
 //   node packages/tooling/release/check.ts [--keep]
 //
@@ -24,6 +25,9 @@ import { checkTarball } from './tarball.ts';
 const PACKAGES = [
   { name: '@nizivo/tokens', dir: 'packages/tokens', partsOnly: false },
   { name: '@nizivo/react', dir: 'packages/react', partsOnly: true },
+  // ~1,900 icon modules behind two wildcard subpaths (`./*`, `./brands/*`). attw checks only '.':
+  // it does not expand wildcard subpaths, so their types are not covered here (§14.2).
+  { name: '@nizivo/icons', dir: 'packages/icons', partsOnly: false },
 ];
 const ATTW = join(import.meta.dirname, '..', 'node_modules', '.bin', 'attw');
 

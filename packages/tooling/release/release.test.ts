@@ -285,6 +285,40 @@ describe('tarball allowlist', () => {
     ).toEqual(['THIRD_PARTY_NOTICES: not in the allowlist']);
   });
 
+  test('icons ships JavaScript, declarations and its notices only', () => {
+    const icons = [
+      'package/package.json',
+      'package/LICENSE',
+      'package/THIRD_PARTY_NOTICES',
+      'package/dist/index.js',
+      'package/dist/index.d.ts',
+      'package/dist/_internal/icon.js',
+      'package/dist/icons/calendar.js',
+      'package/dist/icons/calendar.d.ts',
+      'package/dist/brands/instagram.js',
+    ];
+    const manifest = { name: '@nizivo/icons' };
+    expect(checkTarball('@nizivo/icons', icons, manifest, () => 1)).toEqual([]);
+    expect(
+      checkTarball(
+        '@nizivo/icons',
+        [
+          ...icons.filter((entry) => entry !== 'package/THIRD_PARTY_NOTICES'),
+          'package/dist/icons.json',
+          'package/dist/sprite.svg',
+          'package/src/icons/calendar.ts',
+        ],
+        manifest,
+        () => 1,
+      ),
+    ).toEqual([
+      'dist/icons.json: file type not allowed',
+      'dist/sprite.svg: file type not allowed',
+      'src/icons/calendar.ts: not in the allowlist',
+      'THIRD_PARTY_NOTICES: missing',
+    ]);
+  });
+
   test('the published package.json runs no lifecycle script and keeps no repo-local protocol', () => {
     expect(
       checkTarball(
