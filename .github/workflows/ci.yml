@@ -56,6 +56,9 @@ jobs:
       - name: Build
         run: pnpm build
 
+      - name: Token a11y gate, never cached (override and proposal expiry is checked against today)
+        run: pnpm check:a11y
+
       - name: Dist seam checks (directives, namespace objects, .d.ts walk from the exports map)
         run: pnpm test:dist
 

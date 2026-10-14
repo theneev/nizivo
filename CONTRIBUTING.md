@@ -20,17 +20,18 @@ COREPACK_ENABLE_DOWNLOAD_PROMPT=0 corepack pnpm@12.11.2 install
 
 ## Everyday commands
 
-| Command              | What it does                                                                                                                                      |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `pnpm build`         | Builds every package with tsdown (Turborepo, local cache only)                                                                                    |
-| `pnpm typecheck`     | `tsc --noEmit` with TypeScript 7 in every package                                                                                                 |
-| `pnpm lint`          | oxlint, the oxfmt check, then stylelint on component CSS                                                                                          |
-| `pnpm test`          | Vitest in every package                                                                                                                           |
-| `pnpm format`        | Formats the repo with oxfmt                                                                                                                       |
-| `pnpm changeset`     | Adds a changeset (see below)                                                                                                                      |
-| `pnpm nz gen`        | Regenerates barrels, `engine.ts`, exports and the component map from `component.json` files                                                       |
-| `pnpm check:release` | After a build: packs `@nizivo/tokens` and `@nizivo/react`, then runs the tarball allowlist, publint, attw and the directive guard on the tarballs |
-| `pnpm check`         | Everything CI runs, in CI's order: frozen install, typecheck, lint, `nz gen --check`, test, build, then the built-output checks                   |
+| Command              | What it does                                                                                                                                                                                                                         |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `pnpm build`         | Builds every package (Turborepo, local cache only): tsdown everywhere; then for `@nizivo/tokens` the Terrazzo build and the contrast check, and for `@nizivo/react` the Lightning CSS build with its guard and the emitted-CSS check |
+| `pnpm typecheck`     | `tsc --noEmit` with TypeScript 7 in every package                                                                                                                                                                                    |
+| `pnpm lint`          | oxlint, the oxfmt check, then stylelint on component CSS                                                                                                                                                                             |
+| `pnpm test`          | Vitest in every package                                                                                                                                                                                                              |
+| `pnpm format`        | Formats the repo with oxfmt                                                                                                                                                                                                          |
+| `pnpm changeset`     | Adds a changeset (see below)                                                                                                                                                                                                         |
+| `pnpm nz gen`        | Regenerates barrels, `engine.ts`, exports, the component map and the a11y floor in `packages/react/styles/base.css` from `component.json` files                                                                                      |
+| `pnpm check:a11y`    | After a build: the token contrast matrix and the override and proposal checks, never cached, so expiry is checked against today's date                                                                                               |
+| `pnpm check:release` | After a build: packs `@nizivo/tokens` and `@nizivo/react`, then runs the tarball allowlist, publint, attw and the directive guard on the tarballs                                                                                    |
+| `pnpm check`         | Everything CI runs, in CI's order: frozen install, typecheck, lint, `nz gen --check`, test, build, `check:a11y`, then the built-output checks                                                                                        |
 
 CI runs the same steps as `pnpm check` on every pull request. GitHub Actions is switched off for now, so run `pnpm check` before you push.
 
