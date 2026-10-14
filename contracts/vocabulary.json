@@ -1,5 +1,5 @@
 {
-  "$comment": "The single source of the data-* and data-nz-* vocabulary (ARCHITECTURE.md §8.2, §8.3). It feeds stateAttrs(), the stylelint allowlist, the emitted-CSS check, engineDom() filtering and the docs page. Semver'd: removing or renaming an entry or a value is breaking. An entry with \"presence\": true is a presence attribute (data-open=\"\"); otherwise \"values\" lists the allowed values. \"values\": null means the value set is defined per component manifest. Engine sources (for example React Aria render state) live in each adapter, not here.",
+  "$comment": "The single source of the data-* and data-nz-* vocabulary (ARCHITECTURE.md §8.2, §8.3). It feeds stateAttrs(), the stylelint allowlist, the emitted-CSS check, the conformance check that parts carry nothing outside it, and the docs page. engineDom() does not read it: it drops every engine data-* attribute except those in each adapter's dom-allowlist.json (ARCHITECTURE.md §9.3 rule 6). Semver'd: removing or renaming an entry or a value is breaking. An entry with \"presence\": true is a presence attribute (data-open=\"\"); otherwise \"values\" lists the allowed values. \"values\": null means the value set is defined per component manifest. Engine sources (for example React Aria render state) live in each adapter, not here.",
   "version": 1,
   "state": [
     {
