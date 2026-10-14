@@ -1,0 +1,121 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/select.css (ARCHITECTURE.md §8.2–§8.4, §12.1). Skeleton: shows the contract
+   (privates, hooks read once, state from the data-* vocabulary); the full visual pass lands later. */
+@layer nz.components {
+  .nz-select-trigger {
+    --_nz-select-height: var(--nz-size-control-md);
+    --_nz-select-border: var(--nz-border-control);
+
+    display: inline-flex;
+    align-items: center;
+    gap: var(--nz-space-2);
+    block-size: var(--nz-select-height, var(--_nz-select-height));
+    padding-inline: var(--nz-space-3);
+    border: var(--nz-border-width-default) solid var(--nz-select-border, var(--_nz-select-border));
+    border-radius: var(--nz-select-radius, var(--nz-radius-md));
+    background: var(--nz-select-bg, var(--nz-bg-surface));
+    color: var(--nz-text-primary);
+    font: var(--nz-font-label-m);
+
+    @media (hover: hover) {
+      &:hover:not([data-disabled]) {
+        border-color: var(--nz-select-border-hover, var(--nz-border-strong));
+      }
+    }
+
+    &[data-disabled] {
+      background: var(--nz-bg-disabled);
+      color: var(--nz-text-disabled);
+      cursor: not-allowed;
+    }
+
+    &[data-size='sm'] {
+      --_nz-select-height: var(--nz-size-control-sm);
+    }
+
+    &[data-size='lg'] {
+      --_nz-select-height: var(--nz-size-control-lg);
+    }
+  }
+
+  .nz-select-value {
+    flex: 1;
+    text-align: start;
+
+    &[data-placeholder] {
+      color: var(--nz-text-tertiary);
+    }
+  }
+
+  .nz-select-icon,
+  .nz-select-chevron {
+    display: inline-flex;
+    /* internal glyphs are 1em: size them to the 16 px icon slot, not to the value font */
+    font-size: var(--nz-size-icon-sm);
+    color: var(--nz-text-secondary);
+  }
+
+  /* one overlay band, ordered by DOM (§12.1 L1) */
+  .nz-select-popup {
+    z-index: var(--nz-z-overlay);
+    min-inline-size: var(--nz-trigger-width);
+    overflow: auto;
+    border-radius: var(--nz-radius-md);
+    background: var(--nz-bg-surface-raised);
+    box-shadow: var(--nz-elevation-4);
+    transform-origin: var(--nz-transform-origin);
+    transition: opacity var(--nz-duration-fast) var(--nz-easing-enter);
+
+    &[data-entering] {
+      opacity: 0;
+    }
+
+    &[data-exiting] {
+      opacity: 0;
+      transition: opacity var(--nz-duration-fade) var(--nz-easing-exit);
+    }
+  }
+
+  .nz-select-list {
+    padding: var(--nz-space-1-5);
+    outline: none;
+  }
+
+  .nz-select-item {
+    padding-block: var(--nz-space-2);
+    padding-inline: var(--nz-space-3);
+    border-radius: var(--nz-radius-sm);
+    cursor: default;
+
+    &[data-highlighted] {
+      background: var(--nz-bg-hover);
+    }
+
+    &[data-selected] {
+      font-weight: 600;
+    }
+
+    &[data-disabled] {
+      color: var(--nz-text-disabled);
+    }
+  }
+
+  .nz-select-group-label {
+    padding-inline: var(--nz-space-3);
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-label-s);
+  }
+
+  .nz-select-separator {
+    block-size: 1px;
+    margin-block: var(--nz-space-1-5);
+    background: var(--nz-border-subtle);
+  }
+
+  @media (forced-colors: active) {
+    .nz-select-popup {
+      border: 1px solid CanvasText;
+    }
+  }
+}

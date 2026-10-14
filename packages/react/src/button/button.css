@@ -1,0 +1,150 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/button.css (ARCHITECTURE.md §10.2). Variants and sizes set ONLY --_nz-* privates;
+   public --nz-button-* hooks are read once, at the property, and never assigned here. */
+@layer nz.components {
+  .nz-button {
+    /* defaults = Figma Secondary / Md */
+    --_nz-button-bg: var(--nz-bg-surface);
+    --_nz-button-bg-hover: var(--nz-bg-hover);
+    --_nz-button-bg-pressed: var(--nz-bg-pressed);
+    --_nz-button-fg: var(--nz-text-primary);
+    --_nz-button-border: var(--nz-border-default);
+    --_nz-button-border-hover: var(--nz-border-strong);
+    --_nz-button-shadow: none;
+    --_nz-button-height: var(--nz-size-control-md);
+    --_nz-button-padding-inline: var(--nz-space-4);
+    --_nz-button-gap: var(--nz-space-2);
+    --_nz-button-radius: var(--nz-radius-md);
+    --_nz-button-font: var(--nz-font-label-m);
+    --_nz-button-icon-size: var(--nz-size-icon-sm);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--nz-button-gap, var(--_nz-button-gap));
+    block-size: var(--nz-button-height, var(--_nz-button-height));
+    padding-inline: var(--nz-button-padding-inline, var(--_nz-button-padding-inline));
+    border: var(--nz-border-width-default) solid var(--nz-button-border, var(--_nz-button-border));
+    border-radius: var(--nz-button-radius, var(--_nz-button-radius));
+    background: var(--nz-button-bg, var(--_nz-button-bg));
+    color: var(--nz-button-fg, var(--_nz-button-fg));
+    box-shadow: var(--nz-button-shadow, var(--_nz-button-shadow));
+    font: var(--nz-button-font, var(--_nz-button-font));
+    cursor: pointer;
+    transition:
+      background-color var(--nz-duration-fast) var(--nz-easing-standard),
+      border-color var(--nz-duration-fast) var(--nz-easing-standard),
+      scale var(--nz-duration-instant) var(--nz-easing-standard);
+
+    @media (hover: hover) {
+      &:hover:not(:disabled, [data-disabled], [aria-disabled='true']) {
+        background: var(--nz-button-bg-hover, var(--_nz-button-bg-hover));
+        border-color: var(--nz-button-border-hover, var(--_nz-button-border-hover));
+      }
+    }
+
+    &:active:not(:disabled, [data-disabled], [aria-disabled='true']) {
+      background: var(--nz-button-bg-pressed, var(--_nz-button-bg-pressed));
+      border-color: var(--nz-button-border-hover, var(--_nz-button-border-hover));
+      scale: var(--nz-scale-press);
+    }
+
+    /* the 2 px outline lives in nz.base; this adds only the decorative halo */
+    &:focus-visible {
+      box-shadow:
+        var(--nz-button-shadow, var(--_nz-button-shadow)),
+        0 0 0 calc(var(--nz-border-width-focus) + 4px) var(--nz-focus-halo);
+    }
+
+    &:is(:disabled, [data-disabled]) {
+      background: var(--nz-button-bg-disabled, var(--nz-bg-disabled));
+      color: var(--nz-button-fg-disabled, var(--nz-text-disabled));
+      border-color: var(--nz-border-subtle);
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+
+    &[data-pending] {
+      cursor: progress;
+    }
+
+    &[data-full-width] {
+      inline-size: 100%;
+    }
+  }
+
+  .nz-button[data-variant='primary'] {
+    --_nz-button-bg: var(--nz-bg-brand);
+    --_nz-button-bg-hover: var(--nz-bg-brand-hover);
+    --_nz-button-bg-pressed: var(--nz-bg-brand-pressed);
+    --_nz-button-fg: var(--nz-text-on-brand);
+    --_nz-button-border: transparent;
+    --_nz-button-border-hover: transparent;
+    --_nz-button-shadow: var(--nz-elevation-button);
+  }
+
+  .nz-button[data-variant='tertiary'] {
+    --_nz-button-bg: transparent;
+    --_nz-button-border: transparent;
+    --_nz-button-border-hover: transparent;
+  }
+
+  .nz-button[data-variant='critical'] {
+    --_nz-button-bg: var(--nz-bg-critical);
+    --_nz-button-bg-hover: var(--nz-bg-critical-hover);
+    --_nz-button-bg-pressed: var(--nz-bg-critical-hover);
+    --_nz-button-fg: var(--nz-text-on-critical);
+    --_nz-button-border: transparent;
+    --_nz-button-border-hover: transparent;
+  }
+
+  /* "reserved for AI features": docs guidance, not enforced */
+  .nz-button[data-variant='accent'] {
+    --_nz-button-bg: var(--nz-bg-accent);
+    --_nz-button-bg-hover: var(--nz-bg-accent-hover);
+    --_nz-button-bg-pressed: var(--nz-bg-accent-hover);
+    --_nz-button-fg: var(--nz-text-on-accent);
+    --_nz-button-border: transparent;
+    --_nz-button-border-hover: transparent;
+  }
+
+  .nz-button[data-size='sm'] {
+    --_nz-button-height: var(--nz-size-control-sm);
+    --_nz-button-padding-inline: var(--nz-space-3);
+    --_nz-button-gap: var(--nz-space-1-5);
+    --_nz-button-radius: var(--nz-radius-sm);
+  }
+
+  .nz-button[data-size='lg'] {
+    --_nz-button-height: var(--nz-size-control-lg);
+    --_nz-button-padding-inline: var(--nz-space-5);
+    --_nz-button-font: var(--nz-font-label-l);
+    --_nz-button-icon-size: var(--nz-size-icon-md);
+  }
+
+  .nz-button-icon {
+    display: inline-flex;
+    inline-size: var(--_nz-button-icon-size);
+    block-size: var(--_nz-button-icon-size);
+    /* internal glyphs are 1em: size them to the slot, not to the label font */
+    font-size: var(--_nz-button-icon-size);
+  }
+
+  /* the pending spinner keeps turning under reduced motion: it is essential feedback (§15.1) */
+  .nz-button[data-pending] .nz-glyph-spinner {
+    animation: nz-button-spin var(--nz-duration-spin) linear infinite;
+  }
+
+  @keyframes nz-button-spin {
+    to {
+      rotate: 1turn;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .nz-button {
+      border-color: ButtonText;
+    }
+  }
+}

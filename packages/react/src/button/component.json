@@ -1,0 +1,25 @@
+{
+  "name": "button",
+  "status": "stable",
+  "tier": "server",
+  "parts": [],
+  "interactive": ["root"],
+  "focusTarget": "self",
+  "stateIndicator": [],
+  "cssDeps": ["base"],
+  "variants": {
+    "variant": ["primary", "secondary", "tertiary", "critical", "accent"],
+    "size": ["sm", "md", "lg"]
+  },
+  "figma": {
+    "canonical": ["7275:11244"],
+    "ghosts": ["744:263"],
+    "variantsSeen": ["744:70", "744:105", "744:175", "744:210", "744:77", "744:112", "744:217"],
+    "related": []
+  },
+  "budget": {
+    "measuredKB": 0,
+    "limitKB": 0,
+    "source": "server-safe, no directive: 0 KB client JS under RSC (spike S2c)"
+  }
+}

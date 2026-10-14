@@ -1,0 +1,85 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/dialog.css (ARCHITECTURE.md §10.4, §12.1). Skeleton: the full visual pass lands later. */
+@layer nz.components {
+  /* never transformed and never clipping: it is the nested-portal container */
+  .nz-dialog-positioner {
+    position: fixed;
+    inset: 0;
+    z-index: var(--nz-z-overlay);
+    display: grid;
+    place-items: center;
+    padding: var(--nz-space-8);
+  }
+
+  /* "the backdrop only fades" */
+  .nz-dialog-backdrop {
+    position: fixed;
+    inset: 0;
+    background: var(--nz-bg-scrim);
+    transition: opacity var(--nz-duration-base) var(--nz-easing-enter);
+
+    &[data-entering] {
+      opacity: 0;
+    }
+
+    &[data-exiting] {
+      opacity: 0;
+      transition: opacity var(--nz-duration-fade) var(--nz-easing-exit);
+    }
+  }
+
+  .nz-dialog-popup {
+    --_nz-dialog-width: 30rem; /* Figma Modal 7275:15139: 480 px */
+
+    position: relative; /* above the backdrop sibling */
+    inline-size: min(var(--nz-dialog-width, var(--_nz-dialog-width)), 100%);
+    max-block-size: calc(100dvh - 2 * var(--nz-space-8));
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--nz-dialog-radius, var(--nz-radius-2xl));
+    background: var(--nz-dialog-bg, var(--nz-bg-surface-raised));
+    box-shadow: var(--nz-elevation-4);
+    transition:
+      scale var(--nz-duration-spring) var(--nz-easing-spring),
+      opacity var(--nz-duration-spring) var(--nz-easing-enter);
+
+    &[data-entering] {
+      opacity: 0;
+      scale: var(--nz-scale-enter);
+    }
+
+    &[data-exiting] {
+      opacity: 0;
+      transition: opacity var(--nz-duration-fade) var(--nz-easing-exit);
+    }
+
+    &[data-size='sm'] {
+      --_nz-dialog-width: 25rem; /* 400 px, provisional */
+    }
+
+    &[data-size='lg'] {
+      --_nz-dialog-width: 40rem; /* 640 px, provisional */
+    }
+  }
+
+  /* clipping lives here, not on the positioner (Figma clips at radius 28) */
+  .nz-dialog-content {
+    display: flex;
+    flex-direction: column;
+    min-block-size: 0;
+    overflow: clip;
+    border-radius: inherit;
+  }
+
+  /* the only scroller */
+  .nz-dialog-body {
+    overflow: auto;
+  }
+
+  @media (forced-colors: active) {
+    .nz-dialog-popup {
+      border: 1px solid CanvasText;
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "$comment": "Engine data-* attributes that React Aria 1.22.1 / react-aria 3.53.1 read back from the DOM (selectors, dataset). engineDom() keeps only these; every other engine data-* is dropped (ARCHITECTURE.md §9.3 rule 6). Undocumented on purpose: no shipped CSS or docs may reference them.",
+  "attributes": [
+    "data-react-aria-top-layer",
+    "data-live-announcer",
+    "data-key",
+    "data-collection",
+    "data-ismodal",
+    "data-overlay-container",
+    "data-react-aria-prevent-focus",
+    "data-react-aria-pressable",
+    "data-href",
+    "data-target",
+    "data-rel",
+    "data-download",
+    "data-ping",
+    "data-referrer-policy"
+  ]
+}

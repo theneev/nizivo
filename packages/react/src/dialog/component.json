@@ -1,0 +1,24 @@
+{
+  "name": "dialog",
+  "status": "stable",
+  "tier": "engine",
+  "engine": "react-aria",
+  "overlay": true,
+  "parts": ["Root", "Trigger", "Popup", "Title", "Description", "Body", "Footer", "Close"],
+  "interactive": ["trigger", "close"],
+  "focusTarget": "self",
+  "stateIndicator": [],
+  "cssDeps": ["base"],
+  "variants": { "size": ["sm", "md", "lg"] },
+  "figma": {
+    "canonical": ["7275:15139"],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": []
+  },
+  "budget": {
+    "measuredKB": 28.1,
+    "limitKB": 31,
+    "source": "r3, RAC Dialog + Modal, all locales (ARCHITECTURE.md §17.1)"
+  }
+}

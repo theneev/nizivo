@@ -165,6 +165,12 @@
       "values": null,
       "on": "component roots",
       "meaning": "The tone prop; values in each component manifest"
+    },
+    {
+      "name": "data-full-width",
+      "presence": true,
+      "on": "Button",
+      "meaning": "The fullWidth prop: the control fills the inline size of its container"
     }
   ],
   "local": [

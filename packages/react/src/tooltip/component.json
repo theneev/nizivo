@@ -1,0 +1,24 @@
+{
+  "name": "tooltip",
+  "status": "stable",
+  "tier": "engine",
+  "engine": "react-aria",
+  "overlay": true,
+  "parts": ["Root", "Trigger", "Popup"],
+  "interactive": ["trigger"],
+  "focusTarget": "self",
+  "stateIndicator": [],
+  "cssDeps": ["base"],
+  "variants": {},
+  "figma": {
+    "canonical": [],
+    "ghosts": ["746:262"],
+    "variantsSeen": [],
+    "related": []
+  },
+  "budget": {
+    "measuredKB": 14.3,
+    "limitKB": 16,
+    "source": "r3 §3.1, RAC Tooltip, all locales (ARCHITECTURE.md §17.1)"
+  }
+}

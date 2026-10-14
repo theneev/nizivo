@@ -1,0 +1,54 @@
+// NO directive. Used by server-safe AND client parts (ARCHITECTURE.md §10.1).
+// It must never import react-aria: those modules import 'client-only', which throws under react-server.
+import { cloneElement, createElement, isValidElement, type ReactElement } from 'react';
+import { mergeProps } from './merge-props';
+
+/**
+ * Composition without `asChild` or a polymorphic `as`:
+ * - element form: `render={<Link href="/orders" />}`, serializable from Server Components;
+ * - function form: `render={(props, state) => <a {...props} />}`, client code only.
+ */
+export type RenderProp<S> =
+  | ReactElement
+  | ((props: Record<string, unknown>, state: S) => ReactElement);
+
+/**
+ * The presentational attributes (the `presentational` group of contracts/vocabulary.json). They
+ * describe the part, so when a part renders through an element, the part's values win. That element
+ * may be a server Button that RSC has already rendered to a host `<button data-slot="button">`.
+ */
+export const PART_OWNED: readonly string[] = [
+  'data-slot',
+  'data-variant',
+  'data-size',
+  'data-tone',
+  'data-full-width',
+];
+
+/**
+ * Renders `tag` with `props`, or the consumer's element/function with `props` merged in (ours first).
+ * Element form: `mergeProps` semantics (the element's props win), except that the part's own
+ * `PART_OWNED` attributes win over the element's.
+ */
+export function renderElement<S>(
+  tag: string,
+  render: RenderProp<S> | undefined,
+  state: S,
+  props: Record<string, unknown>,
+): ReactElement {
+  if (typeof render === 'function') return render(props, state);
+  if (isValidElement<Record<string, unknown>>(render)) {
+    const merged = mergeProps(props, render.props);
+    for (const name of PART_OWNED) if (props[name] !== undefined) merged[name] = props[name];
+    return cloneElement(render, merged);
+  }
+  return createElement(tag, props);
+}
+
+/** Normalises any render prop to the function form that engine adapters receive. */
+export function toRenderFn<S>(
+  render: RenderProp<S> | undefined,
+  tag: string,
+): (props: Record<string, unknown>, state: S) => ReactElement {
+  return (props, state) => renderElement(tag, render, state, props);
+}
