@@ -20,7 +20,7 @@
 
     @media (hover: hover) {
       &:hover:not([data-disabled]) {
-        border-color: var(--nz-select-border-hover, var(--nz-border-strong));
+        border-color: var(--nz-select-border-hover, var(--nz-border-control-hover));
       }
     }
 
