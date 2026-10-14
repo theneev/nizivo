@@ -4,6 +4,6 @@ Nizivo adopts the [Contributor Covenant, version 3.0](https://www.contributor-co
 
 ## Reporting
 
-Report unacceptable behaviour to the project maintainers at TODO(maintainer): contact email. Reports are handled in confidence.
+Report unacceptable behaviour to the project maintainers at [theneevteam@gmail.com](mailto:theneevteam@gmail.com). Reports are handled in confidence.
 
 Maintainers enforce the code of conduct following the Contributor Covenant's enforcement guidelines.
