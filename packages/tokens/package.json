@@ -47,12 +47,15 @@
     "tokens:dry-run": "tz build -c build/terrazzo.config.ts"
   },
   "devDependencies": {
+    "@nizivo/tooling": "workspace:*",
     "@nizivo/tsconfig": "workspace:*",
     "@nizivo/tsdown-preset": "workspace:*",
     "@terrazzo/cli": "catalog:",
+    "@terrazzo/parser": "catalog:",
     "@terrazzo/plugin-css": "catalog:",
     "@terrazzo/token-tools": "catalog:",
     "@types/node": "catalog:",
+    "lightningcss": "catalog:",
     "tokens-bruecke": "catalog:",
     "tsdown": "catalog:",
     "typescript": "catalog:",

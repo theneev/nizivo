@@ -16,10 +16,12 @@
     "test": "vitest run --fsModuleCachePath node_modules/.vitest-cache"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "catalog:",
     "@nizivo/tsconfig": "workspace:*",
     "@types/node": "catalog:",
     "@typescript/typescript6": "catalog:",
     "lightningcss": "catalog:",
+    "publint": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"
   }

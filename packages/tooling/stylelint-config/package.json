@@ -10,9 +10,13 @@
     "./package.json": "./package.json"
   },
   "dependencies": {
+    "@nizivo/tokens": "workspace:*",
+    "postcss-selector-parser": "catalog:",
+    "postcss-value-parser": "catalog:",
     "stylelint-use-logical": "catalog:"
   },
   "devDependencies": {
+    "postcss": "catalog:",
     "stylelint": "catalog:"
   },
   "peerDependencies": {

@@ -35,6 +35,10 @@ catalog:
   oxfmt: 0.73.0
   stylelint: 17.16.0
   stylelint-use-logical: 2.1.3
+  # Parsers for the stylelint contract rules (the versions stylelint 17.16.0 already installs)
+  postcss: 8.5.29
+  postcss-selector-parser: 7.1.6
+  postcss-value-parser: 4.2.0
 
   # Tests
   vitest: 5.0.4
@@ -44,9 +48,13 @@ catalog:
 
   # Release
   '@changesets/cli': 3.0.3
+  # Package correctness on packed tarballs (§18.1)
+  publint: 0.3.25
+  '@arethetypeswrong/cli': 0.18.5
 
   # Tokens
   '@terrazzo/cli': 2.8.0
+  '@terrazzo/parser': 2.8.0
   '@terrazzo/plugin-css': 2.8.0
   '@terrazzo/token-tools': 2.8.0
   tokens-bruecke: 3.18.0
