@@ -23,6 +23,7 @@
     "@typescript/typescript6": "catalog:",
     "lightningcss": "catalog:",
     "publint": "catalog:",
+    "ts-morph": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"
   }

@@ -40,7 +40,7 @@ CI runs the same steps as `pnpm check` on every pull request. GitHub Actions is 
 The plan in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) is the source of truth. The ones you will meet first:
 
 - **Dependencies.** Shared versions live in the `catalog:` in [`pnpm-workspace.yaml`](pnpm-workspace.yaml). Tooling is pinned exactly; the React Aria engine uses caret ranges. Any new runtime dependency of a published package needs an RFC (§19.3).
-- **Supply chain.** pnpm refuses versions younger than 3 days (`minimumReleaseAge`), trust downgrades (`trustPolicy: no-downgrade`) and git or tarball sub-dependencies (`blockExoticSubdeps`). No dependency runs install scripts (`allowBuilds: {}`).
+- **Supply chain.** pnpm refuses versions younger than 3 days (`minimumReleaseAge`), trust downgrades (`trustPolicy: no-downgrade`) and git or tarball sub-dependencies (`blockExoticSubdeps`). No dependency runs install scripts: pnpm stops an install on any unreviewed script, and `allowBuilds` only lists scripts that were reviewed and denied, each at an exact version (`'esbuild@0.28.2': false`), so a new version stops the install again.
 - **Server-first.** `'use client'` goes only in `*.client.tsx` files and `src/_engines/**` (§8.2). Barrels and `*.parts.ts` files carry no directive.
 - **The engine seam.** Only `packages/react/src/_engines/**` may import `react-aria`, `react-aria-components`, `@react-aria/*` or `@react-stately/*`. oxlint fails anything else (§9.2).
 - **CSS.** Classes are `nz-<component>[-<part>]`, custom properties are `--nz-*` or `--_nz-*`, and only logical properties are allowed (§8.2).

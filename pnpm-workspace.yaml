@@ -45,6 +45,26 @@ catalog:
   '@vitest/browser-playwright': 5.0.4
   vitest-browser-react: 2.3.0
   playwright: 1.64.0
+  # Injected into Playwright pages as source; no @axe-core/playwright, which pins axe-core ~4.13 (§18.1)
+  axe-core: 4.14.0
+
+  # Docs site (apps/docs, §18.2): Fumadocs on Next, a static export. fumadocs-ui peers on
+  # fumadocs-core at its own exact version; fumadocs-mdx 15.4.7 peers on fumadocs-core ^16.17.0.
+  next: 16.4.0
+  fumadocs-core: 16.17.2
+  fumadocs-ui: 16.17.2
+  fumadocs-mdx: 15.4.7
+  '@types/mdx': 2.0.14
+  # Frontmatter schemas for fumadocs-mdx (the version fumadocs-mdx itself resolves)
+  zod: 4.6.5
+  # Fumadocs UI's styles are Tailwind CSS v4
+  tailwindcss: 4.3.3
+  '@tailwindcss/postcss': 4.3.3
+  # Geist through next/font/local: the font files ship in the package, so the build stays offline (§14.4)
+  geist: 1.7.2
+
+  # API extraction (packages/tooling/api, §18.2). ts-morph 28 bundles its own TypeScript 6.0.2.
+  ts-morph: 28.0.0
 
   # Release
   '@changesets/cli': 3.0.3
@@ -64,9 +84,24 @@ catalog:
 
 # Supply chain (§19.3). All four keys were accepted by pnpm 12.11.2 on 2026-10-14 (it rejects unknown keys).
 minimumReleaseAge: 4320 # 3 days; keep identical to Renovate's minimumReleaseAge
-allowBuilds: {} # no dependency install scripts run
+# No dependency install script runs: a package version is listed here only to deny its script
+# explicitly. pnpm 12 fails an install on any unlisted script (ERR_PNPM_IGNORED_BUILDS), so a new
+# script, or a new version of a denied package, still stops the install until someone reviews it.
+# Each key names an exact version for that reason: a bare name would deny every future version's
+# script unseen. Never set strictDepBuilds: false, which would skip every future script silently.
+allowBuilds:
+  # esbuild 0.28.2 (fumadocs-mdx > esbuild): its postinstall only validates the platform binary and
+  # swaps the JS bin shim for it. The JS API finds the binary in the optional @esbuild/<platform>
+  # package without it (checked 2026-10-14: build() works with the script never run).
+  'esbuild@0.28.2': false
 trustPolicy: no-downgrade
 blockExoticSubdeps: true
+
+# next lists sharp as optional for next/image optimisation, which apps/docs does not use (images are
+# unoptimized in a static export). sharp pulls in @img/sharp-libvips-* (LGPL-3.0-or-later), outside
+# the §19.3 licence allowlist, so it stays out, as in fixtures/next/pnpm-workspace.yaml.
+ignoredOptionalDependencies:
+  - sharp
 
 # Exact pins required by ARCHITECTURE.md §19.1 that were younger than 3 days on 2026-10-14.
 # Each entry is one exact version, so an upgrade is gated again. Delete this list once every entry is
@@ -88,6 +123,11 @@ minimumReleaseAgeExclude:
   - '@terrazzo/token-tools@2.8.0'
   - '@terrazzo/token-types@2.8.0'
   - lucide-static@1.56.0
+  # fumadocs-core 16.17.2 is pinned by §19.1 (published 2026-10-13T09:46Z); fumadocs-ui 16.17.2
+  # (2026-10-13T09:46Z) is the only fumadocs-ui that accepts it, through its exact peer: a builder
+  # default the maintainer can override (D-p, §23.4).
+  - fumadocs-core@16.17.2
+  - fumadocs-ui@16.17.2
   # Platform binaries. pnpm rejects a version on a name pattern, so these are names only; their
   # versions are fixed exactly by oxlint and oxfmt above, which stay gated.
   - '@oxlint/binding-*'
