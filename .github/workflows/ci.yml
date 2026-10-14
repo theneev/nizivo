@@ -45,8 +45,14 @@ jobs:
       - name: Lint
         run: pnpm lint
 
+      - name: Generated files are current (barrels, engine.ts, exports map, component map)
+        run: pnpm nz gen --check
+
       - name: Test
         run: pnpm test
 
       - name: Build
         run: pnpm build
+
+      - name: Dist seam checks (directives, namespace objects, .d.ts walk from the exports map)
+        run: pnpm --filter @nizivo/react exec vitest run --config test/built/vitest.config.ts
