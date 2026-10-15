@@ -40,6 +40,17 @@ Two week 4 behaviours differ from the APG patterns, and neither is in the Figma 
   right-to-left strip. Reading the direction from the DOM after hydration is open for the
   maintainer.
 
+### Week 5
+
+Week 5 added no component and no Figma facts file, so it has no new value to choose. It removed two
+places where the shipped CSS leaned on a page reset, which the components must not do: Menu rows are
+36 px as Figma draws them with or without a `border-box` reset, and a Button rendered as a link has
+no underline.
+
+## Builder defaults
+
+<BuilderDefaults />
+
 ## Browser degradations
 
 Found on the browser floor (Chrome/Edge 123, Firefox 129, Safari/iOS 17.5).

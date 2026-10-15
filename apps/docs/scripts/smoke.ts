@@ -27,7 +27,8 @@
 //   while open (the page behind is inert, Escape closes it, focus returns to its button);
 // - search finds a component from the static index, offline, and opens it; Escape returns focus to
 //   the button that opened it;
-// - the Deviations page lists the overrides, proposals, D-i and D1/D2.
+// - the Deviations page lists the overrides, proposals, every builder-chosen value and builder
+//   default, and every degradation (D1, D2, …) the plan records.
 // Exit code 1 on any failure.
 /* oxlint-disable no-await-in-loop -- pages and steps run one after another in one browser */
 import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
@@ -819,9 +820,26 @@ async function deviationsChecks(browser: Browser): Promise<void> {
   check(overrides > 0, `deviations: ${overrides} override rows`);
   check(proposals > 0, `deviations: ${proposals} proposal rows`);
   const text = (await page.locator('article').textContent()) ?? '';
+  // Every degradation (§18.2) and every builder default (§23.4) the plan holds is on the page.
+  const plan = readFileSync(join(import.meta.dirname, '../../../docs/ARCHITECTURE.md'), 'utf8');
+  const planDs = [...plan.matchAll(/^\s*- \*\*(D\d+)\.\*\* "/gm)].map((m) => m[1] ?? '');
+  const planDefaults = [...plan.matchAll(/^\| (D-[a-z]+) \|/gm)].map((m) => m[1] ?? '');
+  const missingDs = planDs.filter((d) => !text.includes(d));
   check(
-    ['D1', 'D2', 'D3', 'D4', 'Firefox', 'Mobile Safari 17.5'].every((t) => text.includes(t)),
-    'deviations: degradations D1 to D4 and the Safari 17.5 status are listed',
+    planDs.length >= 4 &&
+      missingDs.length === 0 &&
+      ['Firefox', 'Mobile Safari 17.5'].every((t) => text.includes(t)),
+    `deviations: degradations ${planDs.join(', ')} and the Safari 17.5 status are listed${missingDs.length > 0 ? ` (missing ${missingDs.join(', ')})` : ''}`,
+  );
+  const defaults = await page
+    .locator('table[aria-label="Builder defaults"] tbody th')
+    .allTextContents();
+  const missingDefaults = planDefaults.filter((id) => !defaults.some((t) => t.startsWith(id)));
+  check(
+    planDefaults.length > 0 &&
+      missingDefaults.length === 0 &&
+      defaults.length === planDefaults.length,
+    `deviations: ${defaults.length} of the plan's ${planDefaults.length} builder defaults (§23.4) are listed${missingDefaults.length > 0 ? ` (missing ${missingDefaults.join(', ')})` : ''}`,
   );
   check(text.includes('D-i'), 'deviations: builder decision D-i is listed');
   const chosen = await rows('Builder-chosen values');

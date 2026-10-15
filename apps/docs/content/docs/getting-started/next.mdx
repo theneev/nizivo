@@ -64,9 +64,10 @@ targets to Nizivo's support floor in `package.json`:
 ```
 
 <Callout type="info">
-  Found while building this site with Next 16.4.0, not by the fixture: without these targets,
-  Turbopack rewrote all 68 `light-dark()` values in `tokens.css` into a fallback that ignores nested
-  scopes; with them, it kept all 68. A webpack build (`next build --webpack`) kept them either way.
+  Measured by the fixture with Next 16.4.0: without these targets, Turbopack rewrote all 68
+  `light-dark()` values in `tokens.css` into a fallback that ignores nested scopes, and an explicit
+  `data-nz-theme="dark"` scope painted light; with them, it kept all 68 and every nested scope
+  painted its own theme. A webpack build (`next build --webpack`) kept them either way.
 </Callout>
 
 ## Theme
@@ -90,26 +91,28 @@ called out in the changelog):
 ```tsx title="app/layout.tsx"
 import { ThemeScript } from '@nizivo/react/theme-script';
 
-const theme = `(function(){var t;try{t=localStorage.getItem('theme')}catch(e){}
-if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
-document.documentElement.setAttribute('data-nz-theme',t)})()`;
+const storedTheme = `(function(){try{var t=localStorage.getItem('nz-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-nz-theme',t)}catch(e){}})()`;
 
-<html lang="en" suppressHydrationWarning>
+<html lang="en" data-nz-theme="system" suppressHydrationWarning>
   <head>
-    <script dangerouslySetInnerHTML={{ __html: theme }} />
+    <script dangerouslySetInnerHTML={{ __html: storedTheme }} />
     <ThemeScript />
   </head>
 ```
 
-A library such as `next-themes` works for the switch itself (`attribute="data-nz-theme"`), but it
-renders its script inside `<body>`, which is too late to rule out a flash. This site pairs it with a
-`<head>` script like the one above.
+With nothing stored, the script does nothing and `data-nz-theme="system"` keeps following the
+operating system, including a change made while the page is open and a visit with JavaScript off.
 
 <Callout type="info">
-  The fixture does not check a theme script yet. This site runs the same logic, and its smoke test
-  checks that `data-nz-theme` is set before `<body>` exists, for the OS preference and for a stored
-  choice.
+  The fixture runs exactly this pattern (`data-nz-theme="system"`, the stored-choice script above with
+  the `nz-theme` key, and `ThemeScript`) in every build mode and records every frame from first paint:
+  with the OS in dark mode, a stored choice or a static attribute, every frame is already in the right
+  theme, and a theme set late by a script at the end of `<body>` is caught as a flash.
 </Callout>
+
+A library such as `next-themes` works for the switch itself (`attribute="data-nz-theme"`), but it
+renders its script inside `<body>`, which is too late to rule out a flash. This docs site pairs it with
+a `<head>` script of its own; that variant is not checked by the fixture.
 
 ## Import from subpaths
 

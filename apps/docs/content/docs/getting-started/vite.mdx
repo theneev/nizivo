@@ -1,39 +1,119 @@
 ---
 title: Vite
-description: Set up Nizivo in a Vite single-page app. Draft.
+description: Set up Nizivo in a Vite 8 single-page app.
 ---
 
-<Callout type="warn" title="Draft: not yet verified by a fixture (W5)">
-  The Vite fixture lands in week 5. Until then this page follows the plan (ARCHITECTURE.md §11.1)
-  and has not been run end to end.
-</Callout>
+Everything on this page is checked by the Vite fixture (`fixtures/vite`, Vite 8.3.4 with
+`@vitejs/plugin-react` 6.1.2, `vite build` and `vite preview`) on the packed packages, except where a
+note says otherwise.
 
 ## Install
+
+<Callout type="warn">
+  Not on npm yet: these commands work once 0.1.0 is published to the `next` dist-tag.
+</Callout>
 
 ```sh
 pnpm add @nizivo/react@next @nizivo/tokens@next
 ```
 
+`@nizivo/react` needs `react` and `react-dom` `^19.2.0`.
+
 ## Import the CSS once
 
-In `main.tsx`, before rendering, import the tokens, the accessibility floor and the stylesheets of the
-components you use:
+Nizivo's JavaScript never imports CSS. In `main.tsx`, before rendering, import the tokens, the
+accessibility floor (`base.css`), then one stylesheet per component you use:
 
 ```tsx title="src/main.tsx"
 import '@nizivo/tokens/tokens.css';
 import '@nizivo/react/css/base.css';
 import '@nizivo/react/css/button.css';
+import '@nizivo/react/css/select.css';
 ```
+
+A single `@nizivo/react/styles.css` with every component is planned; it is not in the package yet.
+
+## Set the CSS target
+
+Nizivo's colours are `light-dark()` values. Vite 8 minifies CSS for its default target, which is older
+than `light-dark()`, so a plain build rewrites every one of them into a fallback that cannot follow a
+nested `data-nz-theme` scope or an inverse surface (a `tone="inverse"` Card, a Tooltip). Set the CSS
+target to Nizivo's support floor:
+
+```js title="vite.config.js"
+import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite';
+
+export default defineConfig({
+  plugins: [react()],
+  build: {
+    cssTarget: ['chrome123', 'edge123', 'firefox129', 'safari17.5', 'ios17.5'],
+  },
+});
+```
+
+<Callout type="info">
+  Measured by the fixture: without `cssTarget`, Vite 8.3.4 kept 0 of the 68 `light-dark()` values in
+  `tokens.css`; with it, all 68. A `browserslist` in `package.json` does not change this, because
+  Vite reads only `build.cssTarget`.
+</Callout>
 
 ## Theme
 
-Set the theme on `<html>` in `index.html`, for example `<html lang="en" data-nz-theme="system">`. A
-user switch must set the attribute before first paint, from an inline script in `<head>`.
+Set the theme on `<html>` in `index.html`. `data-nz-theme="system"` follows the operating system with
+no script and no flash; `light` or `dark` forces one theme. A switch that remembers the user's choice
+must apply it before first paint, from an inline script in `<head>`:
 
-## Known warnings
+```html title="index.html"
+<html lang="en" data-nz-theme="system">
+  <head>
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('nz-theme');
+          if (t === 'light' || t === 'dark')
+            document.documentElement.setAttribute('data-nz-theme', t);
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+</html>
+```
 
-Rolldown may print `MODULE_LEVEL_DIRECTIVE` warnings for the `'use client'` directives in
-`@nizivo/react`. In a single-page app they are harmless.
+Nizivo's `themeScript` does not persist the theme yet; it sets `data-nz-platform` so `Kbd` shows ⌘ or
+Ctrl from the first frame. Paste it into `<head>`, or let a small plugin inject it from the installed
+package so the copy never drifts from the version you run:
+
+```js title="vite.config.js"
+import { themeScript } from '@nizivo/react/theme-script';
+
+function nizivoThemeScript() {
+  return {
+    name: 'nizivo-theme-script',
+    transformIndexHtml: () => [{ tag: 'script', children: themeScript, injectTo: 'head' }],
+  };
+}
+// plugins: [react(), nizivoThemeScript()]
+```
+
+The fixture checks this setup on every frame from first paint: the OS preference, a stored choice and a
+static attribute are right from the first frame, and a theme set late is caught as a flash.
+
+## Imports and bundle size
+
+Import from subpaths (`@nizivo/react/button`) or from the barrel (`@nizivo/react`): Vite drops every
+module a page does not use, so both give the same bundle. In the fixture, a page with three Buttons
+through the barrel was the same size as the same page through the subpath, within a few bytes, and a page that imports
+Select through the barrel shipped only Select's modules. `@nizivo/icons` tree-shakes the same way: three
+imported icons ship three icon modules and the shared base.
+
+Vite 8.3.4 prints no warning for the `'use client'` directives in `@nizivo/react`; a single-page app
+treats them as plain strings.
 
 Vite with SSR needs no `ssr.noExternal` entry: Nizivo's JavaScript never imports CSS, so Node can load
-every module as is.
+every module as is (a v0.2 fixture will check it).
+
+## Not covered by the fixture yet
+
+The Vite dev server (it injects CSS from JavaScript, so a dev page can paint once without styles) and
+Vite SSR are not checked yet. The fixture runs in Chromium.

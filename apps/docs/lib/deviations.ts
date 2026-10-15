@@ -5,6 +5,7 @@
 // - the builder-chosen values: decision D-i in the plan's §23.4 table, and the "builder decides"
 //   items of docs/figma/11-w2-server-safe-components.md and the §5 tables of docs/figma/12 and 13,
 //   each with the answer the stylesheet ships (lib/builder-choices.ts);
+// - every builder default of the plan's §23.4 table (D-a, D-b, …), as the plan states it;
 // - the browser degradations (D1, D2, …), verbatim from the plan's §18.2, and the Safari 17.5 status
 //   from fixtures/floor-lane/RESULTS.md.
 // packages/tokens/CONTRAST.md is generated from the same token files.
@@ -203,13 +204,14 @@ export interface BuilderDecision {
   evidence: string;
 }
 
-/** Rows of the plan's §23.4 builder-defaults table, by id (`D-i`). */
-export function builderDecision(id: string): BuilderDecision {
-  const row = planSection('23.4')
-    .split('\n')
-    .find((l) => l.startsWith(`| ${id} |`));
-  if (!row) throw new Error(`docs: ${PLAN} §23.4 has no row ${id}`);
-  const cells = row.split(' | ').map((c) => c.replace(/^\|\s*|\s*\|$/g, '').trim());
+function decisionRow(id: string, row: string): BuilderDecision {
+  // A table cell escapes a literal pipe as `\|`; the page shows the pipe.
+  const cells = row.split(' | ').map((c) =>
+    c
+      .replace(/^\|\s*|\s*\|$/g, '')
+      .replaceAll('\\|', '|')
+      .trim(),
+  );
   return {
     id,
     decision: cells[1] ?? '',
@@ -218,6 +220,31 @@ export function builderDecision(id: string): BuilderDecision {
     evidence: cells[6] ?? '',
   };
 }
+
+/** Rows of the plan's §23.4 builder-defaults table, by id (`D-i`). */
+export function builderDecision(id: string): BuilderDecision {
+  const row = planSection('23.4')
+    .split('\n')
+    .find((l) => l.startsWith(`| ${id} |`));
+  if (!row) throw new Error(`docs: ${PLAN} §23.4 has no row ${id}`);
+  return decisionRow(id, row);
+}
+
+/** Every row of the plan's §23.4 builder-defaults table (D-a, D-b, …), in the plan's order. */
+export function builderDefaults(): BuilderDecision[] {
+  const rows = planSection('23.4')
+    .split('\n')
+    .flatMap((line) => {
+      const id = /^\| (D-[a-z]+) \|/.exec(line)?.[1];
+      return id === undefined ? [] : [decisionRow(id, line)];
+    });
+  if (rows.length === 0) throw new Error(`docs: ${PLAN} §23.4 has no D-<x> rows`);
+  return rows;
+}
+
+/** The status prefix every §23.4 choice starts with, which the table shows once instead. */
+export const ADOPTED_PREFIX =
+  /^Adopted (\d{4}-\d{2}-\d{2}) \(builder default; the maintainer can override(?:;[^)]*)?\)\.\s*/;
 
 export interface BuilderItem {
   /** `Kbd`, from the `### 4.8 Kbd` heading. */

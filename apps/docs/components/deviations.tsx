@@ -3,7 +3,9 @@
 // and the build checks each against the stylesheet that ships it.
 import type { JSX } from 'react';
 import {
+  ADOPTED_PREFIX,
   builderDecision,
+  builderDefaults,
   builderItems,
   builderItemsW3,
   builderItemsW4,
@@ -289,6 +291,55 @@ export function BuilderChoicesW3(): JSX.Element {
 export function BuilderChoicesW4(): JSX.Element {
   const { file, items } = builderItemsW4();
   return <BuilderChoicesWeek week={4} file={file} items={items} choiceFor={builderChoiceW4} />;
+}
+
+/** Every builder default of the plan's §23.4 table, generated from it. */
+export function BuilderDefaults(): JSX.Element {
+  const rows = builderDefaults();
+  const plan = 'docs/ARCHITECTURE.md';
+  return (
+    <>
+      <p>
+        The plan's decision log has {rows.length} builder defaults ({rows[0]?.id} to{' '}
+        {rows.at(-1)?.id}): questions the plan did not settle, where the builder adopted an answer
+        that the maintainer can override. Most are engineering choices rather than Figma values;
+        they are listed here so that every choice the builder made is in one place.
+      </p>
+      <Table label="Builder defaults">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Decision</th>
+            <th scope="col">What ships</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((r) => {
+            const adopted = ADOPTED_PREFIX.exec(r.choice)?.[1];
+            return (
+              <tr key={r.id}>
+                <th scope="row" className="font-normal whitespace-nowrap">
+                  {r.id}
+                  {adopted !== undefined && (
+                    <div className="text-fd-muted-foreground">{adopted}</div>
+                  )}
+                </th>
+                <td>
+                  <InlineMd text={r.decision} base={plan} />
+                </td>
+                <td>
+                  <InlineMd text={r.choice.replace(ADOPTED_PREFIX, '')} base={plan} />
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </Table>
+      <p className="text-sm text-fd-muted-foreground">
+        Source: <a href={repoFileUrl(`${plan}#234-builder-defaults-2026-10-14`)}>{plan} §23.4</a>
+      </p>
+    </>
+  );
 }
 
 export function Degradations(): JSX.Element {

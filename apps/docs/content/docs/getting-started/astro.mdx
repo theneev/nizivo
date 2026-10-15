@@ -1,41 +1,78 @@
 ---
 title: Astro
-description: Use Nizivo in Astro with @astrojs/react. Draft.
+description: Use Nizivo in Astro 7 with @astrojs/react.
 ---
 
-<Callout type="warn" title="Draft: not yet verified by a fixture (W5)">
-  The Astro fixture lands in week 5. Until then this page follows the plan (ARCHITECTURE.md §11.1)
-  and has not been run end to end.
-</Callout>
+Everything on this page is checked by the Astro fixture (`fixtures/astro`, Astro 7.3.8 with
+`@astrojs/react` 7.0.1, static output, `astro build` and `astro preview`) on the packed packages,
+except where a note says otherwise.
 
 ## Install
+
+<Callout type="warn">
+  Not on npm yet: these commands work once 0.1.0 is published to the `next` dist-tag.
+</Callout>
 
 ```sh
 pnpm add @nizivo/react@next @nizivo/tokens@next
 ```
 
-Add React to Astro with `@astrojs/react`.
+Add React to Astro with `@astrojs/react`. `@nizivo/react` needs `react` and `react-dom` `^19.2.0`.
 
 ## Import the CSS once
 
-In your base layout, import the tokens, the accessibility floor and the component stylesheets. Keep the
-`.css` extension:
+In your base layout, import the tokens, the accessibility floor and one stylesheet per component you
+use. Keep the `.css` extension. Astro turns the imports into one render-blocking `<link>` on every
+page, server-only pages included, and keeps every `light-dark()` value with no extra setting.
 
 ```astro title="src/layouts/Base.astro"
 ---
 import '@nizivo/tokens/tokens.css';
 import '@nizivo/react/css/base.css';
 import '@nizivo/react/css/card.css';
+import { themeScript } from '@nizivo/react/theme-script';
+
+const storedTheme = `(function(){try{var t=localStorage.getItem('nz-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-nz-theme',t)}catch(e){}})()`;
 ---
 <html lang="en" data-nz-theme="system">
+  <head>
+    <script is:inline set:html={storedTheme} />
+    <script is:inline set:html={themeScript} />
+  </head>
   <body><slot /></body>
 </html>
 ```
 
+## Theme
+
+`data-nz-theme="system"` follows the operating system with no script and no flash; `light` or `dark`
+forces one theme. The first inline script above applies a stored choice before first paint.
+`themeScript` does not persist the theme yet; it sets `data-nz-platform` so `Kbd` shows ⌘ or Ctrl from
+the first frame. The fixture checks every frame from first paint for the OS preference, a stored
+choice and a static attribute, and catches a theme set late as a flash.
+
 ## Islands
 
-- Components rendered without a `client:*` directive are static HTML and ship no JavaScript.
-- Children passed from an `.astro` file arrive as static HTML. Compose a compound component (a
-  `Select.Root` with its parts) inside one `.tsx` island.
-- Props to a `client:*` island must be serialisable: no functions.
-- Context does not cross islands.
+- A component rendered without a `client:*` directive is static HTML and ships no JavaScript: the
+  fixture's server-only pages load no script at all, barrel imports included.
+- Children passed from an `.astro` file arrive as static HTML, outside their Root's context. Compose a
+  compound component (a `Select.Root` with its parts) inside one `.tsx` island. With the parts as
+  `.astro` children the build fails with React Aria's "ListBoxItem cannot be rendered outside a
+  collection" (seen once on a throwaway page; the fixture does not keep a failing build).
+- Each island gets its own `useId` prefix, so two islands on one page never repeat an id.
+- `client:load` and `client:visible` hydrate with no console message.
+- Context does not cross islands: an island that needs a non-default locale wraps its own
+  `NizivoConfig`. This follows from how Astro hydrates islands; the fixture does not exercise it.
+- Props to a `client:*` island must be serialisable, so no functions. This is Astro's rule; the
+  fixture does not exercise it.
+
+## Running Astro under a coding agent
+
+Astro 7 detects coding agents and then runs `astro dev` and `astro preview` in the background with a
+lock file. Pass `--ignore-lock` to keep them in the foreground. `astro build` behaves the same either
+way. Set `ASTRO_TELEMETRY_DISABLED=1` to stop Astro's telemetry.
+
+## Not covered by the fixture yet
+
+`output: 'server'` (it needs an adapter), `astro dev`, `client:idle` and `client:only` are not checked
+yet. The fixture runs in Chromium.
