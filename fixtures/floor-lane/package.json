@@ -2,12 +2,13 @@
   "name": "@nizivo/fixture-floor-lane",
   "version": "0.0.0",
   "private": true,
-  "description": "Browser floor lane: S1 nesting matrix, halo/inverse and overlay-entry probes on Firefox 129 and Safari 17.5 (ARCHITECTURE.md §21.1)",
+  "description": "Browser floor lane: S1 nesting matrix, halo/inverse and overlay-entry probes, and every v0.1 component's CSS, on Firefox 129 and Safari 17.5 (ARCHITECTURE.md §21.1)",
   "license": "Apache-2.0",
   "type": "module",
   "scripts": {
     "typecheck": "tsc --noEmit -p .",
-    "floor": "node run.ts"
+    "floor": "node run.ts",
+    "gen": "node gen-w5.ts"
   },
   "devDependencies": {
     "@nizivo/tsconfig": "workspace:*",
