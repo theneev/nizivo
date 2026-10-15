@@ -49,6 +49,15 @@
   --color-fd-idea: var(--nz-icon-brand);
 }
 
+/* Code highlighting follows the theme the way the tokens do, from `color-scheme` (`data-nz-theme`),
+   not from Fumadocs' `dark` class, which next-themes sets only at the top of <body>; ThemeScript sets
+   the theme in <head> (lib/theme.ts). Same selectors as fumadocs-ui/css/lib/shiki.css, later in the
+   source, so these win; its `.dark` rules pick the same colour once the class is set. */
+.shiki:not(.not-fumadocs-codeblock *) code span,
+code.shiki:not(.not-fumadocs-code *) span {
+  color: light-dark(var(--shiki-light), var(--shiki-dark));
+}
+
 @layer base {
   body {
     display: flex;

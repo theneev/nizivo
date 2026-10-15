@@ -15,9 +15,11 @@
 //   browsers skip them; prefetches of other routes excluded, since they belong to those routes).
 //   A page loads a Nizivo client module only when one of its examples renders it: Select, Tooltip,
 //   Dialog and Alert's dismiss leaf, each on its own page and nowhere else;
-// - theme: the switch moves both Fumadocs (`dark` class) and Nizivo (`data-nz-theme`), and both the
-//   page background and a live example follow; the theme is on <html> before <body> exists (no
-//   flash), for the OS preference and for a stored choice;
+// - theme: the switch moves both Fumadocs (`dark` class) and Nizivo (`data-nz-theme`), and the page
+//   background, a live example and code highlighting follow (code from `data-nz-theme`, not the
+//   class); ThemeScript has the stored choice (`nz-theme`) or the server's `system` on <html> before
+//   <body> exists, and the first frame with a painted background is already in the right theme (no
+//   flash), for the OS preference and for each stored choice;
 // - nesting: colour swatches keep their own scheme and an inverse Card flips, so `light-dark()`
 //   reached the browser unlowered (the browserslist in package.json);
 // - Tailwind: the `nz` utilities of @nizivo/tokens/tailwind.css compile and follow nested scopes;
@@ -393,6 +395,7 @@ async function themeChecks(browser: Browser): Promise<void> {
     (await bg(page, trigger)) === RGB.surfaceLight,
     'theme: light Select trigger is --nz-bg-surface',
   );
+  check((await codeColours(page)) === 'light', 'theme: code highlighting is in its light colours');
   await page.locator('[data-theme-toggle] button[aria-label="Dark"]').first().click();
   await page.waitForFunction(
     () => document.documentElement.getAttribute('data-nz-theme') === 'dark',
@@ -413,46 +416,114 @@ async function themeChecks(browser: Browser): Promise<void> {
     (await bg(page, trigger)) === RGB.surfaceDark,
     'theme: dark Select trigger follows (live example)',
   );
+  check(
+    (await codeColours(page)) === 'dark',
+    'theme: code highlighting follows to its dark colours',
+  );
+  // ThemeScript sets the theme before next-themes sets the class, so the code colours must not need
+  // the class: without it, they stay dark.
+  await page.evaluate(() => document.documentElement.classList.remove('dark'));
+  check(
+    (await codeColours(page)) === 'dark',
+    'theme: code highlighting follows data-nz-theme, not the dark class',
+  );
   await ctx.close();
 
-  // No flash: the theme is on <html> when <body> is inserted, from the OS and from a stored choice.
-  for (const [scheme, stored, expected] of [
-    ['dark', null, 'dark'],
-    ['light', null, 'light'],
-    ['dark', 'light', 'light'],
-    ['light', 'dark', 'dark'],
+  // No flash. ThemeScript in <head> puts the stored choice (`nz-theme`) on <html> before <body> is
+  // inserted; with nothing stored, or a value it ignores, the server's `system` stays and CSS follows
+  // the OS. The site later writes the resolved `light` or `dark`, which paints the same. The first
+  // frame that paints a body background (render-blocking CSS loaded) must already be the expected
+  // canvas.
+  for (const [scheme, stored, attribute, expected] of [
+    ['dark', null, 'system', 'dark'],
+    ['light', null, 'system', 'light'],
+    ['dark', 'light', 'light', 'light'],
+    ['light', 'dark', 'dark', 'dark'],
+    ['dark', 'system', 'system', 'dark'],
+    ['light', 'sepia', 'system', 'light'],
+    // next-themes' own body script used to copy an unknown value onto <html> (week 6 review)
+    ['dark', 'sepia', 'system', 'dark'],
   ] as const) {
     const c = await context(browser, scheme);
     await c.addInitScript((value) => {
-      if (value !== null) localStorage.setItem('theme', value);
+      if (value !== null) localStorage.setItem('nz-theme', value);
       // The init script runs before <html> exists, so watch the document itself.
       new MutationObserver((records, obs) => {
         for (const r of records) {
           for (const n of r.addedNodes) {
             if (n.nodeName !== 'BODY') continue;
-            const root = document.documentElement;
-            const cls = root.classList.contains('dark') ? 'dark' : 'light';
             Reflect.set(
               globalThis,
               'nzThemeAtBody',
-              `${root.getAttribute('data-nz-theme')}|${cls}`,
+              document.documentElement.getAttribute('data-nz-theme'),
             );
             obs.disconnect();
           }
         }
       }).observe(document, { childList: true, subtree: true });
+      // requestAnimationFrame runs right before a frame paints.
+      // oxlint-disable-next-line unicorn/consistent-function-scoping -- serialised into the page
+      const frame = (): void => {
+        const painted = document.body ? getComputedStyle(document.body).backgroundColor : '';
+        if (painted !== '' && painted !== 'rgba(0, 0, 0, 0)') {
+          Reflect.set(globalThis, 'nzFirstCanvas', painted);
+        } else requestAnimationFrame(frame);
+      };
+      requestAnimationFrame(frame);
     }, stored);
     const p = await c.newPage();
     await p.goto(`${ORIGIN}/docs/foundations/colour/`, { waitUntil: 'load' });
-    const seen: unknown = await p.evaluate(() => Reflect.get(globalThis, 'nzThemeAtBody'));
-    const at = typeof seen === 'string' ? seen : null;
-    const [attr, cls] = (at ?? '').split('|');
+    await p
+      .waitForFunction(() => Reflect.get(globalThis, 'nzFirstCanvas') !== undefined, undefined, {
+        timeout: 5_000,
+      })
+      .catch(() => undefined);
+    const at: unknown = await p.evaluate(() => Reflect.get(globalThis, 'nzThemeAtBody'));
+    const canvas: unknown = await p.evaluate(() => Reflect.get(globalThis, 'nzFirstCanvas'));
+    const want = expected === 'dark' ? RGB.canvasDark : RGB.canvasLight;
     check(
-      attr === expected && cls === expected,
-      `no flash: OS ${scheme}, stored ${stored ?? 'none'} → data-nz-theme="${expected}" before <body> (saw ${at ?? 'nothing'})`,
+      at === attribute && canvas === want,
+      `no flash: OS ${scheme}, stored ${stored ?? 'none'} → data-nz-theme="${attribute}" before <body> and a ${expected} first canvas (saw ${String(at)}, ${String(canvas)})`,
     );
     await c.close();
   }
+}
+
+/**
+ * Whether the page's code highlighting shows its `light` or `dark` colours: every highlighted span of
+ * the first code block, compared with its own `--shiki-light` and `--shiki-dark` values.
+ */
+async function codeColours(page: Page): Promise<'light' | 'dark' | 'mixed' | 'none'> {
+  const result: unknown = await page.evaluate(() => {
+    const spans = [
+      ...document.querySelectorAll<HTMLElement>('.shiki code span[style*="--shiki-dark"]'),
+    ];
+    const probe = document.createElement('i');
+    document.body.append(probe);
+    const resolve = (value: string): string => {
+      probe.style.color = value;
+      return getComputedStyle(probe).color;
+    };
+    // Only spans whose two colours differ tell the themes apart.
+    let light = 0;
+    let dark = 0;
+    let other = 0;
+    for (const span of spans) {
+      const l = resolve(span.style.getPropertyValue('--shiki-light'));
+      const d = resolve(span.style.getPropertyValue('--shiki-dark'));
+      if (l === d) continue;
+      const shown = getComputedStyle(span).color;
+      if (shown === l) light += 1;
+      else if (shown === d) dark += 1;
+      else other += 1;
+    }
+    probe.remove();
+    if (other > 0) return 'mixed';
+    if (light === 0 && dark === 0) return 'none';
+    if (light > 0 && dark > 0) return 'mixed';
+    return light > 0 ? 'light' : 'dark';
+  });
+  return result === 'light' || result === 'dark' || result === 'mixed' ? result : 'none';
 }
 
 /** The swatch of --nz-bg-canvas in one scheme's column on the Colour page. */

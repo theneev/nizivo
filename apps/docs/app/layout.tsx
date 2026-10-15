@@ -1,15 +1,16 @@
-// The root layout. Theme: an inline script in <head> (lib/theme.ts) sets the `dark` class that
-// Fumadocs' styles key on and Nizivo's own `data-nz-theme` attribute on <html> before <body> exists,
-// so there is no flash. Fumadocs' theme switch then drives both through next-themes
-// (components/provider.tsx). Nizivo's tokens resolve through `light-dark()` from that attribute
-// (ARCHITECTURE.md §7.4), so the docs chrome and every live example switch together.
+// The root layout. Theme: <html data-nz-theme="system"> follows the OS with no script (a reader with
+// JavaScript off included), and Nizivo's ThemeScript in <head> restores a stored choice before <body>
+// exists, so there is no flash (lib/theme.ts). Fumadocs' theme switch then drives the `dark` class
+// through next-themes, and `data-nz-theme` from the checked choice (components/provider.tsx). Nizivo's tokens resolve through
+// `light-dark()` from that attribute (ARCHITECTURE.md §7.4), so the docs chrome and every live
+// example switch together.
 import './global.css';
 import type { Metadata, Viewport } from 'next';
 import type { JSX, ReactNode } from 'react';
 import { GeistMono } from 'geist/font/mono';
 import { GeistSans } from 'geist/font/sans';
 import { Provider } from '../components/provider';
-import { THEME_SCRIPT } from '../lib/theme';
+import { ThemeScript } from '@nizivo/react/theme-script';
 
 export const metadata: Metadata = {
   title: { default: 'Nizivo UI', template: '%s · Nizivo UI' },
@@ -30,10 +31,11 @@ export default function Layout({ children }: { children: ReactNode }): JSX.Eleme
     <html
       lang="en"
       className={`${GeistSans.variable} ${GeistMono.variable}`}
+      data-nz-theme="system"
       suppressHydrationWarning
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+        <ThemeScript />
       </head>
       <body>
         <Provider>{children}</Provider>
