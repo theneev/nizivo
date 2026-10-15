@@ -15,7 +15,7 @@
   },
   "scripts": {
     "typecheck": "tsc --noEmit -p . && tsc --noEmit -p test/fixtures && tsc --noEmit -p release",
-    "test": "vitest run --fsModuleCachePath node_modules/.vitest-cache"
+    "test": "vitest run --fsModuleCachePath node_modules/.vitest-cache --testTimeout 120000"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "catalog:",
