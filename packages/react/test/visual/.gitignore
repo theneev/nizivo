@@ -1,0 +1,3 @@
+# scripts/visual/run.ts: the diffs and new renders of a failed compare, and the design review set
+.diff/
+.review/
