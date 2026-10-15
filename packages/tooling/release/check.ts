@@ -10,6 +10,7 @@
 // 3. attw on the tarball, profile esm-only, with the CSS entries excluded;
 // 4. the directive guard and the `export * as` lint on the unpacked dist/ against src/ (directives.ts).
 // --keep leaves the tarballs and their unpacked folders in the temporary directory it prints.
+// The local release script (release.ts) calls checkPackages() and publishes the tarballs it checked.
 /* oxlint-disable no-await-in-loop -- one package at a time: they share the stage folder, and each report prints whole */
 import { spawnSync } from 'node:child_process';
 import { existsSync, mkdtempSync, readdirSync, readFileSync, rmSync } from 'node:fs';
@@ -22,7 +23,7 @@ import { pack, REPO_ROOT, unpack } from '../../../fixtures/runner/pack.ts';
 import { checkDirectives } from './directives.ts';
 import { checkTarball } from './tarball.ts';
 
-const PACKAGES = [
+export const PACKAGES = [
   { name: '@nizivo/tokens', dir: 'packages/tokens', partsOnly: false },
   { name: '@nizivo/react', dir: 'packages/react', partsOnly: true },
   // ~1,900 icon modules behind two wildcard subpaths (`./*`, `./brands/*`). attw checks only '.':
@@ -105,57 +106,80 @@ export function runAttw(tarball: string, manifest: Record<string, unknown>): str
   return [`exit ${result.status ?? result.signal}\n${result.stdout}${result.stderr}`];
 }
 
+export interface CheckedPackage {
+  name: string;
+  dir: string;
+  /** The tarball the checks ran on; release.ts publishes exactly this file. */
+  tarball: string;
+  /** Its package.json. */
+  manifest: Record<string, unknown>;
+}
+
+/**
+ * Packs each published package into `stage` and runs every check on the tarball. The tarballs and
+ * their unpacked folders stay in `stage`. Prints one report per package; returns the problem count.
+ */
+export async function checkPackages(
+  stage: string,
+): Promise<{ failed: number; packages: CheckedPackage[] }> {
+  let failed = 0;
+  const packages: CheckedPackage[] = [];
+  for (const { name, dir, partsOnly } of PACKAGES) {
+    const tarball = pack(dir, stage);
+    const unpacked = unpack(tarball, join(stage, name.replace('@nizivo/', '')));
+    const manifest: unknown = JSON.parse(readFileSync(join(unpacked, 'package.json'), 'utf8'));
+    if (!isRecord(manifest)) throw new Error(`${name}: package.json is not an object`);
+    const entries = tarEntries(tarball);
+    const srcDir = join(REPO_ROOT, dir, 'src');
+
+    const { failures: publintFailures, notes } = await runPublint(tarball);
+    const checks: [string, string[]][] = [
+      [
+        `tarball allowlist (${entries.length} files)`,
+        checkTarball(name, entries, manifest, (path) => readFileSync(join(unpacked, path)).length),
+      ],
+      ['publint (strict)', publintFailures],
+      ['attw (esm-only)', runAttw(tarball, manifest)],
+      [
+        'directive guard and export * as lint',
+        checkDirectives({
+          dist: readTree(join(unpacked, 'dist'), unpacked, (file) => /\.(js|d\.ts)$/.test(file)),
+          src: readTree(srcDir, join(REPO_ROOT, dir), (file) => /\.(tsx?|json)$/.test(file)),
+          components: components(srcDir),
+          partsOnly,
+        }),
+      ],
+    ];
+    console.log(`\n${name}`);
+    for (const [label, failures] of checks) {
+      console.log(`  ${failures.length === 0 ? 'ok  ' : 'FAIL'} ${label}`);
+      for (const failure of failures)
+        console.log(`       ${failure.replaceAll('\n', '\n       ')}`);
+      failed += failures.length;
+    }
+    for (const note of notes) console.log(`       publint suggestion: ${note}`);
+    packages.push({ name, dir, tarball, manifest });
+  }
+  return { failed, packages };
+}
+
+/** Whether every published package has been built. */
+export function missingBuilds(): string[] {
+  return PACKAGES.filter(({ dir }) => !existsSync(join(REPO_ROOT, dir, 'dist', 'index.js'))).map(
+    ({ dir }) => dir,
+  );
+}
+
 async function main(): Promise<number> {
   const { values } = parseArgs({ options: { keep: { type: 'boolean' } } });
-  for (const { dir } of PACKAGES) {
-    if (!existsSync(join(REPO_ROOT, dir, 'dist', 'index.js'))) {
-      console.error(`check:release: ${dir}/dist/index.js is missing; run \`pnpm build\` first`);
-      return 1;
-    }
+  for (const dir of missingBuilds()) {
+    console.error(`check:release: ${dir}/dist/index.js is missing; run \`pnpm build\` first`);
+    return 1;
   }
   const stage = mkdtempSync(join(tmpdir(), 'nz-release-'));
   let failed = 0;
   try {
-    for (const { name, dir, partsOnly } of PACKAGES) {
-      const tarball = pack(dir, stage);
-      const unpacked = unpack(tarball, join(stage, name.replace('@nizivo/', '')));
-      const manifest: unknown = JSON.parse(readFileSync(join(unpacked, 'package.json'), 'utf8'));
-      if (!isRecord(manifest)) throw new Error(`${name}: package.json is not an object`);
-      const entries = tarEntries(tarball);
-      const srcDir = join(REPO_ROOT, dir, 'src');
-
-      const { failures: publintFailures, notes } = await runPublint(tarball);
-      const checks: [string, string[]][] = [
-        [
-          `tarball allowlist (${entries.length} files)`,
-          checkTarball(
-            name,
-            entries,
-            manifest,
-            (path) => readFileSync(join(unpacked, path)).length,
-          ),
-        ],
-        ['publint (strict)', publintFailures],
-        ['attw (esm-only)', runAttw(tarball, manifest)],
-        [
-          'directive guard and export * as lint',
-          checkDirectives({
-            dist: readTree(join(unpacked, 'dist'), unpacked, (file) => /\.(js|d\.ts)$/.test(file)),
-            src: readTree(srcDir, join(REPO_ROOT, dir), (file) => /\.(tsx?|json)$/.test(file)),
-            components: components(srcDir),
-            partsOnly,
-          }),
-        ],
-      ];
-      console.log(`\n${name}`);
-      for (const [label, failures] of checks) {
-        console.log(`  ${failures.length === 0 ? 'ok  ' : 'FAIL'} ${label}`);
-        for (const failure of failures)
-          console.log(`       ${failure.replaceAll('\n', '\n       ')}`);
-        failed += failures.length;
-      }
-      for (const note of notes) console.log(`       publint suggestion: ${note}`);
-    }
+    ({ failed } = await checkPackages(stage));
   } finally {
     if (values.keep === true) console.log(`\nkept ${stage}`);
     else rmSync(stage, { recursive: true, force: true });

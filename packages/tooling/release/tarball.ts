@@ -12,21 +12,22 @@ export interface TarballPolicy {
 }
 
 export const POLICIES: Record<string, TarballPolicy> = {
+  // README.md is required since week 5: npm shows it on the package page (§18.1 package correctness).
   '@nizivo/tokens': {
-    required: ['LICENSE'],
-    optional: ['README.md'],
+    required: ['LICENSE', 'README.md'],
+    optional: [],
     dist: ['.js', '.d.ts', '.css', '.json'],
   },
   '@nizivo/react': {
     // THIRD_PARTY_NOTICES covers the glyphs inlined from Lucide (§14.2).
-    required: ['LICENSE', 'THIRD_PARTY_NOTICES'],
-    optional: ['README.md'],
+    required: ['LICENSE', 'README.md', 'THIRD_PARTY_NOTICES'],
+    optional: [],
     dist: ['.js', '.d.ts', '.css', '.json'],
   },
   '@nizivo/icons': {
     // THIRD_PARTY_NOTICES: Lucide ISC + Feather MIT, Simple Icons CC0 and the Instagram rule (§14.2).
-    required: ['LICENSE', 'THIRD_PARTY_NOTICES'],
-    optional: ['README.md'],
+    required: ['LICENSE', 'README.md', 'THIRD_PARTY_NOTICES'],
+    optional: [],
     dist: ['.js', '.d.ts'],
   },
 };

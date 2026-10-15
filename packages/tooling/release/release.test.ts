@@ -217,6 +217,7 @@ describe('directive guard', () => {
 const REACT = [
   'package/package.json',
   'package/LICENSE',
+  'package/README.md',
   'package/THIRD_PARTY_NOTICES',
   'package/dist/index.js',
   'package/dist/index.d.ts',
@@ -229,8 +230,8 @@ describe('tarball allowlist', () => {
   test('passes the files a published package may ship', () => {
     expect(checkTarball('@nizivo/react', REACT, MANIFEST, () => 1)).toEqual([]);
     expect(
-      checkTarball('@nizivo/react', [...REACT, 'package/README.md'], MANIFEST, () => 1),
-    ).toEqual([]);
+      checkTarball('@nizivo/react', [...REACT, 'package/CHANGELOG.md'], MANIFEST, () => 1),
+    ).toEqual(['CHANGELOG.md: not in the allowlist']);
   });
 
   test('fails on anything else', () => {
@@ -268,7 +269,12 @@ describe('tarball allowlist', () => {
         MANIFEST,
         (path) => (path === 'LICENSE' ? 0 : 1),
       ),
-    ).toEqual(['LICENSE: empty', 'THIRD_PARTY_NOTICES: missing', 'dist/: missing (build first)']);
+    ).toEqual([
+      'LICENSE: empty',
+      'README.md: missing',
+      'THIRD_PARTY_NOTICES: missing',
+      'dist/: missing (build first)',
+    ]);
     // Notices are react's: tokens may not ship one.
     expect(
       checkTarball(
@@ -282,13 +288,14 @@ describe('tarball allowlist', () => {
         { name: '@nizivo/tokens' },
         () => 1,
       ),
-    ).toEqual(['THIRD_PARTY_NOTICES: not in the allowlist']);
+    ).toEqual(['THIRD_PARTY_NOTICES: not in the allowlist', 'README.md: missing']);
   });
 
   test('icons ships JavaScript, declarations and its notices only', () => {
     const icons = [
       'package/package.json',
       'package/LICENSE',
+      'package/README.md',
       'package/THIRD_PARTY_NOTICES',
       'package/dist/index.js',
       'package/dist/index.d.ts',
