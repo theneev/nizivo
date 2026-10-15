@@ -15,10 +15,5 @@
     "ghosts": [],
     "variantsSeen": [],
     "related": []
-  },
-  "budget": {
-    "measuredKB": 28.1,
-    "limitKB": 31,
-    "source": "r3, RAC Dialog + Modal, all locales (ARCHITECTURE.md §17.1)"
   }
 }

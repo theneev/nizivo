@@ -18,10 +18,5 @@
     "ghosts": ["745:222"],
     "variantsSeen": ["745:188"],
     "related": ["746:204"]
-  },
-  "budget": {
-    "measuredKB": 59.5,
-    "limitKB": 66,
-    "source": "r3 §3.1, RAC Select standalone, all locales"
   }
 }

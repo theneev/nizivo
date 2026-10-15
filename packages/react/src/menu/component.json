@@ -35,10 +35,5 @@
     "ghosts": ["746:203"],
     "variantsSeen": ["746:157", "746:167", "746:187"],
     "related": ["746:204", "7275:11511"]
-  },
-  "budget": {
-    "measuredKB": 55.1,
-    "limitKB": 61,
-    "source": "W4: @nizivo/react/menu bundled with React Aria, react external, esbuild 0.28.2 min+gz (V8 RAC Menu alone: 51.3)"
   }
 }

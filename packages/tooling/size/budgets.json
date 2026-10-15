@@ -1,0 +1,477 @@
+{
+  "$comment": "Size budgets (ARCHITECTURE.md §17), written by `node packages/tooling/size/measure.ts --write`. measured: bytes, gzip -9, as size-limit 14.2 reports them. limitKiB: measured + 10%, rounded up (method.ts limitKiB), never above the entry's §17.1 plan limit (method.ts PLAN_LIMITS_KIB). Limits only go up through a labelled PR (§17.3).",
+  "entries": {
+    "@nizivo/react": {
+      "measured": 84875,
+      "limitKiB": 92
+    },
+    "@nizivo/react/alert": {
+      "measured": 1393,
+      "limitKiB": 1.5
+    },
+    "@nizivo/react/augment": {
+      "measured": 0,
+      "limitKiB": 0
+    },
+    "@nizivo/react/badge": {
+      "measured": 796,
+      "limitKiB": 0.9
+    },
+    "@nizivo/react/button": {
+      "measured": 1379,
+      "limitKiB": 1.5
+    },
+    "@nizivo/react/card": {
+      "measured": 1086,
+      "limitKiB": 1.2
+    },
+    "@nizivo/react/checkbox": {
+      "measured": 2163,
+      "limitKiB": 2.4
+    },
+    "@nizivo/react/config": {
+      "measured": 165,
+      "limitKiB": 0.2
+    },
+    "@nizivo/react/container": {
+      "measured": 694,
+      "limitKiB": 0.8
+    },
+    "@nizivo/react/contracts": {
+      "measured": 1021,
+      "limitKiB": 1.1
+    },
+    "@nizivo/react/delta": {
+      "measured": 1012,
+      "limitKiB": 1.1
+    },
+    "@nizivo/react/dialog": {
+      "measured": 31445,
+      "limitKiB": 31
+    },
+    "@nizivo/react/empty-state": {
+      "measured": 840,
+      "limitKiB": 1
+    },
+    "@nizivo/react/field": {
+      "measured": 3136,
+      "limitKiB": 3.4
+    },
+    "@nizivo/react/fieldset": {
+      "measured": 1850,
+      "limitKiB": 2
+    },
+    "@nizivo/react/grid": {
+      "measured": 793,
+      "limitKiB": 0.9
+    },
+    "@nizivo/react/heading": {
+      "measured": 767,
+      "limitKiB": 0.9
+    },
+    "@nizivo/react/icon-button": {
+      "measured": 17413,
+      "limitKiB": 19
+    },
+    "@nizivo/react/image": {
+      "measured": 794,
+      "limitKiB": 0.9
+    },
+    "@nizivo/react/inline": {
+      "measured": 703,
+      "limitKiB": 0.8
+    },
+    "@nizivo/react/inline-error": {
+      "measured": 1176,
+      "limitKiB": 1.3
+    },
+    "@nizivo/react/input": {
+      "measured": 1749,
+      "limitKiB": 1.9
+    },
+    "@nizivo/react/kbd": {
+      "measured": 1192,
+      "limitKiB": 1.3
+    },
+    "@nizivo/react/menu": {
+      "measured": 56623,
+      "limitKiB": 57
+    },
+    "@nizivo/react/meter": {
+      "measured": 1143,
+      "limitKiB": 1.3
+    },
+    "@nizivo/react/native-select": {
+      "measured": 1704,
+      "limitKiB": 1.9
+    },
+    "@nizivo/react/progress-bar": {
+      "measured": 1137,
+      "limitKiB": 1.3
+    },
+    "@nizivo/react/progress-ring": {
+      "measured": 1194,
+      "limitKiB": 1.3
+    },
+    "@nizivo/react/radio-group": {
+      "measured": 2332,
+      "limitKiB": 2.6
+    },
+    "@nizivo/react/segmented-control": {
+      "measured": 2309,
+      "limitKiB": 2.5
+    },
+    "@nizivo/react/select": {
+      "measured": 62404,
+      "limitKiB": 66
+    },
+    "@nizivo/react/separator": {
+      "measured": 772,
+      "limitKiB": 0.9
+    },
+    "@nizivo/react/skeleton": {
+      "measured": 716,
+      "limitKiB": 0.8
+    },
+    "@nizivo/react/stack": {
+      "measured": 703,
+      "limitKiB": 0.8
+    },
+    "@nizivo/react/switch": {
+      "measured": 1671,
+      "limitKiB": 1.8
+    },
+    "@nizivo/react/tab-nav": {
+      "measured": 1031,
+      "limitKiB": 1.2
+    },
+    "@nizivo/react/tabs": {
+      "measured": 33577,
+      "limitKiB": 35
+    },
+    "@nizivo/react/text": {
+      "measured": 716,
+      "limitKiB": 0.8
+    },
+    "@nizivo/react/textarea": {
+      "measured": 1291,
+      "limitKiB": 1.4
+    },
+    "@nizivo/react/theme-script": {
+      "measured": 302,
+      "limitKiB": 0.4
+    },
+    "@nizivo/react/tooltip": {
+      "measured": 16327,
+      "limitKiB": 16
+    },
+    "@nizivo/react dashboard set": {
+      "measured": 76153,
+      "limitKiB": 75
+    },
+    "@nizivo/react { Button } from the barrel": {
+      "measured": 1381,
+      "limitKiB": 1.5
+    },
+    "@nizivo/react { Select } from the barrel": {
+      "measured": 62321,
+      "limitKiB": 67
+    },
+    "@nizivo/react own: _engines/react-aria/dialog.client": {
+      "measured": 1123,
+      "limitKiB": 1.3
+    },
+    "@nizivo/react own: _engines/react-aria/locale.client": {
+      "measured": 162,
+      "limitKiB": 0.2
+    },
+    "@nizivo/react own: _engines/react-aria/menu.client": {
+      "measured": 1777,
+      "limitKiB": 2
+    },
+    "@nizivo/react own: _engines/react-aria/overlay.client": {
+      "measured": 511,
+      "limitKiB": 0.6
+    },
+    "@nizivo/react own: _engines/react-aria/popup.client": {
+      "measured": 808,
+      "limitKiB": 0.9
+    },
+    "@nizivo/react own: _engines/react-aria/select.client": {
+      "measured": 1258,
+      "limitKiB": 1.4
+    },
+    "@nizivo/react own: _engines/react-aria/tabs.client": {
+      "measured": 629,
+      "limitKiB": 0.7
+    },
+    "@nizivo/react own: _engines/react-aria/tooltip.client": {
+      "measured": 654,
+      "limitKiB": 0.8
+    },
+    "@nizivo/react own: alert/alert-dismiss.client": {
+      "measured": 357,
+      "limitKiB": 0.4
+    },
+    "@nizivo/react own: checkbox/checkbox.client": {
+      "measured": 749,
+      "limitKiB": 0.9
+    },
+    "@nizivo/react own: config/config.client": {
+      "measured": 197,
+      "limitKiB": 0.3
+    },
+    "@nizivo/react own: dialog/dialog.client": {
+      "measured": 1098,
+      "limitKiB": 1.2
+    },
+    "@nizivo/react own: field/field-scope.client": {
+      "measured": 1009,
+      "limitKiB": 1.1
+    },
+    "@nizivo/react own: icon-button/icon-button.client": {
+      "measured": 349,
+      "limitKiB": 0.4
+    },
+    "@nizivo/react own: input/input.client": {
+      "measured": 692,
+      "limitKiB": 0.8
+    },
+    "@nizivo/react own: menu/menu.client": {
+      "measured": 1041,
+      "limitKiB": 1.2
+    },
+    "@nizivo/react own: radio-group/radio-group.client": {
+      "measured": 614,
+      "limitKiB": 0.7
+    },
+    "@nizivo/react own: segmented-control/segmented-control.client": {
+      "measured": 1169,
+      "limitKiB": 1.3
+    },
+    "@nizivo/react own: select/select.client": {
+      "measured": 880,
+      "limitKiB": 1
+    },
+    "@nizivo/react own: switch/switch.client": {
+      "measured": 552,
+      "limitKiB": 0.6
+    },
+    "@nizivo/react own: tabs/tabs.client": {
+      "measured": 486,
+      "limitKiB": 0.6
+    },
+    "@nizivo/react own: textarea/textarea.client": {
+      "measured": 316,
+      "limitKiB": 0.4
+    },
+    "@nizivo/react own: tooltip/tooltip.client": {
+      "measured": 507,
+      "limitKiB": 0.6
+    },
+    "@nizivo/react seam K6 (stateAttrs, details, EngineLocale, engineDom)": {
+      "measured": 757,
+      "limitKiB": 0.9
+    },
+    "@nizivo/react seam K7 (renderElement, toRenderFn, mergeProps)": {
+      "measured": 678,
+      "limitKiB": 0.8
+    },
+    "@nizivo/react/css/alert.css": {
+      "measured": 734,
+      "limitKiB": 0.8
+    },
+    "@nizivo/react/css/badge.css": {
+      "measured": 512,
+      "limitKiB": 0.6
+    },
+    "@nizivo/react/css/base.css": {
+      "measured": 996,
+      "limitKiB": 1.1
+    },
+    "@nizivo/react/css/button.css": {
+      "measured": 1007,
+      "limitKiB": 1.1
+    },
+    "@nizivo/react/css/card.css": {
+      "measured": 592,
+      "limitKiB": 0.7
+    },
+    "@nizivo/react/css/checkbox.css": {
+      "measured": 834,
+      "limitKiB": 0.9
+    },
+    "@nizivo/react/css/container.css": {
+      "measured": 185,
+      "limitKiB": 0.2
+    },
+    "@nizivo/react/css/delta.css": {
+      "measured": 453,
+      "limitKiB": 0.5
+    },
+    "@nizivo/react/css/dialog.css": {
+      "measured": 770,
+      "limitKiB": 0.9
+    },
+    "@nizivo/react/css/empty-state.css": {
+      "measured": 476,
+      "limitKiB": 0.6
+    },
+    "@nizivo/react/css/field.css": {
+      "measured": 330,
+      "limitKiB": 0.4
+    },
+    "@nizivo/react/css/fieldset.css": {
+      "measured": 362,
+      "limitKiB": 0.4
+    },
+    "@nizivo/react/css/grid.css": {
+      "measured": 531,
+      "limitKiB": 0.6
+    },
+    "@nizivo/react/css/heading.css": {
+      "measured": 390,
+      "limitKiB": 0.5
+    },
+    "@nizivo/react/css/icon-button.css": {
+      "measured": 1004,
+      "limitKiB": 1.1
+    },
+    "@nizivo/react/css/image.css": {
+      "measured": 243,
+      "limitKiB": 0.3
+    },
+    "@nizivo/react/css/inline-error.css": {
+      "measured": 273,
+      "limitKiB": 0.3
+    },
+    "@nizivo/react/css/inline.css": {
+      "measured": 274,
+      "limitKiB": 0.3
+    },
+    "@nizivo/react/css/input.css": {
+      "measured": 820,
+      "limitKiB": 0.9
+    },
+    "@nizivo/react/css/kbd.css": {
+      "measured": 377,
+      "limitKiB": 0.5
+    },
+    "@nizivo/react/css/menu.css": {
+      "measured": 1030,
+      "limitKiB": 1.2
+    },
+    "@nizivo/react/css/meter.css": {
+      "measured": 663,
+      "limitKiB": 0.8
+    },
+    "@nizivo/react/css/native-select.css": {
+      "measured": 908,
+      "limitKiB": 1
+    },
+    "@nizivo/react/css/progress-bar.css": {
+      "measured": 807,
+      "limitKiB": 0.9
+    },
+    "@nizivo/react/css/progress-ring.css": {
+      "measured": 519,
+      "limitKiB": 0.6
+    },
+    "@nizivo/react/css/radio-group.css": {
+      "measured": 824,
+      "limitKiB": 0.9
+    },
+    "@nizivo/react/css/segmented-control.css": {
+      "measured": 986,
+      "limitKiB": 1.1
+    },
+    "@nizivo/react/css/select.css": {
+      "measured": 840,
+      "limitKiB": 1
+    },
+    "@nizivo/react/css/separator.css": {
+      "measured": 261,
+      "limitKiB": 0.3
+    },
+    "@nizivo/react/css/skeleton.css": {
+      "measured": 365,
+      "limitKiB": 0.4
+    },
+    "@nizivo/react/css/stack.css": {
+      "measured": 270,
+      "limitKiB": 0.3
+    },
+    "@nizivo/react/css/switch.css": {
+      "measured": 884,
+      "limitKiB": 1
+    },
+    "@nizivo/react/css/tab-nav.css": {
+      "measured": 842,
+      "limitKiB": 1
+    },
+    "@nizivo/react/css/tabs.css": {
+      "measured": 972,
+      "limitKiB": 1.1
+    },
+    "@nizivo/react/css/text.css": {
+      "measured": 574,
+      "limitKiB": 0.7
+    },
+    "@nizivo/react/css/textarea.css": {
+      "measured": 703,
+      "limitKiB": 0.8
+    },
+    "@nizivo/react/css/tooltip.css": {
+      "measured": 550,
+      "limitKiB": 0.6
+    },
+    "@nizivo/tokens": {
+      "measured": 2309,
+      "limitKiB": 2.5
+    },
+    "@nizivo/tokens/contract.json": {
+      "measured": 3247,
+      "limitKiB": 3.5
+    },
+    "@nizivo/tokens/custom-media.css": {
+      "measured": 166,
+      "limitKiB": 0.2
+    },
+    "@nizivo/tokens/tailwind.css": {
+      "measured": 764,
+      "limitKiB": 0.9
+    },
+    "@nizivo/tokens/tokens.css": {
+      "measured": 3879,
+      "limitKiB": 4.2
+    },
+    "@nizivo/tokens/tokens.json": {
+      "measured": 8887,
+      "limitKiB": 9.6
+    },
+    "@nizivo/icons": {
+      "measured": 102760,
+      "limitKiB": 111
+    },
+    "@nizivo/icons { Calendar } from the barrel": {
+      "measured": 473,
+      "limitKiB": 0.6
+    },
+    "@nizivo/icons 10 icons from the barrel": {
+      "measured": 1117,
+      "limitKiB": 1.2
+    },
+    "@nizivo/icons/calendar": {
+      "measured": 471,
+      "limitKiB": 0.6
+    },
+    "@nizivo/icons/hop": {
+      "measured": 822,
+      "limitKiB": 0.9
+    },
+    "@nizivo/icons/brands/instagram": {
+      "measured": 1193,
+      "limitKiB": 1.3
+    }
+  }
+}

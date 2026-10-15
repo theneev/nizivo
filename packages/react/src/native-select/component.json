@@ -15,10 +15,5 @@
     "ghosts": [],
     "variantsSeen": [],
     "related": ["7275:11438"]
-  },
-  "budget": {
-    "measuredKB": 0,
-    "limitKB": 0,
-    "source": "server-safe, no directive: 0 KB client JS under RSC; Field wiring through the zero-JS function child"
   }
 }

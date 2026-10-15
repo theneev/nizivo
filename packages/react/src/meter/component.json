@@ -18,10 +18,5 @@
     "ghosts": [],
     "variantsSeen": [],
     "related": ["7275:13526", "7275:14131", "752:444"]
-  },
-  "budget": {
-    "measuredKB": 0,
-    "limitKB": 0,
-    "source": "server-safe, no directive: 0 KB client JS under RSC"
   }
 }

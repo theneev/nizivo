@@ -14,7 +14,7 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "typecheck": "tsc --noEmit -p . && tsc --noEmit -p test/fixtures && tsc --noEmit -p release",
+    "typecheck": "tsc --noEmit -p . && tsc --noEmit -p test/fixtures && tsc --noEmit -p release && tsc --noEmit -p size && tsc --noEmit -p size/seam/direct",
     "test": "vitest run --fsModuleCachePath node_modules/.vitest-cache --testTimeout 120000"
   },
   "devDependencies": {

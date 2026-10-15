@@ -1,0 +1,14 @@
+{
+  "extends": "@nizivo/tsconfig/base.json",
+  "compilerOptions": {
+    "isolatedDeclarations": false,
+    "declaration": false,
+    // The baselines import what @nizivo/react imports; under pnpm only that package can resolve them.
+    "paths": {
+      "react": ["../../../../react/node_modules/@types/react"],
+      "react/*": ["../../../../react/node_modules/@types/react/*"],
+      "react-aria-components": ["../../../../react/node_modules/react-aria-components"]
+    }
+  },
+  "include": ["."]
+}

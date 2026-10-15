@@ -1,0 +1,91 @@
+{
+  "$comment": "Written by packages/tooling/size/seam/seam.ts --write. gzip -9 bytes of raw esbuild output; `own` is minified bytes by layer.",
+  "esbuild": "0.28.2",
+  "k6": 789,
+  "rows": [
+    {
+      "name": "select",
+      "floor": 58906,
+      "direct": 59439,
+      "adapter": 61200,
+      "subpath": 62436,
+      "own": {
+        "leaf": 3247,
+        "adapter": 2305,
+        "family": 2137,
+        "k6": 1681,
+        "k7": 1306
+      }
+    },
+    {
+      "name": "dialog",
+      "floor": 28757,
+      "direct": 29023,
+      "adapter": 30437,
+      "subpath": 31477,
+      "own": {
+        "leaf": 2866,
+        "adapter": 1994,
+        "family": 738,
+        "k6": 1681,
+        "k7": 1303
+      }
+    },
+    {
+      "name": "tooltip",
+      "floor": 14019,
+      "direct": 14699,
+      "adapter": 15304,
+      "subpath": 16359,
+      "own": {
+        "leaf": 2488,
+        "adapter": 784,
+        "family": 677,
+        "k6": 1681,
+        "k7": 1305
+      }
+    },
+    {
+      "name": "menu",
+      "floor": 51904,
+      "direct": 52192,
+      "adapter": 54667,
+      "subpath": 56655,
+      "own": {
+        "leaf": 5944,
+        "adapter": 3560,
+        "family": 2137,
+        "k6": 1681,
+        "k7": 1306
+      }
+    },
+    {
+      "name": "tabs",
+      "floor": 31857,
+      "direct": 32015,
+      "adapter": 33047,
+      "subpath": 33609,
+      "own": {
+        "leaf": 1437,
+        "adapter": 1124,
+        "family": 0,
+        "k6": 1681,
+        "k7": 1306
+      }
+    },
+    {
+      "name": "all",
+      "floor": 68258,
+      "direct": 69712,
+      "adapter": 72595,
+      "subpath": 76224,
+      "own": {
+        "leaf": 13524,
+        "adapter": 9711,
+        "family": 2311,
+        "k6": 1680,
+        "k7": 1302
+      }
+    }
+  ]
+}

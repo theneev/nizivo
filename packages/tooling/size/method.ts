@@ -1,0 +1,81 @@
+// The measuring method shared by the size budgets (checks.ts, run by size-limit) and the seam harness
+// (seam/seam.ts, which drives the same esbuild binary directly for its metafile). ARCHITECTURE.md §17:
+// min + gzip -9, ESM, the `production` condition, React and ReactDOM external, every React Aria locale
+// included (no locale plugin), r3's esbuild method. Plain data and pure functions: no imports beyond
+// node built-ins, so Node runs this file directly through type stripping.
+import { join } from 'node:path';
+
+export const REPO_ROOT = join(import.meta.dirname, '..', '..', '..');
+export const PACKAGES_DIR = join(REPO_ROOT, 'packages');
+export const REACT_DIR = join(PACKAGES_DIR, 'react');
+export const SIZE_DIR = import.meta.dirname;
+
+/** The packages whose public entries carry budgets, in report order. */
+export const PACKAGE_NAMES = ['react', 'tokens', 'icons'] as const;
+export type PackageName = (typeof PACKAGE_NAMES)[number];
+
+/**
+ * The esbuild options both runners add to a plain minified bundle. size-limit's esbuild plugin
+ * already sets `bundle`, the three `minify*` flags and `treeShaking`, and passes the package's peer
+ * dependencies as `external`; with every minify flag on and the default `browser` platform, esbuild
+ * defines `process.env.NODE_ENV` as "production" itself. ESM keeps the entry's exports alive (the
+ * default IIFE would tree-shake an entry that only exports). `conditions` adds `production` to the
+ * default `browser`/`import`/`default` set.
+ */
+export const ESBUILD_METHOD = {
+  format: 'esm',
+  conditions: ['production'],
+  // A hand-written seam baseline (seam/direct/*.tsx) is compiled the way a consumer's app would be.
+  jsx: 'automatic',
+} as const;
+
+/** Peer dependencies that are never counted; `react` also covers `react/jsx-runtime` (esbuild treats
+ * a package name in `external` as covering its subpaths). */
+export const PEERS = ['react', 'react-dom'] as const;
+
+/** The engine, kept external only where a check measures Nizivo's own code over it. */
+export const ENGINE = ['react-aria-components', 'react-aria'] as const;
+
+/**
+ * Limit = measured + 10%, rounded UP: to 0.1 KiB below 10 KiB, to 1 KiB from 10 KiB (the precision
+ * of §17's tables; KiB = 1,024 B, as component.json and the W*-RESULTS files count). Integer maths,
+ * so 1.1 × measured never rounds through a float. A measurement at or below zero (an empty module:
+ * size-limit subtracts its empty-bundle constant) gets a 0 limit: it must stay empty.
+ */
+export function limitKiB(measuredBytes: number): number {
+  if (measuredBytes <= 0) return 0;
+  // measured × 1.1 / 1024 = measured × 11 / 10,240 KiB
+  const tenths = Math.ceil((measuredBytes * 11) / 1024);
+  if (tenths < 100) return tenths / 10;
+  return Math.ceil((measuredBytes * 11) / 10240);
+}
+
+/**
+ * The hard limits of ARCHITECTURE.md §17.1 (KiB) for the entries that have one. A budget never sits
+ * above its plan limit: measured + 10% applies only below it (§17: "limits only go up through a
+ * labelled PR", and the plan's limits are where that happens). The dashboard set's "75" is read as
+ * KiB, as every other figure here; whether it means decimal kB is open for the maintainer.
+ */
+export const PLAN_LIMITS_KIB: Readonly<Record<string, number>> = {
+  '@nizivo/react/tooltip': 16,
+  '@nizivo/react/dialog': 31,
+  '@nizivo/react/tabs': 35,
+  '@nizivo/react/menu': 57,
+  '@nizivo/react/select': 66,
+  '@nizivo/react dashboard set': 75,
+};
+
+/** A KiB figure as size-limit parses it (`KiB` is 1,024; `KB` would be 1,000). */
+export function limitString(limit: number): string {
+  return `${limit} KiB`;
+}
+
+/** The byte count size-limit compares against for a `limitString(kib)`. */
+export function limitBytes(limit: number): number {
+  return Math.floor(limit * 1024);
+}
+
+/** Formats bytes as KiB with one decimal, for reports. */
+export function kib(bytes: number): string {
+  return (bytes / 1024).toFixed(1);
+}

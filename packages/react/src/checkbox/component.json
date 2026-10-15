@@ -28,10 +28,5 @@
     "ghosts": ["745:284"],
     "variantsSeen": [],
     "related": []
-  },
-  "budget": {
-    "measuredKB": 0.76,
-    "limitKB": 1,
-    "source": "778 B own code: the client leaf in dist minified alone (esbuild 0.28.2 --minify, imports not counted) and piped through gzip; W3 fix pass. Bundled with its package imports (react external): 2,200 B (its check and dash glyphs included). §16.1 targets ~0.3 KB, §17.2 caps an own input leaf at 1 KB"
   }
 }

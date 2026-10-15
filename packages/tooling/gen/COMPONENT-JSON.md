@@ -27,7 +27,7 @@ file fixes what those fields hold and what each one produces.
 | `figma`          | no                 | `canonical`, `ghosts`, `variantsSeen`, `related`: node ids       |
 | `budget`         | no                 | `measuredKB`, `limitKB`, `source`                                |
 
-`adapter` is rejected until v0.2 defines the second adapter's file layout. Unknown keys are errors.
+`adapter` is rejected until v0.2 defines the second adapter's file layout. Unknown keys are errors. `budget` is accepted but read by nothing: since week 5 the size budgets are derived from the package exports and live in `packages/tooling/size/budgets.json` (D-ah), and no manifest carries one.
 
 ## `tier`
 
