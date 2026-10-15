@@ -10,7 +10,11 @@ import { ButtonExample } from '../../src/button/button.example';
 import { CardExample } from '../../src/card/card.example';
 import { ContainerExample } from '../../src/container/container.example';
 import { DeltaExample } from '../../src/delta/delta.example';
-import { DialogExample, DialogOpenExample } from '../../src/dialog/dialog.example';
+import {
+  DialogExample,
+  DialogPlainCloseExample,
+  DialogOpenExample,
+} from '../../src/dialog/dialog.example';
 import { EmptyStateExample } from '../../src/empty-state/empty-state.example';
 import { GridExample } from '../../src/grid/grid.example';
 import { HeadingExample } from '../../src/heading/heading.example';
@@ -43,6 +47,7 @@ const examples: Record<string, () => JSX.Element> = {
   SelectOpenExample,
   DialogExample,
   DialogOpenExample,
+  DialogPlainCloseExample,
   TooltipExample,
   TooltipOpenExample,
   TextExample,
@@ -175,7 +180,9 @@ describe('renderToString (Node, default condition)', () => {
     expect(html).toMatch(/<button[^>]*class="nz-button nz-hit-target nz-dialog-trigger"/);
     expect(html).toContain('aria-expanded="false"');
     const open = renderToString(<DialogOpenExample />);
-    expect(open).toMatch(/data-slot="dialog-trigger" data-open=""/);
+    expect(open).toMatch(
+      /data-slot="dialog-trigger"[^>]*data-open=""[^>]*class="nz-button nz-hit-target nz-dialog-trigger"/,
+    );
     expect(open).not.toContain('data-pressed');
     expect(open).not.toContain('nz-dialog-popup');
   });
@@ -204,9 +211,10 @@ describe('renderToString (Node, default condition)', () => {
 
   test('Tooltip: a server-open trigger carries aria-describedby, the popup renders only after hydration, and the trigger never submits a form', () => {
     const html = renderToString(<TooltipOpenExample />);
-    const id = /<button[^>]*aria-describedby="([^"]+)"[^>]*class="nz-tooltip-trigger"/.exec(
-      html,
-    )?.[1];
+    const id =
+      /<button[^>]*aria-describedby="([^"]+)"[^>]*class="nz-button nz-hit-target nz-tooltip-trigger"/.exec(
+        html,
+      )?.[1];
     expect(id).toBeDefined();
     // React Aria renders no tooltip during SSR, so the IDREF dangles until hydration (engine gap).
     expect(html).not.toContain(`id="${id}"`);

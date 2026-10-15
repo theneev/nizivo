@@ -89,6 +89,7 @@ export const Popup: DialogEngine['Popup'] = ({
   backdropProps,
   contentProps,
   initialFocus,
+  returnFocus,
   'aria-label': label,
   'aria-labelledby': labelledBy,
   'aria-describedby': describedBy,
@@ -145,7 +146,7 @@ export const Popup: DialogEngine['Popup'] = ({
             }
           >
             <InitialFocus content={contentRef} resolve={initialFocus} />
-            <ReturnFocus trigger={trigger} popup={contentRef} />
+            <ReturnFocus trigger={trigger} popup={contentRef} target={returnFocus} />
             {children}
           </Dialog>
         </Modal>

@@ -3,6 +3,7 @@ import type { ComponentPropsWithRef, ReactElement, ReactNode } from 'react';
 import type { ChangeDetails, OpenReason } from '../contracts/details';
 import type { RenderProp } from '../contracts/render';
 import type { EnginePart } from '../_internal/engine-part';
+import type { ReturnFocusTarget } from '../_internal/overlay';
 
 export type { OpenReason };
 
@@ -13,10 +14,14 @@ export type DialogSize = 'sm' | 'md' | 'lg';
 export type DialogTitleLevel = 2 | 3 | 4 | 5 | 6;
 
 /**
- * Strings the engine renders (§9.3 rule 7). Engine-owned with React Aria (not overridable): `dismiss`,
- * the visually hidden "Dismiss" button rendered inside a dismissable dialog.
+ * Strings the Dialog renders (§9.3 rule 7, §16.4). `close` is the accessible name of the default
+ * `Dialog.Close` (an IconButton showing the close glyph), set through that part's `labels`.
+ * Engine-owned with React Aria (not overridable): `dismiss`, the visually hidden "Dismiss" button
+ * rendered inside a dismissable dialog.
  */
 export interface DialogLabels {
+  /** @default 'Close' */
+  close: string;
   dismiss: string;
 }
 
@@ -25,6 +30,15 @@ export interface DialogRootProps {
   defaultOpen?: boolean;
   /** `details.reason` is `'unknown'` with React Aria, which reports no cause. */
   onOpenChange?: (open: boolean, details: ChangeDetails<OpenReason>) => void;
+  /**
+   * Where focus goes when the dialog closes (§12.2 Focus return). `true` returns it to the trigger
+   * (the element that opened the dialog), else to the trigger of the overlay it was opened from (a
+   * Menu button, after a Menu item opened it), else it stays on `<body>` and development builds warn.
+   * An element ref, or a function returning an element, goes first while that element is on the page;
+   * `false` leaves focus where the browser puts it, for an app that moves it itself.
+   * @default true
+   */
+  returnFocus?: ReturnFocusTarget;
   children: ReactNode;
 }
 
@@ -83,9 +97,16 @@ export interface DialogFooterProps extends ComponentPropsWithRef<'div'> {
 }
 
 export interface DialogCloseProps extends Omit<ComponentPropsWithRef<'button'>, 'children'> {
-  /** Must render a `<button>`, for example `render={<Button>Cancel</Button>}`. */
+  /**
+   * Must render a `<button>`, for example `render={<Button>Cancel</Button>}`. With neither `render`
+   * nor `children`, the part is an IconButton showing the close glyph, named by `labels.close`, which
+   * sits in the popup's top corner when it is a direct child of `Dialog.Popup` (§12.3).
+   */
   render?: RenderProp<DialogCloseState>;
+  /** Text content, rendered in a plain `<button>`; leave it out for the default IconButton. */
   children?: ReactNode;
+  /** The default IconButton's accessible name; an `aria-label` you pass wins. */
+  labels?: Partial<Pick<DialogLabels, 'close'>>;
 }
 
 type NoState = Record<string, never>;
@@ -97,7 +118,8 @@ type NoState = Record<string, never>;
  * `dialog`/`alertdialog` role.
  */
 export interface DialogEngine {
-  Root(p: DialogRootProps): ReactElement;
+  /** `returnFocus` stays with the leaf, which hands it to `Popup`. */
+  Root(p: Omit<DialogRootProps, 'returnFocus'>): ReactElement;
   Trigger(p: EnginePart<'button', DialogTriggerState>): ReactElement;
   Popup(
     p: EnginePart<'div', DialogPopupState, 'role'> & {
@@ -112,6 +134,8 @@ export interface DialogEngine {
        * the engine's default (the popup itself). The leaf resolves it from the documented slots.
        */
       initialFocus: (content: HTMLElement) => HTMLElement | null;
+      /** `Dialog.Root`'s `returnFocus`, resolved by the family's focus-return chain (§12.2). */
+      returnFocus: ReturnFocusTarget;
     },
   ): ReactElement;
   Title(p: EnginePart<'h2', NoState, 'id'> & { level: DialogTitleLevel }): ReactElement;

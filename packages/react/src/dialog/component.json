@@ -8,7 +8,7 @@
   "interactive": ["dialog-trigger", "dialog-close"],
   "focusTarget": "self",
   "stateIndicator": [{ "slot": "dialog-popup", "paint": "border" }],
-  "cssDeps": ["base"],
+  "cssDeps": ["base", "icon-button"],
   "variants": { "size": ["sm", "md", "lg"] },
   "figma": {
     "canonical": ["7275:15139"],

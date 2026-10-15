@@ -46,13 +46,6 @@
       scale var(--nz-duration-spring) var(--nz-easing-spring),
       opacity var(--nz-duration-spring) var(--nz-easing-enter);
 
-    /* Focus lands on the popup itself when nothing inside takes it (a server-open dialog, or one
-       opened from the keyboard): the dialog is the container, so it shows no ring of its own, as the
-       Menu and Select lists do not; Tab moves into it, where every control has the Nizivo ring. */
-    &:focus-visible {
-      outline: none;
-    }
-
     &[data-entering] {
       opacity: 0;
       scale: var(--nz-scale-enter);
@@ -79,6 +72,44 @@
     min-block-size: 0;
     overflow: clip;
     border-radius: inherit;
+
+    /* Focus lands on the dialog element itself (this one, role dialog, tabindex -1) when nothing
+       inside takes it (a server-open dialog, or one opened from the keyboard): it is the container,
+       so it shows no ring of its own, as the Menu and Select lists do not; Tab moves into it, where
+       every control has the Nizivo ring. (Week 5 put this on .nz-dialog-popup, which never takes
+       focus, so the browser's ring still showed: week 6 review.) */
+    &:focus-visible {
+      outline: none;
+    }
+  }
+
+  /* A control placed straight in the popup can sit flush with its edge, where the clip above would
+     cut an outside ring: its ring is drawn inside it instead, as in a scroller (§8.5
+     data-focus-inset). The corner Close below is outside the clip and keeps its outside ring. */
+  .nz-dialog-content
+    > :not(.nz-dialog-close.nz-icon-button):is(:focus-visible, [data-focus-visible]) {
+    outline-offset: calc(-1 * var(--nz-border-width-focus));
+  }
+
+  /* The default Dialog.Close, an IconButton, as a direct child of the popup: Figma's header close
+     (07 §4.4: a 20 px icon/secondary glyph, 20 px from the top and end edges, 12 px after the
+     title), drawn as a 40 px tertiary IconButton whose glyph lands on the same spot (§12.3). It is
+     positioned against the popup, which never clips, so the content's clip does not apply to it
+     and its ring and halo always show. */
+  .nz-dialog-content > .nz-dialog-close.nz-icon-button {
+    --_nz-icon-button-fg: var(--nz-icon-secondary);
+
+    position: absolute;
+    inset-block-start: calc(
+      var(--nz-space-5) - (var(--nz-size-control-md) - var(--nz-size-icon-md)) / 2
+    );
+    inset-inline-end: calc(
+      var(--nz-space-5) - (var(--nz-size-control-md) - var(--nz-size-icon-md)) / 2
+    );
+  }
+
+  .nz-dialog-content:has(> .nz-dialog-close.nz-icon-button) > .nz-dialog-title {
+    padding-inline-end: calc(var(--nz-space-5) + var(--nz-size-icon-md) + var(--nz-space-3));
   }
 
   /* Minimum spacing from the Figma Modal (docs/figma/07 §4.4): 24 px sides, 16 px between the title,

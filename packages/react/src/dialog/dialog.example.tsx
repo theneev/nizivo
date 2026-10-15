@@ -2,13 +2,20 @@ import type { JSX } from 'react';
 import { Button } from '../button/index';
 import { Dialog } from './index';
 
-/** Figma Modal Type=Destructive: a server Button arrives as the trigger through `render`. */
+/**
+ * Figma Modal Type=Destructive: a server Button arrives as the trigger through `render`. Compose a
+ * Button (or an IconButton) into `Dialog.Trigger` rather than styling the bare part: it brings the
+ * 40 px control height, so two triggers side by side meet WCAG 2.2 2.5.8 (target size). The bare
+ * `Dialog.Close` is the header's close IconButton, named "Close"; the alertdialog still focuses
+ * Cancel, its least destructive action.
+ */
 export function DialogExample(): JSX.Element {
   return (
     <Dialog.Root>
       <Dialog.Trigger render={<Button variant="critical">Delete product</Button>} />
       <Dialog.Popup role="alertdialog" size="sm">
         <Dialog.Title>Delete “Stoneware mug”?</Dialog.Title>
+        <Dialog.Close />
         <Dialog.Description>This can't be undone.</Dialog.Description>
         <Dialog.Footer>
           <Dialog.Close render={<Button>Cancel</Button>} />
@@ -21,15 +28,36 @@ export function DialogExample(): JSX.Element {
   );
 }
 
-/** Open on the server: closed overlays and server-rendered opens both emit no popup HTML (§12.2 SSR). */
+/**
+ * Open on the server: closed overlays and server-rendered opens both emit no popup HTML (§12.2 SSR).
+ * The trigger is a composed Button, as everywhere (WCAG 2.2 2.5.8).
+ */
 export function DialogOpenExample(): JSX.Element {
   return (
     <Dialog.Root defaultOpen>
-      <Dialog.Trigger>Edit</Dialog.Trigger>
+      <Dialog.Trigger render={<Button variant="secondary">Edit</Button>} />
       <Dialog.Popup>
         <Dialog.Title level={3}>Edit product</Dialog.Title>
+        <Dialog.Close />
         <Dialog.Body>Body</Dialog.Body>
-        <Dialog.Close>Close</Dialog.Close>
+      </Dialog.Popup>
+    </Dialog.Root>
+  );
+}
+
+/**
+ * A footer-less dialog closed by a full-width `Dialog.Close` flush with the popup's bottom edge. The
+ * content clips its corners (Figma), so a control placed straight in it draws its keyboard ring
+ * inside itself, where the clip cannot cut it (§12.3).
+ */
+export function DialogPlainCloseExample(): JSX.Element {
+  return (
+    <Dialog.Root defaultOpen>
+      <Dialog.Trigger render={<Button variant="secondary">Details</Button>} />
+      <Dialog.Popup>
+        <Dialog.Title level={3}>Order shipped</Dialog.Title>
+        <Dialog.Body>It arrives on Friday.</Dialog.Body>
+        <Dialog.Close>Done</Dialog.Close>
       </Dialog.Popup>
     </Dialog.Root>
   );

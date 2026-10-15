@@ -11,6 +11,8 @@ import {
 } from 'react';
 import { renderElement, toRenderFn } from '../contracts/render';
 import { cx } from '../_internal/cx';
+import { CloseGlyph } from '../_internal/glyphs';
+import type { ReturnFocusTarget } from '../_internal/overlay';
 import type {
   DialogBodyProps,
   DialogCloseProps,
@@ -30,6 +32,9 @@ interface Nesting {
 }
 const NestingContext = createContext<Nesting | null>(null);
 
+/** `Dialog.Root`'s `returnFocus`, for its Popup. */
+const ReturnFocusContext = createContext<ReturnFocusTarget>(true);
+
 const renderDiv = toRenderFn<unknown>(undefined, 'div');
 const renderP = toRenderFn<unknown>(undefined, 'p');
 
@@ -47,7 +52,12 @@ function initialFocus(
 ): (content: HTMLElement) => HTMLElement | null {
   return (content) => {
     if (role === 'alertdialog') {
-      return content.querySelector<HTMLElement>('[data-slot="dialog-close"]:not(:disabled)');
+      // A footer action (Cancel) before a close icon in the corner.
+      return (
+        content.querySelector<HTMLElement>(
+          '[data-slot="dialog-footer"] [data-slot="dialog-close"]:not(:disabled)',
+        ) ?? content.querySelector<HTMLElement>('[data-slot="dialog-close"]:not(:disabled)')
+      );
     }
     const body = content.querySelector('[data-slot="dialog-body"]');
     if (body === null) return null;
@@ -65,8 +75,12 @@ function initialFocus(
 }
 const INITIAL_FOCUS = { dialog: initialFocus('dialog'), alertdialog: initialFocus('alertdialog') };
 
-export function DialogRoot(props: DialogRootProps): JSX.Element {
-  return <Engine.Root {...props} />;
+export function DialogRoot({ returnFocus = true, ...props }: DialogRootProps): JSX.Element {
+  return (
+    <ReturnFocusContext value={returnFocus}>
+      <Engine.Root {...props} />
+    </ReturnFocusContext>
+  );
 }
 
 export function DialogTrigger({ className, render, ...rest }: DialogTriggerProps): JSX.Element {
@@ -90,6 +104,7 @@ export function DialogPopup({
   ...rest
 }: DialogPopupProps): JSX.Element {
   const parent = use(NestingContext);
+  const returnFocus = use(ReturnFocusContext);
   const [openChildren, setOpenChildren] = useState(0);
   const nesting = useMemo<Nesting>(
     () => ({ childOpened: (delta) => setOpenChildren((n) => n + delta) }),
@@ -106,6 +121,7 @@ export function DialogPopup({
       backdropProps={{ className: 'nz-dialog-backdrop', 'data-slot': 'dialog-backdrop' }}
       contentProps={{ className: 'nz-dialog-content', 'data-slot': 'dialog-content' }}
       initialFocus={INITIAL_FOCUS[role]}
+      returnFocus={returnFocus}
       className={cx('nz-dialog-popup', className)}
       data-slot="dialog-popup"
       data-size={size}
@@ -197,13 +213,49 @@ export function DialogFooter({ className, render, ...rest }: DialogFooterProps):
   );
 }
 
-export function DialogClose({ className, render, ...rest }: DialogCloseProps): JSX.Element {
+/**
+ * With `render` or `children`, the consumer's button. With neither, an IconButton (tertiary, `md`)
+ * showing the core close glyph (§12.3, §14.2), named by `labels.close`. Its markup is the IconButton
+ * element's (`iconButtonElement` in icon-button.tsx), written out: importing that builder cost the
+ * Dialog entry about 280 B gzip against its 31 KiB cap. An overlay-lane case compares the two.
+ */
+export function DialogClose({
+  className,
+  render,
+  children,
+  labels,
+  ...rest
+}: DialogCloseProps): JSX.Element {
   return (
     <Engine.Close
       {...rest}
       className={cx('nz-dialog-close', className)}
       data-slot="dialog-close"
-      render={toRenderFn(render, 'button')}
-    />
+      render={toRenderFn(
+        render ??
+          (children === undefined
+            ? closeIcon(rest['aria-label'] ?? labels?.close ?? 'Close')
+            : undefined),
+        'button',
+      )}
+    >
+      {children}
+    </Engine.Close>
+  );
+}
+
+function closeIcon(label: string): ReactElement {
+  return (
+    <button
+      type="button"
+      className="nz-icon-button nz-hit-target"
+      data-variant="tertiary"
+      data-size="md"
+      aria-label={label}
+    >
+      <span className="nz-icon-button-icon" data-slot="icon-button-icon" aria-hidden="true">
+        <CloseGlyph />
+      </span>
+    </button>
   );
 }

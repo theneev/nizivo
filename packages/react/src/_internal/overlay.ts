@@ -16,12 +16,24 @@
 //   lock beside the engine; `delegated` names these so a second family states the same ownership;
 // - completed by the family where the engine stops short (D-af), each in the family's own files and
 //   named in `completes`, because a second family must provide the same behaviour, not the same
-//   code: Tab out of a modal popup closes it and moves focus past the trigger (`tab-out`), focus goes
-//   back to the trigger after a popup that was open on the server closes (`return-focus`), a dialog
-//   focuses its first field (`initial-focus`), and a nested overlay's portal container stays
-//   interactive under a modal parent (`nested-top-layer`). The conformance suite tests all four.
+//   code: Tab out of a modal popup closes it and moves focus past the trigger (`tab-out`), the
+//   focus-return chain of §12.2 (`return-focus`: `returnFocus`, the trigger even after a popup
+//   that was open on the server, the parent overlay's trigger, then <body> with a development
+//   warning), a dialog focuses its first field (`initial-focus`), and a nested overlay's portal
+//   container stays interactive under a modal parent (`nested-top-layer`). The conformance suite
+//   tests all four.
 import type { CSSProperties, ReactElement, ReactNode, RefObject } from 'react';
 import type { Align, Side } from '../contracts/state';
+
+/**
+ * Where focus goes when an overlay closes (§12.2 Focus return): `true` follows the chain (the
+ * trigger, else the parent overlay's trigger), an element ref or a function returning an element
+ * goes there first while it is on the page, and `false` leaves focus alone.
+ */
+export type ReturnFocusTarget =
+  | boolean
+  | RefObject<HTMLElement | null>
+  | (() => HTMLElement | null | undefined);
 
 /** A popup's requested side, in logical terms (`start`/`end` follow the writing direction). */
 export type LogicalSide = 'top' | 'bottom' | 'start' | 'end';

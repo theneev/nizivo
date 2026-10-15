@@ -2,8 +2,8 @@
   "$comment": "Size budgets (ARCHITECTURE.md §17), written by `node packages/tooling/size/measure.ts --write`. measured: bytes, gzip -9, as size-limit 14.2 reports them. limitKiB: measured + 10%, rounded up (method.ts limitKiB), never above the entry's §17.1 plan limit (method.ts PLAN_LIMITS_KIB). Limits only go up through a labelled PR (§17.3).",
   "entries": {
     "@nizivo/react": {
-      "measured": 85322,
-      "limitKiB": 92
+      "measured": 85746,
+      "limitKiB": 93
     },
     "@nizivo/react/alert": {
       "measured": 1244,
@@ -46,7 +46,7 @@
       "limitKiB": 1.1
     },
     "@nizivo/react/dialog": {
-      "measured": 31445,
+      "measured": 32121,
       "limitKiB": 32
     },
     "@nizivo/react/empty-state": {
@@ -70,7 +70,7 @@
       "limitKiB": 0.9
     },
     "@nizivo/react/icon-button": {
-      "measured": 17260,
+      "measured": 17293,
       "limitKiB": 19
     },
     "@nizivo/react/image": {
@@ -94,7 +94,7 @@
       "limitKiB": 1.3
     },
     "@nizivo/react/menu": {
-      "measured": 56455,
+      "measured": 56711,
       "limitKiB": 57
     },
     "@nizivo/react/meter": {
@@ -122,7 +122,7 @@
       "limitKiB": 2.6
     },
     "@nizivo/react/select": {
-      "measured": 62971,
+      "measured": 63259,
       "limitKiB": 66
     },
     "@nizivo/react/separator": {
@@ -162,11 +162,11 @@
       "limitKiB": 0.4
     },
     "@nizivo/react/tooltip": {
-      "measured": 16327,
+      "measured": 16361,
       "limitKiB": 16
     },
     "@nizivo/react dashboard set": {
-      "measured": 76735,
+      "measured": 77260,
       "limitKiB": 76
     },
     "@nizivo/react { Button } from the barrel": {
@@ -174,11 +174,11 @@
       "limitKiB": 1.4
     },
     "@nizivo/react { Select } from the barrel": {
-      "measured": 62904,
+      "measured": 63185,
       "limitKiB": 68
     },
     "@nizivo/react own: _engines/react-aria/dialog.client": {
-      "measured": 1123,
+      "measured": 1138,
       "limitKiB": 1.3
     },
     "@nizivo/react own: _engines/react-aria/locale.client": {
@@ -194,8 +194,8 @@
       "limitKiB": 0.6
     },
     "@nizivo/react own: _engines/react-aria/popup.client": {
-      "measured": 808,
-      "limitKiB": 0.9
+      "measured": 1126,
+      "limitKiB": 1.3
     },
     "@nizivo/react own: _engines/react-aria/select.client": {
       "measured": 1431,
@@ -206,7 +206,7 @@
       "limitKiB": 0.7
     },
     "@nizivo/react own: _engines/react-aria/tooltip.client": {
-      "measured": 654,
+      "measured": 719,
       "limitKiB": 0.8
     },
     "@nizivo/react own: alert/alert-dismiss.client": {
@@ -222,8 +222,8 @@
       "limitKiB": 0.3
     },
     "@nizivo/react own: dialog/dialog.client": {
-      "measured": 1098,
-      "limitKiB": 1.2
+      "measured": 1300,
+      "limitKiB": 1.4
     },
     "@nizivo/react own: field/field-scope.client": {
       "measured": 1123,
@@ -310,8 +310,8 @@
       "limitKiB": 0.5
     },
     "@nizivo/react/css/dialog.css": {
-      "measured": 770,
-      "limitKiB": 0.9
+      "measured": 918,
+      "limitKiB": 1
     },
     "@nizivo/react/css/empty-state.css": {
       "measured": 476,
@@ -426,7 +426,7 @@
       "limitKiB": 0.6
     },
     "@nizivo/react/styles.css": {
-      "measured": 14795,
+      "measured": 14878,
       "limitKiB": 16
     },
     "@nizivo/tokens": {

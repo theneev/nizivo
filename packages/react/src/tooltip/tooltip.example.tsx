@@ -2,6 +2,11 @@ import type { JSX } from 'react';
 import { Button } from '../button/index';
 import { Tooltip } from './index';
 
+/**
+ * Compose a Button (or an IconButton) into `Tooltip.Trigger`: the bare part is an unstyled
+ * `<button>` as small as its text, and two side by side fail WCAG 2.2 2.5.8 (target size); the
+ * Button brings the 40 px control height.
+ */
 export function TooltipExample(): JSX.Element {
   return (
     <Tooltip.Root>
@@ -23,10 +28,11 @@ export function TooltipShortcutExample(): JSX.Element {
   );
 }
 
+/** Open on the server; the trigger is a composed Button, as everywhere (WCAG 2.2 2.5.8). */
 export function TooltipOpenExample(): JSX.Element {
   return (
     <Tooltip.Root defaultOpen delay={0}>
-      <Tooltip.Trigger aria-label="Refresh">↻</Tooltip.Trigger>
+      <Tooltip.Trigger render={<Button variant="secondary">Refresh</Button>} />
       <Tooltip.Popup>Refresh data</Tooltip.Popup>
     </Tooltip.Root>
   );
