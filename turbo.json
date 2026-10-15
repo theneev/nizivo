@@ -40,7 +40,53 @@
     },
     "@nizivo/tooling#test": {
       "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/contracts/api/**"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/contracts/api/**",
+        "$TURBO_ROOT$/packages/react/package.json",
+        "$TURBO_ROOT$/packages/tokens/package.json",
+        "$TURBO_ROOT$/packages/icons/package.json",
+        "$TURBO_ROOT$/packages/react/src/**/*.client.tsx",
+        "$TURBO_ROOT$/fixtures/runner/pack.ts"
+      ],
+      "outputs": []
+    },
+    "@nizivo/react#build": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "!**/*.test.ts",
+        "!**/*.test.tsx",
+        "!**/*.example.tsx",
+        "!test/**",
+        "!scripts/visual/**",
+        "!.size-limit.ts",
+        "!SIZES.md",
+        "!README.md",
+        "!W*-RESULTS.md"
+      ],
+      "outputs": ["dist/**"]
+    },
+    "@nizivo/react#typecheck": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "!test/visual/baselines/**",
+        "!SIZES.md",
+        "!W*-RESULTS.md",
+        "$TURBO_ROOT$/fixtures/floor-lane/png.ts"
+      ],
+      "outputs": []
+    },
+    "@nizivo/react#test": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "!test/visual/**",
+        "!scripts/visual/**",
+        "!SIZES.md",
+        "!W*-RESULTS.md"
+      ],
       "outputs": []
     },
     "@nizivo/docs#build": {
