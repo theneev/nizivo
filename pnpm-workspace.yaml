@@ -3,8 +3,10 @@ packages:
   - packages/tooling/*
   - apps/*
   - fixtures/*
-  # Its own workspace root: it installs packed tarballs from a gitignored folder (fixtures/next/RESULTS.md).
+  # Each is its own workspace root: it installs packed tarballs from a gitignored folder (fixtures/next/RESULTS.md).
   - '!fixtures/next'
+  - '!fixtures/vite'
+  - '!fixtures/astro'
 
 # One version of each shared dependency across the repo (ARCHITECTURE.md §19.1).
 # Tooling is pinned exactly; engine dependencies use caret ranges so consumer trees dedupe (§5.3).
@@ -71,6 +73,13 @@ catalog:
   # Package correctness on packed tarballs (§18.1)
   publint: 0.3.25
   '@arethetypeswrong/cli': 0.18.5
+
+  # Size budgets (§17): @size-limit/esbuild bundles with esbuild (r3's method; it resolves the esbuild
+  # 0.28.2 that allowBuilds already lists) and @size-limit/file measures the result (the esbuild plugin
+  # fails without it). Not preset-small-lib, which bundles with rolldown in 14.x.
+  size-limit: 14.2.0
+  '@size-limit/esbuild': 14.2.0
+  '@size-limit/file': 14.2.0
 
   # Tokens
   '@terrazzo/cli': 2.8.0

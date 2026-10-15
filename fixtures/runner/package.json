@@ -8,11 +8,14 @@
   "scripts": {
     "typecheck": "tsc --noEmit -p .",
     "pack:fixture": "node pack.ts",
-    "fixture:next": "node next.ts"
+    "fixture:next": "node next.ts",
+    "fixture:vite": "node vite.ts",
+    "fixture:astro": "node astro.ts"
   },
   "devDependencies": {
     "@nizivo/tsconfig": "workspace:*",
     "@types/node": "catalog:",
+    "axe-core": "catalog:",
     "playwright": "catalog:",
     "typescript": "catalog:"
   }

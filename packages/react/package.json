@@ -240,7 +240,9 @@
     "test:browser": "vitest run --config test/browser/vitest.config.ts",
     "test:overlay": "vitest run --config test/overlay/vitest.config.ts",
     "lint": "stylelint \"src/**/*.css\" \"styles/**/*.css\" --allow-empty-input",
-    "check:dist": "tsdown && node scripts/build-css.ts && vitest run --config test/built/vitest.config.ts"
+    "check:dist": "tsdown && node scripts/build-css.ts && vitest run --config test/built/vitest.config.ts",
+    "size": "size-limit --hide-passed",
+    "test:visual": "node scripts/visual/run.ts"
   },
   "dependencies": {
     "@nizivo/tokens": "workspace:*",
@@ -251,6 +253,8 @@
     "@nizivo/stylelint-config": "workspace:*",
     "@nizivo/tsconfig": "workspace:*",
     "@nizivo/tsdown-preset": "workspace:*",
+    "@size-limit/esbuild": "catalog:",
+    "@size-limit/file": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
@@ -259,6 +263,7 @@
     "playwright": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
+    "size-limit": "catalog:",
     "stylelint": "catalog:",
     "tsdown": "catalog:",
     "typescript": "catalog:",
