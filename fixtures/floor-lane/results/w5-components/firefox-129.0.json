@@ -2,7 +2,7 @@
   "engine": "firefox",
   "version": "129.0",
   "driver": "WebDriver BiDi (Node WebSocket), headless",
-  "runAt": "2026-10-15T09:40:34.203Z",
+  "runAt": "2026-10-15T14:37:14.924Z",
   "tokens": "packages/tokens/dist/tokens.css",
   "pages": {
     "w5-components.light": {
@@ -37,7 +37,7 @@
         "scaleEnter": "0.96"
       },
       "summary": {
-        "pass": 201,
+        "pass": 208,
         "fail": 0,
         "info": 0
       },
@@ -71,7 +71,7 @@
         "input": 5,
         "textarea": 2,
         "native-select": 8,
-        "select": 10,
+        "select": 17,
         "menu": 18,
         "tooltip": 4,
         "dialog": 9,
@@ -218,12 +218,23 @@
         "select | trigger-height": 40,
         "select | chevron": "16 x 16",
         "select | popup-trigger-width": 240,
-        "select | item-height": 35.6,
+        "select | row-min-height": 36,
+        "select | row-gap": 2,
         "select | item-highlight": "rgb(246, 247, 244)",
-        "select | item-selected-weight": "600",
+        "select | item-selected-fill": "rgb(233, 243, 236)",
+        "select | item-selected-text": "rgb(26, 87, 58)",
+        "select | selected-indicator": "visible",
+        "select | unselected-indicator": "hidden",
+        "select | indicator-1em": "16 x 16",
         "select | item-disabled": "rgb(158, 165, 156)",
+        "select | group-label": "rgb(89, 96, 88)",
         "select | separator": 1,
         "select | list-padding": 6,
+        "select | popup-edge": {
+          "border": "1px solid",
+          "radius": "16px",
+          "shadow": true
+        },
         "select | entering": {
           "opacity": "0",
           "scale": "0.96"
@@ -494,7 +505,7 @@
         "scaleEnter": "0.96"
       },
       "summary": {
-        "pass": 201,
+        "pass": 208,
         "fail": 0,
         "info": 0
       },
@@ -528,7 +539,7 @@
         "input": 5,
         "textarea": 2,
         "native-select": 8,
-        "select": 10,
+        "select": 17,
         "menu": 18,
         "tooltip": 4,
         "dialog": 9,
@@ -675,12 +686,23 @@
         "select | trigger-height": 40,
         "select | chevron": "16 x 16",
         "select | popup-trigger-width": 240,
-        "select | item-height": 35.6,
+        "select | row-min-height": 36,
+        "select | row-gap": 2,
         "select | item-highlight": "rgb(246, 247, 244)",
-        "select | item-selected-weight": "600",
+        "select | item-selected-fill": "rgb(233, 243, 236)",
+        "select | item-selected-text": "rgb(26, 87, 58)",
+        "select | selected-indicator": "visible",
+        "select | unselected-indicator": "hidden",
+        "select | indicator-1em": "16 x 16",
         "select | item-disabled": "rgb(158, 165, 156)",
+        "select | group-label": "rgb(89, 96, 88)",
         "select | separator": 1,
         "select | list-padding": 6,
+        "select | popup-edge": {
+          "border": "1px solid",
+          "radius": "16px",
+          "shadow": true
+        },
         "select | entering": {
           "opacity": "0",
           "scale": "0.96"

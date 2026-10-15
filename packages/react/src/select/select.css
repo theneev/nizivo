@@ -1,30 +1,59 @@
 @layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
 
-/* @nizivo/react/css/select.css (ARCHITECTURE.md §8.2–§8.4, §12.1). Skeleton: shows the contract
-   (privates, hooks read once, state from the data-* vocabulary); the full visual pass lands later. */
+/* @nizivo/react/css/select.css (ARCHITECTURE.md §8.2–§8.4, §12.1; figma/13 §4.3). The trigger is
+   the Select skin NativeSelect repeats (same box, border, sizes, invalid and disabled looks); the
+   popup and its rows repeat Menu's recipe (menu.css: the Dropdown Menu master 746:204 and the Menu
+   Item set 7275:11516), values copied, not imported. Sizes and states set only privates; public
+   --nz-select-* hooks are read once, at the property. Invalid reads [data-invalid], set when a
+   message is presented, never :invalid (§8.3). */
 @layer nz.components {
   .nz-select-trigger {
     --_nz-select-height: var(--nz-size-control-md);
+    --_nz-select-radius: var(--nz-radius-md);
     --_nz-select-border: var(--nz-border-control);
+    --_nz-select-border-hover: var(--nz-border-control-hover);
+    --_nz-select-halo: var(--nz-focus-halo);
 
     display: inline-flex;
     align-items: center;
     gap: var(--nz-space-2);
+    /* the same box with or without a page reset (§8.1) */
+    box-sizing: border-box;
+    min-inline-size: 0;
     block-size: var(--nz-select-height, var(--_nz-select-height));
     padding-inline: var(--nz-space-3);
     border: var(--nz-border-width-default) solid var(--nz-select-border, var(--_nz-select-border));
-    border-radius: var(--nz-select-radius, var(--nz-radius-md));
+    border-radius: var(--nz-select-radius, var(--_nz-select-radius));
     background: var(--nz-select-bg, var(--nz-bg-surface));
     color: var(--nz-text-primary);
     font: var(--nz-font-label-m);
+    cursor: pointer;
+    transition:
+      border-color var(--nz-duration-fast) var(--nz-easing-standard),
+      box-shadow var(--nz-duration-fast) var(--nz-easing-standard);
 
     @media (hover: hover) {
-      &:hover:not([data-disabled]) {
-        border-color: var(--nz-select-border-hover, var(--nz-border-control-hover));
+      &:hover:not([data-disabled], :disabled) {
+        border-color: var(--nz-select-border-hover, var(--_nz-select-border-hover));
       }
     }
 
-    &[data-disabled] {
+    /* the outline lives in nz.base; this adds only the decorative halo, critical while invalid, as
+       on Input and NativeSelect */
+    &:is(:focus-visible, [data-focus-visible]) {
+      box-shadow: 0 0 0 calc(var(--nz-border-width-focus) + 4px) var(--_nz-select-halo);
+    }
+
+    &[data-invalid] {
+      --_nz-select-border: var(--nz-border-critical);
+      --_nz-select-border-hover: var(--nz-border-critical);
+      --_nz-select-halo: var(--nz-focus-halo-critical);
+    }
+
+    /* the Select's own flag, or a disabled Fieldset, which disables the <button> natively */
+    &:is([data-disabled], :disabled) {
+      --_nz-select-border: var(--nz-border-subtle);
+
       background: var(--nz-bg-disabled);
       color: var(--nz-text-disabled);
       cursor: not-allowed;
@@ -32,6 +61,7 @@
 
     &[data-size='sm'] {
       --_nz-select-height: var(--nz-size-control-sm);
+      --_nz-select-radius: var(--nz-radius-sm);
     }
 
     &[data-size='lg'] {
@@ -39,9 +69,14 @@
     }
   }
 
+  /* a long value ends in an ellipsis before the chevron, as NativeSelect's does */
   .nz-select-value {
     flex: 1;
+    min-inline-size: 0;
+    overflow: hidden;
     text-align: start;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 
     &[data-placeholder] {
       color: var(--nz-text-tertiary);
@@ -51,6 +86,7 @@
   .nz-select-icon,
   .nz-select-chevron {
     display: inline-flex;
+    flex: none;
     /* internal glyphs are 1em: size them to the 16 px icon slot, not to the value font */
     font-size: var(--nz-size-icon-sm);
     color: var(--nz-text-secondary);
@@ -62,11 +98,17 @@
      survives reduced motion and the scale does not travel (--nz-scale-enter is 1). */
   .nz-select-popup {
     z-index: var(--nz-z-overlay);
+    /* the minimum is the whole popup, border included, so it matches the trigger (§8.1) */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
     min-inline-size: var(--nz-trigger-width);
+    max-block-size: var(--nz-available-height);
     overflow: auto;
-    border-radius: var(--nz-radius-md);
+    border: var(--nz-border-width-default) solid var(--nz-border-subtle);
+    border-radius: var(--nz-radius-lg);
     background: var(--nz-bg-surface-raised);
-    box-shadow: var(--nz-elevation-4);
+    box-shadow: var(--nz-elevation-3);
     transform-origin: var(--nz-transform-origin);
     transition:
       scale var(--nz-duration-spring) var(--nz-easing-spring),
@@ -83,39 +125,81 @@
     }
   }
 
+  /* the listbox: Figma's 6 px padding and 2 px between rows */
+  .nz-select-list,
+  .nz-select-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-0-5);
+  }
+
   .nz-select-list {
     padding: var(--nz-space-1-5);
     outline: none;
   }
 
+  /* Menu's row: 36 px with or without a page reset (the minimum includes the padding) */
   .nz-select-item {
-    padding-block: var(--nz-space-2);
+    display: flex;
+    align-items: center;
+    gap: var(--nz-space-2);
+    box-sizing: border-box;
+    min-block-size: 2.25rem;
+    padding-block: var(--nz-space-1-5);
     padding-inline: var(--nz-space-3);
     border-radius: var(--nz-radius-sm);
+    color: var(--nz-text-primary);
+    font: var(--nz-font-body-m);
+    letter-spacing: var(--nz-tracking-body-m);
     cursor: default;
 
+    /* a pointer hint only (1.08:1 on the surface); keyboard focus is the generated ring */
     &[data-highlighted] {
       background: var(--nz-bg-hover);
     }
 
+    /* the Menu Item "Selected" look; the check, not the colour, carries the state (WCAG 1.4.1) */
     &[data-selected] {
-      font-weight: 600;
+      background: var(--nz-bg-brand-subtle);
+      color: var(--nz-text-brand);
+    }
+
+    /* under the pointer it swaps to the hover fill and keeps the brand label, as Menu's checked row */
+    &[data-selected][data-highlighted] {
+      background: var(--nz-bg-hover);
     }
 
     &[data-disabled] {
       color: var(--nz-text-disabled);
+      cursor: not-allowed;
     }
   }
 
-  .nz-select-group-label {
-    padding-inline: var(--nz-space-3);
-    color: var(--nz-text-secondary);
-    font: var(--nz-font-label-s);
+  .nz-select-item-indicator {
+    display: inline-flex;
+    flex: none;
+    margin-inline-start: auto;
+    font-size: var(--nz-size-icon-sm);
+    color: var(--nz-icon-brand);
+    visibility: hidden;
   }
 
+  .nz-select-item[data-selected] > .nz-select-item-indicator {
+    visibility: visible;
+  }
+
+  .nz-select-group-label {
+    padding-block: var(--nz-space-1-5) var(--nz-space-1);
+    padding-inline-start: var(--nz-space-3);
+    color: var(--nz-text-tertiary);
+    font: var(--nz-font-label-m);
+    letter-spacing: var(--nz-tracking-label-m);
+  }
+
+  /* inset by the list padding and spaced only by the 2 px gaps, as Menu's */
   .nz-select-separator {
-    block-size: 1px;
-    margin-block: var(--nz-space-1-5);
+    flex: none;
+    block-size: var(--nz-border-width-default);
     background: var(--nz-border-subtle);
   }
 
@@ -124,20 +208,35 @@
       border: 1px solid CanvasText;
     }
 
-    /* base.css's [data-selected] floor (Highlight) loses to [data-highlighted]'s background above,
-       a later layer, and its forced-color-adjust: none would then leave HighlightText on the hover
-       token. Keyboard focus opens on the selected item, so repeat the floor here (§8.5). */
-    .nz-select-item[data-selected] {
+    /* base.css's [data-selected] floor (Highlight) loses to the fills above, a later layer, and its
+       forced-color-adjust: none would then leave HighlightText on a token colour. Keyboard focus
+       opens on the selected item, so repeat the floor here (§8.5); the second selector outranks the
+       selected-and-highlighted hover fill, as Menu's does (week 5 visual lane). */
+    .nz-select-item[data-selected],
+    .nz-select-item[data-selected][data-highlighted] {
       background: Highlight;
       color: HighlightText;
-      /* forced-color-adjust is inherited: the outward ring needs a system colour against Canvas */
-      outline-color: CanvasText;
+      /* forced-color-adjust is inherited: the ring and the check need system colours too. The rows
+         carry data-focus-inset, so the keyboard ring is drawn inside the Highlight fill, where
+         HighlightText shows (CanvasText there was about 1.9:1 against the fill: week 6 review) */
+      outline-color: HighlightText;
+      /* one ring width further in, so Highlight shows on both sides of it: at the row's edge it
+         would sit against the Canvas around the row and read as the fill shrinking */
+      outline-offset: calc(-2 * var(--nz-border-width-focus));
       forced-color-adjust: none;
+
+      & > .nz-select-item-indicator {
+        color: HighlightText;
+      }
     }
 
     /* the options are divs with aria-disabled, which the browser does not grey out */
     .nz-select-item[data-disabled] {
       color: GrayText;
+    }
+
+    .nz-select-separator {
+      background: CanvasText;
     }
   }
 }

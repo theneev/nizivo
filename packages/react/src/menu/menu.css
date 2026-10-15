@@ -181,9 +181,13 @@
       background: Highlight;
       color: HighlightText;
       /* forced-color-adjust is inherited, so the ring and the glyphs would keep their token colours.
-         The keyboard ring sits outside the row, on Canvas, so it takes CanvasText as Select's does
-         (HighlightText there was invisible: week 5 visual lane) */
-      outline-color: CanvasText;
+         The rows carry data-focus-inset, so the keyboard ring is drawn inside the Highlight fill,
+         where HighlightText shows, as Select's does (CanvasText there was about 1.9:1 against the
+         fill: week 6 review) */
+      outline-color: HighlightText;
+      /* one ring width further in, so Highlight shows on both sides of it: at the row's edge it
+         would sit against the Canvas around the row and read as the fill shrinking */
+      outline-offset: calc(-2 * var(--nz-border-width-focus));
       forced-color-adjust: none;
 
       & > :is(.nz-menu-item-icon, .nz-menu-item-shortcut, .nz-menu-item-indicator) {

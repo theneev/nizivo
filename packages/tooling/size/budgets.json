@@ -2,7 +2,7 @@
   "$comment": "Size budgets (ARCHITECTURE.md §17), written by `node packages/tooling/size/measure.ts --write`. measured: bytes, gzip -9, as size-limit 14.2 reports them. limitKiB: measured + 10%, rounded up (method.ts limitKiB), never above the entry's §17.1 plan limit (method.ts PLAN_LIMITS_KIB). Limits only go up through a labelled PR (§17.3).",
   "entries": {
     "@nizivo/react": {
-      "measured": 84891,
+      "measured": 85322,
       "limitKiB": 92
     },
     "@nizivo/react/alert": {
@@ -26,8 +26,8 @@
       "limitKiB": 1.2
     },
     "@nizivo/react/checkbox": {
-      "measured": 2009,
-      "limitKiB": 2.2
+      "measured": 2068,
+      "limitKiB": 2.3
     },
     "@nizivo/react/config": {
       "measured": 165,
@@ -54,8 +54,8 @@
       "limitKiB": 1
     },
     "@nizivo/react/field": {
-      "measured": 2996,
-      "limitKiB": 3.3
+      "measured": 3115,
+      "limitKiB": 3.4
     },
     "@nizivo/react/fieldset": {
       "measured": 1715,
@@ -86,8 +86,8 @@
       "limitKiB": 1.2
     },
     "@nizivo/react/input": {
-      "measured": 1749,
-      "limitKiB": 1.9
+      "measured": 1811,
+      "limitKiB": 2
     },
     "@nizivo/react/kbd": {
       "measured": 1192,
@@ -118,11 +118,11 @@
       "limitKiB": 2.4
     },
     "@nizivo/react/segmented-control": {
-      "measured": 2309,
-      "limitKiB": 2.5
+      "measured": 2365,
+      "limitKiB": 2.6
     },
     "@nizivo/react/select": {
-      "measured": 62242,
+      "measured": 62971,
       "limitKiB": 66
     },
     "@nizivo/react/separator": {
@@ -138,8 +138,8 @@
       "limitKiB": 0.8
     },
     "@nizivo/react/switch": {
-      "measured": 1671,
-      "limitKiB": 1.8
+      "measured": 1729,
+      "limitKiB": 1.9
     },
     "@nizivo/react/tab-nav": {
       "measured": 1031,
@@ -154,8 +154,8 @@
       "limitKiB": 0.8
     },
     "@nizivo/react/textarea": {
-      "measured": 1291,
-      "limitKiB": 1.4
+      "measured": 1349,
+      "limitKiB": 1.5
     },
     "@nizivo/react/theme-script": {
       "measured": 363,
@@ -166,7 +166,7 @@
       "limitKiB": 16
     },
     "@nizivo/react dashboard set": {
-      "measured": 76027,
+      "measured": 76735,
       "limitKiB": 75
     },
     "@nizivo/react { Button } from the barrel": {
@@ -174,8 +174,8 @@
       "limitKiB": 1.4
     },
     "@nizivo/react { Select } from the barrel": {
-      "measured": 62152,
-      "limitKiB": 67
+      "measured": 62904,
+      "limitKiB": 68
     },
     "@nizivo/react own: _engines/react-aria/dialog.client": {
       "measured": 1123,
@@ -198,8 +198,8 @@
       "limitKiB": 0.9
     },
     "@nizivo/react own: _engines/react-aria/select.client": {
-      "measured": 1258,
-      "limitKiB": 1.4
+      "measured": 1431,
+      "limitKiB": 1.6
     },
     "@nizivo/react own: _engines/react-aria/tabs.client": {
       "measured": 629,
@@ -226,8 +226,8 @@
       "limitKiB": 1.2
     },
     "@nizivo/react own: field/field-scope.client": {
-      "measured": 1009,
-      "limitKiB": 1.1
+      "measured": 1123,
+      "limitKiB": 1.3
     },
     "@nizivo/react own: icon-button/icon-button.client": {
       "measured": 349,
@@ -250,8 +250,8 @@
       "limitKiB": 1.3
     },
     "@nizivo/react own: select/select.client": {
-      "measured": 879,
-      "limitKiB": 1
+      "measured": 1146,
+      "limitKiB": 1.3
     },
     "@nizivo/react own: switch/switch.client": {
       "measured": 552,
@@ -358,7 +358,7 @@
       "limitKiB": 0.5
     },
     "@nizivo/react/css/menu.css": {
-      "measured": 1030,
+      "measured": 1050,
       "limitKiB": 1.2
     },
     "@nizivo/react/css/meter.css": {
@@ -386,8 +386,8 @@
       "limitKiB": 1.1
     },
     "@nizivo/react/css/select.css": {
-      "measured": 840,
-      "limitKiB": 1
+      "measured": 1219,
+      "limitKiB": 1.4
     },
     "@nizivo/react/css/separator.css": {
       "measured": 261,
@@ -426,7 +426,7 @@
       "limitKiB": 0.6
     },
     "@nizivo/react/styles.css": {
-      "measured": 14712,
+      "measured": 14795,
       "limitKiB": 16
     },
     "@nizivo/tokens": {

@@ -68,13 +68,13 @@
               "type": "boolean"
             },
             {
-              "description": "An error message is presented (owned by Field, never by the engine).",
+              "description": "An error message is presented (owned by Field, never by the engine). Inside a Field, the Field sets it.",
               "name": "invalid",
               "required": false,
               "type": "boolean"
             },
             {
-              "description": "With `name`, a hidden native `<select>` carries the value into `FormData`.",
+              "description": "With `name`, a hidden native `<select>` carries the value into `FormData`. Inside a `Field`, the Field's `name`, `required`, `disabled` and presented error apply unless set here (an explicit `false` wins), and a click on its label focuses the trigger without opening the listbox.",
               "name": "name",
               "required": false,
               "type": "string"
@@ -301,6 +301,12 @@
               "name": "disabled",
               "required": false,
               "type": "boolean"
+            },
+            {
+              "description": "Replaces the check shown at the end of the selected item; `null` shows none. Decorative.",
+              "name": "indicator",
+              "required": false,
+              "type": "ReactNode"
             },
             {
               "description": "Must render a `<div>`.",
@@ -750,6 +756,12 @@
           "name": "data-disabled",
           "presence": true,
           "prop": "disabled"
+        },
+        {
+          "group": "local",
+          "meaning": "a11y-floor opt-out: draw the focus outline inside the part (outline-offset -2px), for clipped scrollers such as DialogBody and table cells (§8.5)",
+          "name": "data-focus-inset",
+          "presence": true
         },
         {
           "group": "state",

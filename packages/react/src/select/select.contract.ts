@@ -27,11 +27,15 @@ export interface SelectRootProps {
   open?: boolean;
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean, details: ChangeDetails<OpenReason>) => void;
-  /** With `name`, a hidden native `<select>` carries the value into `FormData`. */
+  /**
+   * With `name`, a hidden native `<select>` carries the value into `FormData`. Inside a `Field`, the
+   * Field's `name`, `required`, `disabled` and presented error apply unless set here (an explicit
+   * `false` wins), and a click on its label focuses the trigger without opening the listbox.
+   */
   name?: string;
   required?: boolean;
   disabled?: boolean;
-  /** An error message is presented (owned by Field, never by the engine). */
+  /** An error message is presented (owned by Field, never by the engine). Inside a Field, the Field sets it. */
   invalid?: boolean;
   placeholder?: SelectLabels['placeholder'];
   'aria-label'?: string;
@@ -109,6 +113,8 @@ export interface SelectItemProps extends Omit<ComponentPropsWithRef<'div'>, 'chi
   /** Typeahead text; defaults to `children` when it is a string. */
   textValue?: string;
   disabled?: boolean;
+  /** Replaces the check shown at the end of the selected item; `null` shows none. Decorative. */
+  indicator?: ReactNode;
   /** Must render a `<div>`. */
   render?: RenderProp<SelectItemState>;
   children: ReactNode;

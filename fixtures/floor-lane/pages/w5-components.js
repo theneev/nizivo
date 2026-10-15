@@ -468,22 +468,55 @@ function run() {
     'min-inline-size: var(--nz-trigger-width)',
   );
   const options = $$('.nz-select-item', popup);
-  // The Select popup sets no type style yet (the select.css visual pass, W6): its items inherit the
-  // page's. Label/M, the trigger's style, is what this page gives them; a style of their own must
-  // keep this line.
-  textHeight(
-    'select',
-    'item-height',
-    options[0],
-    'label-m',
-    2 * len('space-2'),
-    'label-m line from its tokens + padding (inherited: the popup sets no type style yet)',
-  );
+  // The select.css pass (week 6, figma/13 §4.3): Select's rows share Menu's recipe. Figma's 36 px
+  // row, padding included, on a page with no reset (§8.1), 2 px apart.
+  height('select', 'row-min-height', options[0], 36, '2.25rem, padding included');
+  distance('select', 'row-gap', box(options[1]).top - box(options[0]).bottom, len('space-0-5'));
   equal('select', 'item-highlight', cs(options[0]).backgroundColor, colour('bg-hover'));
-  equal('select', 'item-selected-weight', cs(options[1]).fontWeight, '600');
+  equal('select', 'item-selected-fill', cs(options[1]).backgroundColor, colour('bg-brand-subtle'));
+  equal('select', 'item-selected-text', cs(options[1]).color, colour('text-brand', 'color'));
+  equal(
+    'select',
+    'selected-indicator',
+    cs($('.nz-select-item-indicator', options[1])).visibility,
+    'visible',
+  );
+  equal(
+    'select',
+    'unselected-indicator',
+    cs($('.nz-select-item-indicator', options[0])).visibility,
+    'hidden',
+  );
+  size('select', 'indicator-1em', $('.nz-select-item-indicator svg', options[1]), iconSm, iconSm);
   equal('select', 'item-disabled', cs(options[2]).color, colour('text-disabled', 'color'));
-  height('select', 'separator', $('.nz-select-separator', popup), 1);
+  equal(
+    'select',
+    'group-label',
+    cs($('.nz-select-group-label', popup)).color,
+    colour('text-tertiary', 'color'),
+  );
+  height('select', 'separator', $('.nz-select-separator', popup), len('border-width-default'));
   equal('select', 'list-padding', px(cs($('.nz-select-list', popup)).paddingTop), len('space-1-5'));
+  const popupStyle = cs(popup);
+  check(
+    'select',
+    'popup-edge',
+    px(popupStyle.borderTopWidth) === len('border-width-default') &&
+      popupStyle.borderTopStyle === 'solid' &&
+      px(popupStyle.borderTopLeftRadius) === len('radius-lg') &&
+      popupStyle.boxShadow !== 'none',
+    {
+      border: `${popupStyle.borderTopWidth} ${popupStyle.borderTopStyle}`,
+      radius: popupStyle.borderTopLeftRadius,
+      shadow: popupStyle.boxShadow !== 'none',
+    },
+    {
+      border: `${len('border-width-default')}px solid`,
+      radius: `${len('radius-lg')}px`,
+      shadow: true,
+    },
+    'border-subtle, radius-lg and elevation-3, as the Menu popup',
+  );
   const scaleEnter = probe('scale:var(--nz-scale-enter)', (el) => cs(el).scale);
   meta.scaleEnter = scaleEnter;
   const entering = cs($('#select-entering'));

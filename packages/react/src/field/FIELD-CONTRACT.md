@@ -58,6 +58,7 @@ type FieldControlOptions = {
   readOnly?: boolean | undefined;
   invalid?: boolean | undefined;
   'aria-describedby'?: string | undefined; // joined after the Field's ids
+  labelBehavior?: 'focus' | undefined; // button controls: a label click focuses, never presses
 };
 
 interface FieldControl {
@@ -111,7 +112,7 @@ A control's own `id` inside a Field detaches the `<label for>`; custom ids go th
 
 `controlProps` (and a function child's argument) carries **only the attributes it sets**: no key
 is present with `undefined`, so `<input name="title" {...control} />` keeps `name`. A control
-outside a Field costs one `use()` call.
+outside a Field costs one `use()` call and one effect that does nothing (it registers `labelBehavior`).
 
 ### How a native control uses it (Input, the reference shape)
 
@@ -201,11 +202,22 @@ need `labelledBy` instead:
   the handlers (`const { id, readOnly, 'aria-describedby': _, 'aria-invalid': __, ...each } =
   field.controlProps`). A required group fires `invalid` on every radio; the handler is idempotent,
   and focus goes to the first radio, the form's first invalid control.
-- **Button controls** (Select in week 4, third-party pickers): `aria-labelledby={field.labelledBy}`
-  on the button, because `aria-labelledby` overrides `<label for>` (§16.1). The label-click
-  interception (`labelBehavior: 'focus'`) is reserved: it lands with Select's Field wiring as a
-  new option of this hook, inside FieldScope (which already renders the label), with no change for
-  native controls.
+- **Button controls** (Select, third-party pickers): `aria-labelledby={field.labelledBy}` on the
+  button, because `aria-labelledby` overrides `<label for>` (§16.1), and `id={field.id}`, so the
+  label's `for` points at it. Call `useFieldControl({ labelBehavior: 'focus' })`: a `<label for>` a
+  button presses it, which would open its popup, so FieldScope (which renders the label) cancels the
+  label's click and focuses the control instead, with `focus({ focusVisible: true })` so the ring
+  shows where focus went (React Aria's own Select label does the same). A disabled button takes no
+  focus. Native controls are unchanged; the option is registered in an effect, so the server HTML
+  and the zero-JS path are unchanged too. Select passes the Field's `name` and `required` to React
+  Aria's hidden native `<select>`, which carries the value into `FormData`. React Aria owns that
+  element's `invalid` event (it cancels it and focuses the trigger), so the Field's handlers do not
+  attach there yet and a native message is not shown inline: pass `error` for a required Select.
+  A button cannot carry `aria-required` or `aria-invalid` (ARIA 1.2), and the hidden `<select>` is
+  `aria-hidden`, so assistive technology hears neither state from the trigger: the error reaches it
+  only as the description, and the Field's `*` is `aria-hidden`. Until the accessibility owner picks
+  the wording for a spoken "required" (week 6 review R1-2, R1-5), put it in the label or the
+  description of a required Select.
 
 ### Invalid, required, disabled and read-only: how they flow
 
@@ -314,7 +326,8 @@ one to `_internal/` only when two controls need the same non-Field code.
 ## Not yet (follow-ups)
 
 - `form.reset()` does not clear a shown native message (§9.6 case 5 will catch it).
-- `labelBehavior: 'focus'` for button controls (week 4, with Select).
+- Select's native validation message: React Aria cancels the hidden `<select>`'s `invalid` event,
+  so an empty required Select blocks the submit and takes focus with no inline message.
 - RadioGroup and checkbox groups have no native-validation path through Fieldset; RadioGroup owns
   its group message.
 - `Form errors[name]` (v0.2) joins the error channel between the `error` prop and the native message.

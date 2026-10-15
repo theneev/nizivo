@@ -7,6 +7,7 @@ import {
   isValidElement,
   useId,
   type ComponentPropsWithRef,
+  type MouseEvent,
   type ReactElement,
   type ReactNode,
 } from 'react';
@@ -125,6 +126,8 @@ interface FieldAnatomy {
   render: RenderProp<FieldState> | undefined;
   /** Attributes of the root. */
   root: Omit<ComponentPropsWithRef<'div'>, 'children'>;
+  /** FieldScope only (never serialised): `labelBehavior: 'focus'` (FIELD-CONTRACT.md). */
+  onLabelClick?: ((event: MouseEvent<HTMLLabelElement>) => void) | undefined;
   children: ReactNode;
 }
 
@@ -249,11 +252,15 @@ export function fieldRootProps(anatomy: FieldAnatomy): Record<string, unknown> {
     children: (
       <>
         {presented(label) && (
+          // onClick is FieldScope's, for a button control (labelBehavior: 'focus'): not a new
+          // interaction, the label's click already acts on the control; it narrows it to focus.
+          // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
           <label
             className="nz-field-label"
             data-slot="field-label"
             id={ids.label}
             htmlFor={anatomy.group ? undefined : ids.control}
+            onClick={anatomy.onLabelClick}
           >
             {label}
             {required && (

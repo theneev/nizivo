@@ -141,10 +141,12 @@ describe('Menu behaviour', () => {
         await until(() => expect(status.hasAttribute('data-focus-visible')).toBe(true));
         const item = getComputedStyle(status);
         expect(item.outlineStyle).toBe('solid');
-        // The ring sits outside the row, on Canvas: CanvasText, as the popup border, never the focus
-        // token or HighlightText (white on white in Chromium's emulated palette; week 5 visual lane)
-        expect(item.outlineColor).toBe(getComputedStyle(get('menu-popup')).borderTopColor);
-        expect(item.outlineColor).not.toBe(item.color);
+        // The ring is drawn one ring width inside the Highlight fill: it takes HighlightText, the
+        // row's text colour, never the focus token or CanvasText (about 1.9:1 against the fill;
+        // week 6 review)
+        expect(item.outlineOffset).toBe('-4px');
+        expect(item.outlineColor).toBe(item.color);
+        expect(item.outlineColor).not.toBe(item.backgroundColor);
         expect(getComputedStyle(indicator(status)).color).toBe(item.color);
         const [edit, print] = [
           ...document.querySelectorAll<HTMLElement>('[data-slot="menu-item"]'),

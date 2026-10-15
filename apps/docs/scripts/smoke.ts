@@ -84,7 +84,8 @@ const NIZIVO_CLIENT_MARKERS = [
  * zero-JS paths (ARCHITECTURE.md §23.4 D-aa).
  */
 const CLIENT_PAGES: Record<string, string[]> = {
-  '/docs/components/select/': ['select-popup'],
+  // Select reads its Field through useFieldControl, which lives in FieldScope's module (week 6).
+  '/docs/components/select/': ['select-popup', 'willValidate'],
   '/docs/components/tooltip/': ['tooltip-popup'],
   '/docs/components/dialog/': ['dialog-popup'],
   '/docs/components/alert/': ['alert-dismiss'],

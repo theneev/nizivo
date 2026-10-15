@@ -5,10 +5,12 @@
 import {
   createContext,
   use,
+  useEffect,
   useLayoutEffect,
   useMemo,
   useState,
   type FocusEvent,
+  type MouseEvent,
   type ReactElement,
   type ReactNode,
   type SyntheticEvent,
@@ -37,6 +39,12 @@ export interface FieldControlOptions {
   invalid?: boolean | undefined;
   /** Joined after the Field's description and error ids, for example a text affix or a count. */
   'aria-describedby'?: string | undefined;
+  /**
+   * `'focus'`: a click on the Field label focuses the control and does nothing else. For button
+   * controls (Select, third-party pickers): a `<label for>` a button presses it, which would open its
+   * popup. Omitted, the label keeps the browser's behaviour.
+   */
+  labelBehavior?: 'focus' | undefined;
 }
 
 /** `controlProps`: the attributes plus the Field's validation handlers, inside a Field. */
@@ -75,6 +83,8 @@ interface Scope {
   readOnly: boolean;
   invalid: boolean;
   handlers: Pick<FieldControlElementProps, 'onInvalid' | 'onInput' | 'onBlur'>;
+  /** A control inside calls it with `true` while it asks for `labelBehavior: 'focus'`. */
+  setLabelFocus: (on: boolean) => void;
 }
 
 const FieldContext = createContext<Scope | null>(null);
@@ -131,6 +141,9 @@ export function FieldScope({
     };
   }, [messages, validateOn]);
 
+  // Set by a button control's `labelBehavior: 'focus'` after hydration, so the server HTML is the same.
+  const [labelFocus, setLabelFocus] = useState(false);
+
   useLayoutEffect(() => {
     const element = toFocus?.element;
     if (element?.form != null && firstInvalid(element.form) === element) element.focus();
@@ -147,11 +160,17 @@ export function FieldScope({
       readOnly,
       invalid,
       handlers,
+      setLabelFocus,
     }),
     [ids, label, description, invalid, name, required, disabled, readOnly, handlers],
   );
 
-  const field = { ...anatomy, error, children };
+  const field = {
+    ...anatomy,
+    error,
+    onLabelClick: labelFocus ? focusControl : undefined,
+    children,
+  };
   return (
     <FieldContext value={scope}>
       {renderElement('div', anatomy.render, fieldState(field), fieldRootProps(field))}
@@ -172,6 +191,12 @@ export function useFieldControl(options: FieldControlOptions = {}): FieldControl
   const readOnly = options.readOnly ?? scope?.readOnly ?? false;
   const invalid = options.invalid ?? scope?.invalid ?? false;
   const described = joinIds(scope?.describedBy, options['aria-describedby']);
+  const setLabelFocus = options.labelBehavior === 'focus' ? scope?.setLabelFocus : undefined;
+  useEffect(() => {
+    if (setLabelFocus === undefined) return undefined;
+    setLabelFocus(true);
+    return () => setLabelFocus(false);
+  }, [setLabelFocus]);
   return {
     inField: scope !== null,
     id,
@@ -195,6 +220,16 @@ export function useFieldControl(options: FieldControlOptions = {}): FieldControl
       ...scope?.handlers,
     },
   };
+}
+
+/**
+ * `labelBehavior: 'focus'`: a `<label for>` a button presses it, which would open its popup. Cancel
+ * that and focus the control, with the ring showing where focus went, as React Aria's own Select
+ * label does. A disabled control takes no focus.
+ */
+function focusControl(event: MouseEvent<HTMLLabelElement>): void {
+  event.preventDefault();
+  event.currentTarget.control?.focus({ focusVisible: true });
 }
 
 const VALIDITY_KEYS: readonly FieldValidityKey[] = [

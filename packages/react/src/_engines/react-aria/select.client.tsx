@@ -1,6 +1,6 @@
 'use client';
 // The ONLY Select module that imports the engine (ARCHITECTURE.md §9.2). Behaviour only: no class names.
-import { createElement, use, useRef } from 'react';
+import { createElement, use, useEffect, useLayoutEffect, useRef, type RefObject } from 'react';
 import {
   Button,
   Header,
@@ -29,6 +29,33 @@ import { EngineLocale } from './locale.client';
 import { popupStyle, resolveSide, toPlacement } from './overlay.client';
 import { ReturnFocus, useTabOut, useTriggerRef } from './popup.client';
 
+/**
+ * React Aria 1.22.1 resets the state on the form's `reset`, then the browser resets the hidden native
+ * <select> to its empty first option, and React never writes the value back (its prop did not
+ * change after the reset): the trigger showed the default while FormData had ''. After the browser's
+ * reset, the hidden <select> takes the state's value again.
+ */
+function FormReset({ root }: { root: RefObject<HTMLElement | null> }): null {
+  const value = use(SelectStateContext)?.value;
+  const latest = useRef(value);
+  useLayoutEffect(() => {
+    latest.current = value;
+  });
+  // A passive effect: the root's ref is attached after its children's layout effects.
+  useEffect(() => {
+    const select = root.current?.querySelector('select');
+    const form = select?.form;
+    const onReset = (): void => {
+      setTimeout(() => {
+        if (select) select.value = String(latest.current ?? '');
+      });
+    };
+    form?.addEventListener('reset', onReset);
+    return () => form?.removeEventListener('reset', onReset);
+  }, [root]);
+  return null;
+}
+
 export const Root: SelectEngine['Root'] = ({
   value,
   defaultValue,
@@ -46,37 +73,41 @@ export const Root: SelectEngine['Root'] = ({
   render,
   children,
   ...dom
-}) => (
-  <EngineLocale>
-    <Select
-      {...defined({
-        value,
-        defaultValue,
-        isOpen: open,
-        defaultOpen,
-        name,
-        isRequired: required,
-        isDisabled: disabled,
-        isInvalid: invalid,
-        placeholder,
-        'aria-label': label,
-        'aria-labelledby': labelledBy,
-      })}
-      // React Aria reports no cause for either change.
-      onChange={(key) => onValueChange?.(key == null ? null : String(key), details('unknown'))}
-      onOpenChange={(isOpen) => onOpenChange?.(isOpen, details('unknown'))}
-      // A hidden native <select> carries name and required into forms.
-      validationBehavior="native"
-      render={(p, rp) => {
-        const s: SelectRootState = { open: rp.isOpen, disabled: rp.isDisabled };
-        const attrs = stateAttrs({ ...s, required: rp.isRequired, invalid });
-        return render(mergeProps(engineDom(p), dom, attrs), s);
-      }}
-    >
-      {children}
-    </Select>
-  </EngineLocale>
-);
+}) => {
+  const root = useRef<HTMLElement | null>(null);
+  return (
+    <EngineLocale>
+      <Select
+        {...defined({
+          value,
+          defaultValue,
+          isOpen: open,
+          defaultOpen,
+          name,
+          isRequired: required,
+          isDisabled: disabled,
+          isInvalid: invalid,
+          placeholder,
+          'aria-label': label,
+          'aria-labelledby': labelledBy,
+        })}
+        // React Aria reports no cause for either change.
+        onChange={(key) => onValueChange?.(key == null ? null : String(key), details('unknown'))}
+        onOpenChange={(isOpen) => onOpenChange?.(isOpen, details('unknown'))}
+        // A hidden native <select> carries name and required into forms.
+        validationBehavior="native"
+        render={(p, rp) => {
+          const s: SelectRootState = { open: rp.isOpen, disabled: rp.isDisabled };
+          const attrs = stateAttrs({ ...s, required: rp.isRequired, invalid });
+          return render(mergeProps(engineDom(p), dom, attrs, { ref: root }), s);
+        }}
+      >
+        {children}
+        <FormReset root={root} />
+      </Select>
+    </EngineLocale>
+  );
+};
 
 export const Trigger: SelectEngine['Trigger'] = ({
   id,

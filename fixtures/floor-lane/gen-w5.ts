@@ -363,6 +363,10 @@ function menuPopup(id: string, style: Record<string, string>, attrs: Props, ...r
 const menuSeparator = (): unknown =>
   h('div', { role: 'separator', className: 'nz-menu-separator', 'data-slot': 'menu-separator' });
 
+/** The check every Select row carries (select.client.tsx); select.css shows it on the selected row only. */
+const selectIndicator = (): unknown =>
+  h('span', { className: 'nz-select-item-indicator', 'aria-hidden': 'true' }, glyphCheck());
+
 function selectPopup(id: string, attrs: Props = null): unknown {
   return h(
     'div',
@@ -396,10 +400,12 @@ function selectPopup(id: string, attrs: Props = null): unknown {
             role: 'option',
             className: 'nz-select-item',
             'data-slot': 'select-item',
+            'data-focus-inset': '',
             'aria-selected': 'false',
             'data-highlighted': '',
           },
           'Last 7 days',
+          selectIndicator(),
         ),
         h(
           'div',
@@ -407,10 +413,12 @@ function selectPopup(id: string, attrs: Props = null): unknown {
             role: 'option',
             className: 'nz-select-item',
             'data-slot': 'select-item',
+            'data-focus-inset': '',
             'aria-selected': 'true',
             'data-selected': '',
           },
           'Last 30 days',
+          selectIndicator(),
         ),
       ),
       h('div', {
@@ -424,10 +432,12 @@ function selectPopup(id: string, attrs: Props = null): unknown {
           role: 'option',
           className: 'nz-select-item',
           'data-slot': 'select-item',
+          'data-focus-inset': '',
           'aria-disabled': 'true',
           'data-disabled': '',
         },
         'All time',
+        selectIndicator(),
       ),
     ),
   );

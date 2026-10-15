@@ -245,6 +245,13 @@
           "type": "boolean"
         },
         {
+          "description": "`'focus'`: a click on the Field label focuses the control and does nothing else. For button controls (Select, third-party pickers): a `<label for>` a button presses it, which would open its popup. Omitted, the label keeps the browser's behaviour.",
+          "name": "labelBehavior",
+          "required": false,
+          "type": "\"focus\"",
+          "values": ["focus"]
+        },
+        {
           "name": "name",
           "required": false,
           "type": "string"

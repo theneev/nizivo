@@ -1,10 +1,12 @@
 'use client';
 // PUBLIC Select parts (ARCHITECTURE.md §10.3). They own the CSS contract; the engine owns behaviour.
-import { createContext, use, useMemo, type JSX } from 'react';
+import { createContext, use, useMemo, type JSX, type ReactNode } from 'react';
 import type { ControlSize } from '../augment';
 import { toRenderFn } from '../contracts/render';
 import { cx } from '../_internal/cx';
-import { ChevronsUpDownGlyph } from '../_internal/glyphs';
+import { joinIds } from '../_internal/field';
+import { CheckGlyph, ChevronsUpDownGlyph } from '../_internal/glyphs';
+import { useFieldControl } from '../field/field-scope.client';
 import * as Engine from './engine';
 import type {
   SelectGroupLabelProps,
@@ -18,21 +20,48 @@ import type {
   SelectValueProps,
 } from './select.contract';
 
-const Scope = createContext<{ size: ControlSize; invalid: boolean }>({
-  size: 'md',
-  invalid: false,
-});
+interface ScopeValue {
+  size: ControlSize;
+  invalid: boolean;
+  /** From a Field around the Select: the trigger's id (the label's `for`) and descriptions. */
+  id?: string | undefined;
+  describedBy?: string | undefined;
+}
+
+const Scope = createContext<ScopeValue>({ size: 'md', invalid: false });
 
 const renderRoot = toRenderFn<SelectRootState>(undefined, 'div');
 const renderDiv = toRenderFn<unknown>(undefined, 'div');
 
-export function SelectRoot({ size = 'md', className, ...props }: SelectRootProps): JSX.Element {
-  const invalid = props.invalid === true;
-  const scope = useMemo(() => ({ size, invalid }), [size, invalid]);
+export function SelectRoot({
+  size = 'md',
+  name,
+  required,
+  disabled,
+  invalid,
+  'aria-labelledby': labelledBy,
+  className,
+  ...props
+}: SelectRootProps): JSX.Element {
+  // Field wiring (FIELD-CONTRACT.md): own props win, `undefined` inherits. A label click focuses the
+  // trigger and never opens the listbox. The hidden native <select> carries name and required.
+  const field = useFieldControl({ name, required, disabled, invalid, labelBehavior: 'focus' });
+  const { id, describedBy } = field;
+  // the trigger's name is the value plus the Field label (§10.3)
+  const named = labelledBy ?? field.labelledBy;
+  const scope = useMemo(
+    () => ({ size, invalid: field.invalid, id, describedBy }),
+    [size, field.invalid, id, describedBy],
+  );
   return (
     <Scope value={scope}>
       <Engine.Root
         {...props}
+        {...(field.name !== undefined && { name: field.name })}
+        {...(named !== undefined && { 'aria-labelledby': named })}
+        required={field.required}
+        disabled={field.disabled}
+        invalid={field.invalid}
         className={cx('nz-select', className)}
         data-slot="select"
         data-size={size}
@@ -43,6 +72,8 @@ export function SelectRoot({ size = 'md', className, ...props }: SelectRootProps
 }
 
 export function SelectTrigger({
+  id,
+  'aria-describedby': describedBy,
   className,
   leadingIcon,
   indicator,
@@ -50,10 +81,12 @@ export function SelectTrigger({
   children,
   ...rest
 }: SelectTriggerProps): JSX.Element {
-  const { size, invalid } = use(Scope);
+  const { size, invalid, ...field } = use(Scope);
   return (
     <Engine.Trigger
       {...rest}
+      id={id ?? field.id}
+      aria-describedby={joinIds(field.describedBy, describedBy)}
       className={cx('nz-select-trigger nz-hit-target', className)}
       data-slot="select-trigger"
       data-size={size}
@@ -114,17 +147,42 @@ export function SelectPopup({
 export function SelectItem({
   className,
   textValue,
+  indicator,
   render,
   children,
   ...rest
 }: SelectItemProps): JSX.Element {
+  const base = toRenderFn(render, 'div');
+  // The check is added here, not to the engine's children: the trigger shows those as the value.
+  const check = indicator !== null && (
+    <span className="nz-select-item-indicator" aria-hidden="true">
+      {indicator ?? <CheckGlyph />}
+    </span>
+  );
   return (
     <Engine.Item
       {...rest}
       textValue={textValue ?? (typeof children === 'string' ? children : undefined)}
       className={cx('nz-select-item', className)}
       data-slot="select-item"
-      render={toRenderFn(render, 'div')}
+      // the keyboard ring sits inside the row, as on Menu rows (§8.5)
+      data-focus-inset=""
+      render={(props, state) =>
+        base(
+          {
+            ...props,
+            children: (
+              <>
+                {/* the engine's rendered row content, passed through as a prop */}
+                {/* oxlint-disable-next-line typescript/no-unsafe-type-assertion */}
+                {props['children'] as ReactNode}
+                {check}
+              </>
+            ),
+          },
+          state,
+        )
+      }
     >
       {children}
     </Engine.Item>

@@ -88,6 +88,7 @@
     "--nz-bg-surface-raised",
     "--nz-border-subtle",
     "--nz-border-width-default",
+    "--nz-border-width-focus",
     "--nz-duration-fade",
     "--nz-duration-spring",
     "--nz-easing-enter",
