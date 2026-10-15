@@ -228,6 +228,7 @@
     "./css/text.css": "./dist/css/text.css",
     "./css/textarea.css": "./dist/css/textarea.css",
     "./css/tooltip.css": "./dist/css/tooltip.css",
+    "./styles.css": "./dist/styles.css",
     "./package.json": "./package.json"
   },
   "publishConfig": {

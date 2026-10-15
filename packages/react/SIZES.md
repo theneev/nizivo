@@ -104,7 +104,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 | Entry              | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | ------------------ | -------: | ---------: | ---------: | ----------: | -----------: |
-| `.`                |   84,837 |       82.8 |     71,685 |          92 |        9,371 |
+| `.`                |   84,891 |       82.9 |     71,710 |          92 |        9,317 |
 | /alert             |    1,244 |        1.2 |      1,149 |         1.4 |          189 |
 | /augment           |        0 |        0.0 |          0 |           0 |            — |
 | /badge             |      796 |        0.8 |        727 |         0.9 |          125 |
@@ -143,7 +143,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /tabs              |   33,577 |       32.8 |     29,755 |          35 |        2,263 |
 | /text              |      716 |        0.7 |        653 |         0.8 |          103 |
 | /textarea          |    1,291 |        1.3 |      1,174 |         1.4 |          142 |
-| /theme-script      |      302 |        0.3 |        243 |         0.4 |          107 |
+| /theme-script      |      363 |        0.4 |        289 |         0.4 |           46 |
 | /tooltip           |   16,327 |       15.9 |     14,768 |          16 |           57 |
 
 #### `@nizivo/react`: Composite bundles (one bundle; React Aria counted once)
@@ -230,6 +230,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/text.css              |      574 |        0.6 |        487 |         0.7 |          142 |
 | /css/textarea.css          |      703 |        0.7 |        577 |         0.8 |          116 |
 | /css/tooltip.css           |      550 |        0.5 |        456 |         0.6 |           64 |
+| /styles.css                |   14,712 |       14.4 |     12,497 |          16 |        1,672 |
 
 #### `@nizivo/tokens`: Public JS entries (bundled with what they import, React Aria included)
 

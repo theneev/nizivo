@@ -59,7 +59,8 @@ export function catalog(): CatalogEntry[] {
   const keys = Object.keys(readRepoJson(REACT_PACKAGE, hasExports).exports);
   const entries: CatalogEntry[] = [];
   for (const key of keys) {
-    if (!key.startsWith('./') || key.startsWith('./css/') || key === './package.json') continue;
+    // Files (./css/<name>.css, ./styles.css, ./package.json) are not JS entries.
+    if (!key.startsWith('./') || /\.[a-z]+$/.test(key)) continue;
     const name = key.slice(2);
     if (name.includes('/')) {
       // ./unstable/<name> joins the catalog once the docs design an unstable section.

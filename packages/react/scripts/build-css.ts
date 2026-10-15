@@ -1,8 +1,10 @@
 /**
  * Builds the CSS of @nizivo/react (ARCHITECTURE.md §8.1, §4.1 L3): each src/<name>/<name>.css
  * (also under src/unstable/) and each styles/<file>.css becomes dist/css/<name>.css, compiled by
- * Lightning CSS for the browser floor, minified, never bundled with tokens.css. Then it checks what
- * it wrote: the Lightning CSS guard, the emitted-CSS vocabulary check, that no published JS
+ * Lightning CSS for the browser floor, minified, never bundled with tokens.css. Then it writes the
+ * convenience sheet, dist/styles.css (§5.2: the layer statement, a byte-identical copy of
+ * tokens.css, base.css and every stable component's sheet; scripts/css/styles.ts). Then it checks
+ * what it wrote: the Lightning CSS guard, the emitted-CSS vocabulary check, that no published JS
  * imports CSS, and that every stylesheet it wrote has a package.json exports entry.
  *
  * Runs after tsdown, which empties dist/. Exits 1 on any problem.
@@ -24,9 +26,11 @@ import {
 import { compileCss } from './css/compile.ts';
 import { checkEmitted, declaredProperties } from './css/emitted.ts';
 import { cssExportProblems } from './css/exports.ts';
+import { assembleStyles, type BuiltSheet, stylesExport, stylesOrder } from './css/styles.ts';
 
 const PACKAGE = fileURLToPath(new URL('../', import.meta.url));
 const OUT = join(PACKAGE, 'dist', 'css');
+const STYLES = join(PACKAGE, 'dist', 'styles.css');
 /** An import, re-export or dynamic import of a .css file (not a comment that names one). */
 const CSS_IMPORT =
   /^\s*(?:import\s*['"][^'"\n]+\.css['"]|(?:import|export)\b[^;\n]*\bfrom\s*['"][^'"\n]+\.css['"])|\bimport\(\s*['"][^'"\n]+\.css['"]\s*\)/m;
@@ -119,7 +123,9 @@ function main(args: string[]): number {
 
   const stylesheets = sources(problems);
   rmSync(OUT, { recursive: true, force: true });
+  rmSync(STYLES, { force: true });
   mkdirSync(OUT, { recursive: true });
+  const built: BuiltSheet[] = [];
   for (const [name, file] of stylesheets) {
     const compiled = compileCss(readFileSync(file, 'utf8'), rel(file), {
       layerStatement: statement,
@@ -127,7 +133,22 @@ function main(args: string[]): number {
       customMedia,
     });
     problems.push(...compiled.problems.map((problem) => `${rel(file)}: ${problem}`));
-    if (compiled.code !== '') writeFileSync(join(OUT, `${name}.css`), compiled.code);
+    if (compiled.code === '') continue;
+    writeFileSync(join(OUT, `${name}.css`), compiled.code);
+    const path = rel(file);
+    built.push({
+      name,
+      code: compiled.code,
+      component: path.startsWith('src/'),
+      unstable: path.startsWith('src/unstable/'),
+    });
+  }
+
+  // The convenience sheet, from the same compiled code and tokens.css's exact bytes.
+  if (tokensCss === undefined) {
+    problems.push('dist/styles.css: no tokens.css to copy into it (build @nizivo/tokens first)');
+  } else if (problems.length === 0) {
+    writeFileSync(STYLES, assembleStyles(statement, readFileSync(tokensCss, 'utf8'), built));
   }
 
   for (const file of cssFiles(OUT)) {
@@ -150,13 +171,22 @@ function main(args: string[]): number {
     ),
   );
 
+  const styles = stylesExport(
+    typeof manifest === 'object' && manifest !== null && 'exports' in manifest
+      ? manifest.exports
+      : undefined,
+  );
+  if (styles.problem !== undefined) problems.push(styles.problem);
+
   for (const note of notes) console.log(`build-css: note: ${note}`);
   if (problems.length > 0) {
     const count = `${problems.length} problem${problems.length === 1 ? '' : 's'}`;
     console.error(`build-css: ${count}\n  ${problems.join('\n  ')}`);
     return 1;
   }
-  console.log(`build-css: wrote ${stylesheets.size} stylesheets to dist/css`);
+  console.log(
+    `build-css: wrote ${stylesheets.size} stylesheets to dist/css, and dist/styles.css (tokens, base and ${stylesOrder(built).length - 1} components)`,
+  );
   return 0;
 }
 

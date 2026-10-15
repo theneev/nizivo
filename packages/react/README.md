@@ -32,7 +32,16 @@ import '@nizivo/react/css/field.css';
 import '@nizivo/react/css/input.css';
 ```
 
-Every stylesheet starts with the same `@layer` statement, so the order a bundler emits them in never changes which rule wins. A single `@nizivo/react/styles.css` with everything is planned but not in the package yet; once it ships, import **either** it **or** the files above, never both. With Tailwind CSS v4, import the same files inside `layer(components)` and add `@nizivo/tokens/tailwind.css`.
+Every stylesheet starts with the same `@layer` statement, so the order a bundler emits them in never changes which rule wins.
+
+Or import a single file, `@nizivo/react/styles.css`: the tokens, `base.css` and every component's stylesheet. Import **either** it **or** the files above, never both. It already holds a byte-identical copy of `@nizivo/tokens/tokens.css` from the same release, so the two never drift apart.
+
+```tsx
+// app/layout.tsx
+import '@nizivo/react/styles.css';
+```
+
+With Tailwind CSS v4, import either route inside `layer(components)` and add `@nizivo/tokens/tailwind.css`.
 
 Keep `light-dark()` intact, or nested theme scopes and inverse surfaces stop following their own theme:
 
@@ -80,6 +89,21 @@ import { Select } from '@nizivo/react/select';
 ## Theme
 
 Light by default. Set `data-nz-theme` on `<html>` to `system` (follows the operating system, no script, no flash), `light` or `dark`. Any element with `data-nz-theme` starts a nested scope.
+
+To remember a reader's choice, render `ThemeScript` in `<head>` and put `suppressHydrationWarning` on `<html>`. Before first paint it reads `localStorage` key `nz-theme` (`light`, `dark` or `system`) and sets `data-nz-theme` on `<html>`; with nothing stored, or storage blocked, it leaves your default alone and never throws. It also sets `data-nz-platform`, so `Kbd` shows ⌘ or Ctrl. Your theme switch stores the choice under the same key and sets the attribute.
+
+```tsx
+import { ThemeScript } from '@nizivo/react/theme-script';
+
+<html lang="en" data-nz-theme="system" suppressHydrationWarning>
+  <head>
+    <ThemeScript nonce={nonce} />
+  </head>
+  <body>{children}</body>
+</html>;
+```
+
+Under a strict CSP, pass the nonce as above or allow the script by hash: `'sha256-nA1HUQWDdDUFqqoxWbjzCzcYSjzWLEe0pwDdRCMGqOw='`. The plain string is exported as `themeScript` for Astro (`<script is:inline set:html={themeScript} />`) and Vite (`transformIndexHtml`).
 
 ## Components in 0.1
 

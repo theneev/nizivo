@@ -82,10 +82,13 @@ export function reactExports(): Record<string, unknown> {
 
 /** JS subpaths of @nizivo/react, from its exports map: `alert`, `config`, … */
 export function reactSubpaths(): string[] {
-  return Object.keys(reactExports())
-    .filter((k) => k.startsWith('./') && !k.startsWith('./css/') && k !== './package.json')
-    .map((k) => k.slice(2))
-    .toSorted();
+  return (
+    Object.keys(reactExports())
+      // files (./css/<name>.css, ./styles.css, ./package.json) are not JS subpaths
+      .filter((k) => k.startsWith('./') && !/\.[a-z]+$/.test(k))
+      .map((k) => k.slice(2))
+      .toSorted()
+  );
 }
 
 function mapSpecifier(file: string, name: string, from: string, subpaths: Set<string>): string {

@@ -2,7 +2,7 @@
   "$comment": "Size budgets (ARCHITECTURE.md §17), written by `node packages/tooling/size/measure.ts --write`. measured: bytes, gzip -9, as size-limit 14.2 reports them. limitKiB: measured + 10%, rounded up (method.ts limitKiB), never above the entry's §17.1 plan limit (method.ts PLAN_LIMITS_KIB). Limits only go up through a labelled PR (§17.3).",
   "entries": {
     "@nizivo/react": {
-      "measured": 84837,
+      "measured": 84891,
       "limitKiB": 92
     },
     "@nizivo/react/alert": {
@@ -158,7 +158,7 @@
       "limitKiB": 1.4
     },
     "@nizivo/react/theme-script": {
-      "measured": 302,
+      "measured": 363,
       "limitKiB": 0.4
     },
     "@nizivo/react/tooltip": {
@@ -424,6 +424,10 @@
     "@nizivo/react/css/tooltip.css": {
       "measured": 550,
       "limitKiB": 0.6
+    },
+    "@nizivo/react/styles.css": {
+      "measured": 14712,
+      "limitKiB": 16
     },
     "@nizivo/tokens": {
       "measured": 2309,

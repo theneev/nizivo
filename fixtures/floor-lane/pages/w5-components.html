@@ -8,6 +8,10 @@
     <script>
       (function (d) {
         try {
+          var t = localStorage.getItem('nz-theme');
+          if (/^(light|dark|system)$/.test(t)) d.setAttribute('data-nz-theme', t);
+        } catch (e) {}
+        try {
           if (!d.hasAttribute('data-nz-platform')) {
             var n = navigator,
               p = (n.userAgentData && n.userAgentData.platform) || n.platform || '';
