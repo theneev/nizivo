@@ -195,7 +195,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | -------------------------- | -------: | ---------: | ---------: | ----------: | -----------: |
 | /css/alert.css             |      734 |        0.7 |        606 |         0.8 |           85 |
 | /css/badge.css             |      512 |        0.5 |        424 |         0.6 |          102 |
-| /css/base.css              |      996 |        1.0 |        836 |         1.1 |          130 |
+| /css/base.css              |      997 |        1.0 |        833 |         1.1 |          129 |
 | /css/button.css            |    1,007 |        1.0 |        843 |         1.1 |          119 |
 | /css/card.css              |      592 |        0.6 |        487 |         0.7 |          124 |
 | /css/checkbox.css          |      834 |        0.8 |        687 |         0.9 |           87 |

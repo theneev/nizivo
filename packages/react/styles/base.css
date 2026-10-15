@@ -124,30 +124,37 @@
     }
     :where(.nz-meter-track)::-moz-meter-bar {
       background: Highlight;
+      outline-color: CanvasText;
       forced-color-adjust: none;
     }
     :where(.nz-progress-bar-track)::-moz-progress-bar {
       background: Highlight;
+      outline-color: CanvasText;
       forced-color-adjust: none;
     }
     :where(.nz-meter-track)::-webkit-meter-even-less-good-value {
       background: Highlight;
+      outline-color: CanvasText;
       forced-color-adjust: none;
     }
     :where(.nz-meter-track)::-webkit-meter-optimum-value {
       background: Highlight;
+      outline-color: CanvasText;
       forced-color-adjust: none;
     }
     :where(.nz-meter-track)::-webkit-meter-suboptimum-value {
       background: Highlight;
+      outline-color: CanvasText;
       forced-color-adjust: none;
     }
     :where(.nz-progress-bar-track)::-webkit-progress-value {
       background: Highlight;
+      outline-color: CanvasText;
       forced-color-adjust: none;
     }
     :where(.nz-checkbox-input, .nz-radio-input, .nz-switch-input):checked {
       background: Highlight;
+      outline-color: CanvasText;
       forced-color-adjust: none;
     }
     :where(.nz-segmented-control-item):has(> input:checked) {
@@ -155,10 +162,12 @@
     }
     :where(.nz-checkbox-input):indeterminate {
       background: Highlight;
+      outline-color: CanvasText;
       forced-color-adjust: none;
     }
     :where(.nz-tab-nav-link)[aria-current='page']::before {
       background: Highlight;
+      outline-color: CanvasText;
       forced-color-adjust: none;
     }
     :where(.nz-icon-button)[aria-pressed='true'] {
@@ -181,6 +190,7 @@
     }
     :where(.nz-tabs-tab)[data-selected]::before {
       background: Highlight;
+      outline-color: CanvasText;
       forced-color-adjust: none;
     }
   }

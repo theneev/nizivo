@@ -35,7 +35,10 @@ const FOCUS_SUFFIX: Record<FocusTarget, string> = {
 const FOCUS_ORDER: readonly FocusTarget[] = ['self', 'engine', 'nested-input', 'within'];
 const PAINT: Record<Paint, string[]> = {
   border: ['border: 1px solid CanvasText;'],
-  fill: ['background: Highlight;', 'forced-color-adjust: none;'],
+  // forced-color-adjust: none also keeps the focus ring's token colour (a checked Checkbox, Radio
+  // or Switch drew it in the brand green; week 6 outline check): CanvasText shows against the
+  // Canvas around an outward ring
+  fill: ['background: Highlight;', 'outline-color: CanvasText;', 'forced-color-adjust: none;'],
   // forced-color-adjust is inherited, so the focus ring would keep its token colour: CanvasText
   // shows against the Canvas around an outward ring (an inset ring sets HighlightText itself)
   highlight: [
