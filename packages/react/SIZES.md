@@ -104,41 +104,41 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 | Entry              | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | ------------------ | -------: | ---------: | ---------: | ----------: | -----------: |
-| `.`                |   84,875 |       82.9 |     71,745 |          92 |        9,333 |
-| /alert             |    1,393 |        1.4 |      1,283 |         1.5 |          143 |
+| `.`                |   84,837 |       82.8 |     71,685 |          92 |        9,371 |
+| /alert             |    1,244 |        1.2 |      1,149 |         1.4 |          189 |
 | /augment           |        0 |        0.0 |          0 |           0 |            — |
 | /badge             |      796 |        0.8 |        727 |         0.9 |          125 |
-| /button            |    1,379 |        1.3 |      1,276 |         1.5 |          157 |
+| /button            |    1,232 |        1.2 |      1,131 |         1.4 |          201 |
 | /card              |    1,086 |        1.1 |        971 |         1.2 |          142 |
-| /checkbox          |    2,163 |        2.1 |      1,998 |         2.4 |          294 |
+| /checkbox          |    2,009 |        2.0 |      1,854 |         2.2 |          243 |
 | /config            |      165 |        0.2 |        152 |         0.2 |           39 |
 | /container         |      694 |        0.7 |        633 |         0.8 |          125 |
 | /contracts         |    1,021 |        1.0 |        915 |         1.1 |          105 |
 | /delta             |    1,012 |        1.0 |        932 |         1.1 |          114 |
 | /dialog            |   31,445 |       30.7 |     27,943 |          31 |          299 |
 | /empty-state       |      840 |        0.8 |        768 |           1 |          184 |
-| /field             |    3,136 |        3.1 |      2,880 |         3.4 |          345 |
-| /fieldset          |    1,850 |        1.8 |      1,698 |           2 |          198 |
+| /field             |    2,996 |        2.9 |      2,749 |         3.3 |          383 |
+| /fieldset          |    1,715 |        1.7 |      1,560 |         1.9 |          230 |
 | /grid              |      793 |        0.8 |        737 |         0.9 |          128 |
 | /heading           |      767 |        0.7 |        697 |         0.9 |          154 |
-| /icon-button       |   17,413 |       17.0 |     15,750 |          19 |        2,043 |
+| /icon-button       |   17,260 |       16.9 |     15,585 |          19 |        2,196 |
 | /image             |      794 |        0.8 |        723 |         0.9 |          127 |
 | /inline            |      703 |        0.7 |        639 |         0.8 |          116 |
-| /inline-error      |    1,176 |        1.1 |      1,082 |         1.3 |          155 |
+| /inline-error      |    1,046 |        1.0 |        953 |         1.2 |          182 |
 | /input             |    1,749 |        1.7 |      1,587 |         1.9 |          196 |
 | /kbd               |    1,192 |        1.2 |      1,087 |         1.3 |          139 |
-| /menu              |   56,623 |       55.3 |     48,950 |          57 |        1,745 |
+| /menu              |   56,455 |       55.1 |     48,863 |          57 |        1,913 |
 | /meter             |    1,143 |        1.1 |      1,058 |         1.3 |          188 |
-| /native-select     |    1,704 |        1.7 |      1,557 |         1.9 |          241 |
+| /native-select     |    1,560 |        1.5 |      1,417 |         1.7 |          180 |
 | /progress-bar      |    1,137 |        1.1 |      1,039 |         1.3 |          194 |
 | /progress-ring     |    1,194 |        1.2 |      1,097 |         1.3 |          137 |
-| /radio-group       |    2,332 |        2.3 |      2,150 |         2.6 |          330 |
+| /radio-group       |    2,200 |        2.1 |      2,025 |         2.4 |          257 |
 | /segmented-control |    2,309 |        2.3 |      2,109 |         2.5 |          251 |
-| /select            |   62,404 |       60.9 |     53,611 |          66 |        5,180 |
+| /select            |   62,242 |       60.8 |     53,479 |          66 |        5,342 |
 | /separator         |      772 |        0.8 |        700 |         0.9 |          149 |
 | /skeleton          |      716 |        0.7 |        652 |         0.8 |          103 |
 | /stack             |      703 |        0.7 |        640 |         0.8 |          116 |
-| /switch            |    1,671 |        1.6 |      1,526 |         1.8 |          172 |
+| /switch            |    1,671 |        1.6 |      1,524 |         1.8 |          172 |
 | /tab-nav           |    1,031 |        1.0 |        949 |         1.2 |          197 |
 | /tabs              |   33,577 |       32.8 |     29,755 |          35 |        2,263 |
 | /text              |      716 |        0.7 |        653 |         0.8 |          103 |
@@ -150,9 +150,9 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 | Entry                      | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | -------------------------- | -------: | ---------: | ---------: | ----------: | -----------: |
-| dashboard set              |   76,153 |       74.4 |     64,470 |          75 |          647 |
-| { Button } from the barrel |    1,381 |        1.3 |      1,262 |         1.5 |          155 |
-| { Select } from the barrel |   62,321 |       60.9 |     53,535 |          67 |        6,287 |
+| dashboard set              |   76,027 |       74.2 |     64,306 |          75 |          773 |
+| { Button } from the barrel |    1,232 |        1.2 |      1,129 |         1.4 |          201 |
+| { Select } from the barrel |   62,152 |       60.7 |     53,390 |          67 |        6,456 |
 
 #### `@nizivo/react`: Own code (one module minified alone, imports not counted)
 
@@ -166,17 +166,17 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | own: _engines/react-aria/select.client          |    1,258 |        1.2 |      1,124 |         1.4 |          175 |
 | own: _engines/react-aria/tabs.client            |      629 |        0.6 |        555 |         0.7 |           87 |
 | own: _engines/react-aria/tooltip.client         |      654 |        0.6 |        596 |         0.8 |          165 |
-| own: alert/alert-dismiss.client                 |      357 |        0.3 |        303 |         0.4 |           52 |
-| own: checkbox/checkbox.client                   |      749 |        0.7 |        689 |         0.9 |          172 |
+| own: alert/alert-dismiss.client                 |      354 |        0.3 |        300 |         0.4 |           55 |
+| own: checkbox/checkbox.client                   |      750 |        0.7 |        692 |         0.9 |          171 |
 | own: config/config.client                       |      197 |        0.2 |        179 |         0.3 |          110 |
 | own: dialog/dialog.client                       |    1,098 |        1.1 |        987 |         1.2 |          130 |
 | own: field/field-scope.client                   |    1,009 |        1.0 |        907 |         1.1 |          117 |
 | own: icon-button/icon-button.client             |      349 |        0.3 |        301 |         0.4 |           60 |
 | own: input/input.client                         |      692 |        0.7 |        611 |         0.8 |          127 |
-| own: menu/menu.client                           |    1,041 |        1.0 |        931 |         1.2 |          187 |
+| own: menu/menu.client                           |    1,035 |        1.0 |        932 |         1.2 |          193 |
 | own: radio-group/radio-group.client             |      614 |        0.6 |        541 |         0.7 |          102 |
 | own: segmented-control/segmented-control.client |    1,169 |        1.1 |      1,052 |         1.3 |          162 |
-| own: select/select.client                       |      880 |        0.9 |        803 |           1 |          144 |
+| own: select/select.client                       |      879 |        0.9 |        815 |           1 |          145 |
 | own: switch/switch.client                       |      552 |        0.5 |        475 |         0.6 |           62 |
 | own: tabs/tabs.client                           |      486 |        0.5 |        439 |         0.6 |          128 |
 | own: textarea/textarea.client                   |      316 |        0.3 |        276 |         0.4 |           93 |

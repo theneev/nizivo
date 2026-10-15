@@ -14,7 +14,7 @@ import { renderElement, type RenderProp } from '../contracts/render';
 import { stateAttrs } from '../contracts/state';
 import { cx } from '../_internal/cx';
 import { FIELD_CONTROL, joinIds, presented } from '../_internal/field';
-import { Glyph } from '../_internal/glyphs';
+import { CircleXGlyph } from '../_internal/glyphs';
 import { InlineError } from '../inline-error/inline-error';
 import { FieldScope } from './field-scope.client';
 
@@ -274,7 +274,7 @@ export function fieldRootProps(anatomy: FieldAnatomy): Record<string, unknown> {
             className="nz-field-error"
             data-slot="field-error"
             id={ids.error}
-            icon={anatomy.errorIcon ?? <Glyph name="circle-x" />}
+            icon={anatomy.errorIcon ?? <CircleXGlyph />}
           >
             {error}
           </InlineError>

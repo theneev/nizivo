@@ -16,7 +16,7 @@ import { mergeProps } from '../contracts/merge-props';
 import { renderElement, type RenderProp } from '../contracts/render';
 import { stateAttrs } from '../contracts/state';
 import { useFieldControl } from '../field/field-scope.client';
-import { Glyph } from '../_internal/glyphs';
+import { CheckGlyph, MinusGlyph } from '../_internal/glyphs';
 import { cx } from '../_internal/cx';
 import { presented } from '../_internal/field';
 
@@ -138,8 +138,8 @@ export function Checkbox({
         <span className="nz-checkbox-indicator" data-slot="checkbox-indicator" aria-hidden="true">
           {indicator ?? (
             <>
-              <Glyph name="check" />
-              <Glyph name="minus" />
+              <CheckGlyph />
+              <MinusGlyph />
             </>
           )}
         </span>

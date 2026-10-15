@@ -2,7 +2,7 @@
 import type { ComponentPropsWithRef, ReactElement, ReactNode } from 'react';
 import { renderElement, type RenderProp } from '../contracts/render';
 import { cx } from '../_internal/cx';
-import { Glyph } from '../_internal/glyphs';
+import { SpinnerGlyph } from '../_internal/glyphs';
 import type { ButtonVariant, ControlSize } from '../augment';
 
 export interface ButtonState {
@@ -84,7 +84,7 @@ export function Button({
         <>
           {pending ? (
             <span className="nz-button-icon" data-slot="button-icon" aria-hidden="true">
-              {pendingIndicator ?? <Glyph name="spinner" />}
+              {pendingIndicator ?? <SpinnerGlyph />}
             </span>
           ) : (
             leadingIcon != null && (

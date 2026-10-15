@@ -5,36 +5,14 @@
 // of Field, Fieldset and InlineError), `close` (Lucide's `x`, AlertDismiss's default), and `check` and
 // `minus` (Checkbox's checked mark and indeterminate dash) are on Lucide's list of Feather-derived
 // icons, so they also carry the Feather MIT notice in THIRD_PARTY_NOTICES.
-import type { JSX } from 'react';
+//
+// One export per glyph, so an entry carries only the paths it draws (a name → paths table kept every
+// glyph in every entry that drew one: about 160 B gzip on the Dialog entry).
+import type { JSX, ReactNode } from 'react';
 
 export type GlyphName = 'spinner' | 'chevrons-up-down' | 'circle-x' | 'close' | 'check' | 'minus';
 
-const PATHS: Record<GlyphName, JSX.Element> = {
-  spinner: <path d="M21 12a9 9 0 1 1-6.219-8.56" />,
-  'chevrons-up-down': (
-    <>
-      <path d="m7 15 5 5 5-5" />
-      <path d="m7 9 5-5 5 5" />
-    </>
-  ),
-  'circle-x': (
-    <>
-      <circle cx="12" cy="12" r="10" />
-      <path d="m15 9-6 6" />
-      <path d="m9 9 6 6" />
-    </>
-  ),
-  close: (
-    <>
-      <path d="M18 6 6 18" />
-      <path d="m6 6 12 12" />
-    </>
-  ),
-  check: <path d="M20 6 9 17l-5-5" />,
-  minus: <path d="M5 12h14" />,
-};
-
-export function Glyph({ name }: { name: GlyphName }): JSX.Element {
+function svg(name: GlyphName, paths: ReactNode): JSX.Element {
   return (
     <svg
       className={`nz-glyph nz-glyph-${name}`}
@@ -49,7 +27,42 @@ export function Glyph({ name }: { name: GlyphName }): JSX.Element {
       aria-hidden="true"
       focusable="false"
     >
-      {PATHS[name]}
+      {paths}
     </svg>
   );
 }
+
+export const SpinnerGlyph = (): JSX.Element =>
+  svg('spinner', <path d="M21 12a9 9 0 1 1-6.219-8.56" />);
+
+export const ChevronsUpDownGlyph = (): JSX.Element =>
+  svg(
+    'chevrons-up-down',
+    <>
+      <path d="m7 15 5 5 5-5" />
+      <path d="m7 9 5-5 5 5" />
+    </>,
+  );
+
+export const CircleXGlyph = (): JSX.Element =>
+  svg(
+    'circle-x',
+    <>
+      <circle cx="12" cy="12" r="10" />
+      <path d="m15 9-6 6" />
+      <path d="m9 9 6 6" />
+    </>,
+  );
+
+export const CloseGlyph = (): JSX.Element =>
+  svg(
+    'close',
+    <>
+      <path d="M18 6 6 18" />
+      <path d="m6 6 12 12" />
+    </>,
+  );
+
+export const CheckGlyph = (): JSX.Element => svg('check', <path d="M20 6 9 17l-5-5" />);
+
+export const MinusGlyph = (): JSX.Element => svg('minus', <path d="M5 12h14" />);

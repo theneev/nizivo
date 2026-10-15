@@ -2,7 +2,7 @@
 import type { ComponentPropsWithRef, ReactElement, ReactNode } from 'react';
 import { renderElement, type RenderProp } from '../contracts/render';
 import { cx } from '../_internal/cx';
-import { Glyph } from '../_internal/glyphs';
+import { CircleXGlyph } from '../_internal/glyphs';
 
 export interface InlineErrorProps extends ComponentPropsWithRef<'div'> {
   /**
@@ -36,7 +36,7 @@ export function InlineError({
       children: (
         <>
           <span className="nz-inline-error-icon" data-slot="inline-error-icon" aria-hidden="true">
-            {icon ?? <Glyph name="circle-x" />}
+            {icon ?? <CircleXGlyph />}
           </span>
           <span className="nz-inline-error-message" data-slot="inline-error-message">
             {children}

@@ -6,7 +6,7 @@ import type { ReactElement } from 'react';
 import { mergeProps } from '../contracts/merge-props';
 import { renderElement } from '../contracts/render';
 import { cx } from '../_internal/cx';
-import { Glyph } from '../_internal/glyphs';
+import { SpinnerGlyph } from '../_internal/glyphs';
 import { ariaKeyShortcuts } from '../_internal/keys';
 import { IconButtonTooltip } from './icon-button.client';
 import type { IconButtonProps } from './icon-button.contract';
@@ -80,7 +80,7 @@ export function iconButtonElement(
       onClick: pending && props['onClick'] !== undefined ? swallow : props['onClick'],
       children: (
         <span className="nz-icon-button-icon" data-slot="icon-button-icon" aria-hidden="true">
-          {pending ? (pendingIndicator ?? <Glyph name="spinner" />) : icon}
+          {pending ? (pendingIndicator ?? <SpinnerGlyph />) : icon}
         </span>
       ),
     },

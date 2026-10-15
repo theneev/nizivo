@@ -6,7 +6,7 @@ import { renderElement, type RenderProp } from '../contracts/render';
 import { stateAttrs } from '../contracts/state';
 import { cx } from '../_internal/cx';
 import { joinIds, presented } from '../_internal/field';
-import { Glyph } from '../_internal/glyphs';
+import { CircleXGlyph } from '../_internal/glyphs';
 import { InlineError } from '../inline-error/inline-error';
 
 export interface FieldsetState {
@@ -109,7 +109,7 @@ export function Fieldset({
                 className="nz-fieldset-error"
                 data-slot="fieldset-error"
                 id={errorId}
-                icon={errorIcon ?? <Glyph name="circle-x" />}
+                icon={errorIcon ?? <CircleXGlyph />}
               >
                 {error}
               </InlineError>

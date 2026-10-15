@@ -10,7 +10,7 @@ import { renderElement, type RenderProp } from '../contracts/render';
 import { stateAttrs } from '../contracts/state';
 import { cx } from '../_internal/cx';
 import { FIELD_CONTROL } from '../_internal/field';
-import { Glyph } from '../_internal/glyphs';
+import { ChevronsUpDownGlyph } from '../_internal/glyphs';
 
 export interface NativeSelectState {
   size: ControlSize;
@@ -118,7 +118,7 @@ export function NativeSelect({
           data-slot="native-select-chevron"
           aria-hidden="true"
         >
-          {indicator ?? <Glyph name="chevrons-up-down" />}
+          {indicator ?? <ChevronsUpDownGlyph />}
         </span>
       </>
     ),

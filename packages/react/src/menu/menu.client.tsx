@@ -6,7 +6,7 @@
 import { isValidElement, type JSX, type ReactNode } from 'react';
 import { toRenderFn } from '../contracts/render';
 import { cx } from '../_internal/cx';
-import { Glyph } from '../_internal/glyphs';
+import { CheckGlyph } from '../_internal/glyphs';
 import { ariaKeyShortcuts } from '../_internal/keys';
 import { Kbd } from '../kbd/kbd';
 import * as Engine from './engine';
@@ -90,7 +90,7 @@ function itemContent(
       )}
       {indicator !== undefined && (
         <span className="nz-menu-item-indicator" aria-hidden="true">
-          {indicator ?? <Glyph name="check" />}
+          {indicator ?? <CheckGlyph />}
         </span>
       )}
     </>

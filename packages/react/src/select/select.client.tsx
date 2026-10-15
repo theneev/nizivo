@@ -4,7 +4,7 @@ import { createContext, use, useMemo, type JSX } from 'react';
 import type { ControlSize } from '../augment';
 import { toRenderFn } from '../contracts/render';
 import { cx } from '../_internal/cx';
-import { Glyph } from '../_internal/glyphs';
+import { ChevronsUpDownGlyph } from '../_internal/glyphs';
 import * as Engine from './engine';
 import type {
   SelectGroupLabelProps,
@@ -68,7 +68,7 @@ export function SelectTrigger({
       {children ?? <SelectValue />}
       {/* "the chevron says choose" */}
       <span className="nz-select-chevron" data-slot="select-chevron" aria-hidden="true">
-        {indicator ?? <Glyph name="chevrons-up-down" />}
+        {indicator ?? <ChevronsUpDownGlyph />}
       </span>
     </Engine.Trigger>
   );
