@@ -23,9 +23,9 @@ export const DIST_TAG = 'next';
  * real run stops on it, and a dry run reports it.
  *
  * Not here: `size` (inside `pnpm check` since week 5); the floor lanes (they need a Firefox 129 binary
- * and the iOS 17.5 Simulator, and they are exit criterion 6, not a per-release gate); and the overlay
- * suite in Firefox, because Playwright's Firefox does not launch on the release machine (weeks 3 to 5),
- * so it would block every release. It comes back with CI or a Firefox that launches.
+ * and the iOS 17.5 Simulator, and they are exit criterion 6, not a per-release gate); and the browser
+ * lane in WebKit (above). Firefox joined in week 6, once packages/react/test/browser-engine.ts gave
+ * Playwright's Firefox a home folder it can open on macOS.
  */
 export interface Lane {
   id: string;
@@ -42,7 +42,16 @@ export const RELEASE_LANES: readonly Lane[] = [
     dir: 'packages/react',
     script: 'test:browser',
   },
-  ...(['chromium', 'webkit'] as const).map((browser) => ({
+  // Playwright's current Firefox, not the 129 floor (the floor lane covers that); WebKit's browser
+  // lane is not here: WebKit on macOS does not Tab to buttons, links or radios by default.
+  {
+    id: 'browser-firefox',
+    why: 'browser lane, Firefox (§18.1)',
+    dir: 'packages/react',
+    script: 'test:browser',
+    env: { NZ_BROWSER: 'firefox' },
+  },
+  ...(['chromium', 'webkit', 'firefox'] as const).map((browser) => ({
     id: `overlay-${browser}`,
     why: `overlay conformance in ${browser} (§12.5)`,
     dir: 'packages/react',

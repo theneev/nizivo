@@ -1,5 +1,5 @@
-import { playwright } from '@vitest/browser-playwright';
 import { defineConfig, type ViteUserConfig } from 'vitest/config';
+import { engine, provider } from '../browser-engine.ts';
 
 // The overlay conformance lane (ARCHITECTURE.md §9.6 case 8, §12.5): every overlay adapter of the
 // react-aria family runs the same cases in a real browser. Run from packages/react:
@@ -7,10 +7,8 @@ import { defineConfig, type ViteUserConfig } from 'vitest/config';
 // contracts, the OverlayEngine shape) are *.test.tsx files in this folder and run with `pnpm test`.
 // Needs the built @nizivo/tokens dist/tokens.css and the generated styles/base.css.
 // `NZ_BROWSER=webkit` (or `firefox`) runs the same cases in another engine; the Chromium-only cases
-// (forced colours through the DevTools protocol) skip themselves there.
-declare const process: { env: Record<string, string | undefined> };
-const BROWSERS = ['chromium', 'firefox', 'webkit'] as const;
-const browser = BROWSERS.find((name) => name === process.env['NZ_BROWSER']) ?? 'chromium';
+// (forced colours through the DevTools protocol) skip themselves there. test/browser-engine.ts has
+// the engine switch and the Firefox launch fix.
 const config: ViteUserConfig = defineConfig({
   // Pre-bundled up front, as in test/browser: a mid-run re-bundle loads a second React copy.
   optimizeDeps: {
@@ -34,8 +32,8 @@ const config: ViteUserConfig = defineConfig({
       enabled: true,
       headless: true,
       screenshotFailures: false,
-      provider: playwright(),
-      instances: [{ browser }],
+      provider: provider(),
+      instances: [{ browser: engine }],
     },
   },
 });

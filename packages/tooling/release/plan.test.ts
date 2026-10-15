@@ -476,7 +476,7 @@ describe('release', () => {
       calls
         .filter((c) => c.args.includes('test:overlay'))
         .map((c) => c.options.env?.['NZ_BROWSER']),
-    ).toEqual(['chromium', 'webkit']);
+    ).toEqual(['chromium', 'webkit', 'firefox']);
     expect(logs.join('\n')).toContain(
       'a real run creates the local tag @nizivo/react@0.1.0 on HEAD',
     );
@@ -711,8 +711,10 @@ describe('release', () => {
   test('the lanes cover the browser, overlay, fixture and visual lanes', () => {
     expect(RELEASE_LANES.map((l) => l.id)).toEqual([
       'browser',
+      'browser-firefox',
       'overlay-chromium',
       'overlay-webkit',
+      'overlay-firefox',
       'fixture-next',
       'fixture-vite',
       'fixture-astro',

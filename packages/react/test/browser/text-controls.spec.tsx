@@ -184,7 +184,8 @@ describe('ref', () => {
 });
 
 describe('Input hit area', () => {
-  // `.nz-input` at (2, 2) is the padding at the box's start edge
+  // `.nz-input` at x = 2, half-way down, is the padding at the box's start edge. Not (2, 2): that is
+  // outside the 12 px rounded corner, which Firefox hit-tests and Chromium does not.
   test.each(['.nz-input-icon', '.nz-input-prefix', '.nz-input-suffix', '.nz-input'])(
     'a press on %s focuses the input',
     async (part) => {
@@ -192,7 +193,9 @@ describe('Input hit area', () => {
         <Input aria-label="Price" leadingIcon={<i>i</i>} prefix="₹" suffix="per kg" />,
       );
       const input = one(container, '.nz-input-control', HTMLInputElement);
-      await userEvent.click(one(container, part, HTMLElement), { position: { x: 2, y: 2 } });
+      const target = one(container, part, HTMLElement);
+      const y = Math.round(target.getBoundingClientRect().height / 2);
+      await userEvent.click(target, { position: { x: 2, y } });
       expect(document.activeElement).toBe(input);
     },
   );
