@@ -11,6 +11,9 @@ export function ButtonExample(): JSX.Element {
     <div>
       <Button variant="primary">Save</Button>
       <Button>Cancel</Button>
+      <Button variant="accent">Upgrade</Button>
+      <Button variant="critical">Remove</Button>
+      <Button size="lg">Continue</Button>
       <Button variant="critical" size="sm" disabled>
         Delete
       </Button>

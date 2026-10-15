@@ -19,6 +19,9 @@
     --_nz-button-font: var(--nz-font-label-m);
     --_nz-button-icon-size: var(--nz-size-icon-sm);
 
+    /* a link rendered as a Button (render={<a />}) gets the <button>'s border box without a page
+       reset (§8.1): same height as its siblings, and fullWidth stays inside its container */
+    box-sizing: border-box;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -31,6 +34,8 @@
     color: var(--nz-button-fg, var(--_nz-button-fg));
     box-shadow: var(--nz-button-shadow, var(--_nz-button-shadow));
     font: var(--nz-button-font, var(--_nz-button-font));
+    /* a link rendered as a Button (render={<a />}) drops the UA underline without a page reset (§8.1) */
+    text-decoration: none;
     cursor: pointer;
     transition:
       background-color var(--nz-duration-fast) var(--nz-easing-standard),

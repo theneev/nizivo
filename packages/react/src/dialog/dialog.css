@@ -33,6 +33,8 @@
     --_nz-dialog-width: 30rem; /* Figma Modal 7275:15139: 480 px */
 
     position: relative; /* above the backdrop sibling */
+    /* the width includes the forced-colours border, with or without a page reset (§8.1) */
+    box-sizing: border-box;
     inline-size: min(var(--nz-dialog-width, var(--_nz-dialog-width)), 100%);
     max-block-size: calc(100dvh - 2 * var(--nz-space-8));
     display: flex;
@@ -43,6 +45,13 @@
     transition:
       scale var(--nz-duration-spring) var(--nz-easing-spring),
       opacity var(--nz-duration-spring) var(--nz-easing-enter);
+
+    /* Focus lands on the popup itself when nothing inside takes it (a server-open dialog, or one
+       opened from the keyboard): the dialog is the container, so it shows no ring of its own, as the
+       Menu and Select lists do not; Tab moves into it, where every control has the Nizivo ring. */
+    &:focus-visible {
+      outline: none;
+    }
 
     &[data-entering] {
       opacity: 0;

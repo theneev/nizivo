@@ -12,6 +12,9 @@
      which stays 120 ms when reduced, so the fade survives and the scale does not travel. */
   .nz-menu-popup {
     z-index: var(--nz-z-overlay);
+    /* the minimum is the whole popup, border included, so it matches its trigger's width with or
+       without a page reset (§8.1) */
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     min-inline-size: max(12rem, var(--nz-trigger-width, 0px));
@@ -57,6 +60,8 @@
     display: flex;
     align-items: center;
     gap: var(--nz-space-2);
+    /* 36 px rows with or without a page reset (§8.1): the minimum includes the padding */
+    box-sizing: border-box;
     min-block-size: 2.25rem;
     padding-block: var(--nz-space-1-5);
     padding-inline: var(--nz-space-3);
@@ -168,13 +173,17 @@
     }
 
     /* base.css's [data-checked] floor (Highlight) loses to [data-highlighted]'s background above, a
-       later layer, so repeat it here, as select.css does for [data-selected] (§8.5) */
-    :is(.nz-menu-checkbox-item, .nz-menu-radio-item)[data-checked] {
+       later layer, so repeat it here, as select.css does for [data-selected] (§8.5). The second
+       selector outranks the checked-and-highlighted hover fill, which would otherwise paint a token
+       colour under HighlightText (week 5 visual lane) */
+    :is(.nz-menu-checkbox-item, .nz-menu-radio-item)[data-checked],
+    :is(.nz-menu-checkbox-item, .nz-menu-radio-item)[data-checked][data-highlighted] {
       background: Highlight;
       color: HighlightText;
-      /* forced-color-adjust is inherited, so the inset ring and the glyphs would keep their token
-         colours on the Highlight fill */
-      outline-color: HighlightText;
+      /* forced-color-adjust is inherited, so the ring and the glyphs would keep their token colours.
+         The keyboard ring sits outside the row, on Canvas, so it takes CanvasText as Select's does
+         (HighlightText there was invisible: week 5 visual lane) */
+      outline-color: CanvasText;
       forced-color-adjust: none;
 
       & > :is(.nz-menu-item-icon, .nz-menu-item-shortcut, .nz-menu-item-indicator) {

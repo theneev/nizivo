@@ -11,6 +11,8 @@
     display: flex;
     align-items: center;
     gap: var(--nz-space-2);
+    /* the 20rem cap is the whole tooltip, padding included, with or without a page reset (§8.1) */
+    box-sizing: border-box;
     max-inline-size: 20rem;
     padding-block: var(--nz-space-2);
     padding-inline: var(--nz-space-3);
