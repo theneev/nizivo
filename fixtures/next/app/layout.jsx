@@ -45,18 +45,17 @@ import { ThemeScript } from '@nizivo/react/theme-script';
 
 export const metadata = { title: 'Nizivo Next fixture' };
 
-// A stored theme choice, applied before first paint (the docs' Next.js page teaches the same pattern;
-// ThemeScript does not persist the theme yet). With nothing stored, data-nz-theme="system" follows
-// the OS with no script at all. runner/theme.ts checks that no light frame paints first.
-const storedTheme = `(function(){try{var t=localStorage.getItem('nz-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-nz-theme',t)}catch(e){}})()`;
+// ThemeScript applies a stored theme choice (localStorage `nz-theme`: light, dark or system) and sets
+// data-nz-platform before first paint (the docs' Next.js page teaches the same pattern). With nothing
+// stored, data-nz-theme="system" follows the OS. runner/theme.ts checks that no light frame paints
+// first.
 
 export default function RootLayout({ children }) {
   return (
-    // Both scripts change <html>'s attributes before hydration (data-nz-theme, data-nz-platform), so
+    // ThemeScript changes <html>'s attributes before hydration (data-nz-theme, data-nz-platform), so
     // <html> takes suppressHydrationWarning, as ThemeScript's JSDoc says.
     <html lang="en" data-nz-theme="system" suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: storedTheme }} />
         <ThemeScript />
       </head>
       <body>{children}</body>

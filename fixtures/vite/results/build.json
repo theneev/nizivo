@@ -1,6 +1,6 @@
 {
   "fixture": "vite",
-  "command": "vite build && vite preview",
+  "command": "vite build && vite preview; vite (dev) for devThemeFlash",
   "versions": {
     "vite": "8.3.4",
     "@vitejs/plugin-react": "6.1.2",
@@ -19,8 +19,8 @@
       "osDark": {
         "frames": 90,
         "wrong": [],
-        "firstPaint": 12,
-        "firstContentfulPaint": 344,
+        "firstPaint": 16,
+        "firstContentfulPaint": 356,
         "firstTheme": "system",
         "lastTheme": "system",
         "pixel": "rgb(16, 19, 17)",
@@ -31,7 +31,7 @@
         "frames": 90,
         "wrong": [],
         "firstPaint": 16,
-        "firstContentfulPaint": 348,
+        "firstContentfulPaint": 356,
         "firstTheme": "dark",
         "lastTheme": "dark",
         "pixel": "rgb(16, 19, 17)",
@@ -41,8 +41,8 @@
       "static": {
         "frames": 90,
         "wrong": [],
-        "firstPaint": 20,
-        "firstContentfulPaint": 364,
+        "firstPaint": 36,
+        "firstContentfulPaint": 372,
         "firstTheme": "dark",
         "lastTheme": "dark",
         "pixel": "rgb(16, 19, 17)",
@@ -53,7 +53,7 @@
         "frames": 90,
         "wrong": [],
         "firstPaint": 16,
-        "firstContentfulPaint": 360,
+        "firstContentfulPaint": 356,
         "firstTheme": "system",
         "lastTheme": "system",
         "pixel": "rgb(246, 247, 244)",
@@ -63,14 +63,14 @@
       "late": {
         "frames": 90,
         "wrong": [
-          "9:light dark/rgb(246, 247, 244)",
-          "25:light dark/rgb(246, 247, 244)",
-          "42:light dark/rgb(246, 247, 244)",
-          "59:light dark/rgb(246, 247, 244)",
-          "75:light dark/rgb(246, 247, 244)"
+          "10:light dark/rgb(246, 247, 244)",
+          "26:light dark/rgb(246, 247, 244)",
+          "43:light dark/rgb(246, 247, 244)",
+          "60:light dark/rgb(246, 247, 244)",
+          "76:light dark/rgb(246, 247, 244)"
         ],
-        "firstPaint": 16,
-        "firstContentfulPaint": 364,
+        "firstPaint": 24,
+        "firstContentfulPaint": 360,
         "firstTheme": "system",
         "lastTheme": "dark",
         "pixel": "rgb(16, 19, 17)",
@@ -82,6 +82,104 @@
       "packed": 68,
       "loaded": 68,
       "stylesheets": 1,
+      "ok": true
+    },
+    "nested": {
+      "dark": "0.071",
+      "darkLight": "0.967",
+      "darkInverse": "0.967",
+      "inverse": "0.071",
+      "ok": true
+    },
+    "ok": true
+  },
+  "devThemeFlash": {
+    "path": "/",
+    "cases": {
+      "osDark": {
+        "frames": 90,
+        "unstyled": [
+          "7:normal/rgba(0, 0, 0, 0)",
+          "24:normal/rgba(0, 0, 0, 0)",
+          "41:normal/rgba(0, 0, 0, 0)",
+          "57:normal/rgba(0, 0, 0, 0)"
+        ],
+        "wrong": [],
+        "firstPaint": 104,
+        "firstContentfulPaint": null,
+        "firstTheme": "system",
+        "lastTheme": "system",
+        "pixel": "rgb(16, 19, 17)",
+        "pixelDark": true,
+        "ok": true
+      },
+      "stored": {
+        "frames": 90,
+        "unstyled": [
+          "6:normal/rgba(0, 0, 0, 0)",
+          "23:normal/rgba(0, 0, 0, 0)",
+          "39:normal/rgba(0, 0, 0, 0)"
+        ],
+        "wrong": [],
+        "firstPaint": 108,
+        "firstContentfulPaint": null,
+        "firstTheme": "dark",
+        "lastTheme": "dark",
+        "pixel": "rgb(16, 19, 17)",
+        "pixelDark": true,
+        "ok": true
+      },
+      "static": {
+        "frames": 90,
+        "unstyled": [
+          "10:normal/rgba(0, 0, 0, 0)",
+          "27:normal/rgba(0, 0, 0, 0)",
+          "44:normal/rgba(0, 0, 0, 0)",
+          "60:normal/rgba(0, 0, 0, 0)"
+        ],
+        "wrong": [],
+        "firstPaint": 112,
+        "firstContentfulPaint": null,
+        "firstTheme": "dark",
+        "lastTheme": "dark",
+        "pixel": "rgb(16, 19, 17)",
+        "pixelDark": true,
+        "ok": true
+      },
+      "light": {
+        "frames": 90,
+        "unstyled": [],
+        "wrong": [],
+        "firstPaint": 100,
+        "firstContentfulPaint": null,
+        "firstTheme": "system",
+        "lastTheme": "system",
+        "pixel": "rgb(246, 247, 244)",
+        "pixelDark": false,
+        "ok": true
+      },
+      "late": {
+        "frames": 90,
+        "wrong": [
+          "9:normal/rgba(0, 0, 0, 0)",
+          "26:normal/rgba(0, 0, 0, 0)",
+          "42:normal/rgba(0, 0, 0, 0)",
+          "59:normal/rgba(0, 0, 0, 0)",
+          "76:light dark/rgb(246, 247, 244)"
+        ],
+        "firstPaint": 108,
+        "firstContentfulPaint": null,
+        "firstTheme": "system",
+        "lastTheme": "dark",
+        "pixel": "rgb(16, 19, 17)",
+        "pixelDark": true,
+        "ok": true
+      }
+    },
+    "lightDark": {
+      "packed": 68,
+      "loaded": 68,
+      "stylesheets": 0,
       "ok": true
     },
     "nested": {
@@ -111,10 +209,12 @@
       "unexpected": [],
       "axe": [],
       "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
       "js": {
         "files": 2,
-        "bytes": 224629,
-        "gzip": 69906
+        "bytes": 224669,
+        "gzip": 69921
       },
       "failures": []
     },
@@ -135,10 +235,12 @@
       "unexpected": [],
       "axe": [],
       "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
       "js": {
         "files": 5,
-        "bytes": 227742,
-        "gzip": 71400
+        "bytes": 227857,
+        "gzip": 71435
       },
       "failures": []
     },
@@ -159,10 +261,12 @@
       "unexpected": [],
       "axe": [],
       "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
       "js": {
         "files": 5,
-        "bytes": 227743,
-        "gzip": 71402
+        "bytes": 227858,
+        "gzip": 71437
       },
       "failures": []
     },
@@ -187,10 +291,12 @@
       "unexpected": [],
       "axe": [],
       "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
       "js": {
         "files": 11,
-        "bytes": 242754,
-        "gzip": 76948
+        "bytes": 242849,
+        "gzip": 76981
       },
       "failures": []
     },
@@ -217,10 +323,12 @@
       "unexpected": [],
       "axe": [],
       "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
       "js": {
         "files": 6,
-        "bytes": 228601,
-        "gzip": 71908
+        "bytes": 228713,
+        "gzip": 71949
       },
       "failures": []
     },
@@ -269,7 +377,7 @@
           "ok": true
         }
       },
-      "chunks": 12,
+      "chunks": 14,
       "markers": [
         "nzfm[_engines/react-aria/dialog.client]",
         "nzfm[_engines/react-aria/locale.client]",
@@ -279,6 +387,7 @@
         "nzfm[_engines/react-aria/tooltip.client]",
         "nzfm[config/config.client]",
         "nzfm[dialog/dialog.client]",
+        "nzfm[field/field-scope.client]",
         "nzfm[select/select.client]",
         "nzfm[tooltip/tooltip.client]"
       ],
@@ -286,10 +395,12 @@
       "unexpected": [],
       "axe": [],
       "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
       "js": {
-        "files": 12,
-        "bytes": 446542,
-        "gzip": 143045
+        "files": 14,
+        "bytes": 455105,
+        "gzip": 146422
       },
       "failures": []
     },
@@ -316,23 +427,26 @@
           "ok": true
         }
       },
-      "chunks": 10,
+      "chunks": 12,
       "markers": [
         "nzfm[_engines/react-aria/locale.client]",
         "nzfm[_engines/react-aria/overlay.client]",
         "nzfm[_engines/react-aria/popup.client]",
         "nzfm[_engines/react-aria/select.client]",
         "nzfm[config/config.client]",
+        "nzfm[field/field-scope.client]",
         "nzfm[select/select.client]"
       ],
       "missing": [],
       "unexpected": [],
       "axe": [],
       "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
       "js": {
-        "files": 10,
-        "bytes": 427860,
-        "gzip": 136482
+        "files": 12,
+        "bytes": 435661,
+        "gzip": 139605
       },
       "failures": []
     },
@@ -367,7 +481,7 @@
           "ok": true
         }
       },
-      "chunks": 10,
+      "chunks": 11,
       "markers": [
         "nzfm[checkbox/checkbox.client]",
         "nzfm[field/field-scope.client]",
@@ -381,10 +495,12 @@
       "unexpected": [],
       "axe": [],
       "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
       "js": {
-        "files": 10,
-        "bytes": 247181,
-        "gzip": 77536
+        "files": 11,
+        "bytes": 247871,
+        "gzip": 78283
       },
       "failures": []
     },
@@ -432,10 +548,12 @@
       "unexpected": [],
       "axe": [],
       "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
       "js": {
         "files": 10,
-        "bytes": 400580,
-        "gzip": 127398
+        "bytes": 401437,
+        "gzip": 127728
       },
       "failures": []
     },
@@ -476,10 +594,12 @@
       "unexpected": [],
       "axe": [],
       "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
       "js": {
         "files": 7,
-        "bytes": 339438,
-        "gzip": 105434
+        "bytes": 339478,
+        "gzip": 105451
       },
       "failures": []
     },
@@ -509,10 +629,12 @@
       "unexpected": [],
       "axe": [],
       "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
       "js": {
         "files": 4,
-        "bytes": 226786,
-        "gzip": 70927
+        "bytes": 226826,
+        "gzip": 70941
       },
       "failures": []
     },
@@ -538,10 +660,12 @@
       "icons": ["_internal/icon", "icons/bell", "icons/calendar", "icons/search"],
       "axe": [],
       "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
       "js": {
         "files": 2,
-        "bytes": 225543,
-        "gzip": 70261
+        "bytes": 225583,
+        "gzip": 70277
       },
       "failures": []
     }

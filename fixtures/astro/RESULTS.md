@@ -14,7 +14,7 @@ The Astro 7.3 fixture with React islands (ARCHITECTURE.md §11.1, §18.1, §21.1
 | Browser           | Playwright 1.64.0, Chromium 156, headless                                                                                                                                                     |
 | Library           | the three packages from **`pnpm pack` tarballs**, unpacked to `.packed/` (gitignored) and installed as `file:` folders by `fixtures/runner/pack.ts --fixture astro`, with the markers planted |
 | CSS               | `src/layouts/Base.astro` imports `tokens.css`, `css/base.css` and every `css/<name>.css` once, with the `.css` extension, then the app's `app.css`                                            |
-| Theme             | `<html lang="en" data-nz-theme="system">`, then in `<head>` an inline stored-choice script and `<script is:inline set:html={themeScript} />`                                                  |
+| Theme             | `<html lang="en" data-nz-theme="system">`, then in `<head>` `<script is:inline set:html={themeScript} />` (it applies a stored `nz-theme` choice and sets `data-nz-platform`)                 |
 
 The folder is its own pnpm workspace root, excluded from the monorepo (`'!fixtures/astro'`), for the reasons in `fixtures/next/RESULTS.md` ("Setup"). `ignoredOptionalDependencies: [sharp]` keeps out `sharp` and its LGPL `libvips` (the fixture uses no image service). The other licence outside the runtime allowlist is MPL-2.0 for Lightning CSS, which §19.3 allows for build tooling. No dependency has an install script.
 
@@ -59,13 +59,13 @@ The same as the Next fixture (`fixtures/next/RESULTS.md`, "Checks"), on Astro's 
 | `/t0-barrel`     | 0         | 0             | 0                        | **zero JavaScript**, 21 names through the barrel                                        |
 | `/tab-nav`       | 0         | 0             | 0                        | **zero JavaScript**                                                                     |
 | `/icons-server`  | 0         | 0             | 0                        | **zero JavaScript**, no icon module                                                     |
-| `/alert-dismiss` | 8         | 71,953        | 1                        | only `alert/alert-dismiss.client`                                                       |
-| `/overlays`      | 14        | 142,597       | 10                       |                                                                                         |
-| `/forms`         | 13        | 78,273        | 7                        |                                                                                         |
-| `/menu`          | 13        | 127,921       | 6                        |                                                                                         |
+| `/alert-dismiss` | 8         | 71,979        | 1                        | only `alert/alert-dismiss.client`                                                       |
+| `/overlays`      | 15        | 145,657       | 11                       |                                                                                         |
+| `/forms`         | 14        | 78,848        | 7                        |                                                                                         |
+| `/menu`          | 13        | 128,200       | 6                        |                                                                                         |
 | `/tabs`          | 11        | 106,080       | 4                        | hydrates after the runner scrolls it into view                                          |
 | `/icons-client`  | 6         | 70,757        | 0                        | exactly the three icons and `_internal/icon`                                            |
-| `/two-islands`   | 10        | 74,227        | 2                        | `field/field-scope.client` and `input/input.client`; the two islands share their chunks |
+| `/two-islands`   | 11        | 74,832        | 2                        | `field/field-scope.client` and `input/input.client`; the two islands share their chunks |
 
 The per-page detail is in `results/static.json`. Every island page carries React, React DOM and Astro's island runtime once, however many islands it has: `/icons-client` (three small icons) loads 70,757 bytes, about the Vite app shell's 69,907.
 
@@ -88,6 +88,8 @@ axe-core 4.14.0 on every page after its islands hydrate (on `/menu`, once the `d
 
 **After the week 5 review** (same day): axe also runs with every interaction-opened popup open (the Select listbox, the Dialog, the Tooltip; once its fade has finished) and, on a `defaultOpen` page, again once the overlay has closed, so the page under a modal (the closed Menu trigger included) is checked too; both block. It runs once more with the OS in dark mode (`data-nz-theme="system"` switches in place; the run waits for the colour transitions) and records `axeDark` per page: reported, never a failure (exit criterion 4). **0 violations in every state, light and dark, on every page.** A build that prints any warning or error line now fails the run (it was only recorded), and the run writes its results to a temporary folder unless given `--record`, so a lane run leaves the tree clean. The deliberate breaks that prove both are in `fixtures/vite/RESULTS.md`, "axe".
 
+**Week 6** (recorded with `--record` on a fresh pack): axe also runs on every page's first render in Chromium's emulated forced colours (`axeForcedColors`) and with reduced motion (`axeReducedMotion`), both blocking: **0 violations in both**. For the forced-colours run only, each element without an inline text fill gets `-webkit-text-fill-color` equal to its computed colour, then the fills are removed: Chromium reports the unforced author colour for the text fill and axe reads it, so before the workaround an inverse Card body was flagged at 1.07:1 although it paints in `CanvasText` (a scratch control showed a real opt-out failure is still caught). The `stored` theme case now tests `ThemeScript`'s theme half: the fixture's own stored-choice script is gone.
+
 ## How to rerun
 
 From the repo root (Node 24, pnpm through corepack; Chromium for Playwright as in `fixtures/next/RESULTS.md`):
@@ -104,4 +106,4 @@ COREPACK_ENABLE_DOWNLOAD_PROMPT=0 corepack pnpm@12.11.2 --filter @nizivo/fixture
 
 - `output: 'server'` (on-demand rendering needs an adapter, which is not installed), `astro dev`, and `client:idle` / `client:only`.
 - Props to `client:*` islands must be serialisable (no functions): Astro's own rule, not exercised here.
-- Only Chromium; axe blocks in light and reports dark; forced colours and reduced motion are not run.
+- Only Chromium; axe blocks in light, forced colours and reduced motion (week 6, first render only) and reports dark.

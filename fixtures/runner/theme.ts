@@ -8,8 +8,8 @@
 //
 // Cases, each in a fresh context:
 // - osDark:  the OS is dark and <html data-nz-theme="system">: every frame is dark, with no script.
-// - stored:  the OS is light and a stored choice says dark; the fixture's inline <head> script applies
-//            it before first paint: every frame is dark.
+// - stored:  the OS is light and a stored choice says dark; ThemeScript in the fixture's <head>
+//            applies it before first paint: every frame is dark.
 // - static:  the OS is light and the server sends <html data-nz-theme="dark"> (the HTML is rewritten
 //            on the way in): every frame is dark.
 // - light:   the OS is light and nothing is stored: every frame is light (the probe tells them apart).
@@ -19,6 +19,12 @@
 // The light case also counts light-dark() in every stylesheet the page loads against the packed
 // tokens.css (a bundler that lowers them breaks nested scopes), and paints nested scopes and inverse
 // surfaces to check they resolve.
+//
+// A dev server that applies its stylesheets from JavaScript (Vite's) paints frames before any
+// stylesheet: <html> has no color-scheme ("normal") and <body> no background, so the browser's
+// default light canvas shows whatever the theme. With `unstyled: 'report'` those frames are listed
+// apart (`unstyled`) instead of failing the case; every frame once a stylesheet applies must still
+// be right, and the late control must still be caught.
 /* oxlint-disable no-await-in-loop -- the cases share one browser and run one after another */
 import { readFileSync } from 'node:fs';
 import type { Browser, BrowserContext, Page } from 'playwright';
@@ -33,6 +39,11 @@ interface Frame {
 
 interface CaseResult {
   frames: number;
+  /**
+   * `unstyled: 'report'` only: frames painted before any stylesheet applied (no color-scheme on
+   * <html>, no body background) where the expected theme is dark, as `t:scheme/bg`.
+   */
+  unstyled?: string[];
   /** Frames whose scheme was not the expected one, as `t:scheme/bg`. */
   wrong: string[];
   firstPaint: number | null;
@@ -169,6 +180,10 @@ const CASES: Record<string, Case> = {
   },
 };
 
+/** A frame painted before any stylesheet applied: no color-scheme on <html>, no body background. */
+const unstyledFrame = (f: Frame): boolean =>
+  f.scheme === 'normal' && (f.bg === null || /^rgba\(.*, 0\)$|^transparent$/.test(f.bg));
+
 const count = (css: string): number => css.split('light-dark(').length - 1;
 const isDark = (l: number): boolean => l >= 0 && l < 0.5;
 const isLight = (l: number): boolean => l >= 0.5;
@@ -237,7 +252,9 @@ export async function checkThemeFlash(
   base: string,
   path: string,
   packedTokens: string,
+  options: { unstyled?: 'fail' | 'report' } = {},
 ): Promise<ThemeFlashResult> {
+  const report = options.unstyled === 'report';
   const cases: Record<string, CaseResult> = {};
   let lightDark: ThemeFlashResult['lightDark'] = {
     packed: 0,
@@ -278,17 +295,26 @@ export async function checkThemeFlash(
       const describe = (f: Frame) => `${f.t}:${f.scheme}/${f.bg ?? 'no body'}`;
       let wrong: string[];
       let ok: boolean;
+      let unstyled: string[] | undefined;
       if (spec.expect === 'late') {
         // Caught: light frames first, then dark ones, and the last frame dark.
         const firstDark = frames.findIndex((f) => f.dark);
         wrong = frames.slice(0, Math.max(firstDark, 0)).map(describe);
         ok = firstDark > 0 && frames.slice(firstDark).every((f) => f.dark) && pixelDark;
       } else {
-        wrong = frames.filter((f) => f.dark !== spec.expect).map(describe);
-        ok = frames.length > 0 && wrong.length === 0 && pixelDark === spec.expect;
+        const off = frames.filter((f) => f.dark !== spec.expect);
+        if (report) unstyled = off.filter(unstyledFrame).map(describe);
+        wrong = (report ? off.filter((f) => !unstyledFrame(f)) : off).map(describe);
+        ok =
+          frames.length > 0 &&
+          wrong.length === 0 &&
+          // at least one frame was styled and right, so the case checked something
+          frames.some((f) => !unstyledFrame(f) && f.dark === spec.expect) &&
+          pixelDark === spec.expect;
       }
       cases[name] = {
         frames: frames.length,
+        ...(unstyled === undefined ? {} : { unstyled }),
         wrong: wrong.slice(0, 5),
         firstPaint: paints['first-paint'] ?? null,
         firstContentfulPaint: paints['first-contentful-paint'] ?? null,

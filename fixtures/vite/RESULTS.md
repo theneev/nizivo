@@ -14,7 +14,7 @@ The Vite 8 single-page app fixture (ARCHITECTURE.md §11.1, §18.1, §21.1 exit 
 | Browser           | Playwright 1.64.0, Chromium 156, headless                                                                                                                                                           |
 | Library           | the three packages from **`pnpm pack` tarballs**, unpacked to `.packed/` (gitignored) and installed as `file:` folders by `fixtures/runner/pack.ts --fixture vite`, with the markers planted        |
 | CSS               | `src/main.jsx` imports `@nizivo/tokens/tokens.css`, `@nizivo/react/css/base.css` and every `css/<name>.css` once, through the exports maps, then the app's own `app.css` (body background and text) |
-| Theme             | `<html lang="en" data-nz-theme="system">` in `index.html`, an inline `<head>` script that applies a stored choice (`localStorage` `nz-theme`), then `themeScript`                                   |
+| Theme             | `<html lang="en" data-nz-theme="system">` in `index.html`, then `themeScript` in `<head>` (it applies a stored `nz-theme` choice; week 6)                                                           |
 
 The folder is its own pnpm workspace root, excluded from the monorepo (`'!fixtures/vite'`), for the reasons in `fixtures/next/RESULTS.md` ("Setup"): the `@nizivo/tokens` override needs a workspace root, and the committed lockfile stays valid across library builds. Its `pnpm-workspace.yaml` carries the root's supply-chain keys with `allowBuilds: {}`; no dependency has an install script (Vite 8 lists esbuild only as an optional peer).
 
@@ -51,18 +51,18 @@ The same as the Next fixture (`fixtures/next/RESULTS.md`, "Checks"): console mes
 
 | Page              | JS chunks | gzip -9 bytes | Client modules (markers) | Notes                                                                    |
 | ----------------- | --------- | ------------- | ------------------------ | ------------------------------------------------------------------------ |
-| `/`               | 2         | 69,906        | 0                        | the shell: React DOM, the router, the lazy-chunk map                     |
-| `/button-only`    | 5         | 71,400        | 0                        | **the barrel costs nothing**: within a few bytes of the subpath page     |
-| `/button-subpath` | 5         | 71,402        | 0                        |                                                                          |
-| `/t0-barrel`      | 11        | 76,948        | 0                        | 21 names through the barrel, no client module                            |
-| `/alert-dismiss`  | 6         | 71,908        | 1                        | only `alert/alert-dismiss.client`                                        |
-| `/overlays`       | 12        | 143,045       | 10                       | Select, Dialog, Tooltip and their adapters                               |
-| `/barrel-select`  | 10        | 136,482       | 6                        | only what Select reaches, through the barrel (no Dialog, Tooltip, Menu…) |
-| `/forms`          | 10        | 77,536        | 7                        |                                                                          |
-| `/menu`           | 10        | 127,398       | 6                        |                                                                          |
-| `/tabs`           | 7         | 105,434       | 4                        |                                                                          |
-| `/tab-nav`        | 4         | 70,927        | 0                        | TabNav is server-safe                                                    |
-| `/icons`          | 2         | 70,261        | 0                        | exactly `icons/bell`, `icons/calendar`, `icons/search`, `_internal/icon` |
+| `/`               | 2         | 69,921        | 0                        | the shell: React DOM, the router, the lazy-chunk map                     |
+| `/button-only`    | 5         | 71,435        | 0                        | **the barrel costs nothing**: within a few bytes of the subpath page     |
+| `/button-subpath` | 5         | 71,437        | 0                        |                                                                          |
+| `/t0-barrel`      | 11        | 76,981        | 0                        | 21 names through the barrel, no client module                            |
+| `/alert-dismiss`  | 6         | 71,949        | 1                        | only `alert/alert-dismiss.client`                                        |
+| `/overlays`       | 14        | 146,422       | 11                       | Select, Dialog, Tooltip and their adapters                               |
+| `/barrel-select`  | 12        | 139,605       | 7                        | only what Select reaches, through the barrel (no Dialog, Tooltip, Menu…) |
+| `/forms`          | 11        | 78,283        | 7                        |                                                                          |
+| `/menu`           | 10        | 127,728       | 6                        |                                                                          |
+| `/tabs`           | 7         | 105,451       | 4                        |                                                                          |
+| `/tab-nav`        | 4         | 70,941        | 0                        | TabNav is server-safe                                                    |
+| `/icons`          | 2         | 70,277        | 0                        | exactly `icons/bell`, `icons/calendar`, `icons/search`, `_internal/icon` |
 
 Bytes are every chunk the page loads, the shell included; subtract `/` for the page's own cost (for example Select alone through the barrel: 66.6 KB gzip, its React Aria engine included; the Tabs page 35.5 KB; Button 1.5 KB). The per-page detail is in `results/build.json`.
 
@@ -91,13 +91,15 @@ Vite 8 minifies CSS with Lightning CSS for its default target, `'baseline-widely
 
 The CSS is a render-blocking `<link>` in `<head>` in the production build, so the first frame already has the tokens. **Nested scopes** on the light page resolve: a `data-nz-theme="dark"` scope is dark, a light scope inside it light, an inverse surface inside the dark scope light, and one on the page dark.
 
-`ThemeScript` contributes nothing to the theme today: it sets only `data-nz-platform` (§7.4). No flash comes from `data-nz-theme` on `<html>` (`system` needs no script at all) and, for a stored choice, from the app's own inline `<head>` script, the pattern the Next docs page teaches.
+No flash comes from `data-nz-theme` on `<html>` (`system` needs no script at all) and, for a stored choice, from `themeScript` in `<head>` (week 6: it applies `localStorage` `nz-theme` before first paint; until then the fixture carried its own stored-choice script).
 
 ### axe
 
 axe-core 4.14.0 (the catalog pin, injected as source) runs on every page after it renders and before any interaction (on `/menu`, once the `defaultOpen` menu has mounted), with the WCAG 2.0–2.2 A and AA tags, in light. **0 violations on all 12 pages.**
 
 **After the week 5 review** (same day): axe also runs with every interaction-opened popup open (the Select listbox, the Dialog, the Tooltip; once its fade has finished) and, on a `defaultOpen` page, again once the overlay has closed, so the page under a modal (the closed Menu trigger included) is checked too; both block. It runs once more with the OS in dark mode (`data-nz-theme="system"` switches in place; the run waits for the colour transitions) and records `axeDark` per page: reported, never a failure (exit criterion 4). **0 violations in every state, light and dark, on every page.** A build that prints any warning or error line now fails the run (it was only recorded), and the run writes its results to a temporary folder unless given `--record`, so a lane run leaves the tree clean. Two deliberate breaks, made and restored: a dark-only low-contrast `h1` is reported in `axeDark` on every page, and a light-only one is caught on `/menu` after the menu closes (`axeClosed`), which the load-time run could not see. A probe plugin that prints a `MODULE_LEVEL_DIRECTIVE`-style warning now fails the run.
+
+**Week 6** (recorded with `--record` on a fresh pack): axe also runs on every page's first render in Chromium's emulated forced colours (`axeForcedColors`) and with reduced motion (`axeReducedMotion`), both blocking: **0 violations in both**. For the forced-colours run only, each element without an inline text fill gets `-webkit-text-fill-color` equal to its computed colour, then the fills are removed: Chromium reports the unforced author colour for the text fill and axe reads it, so before the workaround an inverse Card body was flagged at 1.07:1 although it paints in `CanvasText` (a scratch control showed a real opt-out failure is still caught). The `stored` theme case now tests `ThemeScript`'s theme half: the fixture's own stored-choice script is gone. **The dev server** (`vite`, not preview; `devThemeFlash` in `results/build.json`): with a dark theme (OS dark, a stored choice or the attribute) 3 frames paint before any stylesheet exists (`color-scheme: normal`, a transparent body), because the dev server injects the CSS from JavaScript. They are reported, not failed; every styled frame is right, light has none, the late control is caught and 68 of 68 `light-dark()` values are kept. A production build has none.
 
 The first run found one: `target-size` (WCAG 2.2 2.5.8) on `/overlays`. A bare `<Dialog.Trigger>` or `<Tooltip.Trigger>` (no `render`) is an unstyled native button, 21 px tall, and the two sat side by side with no spacing. The page now lays them out in a `Stack` (`gap="4"`), which meets the spacing exception; the Next fixture's `/namespace` and `/flat` had the same layout and the same fix. The library question (should a bare trigger have a minimum target size, or should docs always compose a `Button`?) is open for the design and accessibility owners.
 
@@ -117,6 +119,6 @@ After a change to the dependencies of `@nizivo/react` or of this fixture, refres
 
 ## Not covered yet
 
-- The Vite dev server (CSS injected by JavaScript, so a dev page can paint unstyled first) and Vite SSR (a v0.2 fixture).
+- Vite SSR (a v0.2 fixture). The dev server is checked for theme frames since week 6 (above), not with the full spec.
 - Only Chromium; Firefox and WebKit belong to the `main` and nightly lanes.
-- axe blocks in light and reports dark; forced colours and reduced motion are not run here.
+- axe blocks in light, forced colours and reduced motion (week 6) and reports dark; the forced-colours and reduced-motion runs cover first render only, not interaction-opened popups.

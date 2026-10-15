@@ -7,6 +7,12 @@
 // 2. pnpm install --frozen-lockfile in fixtures/vite (its own workspace root and lockfile).
 // 3. vite build (a fresh dist/), vite preview, then spec.ts in Chromium on every page, and the theme
 //    flash check (theme.ts) on the home page.
+// 4. The dev server (`vite`, not preview) and the same theme flash check on the home page. In dev,
+//    Vite applies every stylesheet from JavaScript once the entry module runs, so the first frames
+//    paint before any stylesheet, on the browser's default light canvas, whatever the theme. Those
+//    frames are reported (`devThemeFlash.cases.*.unstyled`), not failed: production builds link the
+//    CSS in <head> and block on it (step 3 has none). Every frame once the stylesheets apply must be
+//    right, and the late control caught, as in step 3.
 import { readFileSync, realpathSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
 import { parseArgs } from 'node:util';
@@ -113,17 +119,49 @@ async function main(): Promise<number> {
     await stop();
   }
 
+  // The dev server: a first visit lets Vite pre-bundle the dependencies (it reloads the page when it
+  // finds new ones), so the checked visits all see the same, settled module graph.
+  const stopDev = await serve(
+    VITE,
+    ['--port', String(PORT), '--strictPort'],
+    FIXTURE_DIR,
+    env,
+    BASE,
+  );
+  let devThemeFlash: Awaited<ReturnType<typeof checkThemeFlash>>;
+  try {
+    const browser = await chromium.launch();
+    try {
+      const warm = await browser.newPage();
+      await warm.goto(`${BASE}/`, { waitUntil: 'networkidle', timeout: 60_000 });
+      await warm.waitForTimeout(1000);
+      await warm.close();
+      devThemeFlash = await checkThemeFlash(
+        browser,
+        BASE,
+        '/',
+        join(FIXTURE_DIR, '.packed', 'tokens', 'dist', 'tokens.css'),
+        { unstyled: 'report' },
+      );
+    } finally {
+      await browser.close();
+    }
+  } finally {
+    await stopDev();
+  }
+
   const failures = Object.entries(spec.pages).flatMap(([path, result]) =>
     result.failures.map((failure) => `${path} ${failure}`),
   );
   if (!themeFlash.ok) failures.push(`theme flash: ${JSON.stringify(themeFlash)}`);
+  if (!devThemeFlash.ok) failures.push(`dev server theme flash: ${JSON.stringify(devThemeFlash)}`);
   // A clean build is part of the claim (no MODULE_LEVEL_DIRECTIVE or any other warning), so any
   // warning or error line the build printed fails the run.
   for (const line of buildWarnings) failures.push(`build: ${line.trim()}`);
   const real = realpathSync(join(FIXTURE_DIR, 'node_modules', '@nizivo', 'react'));
   const result = {
     fixture: 'vite',
-    command: 'vite build && vite preview',
+    command: 'vite build && vite preview; vite (dev) for devThemeFlash',
     versions: {
       vite: version(FIXTURE_DIR, 'vite'),
       '@vitejs/plugin-react': version(FIXTURE_DIR, '@vitejs/plugin-react'),
@@ -140,9 +178,18 @@ async function main(): Promise<number> {
     pass: failures.length === 0,
     failures,
     themeFlash,
+    devThemeFlash,
     pages: spec.pages,
   };
   writeResults(resultsFile(FIXTURE_DIR, 'build.json', values.record === true), result);
+  for (const [name, devCase] of Object.entries(devThemeFlash.cases)) {
+    const count = devCase.unstyled?.length ?? 0;
+    if (count > 0) {
+      console.log(
+        `vite dev: ${name}: ${count} frame(s) before any stylesheet (reported): ${devCase.unstyled?.join(', ')}`,
+      );
+    }
+  }
   console.log(`vite: ${result.pass ? 'pass' : `FAIL\n  ${failures.join('\n  ')}`}`);
   return result.pass ? 0 : 1;
 }

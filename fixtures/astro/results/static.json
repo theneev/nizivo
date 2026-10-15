@@ -9,7 +9,7 @@
     "react-aria-components": "1.22.1",
     "browser": "Chromium 156.0.8078.4"
   },
-  "buildSeconds": 1.7,
+  "buildSeconds": 3.6,
   "buildWarnings": [],
   "pass": true,
   "failures": [],
@@ -19,8 +19,8 @@
       "osDark": {
         "frames": 90,
         "wrong": [],
-        "firstPaint": 20,
-        "firstContentfulPaint": 20,
+        "firstPaint": 24,
+        "firstContentfulPaint": 24,
         "firstTheme": "system",
         "lastTheme": "system",
         "pixel": "rgb(16, 19, 17)",
@@ -30,8 +30,8 @@
       "stored": {
         "frames": 90,
         "wrong": [],
-        "firstPaint": 20,
-        "firstContentfulPaint": 20,
+        "firstPaint": 24,
+        "firstContentfulPaint": 24,
         "firstTheme": "dark",
         "lastTheme": "dark",
         "pixel": "rgb(16, 19, 17)",
@@ -52,8 +52,8 @@
       "light": {
         "frames": 90,
         "wrong": [],
-        "firstPaint": 20,
-        "firstContentfulPaint": 20,
+        "firstPaint": 24,
+        "firstContentfulPaint": 24,
         "firstTheme": "system",
         "lastTheme": "system",
         "pixel": "rgb(246, 247, 244)",
@@ -64,13 +64,13 @@
         "frames": 90,
         "wrong": [
           "10:light dark/rgb(246, 247, 244)",
-          "27:light dark/rgb(246, 247, 244)",
-          "44:light dark/rgb(246, 247, 244)",
+          "26:light dark/rgb(246, 247, 244)",
+          "43:light dark/rgb(246, 247, 244)",
           "60:light dark/rgb(246, 247, 244)",
-          "77:light dark/rgb(246, 247, 244)"
+          "76:light dark/rgb(246, 247, 244)"
         ],
-        "firstPaint": 24,
-        "firstContentfulPaint": 24,
+        "firstPaint": 28,
+        "firstContentfulPaint": 28,
         "firstTheme": "system",
         "lastTheme": "dark",
         "pixel": "rgb(16, 19, 17)",
@@ -111,6 +111,8 @@
       "unexpected": [],
       "axe": [],
       "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
       "js": {
         "files": 0,
         "bytes": 0,
@@ -135,6 +137,8 @@
       "unexpected": [],
       "axe": [],
       "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
       "js": {
         "files": 0,
         "bytes": 0,
@@ -163,6 +167,8 @@
       "unexpected": [],
       "axe": [],
       "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
       "js": {
         "files": 0,
         "bytes": 0,
@@ -187,6 +193,8 @@
       "unexpected": [],
       "axe": [],
       "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
       "js": {
         "files": 0,
         "bytes": 0,
@@ -216,6 +224,8 @@
       "icons": [],
       "axe": [],
       "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
       "js": {
         "files": 0,
         "bytes": 0,
@@ -246,10 +256,12 @@
       "unexpected": [],
       "axe": [],
       "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
       "js": {
         "files": 8,
-        "bytes": 226197,
-        "gzip": 71953
+        "bytes": 226274,
+        "gzip": 71979
       },
       "failures": []
     },
@@ -298,7 +310,7 @@
           "ok": true
         }
       },
-      "chunks": 14,
+      "chunks": 15,
       "markers": [
         "nzfm[_engines/react-aria/dialog.client]",
         "nzfm[_engines/react-aria/locale.client]",
@@ -308,6 +320,7 @@
         "nzfm[_engines/react-aria/tooltip.client]",
         "nzfm[config/config.client]",
         "nzfm[dialog/dialog.client]",
+        "nzfm[field/field-scope.client]",
         "nzfm[select/select.client]",
         "nzfm[tooltip/tooltip.client]"
       ],
@@ -315,10 +328,12 @@
       "unexpected": [],
       "axe": [],
       "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
       "js": {
-        "files": 14,
-        "bytes": 444632,
-        "gzip": 142597
+        "files": 15,
+        "bytes": 453030,
+        "gzip": 145657
       },
       "failures": []
     },
@@ -353,7 +368,7 @@
           "ok": true
         }
       },
-      "chunks": 13,
+      "chunks": 14,
       "markers": [
         "nzfm[checkbox/checkbox.client]",
         "nzfm[field/field-scope.client]",
@@ -367,10 +382,12 @@
       "unexpected": [],
       "axe": [],
       "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
       "js": {
-        "files": 13,
-        "bytes": 245277,
-        "gzip": 78273
+        "files": 14,
+        "bytes": 245928,
+        "gzip": 78848
       },
       "failures": []
     },
@@ -418,10 +435,12 @@
       "unexpected": [],
       "axe": [],
       "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
       "js": {
         "files": 13,
-        "bytes": 398995,
-        "gzip": 127921
+        "bytes": 399812,
+        "gzip": 128200
       },
       "failures": []
     },
@@ -462,6 +481,8 @@
       "unexpected": [],
       "axe": [],
       "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
       "js": {
         "files": 11,
         "bytes": 337836,
@@ -491,6 +512,8 @@
       "icons": ["_internal/icon", "icons/bell", "icons/calendar", "icons/search"],
       "axe": [],
       "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
       "js": {
         "files": 6,
         "bytes": 223669,
@@ -515,16 +538,18 @@
           "ok": true
         }
       },
-      "chunks": 10,
+      "chunks": 11,
       "markers": ["nzfm[field/field-scope.client]", "nzfm[input/input.client]"],
       "missing": [],
       "unexpected": [],
       "axe": [],
       "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
       "js": {
-        "files": 10,
-        "bytes": 232366,
-        "gzip": 74227
+        "files": 11,
+        "bytes": 233072,
+        "gzip": 74832
       },
       "failures": []
     }

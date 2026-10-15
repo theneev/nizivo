@@ -44,8 +44,8 @@ import '../styles/app.css';
 import { themeScript } from '@nizivo/react/theme-script';
 
 const { title } = Astro.props;
-// A stored theme choice, applied before first paint (ThemeScript does not persist the theme yet).
-const storedTheme = `(function(){try{var t=localStorage.getItem('nz-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-nz-theme',t)}catch(e){}})()`;
+// themeScript applies a stored theme choice (localStorage `nz-theme`) and sets data-nz-platform
+// before first paint; with nothing stored, data-nz-theme="system" follows the OS with no script.
 ---
 
 <html lang="en" data-nz-theme="system">
@@ -54,7 +54,6 @@ const storedTheme = `(function(){try{var t=localStorage.getItem('nz-theme');if(t
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="nz-build" content={process.env.NZ_BUILD_ID ?? 'none'} />
     <title>{title} · Nizivo Astro fixture</title>
-    <script is:inline set:html={storedTheme} />
     <script is:inline set:html={themeScript} />
   </head>
   <body>

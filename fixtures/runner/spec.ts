@@ -9,8 +9,9 @@
 // - @nizivo/icons: a page ships exactly the icon modules its client code imports (pack.ts plants
 //   `nzim[...]` markers), and none from a Server Component,
 // - axe-core (WCAG 2.0–2.2 A and AA) on the page as first rendered, in light, again with each
-//   interaction-opened popup open and after a server-open overlay closes (all blocking), and once in
-//   dark (reported, not blocking: exit criterion 4),
+//   interaction-opened popup open and after a server-open overlay closes, then on the first render
+//   again in forced colours (Chromium's emulation) and with reduced motion (all blocking), and once
+//   in dark (reported, not blocking: exit criterion 4),
 // - and once per build, checkThemeFlash: no light frame before the theme applies (theme.ts).
 // The same spec runs the Next, Vite and Astro fixtures; SpecOptions says how each one differs.
 /* oxlint-disable no-await-in-loop -- pages and interaction steps run one after another in one browser */
@@ -235,6 +236,17 @@ export interface PageResult {
   axe: string[];
   /** The same run with the OS in dark mode (`data-nz-theme="system"`): reported, never a failure. */
   axeDark: string[];
+  /**
+   * The same run in forced colours (`forced-colors: active`, Chromium's emulation of a light OS
+   * palette): blocking. The colours axe reads are the forced ones, so color-contrast checks what a
+   * forced-colours user sees, and every other rule runs on the same DOM (§15.1, exit criterion 14).
+   */
+  axeForcedColors: string[];
+  /**
+   * The same run with `prefers-reduced-motion: reduce` (tokens.css swaps the motion tokens, §13.2
+   * rule 3): blocking. A reduced-motion path must not leave a part hidden, unlabelled or mid-fade.
+   */
+  axeReducedMotion: string[];
   /** The page's client JavaScript: every chunk the spec found, raw and gzip -9 bytes. */
   js: { files: number; bytes: number; gzip: number };
   failures: string[];
@@ -273,6 +285,38 @@ export async function axe(page: Page): Promise<string[]> {
     });
   }, AXE_TAGS);
   return Array.isArray(lines) ? lines.map(String) : ['axe-core returned no result'];
+}
+
+/**
+ * axe in forced colours. Chromium forces `color` to a system colour but reports the author's colour
+ * for `-webkit-text-fill-color` (its default, currentcolor, resolves against the colour before
+ * forcing), and axe-core reads that property as the text colour. Light text on a dark surface (an
+ * inverse Card) then reads as light text on the forced Canvas, 1.07:1: a failure the screen does not
+ * show (the text paints in CanvasText; week 6, the t0 pages). So, for the run only, every element
+ * gets its computed `color` as an inline fill, which is what it paints: the forced system colour, or
+ * its own colour where it opts out (`forced-color-adjust: none`, the generated Highlight fills), so
+ * those are still checked as they are. Every element, because the fill is inherited. No Nizivo
+ * stylesheet sets `-webkit-text-fill-color`; an inline one is left alone.
+ */
+async function axeForced(page: Page): Promise<string[]> {
+  await page.evaluate(() => {
+    for (const element of document.querySelectorAll<HTMLElement>('body *')) {
+      if (element.style.webkitTextFillColor !== '') continue;
+      element.style.webkitTextFillColor = getComputedStyle(element).color;
+      element.dataset['nzAxeFill'] = '';
+    }
+  });
+  try {
+    return await axe(page);
+  } finally {
+    await page.evaluate(() => {
+      for (const element of document.querySelectorAll<HTMLElement>('[data-nz-axe-fill]')) {
+        element.style.webkitTextFillColor = '';
+        if (element.getAttribute('style') === '') element.removeAttribute('style');
+        delete element.dataset['nzAxeFill'];
+      }
+    });
+  }
 }
 
 /**
@@ -1209,6 +1253,8 @@ async function runPage(
   let serverHtml = '';
   let axeLines: string[] = [];
   let axeDark: string[] = [];
+  let axeForcedColors: string[] = [];
+  let axeReducedMotion: string[] = [];
   const ready = options.ready ?? hydratedHeading;
   try {
     const response = await page.goto(base + path, { waitUntil: 'networkidle', timeout: 60_000 });
@@ -1233,6 +1279,20 @@ async function runPage(
     await transitionsDone(page);
     axeDark = await axe(page);
     await page.emulateMedia({ colorScheme: 'light' });
+    await transitionsDone(page);
+    // Forced colours and reduced motion are blocking, each on its own, and back to the defaults
+    // before any interaction step runs.
+    await page.emulateMedia({ forcedColors: 'active' });
+    await transitionsDone(page);
+    axeForcedColors = await axeForced(page);
+    if (axeForcedColors.length > 0)
+      failures.push(`axe in forced colours: ${axeForcedColors.join(' | ')}`);
+    await page.emulateMedia({ forcedColors: 'none', reducedMotion: 'reduce' });
+    await transitionsDone(page);
+    axeReducedMotion = await axe(page);
+    if (axeReducedMotion.length > 0)
+      failures.push(`axe with reduced motion: ${axeReducedMotion.join(' | ')}`);
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
     await transitionsDone(page);
   } catch (error) {
     failures.push(`load: ${String(error).split('\n')[0] ?? ''}`);
@@ -1378,6 +1438,8 @@ async function runPage(
     ...(spec.icons === undefined && shippedIcons.length === 0 ? {} : { icons: shippedIcons }),
     axe: axeLines,
     axeDark,
+    axeForcedColors,
+    axeReducedMotion,
     js: { files: sources.size, bytes, gzip },
     failures,
   };
