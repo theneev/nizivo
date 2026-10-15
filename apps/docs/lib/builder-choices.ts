@@ -238,7 +238,7 @@ const W3_CHOICES: Record<number, BuilderChoiceW3> = {
   },
   19: {
     chosen:
-      '`--nz-border-subtle` on Input, Textarea and NativeSelect. The shipped Select keeps `--nz-border-control` until its visual pass (week 4).',
+      '`--nz-border-subtle` on Input, Textarea, NativeSelect and (since its week 6 visual pass) Select, a disabled Fieldset included.',
     file: sheet('native-select'),
     declarations: ['--_nz-native-select-border: var(--nz-border-subtle);'],
   },
@@ -325,13 +325,13 @@ const tsx = (path: string): string => `packages/react/src/${path}.tsx`;
 const W4_CHOICES: Record<number, BuilderChoiceW3> = {
   1: {
     chosen:
-      'Menu rows have a `2.25rem` (36 px) minimum height around `--nz-space-1-5` (6 px) block padding, so a one-line row is 36 px. The shipped Select keeps its `--nz-space-2` rows until its visual pass (item 11).',
+      'Menu rows have a `2.25rem` (36 px) minimum height around `--nz-space-1-5` (6 px) block padding, so a one-line row is 36 px. Select rows share the recipe since the week 6 `select.css` pass (item 11).',
     file: sheet('menu'),
     declarations: ['min-block-size: 2.25rem;', 'padding-block: var(--nz-space-1-5);'],
   },
   2: {
     chosen:
-      '`--nz-space-3` (12 px) inline padding, as the Select item, and `--nz-space-2` (8 px) between icon, label, shortcut and check; the group label starts at `--nz-space-3` too.',
+      '`--nz-space-3` (12 px) inline padding and `--nz-space-2` (8 px) between icon, label, shortcut and check, on Menu and Select rows alike; the group label starts at `--nz-space-3` too.',
     file: sheet('menu'),
     declarations: [
       'padding-inline: var(--nz-space-3);',
@@ -379,7 +379,7 @@ const W4_CHOICES: Record<number, BuilderChoiceW3> = {
   },
   8: {
     chosen:
-      'Both kept on Menu: the 1 px `--nz-border-subtle` border and `--nz-elevation-3`, so dark mode shows the double edge Figma draws; `--nz-menu-border` and `--nz-menu-shadow` change either. Select keeps its week 1 popup (no border, `--nz-elevation-4`) until its visual pass.',
+      'Both kept on Menu: the 1 px `--nz-border-subtle` border and `--nz-elevation-3`, so dark mode shows the double edge Figma draws; `--nz-menu-border` and `--nz-menu-shadow` change either. The Select popup has the same border and elevation since week 6, with no public hook yet.',
     hook: '--nz-menu-shadow',
     file: sheet('menu'),
     declarations: [
@@ -400,11 +400,18 @@ const W4_CHOICES: Record<number, BuilderChoiceW3> = {
   },
   11: {
     chosen:
-      'Only the entry motion changed this week: the popup now enters on the spring pair with `--nz-scale-enter` and fades out, like Menu and Dialog (§12.2), so reduced motion keeps its fade. The radius, elevation, row gap, selected look, group label and separator wait for the `select.css` pass that shares the Menu item recipe.',
+      "Week 4 changed the entry motion: the popup enters on the spring pair with `--nz-scale-enter` and fades out, like Menu and Dialog (§12.2), so reduced motion keeps its fade. The week 6 `select.css` pass gave it the Menu recipe: `--nz-radius-lg`, a 1 px `--nz-border-subtle` border and `--nz-elevation-3`; 36 px rows 2 px apart with the inset ring; the selected row `--nz-bg-brand-subtle` with `--nz-text-brand` and a trailing check (the check, not the colour, carries the state; `indicator` replaces it); Label/M `--nz-text-tertiary` group labels; a separator spaced only by the gaps. The trigger gained NativeSelect's `--nz-radius-sm` at sm, invalid border and halo, and disabled border.",
     file: sheet('select'),
     declarations: [
       'scale: var(--nz-scale-enter);',
       'scale var(--nz-duration-spring) var(--nz-easing-spring),',
+      'border-radius: var(--nz-radius-lg);',
+      'box-shadow: var(--nz-elevation-3);',
+      'background: var(--nz-bg-brand-subtle);',
+      'min-block-size: 2.25rem;',
+      'gap: var(--nz-space-0-5);',
+      'color: var(--nz-text-tertiary);',
+      '--_nz-select-radius: var(--nz-radius-sm);',
     ],
   },
   12: {

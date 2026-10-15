@@ -41,8 +41,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 ```
 
 Every stylesheet starts with the same `@layer` statement, so the order in which the bundler emits the
-files never changes which rule wins. Each component page lists its stylesheet under **Import**. A single
-`@nizivo/react/styles.css` with every component is planned; it is not in the package yet.
+files never changes which rule wins. Each component page lists its stylesheet under **Import**.
+
+Or import one file, `@nizivo/react/styles.css`: the tokens, `base.css` and every component's
+stylesheet, in that order. Import **either** it **or** the files above, never both: it already holds a
+byte-identical copy of `tokens.css` from the same release, so the two cannot drift apart. The single
+file is the simplest start; the granular files load less CSS on a page that uses a few components.
+The fixture checks the granular files; `styles.css` is checked by the package's own build tests.
 
 ## Keep `light-dark()` intact
 
@@ -79,40 +84,59 @@ Nizivo is light unless you opt in. Set `data-nz-theme` on `<html>`:
 
 Any element with `data-nz-theme` starts a nested scope. See [Theming](/docs/foundations/theming/).
 
-A theme switch that remembers the user's choice must set the attribute before first paint. Nizivo's
-own `ThemeScript` does not persist the theme yet; today it sets `data-nz-platform` (`apple` or
-`other`) so `Kbd` and shortcuts show ⌘ or Ctrl from the first frame. Render it in `<head>`, set the
-theme from your own inline script beside it, and put `suppressHydrationWarning` on `<html>`, because
-both scripts change attributes React rendered. Under a strict CSP, pass the request's nonce to
-`ThemeScript` (`<ThemeScript nonce={nonce} />`) or allow its script by hash,
-`'sha256-HZHIu/4RWssbJrteyX51NbvdyR6ZSlZlY4BPl3yXw+I='` (a test pins it; a change to the script is
-called out in the changelog):
+A theme switch that remembers the user's choice must set the attribute before first paint. Render
+Nizivo's `ThemeScript` in `<head>`: it reads the saved choice from `localStorage` (key `nz-theme`,
+value `light`, `dark` or `system`) and sets `data-nz-theme` on `<html>` before `<body>` exists. It also
+sets `data-nz-platform` (`apple` or `other`), so `Kbd` and shortcuts show ⌘ or Ctrl from the first
+frame. Put `suppressHydrationWarning` on `<html>`, because the script changes attributes React
+rendered:
 
 ```tsx title="app/layout.tsx"
 import { ThemeScript } from '@nizivo/react/theme-script';
 
-const storedTheme = `(function(){try{var t=localStorage.getItem('nz-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-nz-theme',t)}catch(e){}})()`;
-
 <html lang="en" data-nz-theme="system" suppressHydrationWarning>
   <head>
-    <script dangerouslySetInnerHTML={{ __html: storedTheme }} />
     <ThemeScript />
   </head>
 ```
 
-With nothing stored, the script does nothing and `data-nz-theme="system"` keeps following the
-operating system, including a change made while the page is open and a visit with JavaScript off.
+- With nothing stored, the script leaves `data-nz-theme="system"` alone, and the page keeps following
+  the operating system, including a change made while the page is open and a visit with JavaScript off.
+- A stored choice replaces the value the server rendered: that value is your app's default, the stored
+  one is the reader's. Any other stored value is ignored, and so is storage the browser blocks (a
+  sandboxed frame, disabled site data); the script never throws.
+- `system` is set as it is; CSS resolves it. The script runs no media query and adds no listener.
+
+Your theme switch saves the choice and applies it in one step:
+
+```ts
+function setTheme(theme: 'light' | 'dark' | 'system') {
+  try {
+    localStorage.setItem('nz-theme', theme);
+  } catch {}
+  document.documentElement.setAttribute('data-nz-theme', theme);
+}
+```
+
+Under a strict CSP, pass the request's nonce (`<ThemeScript nonce={nonce} />`) or allow the script by
+hash, `'sha256-nA1HUQWDdDUFqqoxWbjzCzcYSjzWLEe0pwDdRCMGqOw='`. A test pins the hash, and a change to the
+script is called out in the changelog. It is 379 bytes.
 
 <Callout type="info">
-  The fixture runs exactly this pattern (`data-nz-theme="system"`, the stored-choice script above with
-  the `nz-theme` key, and `ThemeScript`) in every build mode and records every frame from first paint:
-  with the OS in dark mode, a stored choice or a static attribute, every frame is already in the right
-  theme, and a theme set late by a script at the end of `<body>` is caught as a flash.
+  The fixture runs this pattern (`data-nz-theme="system"` and `ThemeScript`) in every build mode and
+  records every frame from first paint: with the OS in dark mode, a stored choice or a static
+  attribute, every frame is already in the right theme, and a theme set late by a script at the end of
+  `<body>` is caught as a flash.
 </Callout>
 
-A library such as `next-themes` works for the switch itself (`attribute="data-nz-theme"`), but it
-renders its script inside `<body>`, which is too late to rule out a flash. This docs site pairs it with
-a `<head>` script of its own; that variant is not checked by the fixture.
+A library such as `next-themes` works for the switch itself. Give it the same key
+(`storageKey="nz-theme"`) so `ThemeScript` restores what it stored; its own script runs inside
+`<body>`, which is too late to rule out a flash on its own. With `attribute="data-nz-theme"`,
+`next-themes` writes the resolved `light` or `dark` once it runs, where `ThemeScript` wrote `system`;
+the paint is the same. One catch: `next-themes`' script copies any stored value onto `<html>`
+unchecked, so a value `ThemeScript` ignored (a foreign or corrupt `nz-theme`) would still reach the
+attribute and paint the page light under a dark OS. This docs site therefore lets `next-themes` write
+only its `class` and sets `data-nz-theme` itself after hydration, from the checked choice.
 
 ## Import from subpaths
 

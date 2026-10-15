@@ -13,3 +13,12 @@ covers every control, keep a form on one kind, or validate on the server and pas
 
 `readOnly` on a Field reaches Input and Textarea. Checkbox, Switch, SegmentedControl and NativeSelect
 have no read-only state and ignore it, so the Field's `data-readonly` does not make them read-only.
+
+## Button controls
+
+A control that is a `<button>` (Select, or a third-party picker) is named by
+`aria-labelledby={field.labelledBy}`, and should call
+`useFieldControl({ labelBehavior: 'focus' })`. A `<label for>` a button would press it and open its
+popup; with the option, a click on the label focuses the control instead, with its focus ring, and
+does nothing for a disabled control. Native controls need no option. The option is registered after
+hydration, so the server HTML and the zero-JS path do not change.

@@ -29,8 +29,9 @@ page is checked by its build.
   preflight cannot override Nizivo, and any Tailwind utility on a Nizivo component wins over the
   component's own styles, with no `!important`.
 - Import one stylesheet per component you use, after the tokens and `base.css`, as on
-  [Next.js](/docs/getting-started/next/). A single `@nizivo/react/styles.css` with every component is
-  planned; it is not in the package yet.
+  [Next.js](/docs/getting-started/next/). Or replace all of them, tokens included, with
+  `@import '@nizivo/react/styles.css' layer(components);`. Use either, never both. This site uses the
+  separate files.
 - Keep `light-dark()` intact: with Next.js and Turbopack, set the browser targets from the
   [Next.js page](/docs/getting-started/next/#keep-light-dark-intact).
 

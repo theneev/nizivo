@@ -31,7 +31,9 @@ import '@nizivo/react/css/button.css';
 import '@nizivo/react/css/select.css';
 ```
 
-A single `@nizivo/react/styles.css` with every component is planned; it is not in the package yet.
+Or import one file, `@nizivo/react/styles.css`, which holds the tokens, `base.css` and every
+component's stylesheet. Import **either** it **or** the files above, never both (it already holds a
+byte-identical copy of `tokens.css`). The fixture checks the granular files.
 
 ## Set the CSS target
 
@@ -62,27 +64,10 @@ export default defineConfig({
 
 Set the theme on `<html>` in `index.html`. `data-nz-theme="system"` follows the operating system with
 no script and no flash; `light` or `dark` forces one theme. A switch that remembers the user's choice
-must apply it before first paint, from an inline script in `<head>`:
-
-```html title="index.html"
-<html lang="en" data-nz-theme="system">
-  <head>
-    <script>
-      (function () {
-        try {
-          var t = localStorage.getItem('nz-theme');
-          if (t === 'light' || t === 'dark')
-            document.documentElement.setAttribute('data-nz-theme', t);
-        } catch (e) {}
-      })();
-    </script>
-  </head>
-</html>
-```
-
-Nizivo's `themeScript` does not persist the theme yet; it sets `data-nz-platform` so `Kbd` shows ⌘ or
-Ctrl from the first frame. Paste it into `<head>`, or let a small plugin inject it from the installed
-package so the copy never drifts from the version you run:
+must apply it before first paint. Nizivo's `themeScript` does that from `<head>`: it reads the saved
+choice from `localStorage` (key `nz-theme`, value `light`, `dark` or `system`), sets `data-nz-theme` on
+`<html>`, and sets `data-nz-platform` so `Kbd` shows ⌘ or Ctrl from the first frame. Let a small plugin
+inject it from the installed package, so the copy never drifts from the version you run:
 
 ```js title="vite.config.js"
 import { themeScript } from '@nizivo/react/theme-script';
@@ -96,8 +81,45 @@ function nizivoThemeScript() {
 // plugins: [react(), nizivoThemeScript()]
 ```
 
+```html title="index.html"
+<!doctype html>
+<html lang="en" data-nz-theme="system">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+```
+
+With nothing stored, or storage blocked, the attribute stays as `index.html` set it. Your theme switch
+saves the choice with `localStorage.setItem('nz-theme', theme)` and sets the attribute itself; see
+[Next.js](/docs/getting-started/next/#theme) for the details and the CSP hash.
+
 The fixture checks this setup on every frame from first paint: the OS preference, a stored choice and a
 static attribute are right from the first frame, and a theme set late is caught as a flash.
+
+### The dev server
+
+`vite` (dev) injects the CSS from JavaScript, so the first few frames of a page load paint before any
+stylesheet exists. With a dark theme (the OS, a stored choice or the attribute), the fixture measured
+about 3 frames (under 40 ms) of the browser's default light canvas before the styles apply; after
+that every frame is right. A production build (`vite build`) links the CSS in `<head>` and has none.
+It is a dev-only effect of how Vite serves CSS, not of Nizivo. If it bothers you, a few inline rules
+in `index.html` paint the right canvas before the styles arrive (not checked by the fixture):
+
+```html title="index.html"
+<style>
+  :root[data-nz-theme='dark'] {
+    color-scheme: dark;
+  }
+  :root[data-nz-theme='system'] {
+    color-scheme: light dark;
+  }
+</style>
+```
 
 ## Imports and bundle size
 
@@ -115,5 +137,5 @@ every module as is (a v0.2 fixture will check it).
 
 ## Not covered by the fixture yet
 
-The Vite dev server (it injects CSS from JavaScript, so a dev page can paint once without styles) and
-Vite SSR are not checked yet. The fixture runs in Chromium.
+Vite SSR is not checked yet. The fixture runs in Chromium; it checks the dev server's theme frames
+(above), and runs axe in light, dark, forced colours and with reduced motion.

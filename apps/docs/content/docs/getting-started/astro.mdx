@@ -31,12 +31,9 @@ import '@nizivo/tokens/tokens.css';
 import '@nizivo/react/css/base.css';
 import '@nizivo/react/css/card.css';
 import { themeScript } from '@nizivo/react/theme-script';
-
-const storedTheme = `(function(){try{var t=localStorage.getItem('nz-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-nz-theme',t)}catch(e){}})()`;
 ---
 <html lang="en" data-nz-theme="system">
   <head>
-    <script is:inline set:html={storedTheme} />
     <script is:inline set:html={themeScript} />
   </head>
   <body><slot /></body>
@@ -46,10 +43,17 @@ const storedTheme = `(function(){try{var t=localStorage.getItem('nz-theme');if(t
 ## Theme
 
 `data-nz-theme="system"` follows the operating system with no script and no flash; `light` or `dark`
-forces one theme. The first inline script above applies a stored choice before first paint.
-`themeScript` does not persist the theme yet; it sets `data-nz-platform` so `Kbd` shows ⌘ or Ctrl from
-the first frame. The fixture checks every frame from first paint for the OS preference, a stored
-choice and a static attribute, and catches a theme set late as a flash.
+forces one theme. `themeScript`, inline in `<head>`, applies a stored choice before first paint: it
+reads `localStorage` key `nz-theme` (`light`, `dark` or `system`) and sets `data-nz-theme` on `<html>`.
+It also sets `data-nz-platform` so `Kbd` shows ⌘ or Ctrl from the first frame. Your theme switch saves
+the choice with `localStorage.setItem('nz-theme', theme)` and sets the attribute itself; see
+[Next.js](/docs/getting-started/next/#theme) for the details and the CSP hash. The fixture checks every
+frame from first paint for the OS preference, a stored choice and a static attribute, and catches a
+theme set late as a flash.
+
+Instead of the three stylesheets above, you can import `@nizivo/react/styles.css` alone: the tokens,
+`base.css` and every component. Import either it or the separate files, never both. The fixture checks
+the separate files.
 
 ## Islands
 

@@ -23,3 +23,24 @@ keyboard:
     action: In the open list, closes it without changing the selection and moves focus to the next or previous element after the trigger.
 keyboardSource: react-aria-components 1.22.1 `Select` (react-aria 3.53.1 `useSelect`, `useMenuTrigger` and `useSelectableCollection`) through `_engines/react-aria/select.client.tsx`. apps/docs/scripts/smoke.ts checks ArrowDown opening on the selected option, ArrowDown and Enter choosing, Escape closing with focus back on the trigger, ArrowRight and ArrowLeft on the closed trigger, and typing on the trigger; the overlay lane (`test/overlay/select.spec.tsx`) checks Tab and Shift+Tab, which the adapter handles because React Aria keeps Tab inside its modal popover.
 ---
+
+## In a Field
+
+Inside a `Field`, Select reads the Field the way Input does: the label and the selected value name
+the trigger, the description and the error describe it, and the Field's `name`, `required`,
+`disabled` and error state apply unless the Select sets its own (an explicit `false` wins). The
+Field's `name` reaches the hidden native `<select>`, so the value is in `FormData`.
+
+A click on the label focuses the trigger, with its focus ring, and never opens the list: a native
+`<label for>` a button would press it. A required, empty Select stops the submit and takes focus,
+but shows no inline message yet (React Aria handles the hidden `<select>`'s `invalid` event), so pass
+`error` for it. The trigger is a button, which cannot carry `aria-required`, and the Field's `*` is
+hidden from screen readers, so say "required" in the label or the description too. A form reset puts
+the default value back in the trigger and in the submitted data.
+
+## The selected row
+
+The selected row is `--nz-bg-brand-subtle` with `--nz-text-brand`, and a check at its end carries
+the state for readers who do not see the colour (WCAG 1.4.1). `indicator` on `Select.Item`
+replaces the check, and `indicator={null}` removes it. Rows, the group label and the separator
+share Menu's recipe: 36 px rows, 2 px apart, with the keyboard ring drawn inside the row.

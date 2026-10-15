@@ -9,3 +9,19 @@ keyboard:
     action: Hides the tooltip; focus stays on the trigger.
 keyboardSource: react-aria-components 1.22.1 `TooltipTrigger` (react-aria 3.53.1 `useTooltipTrigger`) through `_engines/react-aria/tooltip.client.tsx`. Showing on keyboard focus and hiding on Escape are checked by the Next fixture and by apps/docs/scripts/smoke.ts.
 ---
+
+## The trigger
+
+Always compose a Button into the trigger:
+
+```tsx
+<Tooltip.Trigger render={<Button variant="tertiary">Export</Button>} />
+```
+
+For an icon-only action, use an [IconButton](/docs/components/icon-button/): it pairs itself with a
+Tooltip that shows its `label`, so it needs no `Tooltip.Root`.
+
+A bare `<Tooltip.Trigger>` is a plain `<button>` with no size of its own. Around a short text or a
+single glyph it is smaller than the 24 by 24 CSS pixel minimum target of WCAG 2.2 success criterion
+2.5.8 (Target Size, Minimum). One on its own can pass through the criterion's spacing exception, but
+two side by side fail it. Whether a bare trigger should get a minimum size of its own is open.

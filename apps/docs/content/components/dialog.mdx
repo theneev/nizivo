@@ -4,10 +4,73 @@ description: A modal dialog or alert dialog with a trigger, title, description, 
 apg: https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/
 keyboard:
   - keys: Enter, Space
-    action: On the trigger (a button), opens the dialog and moves focus to the first focusable element in its body, or to the dialog itself when the body has none. An alertdialog focuses its Close button; a control with autoFocus wins.
+    action: On the trigger (a button), opens the dialog and moves focus to the first focusable element in its body, or to the dialog itself when the body has none. An alertdialog focuses the Close in its footer (its least destructive action), else any Close; a control with autoFocus wins.
   - keys: Tab, Shift+Tab
     action: Moves focus between the focusable elements inside the dialog; focus stays inside while it is open.
   - keys: Escape
-    action: Closes the dialog (also an alertdialog) and returns focus to the trigger.
+    action: Closes the dialog (also an alertdialog) and returns focus to the trigger, or along the returnFocus chain below.
 keyboardSource: react-aria-components 1.22.1 `ModalOverlay` and `Modal` (react-aria 3.53.1 `useModalOverlay`, which contains focus) through `_engines/react-aria/dialog.client.tsx`. React Aria focuses the dialog element; the first-focusable rule is Nizivo's (`initialFocus` on the engine seam, ARCHITECTURE.md §12.2), checked by the overlay lane (`test/overlay/dialog.spec.tsx`). apps/docs/scripts/smoke.ts checks opening with Enter, Tab staying inside, and Escape closing with focus back on the trigger; the Next fixture checks Escape and the Close part. An alertdialog does not close on an outside press.
 ---
+
+## The trigger
+
+Always compose a Button (or an IconButton) into the trigger:
+
+```tsx
+<Dialog.Trigger render={<Button variant="secondary">Edit</Button>} />
+```
+
+A bare `<Dialog.Trigger>Edit</Dialog.Trigger>` is a plain `<button>` with no size of its own: about as
+tall as its text line, which is under the 24 by 24 CSS pixel minimum target of WCAG 2.2 success
+criterion 2.5.8 (Target Size, Minimum). One bare trigger on its own can still pass through the
+criterion's spacing exception, but two side by side fail it. A Button is 32, 40 or 48 px tall and brings
+the variants, the focus ring and the pressed state. Whether a bare trigger should get a minimum size of
+its own is open.
+
+## The close button
+
+`<Dialog.Close />` with no `render` and no `children` is an IconButton (tertiary, `md`) showing the
+close glyph, named "Close". Change the name with `labels`, or pass `aria-label`:
+
+```tsx
+<Dialog.Popup>
+  <Dialog.Title>Edit product</Dialog.Title>
+  <Dialog.Close labels={{ close: 'Fermer' }} />
+  <Dialog.Body>…</Dialog.Body>
+</Dialog.Popup>
+```
+
+Placed as a direct child of `Dialog.Popup`, it sits in the popup's top end corner, 20 px from both
+edges, where Figma draws the header's close glyph, and the title leaves room for it. Its focus ring
+always shows, because it is positioned against the popup, which never clips. Its markup is
+IconButton's, so a page that imports per-component stylesheets needs `css/icon-button.css` for it too
+(the stylesheets list above names it; `styles.css` already has it).
+
+With `children`, it is a plain button with that text; with `render`, it is your element, for example
+`render={<Button>Cancel</Button>}` in the footer, or another glyph through
+`render={<IconButton icon={<X />} label="Close" tooltip={false} />}`. Either one removes the default
+glyph. A control placed directly in the content and flush with its edge draws its ring inside itself,
+so the content's corner clip never cuts the ring.
+
+## Focus return
+
+When the dialog closes, focus goes, in order, to:
+
+1. `returnFocus` on `Dialog.Root`, when it is an element ref or a function that returns an element
+   that is still on the page;
+2. the trigger, or the element that had focus when the dialog opened;
+3. the trigger of the overlay the dialog was opened from: a Dialog opened from a Menu item returns
+   focus to the Menu button, after the Menu has closed;
+4. `<body>`, and development builds warn in the console, naming `returnFocus`. Production builds drop
+   the warning.
+
+`returnFocus={false}` leaves focus wherever the browser puts it, for an app that moves focus itself.
+Focus that already went somewhere (an outside click on another control) is never moved.
+
+```tsx
+const search = useRef<HTMLInputElement>(null);
+
+<Dialog.Root open={open} onOpenChange={setOpen} returnFocus={search}>
+  …
+</Dialog.Root>;
+```

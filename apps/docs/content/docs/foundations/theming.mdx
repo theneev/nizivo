@@ -26,26 +26,44 @@ A Tooltip or a `tone="inverse"` Card renders `data-nz-scheme="inverse"`, which s
 there is no separate "on-inverse" token family. An inverse surface inside another inverse surface stays
 inverse; it does not flip back.
 
+## Remember the reader's choice
+
+`ThemeScript` (`@nizivo/react/theme-script`) restores a saved theme before first paint. Render it in
+`<head>`; it runs before `<body>` exists. It reads `localStorage` key `nz-theme` and, when the value is
+`light`, `dark` or `system`, sets `data-nz-theme` on `<html>` to it, replacing the default your server
+rendered. Anything else, nothing stored, or storage the browser blocks leaves the attribute as it
+was, and the script never throws. It sets `system` as it is, and CSS follows the operating system
+from there. It also sets `data-nz-platform` (`apple` or `other`), so `Kbd` spells `mod` as ⌘ or Ctrl
+from the first frame. Your switch writes the same key and the same attribute:
+
+```ts
+localStorage.setItem('nz-theme', theme); // 'light' | 'dark' | 'system'
+document.documentElement.setAttribute('data-nz-theme', theme);
+```
+
+The script has no options, so one published hash covers every app under a strict CSP; the
+[Next.js page](/docs/getting-started/next/#theme) has the hash and the nonce. An app that needs a
+different key writes its own `<head>` script the same way.
+
 ## This site's theme switch
 
 The theme switch (at the foot of the sidebar on these pages, in the top bar on the home page) is
-Fumadocs' own, built on `next-themes`. It offers Light, Dark and System, and it writes two things on
-`<html>`:
+Fumadocs' own, built on `next-themes`. It offers Light, Dark and System, stores the choice under
+`nz-theme`, and two things on `<html>` follow it:
 
-- the `dark` class, which Fumadocs' styles key on;
-- `data-nz-theme="light"` or `"dark"`, which Nizivo's tokens key on.
+- the `dark` class, which Fumadocs' styles key on, written by `next-themes`;
+- `data-nz-theme="light"` or `"dark"`, which Nizivo's tokens key on, written by the site after
+  hydration.
 
-"System" resolves to light or dark from `prefers-color-scheme`. A small inline script in `<head>`
-applies the stored choice to both before `<body>` exists, so the first paint is already in the right
-theme; `next-themes` then keeps them in step. Its own script runs inside `<body>`, which is too late to
-rule out a flash. Fumadocs' colour variables are mapped onto Nizivo's
-tokens (`--color-fd-background: var(--nz-bg-canvas)` and so on), so the docs chrome and every live
-example change together, with no flash on load.
-
-Nizivo's own `ThemeScript` (`@nizivo/react/theme-script`) ships the platform half today: it sets
-`data-nz-platform` (`apple` or `other`) before first paint, so `Kbd` spells `mod` as ⌘ or Ctrl from the
-first frame. This site appends its `themeScript` string to the theme script above. Persisting the
-theme choice in `ThemeScript` itself is planned.
+`<html>` starts as `data-nz-theme="system"`, and `ThemeScript` in `<head>` applies the stored choice
+before `<body>` exists, so the first paint is already in the right theme. After hydration the site
+writes the resolved `light` or `dark` where `ThemeScript` wrote `system`, which paints the same.
+`next-themes` does not write the attribute itself: its script would copy a stored value
+`ThemeScript` ignored (not light, dark or system) onto `<html>` unchecked, and the site puts such a
+value back to `system`. Fumadocs' colour variables are mapped onto Nizivo's tokens
+(`--color-fd-background: var(--nz-bg-canvas)` and so on), and code highlighting follows the same
+`light-dark()` mechanism, so the docs chrome, the code and every live example change together, with
+no flash on load.
 
 ## Rebrand with tokens
 
