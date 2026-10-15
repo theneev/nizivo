@@ -1,0 +1,12 @@
+---
+// The form island: its server HTML submits natively before hydration.
+import Base from '../layouts/Base.astro';
+import { ProductForm } from '../components/forms.jsx';
+---
+
+<Base title="Forms">
+  <main>
+    <h1>Forms</h1>
+    <ProductForm client:load />
+  </main>
+</Base>

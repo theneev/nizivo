@@ -1,0 +1,12 @@
+---
+// One island: the Alert and its dismiss leaf.
+import Base from '../layouts/Base.astro';
+import { DismissibleAlert } from '../components/alert-dismiss.jsx';
+---
+
+<Base title="A dismissible Alert">
+  <main>
+    <h1>A dismissible Alert</h1>
+    <DismissibleAlert client:load />
+  </main>
+</Base>

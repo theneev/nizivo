@@ -1,0 +1,13 @@
+---
+// A Tabs island with client:visible below a tall spacer: it hydrates only once scrolled into view.
+import Base from '../layouts/Base.astro';
+import { OrderTabs } from '../components/tabs.jsx';
+---
+
+<Base title="Tabs">
+  <main>
+    <h1>Tabs</h1>
+    <p style="block-size: 150vh">The tabs are below the fold.</p>
+    <OrderTabs client:visible />
+  </main>
+</Base>

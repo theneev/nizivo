@@ -1,0 +1,13 @@
+---
+// Two islands that each generate ids with useId: every id on the page must be unique.
+import Base from '../layouts/Base.astro';
+import { SkuField } from '../components/sku-field.jsx';
+---
+
+<Base title="Two islands">
+  <main>
+    <h1>Two islands</h1>
+    <SkuField client:load label="SKU" />
+    <SkuField client:load label="Barcode" />
+  </main>
+</Base>

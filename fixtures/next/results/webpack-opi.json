@@ -11,6 +11,86 @@
   "buildWarnings": [],
   "pass": true,
   "failures": [],
+  "themeFlash": {
+    "path": "/",
+    "cases": {
+      "osDark": {
+        "frames": 90,
+        "wrong": [],
+        "firstPaint": 24,
+        "firstContentfulPaint": 24,
+        "firstTheme": "system",
+        "lastTheme": "system",
+        "pixel": "rgb(16, 19, 17)",
+        "pixelDark": true,
+        "ok": true
+      },
+      "stored": {
+        "frames": 90,
+        "wrong": [],
+        "firstPaint": 28,
+        "firstContentfulPaint": 28,
+        "firstTheme": "dark",
+        "lastTheme": "dark",
+        "pixel": "rgb(16, 19, 17)",
+        "pixelDark": true,
+        "ok": true
+      },
+      "static": {
+        "frames": 90,
+        "wrong": [],
+        "firstPaint": 40,
+        "firstContentfulPaint": 40,
+        "firstTheme": "dark",
+        "lastTheme": "dark",
+        "pixel": "rgb(16, 19, 17)",
+        "pixelDark": true,
+        "ok": true
+      },
+      "light": {
+        "frames": 90,
+        "wrong": [],
+        "firstPaint": 24,
+        "firstContentfulPaint": 24,
+        "firstTheme": "system",
+        "lastTheme": "system",
+        "pixel": "rgb(246, 247, 244)",
+        "pixelDark": false,
+        "ok": true
+      },
+      "late": {
+        "frames": 90,
+        "wrong": [
+          "8:light dark/rgb(246, 247, 244)",
+          "24:light dark/rgb(246, 247, 244)",
+          "41:light dark/rgb(246, 247, 244)",
+          "58:light dark/rgb(246, 247, 244)",
+          "74:light dark/rgb(246, 247, 244)"
+        ],
+        "firstPaint": 24,
+        "firstContentfulPaint": 24,
+        "firstTheme": "system",
+        "lastTheme": "dark",
+        "pixel": "rgb(16, 19, 17)",
+        "pixelDark": true,
+        "ok": true
+      }
+    },
+    "lightDark": {
+      "packed": 68,
+      "loaded": 68,
+      "stylesheets": 2,
+      "ok": true
+    },
+    "nested": {
+      "dark": "0.071",
+      "darkLight": "0.967",
+      "darkInverse": "0.967",
+      "inverse": "0.071",
+      "ok": true
+    },
+    "ok": true
+  },
   "pages": {
     "/button-only": {
       "console": [],
@@ -27,6 +107,13 @@
       "markers": [],
       "missing": [],
       "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 5,
+        "bytes": 562481,
+        "gzip": 171879
+      },
       "failures": []
     },
     "/button-subpath": {
@@ -44,13 +131,20 @@
       "markers": [],
       "missing": [],
       "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 5,
+        "bytes": 562481,
+        "gzip": 171879
+      },
       "failures": []
     },
     "/namespace": {
       "console": [],
       "interactions": {
         "parts": {
-          "partsScanned": "dialog-trigger select select-chevron select-trigger select-value tooltip-trigger",
+          "partsScanned": "dialog-trigger select select-chevron select-trigger select-value stack tooltip-trigger",
           "partsOutsideVocabulary": "",
           "danglingIdrefs": "",
           "missingSlots": "",
@@ -63,8 +157,9 @@
           "triggerSlot": "select-trigger",
           "triggerSize": "md",
           "triggerClass": "nz-select-trigger nz-hit-target",
-          "partsScanned": "dialog-trigger select select-chevron select-item select-list select-popup select-trigger select-value tooltip-trigger",
+          "partsScanned": "dialog-trigger select select-chevron select-item select-list select-popup select-trigger select-value stack tooltip-trigger",
           "partsOutsideVocabulary": "",
+          "axeOpen": "",
           "ok": true
         },
         "dialog": {
@@ -73,8 +168,9 @@
           "closedByClosePart": true,
           "focusReturned": true,
           "closedByEscape": true,
-          "partsScanned": "dialog-backdrop dialog-body dialog-close dialog-content dialog-description dialog-footer dialog-popup dialog-positioner dialog-title dialog-trigger select select-chevron select-trigger select-value tooltip-trigger",
+          "partsScanned": "dialog-backdrop dialog-body dialog-close dialog-content dialog-description dialog-footer dialog-popup dialog-positioner dialog-title dialog-trigger select select-chevron select-trigger select-value stack tooltip-trigger",
           "partsOutsideVocabulary": "",
+          "axeOpen": "",
           "ok": true
         },
         "tooltip": {
@@ -83,8 +179,9 @@
           "describedByTooltip": true,
           "shownOnHover": true,
           "shownOnFocus": true,
-          "partsScanned": "dialog-trigger select select-chevron select-trigger select-value tooltip-popup tooltip-trigger",
+          "partsScanned": "dialog-trigger select select-chevron select-trigger select-value stack tooltip-popup tooltip-trigger",
           "partsOutsideVocabulary": "",
+          "axeOpen": "",
           "ok": true
         }
       },
@@ -103,13 +200,20 @@
       ],
       "missing": [],
       "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 13,
+        "bytes": 792662,
+        "gzip": 249589
+      },
       "failures": []
     },
     "/flat": {
       "console": [],
       "interactions": {
         "parts": {
-          "partsScanned": "dialog-trigger select select-chevron select-trigger select-value tooltip-trigger",
+          "partsScanned": "dialog-trigger select select-chevron select-trigger select-value stack tooltip-trigger",
           "partsOutsideVocabulary": "",
           "danglingIdrefs": "",
           "missingSlots": "",
@@ -122,8 +226,9 @@
           "triggerSlot": "select-trigger",
           "triggerSize": "md",
           "triggerClass": "nz-select-trigger nz-hit-target",
-          "partsScanned": "dialog-trigger select select-chevron select-item select-list select-popup select-trigger select-value tooltip-trigger",
+          "partsScanned": "dialog-trigger select select-chevron select-item select-list select-popup select-trigger select-value stack tooltip-trigger",
           "partsOutsideVocabulary": "",
+          "axeOpen": "",
           "ok": true
         },
         "dialog": {
@@ -132,8 +237,9 @@
           "closedByClosePart": true,
           "focusReturned": true,
           "closedByEscape": true,
-          "partsScanned": "dialog-backdrop dialog-body dialog-close dialog-content dialog-description dialog-footer dialog-popup dialog-positioner dialog-title dialog-trigger select select-chevron select-trigger select-value tooltip-trigger",
+          "partsScanned": "dialog-backdrop dialog-body dialog-close dialog-content dialog-description dialog-footer dialog-popup dialog-positioner dialog-title dialog-trigger select select-chevron select-trigger select-value stack tooltip-trigger",
           "partsOutsideVocabulary": "",
+          "axeOpen": "",
           "ok": true
         },
         "tooltip": {
@@ -142,8 +248,9 @@
           "describedByTooltip": true,
           "shownOnHover": true,
           "shownOnFocus": true,
-          "partsScanned": "dialog-trigger select select-chevron select-trigger select-value tooltip-popup tooltip-trigger",
+          "partsScanned": "dialog-trigger select select-chevron select-trigger select-value stack tooltip-popup tooltip-trigger",
           "partsOutsideVocabulary": "",
+          "axeOpen": "",
           "ok": true
         }
       },
@@ -162,6 +269,13 @@
       ],
       "missing": [],
       "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 13,
+        "bytes": 792662,
+        "gzip": 249589
+      },
       "failures": []
     },
     "/render-prop": {
@@ -182,6 +296,7 @@
           "closedByEscape": true,
           "partsScanned": "button-label dialog-backdrop dialog-close dialog-content dialog-description dialog-footer dialog-popup dialog-positioner dialog-title dialog-trigger tooltip-trigger",
           "partsOutsideVocabulary": "",
+          "axeOpen": "",
           "ok": true
         },
         "tooltip": {
@@ -192,6 +307,7 @@
           "shownOnFocus": true,
           "partsScanned": "button-label dialog-trigger tooltip-popup tooltip-trigger",
           "partsOutsideVocabulary": "",
+          "axeOpen": "",
           "ok": true
         }
       },
@@ -208,6 +324,13 @@
       ],
       "missing": [],
       "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 12,
+        "bytes": 753745,
+        "gzip": 236531
+      },
       "failures": []
     },
     "/barrel-select": {
@@ -229,6 +352,7 @@
           "triggerClass": "nz-select-trigger nz-hit-target",
           "partsScanned": "select select-chevron select-item select-list select-popup select-trigger select-value",
           "partsOutsideVocabulary": "",
+          "axeOpen": "",
           "ok": true
         }
       },
@@ -243,6 +367,13 @@
       ],
       "missing": [],
       "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 11,
+        "bytes": 773796,
+        "gzip": 242294
+      },
       "failures": []
     },
     "/dialog-default-open": {
@@ -266,6 +397,7 @@
           "closedByEscape": true,
           "partsScanned": "dialog-backdrop dialog-body dialog-close dialog-content dialog-description dialog-footer dialog-popup dialog-positioner dialog-title dialog-trigger",
           "partsOutsideVocabulary": "",
+          "axeClosed": "",
           "ok": true
         },
         "dialog": {
@@ -276,6 +408,7 @@
           "closedByEscape": true,
           "partsScanned": "dialog-backdrop dialog-body dialog-close dialog-content dialog-description dialog-footer dialog-popup dialog-positioner dialog-title dialog-trigger",
           "partsOutsideVocabulary": "",
+          "axeOpen": "",
           "ok": true
         }
       },
@@ -290,6 +423,13 @@
       ],
       "missing": [],
       "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 11,
+        "bytes": 744803,
+        "gzip": 232786
+      },
       "failures": []
     },
     "/tooltip-default-open": {
@@ -311,6 +451,7 @@
           "closedByEscape": true,
           "partsScanned": "tooltip-popup tooltip-trigger",
           "partsOutsideVocabulary": "",
+          "axeClosed": "",
           "ok": true
         },
         "tooltip": {
@@ -321,6 +462,7 @@
           "shownOnFocus": true,
           "partsScanned": "tooltip-popup tooltip-trigger",
           "partsOutsideVocabulary": "",
+          "axeOpen": "",
           "ok": true
         }
       },
@@ -334,6 +476,13 @@
       ],
       "missing": [],
       "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 9,
+        "bytes": 616618,
+        "gzip": 192161
+      },
       "failures": []
     },
     "/select-groups": {
@@ -355,6 +504,7 @@
           "triggerClass": "nz-select-trigger nz-hit-target",
           "partsScanned": "select select-chevron select-group select-group-label select-item select-list select-popup select-separator select-trigger select-value",
           "partsOutsideVocabulary": "",
+          "axeOpen": "",
           "ok": true
         }
       },
@@ -369,6 +519,13 @@
       ],
       "missing": [],
       "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 11,
+        "bytes": 773800,
+        "gzip": 242297
+      },
       "failures": []
     },
     "/select-composed": {
@@ -390,6 +547,7 @@
           "triggerClass": "nz-select-trigger nz-hit-target nz-button",
           "partsScanned": "select select-chevron select-item select-list select-popup select-trigger select-value",
           "partsOutsideVocabulary": "",
+          "axeOpen": "",
           "ok": true
         }
       },
@@ -404,6 +562,13 @@
       ],
       "missing": [],
       "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 11,
+        "bytes": 773800,
+        "gzip": 242297
+      },
       "failures": []
     },
     "/t0": {
@@ -425,6 +590,13 @@
       "markers": [],
       "missing": [],
       "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 5,
+        "bytes": 562481,
+        "gzip": 171879
+      },
       "failures": []
     },
     "/t0-barrel": {
@@ -446,6 +618,13 @@
       "markers": [],
       "missing": [],
       "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 5,
+        "bytes": 562481,
+        "gzip": 171879
+      },
       "failures": []
     },
     "/alert-dismiss": {
@@ -469,6 +648,13 @@
       "markers": ["nzfm[alert/alert-dismiss.client]"],
       "missing": [],
       "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 6,
+        "bytes": 565763,
+        "gzip": 173391
+      },
       "failures": []
     },
     "/forms": {
@@ -514,6 +700,13 @@
       ],
       "missing": [],
       "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 7,
+        "bytes": 579754,
+        "gzip": 177638
+      },
       "failures": []
     },
     "/native-select": {
@@ -531,6 +724,13 @@
       "markers": [],
       "missing": [],
       "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 5,
+        "bytes": 562481,
+        "gzip": 171879
+      },
       "failures": []
     },
     "/field-zero-js": {
@@ -548,6 +748,13 @@
       "markers": [],
       "missing": [],
       "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 5,
+        "bytes": 562481,
+        "gzip": 171879
+      },
       "failures": []
     },
     "/icon-button": {
@@ -565,6 +772,13 @@
       "markers": [],
       "missing": [],
       "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 5,
+        "bytes": 562481,
+        "gzip": 171879
+      },
       "failures": []
     },
     "/icon-button-tooltip": {
@@ -595,6 +809,13 @@
       ],
       "missing": [],
       "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 9,
+        "bytes": 619022,
+        "gzip": 193236
+      },
       "failures": []
     },
     "/menu": {
@@ -624,6 +845,7 @@
           "reopenedByEnter": true,
           "partsScanned": "button-label kbd kbd-glyphs menu-checkbox-item menu-group menu-group-label menu-item menu-list menu-popup menu-separator menu-trigger",
           "partsOutsideVocabulary": "",
+          "axeClosed": "",
           "ok": true
         }
       },
@@ -638,6 +860,13 @@
       ],
       "missing": [],
       "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 10,
+        "bytes": 745074,
+        "gzip": 232757
+      },
       "failures": []
     },
     "/tabs": {
@@ -675,6 +904,13 @@
       ],
       "missing": [],
       "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 9,
+        "bytes": 683006,
+        "gzip": 210077
+      },
       "failures": []
     },
     "/tab-nav": {
@@ -701,6 +937,13 @@
       "markers": [],
       "missing": [],
       "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 7,
+        "bytes": 570318,
+        "gzip": 175305
+      },
       "failures": []
     },
     "/icons-server": {
@@ -723,6 +966,13 @@
       "missing": [],
       "unexpected": [],
       "icons": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 5,
+        "bytes": 562481,
+        "gzip": 171879
+      },
       "failures": []
     },
     "/icons-client": {
@@ -745,6 +995,13 @@
       "missing": [],
       "unexpected": [],
       "icons": ["_internal/icon", "icons/bell", "icons/calendar", "icons/search"],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 6,
+        "bytes": 564331,
+        "gzip": 172776
+      },
       "failures": []
     }
   }

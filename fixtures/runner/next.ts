@@ -1,20 +1,25 @@
-// Runs the Next fixture (fixtures/next) end to end and writes fixtures/next/results/<variant>.json.
+// Runs the Next fixture (fixtures/next) end to end. With --record it writes the committed
+// fixtures/next/results/<variant>.json; otherwise temporary copies, so a lane run leaves the tree clean.
 //
-//   node fixtures/runner/next.ts [--skip-pack] [--skip-install] [--variants turbopack,webpack,webpack-opi] [--dev]
+//   node fixtures/runner/next.ts [--skip-pack] [--skip-install] [--variants turbopack,webpack,webpack-opi] [--dev] [--record]
 //
 // 1. pack.ts: build the monorepo, pack @nizivo/tokens and @nizivo/react, plant the markers.
 // 2. pnpm install --frozen-lockfile in fixtures/next (its own workspace root with its own lockfile; the
 //    @nizivo packages are unpacked `file:` folders, which pnpm re-copies whenever their files change).
-// 3. Per variant: delete .next/<variant>, next build into it, next start, then spec.ts in Chromium.
+// 3. Per variant: delete .next/<variant>, next build into it, next start, then spec.ts in Chromium
+//    (axe on every page) and the theme flash check (theme.ts) on the home page.
 //    --dev adds an informational `next dev` pass: development React reports hydration mismatches
 //    (attribute differences included) that production React does not log.
 /* oxlint-disable no-await-in-loop -- variants share one port and one .next folder, so they run one after another */
 import { spawn, spawnSync } from 'node:child_process';
-import { readFileSync, realpathSync, rmSync, writeFileSync } from 'node:fs';
+import { readFileSync, realpathSync, rmSync } from 'node:fs';
 import { isAbsolute, join } from 'node:path';
 import { parseArgs } from 'node:util';
+import { chromium } from 'playwright';
 import { packInto, REPO_ROOT } from './pack.ts';
+import { resultsFile, writeResults } from './serve.ts';
 import { loadMarkers, runSpec, type PageResult } from './spec.ts';
+import { checkThemeFlash, type ThemeFlashResult } from './theme.ts';
 
 const FIXTURE_DIR = join(REPO_ROOT, 'fixtures', 'next');
 const VARIANTS = ['turbopack', 'webpack', 'webpack-opi'] as const;
@@ -115,6 +120,7 @@ async function main(): Promise<number> {
       'skip-install': { type: 'boolean' },
       variants: { type: 'string' },
       dev: { type: 'boolean' },
+      record: { type: 'boolean' },
     },
   });
   const requested = (values.variants ?? VARIANTS.join(',')).split(',');
@@ -146,6 +152,7 @@ async function main(): Promise<number> {
     }
     const stop = await serve(variant);
     let spec: { browser: string; pages: Record<string, PageResult> };
+    let themeFlash: ThemeFlashResult;
     try {
       spec = await runSpec(BASE, markers, {
         // Every page must come from this variant's build, never from a server left running.
@@ -158,12 +165,27 @@ async function main(): Promise<number> {
         // Development chunks are unminified and per-module; the marker checks are for builds.
         markerChecks: variant !== 'dev',
       });
+      const browser = await chromium.launch();
+      try {
+        themeFlash = await checkThemeFlash(
+          browser,
+          BASE,
+          '/',
+          join(FIXTURE_DIR, '.packed', 'tokens', 'dist', 'tokens.css'),
+        );
+      } finally {
+        await browser.close();
+      }
     } finally {
       await stop();
     }
     const failures = Object.entries(spec.pages).flatMap(([path, page]) =>
       page.failures.map((failure) => `${path} ${failure}`),
     );
+    if (!themeFlash.ok) failures.push(`theme flash: ${JSON.stringify(themeFlash)}`);
+    // A clean build is part of the claim (no MODULE_LEVEL_DIRECTIVE or any other warning), so any
+    // warning or error line the build printed fails the run.
+    for (const line of buildWarnings) failures.push(`build: ${line.trim()}`);
     const result = {
       variant,
       command:
@@ -180,12 +202,10 @@ async function main(): Promise<number> {
       buildWarnings,
       pass: failures.length === 0,
       failures,
+      themeFlash,
       pages: spec.pages,
     };
-    const resultFile = join(FIXTURE_DIR, 'results', `${variant}.json`);
-    writeFileSync(resultFile, `${JSON.stringify(result, null, 2)}\n`);
-    // Committed files: lay them out the way the repo's `oxfmt --check` expects.
-    spawnSync(join(REPO_ROOT, 'node_modules', '.bin', 'oxfmt'), [resultFile], { stdio: 'ignore' });
+    writeResults(resultsFile(FIXTURE_DIR, `${variant}.json`, values.record === true), result);
     console.log(`${variant}: ${result.pass ? 'pass' : `FAIL\n  ${failures.join('\n  ')}`}`);
     if (!result.pass && variant !== 'dev') failed++;
   }

@@ -1,0 +1,13 @@
+---
+// Server-only: icons from the @nizivo/icons barrel used directly in .astro (no client directive):
+// rendered to SVG on the server, no icon module and no script reach the browser.
+import Base from '../layouts/Base.astro';
+import { Bell, Calendar, Search } from '@nizivo/icons';
+---
+
+<Base title="Icons on the server">
+  <main>
+    <h1>Icons on the server</h1>
+    <p data-testid="icons"><Calendar size={20} /><Bell size={20} /><Search size={20} label="Search" /></p>
+  </main>
+</Base>

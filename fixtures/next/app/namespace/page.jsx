@@ -1,11 +1,14 @@
 // (b) A Server Component rendering compound parts through namespace imports (spike S2b shape).
 import { Dialog } from '@nizivo/react/dialog';
 import { Select } from '@nizivo/react/select';
+import { Stack } from '@nizivo/react/stack';
 import { Tooltip } from '@nizivo/react/tooltip';
 
 export default function Page() {
   return (
-    <main>
+    // The bare Dialog and Tooltip triggers are unstyled native buttons (21 px tall): side by side they
+    // fail WCAG 2.2 target size (2.5.8), so the Stack spaces them (RESULTS.md, "axe").
+    <Stack gap="4" render={<main />}>
       <h1>Namespace imports</h1>
       <Select.Root defaultValue="30d" name="period" aria-label="Period">
         <Select.Trigger />
@@ -30,6 +33,6 @@ export default function Page() {
         <Tooltip.Trigger>Export</Tooltip.Trigger>
         <Tooltip.Popup>Download the report as CSV</Tooltip.Popup>
       </Tooltip.Root>
-    </main>
+    </Stack>
   );
 }

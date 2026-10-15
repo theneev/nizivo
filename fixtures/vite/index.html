@@ -1,0 +1,23 @@
+<!doctype html>
+<!-- data-nz-theme="system" follows the OS with no script. The inline script below applies a stored
+     choice before first paint; vite.config.js injects @nizivo/react's themeScript after it. -->
+<html lang="en" data-nz-theme="system">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Nizivo Vite fixture</title>
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('nz-theme');
+          if (t === 'light' || t === 'dark')
+            document.documentElement.setAttribute('data-nz-theme', t);
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

@@ -1,0 +1,532 @@
+{
+  "fixture": "astro",
+  "command": "astro build && astro preview --ignore-lock",
+  "versions": {
+    "astro": "7.3.8",
+    "@astrojs/react": "7.0.1",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "react-aria-components": "1.22.1",
+    "browser": "Chromium 156.0.8078.4"
+  },
+  "buildSeconds": 1.7,
+  "buildWarnings": [],
+  "pass": true,
+  "failures": [],
+  "themeFlash": {
+    "path": "/",
+    "cases": {
+      "osDark": {
+        "frames": 90,
+        "wrong": [],
+        "firstPaint": 20,
+        "firstContentfulPaint": 20,
+        "firstTheme": "system",
+        "lastTheme": "system",
+        "pixel": "rgb(16, 19, 17)",
+        "pixelDark": true,
+        "ok": true
+      },
+      "stored": {
+        "frames": 90,
+        "wrong": [],
+        "firstPaint": 20,
+        "firstContentfulPaint": 20,
+        "firstTheme": "dark",
+        "lastTheme": "dark",
+        "pixel": "rgb(16, 19, 17)",
+        "pixelDark": true,
+        "ok": true
+      },
+      "static": {
+        "frames": 90,
+        "wrong": [],
+        "firstPaint": 28,
+        "firstContentfulPaint": 28,
+        "firstTheme": "dark",
+        "lastTheme": "dark",
+        "pixel": "rgb(16, 19, 17)",
+        "pixelDark": true,
+        "ok": true
+      },
+      "light": {
+        "frames": 90,
+        "wrong": [],
+        "firstPaint": 20,
+        "firstContentfulPaint": 20,
+        "firstTheme": "system",
+        "lastTheme": "system",
+        "pixel": "rgb(246, 247, 244)",
+        "pixelDark": false,
+        "ok": true
+      },
+      "late": {
+        "frames": 90,
+        "wrong": [
+          "10:light dark/rgb(246, 247, 244)",
+          "27:light dark/rgb(246, 247, 244)",
+          "44:light dark/rgb(246, 247, 244)",
+          "60:light dark/rgb(246, 247, 244)",
+          "77:light dark/rgb(246, 247, 244)"
+        ],
+        "firstPaint": 24,
+        "firstContentfulPaint": 24,
+        "firstTheme": "system",
+        "lastTheme": "dark",
+        "pixel": "rgb(16, 19, 17)",
+        "pixelDark": true,
+        "ok": true
+      }
+    },
+    "lightDark": {
+      "packed": 68,
+      "loaded": 68,
+      "stylesheets": 1,
+      "ok": true
+    },
+    "nested": {
+      "dark": "0.071",
+      "darkLight": "0.967",
+      "darkInverse": "0.967",
+      "inverse": "0.071",
+      "ok": true
+    },
+    "ok": true
+  },
+  "pages": {
+    "/": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        }
+      },
+      "chunks": 0,
+      "markers": [],
+      "missing": [],
+      "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 0,
+        "bytes": 0,
+        "gzip": 0
+      },
+      "failures": []
+    },
+    "/button-only": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "button button-label",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        }
+      },
+      "chunks": 0,
+      "markers": [],
+      "missing": [],
+      "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 0,
+        "bytes": 0,
+        "gzip": 0
+      },
+      "failures": []
+    },
+    "/t0-barrel": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "alert alert-content alert-description alert-icon alert-title badge badge-dot button button-label card card-action card-body card-description card-header card-title container delta delta-value empty-state empty-state-actions empty-state-title grid grid-item heading image inline inline-error inline-error-icon inline-error-message kbd kbd-glyphs meter meter-header meter-label meter-track meter-value progress-bar progress-bar-header progress-bar-label progress-bar-track progress-bar-value progress-ring progress-ring-fill progress-ring-label progress-ring-track separator skeleton stack text",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "skeletonCircle": {
+          "sizes": "[[16,16]]",
+          "ok": true
+        }
+      },
+      "chunks": 0,
+      "markers": [],
+      "missing": [],
+      "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 0,
+        "bytes": 0,
+        "gzip": 0
+      },
+      "failures": []
+    },
+    "/tab-nav": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "tab-nav tab-nav-label tab-nav-link",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        }
+      },
+      "chunks": 0,
+      "markers": [],
+      "missing": [],
+      "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 0,
+        "bytes": 0,
+        "gzip": 0
+      },
+      "failures": []
+    },
+    "/icons-server": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "icons": {
+          "svgs": "[{\"stroke\":\"1.92\",\"hidden\":\"true\",\"role\":\"\",\"label\":\"\",\"size\":20},{\"stroke\":\"1.92\",\"hidden\":\"true\",\"role\":\"\",\"label\":\"\",\"size\":20},{\"stroke\":\"1.92\",\"hidden\":\"\",\"role\":\"img\",\"label\":\"Search\",\"size\":20}]",
+          "ok": true
+        }
+      },
+      "chunks": 0,
+      "markers": [],
+      "missing": [],
+      "unexpected": [],
+      "icons": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 0,
+        "bytes": 0,
+        "gzip": 0
+      },
+      "failures": []
+    },
+    "/alert-dismiss": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "alert alert-content alert-description alert-dismiss alert-dismiss-icon alert-title",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "alertDismiss": {
+          "slot": "alert-dismiss",
+          "type": "button",
+          "clicked": true,
+          "ok": true
+        }
+      },
+      "chunks": 8,
+      "markers": ["nzfm[alert/alert-dismiss.client]"],
+      "missing": [],
+      "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 8,
+        "bytes": 226197,
+        "gzip": 71953
+      },
+      "failures": []
+    },
+    "/overlays": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "dialog-trigger select select-chevron select-trigger select-value stack tooltip-trigger",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "select": {
+          "before": "Last 30 days",
+          "after": "Last 7 days",
+          "formValue": "7d",
+          "triggerSlot": "select-trigger",
+          "triggerSize": "md",
+          "triggerClass": "nz-select-trigger nz-hit-target",
+          "partsScanned": "dialog-trigger select select-chevron select-item select-list select-popup select-trigger select-value stack tooltip-trigger",
+          "partsOutsideVocabulary": "",
+          "axeOpen": "",
+          "ok": true
+        },
+        "dialog": {
+          "triggerSlot": "dialog-trigger",
+          "title": "Edit product",
+          "closedByClosePart": true,
+          "focusReturned": true,
+          "closedByEscape": true,
+          "partsScanned": "dialog-backdrop dialog-body dialog-close dialog-content dialog-description dialog-footer dialog-popup dialog-positioner dialog-title dialog-trigger select select-chevron select-trigger select-value stack tooltip-trigger",
+          "partsOutsideVocabulary": "",
+          "axeOpen": "",
+          "ok": true
+        },
+        "tooltip": {
+          "triggerSlot": "tooltip-trigger",
+          "text": "Download the report as CSV",
+          "describedByTooltip": true,
+          "shownOnHover": true,
+          "shownOnFocus": true,
+          "partsScanned": "dialog-trigger select select-chevron select-trigger select-value stack tooltip-popup tooltip-trigger",
+          "partsOutsideVocabulary": "",
+          "axeOpen": "",
+          "ok": true
+        }
+      },
+      "chunks": 14,
+      "markers": [
+        "nzfm[_engines/react-aria/dialog.client]",
+        "nzfm[_engines/react-aria/locale.client]",
+        "nzfm[_engines/react-aria/overlay.client]",
+        "nzfm[_engines/react-aria/popup.client]",
+        "nzfm[_engines/react-aria/select.client]",
+        "nzfm[_engines/react-aria/tooltip.client]",
+        "nzfm[config/config.client]",
+        "nzfm[dialog/dialog.client]",
+        "nzfm[select/select.client]",
+        "nzfm[tooltip/tooltip.client]"
+      ],
+      "missing": [],
+      "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 14,
+        "bytes": 444632,
+        "gzip": 142597
+      },
+      "failures": []
+    },
+    "/forms": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "button button-label checkbox checkbox-indicator checkbox-input checkbox-label field field-description field-label field-required fieldset fieldset-content fieldset-legend fieldset-required input input-control native-select native-select-chevron native-select-trigger radio radio-group radio-input radio-label segmented-control segmented-control-input segmented-control-item segmented-control-label stack switch switch-input switch-label switch-thumb textarea",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "forms": {
+          "fields": "5",
+          "problems": "",
+          "danglingServerIdrefs": "",
+          "platform": "apple",
+          "inlineMessage": "Please fill out this field.",
+          "focused": "name",
+          "ariaInvalid": "true",
+          "stayed": true,
+          "ok": true
+        },
+        "nativeSubmit": {
+          "name": "Linen shirt",
+          "unit": "lb",
+          "terms": "on",
+          "range": "30d",
+          "billing": "invoices",
+          "shipping": "express",
+          "ok": true
+        }
+      },
+      "chunks": 13,
+      "markers": [
+        "nzfm[checkbox/checkbox.client]",
+        "nzfm[field/field-scope.client]",
+        "nzfm[input/input.client]",
+        "nzfm[radio-group/radio-group.client]",
+        "nzfm[segmented-control/segmented-control.client]",
+        "nzfm[switch/switch.client]",
+        "nzfm[textarea/textarea.client]"
+      ],
+      "missing": [],
+      "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 13,
+        "bytes": 245277,
+        "gzip": 78273
+      },
+      "failures": []
+    },
+    "/menu": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "button-label kbd kbd-glyphs menu-checkbox-item menu-group menu-group-label menu-item menu-list menu-popup menu-separator menu-trigger",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "menuDefaultOpen": {
+          "ssrExpanded": "true",
+          "ssrPopup": false,
+          "ssrDangling": "menu-trigger aria-controls=react-aria-_r1R_0H1_",
+          "triggerTag": "button",
+          "expanded": "true",
+          "focusInside": true,
+          "firstFocused": true,
+          "items": "5",
+          "checked": "true",
+          "linkTag": "a",
+          "linkHref": "#preview",
+          "dangling": "",
+          "focusReturned": true,
+          "reopenedByEnter": true,
+          "partsScanned": "button-label kbd kbd-glyphs menu-checkbox-item menu-group menu-group-label menu-item menu-list menu-popup menu-separator menu-trigger",
+          "partsOutsideVocabulary": "",
+          "axeClosed": "",
+          "ok": true
+        }
+      },
+      "chunks": 13,
+      "markers": [
+        "nzfm[_engines/react-aria/locale.client]",
+        "nzfm[_engines/react-aria/menu.client]",
+        "nzfm[_engines/react-aria/overlay.client]",
+        "nzfm[_engines/react-aria/popup.client]",
+        "nzfm[config/config.client]",
+        "nzfm[menu/menu.client]"
+      ],
+      "missing": [],
+      "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 13,
+        "bytes": 398995,
+        "gzip": 127921
+      },
+      "failures": []
+    },
+    "/tabs": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "tabs tabs-count tabs-label tabs-list tabs-panel tabs-tab",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "tabs": {
+          "ssrTabs": "3",
+          "ssrSelected": "Unfulfilled",
+          "ssrPanels": "1",
+          "ssrPanelText": "Paid orders that still need to ship.",
+          "ssrWired": true,
+          "ssrDangling": "",
+          "selectedAfterArrowRight": true,
+          "focusedArchived": true,
+          "panelText": "Orders you closed.",
+          "dangling": "",
+          "partsScanned": "tabs tabs-count tabs-label tabs-list tabs-panel tabs-tab",
+          "partsOutsideVocabulary": "",
+          "ok": true
+        }
+      },
+      "chunks": 11,
+      "markers": [
+        "nzfm[_engines/react-aria/locale.client]",
+        "nzfm[_engines/react-aria/tabs.client]",
+        "nzfm[config/config.client]",
+        "nzfm[tabs/tabs.client]"
+      ],
+      "missing": [],
+      "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 11,
+        "bytes": 337836,
+        "gzip": 106080
+      },
+      "failures": []
+    },
+    "/icons-client": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "icons": {
+          "svgs": "[{\"stroke\":\"1.92\",\"hidden\":\"true\",\"role\":\"\",\"label\":\"\",\"size\":20},{\"stroke\":\"1.92\",\"hidden\":\"true\",\"role\":\"\",\"label\":\"\",\"size\":20},{\"stroke\":\"1.92\",\"hidden\":\"\",\"role\":\"img\",\"label\":\"Search\",\"size\":20}]",
+          "ok": true
+        }
+      },
+      "chunks": 6,
+      "markers": [],
+      "missing": [],
+      "unexpected": [],
+      "icons": ["_internal/icon", "icons/bell", "icons/calendar", "icons/search"],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 6,
+        "bytes": 223669,
+        "gzip": 70757
+      },
+      "failures": []
+    },
+    "/two-islands": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "field field-description field-label input input-control",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "islandIds": {
+          "islands": "2",
+          "duplicateIds": "",
+          "dangling": "",
+          "ok": true
+        }
+      },
+      "chunks": 10,
+      "markers": ["nzfm[field/field-scope.client]", "nzfm[input/input.client]"],
+      "missing": [],
+      "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 10,
+        "bytes": 232366,
+        "gzip": 74227
+      },
+      "failures": []
+    }
+  }
+}

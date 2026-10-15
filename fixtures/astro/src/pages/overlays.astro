@@ -1,0 +1,12 @@
+---
+// Select, Dialog and Tooltip composed inside one island.
+import Base from '../layouts/Base.astro';
+import { Overlays } from '../components/overlays.jsx';
+---
+
+<Base title="Overlays">
+  <main>
+    <h1>Overlays</h1>
+    <Overlays client:load />
+  </main>
+</Base>

@@ -1,0 +1,12 @@
+---
+// Server-only: a React component with no client directive renders to HTML and ships no JavaScript.
+import Base from '../layouts/Base.astro';
+import { Buttons } from '../components/buttons.jsx';
+---
+
+<Base title="Button from the barrel">
+  <main>
+    <h1>Button from the barrel</h1>
+    <Buttons />
+  </main>
+</Base>

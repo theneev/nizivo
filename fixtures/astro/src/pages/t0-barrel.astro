@@ -1,0 +1,10 @@
+---
+// Server-only: every T0 component through the root barrel, rendered with no client directive. The
+// component renders its own <main> and <h1>.
+import Base from '../layouts/Base.astro';
+import { T0Barrel } from '../components/t0-barrel.jsx';
+---
+
+<Base title="Server-safe components (barrel)">
+  <T0Barrel />
+</Base>

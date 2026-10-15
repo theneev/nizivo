@@ -10,11 +10,14 @@ import {
   DialogTrigger,
 } from '@nizivo/react/dialog';
 import { SelectItem, SelectPopup, SelectRoot, SelectTrigger } from '@nizivo/react/select';
+import { Stack } from '@nizivo/react/stack';
 import { TooltipPopup, TooltipRoot, TooltipTrigger } from '@nizivo/react/tooltip';
 
 export default function Page() {
   return (
-    <main>
+    // The bare Dialog and Tooltip triggers are unstyled native buttons (21 px tall): side by side they
+    // fail WCAG 2.2 target size (2.5.8), so the Stack spaces them (RESULTS.md, "axe").
+    <Stack gap="4" render={<main />}>
       <h1>Flat imports</h1>
       <SelectRoot defaultValue="30d" name="period" aria-label="Period">
         <SelectTrigger />
@@ -39,6 +42,6 @@ export default function Page() {
         <TooltipTrigger>Export</TooltipTrigger>
         <TooltipPopup>Download the report as CSV</TooltipPopup>
       </TooltipRoot>
-    </main>
+    </Stack>
   );
 }

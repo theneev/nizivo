@@ -13,5 +13,12 @@
     "react": "19.3.0",
     "react-dom": "19.3.0"
   },
+  "browserslist": [
+    "chrome >= 123",
+    "edge >= 123",
+    "firefox >= 129",
+    "safari >= 17.5",
+    "ios_saf >= 17.5"
+  ],
   "packageManager": "pnpm@12.11.2"
 }

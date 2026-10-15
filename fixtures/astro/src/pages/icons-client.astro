@@ -1,0 +1,12 @@
+---
+// Icons from the @nizivo/icons barrel inside an island.
+import Base from '../layouts/Base.astro';
+import { ClientIcons } from '../components/icons-client.jsx';
+---
+
+<Base title="Icons in an island">
+  <main>
+    <h1>Icons in an island</h1>
+    <ClientIcons client:load />
+  </main>
+</Base>

@@ -1,0 +1,12 @@
+---
+// A Menu island with defaultOpen: it opens when the island hydrates.
+import Base from '../layouts/Base.astro';
+import { ProductMenu } from '../components/menu.jsx';
+---
+
+<Base title="Menu open on the server">
+  <main>
+    <h1>Menu open on the server</h1>
+    <ProductMenu client:load />
+  </main>
+</Base>

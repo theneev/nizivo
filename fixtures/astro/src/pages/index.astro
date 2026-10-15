@@ -1,0 +1,24 @@
+---
+import Base from '../layouts/Base.astro';
+
+const pages = [
+  ['/button-only', 'server-only: Button from the @nizivo/react barrel'],
+  ['/t0-barrel', 'server-only: every T0 component through the barrel'],
+  ['/tab-nav', 'server-only: TabNav with plain links'],
+  ['/icons-server', 'server-only: three icons from the @nizivo/icons barrel'],
+  ['/alert-dismiss', 'a dismissible Alert island (client:load)'],
+  ['/overlays', 'Select, Dialog and Tooltip in one island (client:load)'],
+  ['/forms', 'a form island that submits natively before hydration'],
+  ['/menu', 'a Menu island open on the server (defaultOpen)'],
+  ['/tabs', 'a Tabs island below the fold (client:visible)'],
+  ['/icons-client', 'three icons from the @nizivo/icons barrel in an island'],
+  ['/two-islands', 'two Field islands: their ids must not collide'],
+];
+---
+
+<Base title="Home">
+  <main>
+    <h1>Nizivo Astro fixture</h1>
+    <ul>{pages.map(([href, label]) => <li><a href={href}>{label}</a></li>)}</ul>
+  </main>
+</Base>

@@ -7,14 +7,21 @@
 // - every documented part ([data-slot]) on the page, with each overlay open, carries only vocabulary
 //   or functional-allowlist data-* attributes and no engine class (§8.3 rule 3, §9.6 case 3),
 // - @nizivo/icons: a page ships exactly the icon modules its client code imports (pack.ts plants
-//   `nzim[...]` markers), and none from a Server Component.
+//   `nzim[...]` markers), and none from a Server Component,
+// - axe-core (WCAG 2.0–2.2 A and AA) on the page as first rendered, in light, again with each
+//   interaction-opened popup open and after a server-open overlay closes (all blocking), and once in
+//   dark (reported, not blocking: exit criterion 4),
+// - and once per build, checkThemeFlash: no light frame before the theme applies (theme.ts).
+// The same spec runs the Next, Vite and Astro fixtures; SpecOptions says how each one differs.
 /* oxlint-disable no-await-in-loop -- pages and interaction steps run one after another in one browser */
 import { readFileSync } from 'node:fs';
+import { createRequire } from 'node:module';
 import { dirname, join, normalize } from 'node:path';
+import { gzipSync } from 'node:zlib';
 import { chromium, type Browser, type Page } from 'playwright';
 import { REPO_ROOT } from './pack.ts';
 
-type Component =
+export type Component =
   | 'select'
   | 'dialog'
   | 'tooltip'
@@ -52,7 +59,7 @@ const LEAF: Record<Component, string> = {
   tabs: 'tabs/tabs.client',
 };
 
-interface PageSpec {
+export interface PageSpec {
   /** Components the page renders; their client leaves must ship, and no other client module may. */
   renders: Component[];
   /**
@@ -76,6 +83,10 @@ interface PageSpec {
   iconButtonTooltip?: string;
   /** Tabs: the selected panel in the server HTML, and arrow-key selection after hydration. */
   tabs?: true;
+  /** Astro: `client:visible` islands sit below the fold; scroll to them before waiting for hydration. */
+  scrollToIslands?: true;
+  /** Astro: the page carries two islands; their ids must not collide (per-island useId prefixes). */
+  islandIds?: true;
   /** TabNav through next/link: the current link, and client navigation moving it. */
   tabNav?: true;
   /**
@@ -220,10 +231,89 @@ export interface PageResult {
   unexpected: string[];
   /** @nizivo/icons modules found in the page's client chunks (`icons/calendar`, `_internal/icon`). */
   icons?: string[];
+  /** axe-core WCAG 2.2 A/AA violations on the page as first rendered, in light: `rule [impact] (n): target`. */
+  axe: string[];
+  /** The same run with the OS in dark mode (`data-nz-theme="system"`): reported, never a failure. */
+  axeDark: string[];
+  /** The page's client JavaScript: every chunk the spec found, raw and gzip -9 bytes. */
+  js: { files: number; bytes: number; gzip: number };
   failures: string[];
 }
 
 const TIMEOUT = 5000;
+
+/** axe-core's tags for WCAG 2.0–2.2 A and AA (ARCHITECTURE.md §18.1), as in the docs smoke test. */
+const AXE_TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'];
+const AXE_SOURCE = readFileSync(
+  createRequire(import.meta.url).resolve('axe-core/axe.min.js'),
+  'utf8',
+);
+
+/** Runs axe-core (the catalog pin, injected as source) on the page; one line per violated rule. */
+export async function axe(page: Page): Promise<string[]> {
+  const loaded = await page.evaluate(() => typeof Reflect.get(globalThis, 'axe') === 'object');
+  if (!loaded) await page.addScriptTag({ content: AXE_SOURCE });
+  const lines: unknown = await page.evaluate(async (tags) => {
+    const run: unknown = Reflect.get(Reflect.get(globalThis, 'axe') ?? {}, 'run');
+    if (typeof run !== 'function') return ['axe-core did not load'];
+    const result: unknown = await run(document, { runOnly: { type: 'tag', values: tags } });
+    const list: unknown =
+      typeof result === 'object' && result !== null ? Reflect.get(result, 'violations') : undefined;
+    if (!Array.isArray(list)) return ['axe-core returned no result'];
+    return list.map((v: unknown) => {
+      if (typeof v !== 'object' || v === null) return 'malformed violation';
+      const id: unknown = Reflect.get(v, 'id');
+      const impact: unknown = Reflect.get(v, 'impact');
+      const nodes: unknown = Reflect.get(v, 'nodes');
+      const first: unknown = Array.isArray(nodes) ? nodes[0] : undefined;
+      const target: unknown =
+        typeof first === 'object' && first !== null ? Reflect.get(first, 'target') : undefined;
+      const count = Array.isArray(nodes) ? nodes.length : 0;
+      return `${typeof id === 'string' ? id : '?'} [${typeof impact === 'string' ? impact : 'unknown'}] (${count}): ${Array.isArray(target) ? target.join(' ') : ''}`;
+    });
+  }, AXE_TAGS);
+  return Array.isArray(lines) ? lines.map(String) : ['axe-core returned no result'];
+}
+
+/**
+ * Waits for every running CSS transition and animation: a theme switched in place transitions the
+ * controls' colours (Button's background, for one), and axe must read the end colours, not a frame
+ * in between.
+ */
+async function transitionsDone(page: Page): Promise<void> {
+  await page.evaluate(async () => {
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+    // Transitions only: a Skeleton's shimmer or a spinner runs forever and never finishes.
+    const transitions = document.getAnimations().filter((a) => a instanceof CSSTransition);
+    await Promise.race([
+      Promise.all(transitions.map((a) => a.finished.catch(() => undefined))),
+      new Promise((resolve) => setTimeout(resolve, 2000)),
+    ]);
+  });
+}
+
+/**
+ * axe in a state an interaction step reached (a popup open, a server-open overlay closed): the lines
+ * go into the step's result under `key`, and the step fails when there are any.
+ */
+async function axeStep(
+  page: Page,
+  result: Record<string, string | boolean>,
+  key: string,
+): Promise<boolean> {
+  // A popup fades in: axe must read its colours at full opacity, not a frame of the fade.
+  await page
+    .waitForFunction(
+      () => document.querySelector('[data-entering], [data-exiting]') === null,
+      undefined,
+      { timeout: TIMEOUT },
+    )
+    .catch(() => undefined);
+  await transitionsDone(page);
+  const lines = await axe(page);
+  result[key] = lines.join(' | ');
+  return lines.length === 0;
+}
 
 function readRepoJson(file: string): object {
   const json: unknown = JSON.parse(readFileSync(join(REPO_ROOT, file), 'utf8'));
@@ -387,6 +477,7 @@ async function checkSelect(
   await listbox.waitFor({ state: 'visible', timeout: TIMEOUT });
   const result: Record<string, string | boolean> = {};
   const clean = await partsClean(page, result);
+  const accessibleOpen = await axeStep(page, result, 'axeOpen');
   const scanned = String(result['partsScanned']).split(' ');
   const partsShown = (want?.parts ?? []).every((slot) => scanned.includes(slot));
   await page.getByRole('option', { name: 'Last 7 days' }).click();
@@ -408,6 +499,7 @@ async function checkSelect(
       triggerSlot === 'select-trigger' &&
       (want?.size === undefined || triggerSize === want.size) &&
       partsShown &&
+      accessibleOpen &&
       clean,
   };
 }
@@ -450,6 +542,8 @@ async function checkDialogDefaultOpen(
   const clean = await partsClean(page, result);
   await page.keyboard.press('Escape');
   await dialog.waitFor({ state: 'detached', timeout: TIMEOUT });
+  // The page under the modal, which the load-time axe run could not see.
+  const accessibleClosed = await axeStep(page, result, 'axeClosed');
   return {
     ssrExpanded,
     ssrDangling,
@@ -465,6 +559,7 @@ async function checkDialogDefaultOpen(
       (controls === '' || wiring.controlsDialog) &&
       wiring.title !== '' &&
       dangling === '' &&
+      accessibleClosed &&
       clean,
   };
 }
@@ -489,6 +584,7 @@ async function checkTooltipDefaultOpen(
   const clean = await partsClean(page, result);
   await page.keyboard.press('Escape');
   await tooltip.waitFor({ state: 'detached', timeout: TIMEOUT });
+  const accessibleClosed = await axeStep(page, result, 'axeClosed');
   const describedByTooltip = tooltipId !== '' && describedBy.split(' ').includes(tooltipId);
   return {
     ssrDangling,
@@ -498,7 +594,12 @@ async function checkTooltipDefaultOpen(
     dangling,
     closedByEscape: true,
     ...result,
-    ok: describedByTooltip && text === 'Download the report as CSV' && dangling === '' && clean,
+    ok:
+      describedByTooltip &&
+      text === 'Download the report as CSV' &&
+      dangling === '' &&
+      accessibleClosed &&
+      clean,
   };
 }
 
@@ -514,6 +615,7 @@ async function checkDialog(
   await dialog.waitFor({ state: 'visible', timeout: TIMEOUT });
   const result: Record<string, string | boolean> = {};
   const clean = await partsClean(page, result);
+  const accessibleOpen = await axeStep(page, result, 'axeOpen');
   const title = (await dialog.getByRole('heading').textContent()) ?? '';
   await dialog.getByRole('button', { name: spec.close, exact: true }).click();
   await dialog.waitFor({ state: 'detached', timeout: TIMEOUT });
@@ -539,7 +641,8 @@ async function checkDialog(
     focusReturned,
     closedByEscape: true,
     ...result,
-    ok: triggerSlot === 'dialog-trigger' && title !== '' && focusReturned && clean,
+    ok:
+      triggerSlot === 'dialog-trigger' && title !== '' && focusReturned && accessibleOpen && clean,
   };
 }
 
@@ -555,6 +658,7 @@ async function checkTooltip(page: Page): Promise<Record<string, string | boolean
   const triggerSlot = (await trigger.getAttribute('data-slot')) ?? '';
   const result: Record<string, string | boolean> = {};
   const clean = await partsClean(page, result);
+  const accessibleOpen = await axeStep(page, result, 'axeOpen');
   const text = (await tooltip.textContent()) ?? '';
   const describedBy = (await trigger.getAttribute('aria-describedby')) ?? '';
   const tooltipId = (await tooltip.getAttribute('id')) ?? '';
@@ -579,6 +683,7 @@ async function checkTooltip(page: Page): Promise<Record<string, string | boolean
       triggerSlot === 'tooltip-trigger' &&
       text === 'Download the report as CSV' &&
       describedByTooltip &&
+      accessibleOpen &&
       clean,
   };
 }
@@ -677,13 +782,16 @@ async function checkForms(page: Page, html: string): Promise<Record<string, stri
 
 /**
  * The forms page with JavaScript off: the server HTML alone is a working form. Fill it, submit it,
- * and read what the browser sent from the next URL's query string.
+ * and read what the browser sent from the next URL's query string. A single-page app renders nothing
+ * without JavaScript, so there (`javaScriptEnabled`) the hydrated form submits natively instead: no
+ * handler intercepts it and the browser sends the same values.
  */
 async function checkNativeSubmit(
   browser: Browser,
   url: string,
+  javaScriptEnabled: boolean,
 ): Promise<Record<string, string | boolean>> {
-  const context = await browser.newContext({ javaScriptEnabled: false });
+  const context = await browser.newContext({ javaScriptEnabled });
   try {
     const page = await context.newPage();
     await page.goto(url, { waitUntil: 'load', timeout: 60_000 });
@@ -758,6 +866,7 @@ async function checkIconButtonTooltip(
 async function checkMenuDefaultOpen(
   page: Page,
   html: string,
+  serverHtml: boolean,
 ): Promise<Record<string, string | boolean>> {
   const ssr = await page.evaluate((source) => {
     const doc = new DOMParser().parseFromString(source, 'text/html');
@@ -796,6 +905,8 @@ async function checkMenuDefaultOpen(
   const clean = await partsClean(page, result);
   await page.keyboard.press('Escape');
   await menu.waitFor({ state: 'detached', timeout: TIMEOUT });
+  // The page under the menu (its closed trigger included), which the load-time axe run could not see.
+  const accessibleClosed = await axeStep(page, result, 'axeClosed');
   const focusReturned = await page
     .waitForFunction(
       () => document.activeElement?.getAttribute('data-slot') === 'menu-trigger',
@@ -841,7 +952,8 @@ async function checkMenuDefaultOpen(
     reopenedByEnter: true,
     ...result,
     ok:
-      !ssr.popup &&
+      // A client render may mount the popup in its first commit; only server HTML must lack it.
+      (!serverHtml || !ssr.popup) &&
       triggerTag === 'button' &&
       expanded === 'true' &&
       focusInside &&
@@ -852,6 +964,7 @@ async function checkMenuDefaultOpen(
       link.href === '#preview' &&
       dangling === '' &&
       focusReturned &&
+      accessibleClosed &&
       clean,
   };
 }
@@ -989,8 +1102,29 @@ async function checkIcons(page: Page): Promise<Record<string, string | boolean>>
   };
 }
 
-/** Client JS the page references in its HTML (script tags and the flight payload) or loads. */
-function chunkUrls(html: string, base: string): string[] {
+/**
+ * Astro, two islands on one page: every id in the document is unique, so the islands' `useId`
+ * prefixes differ (§11.1: handled by @astrojs/react 7), and every IDREF resolves.
+ */
+async function checkIslandIds(page: Page): Promise<Record<string, string | boolean>> {
+  const { islands, duplicates } = await page.evaluate(() => {
+    const ids = [...document.querySelectorAll('[id]')].map((element) => element.id);
+    return {
+      islands: document.querySelectorAll('astro-island').length,
+      duplicates: [...new Set(ids.filter((id, index) => ids.indexOf(id) !== index))],
+    };
+  });
+  const dangling = await danglingIdrefs(page);
+  return {
+    islands: String(islands),
+    duplicateIds: duplicates.join(', '),
+    dangling: dangling.join(', '),
+    ok: islands >= 2 && duplicates.length === 0 && dangling.length === 0,
+  };
+}
+
+/** Next: client JS the page references in its HTML (script tags and the flight payload). */
+function nextChunkUrls(html: string, base: string): string[] {
   const urls = new Set<string>();
   for (const m of html.matchAll(/<script[^>]+src="([^"]+\.js[^"]*)"/g)) {
     if (m[1] !== undefined) urls.add(new URL(m[1], base).href);
@@ -1000,6 +1134,46 @@ function chunkUrls(html: string, base: string): string[] {
     urls.add(new URL(path, base).href);
   }
   return [...urls];
+}
+
+/**
+ * Vite and Astro: the module scripts and module preloads in the HTML and Astro's island component and
+ * renderer URLs. Static imports are followed from there (importClosure).
+ */
+function moduleSeedUrls(html: string, base: string): string[] {
+  const urls = new Set<string>();
+  const attributes =
+    /<script[^>]+src="([^"]+)"|<link[^>]+rel="modulepreload"[^>]+href="([^"]+)"|(?:component|renderer|before-hydration)-url="([^"]+)"/g;
+  for (const m of html.matchAll(attributes)) {
+    const url = m[1] ?? m[2] ?? m[3];
+    if (url !== undefined && url !== '') urls.add(new URL(url.replaceAll('&amp;', '&'), base).href);
+  }
+  return [...urls];
+}
+
+const STATIC_IMPORT = /\b(?:from|import)\s*["']([^"']+\.m?js)["']/g;
+
+/**
+ * Every chunk reachable from `seeds` through static imports (`import "./x.js"`, `from "./x.js"`), with
+ * its source. Dynamic `import()` is not followed: a lazy chunk counts only once the page loaded it.
+ */
+async function importClosure(
+  seeds: string[],
+  base: string,
+  follow: boolean,
+): Promise<Map<string, string>> {
+  const sources = new Map<string, string>();
+  const stack = [...seeds];
+  for (let url = stack.pop(); url !== undefined; url = stack.pop()) {
+    if (sources.has(url) || !url.startsWith(base)) continue;
+    const source = await (await fetch(url)).text();
+    sources.set(url, source);
+    if (!follow) continue;
+    for (const m of source.matchAll(STATIC_IMPORT)) {
+      if (m[1] !== undefined) stack.push(new URL(m[1], url).href);
+    }
+  }
+  return sources;
 }
 
 async function runPage(
@@ -1023,30 +1197,47 @@ async function runPage(
     consoleMessages.push(`pageerror: ${error.message.slice(0, 300)}`),
   );
   page.on('response', (response) => {
-    if (response.request().resourceType() === 'script') loaded.add(response.url());
+    const url = response.url();
+    if (response.request().resourceType() === 'script' || /\.m?js(?:\?|$)/.test(url)) {
+      loaded.add(url);
+    }
   });
 
   const failures: string[] = [];
   const interactions: PageResult['interactions'] = {};
   let html = '';
+  let serverHtml = '';
+  let axeLines: string[] = [];
+  let axeDark: string[] = [];
+  const ready = options.ready ?? hydratedHeading;
   try {
     const response = await page.goto(base + path, { waitUntil: 'networkidle', timeout: 60_000 });
-    html = (await response?.text()) ?? '';
-    if (options.buildId !== undefined && !html.includes(options.buildId)) {
+    serverHtml = (await response?.text()) ?? '';
+    if (options.buildId !== undefined && !serverHtml.includes(options.buildId)) {
       failures.push(`served by another build (no ${options.buildId} in the HTML)`);
     }
-    // Hydrated: React has attached its fiber to the page's heading.
-    await page.waitForFunction(
-      () =>
-        Object.keys(document.querySelector('h1') ?? {}).some((key) =>
-          key.startsWith('__reactFiber'),
-        ),
-      undefined,
-      { timeout: 30_000 },
-    );
+    await ready(page, spec);
+    // A single-page app's HTML is an empty shell: the checks that read "the HTML before any
+    // interaction" read the first client render instead.
+    html = options.initialHtml === 'rendered' ? await page.content() : serverHtml;
+    // A server-open overlay mounts after hydration: axe checks it open, once it is there.
+    const open = spec.defaultOpen === 'dialog' ? (spec.dialog?.role ?? 'dialog') : spec.defaultOpen;
+    if (open !== undefined) {
+      await page.getByRole(open).waitFor({ state: 'visible', timeout: TIMEOUT });
+    }
+    axeLines = await axe(page);
+    if (axeLines.length > 0) failures.push(`axe: ${axeLines.join(' | ')}`);
+    // Dark is reported, not blocking (exit criterion 4). Every fixture's <html> carries
+    // data-nz-theme="system", so the OS preference switches the theme in place.
+    await page.emulateMedia({ colorScheme: 'dark' });
+    await transitionsDone(page);
+    axeDark = await axe(page);
+    await page.emulateMedia({ colorScheme: 'light' });
+    await transitionsDone(page);
   } catch (error) {
     failures.push(`load: ${String(error).split('\n')[0] ?? ''}`);
   }
+  const fromServer = options.initialHtml !== 'rendered';
 
   // Interactions run only on a page that loaded from the right build and hydrated.
   const steps: [string, () => Promise<Record<string, string | boolean>>][] = [];
@@ -1075,7 +1266,10 @@ async function runPage(
     steps.push(['tooltipDefaultOpen', () => checkTooltipDefaultOpen(page, html)]);
   }
   if (failures.length === 0 && spec.defaultOpen === 'menu') {
-    steps.push(['menuDefaultOpen', () => checkMenuDefaultOpen(page, html)]);
+    steps.push(['menuDefaultOpen', () => checkMenuDefaultOpen(page, html, fromServer)]);
+  }
+  if (failures.length === 0 && spec.islandIds === true) {
+    steps.push(['islandIds', () => checkIslandIds(page)]);
   }
   if (failures.length === 0 && spec.tabs === true) {
     steps.push(['tabs', () => checkTabs(page, html)]);
@@ -1100,7 +1294,7 @@ async function runPage(
   }
   if (failures.length === 0 && spec.forms === true) {
     steps.push(['forms', () => checkForms(page, html)]);
-    steps.push(['nativeSubmit', () => checkNativeSubmit(browser, base + path)]);
+    steps.push(['nativeSubmit', () => checkNativeSubmit(browser, base + path, !fromServer)]);
   }
   const iconButtonLabel = spec.iconButtonTooltip;
   if (failures.length === 0 && iconButtonLabel !== undefined) {
@@ -1122,13 +1316,19 @@ async function runPage(
   }
   if (consoleMessages.length > 0) failures.push(`console: ${consoleMessages.length} message(s)`);
 
-  const urls = [...new Set([...chunkUrls(html, base), ...loaded])].filter((url) =>
-    url.startsWith(base),
-  );
+  // Next's chunks are not ES modules: its chunk list and the loaded scripts are the whole set.
+  const sources =
+    options.chunks === 'imports'
+      ? await importClosure([...moduleSeedUrls(serverHtml, base), ...loaded], base, true)
+      : await importClosure([...nextChunkUrls(serverHtml, base), ...loaded], base, false);
   const found = new Set<string>();
   const iconsFound = new Set<string>();
-  for (const url of urls) {
-    const source = await (await fetch(url)).text();
+  let bytes = 0;
+  let gzip = 0;
+  for (const source of sources.values()) {
+    const buffer = Buffer.from(source);
+    bytes += buffer.length;
+    gzip += gzipSync(buffer, { level: 9 }).length;
     for (const marker of markers.all.keys()) if (source.includes(marker)) found.add(marker);
     if (source.includes('nzim[')) {
       for (const [marker, distPath] of markers.icons) {
@@ -1136,6 +1336,12 @@ async function runPage(
           iconsFound.add(distPath.replace(/^dist\//, '').replace(/\.js$/, ''));
       }
     }
+  }
+  const serverOnly =
+    spec.renders.length === 0 && (spec.icons ?? []).length === 0 && spec.imports === undefined;
+  if (options.serverOnlyNoScript === true && serverOnly) {
+    // Astro: a page with no island loads no JavaScript at all, not just no @nizivo module.
+    if (sources.size > 0) failures.push(`server-only page loads ${sources.size} script(s)`);
   }
   const shippedIcons = [...iconsFound].toSorted();
   const allowed = markers.allowed([...spec.renders, ...(spec.imports ?? [])]);
@@ -1165,20 +1371,46 @@ async function runPage(
   return {
     console: consoleMessages,
     interactions,
-    chunks: urls.length,
+    chunks: sources.size,
     markers: [...found].toSorted(),
     missing,
     unexpected,
     ...(spec.icons === undefined && shippedIcons.length === 0 ? {} : { icons: shippedIcons }),
+    axe: axeLines,
+    axeDark,
+    js: { files: sources.size, bytes, gzip },
     failures,
   };
 }
 
+/** Next and Vite: hydrated (or rendered) once React has attached its fiber to the page's heading. */
+async function hydratedHeading(page: Page): Promise<void> {
+  await page.waitForFunction(
+    () =>
+      Object.keys(document.querySelector('h1') ?? {}).some((key) => key.startsWith('__reactFiber')),
+    undefined,
+    { timeout: 30_000 },
+  );
+}
+
 export interface SpecOptions {
-  /** The build the server must be serving (its BUILD_ID); undefined for `next dev`. */
+  /** A string the served HTML must contain (Next's BUILD_ID, Vite's entry chunk); undefined for dev. */
   buildId: string | undefined;
   leakExpected: boolean;
   markerChecks: boolean;
+  /** The fixture's pages; Next's PAGES when left out. */
+  pages?: Record<string, PageSpec>;
+  /**
+   * Where "the HTML before any interaction" comes from: the server's response (Next, Astro), or the
+   * first client render (a Vite SPA, whose HTML is an empty shell).
+   */
+  initialHtml?: 'server' | 'rendered';
+  /** Waits until the page is interactive; React's fiber on the <h1> when left out. */
+  ready?: (page: Page, spec: PageSpec) => Promise<void>;
+  /** How the page's client JS is found: Next's chunk list (default), or module imports (Vite, Astro). */
+  chunks?: 'next' | 'imports';
+  /** Astro: a page that renders no client component must load no script at all. */
+  serverOnlyNoScript?: boolean;
 }
 
 export async function runSpec(
@@ -1189,7 +1421,7 @@ export async function runSpec(
   const browser = await chromium.launch();
   const pages: Record<string, PageResult> = {};
   try {
-    for (const [path, spec] of Object.entries(PAGES)) {
+    for (const [path, spec] of Object.entries(options.pages ?? PAGES)) {
       pages[path] = await runPage(browser, base, path, spec, markers, options);
     }
     return { browser: `Chromium ${browser.version()}`, pages };

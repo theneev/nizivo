@@ -1,0 +1,549 @@
+{
+  "fixture": "vite",
+  "command": "vite build && vite preview",
+  "versions": {
+    "vite": "8.3.4",
+    "@vitejs/plugin-react": "6.1.2",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "react-aria-components": "1.22.1",
+    "browser": "Chromium 156.0.8078.4"
+  },
+  "buildSeconds": 0.4,
+  "buildWarnings": [],
+  "pass": true,
+  "failures": [],
+  "themeFlash": {
+    "path": "/",
+    "cases": {
+      "osDark": {
+        "frames": 90,
+        "wrong": [],
+        "firstPaint": 12,
+        "firstContentfulPaint": 344,
+        "firstTheme": "system",
+        "lastTheme": "system",
+        "pixel": "rgb(16, 19, 17)",
+        "pixelDark": true,
+        "ok": true
+      },
+      "stored": {
+        "frames": 90,
+        "wrong": [],
+        "firstPaint": 16,
+        "firstContentfulPaint": 348,
+        "firstTheme": "dark",
+        "lastTheme": "dark",
+        "pixel": "rgb(16, 19, 17)",
+        "pixelDark": true,
+        "ok": true
+      },
+      "static": {
+        "frames": 90,
+        "wrong": [],
+        "firstPaint": 20,
+        "firstContentfulPaint": 364,
+        "firstTheme": "dark",
+        "lastTheme": "dark",
+        "pixel": "rgb(16, 19, 17)",
+        "pixelDark": true,
+        "ok": true
+      },
+      "light": {
+        "frames": 90,
+        "wrong": [],
+        "firstPaint": 16,
+        "firstContentfulPaint": 360,
+        "firstTheme": "system",
+        "lastTheme": "system",
+        "pixel": "rgb(246, 247, 244)",
+        "pixelDark": false,
+        "ok": true
+      },
+      "late": {
+        "frames": 90,
+        "wrong": [
+          "9:light dark/rgb(246, 247, 244)",
+          "25:light dark/rgb(246, 247, 244)",
+          "42:light dark/rgb(246, 247, 244)",
+          "59:light dark/rgb(246, 247, 244)",
+          "75:light dark/rgb(246, 247, 244)"
+        ],
+        "firstPaint": 16,
+        "firstContentfulPaint": 364,
+        "firstTheme": "system",
+        "lastTheme": "dark",
+        "pixel": "rgb(16, 19, 17)",
+        "pixelDark": true,
+        "ok": true
+      }
+    },
+    "lightDark": {
+      "packed": 68,
+      "loaded": 68,
+      "stylesheets": 1,
+      "ok": true
+    },
+    "nested": {
+      "dark": "0.071",
+      "darkLight": "0.967",
+      "darkInverse": "0.967",
+      "inverse": "0.071",
+      "ok": true
+    },
+    "ok": true
+  },
+  "pages": {
+    "/": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        }
+      },
+      "chunks": 2,
+      "markers": [],
+      "missing": [],
+      "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 2,
+        "bytes": 224629,
+        "gzip": 69906
+      },
+      "failures": []
+    },
+    "/button-only": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "button button-label",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        }
+      },
+      "chunks": 5,
+      "markers": [],
+      "missing": [],
+      "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 5,
+        "bytes": 227742,
+        "gzip": 71400
+      },
+      "failures": []
+    },
+    "/button-subpath": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "button button-label",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        }
+      },
+      "chunks": 5,
+      "markers": [],
+      "missing": [],
+      "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 5,
+        "bytes": 227743,
+        "gzip": 71402
+      },
+      "failures": []
+    },
+    "/t0-barrel": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "alert alert-content alert-description alert-icon alert-title badge badge-dot button button-label card card-action card-body card-description card-header card-title container delta delta-value empty-state empty-state-actions empty-state-title grid grid-item heading image inline inline-error inline-error-icon inline-error-message kbd kbd-glyphs meter meter-header meter-label meter-track meter-value progress-bar progress-bar-header progress-bar-label progress-bar-track progress-bar-value progress-ring progress-ring-fill progress-ring-label progress-ring-track separator skeleton stack text",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "skeletonCircle": {
+          "sizes": "[[16,16]]",
+          "ok": true
+        }
+      },
+      "chunks": 11,
+      "markers": [],
+      "missing": [],
+      "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 11,
+        "bytes": 242754,
+        "gzip": 76948
+      },
+      "failures": []
+    },
+    "/alert-dismiss": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "alert alert-content alert-description alert-dismiss alert-dismiss-icon alert-title heading",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "alertDismiss": {
+          "slot": "alert-dismiss",
+          "type": "button",
+          "clicked": true,
+          "ok": true
+        }
+      },
+      "chunks": 6,
+      "markers": ["nzfm[alert/alert-dismiss.client]"],
+      "missing": [],
+      "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 6,
+        "bytes": 228601,
+        "gzip": 71908
+      },
+      "failures": []
+    },
+    "/overlays": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "dialog-trigger select select-chevron select-trigger select-value stack tooltip-trigger",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "select": {
+          "before": "Last 30 days",
+          "after": "Last 7 days",
+          "formValue": "7d",
+          "triggerSlot": "select-trigger",
+          "triggerSize": "md",
+          "triggerClass": "nz-select-trigger nz-hit-target",
+          "partsScanned": "dialog-trigger select select-chevron select-item select-list select-popup select-trigger select-value stack tooltip-trigger",
+          "partsOutsideVocabulary": "",
+          "axeOpen": "",
+          "ok": true
+        },
+        "dialog": {
+          "triggerSlot": "dialog-trigger",
+          "title": "Edit product",
+          "closedByClosePart": true,
+          "focusReturned": true,
+          "closedByEscape": true,
+          "partsScanned": "dialog-backdrop dialog-body dialog-close dialog-content dialog-description dialog-footer dialog-popup dialog-positioner dialog-title dialog-trigger select select-chevron select-trigger select-value stack tooltip-trigger",
+          "partsOutsideVocabulary": "",
+          "axeOpen": "",
+          "ok": true
+        },
+        "tooltip": {
+          "triggerSlot": "tooltip-trigger",
+          "text": "Download the report as CSV",
+          "describedByTooltip": true,
+          "shownOnHover": true,
+          "shownOnFocus": true,
+          "partsScanned": "dialog-trigger select select-chevron select-trigger select-value stack tooltip-popup tooltip-trigger",
+          "partsOutsideVocabulary": "",
+          "axeOpen": "",
+          "ok": true
+        }
+      },
+      "chunks": 12,
+      "markers": [
+        "nzfm[_engines/react-aria/dialog.client]",
+        "nzfm[_engines/react-aria/locale.client]",
+        "nzfm[_engines/react-aria/overlay.client]",
+        "nzfm[_engines/react-aria/popup.client]",
+        "nzfm[_engines/react-aria/select.client]",
+        "nzfm[_engines/react-aria/tooltip.client]",
+        "nzfm[config/config.client]",
+        "nzfm[dialog/dialog.client]",
+        "nzfm[select/select.client]",
+        "nzfm[tooltip/tooltip.client]"
+      ],
+      "missing": [],
+      "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 12,
+        "bytes": 446542,
+        "gzip": 143045
+      },
+      "failures": []
+    },
+    "/barrel-select": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "select select-chevron select-trigger select-value",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "select": {
+          "before": "Last 30 days",
+          "after": "Last 7 days",
+          "formValue": "7d",
+          "triggerSlot": "select-trigger",
+          "triggerSize": "md",
+          "triggerClass": "nz-select-trigger nz-hit-target",
+          "partsScanned": "select select-chevron select-item select-list select-popup select-trigger select-value",
+          "partsOutsideVocabulary": "",
+          "axeOpen": "",
+          "ok": true
+        }
+      },
+      "chunks": 10,
+      "markers": [
+        "nzfm[_engines/react-aria/locale.client]",
+        "nzfm[_engines/react-aria/overlay.client]",
+        "nzfm[_engines/react-aria/popup.client]",
+        "nzfm[_engines/react-aria/select.client]",
+        "nzfm[config/config.client]",
+        "nzfm[select/select.client]"
+      ],
+      "missing": [],
+      "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 10,
+        "bytes": 427860,
+        "gzip": 136482
+      },
+      "failures": []
+    },
+    "/forms": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "button button-label checkbox checkbox-indicator checkbox-input checkbox-label field field-description field-label field-required fieldset fieldset-content fieldset-legend fieldset-required heading input input-control native-select native-select-chevron native-select-trigger radio radio-group radio-input radio-label segmented-control segmented-control-input segmented-control-item segmented-control-label stack switch switch-input switch-label switch-thumb textarea",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "forms": {
+          "fields": "5",
+          "problems": "",
+          "danglingServerIdrefs": "",
+          "platform": "apple",
+          "inlineMessage": "Please fill out this field.",
+          "focused": "name",
+          "ariaInvalid": "true",
+          "stayed": true,
+          "ok": true
+        },
+        "nativeSubmit": {
+          "name": "Linen shirt",
+          "unit": "lb",
+          "terms": "on",
+          "range": "30d",
+          "billing": "invoices",
+          "shipping": "express",
+          "ok": true
+        }
+      },
+      "chunks": 10,
+      "markers": [
+        "nzfm[checkbox/checkbox.client]",
+        "nzfm[field/field-scope.client]",
+        "nzfm[input/input.client]",
+        "nzfm[radio-group/radio-group.client]",
+        "nzfm[segmented-control/segmented-control.client]",
+        "nzfm[switch/switch.client]",
+        "nzfm[textarea/textarea.client]"
+      ],
+      "missing": [],
+      "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 10,
+        "bytes": 247181,
+        "gzip": 77536
+      },
+      "failures": []
+    },
+    "/menu": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "button-label kbd kbd-glyphs menu-checkbox-item menu-group menu-group-label menu-item menu-list menu-popup menu-separator menu-trigger",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "menuDefaultOpen": {
+          "ssrExpanded": "true",
+          "ssrPopup": true,
+          "ssrDangling": "",
+          "triggerTag": "button",
+          "expanded": "true",
+          "focusInside": true,
+          "firstFocused": true,
+          "items": "5",
+          "checked": "true",
+          "linkTag": "a",
+          "linkHref": "#preview",
+          "dangling": "",
+          "focusReturned": true,
+          "reopenedByEnter": true,
+          "partsScanned": "button-label kbd kbd-glyphs menu-checkbox-item menu-group menu-group-label menu-item menu-list menu-popup menu-separator menu-trigger",
+          "partsOutsideVocabulary": "",
+          "axeClosed": "",
+          "ok": true
+        }
+      },
+      "chunks": 10,
+      "markers": [
+        "nzfm[_engines/react-aria/locale.client]",
+        "nzfm[_engines/react-aria/menu.client]",
+        "nzfm[_engines/react-aria/overlay.client]",
+        "nzfm[_engines/react-aria/popup.client]",
+        "nzfm[config/config.client]",
+        "nzfm[menu/menu.client]"
+      ],
+      "missing": [],
+      "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 10,
+        "bytes": 400580,
+        "gzip": 127398
+      },
+      "failures": []
+    },
+    "/tabs": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "tabs tabs-count tabs-label tabs-list tabs-panel tabs-tab",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "tabs": {
+          "ssrTabs": "3",
+          "ssrSelected": "Unfulfilled",
+          "ssrPanels": "1",
+          "ssrPanelText": "Paid orders that still need to ship.",
+          "ssrWired": true,
+          "ssrDangling": "",
+          "selectedAfterArrowRight": true,
+          "focusedArchived": true,
+          "panelText": "Orders you closed.",
+          "dangling": "",
+          "partsScanned": "tabs tabs-count tabs-label tabs-list tabs-panel tabs-tab",
+          "partsOutsideVocabulary": "",
+          "ok": true
+        }
+      },
+      "chunks": 7,
+      "markers": [
+        "nzfm[_engines/react-aria/locale.client]",
+        "nzfm[_engines/react-aria/tabs.client]",
+        "nzfm[config/config.client]",
+        "nzfm[tabs/tabs.client]"
+      ],
+      "missing": [],
+      "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 7,
+        "bytes": 339438,
+        "gzip": 105434
+      },
+      "failures": []
+    },
+    "/tab-nav": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "tab-nav tab-nav-label tab-nav-link",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "tabNav": {
+          "links": "3",
+          "before": "All ordersAll orders",
+          "after": "ArchivedArchived",
+          "movedWithTheUrl": true,
+          "partsScanned": "tab-nav tab-nav-label tab-nav-link",
+          "partsOutsideVocabulary": "",
+          "ok": true
+        }
+      },
+      "chunks": 4,
+      "markers": [],
+      "missing": [],
+      "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 4,
+        "bytes": 226786,
+        "gzip": 70927
+      },
+      "failures": []
+    },
+    "/icons": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "icons": {
+          "svgs": "[{\"stroke\":\"1.92\",\"hidden\":\"true\",\"role\":\"\",\"label\":\"\",\"size\":20},{\"stroke\":\"1.92\",\"hidden\":\"true\",\"role\":\"\",\"label\":\"\",\"size\":20},{\"stroke\":\"1.92\",\"hidden\":\"\",\"role\":\"img\",\"label\":\"Search\",\"size\":20}]",
+          "ok": true
+        }
+      },
+      "chunks": 2,
+      "markers": [],
+      "missing": [],
+      "unexpected": [],
+      "icons": ["_internal/icon", "icons/bell", "icons/calendar", "icons/search"],
+      "axe": [],
+      "axeDark": [],
+      "js": {
+        "files": 2,
+        "bytes": 225543,
+        "gzip": 70261
+      },
+      "failures": []
+    }
+  }
+}
