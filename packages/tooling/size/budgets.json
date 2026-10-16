@@ -47,7 +47,7 @@
     },
     "@nizivo/react/dialog": {
       "measured": 31445,
-      "limitKiB": 31
+      "limitKiB": 32
     },
     "@nizivo/react/empty-state": {
       "measured": 840,
@@ -167,7 +167,7 @@
     },
     "@nizivo/react dashboard set": {
       "measured": 76735,
-      "limitKiB": 75
+      "limitKiB": 76
     },
     "@nizivo/react { Button } from the barrel": {
       "measured": 1232,
