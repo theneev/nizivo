@@ -7,7 +7,7 @@
   "interactive": ["alert-dismiss"],
   "focusTarget": "self",
   "stateIndicator": [],
-  "cssDeps": ["base"],
+  "cssDeps": ["base", "icon-button"],
   "variants": {
     "tone": ["info", "success", "warning", "critical"]
   },

@@ -20,10 +20,23 @@ export interface AlertDismissProps extends Omit<ComponentPropsWithRef<'button'>,
   labels?: Partial<AlertDismissLabels>;
   /** The close glyph, decorative. Defaults to the internal `close` glyph (Lucide's `x`). */
   children?: ReactNode;
-  /** Composition, for example an IconButton; it must render a `<button>`. */
+  /**
+   * Your element in place of the default IconButton; it must render a `<button>`. A plain element
+   * keeps its own look. An IconButton, for example
+   * `render={<IconButton icon={<X />} label="Dismiss" variant="tertiary" size="sm" />}` to add its
+   * tooltip, keeps its variant and size, and in an Alert takes the dismiss slot's placement (made for
+   * `sm`) and icon/secondary glyph colour, as a composed IconButton does in `Dialog.Close`.
+   */
   render?: RenderProp<Record<string, never>>;
 }
 
+/**
+ * With no `render`, an IconButton (tertiary, `sm`: the 16 px glyph Figma draws, in a 32 px target)
+ * with no tooltip, as `Dialog.Close` does (week 6): its markup is the IconButton element's
+ * (`iconButtonElement` in icon-button.tsx), written out, because importing that module brings in the
+ * IconButton's tooltip leaf and the Tooltip chain (D-aa), and this leaf must stay the Alert's only
+ * client module. A unit test compares the two.
+ */
 export function AlertDismiss({
   onDismiss,
   labels,
@@ -35,24 +48,28 @@ export function AlertDismiss({
   children,
   ...rest
 }: AlertDismissProps): ReactElement {
+  const own = render === undefined;
   return renderElement(
     'button',
     render,
     {},
     {
       'data-slot': 'alert-dismiss',
+      // Only the default is an IconButton. data-variant and data-size are part-owned (they would win
+      // over the element's), so under `render` a composed IconButton keeps its own.
+      ...(own && { 'data-variant': 'tertiary', 'data-size': 'sm' }),
       ...rest,
       // Only a real <button> may receive `type`.
-      type: render === undefined ? (type ?? 'button') : undefined,
+      type: own ? (type ?? 'button') : undefined,
       'aria-label': ariaLabel ?? labels?.dismiss ?? 'Dismiss',
-      className: cx('nz-alert-dismiss nz-hit-target', className),
+      className: cx('nz-alert-dismiss', own && 'nz-icon-button', 'nz-hit-target', className),
       // Consumer first; a prevented click does not dismiss.
       onClick: (event: MouseEvent<HTMLButtonElement>) => {
         onClick?.(event);
         if (!event.defaultPrevented) onDismiss?.();
       },
       children: (
-        <span className="nz-alert-dismiss-icon" data-slot="alert-dismiss-icon" aria-hidden="true">
+        <span className="nz-icon-button-icon" data-slot="icon-button-icon" aria-hidden="true">
           {children ?? <CloseGlyph />}
         </span>
       ),

@@ -6,9 +6,9 @@
     "nz-alert-content",
     "nz-alert-description",
     "nz-alert-dismiss",
-    "nz-alert-dismiss-icon",
     "nz-alert-icon",
-    "nz-alert-title"
+    "nz-alert-title",
+    "nz-icon-button"
   ],
   "component": "alert",
   "entry": "./css/alert.css",
@@ -84,8 +84,8 @@
       "reads": [
         {
           "conditions": [],
-          "property": "color",
-          "selector": ".nz-alert-dismiss",
+          "property": "--_nz-icon-button-fg",
+          "selector": ".nz-alert > .nz-icon-button.nz-alert-dismiss",
           "slot": "alert-dismiss"
         }
       ]
@@ -221,22 +221,18 @@
     "--nz-bg-info-subtle",
     "--nz-bg-success-subtle",
     "--nz-bg-warning-subtle",
-    "--nz-duration-fast",
-    "--nz-easing-standard",
     "--nz-font-body-m",
     "--nz-font-label-m-strong",
     "--nz-icon-critical",
     "--nz-icon-info",
-    "--nz-icon-primary",
     "--nz-icon-secondary",
     "--nz-icon-success",
     "--nz-icon-warning",
     "--nz-radius-lg",
-    "--nz-radius-sm",
+    "--nz-size-control-sm",
     "--nz-size-icon-md",
     "--nz-size-icon-sm",
     "--nz-space-0-5",
-    "--nz-space-1",
     "--nz-space-2",
     "--nz-space-3",
     "--nz-space-4",

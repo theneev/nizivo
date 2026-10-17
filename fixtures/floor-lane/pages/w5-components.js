@@ -172,16 +172,25 @@ function run() {
     const alert = $(`#alert-${dir}`);
     const a = box(alert);
     const icon = box($('.nz-alert-icon', alert));
-    const dismiss = box($('.nz-alert-dismiss', alert));
+    // The dismiss is a tertiary sm IconButton (M28): a 32 px box whose 16 px glyph sits at the
+    // padding edge, where Figma draws the close glyph
+    const glyph = box($('.nz-alert-dismiss .nz-icon-button-icon', alert));
     const pad = px(cs(alert).paddingInlineStart);
     size('alert', `icon-${dir}`, $('.nz-alert-icon svg', alert), iconMd, iconMd, 'svg is 1em');
-    size('alert', `dismiss-${dir}`, $('.nz-alert-dismiss', alert), iconSm + 8, iconSm + 8);
+    size('alert', `dismiss-${dir}`, $('.nz-alert-dismiss', alert), controlSm, controlSm);
+    size('alert', `dismiss-glyph-${dir}`, $('.nz-alert-dismiss svg', alert), iconSm, iconSm);
     if (dir === 'ltr') {
       distance('alert', 'icon-at-start-ltr', icon.left - a.left, pad);
-      distance('alert', 'dismiss-at-end-ltr', a.right - dismiss.right, pad);
+      distance('alert', 'dismiss-at-end-ltr', a.right - glyph.right, pad, 'the glyph');
     } else {
       distance('alert', 'icon-at-start-rtl', a.right - icon.right, pad, 'flex row mirrors');
-      distance('alert', 'dismiss-at-end-rtl', dismiss.left - a.left, pad, 'flex row mirrors');
+      distance(
+        'alert',
+        'dismiss-at-end-rtl',
+        glyph.left - a.left,
+        pad,
+        'the glyph; flex row mirrors',
+      );
     }
   }
 

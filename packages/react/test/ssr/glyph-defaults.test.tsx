@@ -25,7 +25,7 @@ describe('AlertDismiss', () => {
   test('the close mark defaults to Lucide x', () => {
     const html = renderToString(<AlertDismiss />);
     expect(html).toContain(
-      '<span class="nz-alert-dismiss-icon" data-slot="alert-dismiss-icon" aria-hidden="true"><svg class="nz-glyph nz-glyph-close"',
+      '<span class="nz-icon-button-icon" data-slot="icon-button-icon" aria-hidden="true"><svg class="nz-glyph nz-glyph-close"',
     );
     expect(html).toContain('<path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>');
     expect(html).toContain('aria-label="Dismiss"');

@@ -59,42 +59,23 @@
     margin-block-start: var(--nz-space-2);
   }
 
-  /* a 24 px target around Figma's 16 px glyph (WCAG 2.5.8); the negative block margin keeps the
-     row at the title's 20 px line */
+  /* The dismiss slot. The default AlertDismiss is a tertiary sm IconButton (icon-button.css draws
+     it). Its 32 px box overhangs 6 px on the block axis and 8 px on the inline axis, so the row keeps
+     its first line and the 16 px glyph sits where Figma draws it (icon/secondary, 12 px after the
+     text, at the padding edge). The block overhang is measured from --nz-size-icon-md on purpose:
+     that is the leading .nz-alert-icon's box, which sets the first line (the title's own line is
+     19.6 px and can be restyled), so both glyphs share one centre line; resizing the leading icon
+     moves both. As with Dialog.Close, an IconButton composed through `render` takes the same
+     placement and glyph colour, so compose `size="sm"`. */
   .nz-alert-dismiss {
-    display: inline-flex;
     flex: none;
-    align-items: center;
-    justify-content: center;
-    inline-size: calc(var(--nz-size-icon-sm) + 2 * var(--nz-space-1));
-    block-size: calc(var(--nz-size-icon-sm) + 2 * var(--nz-space-1));
-    margin-block: calc(-1 * var(--nz-space-0-5));
-    padding: 0;
-    border: 0;
-    border-radius: var(--nz-radius-sm);
-    background: transparent;
-    color: var(--nz-alert-dismiss-fg, var(--nz-icon-secondary));
-    cursor: pointer;
-    transition: color var(--nz-duration-fast) var(--nz-easing-standard);
-
-    @media (hover: hover) {
-      &:hover {
-        color: var(--nz-icon-primary);
-      }
-    }
   }
 
-  .nz-alert-dismiss-icon {
-    display: inline-flex;
-    inline-size: var(--nz-size-icon-sm);
-    block-size: var(--nz-size-icon-sm);
-    /* internal glyphs are 1em: size them to the slot */
-    font-size: var(--nz-size-icon-sm);
+  .nz-alert > .nz-icon-button.nz-alert-dismiss {
+    --_nz-icon-button-fg: var(--nz-alert-dismiss-fg, var(--nz-icon-secondary));
 
-    & > svg {
-      inline-size: 100%;
-      block-size: 100%;
-    }
+    margin-block: calc((var(--nz-size-icon-md) - var(--nz-size-control-sm)) / 2);
+    margin-inline: calc((var(--nz-size-icon-sm) - var(--nz-size-control-sm)) / 2);
   }
 
   .nz-alert[data-tone='success'] {

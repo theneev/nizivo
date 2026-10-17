@@ -5,6 +5,8 @@ import { graph, isClient, reactImports, REACT_SERVER, rekey } from '../helpers/g
 import { Alert } from '../../src/alert/alert';
 import { AlertDismiss } from '../../src/alert/alert-dismiss.client';
 import { AlertDismissibleExample, AlertExample } from '../../src/alert/alert.example';
+import { CloseGlyph } from '../../src/_internal/glyphs';
+import { IconButton } from '../../src/icon-button/icon-button';
 
 const SRC = rekey(
   import.meta.glob('../../src/**/*.{ts,tsx}', { query: '?raw', import: 'default', eager: true }),
@@ -62,8 +64,8 @@ describe('Alert markup', () => {
       '<div class="nz-alert-action" data-slot="alert-action"><button data-slot="button"',
     );
     expect(html).toContain(
-      '<button data-slot="alert-dismiss" type="button" aria-label="Dismiss" class="nz-alert-dismiss nz-hit-target">' +
-        '<span class="nz-alert-dismiss-icon" data-slot="alert-dismiss-icon" aria-hidden="true"><svg',
+      '<button data-slot="alert-dismiss" data-variant="tertiary" data-size="sm" type="button" aria-label="Dismiss" class="nz-alert-dismiss nz-icon-button nz-hit-target">' +
+        '<span class="nz-icon-button-icon" data-slot="icon-button-icon" aria-hidden="true"><svg',
     );
   });
 
@@ -134,6 +136,90 @@ describe('AlertDismiss', () => {
     );
     expect(html).toMatch(
       /^<button type="submit" class="nz-alert-dismiss nz-hit-target icon-button" aria-label="Close" data-slot="alert-dismiss">/,
+    );
+  });
+});
+
+/** The opening tag's attributes, as a sorted name=value list. */
+function attributes(html: string): string[] {
+  const tag = /^<button([^>]*)>/.exec(html)?.[1] ?? '';
+  return [...tag.matchAll(/ ([\w-]+)="([^"]*)"/g)]
+    .map(([, name, value]) => `${name}=${value}`)
+    .toSorted();
+}
+
+/** Everything inside the outer element. */
+function inner(html: string): string {
+  return html.slice(html.indexOf('>') + 1, html.lastIndexOf('</'));
+}
+
+describe('AlertDismiss is an IconButton (M28)', () => {
+  // What `<IconButton>` writes for the same button: the server path, as the default has no tooltip.
+  const iconButton = renderToString(
+    <IconButton
+      label="Dismiss"
+      icon={<CloseGlyph />}
+      variant="tertiary"
+      size="sm"
+      tooltip={false}
+    />,
+  );
+
+  test("the default is the IconButton element's markup, with the part's slot and class", () => {
+    const html = renderToString(<AlertDismiss />);
+    const expected = attributes(iconButton)
+      .filter((attribute) => attribute !== 'data-slot=icon-button')
+      .map((attribute) =>
+        attribute.startsWith('class=') ? `class=nz-alert-dismiss ${attribute.slice(6)}` : attribute,
+      )
+      .concat('data-slot=alert-dismiss')
+      .toSorted();
+    expect(attributes(html)).toEqual(expected);
+    expect(inner(html)).toBe(inner(iconButton));
+  });
+
+  test('no tooltip: no trigger wiring, no aria-describedby, no popup', () => {
+    const html = renderToString(
+      <Alert title="Payout sent" dismiss={<AlertDismiss />}>
+        It arrives in two days.
+      </Alert>,
+    );
+    expect(html).not.toMatch(/tooltip|aria-describedby/);
+  });
+
+  test('a disabled dismiss is a disabled native button, as an IconButton is', () => {
+    expect(attributes(renderToString(<AlertDismiss disabled />))).toContain('disabled=');
+  });
+
+  test('render: a composed IconButton keeps its own variant and size, and takes the part slot', () => {
+    const html = renderToString(
+      <AlertDismiss
+        render={
+          <IconButton
+            label="Hide"
+            icon={<CloseGlyph />}
+            variant="secondary"
+            size="md"
+            tooltip={false}
+          />
+        }
+      />,
+    );
+    expect(html).toMatch(
+      /^<button data-slot="alert-dismiss" data-variant="secondary" data-size="md"/,
+    );
+    expect(html).toContain('class="nz-icon-button nz-hit-target nz-alert-dismiss"');
+    // The composed element's own name wins, as for any `render` element.
+    expect(html).toContain('aria-label="Hide"');
+  });
+
+  test('render: a plain element gets no IconButton look', () => {
+    const html = renderToString(
+      <AlertDismiss render={<button className="mine" aria-label="Hide" />} />,
+    );
+    expect(html).not.toMatch(/data-variant|data-size|nz-icon-button"|nz-icon-button /);
+    expect(html).toMatch(
+      /^<button class="nz-alert-dismiss nz-hit-target mine" aria-label="Hide" data-slot="alert-dismiss">/,
     );
   });
 });

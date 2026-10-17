@@ -104,8 +104,8 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 | Entry              | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | ------------------ | -------: | ---------: | ---------: | ----------: | -----------: |
-| `.`                |   85,879 |       83.9 |     72,526 |          93 |        9,353 |
-| /alert             |    1,244 |        1.2 |      1,149 |         1.4 |          189 |
+| `.`                |   85,908 |       83.9 |     72,564 |          93 |        9,324 |
+| /alert             |    1,282 |        1.3 |      1,187 |         1.4 |          151 |
 | /augment           |        0 |        0.0 |          0 |           0 |            — |
 | /badge             |      796 |        0.8 |        727 |         0.9 |          125 |
 | /button            |    1,232 |        1.2 |      1,131 |         1.4 |          201 |
@@ -166,7 +166,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | own: _engines/react-aria/select.client          |    1,431 |        1.4 |      1,255 |         1.6 |          207 |
 | own: _engines/react-aria/tabs.client            |      769 |        0.8 |        702 |         0.9 |          152 |
 | own: _engines/react-aria/tooltip.client         |      719 |        0.7 |        680 |         0.8 |          100 |
-| own: alert/alert-dismiss.client                 |      354 |        0.3 |        300 |         0.4 |           55 |
+| own: alert/alert-dismiss.client                 |      394 |        0.4 |        346 |         0.4 |           15 |
 | own: checkbox/checkbox.client                   |      750 |        0.7 |        692 |         0.9 |          171 |
 | own: config/config.client                       |      197 |        0.2 |        179 |         0.3 |          110 |
 | own: dialog/dialog.client                       |    1,309 |        1.3 |      1,182 |         1.4 |          124 |
@@ -193,7 +193,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 | Entry                      | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | -------------------------- | -------: | ---------: | ---------: | ----------: | -----------: |
-| /css/alert.css             |      734 |        0.7 |        606 |         0.8 |           85 |
+| /css/alert.css             |      636 |        0.6 |        522 |         0.8 |          183 |
 | /css/badge.css             |      512 |        0.5 |        424 |         0.6 |          102 |
 | /css/base.css              |      997 |        1.0 |        833 |         1.1 |          129 |
 | /css/button.css            |    1,007 |        1.0 |        843 |         1.1 |          119 |
@@ -230,7 +230,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/text.css              |      574 |        0.6 |        487 |         0.7 |          142 |
 | /css/textarea.css          |      725 |        0.7 |        601 |         0.8 |           94 |
 | /css/tooltip.css           |      581 |        0.6 |        503 |         0.6 |           33 |
-| /styles.css                |   14,971 |       14.6 |     12,684 |          16 |        1,413 |
+| /styles.css                |   14,942 |       14.6 |     12,648 |          16 |        1,442 |
 
 #### `@nizivo/tokens`: Public JS entries (bundled with what they import, React Aria included)
 
