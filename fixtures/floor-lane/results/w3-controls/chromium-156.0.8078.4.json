@@ -2,7 +2,7 @@
   "engine": "chromium",
   "version": "156.0.8078.4",
   "driver": "Playwright 1.64.0 (emulated prefers-color-scheme), headless",
-  "runAt": "2026-10-14T19:08:15.389Z",
+  "runAt": "2026-10-16T20:39:44.716Z",
   "tokens": "packages/tokens/dist/tokens.css",
   "pages": {
     "w3-controls.light": {
@@ -29,6 +29,31 @@
         "textarea": 2,
         "input": 1,
         "native-select": 1
+      },
+      "observed": {
+        "setup | stylesheets": 10,
+        "checkbox | appearance-none": "none",
+        "checkbox | checked-fill": "rgb(26, 87, 58)",
+        "checkbox | indeterminate-fill": "rgb(26, 87, 58)",
+        "checkbox | indeterminate-glyph": {
+          "dash": "block",
+          "tick": "none"
+        },
+        "checkbox | 1lh-centring": 0.5,
+        "checkbox | is-has-disabled": "rgb(158, 165, 156)",
+        "switch | thumb-ltr": "16px",
+        "switch | thumb-rtl-dir": "-16px",
+        "switch | on-track": "rgb(26, 87, 58)",
+        "radio | checked-ring": "rgb(26, 87, 58)",
+        "segmented | has-checked-thumb": "rgb(255, 255, 255)",
+        "segmented | unchecked-clear": "rgba(0, 0, 0, 0)",
+        "segmented | has-disabled": "rgb(158, 165, 156)",
+        "segmented | focus-rule": "solid",
+        "segmented | fit-content": 0,
+        "textarea | rows": 84,
+        "textarea | field-sizing": 126,
+        "input | is-has-disabled": "rgb(238, 240, 236)",
+        "native-select | has-placeholder": "rgb(89, 96, 88)"
       }
     },
     "w3-controls.dark": {
@@ -55,6 +80,31 @@
         "textarea": 2,
         "input": 1,
         "native-select": 1
+      },
+      "observed": {
+        "setup | stylesheets": 10,
+        "checkbox | appearance-none": "none",
+        "checkbox | checked-fill": "rgb(26, 87, 58)",
+        "checkbox | indeterminate-fill": "rgb(26, 87, 58)",
+        "checkbox | indeterminate-glyph": {
+          "dash": "block",
+          "tick": "none"
+        },
+        "checkbox | 1lh-centring": 0.5,
+        "checkbox | is-has-disabled": "rgb(158, 165, 156)",
+        "switch | thumb-ltr": "16px",
+        "switch | thumb-rtl-dir": "-16px",
+        "switch | on-track": "rgb(26, 87, 58)",
+        "radio | checked-ring": "rgb(26, 87, 58)",
+        "segmented | has-checked-thumb": "rgb(255, 255, 255)",
+        "segmented | unchecked-clear": "rgba(0, 0, 0, 0)",
+        "segmented | has-disabled": "rgb(158, 165, 156)",
+        "segmented | focus-rule": "solid",
+        "segmented | fit-content": 0,
+        "textarea | rows": 84,
+        "textarea | field-sizing": 126,
+        "input | is-has-disabled": "rgb(238, 240, 236)",
+        "native-select | has-placeholder": "rgb(89, 96, 88)"
       }
     }
   }

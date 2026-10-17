@@ -422,7 +422,16 @@ function run() {
   );
   const lh = px(cs($('#ta-2')).lineHeight);
   const h2 = box($('#ta-2')).height;
-  distance('textarea', 'rows', box($('#ta-6')).height - h2, 4 * lh, null, 1);
+  // Mobile Safari 17.5 floors each row to a whole pixel: under a coarse pointer a row is Body/L's
+  // 25.6 px line and 4 rows measure 100 px, so each row may lose its fraction.
+  distance(
+    'textarea',
+    'rows',
+    box($('#ta-6')).height - h2,
+    4 * lh,
+    lh % 1 ? 'each row may round down to whole pixels' : null,
+    1 + 4 * (lh % 1),
+  );
   distance(
     'textarea',
     'field-sizing',
@@ -454,6 +463,52 @@ function run() {
       len('space-3') + iconSm + len('space-2'),
     );
   }
+
+  // ---------- Text fields under a coarse pointer (M25) ----------
+  // iOS Safari zooms into a focused field whose text is under 16 px, so under (pointer: coarse) the
+  // typed text of Input, Textarea, NativeSelect and the Select trigger is Body/L or Label/L (16 px);
+  // under a fine pointer it stays Body/M or Label/M. 16 is iOS's threshold, a literal, not a token.
+  const textSize = (style) => (meta.pointerCoarse ? 16 : fontSize(`font-${style}-font-size`));
+  const fieldText = [
+    ['input', 'text-md', $('#in-md'), 'body-m'],
+    ['input', 'text-sm', $('#in-sm'), 'body-m'],
+    ['input', 'affix', $('#s-inputs .nz-input-suffix'), 'body-m'],
+    ['textarea', 'text', $('#ta-2'), 'body-m'],
+    ['native-select', 'text', $('#ns-ltr'), 'label-m'],
+    ['select', 'trigger-text', $('#s-select .nz-select-trigger'), 'label-m'],
+    ['select', 'value-text', $('#s-select .nz-select-value'), 'label-m'],
+  ];
+  for (const [group, id, el, style] of fieldText) {
+    equal(
+      group,
+      id,
+      px(cs(el).fontSize),
+      textSize(style),
+      meta.pointerCoarse
+        ? `@media (pointer: coarse): ${style.replace('-m', '-l')}, iOS Safari does not zoom`
+        : `${style} (fine pointer)`,
+    );
+  }
+  // The placeholder only sets a colour and inherits the size. An engine that does not compute
+  // ::placeholder (an empty font-size) is recorded, not failed.
+  const placeholder = px(cs($('#field .nz-input-control'), '::placeholder').fontSize);
+  check(
+    'input',
+    'placeholder-text',
+    Number.isNaN(placeholder) ? null : placeholder === textSize('body-m'),
+    Number.isNaN(placeholder) ? 'not computed' : placeholder,
+    textSize('body-m'),
+    'inherited from the field',
+  );
+  // The control heights stay on the size scale under either pointer (the height checks above); a
+  // Textarea row is one line of the field's style, so it grows to Body/L's line under coarse.
+  distance(
+    'textarea',
+    'line',
+    px(cs($('#ta-2')).lineHeight),
+    lineOf(meta.pointerCoarse ? 'body-l' : 'body-m'),
+    meta.pointerCoarse ? 'body-l line under a coarse pointer' : 'body-m line',
+  );
 
   // ---------- Select: trigger (server) and the composed open popup ----------
   const selectTrigger = $('#s-select .nz-select-trigger');

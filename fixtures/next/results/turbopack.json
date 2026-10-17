@@ -17,8 +17,8 @@
       "osDark": {
         "frames": 90,
         "wrong": [],
-        "firstPaint": 24,
-        "firstContentfulPaint": 24,
+        "firstPaint": 20,
+        "firstContentfulPaint": 20,
         "firstTheme": "system",
         "lastTheme": "system",
         "pixel": "rgb(16, 19, 17)",
@@ -28,8 +28,8 @@
       "stored": {
         "frames": 90,
         "wrong": [],
-        "firstPaint": 24,
-        "firstContentfulPaint": 24,
+        "firstPaint": 20,
+        "firstContentfulPaint": 20,
         "firstTheme": "dark",
         "lastTheme": "dark",
         "pixel": "rgb(16, 19, 17)",
@@ -39,8 +39,8 @@
       "static": {
         "frames": 90,
         "wrong": [],
-        "firstPaint": 48,
-        "firstContentfulPaint": 48,
+        "firstPaint": 32,
+        "firstContentfulPaint": 32,
         "firstTheme": "dark",
         "lastTheme": "dark",
         "pixel": "rgb(16, 19, 17)",
@@ -61,11 +61,11 @@
       "late": {
         "frames": 90,
         "wrong": [
-          "8:light dark/rgb(246, 247, 244)",
-          "24:light dark/rgb(246, 247, 244)",
-          "41:light dark/rgb(246, 247, 244)",
-          "58:light dark/rgb(246, 247, 244)",
-          "74:light dark/rgb(246, 247, 244)"
+          "12:light dark/rgb(246, 247, 244)",
+          "28:light dark/rgb(246, 247, 244)",
+          "45:light dark/rgb(246, 247, 244)",
+          "62:light dark/rgb(246, 247, 244)",
+          "78:light dark/rgb(246, 247, 244)"
         ],
         "firstPaint": 28,
         "firstContentfulPaint": 28,
@@ -211,8 +211,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 13,
-        "bytes": 806761,
-        "gzip": 254031
+        "bytes": 806817,
+        "gzip": 254039
       },
       "failures": []
     },
@@ -283,8 +283,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 13,
-        "bytes": 806761,
-        "gzip": 254031
+        "bytes": 806817,
+        "gzip": 254039
       },
       "failures": []
     },
@@ -340,8 +340,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 12,
-        "bytes": 763200,
-        "gzip": 239742
+        "bytes": 763256,
+        "gzip": 239761
       },
       "failures": []
     },
@@ -444,8 +444,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 11,
-        "bytes": 754034,
-        "gzip": 236033
+        "bytes": 754062,
+        "gzip": 236041
       },
       "failures": []
     },
@@ -499,8 +499,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 9,
-        "bytes": 622161,
-        "gzip": 194251
+        "bytes": 622189,
+        "gzip": 194264
       },
       "failures": []
     },
@@ -822,8 +822,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 10,
-        "bytes": 624734,
-        "gzip": 195444
+        "bytes": 624762,
+        "gzip": 195456
       },
       "failures": []
     },
@@ -861,8 +861,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 10,
-        "bytes": 624734,
-        "gzip": 195444
+        "bytes": 624762,
+        "gzip": 195456
       },
       "failures": []
     },
@@ -960,8 +960,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 10,
-        "bytes": 690717,
-        "gzip": 213355
+        "bytes": 691027,
+        "gzip": 213451
       },
       "failures": []
     },

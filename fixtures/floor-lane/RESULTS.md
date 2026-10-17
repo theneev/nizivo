@@ -1,6 +1,6 @@
 # Browser floor lane: results
 
-Status: run on 2026-10-14 on macOS 27.0.1 (arm64), Node 24.16.0; Mobile Safari 17.5 added on 2026-10-15 (iOS 17.5 Simulator, see Week 4 below); every v0.1 component's CSS added on 2026-10-15 (see Week 5 below). This is the W1 floor lane from ARCHITECTURE.md §21.1 (exit criterion 6): the S1 nesting matrix, the halo/inverse probe and the `@starting-style` overlay entry, run on the floor browsers.
+Status: run on 2026-10-14 on macOS 27.0.1 (arm64), Node 24.16.0; Mobile Safari 17.5 added on 2026-10-15 (iOS 17.5 Simulator, see Week 4 below); every v0.1 component's CSS added on 2026-10-15 (see Week 5 below); the coarse-pointer text checks and `--touch` on 2026-10-17 (see Week 7 below). This is the W1 floor lane from ARCHITECTURE.md §21.1 (exit criterion 6): the S1 nesting matrix, the halo/inverse probe and the `@starting-style` overlay entry, run on the floor browsers.
 
 ## Verdict
 
@@ -191,7 +191,27 @@ Two related content-box effects were measured and asserted as the CSS is written
 
 (Both fixed after the review; see above.)
 
-Select's popup has no border outside forced colours, so it matches its trigger exactly. A grep of `src/*/*.css` for `min-block-size`, `min-inline-size` and `max-inline-size` in stylesheets that set no `box-sizing` finds these three, Select's popup rule (no border, so harmless) and rules whose value is `0` or `100%`.
+Select's popup has no border outside forced colours, so it matches its trigger exactly. A grep of `src/*/*.css` for `min-block-size`, `min-inline-size` and `max-inline-size` in stylesheets that set no `box-sizing` finds these three, Select's popup rule (no border, so harmless) and rules whose value is `0` or `100%`. Week 7 adds two: the bare `Dialog.Trigger` and `Tooltip.Trigger` minimum (`.nz-dialog-trigger.nz-hit-target` and `.nz-tooltip-trigger.nz-hit-target`, `min-inline-size` and `min-block-size: 1.5rem`). They need no `box-sizing` of their own: they match the bare trigger's `<button>`, which every engine's user-agent stylesheet already makes `border-box`, or a composed Button or IconButton, which sets `border-box` itself (Chromium 156, Firefox 157 and WebKit 27.2 report `border-box` and a 24 × 24 px box for a bare button under the rule, with no reset), so the border box is 24 px with or without a page reset.
+
+## Week 7: 16 px text fields under a coarse pointer (2026-10-17)
+
+The maintainer decided on 2026-10-16 that text fields use 16 px text under a coarse pointer, so iOS Safari does not zoom into them (ARCHITECTURE.md §23.3 M25). `w5-components.js` gains 9 checks per scheme (208 → 217 on `w5-components`, 276 → 285 per scheme over the three week 5 pages): Input at md and sm, its suffix affix and its placeholder (inside a Field), Textarea's text and line height, NativeSelect's text, and the Select trigger and value. Each expects Body/L or Label/L (16 px; Textarea's line is Body/L's 25.6 px) when `(pointer: coarse)` matches and Body/M or Label/M (14 px, a 21 px line) otherwise. The textarea `rows` checks here and in `w3-controls.js` now allow Mobile Safari's rounding: it lays each 25.6 px row as 25 px, so 4 rows are 100 px, not 102.4. The generated pages did not change (`gen-w5.ts --check`: up to date).
+
+Recorded with the commands of Week 5 (`--results fixtures/floor-lane/results/w5-components`, and `--pages w3-controls --results fixtures/floor-lane/results/w3-controls`), Firefox 129.0 from Mozilla's release archive (re-downloaded for week 7, same SHA-256), plus a `--touch` pass in Chromium and WebKit:
+
+| Run (both OS schemes; per scheme)                            | `w5-components` | `w5-paint` | `w5-grid` | `w3-controls` | Text fields                                       |
+| ------------------------------------------------------------ | --------------: | ---------: | --------: | ------------: | ------------------------------------------------- |
+| Firefox 129.0                                                |         217/217 |      29/29 |     39/39 |         20/20 | 14 px (fine pointer)                              |
+| Chromium 156.0.8078.4                                        |         217/217 |      29/29 |     39/39 |         20/20 | 14 px (fine pointer)                              |
+| WebKit 27.2                                                  |         217/217 |      29/29 |     39/39 |         20/20 | 14 px (fine pointer)                              |
+| Chromium 156.0.8078.4, `--touch` (`hasTouch` and `isMobile`) |         217/217 |      29/29 |     39/39 |         20/20 | 16 px; Textarea rows 102.38 px; 44 px hit area    |
+| WebKit 27.2, `--touch` (`hasTouch`)                          |         217/217 |      29/29 |     39/39 |         20/20 | 16 px; Textarea rows 102.38 px; 44 px hit area    |
+| Mobile Safari 17.5 (iOS 17.5 Simulator, coarse natively)     |         217/217 |      29/29 |     39/39 |         20/20 | 16 px, placeholder included; Textarea rows 100 px |
+
+- **The coarse branch is shown on Mobile Safari 17.5, the target**, and on Chromium and WebKit under touch emulation. Firefox 129 shows only that the fine-pointer render is unchanged: the runner drives it over BiDi with no touch emulation, so no Gecko engine has run the coarse branch (Firefox for Android is not on the floor lane).
+- On Mobile Safari 17.5 the RTL affix positions moved (`input | affixes-rtl`), because the affix text is now 16 px; the check asserts their order, not their offsets.
+- Controls keep their 32/40/48 px heights under a coarse pointer; only the Textarea grows (21 → 25.6 px a row).
+- The Simulator runs created and deleted their own device; `xcrun simctl list devices | grep nz-floor` is empty afterwards.
 
 ## Browsers
 
@@ -341,6 +361,7 @@ Zero-cost routes, checked 2026-10-14:
    - `--raw <dir>` writes every check; the committed `results/*.json` keep summaries, failures and notes only. They also leave out timing-only meta (`animationFramesIn300ms`, 19 or 20 from run to run), so a rerun differs only in `runAt`; the week 1 files predate this and still carry it.
    - `--serve [--port 8129] [--host 0.0.0.0]` only serves the pages, for a manual run in a browser no script can drive.
    - `--ios-sim` runs Mobile Safari on a throwaway iOS 17.5 Simulator device instead (Week 4); it needs Xcode and the iOS 17.5 runtime, nothing from npm.
+   - `--touch` (Chromium and WebKit only) emulates a touch screen (Playwright's `hasTouch`, and `isMobile` in Chromium), so `(pointer: coarse)` matches as on a phone; it writes `<engine>-<version>-touch.json` next to the fine-pointer results and never overwrites them (Week 7).
    - The exit code is 1 when any check fails, so Firefox 129 and 131 exit 1 today because of D1.
 4. The week 5 pages are generated: build `@nizivo/react` and `@nizivo/icons`, run `node fixtures/floor-lane/gen-w5.ts`, then pass `--pages w5-components,w5-paint,w5-grid --tokens packages/tokens/dist/tokens.css --react-css packages/react/dist/css` (commands in Week 5). `gen-w5.ts --check` says whether the committed pages match the built packages.
 5. How Firefox is driven: the runner writes a fresh profile with the prefs above and starts `firefox --headless --no-remote --profile <tmp> --remote-debugging-port=0`, then talks WebDriver BiDi over Node's built-in `WebSocket`, with no npm package and no geckodriver. It sets `HOME` and `CFFIXED_USER_HOME` to a temporary folder: on macOS, Firefox reads and writes `~/Library/Application Support/Firefox` even with `--profile` and hangs at startup when it cannot. That is also why spike S1d's Playwright Firefox never launched in a sandboxed session: launched plainly, it fails here too ("Failed to launch the browser process"), and with the same two variables passed through `firefox.launch({ env })` it starts (checked with Firefox 157.0). Its build was driven over BiDi in this lane so that every Firefox ran through the same code path.

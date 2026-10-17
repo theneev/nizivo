@@ -19,8 +19,8 @@
       "osDark": {
         "frames": 90,
         "wrong": [],
-        "firstPaint": 16,
-        "firstContentfulPaint": 356,
+        "firstPaint": 12,
+        "firstContentfulPaint": 344,
         "firstTheme": "system",
         "lastTheme": "system",
         "pixel": "rgb(16, 19, 17)",
@@ -31,7 +31,7 @@
         "frames": 90,
         "wrong": [],
         "firstPaint": 16,
-        "firstContentfulPaint": 356,
+        "firstContentfulPaint": 352,
         "firstTheme": "dark",
         "lastTheme": "dark",
         "pixel": "rgb(16, 19, 17)",
@@ -41,8 +41,8 @@
       "static": {
         "frames": 90,
         "wrong": [],
-        "firstPaint": 36,
-        "firstContentfulPaint": 372,
+        "firstPaint": 20,
+        "firstContentfulPaint": 352,
         "firstTheme": "dark",
         "lastTheme": "dark",
         "pixel": "rgb(16, 19, 17)",
@@ -53,7 +53,7 @@
         "frames": 90,
         "wrong": [],
         "firstPaint": 16,
-        "firstContentfulPaint": 356,
+        "firstContentfulPaint": 348,
         "firstTheme": "system",
         "lastTheme": "system",
         "pixel": "rgb(246, 247, 244)",
@@ -63,14 +63,14 @@
       "late": {
         "frames": 90,
         "wrong": [
-          "10:light dark/rgb(246, 247, 244)",
-          "26:light dark/rgb(246, 247, 244)",
-          "43:light dark/rgb(246, 247, 244)",
-          "60:light dark/rgb(246, 247, 244)",
-          "76:light dark/rgb(246, 247, 244)"
+          "11:light dark/rgb(246, 247, 244)",
+          "28:light dark/rgb(246, 247, 244)",
+          "44:light dark/rgb(246, 247, 244)",
+          "61:light dark/rgb(246, 247, 244)",
+          "78:light dark/rgb(246, 247, 244)"
         ],
-        "firstPaint": 24,
-        "firstContentfulPaint": 360,
+        "firstPaint": 20,
+        "firstContentfulPaint": 344,
         "firstTheme": "system",
         "lastTheme": "dark",
         "pixel": "rgb(16, 19, 17)",
@@ -99,13 +99,12 @@
       "osDark": {
         "frames": 90,
         "unstyled": [
-          "7:normal/rgba(0, 0, 0, 0)",
+          "8:normal/rgba(0, 0, 0, 0)",
           "24:normal/rgba(0, 0, 0, 0)",
-          "41:normal/rgba(0, 0, 0, 0)",
-          "57:normal/rgba(0, 0, 0, 0)"
+          "41:normal/rgba(0, 0, 0, 0)"
         ],
         "wrong": [],
-        "firstPaint": 104,
+        "firstPaint": 76,
         "firstContentfulPaint": null,
         "firstTheme": "system",
         "lastTheme": "system",
@@ -116,12 +115,12 @@
       "stored": {
         "frames": 90,
         "unstyled": [
-          "6:normal/rgba(0, 0, 0, 0)",
-          "23:normal/rgba(0, 0, 0, 0)",
-          "39:normal/rgba(0, 0, 0, 0)"
+          "5:normal/rgba(0, 0, 0, 0)",
+          "21:normal/rgba(0, 0, 0, 0)",
+          "38:normal/rgba(0, 0, 0, 0)"
         ],
         "wrong": [],
-        "firstPaint": 108,
+        "firstPaint": 72,
         "firstContentfulPaint": null,
         "firstTheme": "dark",
         "lastTheme": "dark",
@@ -132,13 +131,12 @@
       "static": {
         "frames": 90,
         "unstyled": [
-          "10:normal/rgba(0, 0, 0, 0)",
-          "27:normal/rgba(0, 0, 0, 0)",
-          "44:normal/rgba(0, 0, 0, 0)",
-          "60:normal/rgba(0, 0, 0, 0)"
+          "7:normal/rgba(0, 0, 0, 0)",
+          "24:normal/rgba(0, 0, 0, 0)",
+          "40:normal/rgba(0, 0, 0, 0)"
         ],
         "wrong": [],
-        "firstPaint": 112,
+        "firstPaint": 80,
         "firstContentfulPaint": null,
         "firstTheme": "dark",
         "lastTheme": "dark",
@@ -150,7 +148,7 @@
         "frames": 90,
         "unstyled": [],
         "wrong": [],
-        "firstPaint": 100,
+        "firstPaint": 80,
         "firstContentfulPaint": null,
         "firstTheme": "system",
         "lastTheme": "system",
@@ -163,11 +161,11 @@
         "wrong": [
           "9:normal/rgba(0, 0, 0, 0)",
           "26:normal/rgba(0, 0, 0, 0)",
-          "42:normal/rgba(0, 0, 0, 0)",
-          "59:normal/rgba(0, 0, 0, 0)",
+          "43:normal/rgba(0, 0, 0, 0)",
+          "59:light dark/rgb(246, 247, 244)",
           "76:light dark/rgb(246, 247, 244)"
         ],
-        "firstPaint": 108,
+        "firstPaint": 80,
         "firstContentfulPaint": null,
         "firstTheme": "system",
         "lastTheme": "dark",
@@ -214,7 +212,7 @@
       "js": {
         "files": 2,
         "bytes": 224669,
-        "gzip": 69921
+        "gzip": 69932
       },
       "failures": []
     },
@@ -240,7 +238,7 @@
       "js": {
         "files": 5,
         "bytes": 227857,
-        "gzip": 71435
+        "gzip": 71443
       },
       "failures": []
     },
@@ -266,7 +264,7 @@
       "js": {
         "files": 5,
         "bytes": 227858,
-        "gzip": 71437
+        "gzip": 71445
       },
       "failures": []
     },
@@ -296,7 +294,7 @@
       "js": {
         "files": 11,
         "bytes": 242849,
-        "gzip": 76981
+        "gzip": 76983
       },
       "failures": []
     },
@@ -328,7 +326,7 @@
       "js": {
         "files": 6,
         "bytes": 228713,
-        "gzip": 71949
+        "gzip": 71952
       },
       "failures": []
     },
@@ -399,8 +397,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 14,
-        "bytes": 455105,
-        "gzip": 146422
+        "bytes": 455171,
+        "gzip": 146479
       },
       "failures": []
     },
@@ -445,8 +443,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 12,
-        "bytes": 435661,
-        "gzip": 139605
+        "bytes": 435671,
+        "gzip": 139650
       },
       "failures": []
     },
@@ -500,7 +498,7 @@
       "js": {
         "files": 11,
         "bytes": 247871,
-        "gzip": 78283
+        "gzip": 78288
       },
       "failures": []
     },
@@ -552,8 +550,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 10,
-        "bytes": 401437,
-        "gzip": 127728
+        "bytes": 401447,
+        "gzip": 127763
       },
       "failures": []
     },
@@ -598,8 +596,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 7,
-        "bytes": 339478,
-        "gzip": 105451
+        "bytes": 339787,
+        "gzip": 105569
       },
       "failures": []
     },
@@ -634,7 +632,7 @@
       "js": {
         "files": 4,
         "bytes": 226826,
-        "gzip": 70941
+        "gzip": 70950
       },
       "failures": []
     },
@@ -665,7 +663,7 @@
       "js": {
         "files": 2,
         "bytes": 225583,
-        "gzip": 70277
+        "gzip": 70285
       },
       "failures": []
     }

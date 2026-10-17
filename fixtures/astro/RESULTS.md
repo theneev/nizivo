@@ -60,10 +60,10 @@ The same as the Next fixture (`fixtures/next/RESULTS.md`, "Checks"), on Astro's 
 | `/tab-nav`       | 0         | 0             | 0                        | **zero JavaScript**                                                                     |
 | `/icons-server`  | 0         | 0             | 0                        | **zero JavaScript**, no icon module                                                     |
 | `/alert-dismiss` | 8         | 71,979        | 1                        | only `alert/alert-dismiss.client`                                                       |
-| `/overlays`      | 15        | 145,657       | 11                       |                                                                                         |
+| `/overlays`      | 15        | 145,663       | 11                       |                                                                                         |
 | `/forms`         | 14        | 78,848        | 7                        |                                                                                         |
-| `/menu`          | 13        | 128,200       | 6                        |                                                                                         |
-| `/tabs`          | 11        | 106,080       | 4                        | hydrates after the runner scrolls it into view                                          |
+| `/menu`          | 13        | 128,201       | 6                        |                                                                                         |
+| `/tabs`          | 11        | 106,190       | 4                        | hydrates after the runner scrolls it into view                                          |
 | `/icons-client`  | 6         | 70,757        | 0                        | exactly the three icons and `_internal/icon`                                            |
 | `/two-islands`   | 11        | 74,832        | 2                        | `field/field-scope.client` and `input/input.client`; the two islands share their chunks |
 
@@ -84,7 +84,7 @@ What the fixture confirms from §11.1:
 
 ### axe
 
-axe-core 4.14.0 on every page after its islands hydrate (on `/menu`, once the `defaultOpen` menu has mounted), WCAG 2.0–2.2 A and AA, in light: **0 violations on all 12 pages.** The overlays island spaces its bare Dialog and Tooltip triggers in a `Stack`, as in the other two fixtures (see `fixtures/vite/RESULTS.md`, "axe").
+axe-core 4.14.0 on every page after its islands hydrate (on `/menu`, once the `defaultOpen` menu has mounted), WCAG 2.0–2.2 A and AA, in light: **0 violations on all 12 pages.** The overlays island spaces its bare Dialog and Tooltip triggers in a `Stack`, as in the other two fixtures (see `fixtures/vite/RESULTS.md`, "axe"); since week 7 (M27) those bare triggers also have a 24 × 24 px minimum of their own.
 
 **After the week 5 review** (same day): axe also runs with every interaction-opened popup open (the Select listbox, the Dialog, the Tooltip; once its fade has finished) and, on a `defaultOpen` page, again once the overlay has closed, so the page under a modal (the closed Menu trigger included) is checked too; both block. It runs once more with the OS in dark mode (`data-nz-theme="system"` switches in place; the run waits for the colour transitions) and records `axeDark` per page: reported, never a failure (exit criterion 4). **0 violations in every state, light and dark, on every page.** A build that prints any warning or error line now fails the run (it was only recorded), and the run writes its results to a temporary folder unless given `--record`, so a lane run leaves the tree clean. The deliberate breaks that prove both are in `fixtures/vite/RESULTS.md`, "axe".
 

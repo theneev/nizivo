@@ -2,7 +2,7 @@
   "engine": "mobile-safari",
   "version": "17.5",
   "driver": "xcrun simctl openurl on iPhone 15, iOS 17.5 (21F79) Simulator; the page posts its result back; simctl io screenshot",
-  "runAt": "2026-10-15T14:37:24.581Z",
+  "runAt": "2026-10-16T20:40:00.308Z",
   "tokens": "packages/tokens/dist/tokens.css",
   "pages": {
     "w5-components.light": {
@@ -37,7 +37,7 @@
         "scaleEnter": "0.96"
       },
       "summary": {
-        "pass": 208,
+        "pass": 217,
         "fail": 0,
         "info": 0
       },
@@ -68,10 +68,10 @@
         "checkbox": 4,
         "switch": 10,
         "segmented": 10,
-        "input": 5,
-        "textarea": 2,
-        "native-select": 8,
-        "select": 17,
+        "input": 9,
+        "textarea": 4,
+        "native-select": 9,
+        "select": 19,
         "menu": 18,
         "tooltip": 4,
         "dialog": 9,
@@ -202,10 +202,10 @@
         "input | height-lg": 48,
         "input | icon-1em": "16 x 16",
         "input | affixes-rtl": {
-          "prefix": 314.33,
-          "suffix": 109.47
+          "prefix": 313.23,
+          "suffix": 84.5
         },
-        "textarea | rows": 84,
+        "textarea | rows": 100,
         "textarea | field-sizing": 0,
         "native-select | height-ltr": 40,
         "native-select | chevron-ltr": "16 x 16",
@@ -215,6 +215,15 @@
         "native-select | chevron-rtl": "16 x 16",
         "native-select | chevron-at-end-rtl": 13,
         "native-select | end-padding-rtl": 36,
+        "input | text-md": 16,
+        "input | text-sm": 16,
+        "input | affix": 16,
+        "textarea | text": 16,
+        "native-select | text": 16,
+        "select | trigger-text": 16,
+        "select | value-text": 16,
+        "input | placeholder-text": 16,
+        "textarea | line": 25.6,
         "select | trigger-height": 40,
         "select | chevron": "16 x 16",
         "select | popup-trigger-width": 240,
@@ -512,7 +521,7 @@
         "scaleEnter": "0.96"
       },
       "summary": {
-        "pass": 208,
+        "pass": 217,
         "fail": 0,
         "info": 0
       },
@@ -543,10 +552,10 @@
         "checkbox": 4,
         "switch": 10,
         "segmented": 10,
-        "input": 5,
-        "textarea": 2,
-        "native-select": 8,
-        "select": 17,
+        "input": 9,
+        "textarea": 4,
+        "native-select": 9,
+        "select": 19,
         "menu": 18,
         "tooltip": 4,
         "dialog": 9,
@@ -677,10 +686,10 @@
         "input | height-lg": 48,
         "input | icon-1em": "16 x 16",
         "input | affixes-rtl": {
-          "prefix": 314.33,
-          "suffix": 109.47
+          "prefix": 313.23,
+          "suffix": 84.5
         },
-        "textarea | rows": 84,
+        "textarea | rows": 100,
         "textarea | field-sizing": 0,
         "native-select | height-ltr": 40,
         "native-select | chevron-ltr": "16 x 16",
@@ -690,6 +699,15 @@
         "native-select | chevron-rtl": "16 x 16",
         "native-select | chevron-at-end-rtl": 13,
         "native-select | end-padding-rtl": 36,
+        "input | text-md": 16,
+        "input | text-sm": 16,
+        "input | affix": 16,
+        "textarea | text": 16,
+        "native-select | text": 16,
+        "select | trigger-text": 16,
+        "select | value-text": 16,
+        "input | placeholder-text": 16,
+        "textarea | line": 25.6,
         "select | trigger-height": 40,
         "select | chevron": "16 x 16",
         "select | popup-trigger-width": 240,

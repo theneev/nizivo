@@ -14,6 +14,8 @@
 //            --react-css <dir> serves a built packages/react/dist/css under react-css/ (w3-controls and
 //            the w5-* pages, which gen-w5.ts renders from the built packages)
 //            --pages <names> runs only these pages (comma-separated keys of `pages` below)
+//            --touch emulates a touch screen in Chromium and WebKit (Playwright's hasTouch, and isMobile
+//            in Chromium), so (pointer: coarse) matches as on a phone; writes <engine>-<version>-touch.json
 //   node fixtures/floor-lane/run.ts --ios-sim [--ios-runtime <id>] [--ios-device-type <name>]
 //            Mobile Safari on the iOS Simulator (Xcode's xcrun simctl): creates and boots a throwaway
 //            device on the runtime (default iOS 17.5), sets its appearance per OS scheme, opens every page
@@ -413,6 +415,8 @@ interface PwBrowser {
   newContext(options: {
     colorScheme: Scheme;
     reducedMotion: 'no-preference';
+    hasTouch?: boolean;
+    isMobile?: boolean;
   }): Promise<{ newPage(): Promise<PwPage> }>;
   close(): Promise<void>;
 }
@@ -434,13 +438,25 @@ function loadPlaywright(): Playwright {
   throw new Error('playwright did not load (run `pnpm install` at the repo root)');
 }
 
-async function launchPlaywright(name: 'chromium' | 'webkit', scheme: Scheme): Promise<Session> {
+async function launchPlaywright(
+  name: 'chromium' | 'webkit',
+  scheme: Scheme,
+  touch: boolean,
+): Promise<Session> {
   const browser = await loadPlaywright()[name].launch();
-  const context = await browser.newContext({ colorScheme: scheme, reducedMotion: 'no-preference' });
+  // WebKit takes no isMobile; hasTouch alone makes (pointer: coarse) match in both engines.
+  const emulation = touch ? { hasTouch: true, ...(name === 'chromium' && { isMobile: true }) } : {};
+  const context = await browser.newContext({
+    colorScheme: scheme,
+    reducedMotion: 'no-preference',
+    ...emulation,
+  });
   const page = await context.newPage();
   return {
     version: browser.version(),
-    driver: 'Playwright 1.64.0 (emulated prefers-color-scheme), headless',
+    driver: `Playwright 1.64.0 (emulated prefers-color-scheme${
+      touch ? `, touch: ${Object.keys(emulation).join(' and ')}` : ''
+    }), headless`,
     read: async (url) => {
       await page.goto(url);
       return parseResult(text(await page.evaluate(readResult), 'page result'));
@@ -695,6 +711,7 @@ const { values } = parseArgs({
     'react-css': { type: 'string' },
     pages: { type: 'string' },
     'ios-sim': { type: 'boolean', default: false },
+    touch: { type: 'boolean', default: false },
     'ios-runtime': { type: 'string', default: 'com.apple.CoreSimulator.SimRuntime.iOS-17-5' },
     'ios-device-type': { type: 'string', default: 'iPhone 15' },
     port: { type: 'string', default: '0' },
@@ -729,7 +746,9 @@ async function inSequence<T>(items: readonly T[], step: (item: T) => Promise<voi
 }
 
 function launch(engine: string, scheme: Scheme): Promise<Session> {
-  if (engine === 'chromium' || engine === 'webkit') return launchPlaywright(engine, scheme);
+  if (engine === 'chromium' || engine === 'webkit')
+    return launchPlaywright(engine, scheme, values.touch);
+  if (values.touch) throw new Error(`--touch: ${engine} has no touch emulation here`);
   if (engine === 'mobile-safari') return launchIosSim(scheme);
   if (engine !== 'firefox') throw new Error(`unknown engine ${engine}`);
   if (!firefoxPath)
@@ -783,13 +802,12 @@ async function runEngine(engine: string, origin: string): Promise<boolean> {
     }
   });
   mkdirSync(outDir, { recursive: true });
-  writeResults(join(outDir, `${engine}-${run.version}.json`), run);
+  // a touch run never overwrites the engine's own (fine-pointer) results
+  const name = `${engine}-${run.version}${values.touch ? '-touch' : ''}.json`;
+  writeResults(join(outDir, name), run);
   if (rawDir) {
     mkdirSync(rawDir, { recursive: true });
-    writeFileSync(
-      join(rawDir, `${engine}-${run.version}.json`),
-      `${JSON.stringify(raw, null, 2)}\n`,
-    );
+    writeFileSync(join(rawDir, name), `${JSON.stringify(raw, null, 2)}\n`);
   }
   return failed;
 }

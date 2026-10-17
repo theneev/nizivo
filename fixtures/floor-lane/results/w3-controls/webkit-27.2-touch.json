@@ -1,0 +1,111 @@
+{
+  "engine": "webkit",
+  "version": "27.2",
+  "driver": "Playwright 1.64.0 (emulated prefers-color-scheme, touch: hasTouch), headless",
+  "runAt": "2026-10-16T20:39:53.668Z",
+  "tokens": "packages/tokens/dist/tokens.css",
+  "pages": {
+    "w3-controls.light": {
+      "page": "w3-controls",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Safari/605.1.15",
+      "osScheme": "light",
+      "reducedMotion": false,
+      "meta": {
+        "fieldSizing": true,
+        "hasSelector": true
+      },
+      "summary": {
+        "pass": 20,
+        "fail": 0,
+        "info": 0
+      },
+      "notPassed": [],
+      "passedByGroup": {
+        "setup": 1,
+        "checkbox": 6,
+        "switch": 3,
+        "radio": 1,
+        "segmented": 5,
+        "textarea": 2,
+        "input": 1,
+        "native-select": 1
+      },
+      "observed": {
+        "setup | stylesheets": 10,
+        "checkbox | appearance-none": "none",
+        "checkbox | checked-fill": "rgb(26, 87, 58)",
+        "checkbox | indeterminate-fill": "rgb(26, 87, 58)",
+        "checkbox | indeterminate-glyph": {
+          "dash": "block",
+          "tick": "none"
+        },
+        "checkbox | 1lh-centring": 0.5,
+        "checkbox | is-has-disabled": "rgb(158, 165, 156)",
+        "switch | thumb-ltr": "16px",
+        "switch | thumb-rtl-dir": "-16px",
+        "switch | on-track": "rgb(26, 87, 58)",
+        "radio | checked-ring": "rgb(26, 87, 58)",
+        "segmented | has-checked-thumb": "rgb(255, 255, 255)",
+        "segmented | unchecked-clear": "rgba(0, 0, 0, 0)",
+        "segmented | has-disabled": "rgb(158, 165, 156)",
+        "segmented | focus-rule": "solid",
+        "segmented | fit-content": 0,
+        "textarea | rows": 102.375,
+        "textarea | field-sizing": 153.5625,
+        "input | is-has-disabled": "rgb(238, 240, 236)",
+        "native-select | has-placeholder": "rgb(89, 96, 88)"
+      }
+    },
+    "w3-controls.dark": {
+      "page": "w3-controls",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Safari/605.1.15",
+      "osScheme": "dark",
+      "reducedMotion": false,
+      "meta": {
+        "fieldSizing": true,
+        "hasSelector": true
+      },
+      "summary": {
+        "pass": 20,
+        "fail": 0,
+        "info": 0
+      },
+      "notPassed": [],
+      "passedByGroup": {
+        "setup": 1,
+        "checkbox": 6,
+        "switch": 3,
+        "radio": 1,
+        "segmented": 5,
+        "textarea": 2,
+        "input": 1,
+        "native-select": 1
+      },
+      "observed": {
+        "setup | stylesheets": 10,
+        "checkbox | appearance-none": "none",
+        "checkbox | checked-fill": "rgb(26, 87, 58)",
+        "checkbox | indeterminate-fill": "rgb(26, 87, 58)",
+        "checkbox | indeterminate-glyph": {
+          "dash": "block",
+          "tick": "none"
+        },
+        "checkbox | 1lh-centring": 0.5,
+        "checkbox | is-has-disabled": "rgb(158, 165, 156)",
+        "switch | thumb-ltr": "16px",
+        "switch | thumb-rtl-dir": "-16px",
+        "switch | on-track": "rgb(26, 87, 58)",
+        "radio | checked-ring": "rgb(26, 87, 58)",
+        "segmented | has-checked-thumb": "rgb(255, 255, 255)",
+        "segmented | unchecked-clear": "rgba(0, 0, 0, 0)",
+        "segmented | has-disabled": "rgb(158, 165, 156)",
+        "segmented | focus-rule": "solid",
+        "segmented | fit-content": 0,
+        "textarea | rows": 102.375,
+        "textarea | field-sizing": 153.5625,
+        "input | is-has-disabled": "rgb(238, 240, 236)",
+        "native-select | has-placeholder": "rgb(89, 96, 88)"
+      }
+    }
+  }
+}

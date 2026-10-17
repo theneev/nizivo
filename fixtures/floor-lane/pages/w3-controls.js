@@ -173,7 +173,16 @@ function run() {
   const h2 = $('#ta-2').getBoundingClientRect().height;
   const h6 = $('#ta-6').getBoundingClientRect().height;
   const full = $('#ta-full').getBoundingClientRect().height;
-  check('textarea', 'rows', near(h6 - h2, 4 * lh, 1), h6 - h2, 4 * lh);
+  // Mobile Safari 17.5 floors each row to a whole pixel: under a coarse pointer (M25) a row is
+  // Body/L's 25.6 px line and 4 rows measure 100 px, so each row may lose its fraction.
+  check(
+    'textarea',
+    'rows',
+    near(h6 - h2, 4 * lh, 1 + 4 * (lh % 1)),
+    h6 - h2,
+    4 * lh,
+    lh % 1 ? 'each row may round down to whole pixels' : null,
+  );
   check(
     'textarea',
     'field-sizing',

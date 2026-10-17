@@ -51,18 +51,18 @@ The same as the Next fixture (`fixtures/next/RESULTS.md`, "Checks"): console mes
 
 | Page              | JS chunks | gzip -9 bytes | Client modules (markers) | Notes                                                                    |
 | ----------------- | --------- | ------------- | ------------------------ | ------------------------------------------------------------------------ |
-| `/`               | 2         | 69,921        | 0                        | the shell: React DOM, the router, the lazy-chunk map                     |
-| `/button-only`    | 5         | 71,435        | 0                        | **the barrel costs nothing**: within a few bytes of the subpath page     |
-| `/button-subpath` | 5         | 71,437        | 0                        |                                                                          |
-| `/t0-barrel`      | 11        | 76,981        | 0                        | 21 names through the barrel, no client module                            |
-| `/alert-dismiss`  | 6         | 71,949        | 1                        | only `alert/alert-dismiss.client`                                        |
-| `/overlays`       | 14        | 146,422       | 11                       | Select, Dialog, Tooltip and their adapters                               |
-| `/barrel-select`  | 12        | 139,605       | 7                        | only what Select reaches, through the barrel (no Dialog, Tooltip, Menu…) |
-| `/forms`          | 11        | 78,283        | 7                        |                                                                          |
-| `/menu`           | 10        | 127,728       | 6                        |                                                                          |
-| `/tabs`           | 7         | 105,451       | 4                        |                                                                          |
-| `/tab-nav`        | 4         | 70,941        | 0                        | TabNav is server-safe                                                    |
-| `/icons`          | 2         | 70,277        | 0                        | exactly `icons/bell`, `icons/calendar`, `icons/search`, `_internal/icon` |
+| `/`               | 2         | 69,932        | 0                        | the shell: React DOM, the router, the lazy-chunk map                     |
+| `/button-only`    | 5         | 71,443        | 0                        | **the barrel costs nothing**: within a few bytes of the subpath page     |
+| `/button-subpath` | 5         | 71,445        | 0                        |                                                                          |
+| `/t0-barrel`      | 11        | 76,983        | 0                        | 21 names through the barrel, no client module                            |
+| `/alert-dismiss`  | 6         | 71,952        | 1                        | only `alert/alert-dismiss.client`                                        |
+| `/overlays`       | 14        | 146,479       | 11                       | Select, Dialog, Tooltip and their adapters                               |
+| `/barrel-select`  | 12        | 139,650       | 7                        | only what Select reaches, through the barrel (no Dialog, Tooltip, Menu…) |
+| `/forms`          | 11        | 78,288        | 7                        |                                                                          |
+| `/menu`           | 10        | 127,763       | 6                        |                                                                          |
+| `/tabs`           | 7         | 105,569       | 4                        |                                                                          |
+| `/tab-nav`        | 4         | 70,950        | 0                        | TabNav is server-safe                                                    |
+| `/icons`          | 2         | 70,285        | 0                        | exactly `icons/bell`, `icons/calendar`, `icons/search`, `_internal/icon` |
 
 Bytes are every chunk the page loads, the shell included; subtract `/` for the page's own cost (for example Select alone through the barrel: 66.6 KB gzip, its React Aria engine included; the Tabs page 35.5 KB; Button 1.5 KB). The per-page detail is in `results/build.json`.
 
@@ -101,7 +101,7 @@ axe-core 4.14.0 (the catalog pin, injected as source) runs on every page after i
 
 **Week 6** (recorded with `--record` on a fresh pack): axe also runs on every page's first render in Chromium's emulated forced colours (`axeForcedColors`) and with reduced motion (`axeReducedMotion`), both blocking: **0 violations in both**. For the forced-colours run only, each element without an inline text fill gets `-webkit-text-fill-color` equal to its computed colour, then the fills are removed: Chromium reports the unforced author colour for the text fill and axe reads it, so before the workaround an inverse Card body was flagged at 1.07:1 although it paints in `CanvasText` (a scratch control showed a real opt-out failure is still caught). The `stored` theme case now tests `ThemeScript`'s theme half: the fixture's own stored-choice script is gone. **The dev server** (`vite`, not preview; `devThemeFlash` in `results/build.json`): with a dark theme (OS dark, a stored choice or the attribute) 3 frames paint before any stylesheet exists (`color-scheme: normal`, a transparent body), because the dev server injects the CSS from JavaScript. They are reported, not failed; every styled frame is right, light has none, the late control is caught and 68 of 68 `light-dark()` values are kept. A production build has none.
 
-The first run found one: `target-size` (WCAG 2.2 2.5.8) on `/overlays`. A bare `<Dialog.Trigger>` or `<Tooltip.Trigger>` (no `render`) is an unstyled native button, 21 px tall, and the two sat side by side with no spacing. The page now lays them out in a `Stack` (`gap="4"`), which meets the spacing exception; the Next fixture's `/namespace` and `/flat` had the same layout and the same fix. The library question (should a bare trigger have a minimum target size, or should docs always compose a `Button`?) is open for the design and accessibility owners.
+The first run found one: `target-size` (WCAG 2.2 2.5.8) on `/overlays`. A bare `<Dialog.Trigger>` or `<Tooltip.Trigger>` (no `render`) is an unstyled native button, 21 px tall, and the two sat side by side with no spacing. The page now lays them out in a `Stack` (`gap="4"`), which meets the spacing exception; the Next fixture's `/namespace` and `/flat` had the same layout and the same fix. The library question (should a bare trigger have a minimum target size, or should docs always compose a `Button`?) was open for the design and accessibility owners. **Week 7 (M27, 2026-10-16):** a bare trigger now has a 24 × 24 px minimum of its own (and `nz-hit-target` for the 44 px coarse-pointer hit area), so the triggers here are at least 24 px tall, not 21 (from the CSS; this fixture does not measure them); composing a `Button` is still the recommended look. The `Stack` spacing is no longer needed and stays.
 
 ## How to rerun
 

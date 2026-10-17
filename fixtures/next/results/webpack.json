@@ -28,8 +28,8 @@
       "stored": {
         "frames": 90,
         "wrong": [],
-        "firstPaint": 20,
-        "firstContentfulPaint": 20,
+        "firstPaint": 24,
+        "firstContentfulPaint": 24,
         "firstTheme": "dark",
         "lastTheme": "dark",
         "pixel": "rgb(16, 19, 17)",
@@ -39,8 +39,8 @@
       "static": {
         "frames": 90,
         "wrong": [],
-        "firstPaint": 32,
-        "firstContentfulPaint": 32,
+        "firstPaint": 28,
+        "firstContentfulPaint": 28,
         "firstTheme": "dark",
         "lastTheme": "dark",
         "pixel": "rgb(16, 19, 17)",
@@ -61,14 +61,14 @@
       "late": {
         "frames": 90,
         "wrong": [
-          "8:light dark/rgb(246, 247, 244)",
-          "24:light dark/rgb(246, 247, 244)",
-          "41:light dark/rgb(246, 247, 244)",
-          "58:light dark/rgb(246, 247, 244)",
-          "74:light dark/rgb(246, 247, 244)"
+          "9:light dark/rgb(246, 247, 244)",
+          "26:light dark/rgb(246, 247, 244)",
+          "42:light dark/rgb(246, 247, 244)",
+          "59:light dark/rgb(246, 247, 244)",
+          "76:light dark/rgb(246, 247, 244)"
         ],
-        "firstPaint": 24,
-        "firstContentfulPaint": 24,
+        "firstPaint": 28,
+        "firstContentfulPaint": 28,
         "firstTheme": "system",
         "lastTheme": "dark",
         "pixel": "rgb(16, 19, 17)",
@@ -211,8 +211,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 13,
-        "bytes": 799660,
-        "gzip": 251968
+        "bytes": 799716,
+        "gzip": 251988
       },
       "failures": []
     },
@@ -283,8 +283,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 13,
-        "bytes": 799660,
-        "gzip": 251968
+        "bytes": 799716,
+        "gzip": 251988
       },
       "failures": []
     },
@@ -340,8 +340,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 12,
-        "bytes": 756181,
-        "gzip": 237423
+        "bytes": 756237,
+        "gzip": 237443
       },
       "failures": []
     },
@@ -419,8 +419,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 16,
-        "bytes": 830169,
-        "gzip": 261677
+        "bytes": 830537,
+        "gzip": 261792
       },
       "failures": []
     },
@@ -477,8 +477,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 11,
-        "bytes": 747152,
-        "gzip": 233645
+        "bytes": 747180,
+        "gzip": 233653
       },
       "failures": []
     },
@@ -532,8 +532,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 9,
-        "bytes": 616725,
-        "gzip": 192210
+        "bytes": 616753,
+        "gzip": 192222
       },
       "failures": []
     },
@@ -887,8 +887,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 9,
-        "bytes": 619212,
-        "gzip": 193316
+        "bytes": 619240,
+        "gzip": 193328
       },
       "failures": []
     },
@@ -986,8 +986,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 9,
-        "bytes": 683041,
-        "gzip": 210251
+        "bytes": 683353,
+        "gzip": 210346
       },
       "failures": []
     },
