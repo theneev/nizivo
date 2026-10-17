@@ -1,7 +1,9 @@
 // Tabs (ARCHITECTURE.md §9.2, §9.5; figma/13 §4.4): WAI-ARIA tabs on the React Aria engine. Module
 // graph, RSC boundary and server markup: the selected panel is in the HTML, engine attributes are
 // not. Keyboard, RTL and hydration run in a browser: test/browser/tabs.spec.tsx.
+import type { JSX } from 'react';
 import { renderToString } from 'react-dom/server';
+import { useLocale } from 'react-aria-components';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import vocabulary from '../../../../contracts/vocabulary.json' with { type: 'json' };
 import allowlist from '../../src/_engines/react-aria/dom-allowlist.json' with { type: 'json' };
@@ -275,5 +277,223 @@ describe('markup', () => {
     );
     expect(rtl).toContain('role="tablist"');
     expect(errors).not.toHaveBeenCalled();
+  });
+});
+
+/** The locale and direction React Aria gives the content it is placed in. */
+function Probe(): JSX.Element {
+  const { locale, direction } = useLocale();
+  return <output data-locale={locale}>{direction}</output>;
+}
+
+/**
+ * A tab element that reports what the tab list resolved: its locale and the direction the arrows
+ * follow. It renders inside the list's direction carrier, around the tab's content.
+ */
+function CarrierTab(props: Record<string, unknown>): JSX.Element {
+  const { locale, direction } = useLocale();
+  return <div {...props} data-carrier={`${locale} ${direction}`} />;
+}
+
+function Strip({ dir }: { dir?: 'ltr' | 'rtl' }): JSX.Element {
+  return (
+    <Tabs.Root defaultValue="a" {...(dir === undefined ? {} : { dir })}>
+      <Tabs.List aria-label="Views">
+        <Tabs.Tab value="a" render={(props) => <CarrierTab {...props} />}>
+          A
+        </Tabs.Tab>
+        <Tabs.Tab value="b">B</Tabs.Tab>
+      </Tabs.List>
+      <Tabs.Panel value="a">Panel A</Tabs.Panel>
+    </Tabs.Root>
+  );
+}
+
+/** The root's `dir` attribute (or null), and the locale and direction the tab list resolved. */
+function resolved(html: string): { attr: string | null; locale: string; direction: string } {
+  const root = tag(html, /data-slot="tabs"/);
+  const probe = / data-carrier="([^" ]+) (ltr|rtl)"/.exec(html);
+  if (probe === null) throw new Error('no probe');
+  return {
+    attr: / dir="([^"]+)"/.exec(root)?.[1] ?? null,
+    locale: probe[1] ?? '',
+    direction: probe[2] ?? '',
+  };
+}
+
+describe("direction (M26): the part's dir, else the NizivoConfig scope's locale", () => {
+  test('without dir: the scope locale decides and the markup has no dir attribute', () => {
+    expect(resolved(renderToString(<Strip />))).toEqual({
+      attr: null,
+      locale: 'en-US',
+      direction: 'ltr',
+    });
+    expect(
+      resolved(
+        renderToString(
+          <NizivoConfig locale="ar-EG">
+            <Strip />
+          </NizivoConfig>,
+        ),
+      ),
+    ).toEqual({ attr: null, locale: 'ar-EG', direction: 'rtl' });
+  });
+
+  test('scope ltr, local rtl: the part wins and renders its dir', () => {
+    expect(
+      resolved(
+        renderToString(
+          <NizivoConfig locale="de-DE">
+            <Strip dir="rtl" />
+          </NizivoConfig>,
+        ),
+      ),
+    ).toEqual({ attr: 'rtl', locale: 'ar', direction: 'rtl' });
+  });
+
+  test('scope rtl, local ltr: the part wins and renders its dir', () => {
+    for (const locale of ['ar-EG', 'he-IL', 'fa-IR']) {
+      expect(
+        resolved(
+          renderToString(
+            <NizivoConfig locale={locale}>
+              <Strip dir="ltr" />
+            </NizivoConfig>,
+          ),
+        ),
+      ).toEqual({ attr: 'ltr', locale: 'en', direction: 'ltr' });
+    }
+  });
+
+  test('a dir the scope locale already has leaves the locale untouched', () => {
+    expect(
+      resolved(
+        renderToString(
+          <NizivoConfig locale="ar-EG">
+            <Strip dir="rtl" />
+          </NizivoConfig>,
+        ),
+      ),
+    ).toEqual({ attr: 'rtl', locale: 'ar-EG', direction: 'rtl' });
+    expect(resolved(renderToString(<Strip dir="ltr" />))).toEqual({
+      attr: 'ltr',
+      locale: 'en-US',
+      direction: 'ltr',
+    });
+  });
+
+  test('nested scopes: the nearest NizivoConfig decides, and a local dir still wins', () => {
+    expect(
+      resolved(
+        renderToString(
+          <NizivoConfig locale="ar-EG">
+            <NizivoConfig locale="en-GB">
+              <Strip />
+            </NizivoConfig>
+          </NizivoConfig>,
+        ),
+      ),
+    ).toEqual({ attr: null, locale: 'en-GB', direction: 'ltr' });
+    expect(
+      resolved(
+        renderToString(
+          <NizivoConfig locale="en-GB">
+            <NizivoConfig locale="he-IL">
+              <Strip />
+            </NizivoConfig>
+          </NizivoConfig>,
+        ),
+      ),
+    ).toEqual({ attr: null, locale: 'he-IL', direction: 'rtl' });
+    expect(
+      resolved(
+        renderToString(
+          <NizivoConfig locale="en-GB">
+            <NizivoConfig locale="he-IL">
+              <Strip dir="ltr" />
+            </NizivoConfig>
+          </NizivoConfig>,
+        ),
+      ),
+    ).toEqual({ attr: 'ltr', locale: 'en', direction: 'ltr' });
+    expect(errors).not.toHaveBeenCalled();
+  });
+
+  test('only the tab list carries the direction: a panel keeps the scope locale', () => {
+    const html = renderToString(
+      <NizivoConfig locale="de-DE">
+        <Tabs.Root defaultValue="a" dir="rtl">
+          <Tabs.List aria-label="Views">
+            <Tabs.Tab value="a">A</Tabs.Tab>
+          </Tabs.List>
+          <Tabs.Panel value="a">
+            <Probe />
+          </Tabs.Panel>
+        </Tabs.Root>
+      </NizivoConfig>,
+    );
+    expect(html).toContain('<output data-locale="de-DE">ltr</output>');
+  });
+
+  test("a tab's content keeps the scope locale; only the list's own hooks get the carrier", () => {
+    const html = renderToString(
+      <NizivoConfig locale="en-US">
+        <Tabs.Root defaultValue="a" dir="rtl">
+          <Tabs.List aria-label="Views">
+            <Tabs.Tab value="a" render={(props) => <CarrierTab {...props} />}>
+              <Probe />
+            </Tabs.Tab>
+          </Tabs.List>
+          <Tabs.Panel value="a">Panel A</Tabs.Panel>
+        </Tabs.Root>
+      </NizivoConfig>,
+    );
+    expect(html).toContain('data-carrier="ar rtl"');
+    expect(html).toContain('<output data-locale="en-US">ltr</output>');
+  });
+
+  test('a root without dir inherits the nearest Tabs dir, and renders no attribute of its own', () => {
+    const html = renderToString(
+      <NizivoConfig locale="en-US">
+        <Tabs.Root defaultValue="a" dir="rtl">
+          <Tabs.List aria-label="Outer">
+            <Tabs.Tab value="a">A</Tabs.Tab>
+          </Tabs.List>
+          <Tabs.Panel value="a">
+            <Strip />
+          </Tabs.Panel>
+        </Tabs.Root>
+      </NizivoConfig>,
+    );
+    const inner = parts(html).filter((part) => /data-slot="tabs"/.test(part))[1];
+    expect(inner).toBeDefined();
+    expect(inner).not.toContain(' dir=');
+    expect(/ data-carrier="([^"]+)"/.exec(html)?.[1]).toBe('ar rtl');
+    // its own dir still wins over the inherited one
+    const own = renderToString(
+      <Tabs.Root defaultValue="a" dir="rtl">
+        <Tabs.List aria-label="Outer">
+          <Tabs.Tab value="a">A</Tabs.Tab>
+        </Tabs.List>
+        <Tabs.Panel value="a">
+          <Strip dir="ltr" />
+        </Tabs.Panel>
+      </Tabs.Root>,
+    );
+    expect(/ data-carrier="([^"]+)"/.exec(own)?.[1]).toBe('en-US ltr');
+  });
+
+  test('render keeps dir on the root element', () => {
+    const html = renderToString(
+      <Tabs.Root defaultValue="a" dir="rtl" render={<div title="root" />}>
+        <Tabs.List aria-label="Views">
+          <Tabs.Tab value="a">A</Tabs.Tab>
+        </Tabs.List>
+        <Tabs.Panel value="a">Panel A</Tabs.Panel>
+      </Tabs.Root>,
+    );
+    const root = tag(html, /data-slot="tabs"/);
+    expect(root).toContain('dir="rtl"');
+    expect(root).toContain('title="root"');
   });
 });

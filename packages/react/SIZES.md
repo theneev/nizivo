@@ -72,23 +72,23 @@ esbuild 0.28.2; gzip -9 bytes of the raw output (32 B above size-limit's figure 
 
 | Component         | React Aria floor | RAC direct | Nizivo adapter | Nizivo subpath | Subpath − direct | Adapter − floor | Subpath − adapter |
 | ----------------- | ---------------: | ---------: | -------------: | -------------: | ---------------: | --------------: | ----------------: |
-| Select            |           58,906 |     59,439 |         61,200 |         62,436 |           +2,997 |          +2,294 |            +1,236 |
-| Dialog            |           28,757 |     29,023 |         30,437 |         31,477 |           +2,454 |          +1,680 |            +1,040 |
-| Tooltip           |           14,019 |     14,699 |         15,304 |         16,359 |           +1,660 |          +1,285 |            +1,055 |
-| Menu              |           51,904 |     52,192 |         54,667 |         56,655 |           +4,463 |          +2,763 |            +1,988 |
-| Tabs              |           31,857 |     32,015 |         33,047 |         33,609 |           +1,594 |          +1,190 |              +562 |
-| All five together |           68,258 |     69,712 |         72,595 |         76,224 |           +6,512 |          +4,337 |            +3,629 |
+| Select            |           58,906 |     59,439 |         61,634 |         63,291 |           +3,852 |          +2,728 |            +1,657 |
+| Dialog            |           28,757 |     29,023 |         30,742 |         32,153 |           +3,130 |          +1,985 |            +1,411 |
+| Tooltip           |           14,019 |     14,699 |         15,338 |         16,393 |           +1,694 |          +1,319 |            +1,055 |
+| Menu              |           51,904 |     52,192 |         54,951 |         56,743 |           +4,551 |          +3,047 |            +1,792 |
+| Tabs              |           31,867 |     32,015 |         33,155 |         33,715 |           +1,700 |          +1,288 |              +560 |
+| All five together |           68,258 |     69,712 |         73,169 |         77,424 |           +7,712 |          +4,911 |            +4,255 |
 
 The subpath's own code by layer (minified bytes before gzip, from esbuild's metafile; gzip compresses the sum, so the columns do not add up to the gzip deltas):
 
 | Component         | Leaf (parts, classes, glyphs) | Adapter | Family helpers (overlay, popup) | K6 helpers | K7 helpers | Own total |
 | ----------------- | ----------------------------: | ------: | ------------------------------: | ---------: | ---------: | --------: |
-| Select            |                         3,247 |   2,305 |                           2,137 |      1,681 |      1,306 |    10,676 |
-| Dialog            |                         2,866 |   1,994 |                             738 |      1,681 |      1,303 |     8,582 |
-| Tooltip           |                         2,488 |     784 |                             677 |      1,681 |      1,305 |     6,935 |
-| Menu              |                         5,944 |   3,560 |                           2,137 |      1,681 |      1,306 |    14,628 |
-| Tabs              |                         1,437 |   1,124 |                               0 |      1,681 |      1,306 |     5,548 |
-| All five together |                        13,524 |   9,711 |                           2,311 |      1,680 |      1,302 |    28,528 |
+| Select            |                         4,802 |   2,679 |                           2,871 |      1,681 |      1,306 |    13,339 |
+| Dialog            |                         3,831 |   2,017 |                           1,472 |      1,681 |      1,303 |    10,304 |
+| Tooltip           |                         2,488 |     886 |                             677 |      1,681 |      1,305 |     7,037 |
+| Menu              |                         5,542 |   3,560 |                           2,871 |      1,681 |      1,306 |    14,960 |
+| Tabs              |                         1,437 |   1,423 |                               0 |      1,681 |      1,306 |     5,847 |
+| All five together |                        15,699 |  10,509 |                           3,045 |      1,680 |      1,302 |    32,235 |
 
 K6 helpers alone (stateAttrs, details, EngineLocale with the config context, engineDom and defined with the attribute allowlist), React Aria external: **789 B** gzip raw (the size budget's figure is 32 B lower).
 
@@ -104,7 +104,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 | Entry              | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | ------------------ | -------: | ---------: | ---------: | ----------: | -----------: |
-| `.`                |   85,746 |       83.7 |     72,488 |          93 |        9,486 |
+| `.`                |   85,868 |       83.9 |     72,460 |          93 |        9,364 |
 | /alert             |    1,244 |        1.2 |      1,149 |         1.4 |          189 |
 | /augment           |        0 |        0.0 |          0 |           0 |            — |
 | /badge             |      796 |        0.8 |        727 |         0.9 |          125 |
@@ -140,7 +140,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /stack             |      703 |        0.7 |        640 |         0.8 |          116 |
 | /switch            |    1,729 |        1.7 |      1,576 |         1.9 |          216 |
 | /tab-nav           |    1,031 |        1.0 |        949 |         1.2 |          197 |
-| /tabs              |   33,577 |       32.8 |     29,755 |          35 |        2,263 |
+| /tabs              |   33,683 |       32.9 |     29,840 |          35 |        2,157 |
 | /text              |      716 |        0.7 |        653 |         0.8 |          103 |
 | /textarea          |    1,349 |        1.3 |      1,226 |         1.5 |          187 |
 | /theme-script      |      363 |        0.4 |        289 |         0.4 |           46 |
@@ -150,7 +150,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 | Entry                      | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | -------------------------- | -------: | ---------: | ---------: | ----------: | -----------: |
-| dashboard set              |   77,260 |       75.4 |     65,314 |          76 |          564 |
+| dashboard set              |   77,363 |       75.5 |     65,394 |          76 |          461 |
 | { Button } from the barrel |    1,232 |        1.2 |      1,129 |         1.4 |          201 |
 | { Select } from the barrel |   63,185 |       61.7 |     54,242 |          68 |        6,447 |
 
@@ -164,7 +164,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | own: _engines/react-aria/overlay.client         |      511 |        0.5 |        444 |         0.6 |          103 |
 | own: _engines/react-aria/popup.client           |    1,126 |        1.1 |        994 |         1.3 |          205 |
 | own: _engines/react-aria/select.client          |    1,431 |        1.4 |      1,255 |         1.6 |          207 |
-| own: _engines/react-aria/tabs.client            |      629 |        0.6 |        555 |         0.9 |          292 |
+| own: _engines/react-aria/tabs.client            |      769 |        0.8 |        702 |         0.9 |          152 |
 | own: _engines/react-aria/tooltip.client         |      719 |        0.7 |        680 |         0.8 |          100 |
 | own: alert/alert-dismiss.client                 |      354 |        0.3 |        300 |         0.4 |           55 |
 | own: checkbox/checkbox.client                   |      750 |        0.7 |        692 |         0.9 |          171 |

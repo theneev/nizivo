@@ -1,7 +1,8 @@
 // Tabs and TabNav in Chromium (ARCHITECTURE.md §9.5, §8.5, §16.4; figma/13 §4.4–4.5). Tabs: the APG
 // tabs keyboard through the engine (roving focus, Home/End, automatic and manual activation, RTL arrow
-// flip), hydration of the server HTML, keepMounted. Both: the inset focus outline, the indicator, and
-// the bold width reserved so a selection never moves the other tabs. TabNav: plain links.
+// flip from the NizivoConfig locale or the part's dir), hydration of the server HTML,
+// keepMounted. Both: the inset focus outline, the indicator, and the bold width reserved so a
+// selection never moves the other tabs. TabNav: plain links.
 import { useState, type JSX, type ReactNode } from 'react';
 import { createRoot, hydrateRoot, type Root } from 'react-dom/client';
 import { renderToString } from 'react-dom/server';
@@ -90,15 +91,18 @@ const TRANSPARENT = 'rgba(0, 0, 0, 0)';
 function Views({
   activationMode,
   onValueChange,
+  dir,
 }: {
   activationMode?: 'automatic' | 'manual';
   onValueChange?: (value: string, details: ChangeDetails<TabsValueReason>) => void;
+  dir?: 'ltr' | 'rtl';
 }): JSX.Element {
   return (
     <div>
       <button type="button">before</button>
       <Tabs.Root
         defaultValue="b"
+        {...(dir === undefined ? {} : { dir })}
         {...(activationMode === undefined ? {} : { activationMode })}
         {...(onValueChange === undefined ? {} : { onValueChange })}
       >
@@ -157,6 +161,44 @@ function Switcher(): JSX.Element {
         </TabNav.Link>
       ))}
     </TabNav.Root>
+  );
+}
+
+/** What a right-to-left and a left-to-right strip report through `direction()`. */
+const RTL = { firstOnRight: true, afterLeft: 'Delta', afterRight: 'Beta' };
+const LTR = { firstOnRight: false, afterLeft: 'Alpha', afterRight: 'Beta' };
+
+/**
+ * Where the first tab sits, then the selection after entering at Beta and pressing ArrowLeft, then
+ * ArrowRight. Right to left, ArrowLeft is "next" (Delta, past the disabled Gamma) and the first tab
+ * is on the right; left to right, ArrowLeft is "previous" (Alpha). The keys and the layout must
+ * agree, whichever scope set the direction.
+ */
+async function direction(container: HTMLElement): Promise<{
+  firstOnRight: boolean;
+  afterLeft: string | undefined;
+  afterRight: string | undefined;
+}> {
+  const [first, second] = tabs(container);
+  if (first === undefined || second === undefined) throw new Error('no tabs');
+  const firstOnRight = first.getBoundingClientRect().left > second.getBoundingClientRect().left;
+  container.querySelector('button')?.focus();
+  await userEvent.tab();
+  if (selected(container) !== 'Beta') throw new Error('the strip did not start at Beta');
+  await userEvent.keyboard('{ArrowLeft}');
+  const afterLeft = selected(container);
+  await userEvent.keyboard('{ArrowRight}');
+  return { firstOnRight, afterLeft, afterRight: selected(container) };
+}
+
+/** Views whose `dir` a checkbox flips between ltr and rtl. */
+function DirToggle(): JSX.Element {
+  const [dir, setDir] = useState<'ltr' | 'rtl'>('ltr');
+  return (
+    <>
+      <Views dir={dir} />
+      <input type="checkbox" onChange={() => setDir(dir === 'ltr' ? 'rtl' : 'ltr')} />
+    </>
   );
 }
 
@@ -242,6 +284,101 @@ describe('Tabs', () => {
     expect(first && second ? first.getBoundingClientRect().left : 0).toBeGreaterThan(
       second ? second.getBoundingClientRect().left : 0,
     );
+  });
+
+  test('direction (M26): an LTR scope, a local dir="rtl" — the part wins, with no dir on the page', async () => {
+    const container = await mount(
+      <NizivoConfig locale="de-DE">
+        <Views dir="rtl" />
+      </NizivoConfig>,
+    );
+    expect(container.querySelector('[data-slot="tabs"]')?.getAttribute('dir')).toBe('rtl');
+    expect(await direction(container)).toEqual(RTL);
+  });
+
+  test('direction: an RTL scope on an RTL page, a local dir="ltr" — the part wins', async () => {
+    const container = await mount(
+      <NizivoConfig locale="ar-EG">
+        <Views dir="ltr" />
+      </NizivoConfig>,
+      'rtl',
+    );
+    expect(await direction(container)).toEqual(LTR);
+  });
+
+  test('direction: nested scopes — the nearest locale decides', async () => {
+    const container = await mount(
+      <NizivoConfig locale="en-GB">
+        <NizivoConfig locale="he-IL">
+          <Views />
+        </NizivoConfig>
+      </NizivoConfig>,
+      'rtl',
+    );
+    expect(await direction(container)).toEqual(RTL);
+  });
+
+  test('direction: nested scopes — a local dir still wins over the nearest locale', async () => {
+    const container = await mount(
+      <NizivoConfig locale="en-GB">
+        <NizivoConfig locale="he-IL">
+          <Views dir="ltr" />
+        </NizivoConfig>
+      </NizivoConfig>,
+    );
+    expect(await direction(container)).toEqual(LTR);
+  });
+
+  test('direction: changing dir turns the arrows without remounting the strip', async () => {
+    const container = await mount(<DirToggle />);
+    const before = tabs(container)[0];
+    expect(await direction(container)).toEqual(LTR);
+    container.querySelector('input')?.click();
+    await settle();
+    expect(tabs(container)[0]).toBe(before);
+    expect(await direction(container)).toEqual(RTL);
+  });
+
+  test('direction: a strip nested in the panel of a dir="rtl" root keys the way it is laid out', async () => {
+    const container = await mount(
+      <NizivoConfig locale="en-US">
+        <Tabs.Root defaultValue="o" dir="rtl">
+          <Tabs.List aria-label="Outer">
+            <Tabs.Tab value="o">Outer</Tabs.Tab>
+          </Tabs.List>
+          <Tabs.Panel value="o">
+            <Views />
+          </Tabs.Panel>
+        </Tabs.Root>
+      </NizivoConfig>,
+    );
+    const panel = container.querySelector<HTMLElement>('[role="tabpanel"]');
+    const inner = panel?.querySelector('[data-slot="tabs"]');
+    if (panel === null || inner === null || inner === undefined) throw new Error('no inner strip');
+    // CSS inherits the outer dir; the inner root renders none of its own
+    expect(inner.hasAttribute('dir')).toBe(false);
+    expect(getComputedStyle(inner).direction).toBe('rtl');
+    expect(await direction(panel)).toEqual(RTL);
+  });
+
+  test('direction: server HTML under an LTR locale with dir="rtl" hydrates cleanly; keys follow dir', async () => {
+    const { container, problems } = await hydrate(
+      <NizivoConfig locale="en-US">
+        <Views dir="rtl" />
+      </NizivoConfig>,
+    );
+    expect(problems).toEqual([]);
+    expect(await direction(container)).toEqual(RTL);
+  });
+
+  test('direction: server HTML under an RTL locale with dir="ltr" hydrates cleanly; keys follow dir', async () => {
+    const { container, problems } = await hydrate(
+      <NizivoConfig locale="ar-EG">
+        <Views dir="ltr" />
+      </NizivoConfig>,
+    );
+    expect(problems).toEqual([]);
+    expect(await direction(container)).toEqual(LTR);
   });
 
   test('a pointer selects; controlled, the parent owns the value', async () => {

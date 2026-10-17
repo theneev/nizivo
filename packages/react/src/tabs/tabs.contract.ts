@@ -41,7 +41,7 @@ export interface TabsPanelState {
 
 export interface TabsRootProps extends Omit<
   ComponentPropsWithRef<'div'>,
-  'children' | 'defaultValue' | 'onChange' | 'id'
+  'children' | 'defaultValue' | 'onChange' | 'id' | 'dir'
 > {
   /** Controlled: the selected tab's `value`. */
   value?: string;
@@ -53,6 +53,14 @@ export interface TabsRootProps extends Omit<
   activationMode?: TabsActivationMode;
   /** Disables every tab. The selected panel still shows. */
   disabled?: boolean;
+  /**
+   * The strip's reading direction (M26), rendered as the root's `dir` attribute: the layout and the
+   * arrow keys follow it (in `rtl`, ArrowLeft moves to the next tab). Unset, nothing is rendered and
+   * the arrows follow the direction of the `NizivoConfig` scope's `locale`. Nothing reads the DOM, so
+   * a `dir` attribute set higher up does not turn the arrows: a strip whose direction differs from
+   * its locale's sets it here. `'auto'` is not accepted for the same reason.
+   */
+  dir?: 'ltr' | 'rtl';
   /** Must render a `<div>`. */
   render?: RenderProp<TabsRootState>;
   /** One `Tabs.List` and its `Tabs.Panel`s. */
@@ -102,7 +110,9 @@ export interface TabsPanelProps extends Omit<ComponentPropsWithRef<'div'>, 'chil
  */
 export interface TabsEngine {
   Root(
-    p: Omit<EnginePart<'div', TabsRootState>, 'defaultValue' | 'onChange' | 'id'> & {
+    p: Omit<EnginePart<'div', TabsRootState>, 'defaultValue' | 'onChange' | 'id' | 'dir'> & {
+      /** Rendered as the root's `dir`; the arrow keys follow it. Unset, the locale's direction. */
+      dir?: 'ltr' | 'rtl' | undefined;
       value?: string | undefined;
       defaultValue?: string | undefined;
       onValueChange?: TabsRootProps['onValueChange'];

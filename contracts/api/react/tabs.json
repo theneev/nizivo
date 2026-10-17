@@ -23,9 +23,9 @@
             {
               "base": "ComponentPropsWithRef<\"div\">",
               "element": "div",
-              "omitted": ["children", "defaultValue", "id", "onChange"],
+              "omitted": ["children", "defaultValue", "dir", "id", "onChange"],
               "overridden": [],
-              "text": "Omit<ComponentPropsWithRef<\"div\">, \"children\" | \"defaultValue\" | \"onChange\" | \"id\">"
+              "text": "Omit<ComponentPropsWithRef<\"div\">, \"children\" | \"defaultValue\" | \"onChange\" | \"id\" | \"dir\">"
             }
           ],
           "name": "Root",
@@ -48,6 +48,13 @@
               "name": "defaultValue",
               "required": false,
               "type": "string"
+            },
+            {
+              "description": "The strip's reading direction (M26), rendered as the root's `dir` attribute: the layout and the arrow keys follow it (in `rtl`, ArrowLeft moves to the next tab). Unset, nothing is rendered and the arrows follow the direction of the `NizivoConfig` scope's `locale`. Nothing reads the DOM, so a `dir` attribute set higher up does not turn the arrows: a strip whose direction differs from its locale's sets it here. `'auto'` is not accepted for the same reason.",
+              "name": "dir",
+              "required": false,
+              "type": "\"ltr\" | \"rtl\"",
+              "values": ["ltr", "rtl"]
             },
             {
               "description": "Disables every tab. The selected panel still shows.",
@@ -333,7 +340,7 @@
     {
       "declaration": "interface",
       "extends": [
-        "Omit<ComponentPropsWithRef<\"div\">, \"children\" | \"defaultValue\" | \"onChange\" | \"id\">"
+        "Omit<ComponentPropsWithRef<\"div\">, \"children\" | \"defaultValue\" | \"onChange\" | \"id\" | \"dir\">"
       ],
       "import": "import type { TabsRootProps } from '@nizivo/react/tabs'",
       "kind": "type",

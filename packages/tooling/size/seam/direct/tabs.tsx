@@ -1,6 +1,7 @@
 'use client';
 // Seam baseline: Tabs written on React Aria directly (see select.tsx). Not here (Nizivo-only): the
-// vocabulary data-* mapping, `render` props, hiding a kept-mounted inactive panel.
+// vocabulary data-* mapping, `render` props, hiding a kept-mounted inactive panel, the `dir` prop's
+// direction carrier (M26).
 import type { JSX, ReactNode } from 'react';
 import { I18nProvider, Tab, TabList, TabPanel, Tabs, type TabsProps } from 'react-aria-components';
 
