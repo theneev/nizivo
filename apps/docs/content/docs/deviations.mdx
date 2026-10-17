@@ -64,6 +64,17 @@ Two values that are not in the Figma file, both the maintainer's decisions of 20
   carries `nz-hit-target` for the 44 px coarse-pointer hit area. Figma draws every trigger as a
   Button, which is still the recommended composition.
 
+### Week 8
+
+One value that is not in the Figma file, the maintainer's decision of 2026-10-17:
+
+- **Alert's dismiss is a small IconButton.** Figma draws the close as a bare 16 px glyph with no
+  states. In code it is a tertiary `sm` IconButton: a 32 px button with IconButton's hover and
+  pressed fills and focus ring, and in forced colours its `ButtonText` border. The glyph stays 16 px
+  in `icon/secondary`, 16 px from the inline-end edge, and the button reaches into the padding, so the
+  row is no taller than the title's line. It replaces week 2's 24 px button, whose hover changed only
+  the glyph colour.
+
 ## Builder defaults
 
 <BuilderDefaults />

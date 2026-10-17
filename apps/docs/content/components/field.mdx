@@ -22,3 +22,42 @@ A control that is a `<button>` (Select, or a third-party picker) is named by
 popup; with the option, a click on the label focuses the control instead, with its focus ring, and
 does nothing for a disabled control. Native controls need no option. The option is registered after
 hydration, so the server HTML and the zero-JS path do not change.
+
+## Errors and screen readers
+
+The error is not a live region. The control points at it (`aria-describedby`, `aria-invalid`), so
+typing announces nothing, and on a failed submit the Field moves focus to the form's first invalid
+control, which makes a screen reader read the control with its error.
+
+When focus is already in that control, nothing moves: Enter pressed in a text field, a shortcut that
+calls `requestSubmit()`, a Server Action that replies while the user waits in the field. For that case
+alone, a Field that renders FieldScope (any child except a function child or a NativeSelect placed
+directly in it) renders one visually hidden polite live region, after the error, and speaks the new
+error once:
+
+- **It listens** after a validation request made while focus is in the Field: the browser's
+  `invalid` event at the form's first invalid control, or the form's `submit` (any form library, or
+  a Server Action). An app that clears its errors when a submit starts still has the reply spoken.
+- **It speaks** the next error text that renders, if focus is still in the Field: the browser's
+  message at once, even when the same message is already shown; for `error`, the reply that changes
+  the text (a pending re-render that keeps the old text says nothing).
+- **It says nothing** on page load and hydration, when the submit moves focus (the focus move reads
+  the error), at a control that is not the form's first invalid one (focus goes to that one), while
+  the user types, when a reply's text equals the error already shown, and to repeat the text it
+  still holds.
+- **It reads** the message only, not the error mark, and empties 7 seconds later.
+
+The region is in the server HTML, empty, so it exists before any message does. A Field with a
+function child, or a NativeSelect placed directly in it (the zero-JS path), has none: there the
+browser's own message bubble speaks. A form library that moves focus into the control itself should
+do so after the error renders, or the control is read without it.
+
+## Bundle size with Turbopack
+
+A zero-JS Field (a function child, or a NativeSelect placed directly in it) renders no client
+component, and production webpack ships none of the Field's client code for it. Turbopack and
+`next dev` ship every client module a page's server code imports, rendered or not, so such a page
+still loads the Field's client leaf. Measured on the Next fixture (gzip of the page's client chunks,
+a page with two zero-JS Fields, a function child and a NativeSelect placed directly, minus a page
+with one Button; the cost is per module, not per Field): Turbopack production +3,377 B, production
+webpack 0 B, `next dev` +8,576 B (unminified). No other import path avoids it in this version.

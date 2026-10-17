@@ -10,3 +10,15 @@ keyboard:
     action: Hides the tooltip; focus stays on the button.
 keyboardSource: a native `<button>` (`icon-button.tsx`); the tooltip is react-aria-components 1.22.1 `TooltipTrigger` through Nizivo's Tooltip (`icon-button.client.tsx`). The Next fixture and the browser lane (`test/browser/icon-button.spec.tsx`) check showing on focus, Escape and the missing aria-describedby.
 ---
+
+## Bundle size with Turbopack
+
+`<IconButton tooltip={false}>` renders its button on the server and runs no client code, and
+production webpack ships none of the tooltip code for it. Turbopack and `next dev` ship every client
+module a page's server code imports, rendered or not, so the IconButton's tooltip leaf and the Tooltip
+code still reach the page. Measured on the Next fixture (gzip of the page's client chunks, a page
+with one `<IconButton tooltip={false}>` minus a page with one Button): Turbopack production
++20,817 B, production webpack 0 B, `next dev` +62,286 B (unminified), the same as a page that shows
+the tooltip.
+No other import path avoids it in this version. `Dialog.Close` and `AlertDismiss` write the
+IconButton markup themselves, so they do not import the tooltip.

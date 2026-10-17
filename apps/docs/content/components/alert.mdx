@@ -8,3 +8,36 @@ keyboard:
     action: Activates the focused button. The dismiss button calls onDismiss; the caller stops rendering the alert.
 keyboardSource: The Alert shell (`alert.tsx`) renders the action before the dismiss slot; `AlertDismiss` is a native `<button type="button">` (`alert-dismiss.client.tsx`), and the Next fixture checks that it takes a click.
 ---
+
+## The dismiss button
+
+Pass an `AlertDismiss` in `dismiss`. With no `render` it is an IconButton (tertiary, `sm`) showing
+the close glyph, named "Dismiss", so it looks, sizes, focuses and responds like every other icon
+button. Change the name with `labels`, or pass `aria-label`; `children` replace the glyph.
+
+```tsx
+<Alert
+  tone="critical"
+  role="alert"
+  title="Payment failed for order #1040"
+  dismiss={<AlertDismiss onDismiss={dismissPaymentAlert} labels={{ dismiss: 'Fermer' }} />}
+>
+  Card was declined.
+</Alert>
+```
+
+`onDismiss` is called with no arguments, so a Server Component can pass a Server Action. The Alert
+does not hide itself: the caller stops rendering it. An Alert without a dismiss ships no client
+JavaScript; `AlertDismiss` is its only client module.
+
+Its glyph is 16 px and sits where Figma draws the close glyph: 16 px from the inline-end edge and
+centred on the title's line. The 32 px button reaches into the padding around it, so the row is no
+taller. It has no tooltip, like `Dialog.Close`: its name is read by assistive technology, and a
+tooltip would add the Tooltip code to every page that shows a dismissible alert. Its markup is
+IconButton's, so a page that imports per-component stylesheets needs `css/icon-button.css` too (the
+stylesheets list above names it; `styles.css` already has it).
+
+With `render`, it is your element. A plain element keeps its own look; an IconButton keeps its
+variant and size and takes the slot's placement, which is made for `sm`. To add a tooltip, compose
+one: `render={<IconButton icon={<X />} label="Dismiss" variant="tertiary" size="sm" />}`.
+`--nz-alert-dismiss-fg` still sets the glyph colour (default `--nz-icon-secondary`).
