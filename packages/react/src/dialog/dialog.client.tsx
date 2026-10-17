@@ -83,11 +83,16 @@ export function DialogRoot({ returnFocus = true, ...props }: DialogRootProps): J
   );
 }
 
+/**
+ * Without `render`, its own `<button>`: `nz-hit-target` gives it the 44 px coarse-pointer hit area of
+ * every standalone pressable, and dialog.css gives that bare button a 24 x 24 px minimum (WCAG 2.2
+ * 2.5.8; M27). A composed Button or IconButton keeps its own size and classes.
+ */
 export function DialogTrigger({ className, render, ...rest }: DialogTriggerProps): JSX.Element {
   return (
     <Engine.Trigger
       {...rest}
-      className={cx('nz-dialog-trigger', className)}
+      className={cx('nz-dialog-trigger', render === undefined && 'nz-hit-target', className)}
       data-slot="dialog-trigger"
       render={toRenderFn(render, 'button')}
     />

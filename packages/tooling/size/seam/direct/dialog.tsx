@@ -31,7 +31,7 @@ export function DialogRoot({
 
 export function DialogTrigger({ children }: { children?: ReactNode }): JSX.Element {
   return (
-    <Button className="nz-dialog-trigger" data-slot="dialog-trigger">
+    <Button className="nz-dialog-trigger nz-hit-target" data-slot="dialog-trigger">
       {children}
     </Button>
   );

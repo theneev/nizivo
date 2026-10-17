@@ -73,22 +73,22 @@ esbuild 0.28.2; gzip -9 bytes of the raw output (32 B above size-limit's figure 
 | Component         | React Aria floor | RAC direct | Nizivo adapter | Nizivo subpath | Subpath − direct | Adapter − floor | Subpath − adapter |
 | ----------------- | ---------------: | ---------: | -------------: | -------------: | ---------------: | --------------: | ----------------: |
 | Select            |           58,906 |     59,439 |         61,634 |         63,291 |           +3,852 |          +2,728 |            +1,657 |
-| Dialog            |           28,757 |     29,023 |         30,742 |         32,153 |           +3,130 |          +1,985 |            +1,411 |
-| Tooltip           |           14,019 |     14,699 |         15,338 |         16,393 |           +1,694 |          +1,319 |            +1,055 |
+| Dialog            |           28,757 |     29,035 |         30,742 |         32,159 |           +3,124 |          +1,985 |            +1,417 |
+| Tooltip           |           14,019 |     14,705 |         15,338 |         16,404 |           +1,699 |          +1,319 |            +1,066 |
 | Menu              |           51,904 |     52,192 |         54,951 |         56,743 |           +4,551 |          +3,047 |            +1,792 |
 | Tabs              |           31,867 |     32,015 |         33,155 |         33,715 |           +1,700 |          +1,288 |              +560 |
-| All five together |           68,258 |     69,712 |         73,169 |         77,424 |           +7,712 |          +4,911 |            +4,255 |
+| All five together |           68,258 |     69,718 |         73,169 |         77,435 |           +7,717 |          +4,911 |            +4,266 |
 
 The subpath's own code by layer (minified bytes before gzip, from esbuild's metafile; gzip compresses the sum, so the columns do not add up to the gzip deltas):
 
 | Component         | Leaf (parts, classes, glyphs) | Adapter | Family helpers (overlay, popup) | K6 helpers | K7 helpers | Own total |
 | ----------------- | ----------------------------: | ------: | ------------------------------: | ---------: | ---------: | --------: |
 | Select            |                         4,802 |   2,679 |                           2,871 |      1,681 |      1,306 |    13,339 |
-| Dialog            |                         3,831 |   2,017 |                           1,472 |      1,681 |      1,303 |    10,304 |
-| Tooltip           |                         2,488 |     886 |                             677 |      1,681 |      1,305 |     7,037 |
+| Dialog            |                         3,859 |   2,017 |                           1,472 |      1,681 |      1,303 |    10,332 |
+| Tooltip           |                         2,516 |     886 |                             677 |      1,681 |      1,305 |     7,065 |
 | Menu              |                         5,542 |   3,560 |                           2,871 |      1,681 |      1,306 |    14,960 |
 | Tabs              |                         1,437 |   1,423 |                               0 |      1,681 |      1,306 |     5,847 |
-| All five together |                        15,699 |  10,509 |                           3,045 |      1,680 |      1,302 |    32,235 |
+| All five together |                        15,755 |  10,509 |                           3,045 |      1,680 |      1,302 |    32,291 |
 
 K6 helpers alone (stateAttrs, details, EngineLocale with the config context, engineDom and defined with the attribute allowlist), React Aria external: **789 B** gzip raw (the size budget's figure is 32 B lower).
 
@@ -104,7 +104,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 | Entry              | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | ------------------ | -------: | ---------: | ---------: | ----------: | -----------: |
-| `.`                |   85,868 |       83.9 |     72,460 |          93 |        9,364 |
+| `.`                |   85,879 |       83.9 |     72,526 |          93 |        9,353 |
 | /alert             |    1,244 |        1.2 |      1,149 |         1.4 |          189 |
 | /augment           |        0 |        0.0 |          0 |           0 |            — |
 | /badge             |      796 |        0.8 |        727 |         0.9 |          125 |
@@ -115,13 +115,13 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /container         |      694 |        0.7 |        633 |         0.8 |          125 |
 | /contracts         |    1,021 |        1.0 |        915 |         1.1 |          105 |
 | /delta             |    1,012 |        1.0 |        932 |         1.1 |          114 |
-| /dialog            |   32,121 |       31.4 |     28,551 |          32 |          647 |
+| /dialog            |   32,127 |       31.4 |     28,561 |          32 |          641 |
 | /empty-state       |      840 |        0.8 |        768 |           1 |          184 |
 | /field             |    3,115 |        3.0 |      2,862 |         3.4 |          366 |
 | /fieldset          |    1,715 |        1.7 |      1,560 |         1.9 |          230 |
 | /grid              |      793 |        0.8 |        737 |         0.9 |          128 |
 | /heading           |      767 |        0.7 |        697 |         0.9 |          154 |
-| /icon-button       |   17,293 |       16.9 |     15,601 |          19 |        2,163 |
+| /icon-button       |   17,299 |       16.9 |     15,612 |          19 |        2,157 |
 | /image             |      794 |        0.8 |        723 |         0.9 |          127 |
 | /inline            |      703 |        0.7 |        639 |         0.8 |          116 |
 | /inline-error      |    1,046 |        1.0 |        953 |         1.2 |          182 |
@@ -144,13 +144,13 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /text              |      716 |        0.7 |        653 |         0.8 |          103 |
 | /textarea          |    1,349 |        1.3 |      1,226 |         1.5 |          187 |
 | /theme-script      |      363 |        0.4 |        289 |         0.4 |           46 |
-| /tooltip           |   16,361 |       16.0 |     14,802 |          16 |           23 |
+| /tooltip           |   16,372 |       16.0 |     14,812 |          16 |           12 |
 
 #### `@nizivo/react`: Composite bundles (one bundle; React Aria counted once)
 
 | Entry                      | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | -------------------------- | -------: | ---------: | ---------: | ----------: | -----------: |
-| dashboard set              |   77,363 |       75.5 |     65,394 |          76 |          461 |
+| dashboard set              |   77,373 |       75.6 |     65,415 |          76 |          451 |
 | { Button } from the barrel |    1,232 |        1.2 |      1,129 |         1.4 |          201 |
 | { Select } from the barrel |   63,185 |       61.7 |     54,242 |          68 |        6,447 |
 
@@ -169,7 +169,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | own: alert/alert-dismiss.client                 |      354 |        0.3 |        300 |         0.4 |           55 |
 | own: checkbox/checkbox.client                   |      750 |        0.7 |        692 |         0.9 |          171 |
 | own: config/config.client                       |      197 |        0.2 |        179 |         0.3 |          110 |
-| own: dialog/dialog.client                       |    1,300 |        1.3 |      1,171 |         1.4 |          133 |
+| own: dialog/dialog.client                       |    1,309 |        1.3 |      1,182 |         1.4 |          124 |
 | own: field/field-scope.client                   |    1,123 |        1.1 |      1,009 |         1.3 |          208 |
 | own: icon-button/icon-button.client             |      349 |        0.3 |        301 |         0.4 |           60 |
 | own: input/input.client                         |      692 |        0.7 |        611 |         0.8 |          127 |
@@ -180,7 +180,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | own: switch/switch.client                       |      552 |        0.5 |        475 |         0.6 |           62 |
 | own: tabs/tabs.client                           |      486 |        0.5 |        439 |         0.6 |          128 |
 | own: textarea/textarea.client                   |      316 |        0.3 |        276 |         0.4 |           93 |
-| own: tooltip/tooltip.client                     |      507 |        0.5 |        448 |         0.6 |          107 |
+| own: tooltip/tooltip.client                     |      519 |        0.5 |        460 |         0.6 |           95 |
 
 #### `@nizivo/react`: Seam helpers (seam ledger K6 and K7; React Aria external)
 
@@ -201,7 +201,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/checkbox.css          |      834 |        0.8 |        687 |         0.9 |           87 |
 | /css/container.css         |      185 |        0.2 |        155 |         0.2 |           19 |
 | /css/delta.css             |      453 |        0.4 |        370 |         0.5 |           59 |
-| /css/dialog.css            |      918 |        0.9 |        766 |           1 |          106 |
+| /css/dialog.css            |      944 |        0.9 |        787 |           1 |           80 |
 | /css/empty-state.css       |      476 |        0.5 |        373 |         0.6 |          138 |
 | /css/field.css             |      330 |        0.3 |        264 |         0.4 |           79 |
 | /css/fieldset.css          |      362 |        0.4 |        293 |         0.4 |           47 |
@@ -229,8 +229,8 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/tabs.css              |      972 |        0.9 |        792 |         1.1 |          154 |
 | /css/text.css              |      574 |        0.6 |        487 |         0.7 |          142 |
 | /css/textarea.css          |      725 |        0.7 |        601 |         0.8 |           94 |
-| /css/tooltip.css           |      550 |        0.5 |        456 |         0.6 |           64 |
-| /styles.css                |   14,928 |       14.6 |     12,698 |          16 |        1,456 |
+| /css/tooltip.css           |      581 |        0.6 |        503 |         0.6 |           33 |
+| /styles.css                |   14,971 |       14.6 |     12,684 |          16 |        1,413 |
 
 #### `@nizivo/tokens`: Public JS entries (bundled with what they import, React Aria included)
 

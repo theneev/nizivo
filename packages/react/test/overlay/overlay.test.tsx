@@ -235,6 +235,34 @@ describe('SSR (§12.2: closed overlays render nothing; O-17)', () => {
     expect(open).not.toContain('data-pressed');
   });
 
+  test("Dialog and Tooltip: only a bare trigger, the part's own <button>, carries nz-hit-target (M27)", () => {
+    const bare = renderToString(
+      <>
+        <Dialog.Root>
+          <Dialog.Trigger className="mine">Edit</Dialog.Trigger>
+        </Dialog.Root>
+        <Tooltip.Root>
+          <Tooltip.Trigger className="mine">Export</Tooltip.Trigger>
+        </Tooltip.Root>
+      </>,
+    );
+    expect(bare).toMatch(/<button[^>]*class="nz-dialog-trigger nz-hit-target mine"/);
+    expect(bare).toMatch(/<button[^>]*class="nz-tooltip-trigger nz-hit-target mine"/);
+    const own = renderToString(
+      <>
+        <Dialog.Root>
+          <Dialog.Trigger render={<a href="#edit">Edit</a>} />
+        </Dialog.Root>
+        <Tooltip.Root>
+          <Tooltip.Trigger render={(props) => <span {...props}>Export</span>} />
+        </Tooltip.Root>
+      </>,
+    );
+    expect(own).toMatch(/<a[^>]*class="nz-dialog-trigger"/);
+    expect(own).toMatch(/<span[^>]*class="nz-tooltip-trigger"/);
+    expect(errors).not.toHaveBeenCalled();
+  });
+
   test('Menu: every example renders on the server without errors', () => {
     for (const Example of [
       MenuExample,

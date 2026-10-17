@@ -67,7 +67,8 @@ Leave it out (or `[]`) for components nobody operates: layout, text, Badge, Skel
 
 The 44 px coarse-pointer hit area is **not** derived from this list. It is the static
 `.nz-hit-target` rule; a standalone pressable adds the `nz-hit-target` class in its markup (Button,
-the Select trigger). Items and rows inside a list do not, because an expanded hit area would overlap
+IconButton, the Select trigger, and a bare `Dialog.Trigger` or `Tooltip.Trigger`: one with no
+`render`, whose own `<button>` also gets a 24 x 24 px minimum in its component CSS, M27). Items and rows inside a list do not, because an expanded hit area would overlap
 their neighbours. `::after` stays reserved for it.
 
 ## `focusTarget`

@@ -28,13 +28,18 @@ export function TooltipRoot({
   );
 }
 
+/**
+ * Without `render`, its own `<button>`: `nz-hit-target` gives it the 44 px coarse-pointer hit area of
+ * every standalone pressable, and tooltip.css gives that bare button a 24 x 24 px minimum (WCAG 2.2
+ * 2.5.8; M27). A composed Button or IconButton keeps its own size and classes.
+ */
 export function TooltipTrigger({ className, render, ...rest }: TooltipTriggerProps): JSX.Element {
   return (
     <Engine.Trigger
       {...rest}
       // Only the default <button> gets a type, so it never submits a form.
       type={rest.type ?? (render === undefined ? 'button' : undefined)}
-      className={cx('nz-tooltip-trigger', className)}
+      className={cx('nz-tooltip-trigger', render === undefined && 'nz-hit-target', className)}
       data-slot="tooltip-trigger"
       render={toRenderFn(render, 'button')}
     />

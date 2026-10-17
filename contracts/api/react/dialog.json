@@ -59,6 +59,7 @@
         },
         {
           "client": true,
+          "description": "Without `render`, its own `<button>`: `nz-hit-target` gives it the 44 px coarse-pointer hit area of every standalone pressable, and dialog.css gives that bare button a 24 x 24 px minimum (WCAG 2.2 2.5.8; M27). A composed Button or IconButton keeps its own size and classes.",
           "flatName": "DialogTrigger",
           "inherits": [
             {

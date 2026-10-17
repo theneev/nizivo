@@ -10,6 +10,8 @@
     "nz-dialog-popup",
     "nz-dialog-positioner",
     "nz-dialog-title",
+    "nz-dialog-trigger",
+    "nz-hit-target",
     "nz-icon-button"
   ],
   "component": "dialog",

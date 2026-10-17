@@ -6,6 +6,17 @@
    Week 3 aligns the W1 skeleton with the master: 8 / 12 padding, Label/M, Elevation/3, a gap before
    the shortcut, and Figma's "fade + 4px rise". The 12 × 7 arrow is not drawn (a Deviations entry). */
 @layer nz.components {
+  /* The bare trigger, its own <button> (the part adds nz-hit-target only then): at least 24 x 24 px,
+     the WCAG 2.2 2.5.8 minimum, so a short label or a lone glyph still meets it beside another
+     target (M27). The rule also matches a composed Button or IconButton, which carry nz-hit-target
+     themselves; at 32, 40 or 48 px it changes nothing there, and it floors a smaller custom height
+     at 24 px. A consumer's own element through `render` carries no nz-hit-target and keeps its
+     size. The coarse-pointer 44 px hit area is the nz.base .nz-hit-target rule. */
+  .nz-tooltip-trigger.nz-hit-target {
+    min-inline-size: 1.5rem;
+    min-block-size: 1.5rem;
+  }
+
   .nz-tooltip-popup {
     z-index: var(--nz-z-overlay);
     display: flex;

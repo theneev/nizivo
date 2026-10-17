@@ -5,7 +5,8 @@ import { Dialog } from './index';
 /**
  * Figma Modal Type=Destructive: a server Button arrives as the trigger through `render`. Compose a
  * Button (or an IconButton) into `Dialog.Trigger` rather than styling the bare part: it brings the
- * 40 px control height, so two triggers side by side meet WCAG 2.2 2.5.8 (target size). The bare
+ * control look and the 40 px control height (the bare part has only the WCAG 2.2 2.5.8 minimum of
+ * 24 x 24 px, and the 44 px hit area under a coarse pointer; M27). The bare
  * `Dialog.Close` is the header's close IconButton, named "Close"; the alertdialog still focuses
  * Cancel, its least destructive action.
  */
@@ -30,7 +31,7 @@ export function DialogExample(): JSX.Element {
 
 /**
  * Open on the server: closed overlays and server-rendered opens both emit no popup HTML (§12.2 SSR).
- * The trigger is a composed Button, as everywhere (WCAG 2.2 2.5.8).
+ * The trigger is a composed Button, as everywhere.
  */
 export function DialogOpenExample(): JSX.Element {
   return (

@@ -3,9 +3,9 @@ import { Button } from '../button/index';
 import { Tooltip } from './index';
 
 /**
- * Compose a Button (or an IconButton) into `Tooltip.Trigger`: the bare part is an unstyled
- * `<button>` as small as its text, and two side by side fail WCAG 2.2 2.5.8 (target size); the
- * Button brings the 40 px control height.
+ * Compose a Button (or an IconButton) into `Tooltip.Trigger`: it brings the control look and the
+ * 40 px control height. The bare part is an unstyled `<button>` with only the WCAG 2.2 2.5.8 minimum
+ * of 24 x 24 px (and the 44 px hit area under a coarse pointer; M27).
  */
 export function TooltipExample(): JSX.Element {
   return (
@@ -28,7 +28,7 @@ export function TooltipShortcutExample(): JSX.Element {
   );
 }
 
-/** Open on the server; the trigger is a composed Button, as everywhere (WCAG 2.2 2.5.8). */
+/** Open on the server; the trigger is a composed Button, as everywhere. */
 export function TooltipOpenExample(): JSX.Element {
   return (
     <Tooltip.Root defaultOpen delay={0}>

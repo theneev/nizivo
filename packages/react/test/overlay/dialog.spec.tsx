@@ -2,6 +2,7 @@
 import { describe, expect, test } from 'vitest';
 import { server, userEvent } from 'vitest/browser';
 import { CloseGlyph } from '../../src/_internal/glyphs';
+import { Button } from '../../src/button/index';
 import { Dialog } from '../../src/dialog/index';
 import { IconButton } from '../../src/icon-button/index';
 import { describeOverlay } from './conformance';
@@ -385,5 +386,147 @@ describe('Dialog.Close (§12.3, §14.2)', () => {
     const close = get('dialog-close').getBoundingClientRect().top;
     body.scrollTop = body.scrollHeight;
     expect(get('dialog-close').getBoundingClientRect().top).toBe(close);
+  });
+});
+
+// M27: a bare Dialog.Trigger is its own <button>, so it gets a minimum target of its own (WCAG 2.2
+// 2.5.8, 24 x 24 CSS px) and the coarse-pointer hit area; a composed Button or IconButton keeps its
+// own size, and a consumer's own element through `render` is left as it is.
+const Glyph = (
+  <svg viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true">
+    <circle cx="12" cy="12" r="9" />
+  </svg>
+);
+
+function size(element: Element): { width: number; height: number } {
+  const { width, height } = element.getBoundingClientRect();
+  return { width, height };
+}
+
+/** Same rendered size, to 0.01 px: Firefox reports the same box with a 1e-5 px difference. */
+function expectSameSize(element: Element, reference: Element): void {
+  const actual = size(element);
+  const expected = size(reference);
+  expect(actual.width).toBeCloseTo(expected.width, 2);
+  expect(actual.height).toBeCloseTo(expected.height, 2);
+}
+
+function triggers(): HTMLElement[] {
+  return [...document.querySelectorAll<HTMLElement>('[data-slot="dialog-trigger"]')];
+}
+
+describe('Dialog.Trigger target size (WCAG 2.2 2.5.8)', () => {
+  test('a bare text trigger and a bare icon-only trigger are at least 24 x 24 px, side by side', async () => {
+    await mount(
+      <div style={{ display: 'flex' }}>
+        {['?', 'Edit'].map((text) => (
+          <Dialog.Root key={text}>
+            <Dialog.Trigger>{text}</Dialog.Trigger>
+            <Dialog.Popup>
+              <Dialog.Title>{text}</Dialog.Title>
+            </Dialog.Popup>
+          </Dialog.Root>
+        ))}
+        <Dialog.Root>
+          <Dialog.Trigger aria-label="Settings">{Glyph}</Dialog.Trigger>
+          <Dialog.Popup>
+            <Dialog.Title>Settings</Dialog.Title>
+          </Dialog.Popup>
+        </Dialog.Root>
+      </div>,
+    );
+    const bare = triggers();
+    expect(bare).toHaveLength(3);
+    for (const trigger of bare) {
+      expect(trigger.className).toBe('nz-dialog-trigger nz-hit-target');
+      const { width, height } = size(trigger);
+      expect(width).toBeGreaterThanOrEqual(24);
+      expect(height).toBeGreaterThanOrEqual(24);
+    }
+  });
+
+  test('a composed Button or IconButton keeps its own size and classes', async () => {
+    await mount(
+      <>
+        <Button variant="secondary">Edit</Button>
+        <IconButton label="Settings" icon={Glyph} variant="tertiary" size="sm" tooltip={false} />
+        <Dialog.Root>
+          <Dialog.Trigger render={<Button variant="secondary">Edit</Button>} />
+          <Dialog.Popup>
+            <Dialog.Title>Edit</Dialog.Title>
+          </Dialog.Popup>
+        </Dialog.Root>
+        <Dialog.Root>
+          <Dialog.Trigger
+            render={
+              <IconButton
+                label="Settings"
+                icon={Glyph}
+                variant="tertiary"
+                size="sm"
+                tooltip={false}
+              />
+            }
+          />
+          <Dialog.Popup>
+            <Dialog.Title>Settings</Dialog.Title>
+          </Dialog.Popup>
+        </Dialog.Root>
+      </>,
+    );
+    const [button, iconButton] = triggers();
+    if (button === undefined || iconButton === undefined) throw new Error('no trigger');
+    expect(button.className).toBe('nz-button nz-hit-target nz-dialog-trigger');
+    expect(iconButton.className).toBe('nz-icon-button nz-hit-target nz-dialog-trigger');
+    expectSameSize(button, get('button'));
+    expectSameSize(iconButton, get('icon-button'));
+  });
+
+  test("a consumer's own element through render gets no minimum and no hit area", async () => {
+    const container = await mount(
+      <div>
+        <button type="button" className="mine">
+          ?
+        </button>
+        <Dialog.Root>
+          <Dialog.Trigger
+            render={
+              <button type="button" className="mine">
+                ?
+              </button>
+            }
+          />
+          <Dialog.Popup>
+            <Dialog.Title>Help</Dialog.Title>
+          </Dialog.Popup>
+        </Dialog.Root>
+      </div>,
+    );
+    const [reference] = container.querySelectorAll('.mine');
+    const [trigger] = triggers();
+    if (reference === undefined || trigger === undefined) throw new Error('no trigger');
+    expect(trigger.classList).not.toContain('nz-hit-target');
+    expectSameSize(trigger, reference);
+  });
+
+  test('the bare trigger keeps the solid focus outline from the keyboard', async () => {
+    await mount(
+      <Dialog.Root>
+        <Dialog.Trigger aria-label="Settings">{Glyph}</Dialog.Trigger>
+        <Dialog.Popup>
+          <Dialog.Title>Settings</Dialog.Title>
+        </Dialog.Popup>
+      </Dialog.Root>,
+    );
+    await userEvent.keyboard('{Tab}');
+    const trigger = get('dialog-trigger');
+    // WebKit on macOS may skip a button on Tab: focus it by script right after the key press, which
+    // keeps the keyboard modality (as the solid-outline check in test/browser does).
+    if (document.activeElement !== trigger) trigger.focus();
+    await until(() => expect(document.activeElement).toBe(trigger));
+    const ring = getComputedStyle(trigger);
+    expect(ring.outlineStyle).toBe('solid');
+    expect(ring.outlineWidth).toBe('2px');
+    expect(ring.outlineOffset).toBe('2px');
   });
 });

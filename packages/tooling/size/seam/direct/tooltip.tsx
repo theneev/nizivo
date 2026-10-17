@@ -29,7 +29,11 @@ export function TooltipRoot({
 export function TooltipTrigger({ children }: { children?: ReactNode }): JSX.Element {
   return (
     <Focusable>
-      <button type="button" className="nz-tooltip-trigger" data-slot="tooltip-trigger">
+      <button
+        type="button"
+        className="nz-tooltip-trigger nz-hit-target"
+        data-slot="tooltip-trigger"
+      >
         {children}
       </button>
     </Focusable>

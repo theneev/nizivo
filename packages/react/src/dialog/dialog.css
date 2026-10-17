@@ -2,6 +2,17 @@
 
 /* @nizivo/react/css/dialog.css (ARCHITECTURE.md §10.4, §12.1). Skeleton: the full visual pass lands later. */
 @layer nz.components {
+  /* The bare trigger, its own <button> (the part adds nz-hit-target only then): at least 24 x 24 px,
+     the WCAG 2.2 2.5.8 minimum, so a short label or a lone glyph still meets it beside another
+     target (M27). The rule also matches a composed Button or IconButton, which carry nz-hit-target
+     themselves; at 32, 40 or 48 px it changes nothing there, and it floors a smaller custom height
+     at 24 px. A consumer's own element through `render` carries no nz-hit-target and keeps its
+     size. The coarse-pointer 44 px hit area is the nz.base .nz-hit-target rule. */
+  .nz-dialog-trigger.nz-hit-target {
+    min-inline-size: 1.5rem;
+    min-block-size: 1.5rem;
+  }
+
   /* never transformed and never clipping: it is the nested-portal container */
   .nz-dialog-positioner {
     position: fixed;

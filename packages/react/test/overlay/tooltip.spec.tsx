@@ -1,6 +1,8 @@
 // Tooltip against the react-aria family's overlay conformance (ARCHITECTURE.md §12.3 Tooltip row).
 import { afterEach, describe, expect, test } from 'vitest';
 import { userEvent } from 'vitest/browser';
+import { Button } from '../../src/button/index';
+import { IconButton } from '../../src/icon-button/index';
 import { Tooltip } from '../../src/tooltip/index';
 import { describeOverlay } from './conformance';
 import { get, mount, settle, until } from './harness';
@@ -86,5 +88,130 @@ describe('Tooltip behaviour', () => {
     await settle(800);
     expect(popups('Download the report')).toEqual([]);
     expect(get('tooltip-trigger').hasAttribute('data-open')).toBe(false);
+  });
+});
+
+// M27: a bare Tooltip.Trigger is its own <button>, so it gets a minimum target of its own (WCAG 2.2
+// 2.5.8, 24 x 24 CSS px) and the coarse-pointer hit area; a composed Button or IconButton keeps its
+// own size, and a consumer's own element through `render` is left as it is.
+const Glyph = (
+  <svg viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true">
+    <circle cx="12" cy="12" r="9" />
+  </svg>
+);
+
+function size(element: Element): { width: number; height: number } {
+  const { width, height } = element.getBoundingClientRect();
+  return { width, height };
+}
+
+/** Same rendered size, to 0.01 px: Firefox reports the same box with a 1e-5 px difference. */
+function expectSameSize(element: Element, reference: Element): void {
+  const actual = size(element);
+  const expected = size(reference);
+  expect(actual.width).toBeCloseTo(expected.width, 2);
+  expect(actual.height).toBeCloseTo(expected.height, 2);
+}
+
+function triggers(): HTMLElement[] {
+  return [...document.querySelectorAll<HTMLElement>('[data-slot="tooltip-trigger"]')];
+}
+
+describe('Tooltip.Trigger target size (WCAG 2.2 2.5.8)', () => {
+  test('a bare text trigger and a bare icon-only trigger are at least 24 x 24 px, side by side', async () => {
+    await mount(
+      <div style={{ display: 'flex' }}>
+        <Tooltip.Root content="Help">
+          <Tooltip.Trigger>?</Tooltip.Trigger>
+        </Tooltip.Root>
+        <Tooltip.Root content="Export the report">
+          <Tooltip.Trigger>Export</Tooltip.Trigger>
+        </Tooltip.Root>
+        <Tooltip.Root content="Settings">
+          <Tooltip.Trigger aria-label="Settings">{Glyph}</Tooltip.Trigger>
+        </Tooltip.Root>
+      </div>,
+    );
+    const bare = triggers();
+    expect(bare).toHaveLength(3);
+    for (const trigger of bare) {
+      expect(trigger.className).toBe('nz-tooltip-trigger nz-hit-target');
+      const { width, height } = size(trigger);
+      expect(width).toBeGreaterThanOrEqual(24);
+      expect(height).toBeGreaterThanOrEqual(24);
+    }
+  });
+
+  test('a composed Button or IconButton keeps its own size and classes', async () => {
+    await mount(
+      <>
+        <Button variant="tertiary">Export</Button>
+        <IconButton label="Settings" icon={Glyph} variant="tertiary" size="sm" tooltip={false} />
+        <Tooltip.Root content="Export the report">
+          <Tooltip.Trigger render={<Button variant="tertiary">Export</Button>} />
+        </Tooltip.Root>
+        <Tooltip.Root content="Settings">
+          <Tooltip.Trigger
+            render={
+              <IconButton
+                label="Settings"
+                icon={Glyph}
+                variant="tertiary"
+                size="sm"
+                tooltip={false}
+              />
+            }
+          />
+        </Tooltip.Root>
+      </>,
+    );
+    const [button, iconButton] = triggers();
+    if (button === undefined || iconButton === undefined) throw new Error('no trigger');
+    expect(button.className).toBe('nz-button nz-hit-target nz-tooltip-trigger');
+    expect(iconButton.className).toBe('nz-icon-button nz-hit-target nz-tooltip-trigger');
+    expectSameSize(button, get('button'));
+    expectSameSize(iconButton, get('icon-button'));
+  });
+
+  test("a consumer's own element through render gets no minimum and no hit area", async () => {
+    const container = await mount(
+      <div>
+        <button type="button" className="mine">
+          ?
+        </button>
+        <Tooltip.Root content="Help">
+          <Tooltip.Trigger
+            render={
+              <button type="button" className="mine">
+                ?
+              </button>
+            }
+          />
+        </Tooltip.Root>
+      </div>,
+    );
+    const [reference] = container.querySelectorAll('.mine');
+    const [trigger] = triggers();
+    if (reference === undefined || trigger === undefined) throw new Error('no trigger');
+    expect(trigger.classList).not.toContain('nz-hit-target');
+    expectSameSize(trigger, reference);
+  });
+
+  test('the bare trigger keeps the solid focus outline from the keyboard', async () => {
+    await mount(
+      <Tooltip.Root content="Settings">
+        <Tooltip.Trigger aria-label="Settings">{Glyph}</Tooltip.Trigger>
+      </Tooltip.Root>,
+    );
+    await userEvent.keyboard('{Tab}');
+    const trigger = get('tooltip-trigger');
+    // WebKit on macOS may skip a button on Tab: focus it by script right after the key press, which
+    // keeps the keyboard modality (as the solid-outline check in test/browser does).
+    if (document.activeElement !== trigger) trigger.focus();
+    await until(() => expect(document.activeElement).toBe(trigger));
+    const ring = getComputedStyle(trigger);
+    expect(ring.outlineStyle).toBe('solid');
+    expect(ring.outlineWidth).toBe('2px');
+    expect(ring.outlineOffset).toBe('2px');
   });
 });
