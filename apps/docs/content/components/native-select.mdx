@@ -13,3 +13,11 @@ Placed directly inside a Field, or through a function child, a NativeSelect is w
 attributes with no client code. It keeps the browser's own validation bubble rather than the Field's
 inline message, so do not mix it with Field-wired client controls in one native-validated form (see
 [Field](/docs/components/field/#validation-in-mixed-forms)).
+
+## Text size on touch screens
+
+Under a coarse pointer (a phone or a tablet), the value is 16 px (Label/L) instead of 14 px (Label/M)
+at every size, as on the Select trigger, because iOS Safari zooms the page into a focused `<select>`
+whose text is smaller than 16 px. The box keeps its 32, 40 or 48 px height.
+`--nz-native-select-font` replaces the font on every pointer, so a page that sets it also decides
+whether iOS zooms.

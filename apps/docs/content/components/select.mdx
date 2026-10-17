@@ -35,7 +35,8 @@ A click on the label focuses the trigger, with its focus ring, and never opens t
 `<label for>` a button would press it. A required, empty Select stops the submit and takes focus,
 but shows no inline message yet (React Aria handles the hidden `<select>`'s `invalid` event), so pass
 `error` for it. The trigger is a button, which cannot carry `aria-required`, and the Field's `*` is
-hidden from screen readers, so say "required" in the label or the description too. A form reset puts
+hidden from screen readers, so put "required" in the label or the description too (the maintainer's
+rule for 0.1.0). A form reset puts
 the default value back in the trigger and in the submitted data.
 
 ## The selected row
@@ -44,3 +45,10 @@ The selected row is `--nz-bg-brand-subtle` with `--nz-text-brand`, and a check a
 the state for readers who do not see the colour (WCAG 1.4.1). `indicator` on `Select.Item`
 replaces the check, and `indicator={null}` removes it. Rows, the group label and the separator
 share Menu's recipe: 36 px rows, 2 px apart, with the keyboard ring drawn inside the row.
+
+## Text size on touch screens
+
+Under a coarse pointer (a phone or a tablet), the trigger's value and placeholder are 16 px (Label/L)
+instead of 14 px (Label/M) at every size, matching NativeSelect, so swapping one for the other does
+not change the text. The trigger keeps its 32, 40 or 48 px height. The list's rows and group labels
+stay at 14 px: they are not text fields, so iOS does not zoom into them.

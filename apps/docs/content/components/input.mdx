@@ -8,3 +8,10 @@ keyboard:
     action: Submits the form the input belongs to (the browser's implicit submission). Inside a Field, a failed constraint shows its message under the input and focuses the first invalid control.
 keyboardSource: a native `<input>` (`input.client.tsx`); the box's mousedown handler forwards focus to it. The browser lane (`test/browser/text-controls.spec.tsx`) checks the focus outline, the hit area and inline validation on submit.
 ---
+
+## Text size on touch screens
+
+Under a coarse pointer (a phone or a tablet), the text, the placeholder and the affixes are 16 px
+(Body/L) instead of 14 px (Body/M) at every size, because iOS Safari zooms the page into a focused
+field whose text is smaller than 16 px. The box keeps its 32, 40 or 48 px height. `--nz-input-font`
+replaces the font on every pointer, so a page that sets it also decides whether iOS zooms.

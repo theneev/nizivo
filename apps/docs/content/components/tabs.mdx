@@ -6,10 +6,34 @@ keyboard:
   - keys: Tab
     action: Moves focus into the tab list, to the selected tab; the next Tab moves into the panel, to its first focusable element or the panel itself.
   - keys: ArrowRight, ArrowLeft
-    action: Moves focus to the next or previous tab, wrapping at the ends and skipping disabled tabs, and selects it (in manual activation, only moves focus). Under a right-to-left locale set on NizivoConfig the keys follow the reading direction; a dir attribute alone does not flip them.
+    action: Moves focus to the next or previous tab, wrapping at the ends and skipping disabled tabs, and selects it (in manual activation, only moves focus). The keys follow the strip's reading direction, which is the dir prop on its Tabs.Root or on the nearest Tabs.Root around it, otherwise the direction of the locale set on NizivoConfig. A dir attribute on any other element higher up the page does not flip them.
   - keys: Home, End
     action: Moves focus to the first or last tab, and selects it, except in manual activation.
   - keys: Enter, Space
     action: In manual activation, selects the focused tab.
-keyboardSource: react-aria-components 1.22.1 `Tabs`, `TabList`, `Tab` and `TabPanel` (react-aria 3.53.1 `useTabList`, `useTab` and `useTabPanel`) through `_engines/react-aria/tabs.client.tsx`. The browser lane (`test/browser/tabs.spec.tsx`) checks Tab entry, arrows, Home, End, wrapping, skipping a disabled tab, manual activation and the RTL flip.
+keyboardSource: react-aria-components 1.22.1 `Tabs`, `TabList`, `Tab` and `TabPanel` (react-aria 3.53.1 `useTabList`, `useTab` and `useTabPanel`) through `_engines/react-aria/tabs.client.tsx`. The browser lane (`test/browser/tabs.spec.tsx`) checks Tab entry, arrows, Home, End, wrapping, skipping a disabled tab, manual activation and the RTL flip, and that a `dir` on Tabs.Root overrides the NizivoConfig scope, that the nearest of nested scopes wins, that a strip nested in a `dir` root's panel follows that `dir`, that changing `dir` turns the arrows without remounting the tabs, and that a server render with `dir` hydrates without warnings.
 ---
+
+## Direction
+
+The strip's direction comes from the `NizivoConfig` scope: under a right-to-left `locale` (Arabic,
+Hebrew, Persian and so on) the layout and the arrow keys follow it, and ArrowLeft moves to the next tab.
+A strip whose direction differs from its locale's sets `dir` on `Tabs.Root`, which wins over the
+scope:
+
+```tsx
+<NizivoConfig locale="de-DE">
+  {/* a strip of Arabic labels inside a German page */}
+  <Tabs.Root dir="rtl" defaultValue="overview">
+    …
+  </Tabs.Root>
+</NizivoConfig>
+```
+
+`dir` takes `'ltr'` or `'rtl'` and is rendered as the root's `dir` attribute. Without it, nothing is
+rendered and the nearest `Tabs.Root` around the strip that sets `dir` decides, so a strip nested in
+its panels keys the way CSS lays it out; with none, the locale decides. Nothing reads the page's DOM,
+so a `dir` attribute on any other ancestor does not turn the arrows, and `'auto'` is not accepted.
+The override covers the tab list's keys only: the tab labels and the panels keep the scope's locale
+(a number formatted in a label stays in it), and a Menu, Select or Tooltip inside a panel takes its
+direction from `NizivoConfig`.

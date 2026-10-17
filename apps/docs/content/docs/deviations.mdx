@@ -35,10 +35,11 @@ Two week 4 behaviours differ from the APG patterns, and neither is in the Figma 
 - Enter on a Menu checkbox item toggles it and keeps the menu open, as Space does. The APG menu
   button closes the menu on Enter. Staying open lets a reader set several columns in one visit
   (D-ag).
-- Tabs arrow keys follow the right-to-left `locale` set on `NizivoConfig`, not a `dir="rtl"`
-  attribute on the page: without the locale, ArrowRight moves to the tab on the left in a
-  right-to-left strip. Reading the direction from the DOM after hydration is open for the
-  maintainer.
+- Tabs arrow keys follow the direction of the `locale` set on `NizivoConfig`, or the `dir` prop on
+  `Tabs.Root`, which overrides it for that strip and the strips nested in its panels (week 7, the
+  maintainer's decision). A `dir="rtl"`
+  attribute set elsewhere on the page alone does not turn them, because nothing reads the DOM:
+  without the locale or the prop, ArrowRight moves to the tab on the left in a right-to-left strip.
 
 ### Week 5
 
@@ -46,6 +47,22 @@ Week 5 added no component and no Figma facts file, so it has no new value to cho
 places where the shipped CSS leaned on a page reset, which the components must not do: Menu rows are
 36 px as Figma draws them with or without a `border-box` reset, and a Button rendered as a link has
 no underline.
+
+### Week 7
+
+Two values that are not in the Figma file, both the maintainer's decisions of 2026-10-16:
+
+- **16 px text in fields under a coarse pointer.** Input, Textarea, NativeSelect and the Select
+  trigger use Body/L or Label/L (16 px) instead of Figma's Body/M or Label/M (14 px) when the primary
+  pointer is coarse, because iOS Safari zooms the page into a focused field whose text is under 16 px.
+  The weights are Figma's. Heights stay on the 32/40/48 px scale; a Textarea row is Body/L's 25.6 px
+  line there instead of 21 px. The Select list's rows stay at 14 px. A page that sets
+  `--nz-input-font`, `--nz-textarea-font` or `--nz-native-select-font` replaces the font on every
+  pointer, so it also owns the zoom.
+- **A minimum size for bare triggers.** A `Dialog.Trigger` or `Tooltip.Trigger` with no `render`
+  (its own unstyled `<button>`) is at least 24 by 24 px (`1.5rem`), the WCAG 2.2 2.5.8 minimum, and
+  carries `nz-hit-target` for the 44 px coarse-pointer hit area. Figma draws every trigger as a
+  Button, which is still the recommended composition.
 
 ## Builder defaults
 

@@ -8,3 +8,11 @@ keyboard:
     action: Starts a new line; it never submits the form.
 keyboardSource: a native `<textarea>` (`textarea.client.tsx`), which adds no key handling.
 ---
+
+## Text size on touch screens
+
+Under a coarse pointer (a phone or a tablet), the text and the placeholder are 16 px (Body/L) instead
+of 14 px (Body/M), because iOS Safari zooms the page into a focused field whose text is smaller than
+16 px. Each row is then Body/L's 25.6 px line instead of 21 px, so three rows are taller there (Mobile
+Safari 17.5 rounds each row down to 25 px). `--nz-textarea-font` replaces the font on every pointer,
+so a page that sets it also decides whether iOS zooms.

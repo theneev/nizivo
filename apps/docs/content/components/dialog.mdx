@@ -14,18 +14,25 @@ keyboardSource: react-aria-components 1.22.1 `ModalOverlay` and `Modal` (react-a
 
 ## The trigger
 
-Always compose a Button (or an IconButton) into the trigger:
+Compose a Button (or an IconButton) into the trigger; it is still the recommended look:
 
 ```tsx
 <Dialog.Trigger render={<Button variant="secondary">Edit</Button>} />
 ```
 
-A bare `<Dialog.Trigger>Edit</Dialog.Trigger>` is a plain `<button>` with no size of its own: about as
-tall as its text line, which is under the 24 by 24 CSS pixel minimum target of WCAG 2.2 success
-criterion 2.5.8 (Target Size, Minimum). One bare trigger on its own can still pass through the
-criterion's spacing exception, but two side by side fail it. A Button is 32, 40 or 48 px tall and brings
-the variants, the focus ring and the pressed state. Whether a bare trigger should get a minimum size of
-its own is open.
+A Button is 32, 40 or 48 px tall and brings the variants, the focus ring and the pressed state.
+
+A bare `<Dialog.Trigger>Edit</Dialog.Trigger>` is a plain, unstyled `<button>`, but it has a minimum
+size of its own: at least 24 by 24 CSS pixels, the minimum target of WCAG 2.2 success criterion 2.5.8
+(Target Size, Minimum), so two bare triggers side by side, or a lone glyph, still meet it. It also
+carries `nz-hit-target`, so under a coarse pointer it gets the same 44 px hit area as every standalone
+pressable. A trigger you render yourself through `render` keeps its own size and gets neither.
+
+A trigger inside running text, such as a word in a sentence that opens a dialog, is the exception:
+render your own element through `render` there. The 24 px minimum would make its line taller than
+the others, and under a coarse pointer the 44 px hit area would reach into the lines above and below
+and take taps meant for a link there. WCAG 2.2 2.5.8 exempts a target inside a sentence, so the
+inline element needs neither.
 
 ## The close button
 
