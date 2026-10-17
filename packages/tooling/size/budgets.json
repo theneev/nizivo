@@ -350,7 +350,7 @@
       "limitKiB": 0.3
     },
     "@nizivo/react/css/input.css": {
-      "measured": 820,
+      "measured": 844,
       "limitKiB": 0.9
     },
     "@nizivo/react/css/kbd.css": {
@@ -366,7 +366,7 @@
       "limitKiB": 0.8
     },
     "@nizivo/react/css/native-select.css": {
-      "measured": 908,
+      "measured": 930,
       "limitKiB": 1
     },
     "@nizivo/react/css/progress-bar.css": {
@@ -386,7 +386,7 @@
       "limitKiB": 1.1
     },
     "@nizivo/react/css/select.css": {
-      "measured": 1219,
+      "measured": 1244,
       "limitKiB": 1.4
     },
     "@nizivo/react/css/separator.css": {
@@ -418,7 +418,7 @@
       "limitKiB": 0.7
     },
     "@nizivo/react/css/textarea.css": {
-      "measured": 703,
+      "measured": 725,
       "limitKiB": 0.8
     },
     "@nizivo/react/css/tooltip.css": {
@@ -426,7 +426,7 @@
       "limitKiB": 0.6
     },
     "@nizivo/react/styles.css": {
-      "measured": 14878,
+      "measured": 14928,
       "limitKiB": 16
     },
     "@nizivo/tokens": {

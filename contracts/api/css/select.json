@@ -196,6 +196,7 @@
     "--nz-focus-halo",
     "--nz-focus-halo-critical",
     "--nz-font-body-m",
+    "--nz-font-label-l",
     "--nz-font-label-m",
     "--nz-icon-brand",
     "--nz-radius-lg",

@@ -211,16 +211,16 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/image.css             |      243 |        0.2 |        191 |         0.3 |           64 |
 | /css/inline-error.css      |      273 |        0.3 |        217 |         0.3 |           34 |
 | /css/inline.css            |      274 |        0.3 |        219 |         0.3 |           33 |
-| /css/input.css             |      820 |        0.8 |        688 |         0.9 |          101 |
+| /css/input.css             |      844 |        0.8 |        710 |         0.9 |           77 |
 | /css/kbd.css               |      377 |        0.4 |        303 |         0.5 |          135 |
 | /css/menu.css              |    1,050 |        1.0 |        867 |         1.2 |          178 |
 | /css/meter.css             |      663 |        0.6 |        546 |         0.8 |          156 |
-| /css/native-select.css     |      908 |        0.9 |        759 |           1 |          116 |
+| /css/native-select.css     |      930 |        0.9 |        778 |           1 |           94 |
 | /css/progress-bar.css      |      807 |        0.8 |        671 |         0.9 |          114 |
 | /css/progress-ring.css     |      519 |        0.5 |        438 |         0.6 |           95 |
 | /css/radio-group.css       |      824 |        0.8 |        678 |         0.9 |           97 |
 | /css/segmented-control.css |      986 |        1.0 |        808 |         1.1 |          140 |
-| /css/select.css            |    1,219 |        1.2 |      1,022 |         1.4 |          214 |
+| /css/select.css            |    1,244 |        1.2 |      1,050 |         1.4 |          189 |
 | /css/separator.css         |      261 |        0.3 |        203 |         0.3 |           46 |
 | /css/skeleton.css          |      365 |        0.4 |        325 |         0.4 |           44 |
 | /css/stack.css             |      270 |        0.3 |        209 |         0.3 |           37 |
@@ -228,9 +228,9 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/tab-nav.css           |      842 |        0.8 |        690 |           1 |          182 |
 | /css/tabs.css              |      972 |        0.9 |        792 |         1.1 |          154 |
 | /css/text.css              |      574 |        0.6 |        487 |         0.7 |          142 |
-| /css/textarea.css          |      703 |        0.7 |        577 |         0.8 |          116 |
+| /css/textarea.css          |      725 |        0.7 |        601 |         0.8 |           94 |
 | /css/tooltip.css           |      550 |        0.5 |        456 |         0.6 |           64 |
-| /styles.css                |   14,878 |       14.5 |     12,631 |          16 |        1,506 |
+| /styles.css                |   14,928 |       14.6 |     12,698 |          16 |        1,456 |
 
 #### `@nizivo/tokens`: Public JS entries (bundled with what they import, React Aria included)
 

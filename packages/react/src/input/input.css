@@ -4,7 +4,7 @@
    is the bordered box; the native <input> inside it (.nz-input-control) is transparent and draws no
    outline of its own (the 2 px focus outline is the root's, from nz.base, focusTarget "within"). Sizes set only privates;
    public --nz-input-* hooks are read once, at the property. Invalid reads [data-invalid], set when
-   a message is presented, never :invalid (§8.3). */
+   a message is presented, never :invalid (§8.3). Body/M, or Body/L under a coarse pointer (M25). */
 @layer nz.components {
   .nz-input {
     --_nz-input-height: var(--nz-size-control-md);
@@ -14,6 +14,7 @@
     --_nz-input-border-hover: var(--nz-border-control-hover);
     --_nz-input-bg: var(--nz-bg-surface);
     --_nz-input-halo: var(--nz-focus-halo);
+    --_nz-input-font: var(--nz-font-body-m);
 
     display: inline-flex;
     align-items: center;
@@ -26,7 +27,7 @@
     border-radius: var(--nz-input-radius, var(--_nz-input-radius));
     background: var(--nz-input-bg, var(--_nz-input-bg));
     color: var(--nz-input-fg, var(--nz-text-primary));
-    font: var(--nz-input-font, var(--nz-font-body-m));
+    font: var(--nz-input-font, var(--_nz-input-font));
     cursor: text;
     transition:
       border-color var(--nz-duration-fast) var(--nz-easing-standard),
@@ -70,6 +71,12 @@
 
     &[data-size='lg'] {
       --_nz-input-height: var(--nz-size-control-lg);
+    }
+
+    /* at every size, with the affixes and placeholder (inherited): iOS Safari zooms into a focused
+       field under 16 px. The height stays on the size scale; only the line inside it grows */
+    @media (pointer: coarse) {
+      --_nz-input-font: var(--nz-font-body-l);
     }
   }
 

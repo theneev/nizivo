@@ -6,13 +6,15 @@
    vertically. Where field-sizing is supported (Chrome 123; not Firefox 129 or Safari 17.5) it also
    grows with its content, never below its `rows`: field-sizing drops the rows height, so the
    minimum is rebuilt from the attribute (rows 1 to 10; more fall back to 3) with no inline style.
-   Invalid reads [data-invalid], set when a message is presented (§8.3). */
+   Invalid reads [data-invalid], set when a message is presented (§8.3). Body/M, or Body/L under a
+   coarse pointer (M25), where each row is Body/L's 25.6 px line instead of 21 px. */
 @layer nz.components {
   .nz-textarea {
     --_nz-textarea-border: var(--nz-border-control);
     --_nz-textarea-border-hover: var(--nz-border-control-hover);
     --_nz-textarea-bg: var(--nz-bg-surface);
     --_nz-textarea-halo: var(--nz-focus-halo);
+    --_nz-textarea-font: var(--nz-font-body-m);
 
     display: block;
     box-sizing: border-box;
@@ -25,7 +27,7 @@
     border-radius: var(--nz-textarea-radius, var(--nz-radius-md));
     background: var(--nz-textarea-bg, var(--_nz-textarea-bg));
     color: var(--nz-textarea-fg, var(--nz-text-primary));
-    font: var(--nz-textarea-font, var(--nz-font-body-m));
+    font: var(--nz-textarea-font, var(--_nz-textarea-font));
     resize: vertical;
     transition:
       border-color var(--nz-duration-fast) var(--nz-easing-standard),
@@ -37,6 +39,11 @@
         var(--_nz-textarea-rows, 3) * 1lh + 2 *
           var(--nz-textarea-padding-block, var(--nz-space-2)) + 2 * var(--nz-border-width-default)
       );
+    }
+
+    /* iOS Safari zooms into a focused field under 16 px; the placeholder inherits the size */
+    @media (pointer: coarse) {
+      --_nz-textarea-font: var(--nz-font-body-l);
     }
 
     &::placeholder {

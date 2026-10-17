@@ -5,7 +5,8 @@
    popup and its rows repeat Menu's recipe (menu.css: the Dropdown Menu master 746:204 and the Menu
    Item set 7275:11516), values copied, not imported. Sizes and states set only privates; public
    --nz-select-* hooks are read once, at the property. Invalid reads [data-invalid], set when a
-   message is presented, never :invalid (§8.3). */
+   message is presented, never :invalid (§8.3). The trigger is Label/M, or Label/L under a coarse
+   pointer (M25), as NativeSelect's, so swapping one for the other does not change the text. */
 @layer nz.components {
   .nz-select-trigger {
     --_nz-select-height: var(--nz-size-control-md);
@@ -13,6 +14,7 @@
     --_nz-select-border: var(--nz-border-control);
     --_nz-select-border-hover: var(--nz-border-control-hover);
     --_nz-select-halo: var(--nz-focus-halo);
+    --_nz-select-font: var(--nz-font-label-m);
 
     display: inline-flex;
     align-items: center;
@@ -26,7 +28,7 @@
     border-radius: var(--nz-select-radius, var(--_nz-select-radius));
     background: var(--nz-select-bg, var(--nz-bg-surface));
     color: var(--nz-text-primary);
-    font: var(--nz-font-label-m);
+    font: var(--_nz-select-font);
     cursor: pointer;
     transition:
       border-color var(--nz-duration-fast) var(--nz-easing-standard),
@@ -66,6 +68,11 @@
 
     &[data-size='lg'] {
       --_nz-select-height: var(--nz-size-control-lg);
+    }
+
+    /* at every size, value and placeholder (inherited); the height stays on the size scale */
+    @media (pointer: coarse) {
+      --_nz-select-font: var(--nz-font-label-l);
     }
   }
 

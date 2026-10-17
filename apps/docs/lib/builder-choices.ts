@@ -268,12 +268,13 @@ const W3_CHOICES: Record<number, BuilderChoiceW3> = {
   },
   23: {
     chosen:
-      'Matches the shipped Select: `--nz-space-3` both sides, `--nz-font-label-m` value, `--nz-text-secondary` chevron.',
+      'Matches the shipped Select: `--nz-space-3` both sides, `--nz-font-label-m` value (`--nz-font-label-l`, 16 px, under a coarse pointer, M25), `--nz-text-secondary` chevron.',
     hook: '--nz-native-select-font',
     file: sheet('native-select'),
     declarations: [
       '--_nz-native-select-padding: var(--nz-space-3);',
-      'font: var(--nz-native-select-font, var(--nz-font-label-m));',
+      '--_nz-native-select-font: var(--nz-font-label-m);',
+      'font: var(--nz-native-select-font, var(--_nz-native-select-font));',
     ],
   },
   24: {

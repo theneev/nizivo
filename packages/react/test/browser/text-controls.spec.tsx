@@ -1,12 +1,13 @@
 // Input, Textarea and NativeSelect in a real browser (ARCHITECTURE.md §8.5, §16.1, §9.5): server HTML
 // hydrates with no mismatch, the Input box is the input's hit area, native validation shows inline
-// through the Field, each control draws exactly one focus outline, and a NativeSelect has the Select
-// trigger's geometry at every size, so swapping one for the other does not shift layout.
+// through the Field, each control draws exactly one focus outline, a NativeSelect has the Select
+// trigger's geometry at every size, so swapping one for the other does not shift layout, and under a
+// coarse pointer every text field's text is 16 px, so iOS Safari does not zoom on focus (M25).
 import { createRef, type JSX, type ReactNode } from 'react';
 import { createRoot, hydrateRoot, type Root } from 'react-dom/client';
 import { renderToString } from 'react-dom/server';
 import { afterEach, describe, expect, test, vi } from 'vitest';
-import { userEvent } from 'vitest/browser';
+import { cdp, server, userEvent } from 'vitest/browser';
 import type { ControlSize } from '../../src/augment';
 import { Field } from '../../src/field/field';
 import { Input } from '../../src/input/input.client';
@@ -326,3 +327,83 @@ describe('Textarea height', () => {
     expect(grown).toBeCloseTo(expected, 0);
   });
 });
+
+/** An element's computed font size, or its pseudo-element's. */
+const fontSize = (el: Element, pseudo?: string): string => getComputedStyle(el, pseudo).fontSize;
+
+/** The typed text of every field at one size, their heights and the Select pair's text metrics. */
+async function measureFields(size: ControlSize) {
+  const container = await mount(
+    <>
+      <Input aria-label="Title" size={size} placeholder="e.g. Stoneware mug" suffix="kg" />
+      <Textarea aria-label="Note" rows={2} placeholder="Add a note" />
+      <NativeSelect aria-label="Zone" size={size} placeholder="Choose a zone">
+        <option value="eu">Europe</option>
+      </NativeSelect>
+      <SelectRoot aria-label="Period" size={size} placeholder="Choose a period">
+        <SelectTrigger />
+        <SelectPopup>
+          <SelectItem value="7d">Last 7 days</SelectItem>
+        </SelectPopup>
+      </SelectRoot>
+    </>,
+  );
+  const input = one(container, '.nz-input-control', HTMLInputElement);
+  const textarea = one(container, '.nz-textarea', HTMLTextAreaElement);
+  const native = one(container, '.nz-native-select-trigger', HTMLSelectElement);
+  const trigger = one(container, '.nz-select-trigger', HTMLElement);
+  return {
+    text: {
+      input: fontSize(input),
+      placeholder: fontSize(input, '::placeholder'),
+      suffix: fontSize(one(container, '.nz-input-suffix', HTMLElement)),
+      textarea: fontSize(textarea),
+      textareaPlaceholder: fontSize(textarea, '::placeholder'),
+      nativeSelect: fontSize(native),
+      selectTrigger: fontSize(trigger),
+      selectValue: fontSize(one(container, '.nz-select-value', HTMLElement)),
+    },
+    heights: {
+      input: one(container, '.nz-input', HTMLElement).getBoundingClientRect().height,
+      nativeSelect: native.getBoundingClientRect().height,
+      selectTrigger: trigger.getBoundingClientRect().height,
+    },
+    line: Number.parseFloat(getComputedStyle(textarea).lineHeight),
+    pair: [metrics(getComputedStyle(native)), metrics(getComputedStyle(trigger))],
+  };
+}
+
+describe.runIf(server.browser === 'chromium')(
+  'text fields under a coarse pointer: 16 px text, heights on the size scale (M25)',
+  () => {
+    const SIZES: ControlSize[] = ['sm', 'md', 'lg'];
+
+    test.each(SIZES)('size %s', async (size) => {
+      const fine = await measureFields(size);
+      document.body.replaceChildren();
+      expect(matchMedia('(pointer: coarse)').matches).toBe(false);
+      const session = cdp();
+      // Chromium's touch emulation also switches the primary pointer to coarse (DevTools device mode)
+      await session.send('Emulation.setTouchEmulationEnabled', {
+        enabled: true,
+        maxTouchPoints: 1,
+      });
+      try {
+        expect(matchMedia('(pointer: coarse)').matches).toBe(true);
+        const coarse = await measureFields(size);
+        // every field's text, its placeholder and the Input's affix: Body/L or Label/L, 16 px
+        for (const value of Object.values(coarse.text)) expect(value).toBe('16px');
+        // desktop is untouched: Body/M and Label/M, 14 px
+        for (const value of Object.values(fine.text)) expect(value).toBe('14px');
+        // the control heights stay on the size scale; only the Textarea's rows grow (Body/L's line)
+        expect(coarse.heights).toEqual(fine.heights);
+        expect(fine.line).toBeCloseTo(21, 1);
+        expect(coarse.line).toBeCloseTo(25.6, 1);
+        // a NativeSelect and a Select still swap with no change to the text
+        expect(coarse.pair[0]).toEqual(coarse.pair[1]);
+      } finally {
+        await session.send('Emulation.setTouchEmulationEnabled', { enabled: false });
+      }
+    });
+  },
+);

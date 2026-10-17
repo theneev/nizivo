@@ -95,8 +95,22 @@
     },
     {
       "fallback": {
-        "kind": "token",
-        "name": "--nz-font-body-m"
+        "kind": "private",
+        "name": "--_nz-textarea-font",
+        "values": [
+          {
+            "conditions": [],
+            "selector": ".nz-textarea",
+            "value": "var(--nz-font-body-m)",
+            "when": {}
+          },
+          {
+            "conditions": ["@media (pointer: coarse)"],
+            "selector": ".nz-textarea",
+            "value": "var(--nz-font-body-l)",
+            "when": {}
+          }
+        ]
       },
       "name": "--nz-textarea-font",
       "reads": [
@@ -192,6 +206,7 @@
     "--nz-easing-standard",
     "--nz-focus-halo",
     "--nz-focus-halo-critical",
+    "--nz-font-body-l",
     "--nz-font-body-m",
     "--nz-radius-md",
     "--nz-space-2",

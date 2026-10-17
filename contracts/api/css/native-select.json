@@ -77,8 +77,22 @@
     },
     {
       "fallback": {
-        "kind": "token",
-        "name": "--nz-font-label-m"
+        "kind": "private",
+        "name": "--_nz-native-select-font",
+        "values": [
+          {
+            "conditions": [],
+            "selector": ".nz-native-select",
+            "value": "var(--nz-font-label-m)",
+            "when": {}
+          },
+          {
+            "conditions": ["@media (pointer: coarse)"],
+            "selector": ".nz-native-select",
+            "value": "var(--nz-font-label-l)",
+            "when": {}
+          }
+        ]
       },
       "name": "--nz-native-select-font",
       "reads": [
@@ -198,6 +212,7 @@
     "--nz-easing-standard",
     "--nz-focus-halo",
     "--nz-focus-halo-critical",
+    "--nz-font-label-l",
     "--nz-font-label-m",
     "--nz-radius-md",
     "--nz-radius-sm",
