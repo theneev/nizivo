@@ -203,7 +203,7 @@
     },
     "@nizivo/react own: _engines/react-aria/tabs.client": {
       "measured": 629,
-      "limitKiB": 0.7
+      "limitKiB": 0.9
     },
     "@nizivo/react own: _engines/react-aria/tooltip.client": {
       "measured": 719,

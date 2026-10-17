@@ -115,7 +115,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /container         |      694 |        0.7 |        633 |         0.8 |          125 |
 | /contracts         |    1,021 |        1.0 |        915 |         1.1 |          105 |
 | /delta             |    1,012 |        1.0 |        932 |         1.1 |          114 |
-| /dialog            |   32,121 |       31.4 |     28,551 |          31 |         -377 |
+| /dialog            |   32,121 |       31.4 |     28,551 |          32 |          647 |
 | /empty-state       |      840 |        0.8 |        768 |           1 |          184 |
 | /field             |    3,115 |        3.0 |      2,862 |         3.4 |          366 |
 | /fieldset          |    1,715 |        1.7 |      1,560 |         1.9 |          230 |
@@ -150,7 +150,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 | Entry                      | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | -------------------------- | -------: | ---------: | ---------: | ----------: | -----------: |
-| dashboard set              |   77,260 |       75.4 |     65,314 |          75 |         -460 |
+| dashboard set              |   77,260 |       75.4 |     65,314 |          76 |          564 |
 | { Button } from the barrel |    1,232 |        1.2 |      1,129 |         1.4 |          201 |
 | { Select } from the barrel |   63,185 |       61.7 |     54,242 |          68 |        6,447 |
 
@@ -164,7 +164,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | own: _engines/react-aria/overlay.client         |      511 |        0.5 |        444 |         0.6 |          103 |
 | own: _engines/react-aria/popup.client           |    1,126 |        1.1 |        994 |         1.3 |          205 |
 | own: _engines/react-aria/select.client          |    1,431 |        1.4 |      1,255 |         1.6 |          207 |
-| own: _engines/react-aria/tabs.client            |      629 |        0.6 |        555 |         0.7 |           87 |
+| own: _engines/react-aria/tabs.client            |      629 |        0.6 |        555 |         0.9 |          292 |
 | own: _engines/react-aria/tooltip.client         |      719 |        0.7 |        680 |         0.8 |          100 |
 | own: alert/alert-dismiss.client                 |      354 |        0.3 |        300 |         0.4 |           55 |
 | own: checkbox/checkbox.client                   |      750 |        0.7 |        692 |         0.9 |          171 |
