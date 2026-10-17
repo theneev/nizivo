@@ -170,7 +170,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | own: checkbox/checkbox.client                   |      750 |        0.7 |        692 |         0.9 |          171 |
 | own: config/config.client                       |      197 |        0.2 |        179 |         0.3 |          110 |
 | own: dialog/dialog.client                       |    1,309 |        1.3 |      1,182 |         1.4 |          124 |
-| own: field/field-scope.client                   |    1,123 |        1.1 |      1,009 |         1.3 |          208 |
+| own: field/field-scope.client                   |    1,123 |        1.1 |      1,009 |         1.6 |          515 |
 | own: icon-button/icon-button.client             |      349 |        0.3 |        301 |         0.4 |           60 |
 | own: input/input.client                         |      692 |        0.7 |        611 |         0.8 |          127 |
 | own: menu/menu.client                           |    1,035 |        1.0 |        932 |         1.2 |          193 |

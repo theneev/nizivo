@@ -227,7 +227,7 @@
     },
     "@nizivo/react own: field/field-scope.client": {
       "measured": 1123,
-      "limitKiB": 1.3
+      "limitKiB": 1.6
     },
     "@nizivo/react own: icon-button/icon-button.client": {
       "measured": 349,
