@@ -96,7 +96,7 @@ Client JavaScript against week 6 (gzip -9 of a page's chunks): Tabs pages grow b
 - **The 44 px coarse-pointer hit area on the bare triggers** comes from the unchanged `nz.base` rule; no test emulates a coarse pointer for them.
 - **Screen readers:** the manual pass is Dayitava's (exit criterion 14, M20).
 - **The `<button>` box sizing on the floor engines:** the `border-box` reading behind F7 was taken in Chromium 156, Firefox 157 and WebKit 27.2, not in Firefox 129 or Safari 17.5 (the floor page has no bare trigger).
-- **A WebKit flake in the overlay lane, older than week 7:** Tooltip's "opens from the keyboard (focus) and Escape returns focus to the trigger" sometimes finds the popup still open after Escape (the full WebKit overlay lane failed it once in five runs at 00266d6 and once in four on the week 7 tree). The first `pnpm release` dry run stopped there (`lane overlay-webkit`); the second passed every step. Like the O-03 Firefox flake of week 6, it is not diagnosed.
+- **A WebKit flake in the overlay lane, older than week 7:** Tooltip's "opens from the keyboard (focus) and Escape returns focus to the trigger" sometimes finds the popup still open after Escape (the full WebKit overlay lane failed it once in five runs at 00266d6 and once in four on the week 7 tree). The first `pnpm release` dry run stopped there (`lane overlay-webkit`); the second passed every step. Like the O-03 Firefox flake of week 6, it is not diagnosed. (Week 8 diagnosed it as test isolation, not a product bug, and fixed it in `test/overlay/tooltip.spec.tsx`; see W8-RESULTS.md.)
 
 ## Follow-ups (not done, not decided)
 
