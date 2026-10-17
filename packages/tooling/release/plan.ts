@@ -1,6 +1,8 @@
 // The pure half of the local release script (release.ts; ARCHITECTURE.md §19.2, M14): the publish
 // order, the version, engine, registry, licence and 2FA rules, and the exact npm and git arguments.
-// Nothing here runs a command or touches a file, so release.test.ts covers it without a network.
+// Nothing here runs a command or touches a file (npmCwdProblem is handed its file check), so
+// plan.test.ts covers it without a network.
+import { dirname, isAbsolute, join, resolve, sep } from 'node:path';
 
 /** The fixed group (§5.4) in publish order: every package after the packages it depends on. */
 export const PUBLISHED = [
@@ -312,9 +314,120 @@ export function twoFactor(result: ExecResult): { ok: boolean; detail: string } {
   return { ok: true, detail: '2FA on (auth-and-writes)' };
 }
 
-/** What the maintainer runs when npm says nobody is logged in. Outside the repo: see release.ts. */
-export function loginCommand(): string {
-  return `cd ~ && npm login --registry ${REGISTRY}`;
+// --- The npm login file and npm's working directory (the maintainer's decision of 2026-10-17) ------
+//
+// The release logs in to npm through a config file of the project's own, never through ~/.npmrc (on
+// the maintainer's machine it holds an unrelated, invalid token). Every npm call gets
+// `--userconfig <file>` and runs in an empty folder outside the repo and the home folder, because
+// npm also reads a *project* config: `<localPrefix>/.npmrc`, where localPrefix is the nearest folder
+// at or above the working directory that holds a package.json or a node_modules, else the working
+// directory itself (@npmcli/config loadLocalPrefix). Run from the home folder, that is ~/.npmrc; npm
+// skips it only while it is also the user config, so with --userconfig it is read as project config,
+// which outranks the user config: its old token wins and npm answers 401.
+
+/** Names another npm login file than the default. */
+export const USERCONFIG_ENV = 'NIZIVO_NPM_USERCONFIG';
+
+/** `path` with the home folder written as `~`, for commands the maintainer copies. */
+export function tilde(path: string, home: string): string {
+  const p = resolve(path);
+  return isInside(p, home) ? `~${p.slice(resolve(home).length)}` : p;
+}
+
+function isInside(path: string, folder: string): boolean {
+  const p = resolve(path);
+  const f = resolve(folder);
+  return p === f || p.startsWith(f.endsWith(sep) ? f : f + sep);
+}
+
+/** A path as a shell word: `~/…` stays unquoted (quotes would stop the shell expanding it). */
+function shellWord(path: string, home: string): string {
+  const short = tilde(path, home);
+  if (/^[\w@%+=:,./~-]+$/.test(short)) return short;
+  return `'${path.replace(/'/g, `'\\''`)}'`;
+}
+
+/**
+ * The npm login file: USERCONFIG_ENV if set (absolute, or starting with `~/`), else
+ * `~/.config/nizivo/npmrc`. Never ~/.npmrc, never a file in the repo (a token there could be
+ * committed), and never a file directly in the home folder (logging in from there hits the
+ * project-config trap above).
+ */
+export function npmUserconfig(
+  env: Readonly<Record<string, string | undefined>>,
+  home: string,
+  repo: string,
+): { path: string } | { problem: string } {
+  const raw = env[USERCONFIG_ENV]?.trim() ?? '';
+  const named = raw === '' ? join(home, '.config', 'nizivo', 'npmrc') : raw;
+  const expanded = named.startsWith('~/') ? join(home, named.slice(2)) : named;
+  const where = raw === '' ? 'the npm login file' : `${USERCONFIG_ENV} (${raw})`;
+  if (!isAbsolute(expanded)) {
+    return { problem: `${where} must be an absolute path or start with ~/` };
+  }
+  const path = resolve(expanded);
+  if (path === join(resolve(home), '.npmrc')) {
+    return { problem: `${where} is ~/.npmrc, which the release never uses; unset it` };
+  }
+  if (isInside(path, repo)) {
+    return { problem: `${where} is inside the repo, where a token could be committed` };
+  }
+  if (dirname(path) === resolve(home)) {
+    return {
+      problem: `${where} is directly in the home folder; keep it in a folder of its own, such as ~/.config/nizivo/npmrc`,
+    };
+  }
+  return { path };
+}
+
+/** Every npm call's arguments: `--userconfig` goes last, so the subcommand stays first. */
+export function withUserconfig(args: readonly string[], userconfig: string): string[] {
+  return [...args, '--userconfig', userconfig];
+}
+
+/**
+ * Why npm must not run in `cwd`, or undefined when it may: inside the repo npm 11 refuses to run
+ * (EBADDEVENGINES: the root package.json's devEngines names pnpm); in the home folder, or below any
+ * folder npm would take as a project, it would read that folder's .npmrc over --userconfig.
+ */
+export function npmCwdProblem(
+  cwd: string,
+  { repo, home, exists }: { repo: string; home: string; exists: (path: string) => boolean },
+): string | undefined {
+  const folder = resolve(cwd);
+  if (isInside(folder, repo)) return `npm's working directory ${folder} is inside the repo`;
+  if (folder === resolve(home)) {
+    return `npm's working directory is the home folder, where npm reads ~/.npmrc over --userconfig`;
+  }
+  for (let p = folder; ; p = dirname(p)) {
+    for (const marker of ['package.json', 'node_modules']) {
+      if (exists(join(p, marker))) {
+        return `npm would take ${p} (it has a ${marker}) as the project above its working directory ${folder}, and read its .npmrc over --userconfig`;
+      }
+    }
+    if (dirname(p) === p) break;
+  }
+  if (exists(join(folder, '.npmrc'))) return `npm's working directory ${folder} has a .npmrc`;
+  return undefined;
+}
+
+/**
+ * What the maintainer runs when the login file is missing or npm says nobody is logged in: from the
+ * login file's own folder (not the repo, not ~), with that file as the user config.
+ */
+export function loginCommand(
+  userconfig: string,
+  home: string,
+  { mkdir }: { mkdir: boolean },
+): string {
+  const folder = shellWord(dirname(userconfig), home);
+  const login = `cd ${folder} && npm login --registry ${REGISTRY} --userconfig ${shellWord(userconfig, home)}`;
+  return mkdir ? `mkdir -p ${folder} && ${login}` : login;
+}
+
+/** Logging out again, the same way (RELEASING.md). */
+export function logoutCommand(userconfig: string, home: string): string {
+  return `cd ${shellWord(dirname(userconfig), home)} && npm logout --registry ${REGISTRY} --userconfig ${shellWord(userconfig, home)}`;
 }
 
 /** `npm publish` arguments for one checked tarball. The one-time password never goes on argv. */

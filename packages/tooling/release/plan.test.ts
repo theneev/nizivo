@@ -1,4 +1,5 @@
 /* oxlint-disable no-await-in-loop -- each scenario runs in its own stubbed world, one after another */
+import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, test } from 'vitest';
 import { REPO_ROOT } from '../../../fixtures/runner/pack.ts';
@@ -8,7 +9,11 @@ import {
   checkOrder,
   checkVersions,
   isOtp,
+  loginCommand,
+  logoutCommand,
   meetsMinimum,
+  npmCwdProblem,
+  npmUserconfig,
   pendingReleases,
   planPublish,
   publishArgs,
@@ -17,14 +22,18 @@ import {
   RELEASE_LANES,
   registryState,
   tagName,
+  tilde,
   twoFactor,
+  USERCONFIG_ENV,
   whoAmI,
+  withUserconfig,
   type ExecResult,
   type Packed,
   type RegistryState,
 } from './plan.ts';
 import { release, type ExecOptions, type Io, type Options } from './release.ts';
 
+const none = (): boolean => false;
 const OK = (stdout = ''): ExecResult => ({ status: 0, stdout, stderr: '' });
 const NPM_404 = (what: string): ExecResult => ({
   status: 1,
@@ -221,6 +230,85 @@ describe('plan', () => {
     ]).toEqual([true, true, true, false, false]);
   });
 
+  test('the npm login file: the default, the override, and the paths refused', () => {
+    const home = '/home/m';
+    const repo = '/home/m/code/nizivo';
+    expect(npmUserconfig({}, home, repo)).toEqual({ path: '/home/m/.config/nizivo/npmrc' });
+    expect(npmUserconfig({ [USERCONFIG_ENV]: '  ' }, home, repo)).toEqual({
+      path: '/home/m/.config/nizivo/npmrc',
+    });
+    expect(npmUserconfig({ [USERCONFIG_ENV]: '/secure/npm/rc' }, home, repo)).toEqual({
+      path: '/secure/npm/rc',
+    });
+    expect(npmUserconfig({ [USERCONFIG_ENV]: '~/.config/other/npmrc' }, home, repo)).toEqual({
+      path: '/home/m/.config/other/npmrc',
+    });
+    const refused = (value: string): string => {
+      const result = npmUserconfig({ [USERCONFIG_ENV]: value }, home, repo);
+      return 'problem' in result ? result.problem : 'accepted';
+    };
+    expect(refused('npmrc')).toMatch(/must be an absolute path or start with ~\//);
+    expect(refused('~/.npmrc')).toMatch(/is ~\/\.npmrc, which the release never uses/);
+    expect(refused('/home/m/.npmrc')).toMatch(/never uses/);
+    expect(refused('/home/m/code/nizivo/.npmrc')).toMatch(/inside the repo/);
+    expect(refused('/home/m/nizivo-npmrc')).toMatch(/directly in the home folder/);
+  });
+
+  test('npm only runs in a folder that is neither the repo, nor home, nor under a project', () => {
+    const where = { repo: '/r/nizivo', home: '/home/m' };
+    expect(npmCwdProblem('/tmp/nz-npm-1', { ...where, exists: none })).toBeUndefined();
+    expect(npmCwdProblem('/r/nizivo', { ...where, exists: none })).toMatch(/inside the repo/);
+    expect(npmCwdProblem('/r/nizivo/packages/react', { ...where, exists: none })).toMatch(
+      /inside the repo/,
+    );
+    // A sibling whose name starts with the repo's is not inside it.
+    expect(npmCwdProblem('/r/nizivo-npm', { ...where, exists: none })).toBeUndefined();
+    expect(npmCwdProblem('/home/m', { ...where, exists: none })).toMatch(/the home folder/);
+    expect(npmCwdProblem('/home/m/', { ...where, exists: none })).toMatch(/the home folder/);
+    // npm would take /w (package.json or node_modules) as the project and read /w/.npmrc.
+    for (const marker of ['package.json', 'node_modules']) {
+      expect(
+        npmCwdProblem('/w/tmp/nz-npm-1', { ...where, exists: (p) => p === `/w/${marker}` }),
+      ).toMatch(new RegExp(`take /w \\(it has a ${marker}\\)`));
+    }
+    expect(
+      npmCwdProblem('/tmp/nz-npm-1', { ...where, exists: (p) => p === '/tmp/nz-npm-1/.npmrc' }),
+    ).toMatch(/has a \.npmrc/);
+  });
+
+  test("npm arguments end with --userconfig; login and logout run from the file's folder", () => {
+    expect(withUserconfig(['whoami', '--json'], '/h/.config/nizivo/npmrc')).toEqual([
+      'whoami',
+      '--json',
+      '--userconfig',
+      '/h/.config/nizivo/npmrc',
+    ]);
+    const file = '/h/.config/nizivo/npmrc';
+    expect(loginCommand(file, '/h', { mkdir: false })).toBe(
+      'cd ~/.config/nizivo && npm login --registry https://registry.npmjs.org/ --userconfig ~/.config/nizivo/npmrc',
+    );
+    expect(loginCommand(file, '/h', { mkdir: true })).toBe(
+      'mkdir -p ~/.config/nizivo && cd ~/.config/nizivo && npm login --registry https://registry.npmjs.org/ --userconfig ~/.config/nizivo/npmrc',
+    );
+    expect(logoutCommand(file, '/h')).toBe(
+      'cd ~/.config/nizivo && npm logout --registry https://registry.npmjs.org/ --userconfig ~/.config/nizivo/npmrc',
+    );
+    // Outside home the path stays absolute; a space is quoted.
+    expect(loginCommand('/vault/my npm/npmrc', '/h', { mkdir: false })).toBe(
+      "cd '/vault/my npm' && npm login --registry https://registry.npmjs.org/ --userconfig '/vault/my npm/npmrc'",
+    );
+    expect(tilde('/h', '/h')).toBe('~');
+    expect(tilde('/hx/npmrc', '/h')).toBe('/hx/npmrc');
+  });
+
+  test('RELEASING.md gives the same login and logout commands as the script', () => {
+    const doc = readFileSync(join(REPO_ROOT, 'RELEASING.md'), 'utf8');
+    const file = join(HOME, '.config', 'nizivo', 'npmrc');
+    expect(doc).toContain(loginCommand(file, HOME, { mkdir: true }));
+    expect(doc).toContain(logoutCommand(file, HOME));
+    expect(doc).not.toContain('cd ~ && npm');
+  });
+
   test('meetsMinimum reads >=x.y.z only', () => {
     expect(meetsMinimum('24.16.0', '>=24.16.0')).toBe(true);
     expect(meetsMinimum('v25.0.1', '>=24.16.0')).toBe(true);
@@ -255,9 +343,19 @@ interface World {
   tamper?: string;
   /** a lane that rewrites a committed file */
   laneDirties?: boolean;
+  /** the npm login file is missing (and its folder, unless in `existing`) */
+  noUserconfig?: boolean;
+  env?: Record<string, string>;
+  /** npm's working directory, if not NPM_CWD */
+  npmCwd?: string;
+  /** more paths that exist */
+  existing?: string[];
 }
 
 const STAGE = '/tmp/nz-publish-test';
+const NPM_CWD = '/tmp/nz-npm-test';
+const HOME = '/home/maintainer';
+const USERCONFIG = `${HOME}/.config/nizivo/npmrc`;
 
 function world(w: World = {}) {
   const calls: Call[] = [];
@@ -306,6 +404,9 @@ function world(w: World = {}) {
     }
   };
   manifests();
+  const userconfig = (w.env?.[USERCONFIG_ENV] ?? USERCONFIG).replace(/^~/, HOME);
+  if (w.noUserconfig !== true) files.set(userconfig, '');
+  const existing = new Set(w.existing ?? []);
   const integrity = new Map<string, string>();
 
   const exec = (command: string, args: string[], options: ExecOptions): ExecResult => {
@@ -408,7 +509,7 @@ function world(w: World = {}) {
       if (text === undefined) throw new Error(`no file ${path}`);
       return text;
     },
-    exists: (path) => files.has(path),
+    exists: (path) => files.has(path) || existing.has(path),
     remove: (path) => removed.push(path),
     integrity: (path) => {
       const first = integrity.get(path);
@@ -419,6 +520,9 @@ function world(w: World = {}) {
       return w.tamper !== undefined && path.includes(w.tamper) ? 'sha512-changed' : first;
     },
     stage: () => STAGE,
+    npmCwd: () => w.npmCwd ?? NPM_CWD,
+    home: HOME,
+    env: w.env ?? {},
     checkPackages: async (stage): Promise<{ failed: number; packages: CheckedPackage[] }> => ({
       failed: 0,
       packages: PUBLISHED.map(({ name, dir }) => ({
@@ -436,7 +540,8 @@ function world(w: World = {}) {
   };
   const lines = () => calls.map((c) => [c.command, ...c.args].join(' '));
   const publishes = () => calls.filter((c) => c.command === 'npm' && c.args[0] === 'publish');
-  return { io, calls, logs, asked, removed, lines, publishes };
+  const npmCalls = () => calls.filter((c) => c.command === 'npm');
+  return { io, calls, logs, asked, removed, lines, publishes, npmCalls };
 }
 
 const DRY: Options = { dryRun: true, skipGate: false, skipLanes: false };
@@ -449,7 +554,9 @@ function expectSafe(lines: string[], dryRun: boolean): void {
   expect(lines.filter((l) => /\bnpm login\b|\badduser\b/.test(l))).toEqual([]);
   // A real run may publish, tag and version; a dry run never does.
   const dry = dryRun ? lines : [];
-  expect(dry.filter((l) => l.startsWith('npm publish') && !l.endsWith('--dry-run'))).toEqual([]);
+  expect(
+    dry.filter((l) => l.startsWith('npm publish') && !l.split(' ').includes('--dry-run')),
+  ).toEqual([]);
   expect(dry.filter((l) => /^git (tag|commit|add|restore)\b/.test(l))).toEqual([]);
   expect(dry.filter((l) => /changeset version/.test(l))).toEqual([]);
 }
@@ -464,8 +571,8 @@ describe('release', () => {
       `${STAGE}/nizivo-icons-0.1.0.tgz`,
       `${STAGE}/nizivo-react-0.1.0.tgz`,
     ]);
-    // npm never runs inside the repo (devEngines names pnpm: EBADDEVENGINES).
-    expect(calls.filter((c) => c.command === 'npm').every((c) => c.options.cwd === STAGE)).toBe(
+    // npm runs in its own folder: never the repo (EBADDEVENGINES), never home (~/.npmrc).
+    expect(calls.filter((c) => c.command === 'npm').every((c) => c.options.cwd === NPM_CWD)).toBe(
       true,
     );
     const check = calls.find((c) => c.args.join(' ') === 'pnpm@12.11.2 check');
@@ -488,7 +595,9 @@ describe('release', () => {
     expectSafe(lines(), true);
     expect(publishes()).toHaveLength(3);
     const text = logs.join('\n');
-    expect(text).toContain('cd ~ && npm login --registry https://registry.npmjs.org/');
+    expect(text).toContain(
+      'cd ~/.config/nizivo && npm login --registry https://registry.npmjs.org/ --userconfig ~/.config/nizivo/npmrc',
+    );
     expect(text).toMatch(/not clean/);
     expect(text).toMatch(/0 ahead, 3 behind/);
   });
@@ -506,7 +615,9 @@ describe('release', () => {
     expectSafe(lines(), false);
     expect(lines().some((l) => l.endsWith(' check'))).toBe(false);
     expect(lines().some((l) => l.startsWith('npm publish'))).toBe(false);
-    expect(logs.join('\n')).toContain('cd ~ && npm login');
+    expect(logs.join('\n')).toContain(
+      '~/.config/nizivo/npmrc is not logged in to npm. The maintainer runs:  cd ~/.config/nizivo && npm login --registry https://registry.npmjs.org/ --userconfig ~/.config/nizivo/npmrc  (as neevtechnologies)',
+    );
   });
 
   test('a real run refuses the wrong npm account, a dirty tree, another branch', async () => {
@@ -521,6 +632,93 @@ describe('release', () => {
     }
   });
 
+  test('every npm call carries --userconfig with the login file, in dry and real runs', async () => {
+    const cases: [Options, World][] = [
+      [DRY, READY],
+      [REAL, { ...READY, answers: ['publish'], otps: ['111111', '222222', '333333'] }],
+      [DRY, { ...READY, env: { [USERCONFIG_ENV]: '/vault/nizivo/npmrc' } }],
+      [DRY, { ...READY, env: { [USERCONFIG_ENV]: '~/.config/elsewhere/npmrc' } }],
+    ];
+    for (const [options, w] of cases) {
+      const { io, npmCalls } = world(w);
+      expect(await release(options, io)).toBe(0);
+      const expected = (w.env?.[USERCONFIG_ENV] ?? USERCONFIG).replace(/^~/, HOME);
+      // whoami, profile get, three views and three publishes
+      expect(npmCalls().map((c) => c.args[0])).toEqual([
+        'whoami',
+        'profile',
+        'view',
+        'view',
+        'view',
+        'publish',
+        'publish',
+        'publish',
+      ]);
+      for (const call of npmCalls()) {
+        expect(call.args.slice(-2)).toEqual(['--userconfig', expected]);
+        expect(call.args.filter((a) => a === '--userconfig')).toHaveLength(1);
+        // never the repo or the home folder, nor anywhere under them
+        const cwd = call.options.cwd;
+        for (const folder of [REPO_ROOT, HOME]) {
+          expect(cwd === folder || cwd.startsWith(`${folder}/`)).toBe(false);
+        }
+      }
+    }
+  });
+
+  test('a missing login file blocks with the login command; npm whoami does not run', async () => {
+    const real = world({ ...READY, noUserconfig: true });
+    expect(await release(REAL, real.io)).toBe(1);
+    expectSafe(real.lines(), false);
+    expect(real.npmCalls()).toEqual([]);
+    expect(real.lines().some((l) => l.endsWith(' check'))).toBe(false);
+    expect(real.logs.join('\n')).toContain(
+      'no npm login file at ~/.config/nizivo/npmrc. The maintainer runs:  mkdir -p ~/.config/nizivo && cd ~/.config/nizivo && npm login --registry https://registry.npmjs.org/ --userconfig ~/.config/nizivo/npmrc  (as neevtechnologies)',
+    );
+    // The folder exists: no mkdir.
+    const folder = world({
+      ...READY,
+      noUserconfig: true,
+      existing: [`${HOME}/.config/nizivo`],
+    });
+    expect(await release(REAL, folder.io)).toBe(1);
+    expect(folder.logs.join('\n')).toContain(
+      'The maintainer runs:  cd ~/.config/nizivo && npm login',
+    );
+    // A dry run lists it and still rehearses view and publish --dry-run, with the same file.
+    const dry = world({ ...READY, noUserconfig: true });
+    expect(await release(DRY, dry.io)).toBe(1);
+    expectSafe(dry.lines(), true);
+    expect(dry.npmCalls().map((c) => c.args[0])).not.toContain('whoami');
+    expect(dry.publishes()).toHaveLength(3);
+    expect(dry.npmCalls().every((c) => c.args.at(-1) === USERCONFIG)).toBe(true);
+    expect(dry.logs.join('\n')).toMatch(
+      /BLOCKER {2}no npm login file at ~\/\.config\/nizivo\/npmrc/,
+    );
+  });
+
+  test('npm never runs in the repo, the home folder or under a project, nor with ~/.npmrc', async () => {
+    const cases: [World, RegExp][] = [
+      [{ npmCwd: REPO_ROOT }, /inside the repo/],
+      [{ npmCwd: join(REPO_ROOT, 'packages/react') }, /inside the repo/],
+      [{ npmCwd: HOME }, /the home folder/],
+      [{ npmCwd: '/w/tmp/nz-npm-1', existing: ['/w/node_modules'] }, /take \/w/],
+      [{ env: { [USERCONFIG_ENV]: '~/.npmrc' } }, /never uses/],
+      [{ env: { [USERCONFIG_ENV]: 'relative/npmrc' } }, /absolute path/],
+      [{ env: { [USERCONFIG_ENV]: join(REPO_ROOT, '.npmrc-release') } }, /inside the repo/],
+    ];
+    for (const [w, message] of cases) {
+      for (const options of [REAL, DRY]) {
+        const { io, npmCalls, logs, lines } = world({ ...READY, ...w });
+        expect(await release(options, io)).toBe(1);
+        expectSafe(lines(), options.dryRun);
+        expect(npmCalls()).toEqual([]);
+        expect(logs.join('\n')).toMatch(message);
+        expect(logs.join('\n')).toContain('npm was not run');
+      }
+    }
+  });
+
   test('a real run publishes in order with a one-time password each, kept off argv, then tags', async () => {
     const otps = ['111111', '222222', '333333'];
     const { io, calls, lines, publishes, asked, logs } = world({
@@ -530,11 +728,14 @@ describe('release', () => {
     });
     expect(await release(REAL, io)).toBe(0);
     expectSafe(lines(), false);
-    expect(publishes().map((c) => c.args.at(-1))).toEqual([
+    expect(
+      publishes().map((c) => c.args[c.args.indexOf('--registry') + 1] ?? 'no --registry'),
+    ).toEqual([
       'https://registry.npmjs.org/',
       'https://registry.npmjs.org/',
       'https://registry.npmjs.org/',
     ]);
+    expect(publishes().every((c) => !c.args.includes('--dry-run'))).toBe(true);
     expect(publishes().map((c) => c.options.env?.['npm_config_otp'])).toEqual(otps);
     for (const otp of otps) {
       expect(lines().some((l) => l.includes(otp))).toBe(false);

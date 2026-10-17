@@ -116,7 +116,7 @@ Contributors never publish. While GitHub Actions is off, the maintainer publishe
 
 1. On a clean `main` that equals `origin/main`, run `pnpm release`. It runs the full gate and the slow lanes (about 8 to 10 minutes), packs and checks the tarballs, runs `npm publish --dry-run` on each, and lists every blocker. Fix them all.
 2. If changesets are pending, run `pnpm release --publish` once: it runs `pnpm changeset version`, shows the diff, commits it on `y` and stops. Push `main`, pull, and start again.
-3. Log in to npm once, outside the repo: `cd ~ && npm login --registry https://registry.npmjs.org/` as `neevtechnologies`, with 2FA set to "authorization and writes".
+3. Log in to npm once, as `neevtechnologies` with 2FA set to "authorization and writes", into the project's own login file (never `~/.npmrc`, and never from `~`; see "The npm login" in RELEASING.md): `mkdir -p ~/.config/nizivo && cd ~/.config/nizivo && npm login --registry https://registry.npmjs.org/ --userconfig ~/.config/nizivo/npmrc`. The script passes `--userconfig` to every npm call and runs npm in an empty temporary folder.
 4. Run `pnpm release` again and expect no blockers. Then run `pnpm release --publish`, type `publish` to confirm, and enter a fresh one-time password for each package (tokens, icons, react).
 5. The script creates local tags `@nizivo/<package>@<version>` and prints the `git push` command; you run it.
 

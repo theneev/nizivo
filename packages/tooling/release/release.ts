@@ -8,7 +8,8 @@
 //
 // Steps, stopping at the first failure:
 // 1. Preflight: on main, a clean tree, HEAD equal to origin/main after `git fetch` (never a push),
-//    Node and pnpm as the root package.json pins them, `npm whoami` is the owner account, 2FA on.
+//    Node and pnpm as the root package.json pins them, npm's working directory and login file (below),
+//    `npm whoami` is the owner account, 2FA on.
 // 2. Version: pending changesets → (real run) `pnpm changeset version`, show the diff, commit it on
 //    confirmation, then stop: the maintainer pushes main and runs the script again from it (§19.2:
 //    the commit to publish already carries the version bumps). A dry run only shows the plan.
@@ -23,14 +24,19 @@
 //    sha512 must still equal the one that was checked.
 // 9. Annotated local tags `<name>@<version>` on HEAD, and the push command for the maintainer.
 //
-// npm runs with its working directory in the temporary stage, outside the repo: inside it, npm 11
-// refuses to run because the root package.json's devEngines names pnpm (EBADDEVENGINES).
+// npm (the maintainer's decision of 2026-10-17; plan.ts explains why): every npm call (whoami,
+// profile, view, publish) gets `--userconfig <login file>`, the project's own login file
+// (`~/.config/nizivo/npmrc`, or NIZIVO_NPM_USERCONFIG), never ~/.npmrc, and runs in an empty folder
+// of its own that is neither in the repo (npm 11 refuses to run there: devEngines names pnpm,
+// EBADDEVENGINES) nor the home folder (npm would read ~/.npmrc as project config, over
+// --userconfig). If that folder is not neutral, or the login file's path is refused, no npm command
+// runs at all.
 /* oxlint-disable no-await-in-loop -- every step runs in order and may prompt */
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs';
-import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { existsSync, mkdtempSync, readFileSync, realpathSync, rmSync } from 'node:fs';
+import { homedir, tmpdir } from 'node:os';
+import { dirname, join } from 'node:path';
 import { createInterface } from 'node:readline/promises';
 import { isatty } from 'node:tty';
 import { parseArgs } from 'node:util';
@@ -44,6 +50,8 @@ import {
   isOtp,
   loginCommand,
   meetsMinimum,
+  npmCwdProblem,
+  npmUserconfig,
   NPM_OWNER,
   pendingReleases,
   planPublish,
@@ -54,9 +62,11 @@ import {
   RELEASE_LANES,
   registryState,
   tagName,
+  tilde,
   twoFactor,
   viewArgs,
   whoAmI,
+  withUserconfig,
   type ExecResult,
   type Manifest,
   type Packed,
@@ -87,6 +97,12 @@ export interface Io {
   integrity(path: string): string;
   /** A new empty folder outside the repo. */
   stage(): string;
+  /** Another new empty folder, npm's working directory: outside the repo and the home folder. */
+  npmCwd(): string;
+  /** The home folder (os.homedir()). */
+  home: string;
+  /** The environment the script reads NIZIVO_NPM_USERCONFIG from. */
+  env: Readonly<Record<string, string | undefined>>;
   checkPackages(stage: string): Promise<{ failed: number; packages: CheckedPackage[] }>;
   missingBuilds(): string[];
 }
@@ -178,9 +194,23 @@ export async function release(options: Options, io: Io): Promise<number> {
   const git = (args: string[], extra: Partial<ExecOptions> = {}): ExecResult =>
     io.exec('git', args, { cwd: REPO_ROOT, ...extra });
   const stage = io.stage();
-  const npm = (args: string[], extra: Partial<ExecOptions> = {}): ExecResult =>
-    io.exec('npm', args, { cwd: stage, ...extra });
+  const npmCwd = io.npmCwd();
+  const cwdProblem = npmCwdProblem(npmCwd, {
+    repo: REPO_ROOT,
+    home: io.home,
+    exists: (path) => io.exists(path),
+  });
+  const userconfig = npmUserconfig(io.env, io.home, REPO_ROOT);
+  const npmRefused = cwdProblem ?? ('problem' in userconfig ? userconfig.problem : undefined);
+  /** The one way the script runs npm: in npmCwd, with the login file, or not at all. */
+  const npm = (args: string[], extra: Partial<ExecOptions> = {}): ExecResult => {
+    if (npmRefused !== undefined || !('path' in userconfig)) {
+      return { status: 1, stdout: '', stderr: `npm not run: ${npmRefused ?? 'no login file'}` };
+    }
+    return io.exec('npm', withUserconfig(args, userconfig.path), { ...extra, cwd: npmCwd });
+  };
   io.log(`stage: ${stage}`);
+  io.log(`npm runs in: ${npmCwd}`);
 
   // 1. Preflight ---------------------------------------------------------------------------------
   heading('1. Preflight');
@@ -219,18 +249,33 @@ export async function release(options: Options, io: Io): Promise<number> {
     if (version === pnpmVersion) ok(`pnpm ${version} (devEngines)`);
     else block(`pnpm is ${version || 'unavailable'}, devEngines pins ${pnpmVersion}`);
   }
-  const who = whoAmI(npm(['whoami', '--json', '--registry', REGISTRY]));
-  if (who.kind === 'logged-out') {
-    block(`not logged in to npm. The maintainer runs:  ${loginCommand()}  (as ${NPM_OWNER})`);
-  } else if (who.kind === 'error') {
-    block(who.message);
-  } else if (who.name !== NPM_OWNER) {
-    block(`npm whoami is "${who.name}", expected ${NPM_OWNER}`);
-  } else {
-    ok(`npm whoami: ${who.name}`);
-    const tfa = twoFactor(npm(['profile', 'get', '--json', '--registry', REGISTRY]));
-    if (tfa.ok) ok(tfa.detail);
-    else block(tfa.detail);
+  if (cwdProblem === undefined) ok(`npm's working directory is neutral (${npmCwd})`);
+  else block(`${cwdProblem}; npm was not run (set TMPDIR to a folder outside the repo and ~)`);
+  if ('problem' in userconfig) block(`${userconfig.problem}; npm was not run`);
+  else if (!io.exists(userconfig.path)) {
+    const shown = tilde(userconfig.path, io.home);
+    const command = loginCommand(userconfig.path, io.home, {
+      mkdir: !io.exists(dirname(userconfig.path)),
+    });
+    block(`no npm login file at ${shown}. The maintainer runs:  ${command}  (as ${NPM_OWNER})`);
+  } else if (cwdProblem === undefined) {
+    const shown = tilde(userconfig.path, io.home);
+    const who = whoAmI(npm(['whoami', '--json', '--registry', REGISTRY]));
+    if (who.kind === 'logged-out') {
+      const command = loginCommand(userconfig.path, io.home, { mkdir: false });
+      block(
+        `${shown} is not logged in to npm. The maintainer runs:  ${command}  (as ${NPM_OWNER})`,
+      );
+    } else if (who.kind === 'error') {
+      block(who.message);
+    } else if (who.name !== NPM_OWNER) {
+      block(`npm whoami (${shown}) is "${who.name}", expected ${NPM_OWNER}`);
+    } else {
+      ok(`npm whoami (${shown}): ${who.name}`);
+      const tfa = twoFactor(npm(['profile', 'get', '--json', '--registry', REGISTRY]));
+      if (tfa.ok) ok(tfa.detail);
+      else block(tfa.detail);
+    }
   }
   if (halt()) return stop('preflight failed; fix the blockers above and run it again');
 
@@ -536,7 +581,8 @@ async function versionStep(
 function childEnv(extra: Record<string, string> | undefined): NodeJS.ProcessEnv {
   const env: NodeJS.ProcessEnv = {};
   for (const [key, value] of Object.entries(process.env)) {
-    if (/^npm_(config|package|lifecycle)_/.test(key)) continue;
+    // npm reads its environment variables in any case: NPM_CONFIG_USERCONFIG is one too.
+    if (/^npm_(config|package|lifecycle)_/i.test(key)) continue;
     env[key] = value;
   }
   return { ...env, COREPACK_ENABLE_DOWNLOAD_PROMPT: '0', ...extra };
@@ -607,6 +653,10 @@ export const realIo: Io = {
   remove: (path) => rmSync(path, { force: true }),
   integrity: (path) => `sha512-${createHash('sha512').update(readFileSync(path)).digest('base64')}`,
   stage: () => mkdtempSync(join(tmpdir(), 'nz-publish-')),
+  // The real path: npm sees it as its working directory, and the checks compare real paths.
+  npmCwd: () => realpathSync(mkdtempSync(join(tmpdir(), 'nz-npm-'))),
+  home: homedir(),
+  env: process.env,
   checkPackages,
   missingBuilds,
 };
