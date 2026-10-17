@@ -216,7 +216,17 @@ describe('native validation through FieldScope', () => {
     expect(describedText(email)).toBe(email.validationMessage);
     // exactly one error part per invalid field (§9.6 case 5), and never a live region (§16.5)
     expect(container.querySelectorAll('[data-slot="field-error"]')).toHaveLength(3);
-    expect(container.querySelector('[aria-live], [role="alert"], [role="status"]')).toBeNull();
+    expect(container.querySelector('[data-slot="field-error"][aria-live]')).toBeNull();
+    expect(container.querySelector('[role="alert"], [role="status"]')).toBeNull();
+    // the only live regions are the announcers of the client Fields (§16.5's one exception), and a
+    // submit that moves focus leaves them empty (test/browser/field-announcer.spec.tsx)
+    const live = [...container.querySelectorAll('[aria-live]')];
+    expect(live.map((region) => region.parentElement?.getAttribute('data-validate-on'))).toEqual([
+      'submit',
+      'blur',
+      'submit',
+    ]);
+    for (const region of live) expect(region.textContent).toBe('');
   });
 
   test('focus lands after the error is wired: aria-invalid and the error id are set at focusin', async () => {

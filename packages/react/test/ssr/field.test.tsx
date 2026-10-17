@@ -311,6 +311,25 @@ describe('Field markup', () => {
     expect('onBlur' in field.controlProps).toBe(false);
   });
 
+  test("client control: the announcer (§16.5) is the root's last child, after the error, empty", () => {
+    const { html } = probe(undefined, (child) => (
+      <Field ids={IDS} label="Title" error="Enter a title">
+        {child}
+      </Field>
+    ));
+    expect(html).toMatch(
+      /Enter a title<\/span><\/div><span class="nz-visually-hidden" aria-live="polite" aria-atomic="true"><\/span><\/div>$/,
+    );
+    // one region, never on the error itself, and no alert or status role
+    expect(html.match(/aria-live/g)).toHaveLength(1);
+    expect(html).not.toMatch(/role="(alert|status)"/);
+    // without an error it is there all the same: a live region must exist before its text does
+    const { html: valid } = probe(undefined, (child) => <Field label="Title">{child}</Field>);
+    expect(valid).toMatch(
+      /<span class="nz-visually-hidden" aria-live="polite" aria-atomic="true"><\/span><\/div>$/,
+    );
+  });
+
   test('validateOn="blur" adds the blur handler and the attribute', () => {
     const { html, field } = probe(undefined, (child) => (
       <Field label="Email" validateOn="blur">

@@ -213,9 +213,11 @@ export function start(input: HarnessInput): void {
         if (!target) throw new Error(`harness: no element marked ${id}`);
         return union([target.getBoundingClientRect(), ...popups]);
       }
-      const content = [...stage.querySelectorAll('.nz-visual-host *')].map((el) =>
-        el.getBoundingClientRect(),
-      );
+      // A visually hidden element paints nothing, but its 1 px box sits 1 px outside its parent
+      // (base.css: margin -1px), so it would grow the crop (Field's announcer, M29)
+      const content = [...stage.querySelectorAll('.nz-visual-host *')]
+        .filter((el) => el.closest('.nz-visually-hidden') === null)
+        .map((el) => el.getBoundingClientRect());
       return union([...content, ...popups]);
     },
 

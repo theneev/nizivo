@@ -74,7 +74,9 @@ export interface FieldProps extends Omit<ComponentPropsWithRef<'div'>, 'children
   /**
    * The error message, rendered through InlineError with an icon (never colour alone). Its presence
    * is what "invalid" means (§8.3): `aria-invalid` on the control and `data-invalid` on the Field.
-   * It is not a live region (§16.5). `null`, `false` and `''` present no error.
+   * It is not a live region; around a client control, the Field's one announcer speaks a new error
+   * while focus is already in the Field (§16.5's one exception, FIELD-CONTRACT.md). `null`, `false`
+   * and `''` present no error.
    */
   error?: ReactNode;
   /** Replaces the internal error mark (`circle-x`). Decorative. */
@@ -128,6 +130,8 @@ interface FieldAnatomy {
   root: Omit<ComponentPropsWithRef<'div'>, 'children'>;
   /** FieldScope only (never serialised): `labelBehavior: 'focus'` (FIELD-CONTRACT.md). */
   onLabelClick?: ((event: MouseEvent<HTMLLabelElement>) => void) | undefined;
+  /** FieldScope only: the polite live region of §16.5's one exception, rendered last. */
+  announcer?: ReactNode;
   children: ReactNode;
 }
 
@@ -286,6 +290,7 @@ export function fieldRootProps(anatomy: FieldAnatomy): Record<string, unknown> {
             {error}
           </InlineError>
         )}
+        {anatomy.announcer}
       </>
     ),
   };

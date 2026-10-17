@@ -3,8 +3,9 @@
 How a form control plugs into `Field` (ARCHITECTURE.md §10.6, §16.1, D16). Input, Textarea,
 Checkbox, Switch, SegmentedControl, NativeSelect and third-party controls build on this API;
 RadioGroup and checkbox groups build on `Fieldset` (last section). Tests that pin it:
-`test/ssr/field.test.tsx` (RSC boundary, markup, precedence) and `test/browser/field.spec.tsx`
-(hydration, native validation; Chromium and WebKit).
+`test/ssr/field.test.tsx` (RSC boundary, markup, precedence), `test/browser/field.spec.tsx`
+(hydration, native validation; Chromium and WebKit) and `test/browser/field-announcer.spec.tsx`
+(the announcer; Chromium, WebKit and Firefox).
 
 ## The shape
 
@@ -15,6 +16,7 @@ Field (field.tsx, NO directive, server-safe; calls useId and nothing else)
                               field-scope.client.tsx ('use client'):
                                ├─ provides the context useFieldControl() reads
                                ├─ owns the native validation message (useState)
+                               ├─ owns the announcer, §16.5's one exception (below)
                                └─ renders the same anatomy (fieldRootProps() in field.tsx)
 control leaf ('use client') ─► useFieldControl({ …its own props }) → spreads controlProps
 ```
@@ -32,16 +34,63 @@ div.nz-field             data-slot="field"  [data-disabled] [data-readonly] [dat
 │   └─ span.nz-field-required  data-slot="field-required"  aria-hidden="true"  "*"   (when required)
 ├─ the control (children)
 ├─ div.nz-field-description  data-slot="field-description"  id={description}         (when given)
-└─ InlineError: div.nz-inline-error.nz-field-error  data-slot="field-error"  id={error}   (when invalid)
+├─ InlineError: div.nz-inline-error.nz-field-error  data-slot="field-error"  id={error}   (when invalid)
+└─ span.nz-visually-hidden  aria-live="polite"  aria-atomic="true"   (FieldScope path only: the announcer)
 ```
 
 - DOM order is label, control, description, error; the description stays visible while an error
-  shows (Q30, builder default). `data-validate-on` is written only on the FieldScope path; the
-  zero-JS path intercepts nothing, so it has no attribute.
+  shows (Q30, builder default). `data-validate-on` and the announcer are written only on the
+  FieldScope path; the zero-JS path intercepts nothing, so it has neither, and both paths print the
+  same HTML otherwise.
 - The error is **not a live region** (§16.5): it is reached through the control's
   `aria-describedby` and `aria-invalid`, so typing never announces anything. Moving focus to the
-  form's first invalid control on submit is what makes a screen reader read it.
+  form's first invalid control on submit is what makes a screen reader read it. When focus is
+  already there, the announcer speaks it instead (next section).
 - The error mark is the internal `circle-x` glyph (`errorIcon` replaces it).
+
+## The announcer (§16.5's one exception, M29)
+
+Focus is the announcement: a submit moves focus to the form's first invalid control, and a screen
+reader reads the new error through `aria-describedby`. When focus is already in that control (Enter
+in it, a shortcut that calls `requestSubmit()`, a Server Action replying while the user waits in the
+field), nothing moves, so nothing would be read. For that case alone, FieldScope renders one polite
+live region, the last child of the Field root. It is the only live region a Nizivo form part adds;
+InlineError and the error part stay not live.
+
+- **It exists before the message.** The region is in the server HTML, empty (a live region must
+  exist before its content changes, WCAG technique ARIA19), and hydration adopts it unchanged. The
+  zero-JS path has none: there the browser's own bubble speaks. It is visually hidden
+  (`nz-visually-hidden`, base.css), never `display: none`, and has no `data-slot`.
+- **When it speaks.** A _validation request made while focus is in the Field_ arms it: an `invalid`
+  event at the control when it is the form's first invalid control, where focus goes (native
+  validation), or a `submit` event of the form (any form library or Server Action; listened for on
+  the document, in the capture phase, so before the app's own handler validates). The next error
+  text that then commits is spoken once, if focus is still in the Field. Native validation answers
+  at once, so its message is spoken even when it is the one already shown (typing may have changed
+  it silently). For the `error` prop, a re-render that keeps the text (a pending state while the
+  action runs) says nothing; the reply that changes it is spoken. A commit that empties the error
+  keeps the request, so an app that clears its errors when a submit starts still has the reply
+  spoken.
+- **When it says nothing.** On the first render and at hydration (Strict Mode included); when the
+  request moves focus to the control (the focus move reads the error); at a control that is not the
+  form's first invalid one (focus goes to that one, moved by the browser or by its own Field, and
+  is read there; so a `reportValidity()` call on such a control is silent too); in a Field focus is
+  not in;
+  while the user types (an input event withdraws the request, so the native message `onInput`
+  updates, or an `error` an app derives per keystroke, stays silent); when a reply's text equals the
+  error already shown; and when the text is the one the region still holds (a second Enter on an
+  unchanged message within 7 s is not repeated).
+- **What it says.** The text of the InlineError message: the `messages` entry, the browser's
+  `validationMessage`, or the text of the `error` node. Not the mark, which is `aria-hidden` and
+  which an `errorIcon` could give text.
+- **Cleared after.** The region empties 7 s after it speaks (the delay React Aria's own announcer
+  uses), and at once when the error changes silently or clears; assistive technology does not
+  announce a removal (`aria-relevant`'s default is additions and text). While it holds the text, a reader moving through the form meets the
+  message twice: the error, then the region.
+- **Outside the rule.** A library that moves focus into the control itself is not a request from
+  inside the Field: if focus lands before the error commits, a screen reader reads the control
+  without it and the region says nothing. Let the Field move focus (native validation), or move it
+  after the error renders.
 
 ## `useFieldControl(options?)`: what a control calls
 
@@ -232,8 +281,9 @@ need `labelledBy` instead:
   `form.elements` order (cancelling `invalid` also cancels the browser's own focus move; not
   `querySelector(':invalid')`, which matches an ancestor `fieldset` first).
 - While a native message shows, `onInput` updates it and removes it once the value is valid, with
-  no announcement. With `validateOn="blur"` (opt-in), `onBlur` reads `validity` directly and shows
-  or clears the message; it never calls `checkValidity()`, which would fire `invalid` and pull focus
+  no announcement. A submit from inside the first invalid control (focus already there, so it does
+  not move) has its message spoken by the announcer instead. With `validateOn="blur"` (opt-in),
+  `onBlur` reads `validity` directly and shows or clears the message; it never calls `checkValidity()`, which would fire `invalid` and pull focus
   back. The `error` prop is never cleared by the Field: the caller owns it.
 - A consumer's own `form.checkValidity()` / `reportValidity()` also fires `invalid`, so it shows the
   inline messages and may move focus to the first invalid control. Accepted: both are validation
@@ -331,3 +381,9 @@ one to `_internal/` only when two controls need the same non-Field code.
 - RadioGroup and checkbox groups have no native-validation path through Fieldset; RadioGroup owns
   its group message.
 - `Form errors[name]` (v0.2) joins the error channel between the `error` prop and the native message.
+  Form's planned focus move to the first invalid control after a Server Action (gap report A §2.5)
+  must run after the errors commit, or the control is read without its error (see "Outside the
+  rule" above).
+- The announcer's speech in real screen readers (NVDA, JAWS, VoiceOver on macOS and iOS, TalkBack)
+  is not verified: the browser tests check the DOM and Chromium's accessibility tree only (the
+  accessibility owner's manual pass, NIZ-78).

@@ -2,7 +2,7 @@
   "$comment": "Size budgets (ARCHITECTURE.md §17), written by `node packages/tooling/size/measure.ts --write`. measured: bytes, gzip -9, as size-limit 14.2 reports them. limitKiB: measured + 10%, rounded up (method.ts limitKiB), never above the entry's §17.1 plan limit (method.ts PLAN_LIMITS_KIB). Limits only go up through a labelled PR (§17.3).",
   "entries": {
     "@nizivo/react": {
-      "measured": 85908,
+      "measured": 86198,
       "limitKiB": 93
     },
     "@nizivo/react/alert": {
@@ -26,7 +26,7 @@
       "limitKiB": 1.2
     },
     "@nizivo/react/checkbox": {
-      "measured": 2068,
+      "measured": 2071,
       "limitKiB": 2.3
     },
     "@nizivo/react/config": {
@@ -54,7 +54,7 @@
       "limitKiB": 1
     },
     "@nizivo/react/field": {
-      "measured": 3115,
+      "measured": 3463,
       "limitKiB": 3.4
     },
     "@nizivo/react/fieldset": {
@@ -86,7 +86,7 @@
       "limitKiB": 1.2
     },
     "@nizivo/react/input": {
-      "measured": 1811,
+      "measured": 1817,
       "limitKiB": 2
     },
     "@nizivo/react/kbd": {
@@ -118,7 +118,7 @@
       "limitKiB": 2.4
     },
     "@nizivo/react/segmented-control": {
-      "measured": 2365,
+      "measured": 2371,
       "limitKiB": 2.6
     },
     "@nizivo/react/select": {
@@ -138,7 +138,7 @@
       "limitKiB": 0.8
     },
     "@nizivo/react/switch": {
-      "measured": 1729,
+      "measured": 1735,
       "limitKiB": 1.9
     },
     "@nizivo/react/tab-nav": {
@@ -154,7 +154,7 @@
       "limitKiB": 0.8
     },
     "@nizivo/react/textarea": {
-      "measured": 1349,
+      "measured": 1355,
       "limitKiB": 1.5
     },
     "@nizivo/react/theme-script": {
@@ -166,7 +166,7 @@
       "limitKiB": 16
     },
     "@nizivo/react dashboard set": {
-      "measured": 77373,
+      "measured": 77378,
       "limitKiB": 76
     },
     "@nizivo/react { Button } from the barrel": {
@@ -174,7 +174,7 @@
       "limitKiB": 1.4
     },
     "@nizivo/react { Select } from the barrel": {
-      "measured": 63185,
+      "measured": 63189,
       "limitKiB": 68
     },
     "@nizivo/react own: _engines/react-aria/dialog.client": {
@@ -226,7 +226,7 @@
       "limitKiB": 1.4
     },
     "@nizivo/react own: field/field-scope.client": {
-      "measured": 1123,
+      "measured": 1490,
       "limitKiB": 1.6
     },
     "@nizivo/react own: icon-button/icon-button.client": {

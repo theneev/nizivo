@@ -1,17 +1,20 @@
 'use client';
 // FieldScope: the Field's client leaf (ARCHITECTURE.md §16.1). The server shell renders it with
 // serialisable props; it provides the context `useFieldControl` reads, owns the native validation
-// message, and renders the same anatomy as the zero-JS path. Contract: FIELD-CONTRACT.md.
+// message and the Field's announcer (§16.5's one exception), and renders the same anatomy as the
+// zero-JS path. Contract: FIELD-CONTRACT.md.
 import {
   createContext,
   use,
   useEffect,
   useLayoutEffect,
   useMemo,
+  useRef,
   useState,
   type FocusEvent,
   type MouseEvent,
   type ReactElement,
+  type RefObject,
   type ReactNode,
   type SyntheticEvent,
 } from 'react';
@@ -110,6 +113,18 @@ export function FieldScope({
   const error = presented(anatomy.error) ? anatomy.error : native;
   const invalid = presented(error);
 
+  // The announcer (M29, §16.5's one exception; FIELD-CONTRACT.md "The announcer"). One polite region,
+  // in the server HTML and empty, so it exists before any message does. It speaks only when focus is
+  // already in the Field, where a focus move would not read the error: after a validation request
+  // made from inside it, the next error text that changes is spoken, once.
+  const region = useRef<HTMLSpanElement>(null);
+  const [said, say] = useState('');
+  // The error text at the last commit; null forces the next commit to count as a change.
+  const last = useRef<string | null>(null);
+  // A validation request (an `invalid` or `submit` event) came while focus was in the Field, and no
+  // input event since: typing never announces.
+  const asked = useRef(false);
+
   const handlers = useMemo<Scope['handlers']>(() => {
     const current = (element: FieldValidatable): string | null =>
       element.validity.valid ? null : messageOf(element, messages);
@@ -119,15 +134,20 @@ export function FieldScope({
         // focus the form's first invalid control ourselves, as the browser would have.
         event.preventDefault();
         const element = event.currentTarget;
+        const first = element.form === null || firstInvalid(element.form) === element;
+        // A request from inside the Field: the message it shows is spoken even when it is already
+        // shown, since typing may have changed it silently (an unchanged one is not repeated). Only
+        // at the form's first invalid control: focus goes there, so any other control would speak
+        // while the browser or that control's Field moves focus away.
+        if (first) arm(region, asked, last);
         setNative(messageOf(element, messages));
         // Focus after the commit, not now: the control must already carry aria-invalid and the
         // error's id in aria-describedby when focus lands, or a screen reader reads it without them.
-        if (element.form !== null && firstInvalid(element.form) === element) {
-          setToFocus({ element });
-        }
+        if (first && element.form !== null) setToFocus({ element });
       },
       onInput(event) {
         // Silent: the message is not a live region, so typing announces nothing (§16.5).
+        asked.current = false;
         const next = current(event.currentTarget);
         setNative((shown) => (shown === null ? null : next));
       },
@@ -144,10 +164,46 @@ export function FieldScope({
   // Set by a button control's `labelBehavior: 'focus'` after hydration, so the server HTML is the same.
   const [labelFocus, setLabelFocus] = useState(false);
 
+  // Runs when the error or a validation request changes, not on every render, and before the focus
+  // move below: a control that only that move focuses is read through aria-describedby, not spoken.
+  // A pending re-render (a Server Action in flight) changes no text, so the reply is what is spoken;
+  // a reply with the same text as before is not.
+  useLayoutEffect(() => {
+    // InlineError's message, its last part (Field passes no action): the aria-hidden mark, which an
+    // `errorIcon` could give text, is left out
+    const text = (invalid && region.current?.previousSibling?.lastChild?.textContent) || '';
+    if (text !== last.current) {
+      last.current = text;
+      // say() with the text already held is a no-op: the region never repeats itself
+      say(asked.current && text !== '' && inside(region.current) ? text : '');
+      // An empty commit keeps the request: an app that clears its errors when a submit starts still
+      // has the reply spoken (typing withdraws it)
+      if (text !== '') asked.current = false;
+    }
+    // toFocus: a native message repeated is the same string, so the request alone re-runs this
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies
+  }, [error, invalid, toFocus]);
+
   useLayoutEffect(() => {
     const element = toFocus?.element;
     if (element?.form != null && firstInvalid(element.form) === element) element.focus();
   }, [toFocus]);
+
+  // A submit made from inside the Field arms it (capture: before the app's own handler validates);
+  // a submit that native validation blocks fires `invalid` instead.
+  useEffect(() => {
+    const doc = region.current?.ownerDocument;
+    const onSubmit = (): void => arm(region, asked);
+    doc?.addEventListener('submit', onSubmit, true);
+    return () => doc?.removeEventListener('submit', onSubmit, true);
+  }, []);
+  // Cleared once spoken, as React Aria's announcer does (7 s), so a reader moving through the form
+  // later finds only the visible error. A removal is not announced (aria-relevant's default).
+  useEffect(() => {
+    if (said === '') return undefined;
+    const timer = setTimeout(say, 7000, '');
+    return () => clearTimeout(timer);
+  }, [said]);
 
   const scope = useMemo<Scope>(
     () => ({
@@ -169,6 +225,13 @@ export function FieldScope({
     ...anatomy,
     error,
     onLabelClick: labelFocus ? focusControl : undefined,
+    // Rendered right after InlineError, whose message the effect above reads.
+    // A span, not <output>: an <output> is a form element, and form.reset() would rewrite its text.
+    announcer: (
+      <span ref={region} className="nz-visually-hidden" aria-live="polite" aria-atomic="true">
+        {said}
+      </span>
+    ),
     children,
   };
   return (
@@ -263,6 +326,28 @@ function firstInvalid(form: HTMLFormElement): Element | undefined {
     if (isValidatable(element) && element.willValidate && !element.validity.valid) return element;
   }
   return undefined;
+}
+
+/**
+ * A validation request: with focus in the Field, the next error text that commits is spoken. With
+ * `last` (native validation, which answers in the same commit) the current text also counts as not
+ * yet seen. A submit passes none: its reply comes later, and the re-renders before it (a pending
+ * state, an `error` node rebuilt) keep the old text, which must not count as new.
+ */
+function arm(
+  region: RefObject<HTMLElement | null>,
+  asked: RefObject<boolean>,
+  last?: RefObject<string | null>,
+): void {
+  if (inside(region.current)) {
+    asked.current = true;
+    if (last) last.current = null;
+  }
+}
+
+/** Focus is in the Field root that holds the announcer (a group control's radios included). */
+function inside(region: HTMLElement | null): boolean {
+  return region?.parentNode?.contains(region.ownerDocument.activeElement) === true;
 }
 
 function isValidatable(element: Element): element is FieldValidatable {
