@@ -59,15 +59,15 @@ The same as the Next fixture (`fixtures/next/RESULTS.md`, "Checks"), on Astro's 
 | `/t0-barrel`     | 0         | 0             | 0                        | **zero JavaScript**, 21 names through the barrel                                        |
 | `/tab-nav`       | 0         | 0             | 0                        | **zero JavaScript**                                                                     |
 | `/icons-server`  | 0         | 0             | 0                        | **zero JavaScript**, no icon module                                                     |
-| `/alert-dismiss` | 8         | 71,979        | 1                        | only `alert/alert-dismiss.client`                                                       |
-| `/overlays`      | 15        | 145,663       | 11                       |                                                                                         |
-| `/forms`         | 14        | 78,848        | 7                        |                                                                                         |
+| `/alert-dismiss` | 8         | 72,021        | 1                        | only `alert/alert-dismiss.client`                                                       |
+| `/overlays`      | 15        | 145,997       | 11                       |                                                                                         |
+| `/forms`         | 14        | 79,179        | 7                        |                                                                                         |
 | `/menu`          | 13        | 128,201       | 6                        |                                                                                         |
 | `/tabs`          | 11        | 106,190       | 4                        | hydrates after the runner scrolls it into view                                          |
 | `/icons-client`  | 6         | 70,757        | 0                        | exactly the three icons and `_internal/icon`                                            |
-| `/two-islands`   | 11        | 74,832        | 2                        | `field/field-scope.client` and `input/input.client`; the two islands share their chunks |
+| `/two-islands`   | 11        | 75,163        | 2                        | `field/field-scope.client` and `input/input.client`; the two islands share their chunks |
 
-The per-page detail is in `results/static.json`. Every island page carries React, React DOM and Astro's island runtime once, however many islands it has: `/icons-client` (three small icons) loads 70,757 bytes, about the Vite app shell's 69,907.
+The per-page detail is in `results/static.json`. Every island page carries React, React DOM and Astro's island runtime once, however many islands it has: `/icons-client` (three small icons) loads 70,757 bytes, about the Vite app shell's 69,922.
 
 What the fixture confirms from §11.1:
 

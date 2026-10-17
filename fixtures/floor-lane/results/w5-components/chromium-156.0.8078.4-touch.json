@@ -2,7 +2,7 @@
   "engine": "chromium",
   "version": "156.0.8078.4",
   "driver": "Playwright 1.64.0 (emulated prefers-color-scheme, touch: hasTouch and isMobile), headless",
-  "runAt": "2026-10-16T20:39:51.548Z",
+  "runAt": "2026-10-17T07:34:29.244Z",
   "tokens": "packages/tokens/dist/tokens.css",
   "pages": {
     "w5-components.light": {
@@ -37,7 +37,7 @@
         "scaleEnter": "0.96"
       },
       "summary": {
-        "pass": 217,
+        "pass": 219,
         "fail": 0,
         "info": 0
       },
@@ -47,7 +47,7 @@
         "theme-script": 1,
         "button": 15,
         "icon-button": 6,
-        "alert": 8,
+        "alert": 10,
         "badge": 2,
         "delta": 1,
         "card": 3,
@@ -114,11 +114,13 @@
         "icon-button | square-lg": "48 x 48",
         "icon-button | icon-1em-lg": "24 x 24",
         "alert | icon-ltr": "20 x 20",
-        "alert | dismiss-ltr": "24 x 24",
+        "alert | dismiss-ltr": "32 x 32",
+        "alert | dismiss-glyph-ltr": "16 x 16",
         "alert | icon-at-start-ltr": 16,
         "alert | dismiss-at-end-ltr": 16,
         "alert | icon-rtl": "20 x 20",
-        "alert | dismiss-rtl": "24 x 24",
+        "alert | dismiss-rtl": "32 x 32",
+        "alert | dismiss-glyph-rtl": "16 x 16",
         "alert | icon-at-start-rtl": 16,
         "alert | dismiss-at-end-rtl": 16,
         "badge | dot": "6 x 6",
@@ -514,7 +516,7 @@
         "scaleEnter": "0.96"
       },
       "summary": {
-        "pass": 217,
+        "pass": 219,
         "fail": 0,
         "info": 0
       },
@@ -524,7 +526,7 @@
         "theme-script": 1,
         "button": 15,
         "icon-button": 6,
-        "alert": 8,
+        "alert": 10,
         "badge": 2,
         "delta": 1,
         "card": 3,
@@ -591,11 +593,13 @@
         "icon-button | square-lg": "48 x 48",
         "icon-button | icon-1em-lg": "24 x 24",
         "alert | icon-ltr": "20 x 20",
-        "alert | dismiss-ltr": "24 x 24",
+        "alert | dismiss-ltr": "32 x 32",
+        "alert | dismiss-glyph-ltr": "16 x 16",
         "alert | icon-at-start-ltr": 16,
         "alert | dismiss-at-end-ltr": 16,
         "alert | icon-rtl": "20 x 20",
-        "alert | dismiss-rtl": "24 x 24",
+        "alert | dismiss-rtl": "32 x 32",
+        "alert | dismiss-glyph-rtl": "16 x 16",
         "alert | icon-at-start-rtl": 16,
         "alert | dismiss-at-end-rtl": 16,
         "badge | dot": "6 x 6",

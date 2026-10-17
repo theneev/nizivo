@@ -51,20 +51,20 @@ The same as the Next fixture (`fixtures/next/RESULTS.md`, "Checks"): console mes
 
 | Page              | JS chunks | gzip -9 bytes | Client modules (markers) | Notes                                                                    |
 | ----------------- | --------- | ------------- | ------------------------ | ------------------------------------------------------------------------ |
-| `/`               | 2         | 69,932        | 0                        | the shell: React DOM, the router, the lazy-chunk map                     |
-| `/button-only`    | 5         | 71,443        | 0                        | **the barrel costs nothing**: within a few bytes of the subpath page     |
-| `/button-subpath` | 5         | 71,445        | 0                        |                                                                          |
+| `/`               | 2         | 69,922        | 0                        | the shell: React DOM, the router, the lazy-chunk map                     |
+| `/button-only`    | 5         | 71,438        | 0                        | **the barrel costs nothing**: within a few bytes of the subpath page     |
+| `/button-subpath` | 5         | 71,440        | 0                        |                                                                          |
 | `/t0-barrel`      | 11        | 76,983        | 0                        | 21 names through the barrel, no client module                            |
-| `/alert-dismiss`  | 6         | 71,952        | 1                        | only `alert/alert-dismiss.client`                                        |
-| `/overlays`       | 14        | 146,479       | 11                       | Select, Dialog, Tooltip and their adapters                               |
-| `/barrel-select`  | 12        | 139,650       | 7                        | only what Select reaches, through the barrel (no Dialog, Tooltip, Menu…) |
-| `/forms`          | 11        | 78,288        | 7                        |                                                                          |
-| `/menu`           | 10        | 127,763       | 6                        |                                                                          |
-| `/tabs`           | 7         | 105,569       | 4                        |                                                                          |
-| `/tab-nav`        | 4         | 70,950        | 0                        | TabNav is server-safe                                                    |
-| `/icons`          | 2         | 70,285        | 0                        | exactly `icons/bell`, `icons/calendar`, `icons/search`, `_internal/icon` |
+| `/alert-dismiss`  | 6         | 71,993        | 1                        | only `alert/alert-dismiss.client`                                        |
+| `/overlays`       | 14        | 146,820       | 11                       | Select, Dialog, Tooltip and their adapters                               |
+| `/barrel-select`  | 12        | 139,994       | 7                        | only what Select reaches, through the barrel (no Dialog, Tooltip, Menu…) |
+| `/forms`          | 11        | 78,631        | 7                        |                                                                          |
+| `/menu`           | 10        | 127,760       | 6                        |                                                                          |
+| `/tabs`           | 7         | 105,562       | 4                        |                                                                          |
+| `/tab-nav`        | 4         | 70,943        | 0                        | TabNav is server-safe                                                    |
+| `/icons`          | 2         | 70,276        | 0                        | exactly `icons/bell`, `icons/calendar`, `icons/search`, `_internal/icon` |
 
-Bytes are every chunk the page loads, the shell included; subtract `/` for the page's own cost (for example Select alone through the barrel: 66.6 KB gzip, its React Aria engine included; the Tabs page 35.5 KB; Button 1.5 KB). The per-page detail is in `results/build.json`.
+Bytes are every chunk the page loads, the shell included; subtract `/` for the page's own cost (for example Select alone through the barrel: 70.1 KB gzip, its React Aria engine included; the Tabs page 35.6 KB; Button 1.5 KB). The per-page detail is in `results/build.json`.
 
 - **Vite tree-shakes the barrel completely.** `@nizivo/react` declares `sideEffects: ["**/*.css"]`, and Rolldown drops every module a page does not use, planted marker statements included: the barrel and subpath Button pages are the same size within a few bytes, the 21-name T0 barrel page ships no client module, and `/barrel-select` ships only Select's closure. There is no webpack-style barrel leak.
 - **Icons:** the `@nizivo/icons` barrel (1,880 re-exports) tree-shakes to the three imported icons and the shared base.

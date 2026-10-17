@@ -9,7 +9,7 @@
     "react-aria-components": "1.22.1",
     "browser": "Chromium 156.0.8078.4"
   },
-  "buildSeconds": 1.8,
+  "buildSeconds": 1.7,
   "buildWarnings": [],
   "pass": true,
   "failures": [],
@@ -19,8 +19,8 @@
       "osDark": {
         "frames": 90,
         "wrong": [],
-        "firstPaint": 20,
-        "firstContentfulPaint": 20,
+        "firstPaint": 16,
+        "firstContentfulPaint": 16,
         "firstTheme": "system",
         "lastTheme": "system",
         "pixel": "rgb(16, 19, 17)",
@@ -30,8 +30,8 @@
       "stored": {
         "frames": 90,
         "wrong": [],
-        "firstPaint": 20,
-        "firstContentfulPaint": 20,
+        "firstPaint": 16,
+        "firstContentfulPaint": 16,
         "firstTheme": "dark",
         "lastTheme": "dark",
         "pixel": "rgb(16, 19, 17)",
@@ -41,8 +41,8 @@
       "static": {
         "frames": 90,
         "wrong": [],
-        "firstPaint": 24,
-        "firstContentfulPaint": 24,
+        "firstPaint": 20,
+        "firstContentfulPaint": 20,
         "firstTheme": "dark",
         "lastTheme": "dark",
         "pixel": "rgb(16, 19, 17)",
@@ -52,8 +52,8 @@
       "light": {
         "frames": 90,
         "wrong": [],
-        "firstPaint": 20,
-        "firstContentfulPaint": 20,
+        "firstPaint": 16,
+        "firstContentfulPaint": 16,
         "firstTheme": "system",
         "lastTheme": "system",
         "pixel": "rgb(246, 247, 244)",
@@ -63,14 +63,14 @@
       "late": {
         "frames": 90,
         "wrong": [
-          "7:light dark/rgb(246, 247, 244)",
-          "24:light dark/rgb(246, 247, 244)",
-          "41:light dark/rgb(246, 247, 244)",
-          "57:light dark/rgb(246, 247, 244)",
-          "74:light dark/rgb(246, 247, 244)"
+          "5:light dark/rgb(246, 247, 244)",
+          "22:light dark/rgb(246, 247, 244)",
+          "38:light dark/rgb(246, 247, 244)",
+          "55:light dark/rgb(246, 247, 244)",
+          "72:light dark/rgb(246, 247, 244)"
         ],
-        "firstPaint": 24,
-        "firstContentfulPaint": 24,
+        "firstPaint": 16,
+        "firstContentfulPaint": 16,
         "firstTheme": "system",
         "lastTheme": "dark",
         "pixel": "rgb(16, 19, 17)",
@@ -237,7 +237,7 @@
       "console": [],
       "interactions": {
         "parts": {
-          "partsScanned": "alert alert-content alert-description alert-dismiss alert-dismiss-icon alert-title",
+          "partsScanned": "alert alert-content alert-description alert-dismiss alert-title icon-button-icon",
           "partsOutsideVocabulary": "",
           "danglingIdrefs": "",
           "missingSlots": "",
@@ -260,8 +260,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 8,
-        "bytes": 226274,
-        "gzip": 71979
+        "bytes": 226351,
+        "gzip": 72021
       },
       "failures": []
     },
@@ -332,8 +332,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 15,
-        "bytes": 453098,
-        "gzip": 145663
+        "bytes": 453952,
+        "gzip": 145997
       },
       "failures": []
     },
@@ -386,8 +386,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 14,
-        "bytes": 245928,
-        "gzip": 78848
+        "bytes": 246782,
+        "gzip": 79179
       },
       "failures": []
     },
@@ -548,8 +548,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 11,
-        "bytes": 233072,
-        "gzip": 74832
+        "bytes": 233926,
+        "gzip": 75163
       },
       "failures": []
     }

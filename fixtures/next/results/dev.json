@@ -17,8 +17,8 @@
       "osDark": {
         "frames": 90,
         "wrong": [],
-        "firstPaint": 48,
-        "firstContentfulPaint": 48,
+        "firstPaint": 40,
+        "firstContentfulPaint": 40,
         "firstTheme": "system",
         "lastTheme": "system",
         "pixel": "rgb(16, 19, 17)",
@@ -28,8 +28,8 @@
       "stored": {
         "frames": 90,
         "wrong": [],
-        "firstPaint": 40,
-        "firstContentfulPaint": 40,
+        "firstPaint": 32,
+        "firstContentfulPaint": 32,
         "firstTheme": "dark",
         "lastTheme": "dark",
         "pixel": "rgb(16, 19, 17)",
@@ -39,8 +39,8 @@
       "static": {
         "frames": 90,
         "wrong": [],
-        "firstPaint": 44,
-        "firstContentfulPaint": 44,
+        "firstPaint": 36,
+        "firstContentfulPaint": 36,
         "firstTheme": "dark",
         "lastTheme": "dark",
         "pixel": "rgb(16, 19, 17)",
@@ -50,8 +50,8 @@
       "light": {
         "frames": 90,
         "wrong": [],
-        "firstPaint": 40,
-        "firstContentfulPaint": 40,
+        "firstPaint": 32,
+        "firstContentfulPaint": 32,
         "firstTheme": "system",
         "lastTheme": "system",
         "pixel": "rgb(246, 247, 244)",
@@ -61,14 +61,14 @@
       "late": {
         "frames": 90,
         "wrong": [
-          "22:light dark/rgb(246, 247, 244)",
-          "39:light dark/rgb(246, 247, 244)",
-          "56:light dark/rgb(246, 247, 244)",
-          "72:light dark/rgb(246, 247, 244)",
-          "89:light dark/rgb(246, 247, 244)"
+          "18:light dark/rgb(246, 247, 244)",
+          "34:light dark/rgb(246, 247, 244)",
+          "51:light dark/rgb(246, 247, 244)",
+          "68:light dark/rgb(246, 247, 244)",
+          "84:light dark/rgb(246, 247, 244)"
         ],
-        "firstPaint": 44,
-        "firstContentfulPaint": 44,
+        "firstPaint": 32,
+        "firstContentfulPaint": 32,
         "firstTheme": "system",
         "lastTheme": "dark",
         "pixel": "rgb(16, 19, 17)",
@@ -211,8 +211,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 25,
-        "bytes": 5954146,
-        "gzip": 1060815
+        "bytes": 5959174,
+        "gzip": 1061587
       },
       "failures": []
     },
@@ -283,8 +283,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 25,
-        "bytes": 5954146,
-        "gzip": 1060815
+        "bytes": 5959174,
+        "gzip": 1061587
       },
       "failures": []
     },
@@ -386,8 +386,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 25,
-        "bytes": 5749604,
-        "gzip": 1044748
+        "bytes": 5754632,
+        "gzip": 1045519
       },
       "failures": []
     },
@@ -545,8 +545,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 25,
-        "bytes": 5749604,
-        "gzip": 1044748
+        "bytes": 5754632,
+        "gzip": 1045519
       },
       "failures": []
     },
@@ -591,8 +591,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 25,
-        "bytes": 5749604,
-        "gzip": 1044748
+        "bytes": 5754632,
+        "gzip": 1045519
       },
       "failures": []
     },
@@ -660,7 +660,7 @@
       "console": [],
       "interactions": {
         "parts": {
-          "partsScanned": "alert alert-content alert-description alert-dismiss alert-dismiss-icon alert-title heading",
+          "partsScanned": "alert alert-content alert-description alert-dismiss alert-title heading icon-button-icon",
           "partsOutsideVocabulary": "",
           "danglingIdrefs": "",
           "missingSlots": "",
@@ -683,8 +683,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 17,
-        "bytes": 3752943,
-        "gzip": 821775
+        "bytes": 3753533,
+        "gzip": 822057
       },
       "failures": []
     },
@@ -737,8 +737,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 17,
-        "bytes": 3865063,
-        "gzip": 830462
+        "bytes": 3870091,
+        "gzip": 831218
       },
       "failures": []
     },
@@ -789,8 +789,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 17,
-        "bytes": 3792567,
-        "gzip": 826150
+        "bytes": 3797595,
+        "gzip": 826926
       },
       "failures": []
     },
