@@ -444,6 +444,79 @@ describe('nz api', () => {
     expect(wrapped.slots.find((slot) => slot.slot === 'chip')).toMatchObject({ part: true });
   });
 
+  test('a `<Name>Static` twin in a leaf-free module shares its base’s slots and root (M31)', () => {
+    const root = copyFixture();
+    const src = join(root, 'packages/react/src/chip');
+    const dist = join(root, 'packages/react/dist/chip');
+    writeFileSync(
+      join(src, 'chip-static.tsx'),
+      [
+        "import type { ReactElement } from 'react';",
+        "import { renderElement } from '../contracts/render';",
+        "import type { ChipStaticProps } from './chip';",
+        '',
+        '/** A chip from a module with no client import. */',
+        'export function ChipStatic({ className, ...rest }: ChipStaticProps): ReactElement {',
+        '  return chipElement(className, rest);',
+        '}',
+        '',
+        'function chipElement(className: string | undefined, rest: object): ReactElement {',
+        "  return renderElement('span', undefined, {}, {",
+        "    'data-slot': 'chip',",
+        '    ...rest,',
+        '    className: `nz-chip ${className ?? ""}`,',
+        '  });',
+        '}',
+        '',
+      ].join('\n'),
+    );
+    edit(join(src, 'chip.tsx'), (text) =>
+      text.replace(
+        '/** A compact label. */',
+        "/** The static twin's props. */\nexport interface ChipStaticProps extends ChipProps {\n  /** Required here. */\n  'aria-label': string;\n}\n\n/** A compact label. */",
+      ),
+    );
+    edit(join(src, 'index.ts'), (text) =>
+      text
+        .replace(
+          "from './chip';\nexport type",
+          "from './chip';\nexport { ChipStatic } from './chip-static';\nexport type",
+        )
+        .replace('  ChipState,', '  ChipState,\n  ChipStaticProps,'),
+    );
+    writeFileSync(
+      join(dist, 'chip-static.d.ts'),
+      "import { ChipStaticProps } from './chip.js';\nimport { ReactElement } from 'react';\n/** A chip from a module with no client import. */\nexport declare function ChipStatic({ className, ...rest }: ChipStaticProps): ReactElement;\n",
+    );
+    writeFileSync(
+      join(dist, 'chip-static.js'),
+      'function ChipStatic({ className, ...rest }) {\n  return { className, ...rest };\n}\nexport { ChipStatic };\n',
+    );
+    edit(join(dist, 'chip.d.ts'), (text) =>
+      text.replace(
+        '/** A compact label. */',
+        "/** The static twin's props. */\nexport interface ChipStaticProps extends ChipProps {\n  /** Required here. */\n  'aria-label': string;\n}\n/** A compact label. */",
+      ),
+    );
+    edit(join(dist, 'index.d.ts'), (text) =>
+      text
+        .replace(
+          "} from './chip.js';",
+          "} from './chip.js';\nimport { ChipStatic } from './chip-static.js';",
+        )
+        .replace('  Chip,\n  type ChipLabels,', '  Chip,\n  ChipStatic,\n  type ChipLabels,')
+        .replace('  ChipState,\n  ChipTone,', '  ChipState,\n  ChipStaticProps,\n  ChipTone,')
+        .replace('  type ChipState,', '  type ChipState,\n  type ChipStaticProps,'),
+    );
+    const chip = reactFile(generated(root), 'react/chip.json');
+    expect(componentExport(chip, 'Chip').slot).toBe('chip');
+    expect(componentExport(chip, 'ChipStatic').slot).toBe('chip');
+    expect(chip.slots.find((slot) => slot.slot === 'chip')).toMatchObject({
+      part: true,
+      renderedBy: 'Chip',
+    });
+  });
+
   test('an attribute outside the vocabulary, a slot without its class, a misnamed root', () => {
     const root = copyFixture();
     edit(join(root, 'packages/react/src/chip/chip.tsx'), (text) =>

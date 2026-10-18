@@ -82,7 +82,10 @@ Rules the generator must enforce (fail with the file and the name, as `nz gen` d
 - Each entry's `.d.ts` exports the same names as its `src` barrel; otherwise `dist` is stale and
   the generator stops ("rebuild @nizivo/react") instead of writing a stale contract.
 - A component's root slot is its §8.2 name: the component name for a `Root` part (`select`), else
-  the kebab-case export (`select-trigger`, `grid-item`). A slot has one `renderedBy`; every
+  the kebab-case export (`select-trigger`, `grid-item`). A server-safe `<Name>Static` twin of an
+  export `<Name>` in the same entry (M31: `IconButtonStatic`, `FieldStatic`) renders its base's
+  markup: its slots are recorded as rendered by `<Name>`, and both carry `<Name>`'s root slot
+  (`icon-button`, `field`). A slot has one `renderedBy`; every
   `interactive` and `stateIndicator` slot of the manifest is rendered; every `"values": null`
   attribute has the manifest `variants` it reads.
 
@@ -311,7 +314,7 @@ Alert is a server-safe shell with one client leaf, so `client` differs per expor
     },
     {
       "client": true,
-      "description": "With no `render`, an IconButton (tertiary, `sm`: the 16 px glyph Figma draws, in a 32 px target) with no tooltip, as `Dialog.Close` does (week 6): its markup is the IconButton element's (`iconButtonElement` in icon-button.tsx), written out, because importing that module brings in the IconButton's tooltip leaf and the Tooltip chain (D-aa), and this leaf must stay the Alert's only client module. A unit test compares the two.",
+      "description": "With no `render`, an IconButton (tertiary, `sm`: the 16 px glyph Figma draws, in a 32 px target) with no tooltip, as `Dialog.Close` does (week 6): its markup is the IconButton element's (`iconButtonElement`, icon-button-static.tsx since M31), written out. Week 8 wrote it out because importing icon-button.tsx brought in the IconButton's tooltip leaf and the Tooltip chain (D-aa); the leaf-free icon-button-static.tsx could now be imported instead, a later change. A unit test compares the two.",
       "import": "import { AlertDismiss } from '@nizivo/react/alert'",
       "inherits": [
         {

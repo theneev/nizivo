@@ -906,12 +906,28 @@ class Context {
     );
     this.#errors.push(...scan.errors);
 
-    const bySlot = new Map<string, SlotOccurrence[]>();
+    // A server-safe `<Name>Static` twin (M31: IconButtonStatic, FieldStatic) renders its base's
+    // markup from a module with no client import, and the base renders through it. Its slots are
+    // the base's: recorded as rendered by the base, whose root slot is kebab(base) (§8.2).
+    const twins = new Map<string, string>();
+    for (const name of components.keys()) {
+      const base = name.endsWith('Static') ? name.slice(0, -'Static'.length) : '';
+      if (base !== '' && components.has(base)) twins.set(name, base);
+    }
+    const found: SlotOccurrence[] = [];
     for (const occurrence of scan.occurrences) {
+      found.push({
+        ...occurrence,
+        component: twins.get(occurrence.component) ?? occurrence.component,
+      });
+    }
+
+    const bySlot = new Map<string, SlotOccurrence[]>();
+    for (const occurrence of found) {
       bySlot.set(occurrence.slot, [...(bySlot.get(occurrence.slot) ?? []), occurrence]);
     }
     const rootSlot = new Map<string, string>();
-    for (const occurrence of scan.occurrences) {
+    for (const occurrence of found) {
       if (!occurrence.root) continue;
       const previous = rootSlot.get(occurrence.component);
       if (previous !== undefined && previous !== occurrence.slot) {
@@ -931,6 +947,12 @@ class Context {
       }
       const doc = componentDocs.get(name);
       if (doc !== undefined) componentDocs.set(name, { ...doc, slot });
+    }
+    // The twin's root is its base's.
+    for (const [twin, base] of twins) {
+      const slot = rootSlot.get(base);
+      const doc = componentDocs.get(twin);
+      if (slot !== undefined && doc !== undefined) componentDocs.set(twin, { ...doc, slot });
     }
 
     const slots: SlotInfo[] = [];
