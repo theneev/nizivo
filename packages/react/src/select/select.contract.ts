@@ -99,7 +99,7 @@ export interface SelectPopupProps {
   side?: 'top' | 'bottom';
   /** @default 'start' */
   align?: Align;
-  /** Distance from the trigger in px. @default 8 */
+  /** Distance from the trigger in px. @default 4 */
   sideOffset?: number;
   /** Portal container. Defaults to the parent overlay, else `document.body` (§12.1 L2). */
   container?: Element | null;

@@ -1,9 +1,11 @@
 @layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
 
-/* @nizivo/react/css/select.css (ARCHITECTURE.md §8.2–§8.4, §12.1; figma/13 §4.3). The trigger is
-   the Select skin NativeSelect repeats (same box, border, sizes, invalid and disabled looks); the
-   popup and its rows repeat Menu's recipe (menu.css: the Dropdown Menu master 746:204 and the Menu
-   Item set 7275:11516), values copied, not imported. Sizes and states set only privates; public
+/* @nizivo/react/css/select.css (ARCHITECTURE.md §8.2–§8.4, §12.1; figma/13 §4.3, figma/14 §4). The
+   trigger is the Select skin NativeSelect repeats (same box, border, sizes, invalid and disabled
+   looks). The popup and its rows follow Figma's Select Menu 7356:406, Select Option set 7356:401,
+   Group Label 7356:402 and Divider 7356:404 (M36), with one kept deviation: the selected row keeps
+   the bg/brand-subtle tint. Menu (the Dropdown Menu 746:204) keeps its own look. Sizes and states
+   set only privates; public
    --nz-select-* hooks are read once, at the property. Invalid reads [data-invalid], set when a
    message is presented, never :invalid (§8.3). The trigger is Label/M, or Label/L under a coarse
    pointer (M25), as NativeSelect's, so swapping one for the other does not change the text. */
@@ -113,9 +115,9 @@
     max-block-size: var(--nz-available-height);
     overflow: auto;
     border: var(--nz-border-width-default) solid var(--nz-border-subtle);
-    border-radius: var(--nz-radius-lg);
+    border-radius: var(--nz-radius-md);
     background: var(--nz-bg-surface-raised);
-    box-shadow: var(--nz-elevation-3);
+    box-shadow: var(--nz-elevation-4);
     transform-origin: var(--nz-transform-origin);
     transition:
       scale var(--nz-duration-spring) var(--nz-easing-spring),
@@ -132,12 +134,11 @@
     }
   }
 
-  /* the listbox: Figma's 6 px padding and 2 px between rows */
+  /* the listbox: the Select Menu's 6 px padding; rows touch (gap 0) */
   .nz-select-list,
   .nz-select-group {
     display: flex;
     flex-direction: column;
-    gap: var(--nz-space-0-5);
   }
 
   .nz-select-list {
@@ -145,19 +146,20 @@
     outline: none;
   }
 
-  /* Menu's row: 36 px with or without a page reset (the minimum includes the padding) */
+  /* the Select Option: 8 / 12 px, Label/M, 36 px with or without a page reset (the minimum
+     includes the padding). The rows stay 14 px under a coarse pointer: they are not text fields. */
   .nz-select-item {
     display: flex;
     align-items: center;
     gap: var(--nz-space-2);
     box-sizing: border-box;
     min-block-size: 2.25rem;
-    padding-block: var(--nz-space-1-5);
+    padding-block: var(--nz-space-2);
     padding-inline: var(--nz-space-3);
     border-radius: var(--nz-radius-sm);
     color: var(--nz-text-primary);
-    font: var(--nz-font-body-m);
-    letter-spacing: var(--nz-tracking-body-m);
+    font: var(--nz-font-label-m);
+    letter-spacing: var(--nz-tracking-label-m);
     cursor: default;
 
     /* a pointer hint only (1.08:1 on the surface); keyboard focus is the generated ring */
@@ -165,13 +167,15 @@
       background: var(--nz-bg-hover);
     }
 
-    /* the Menu Item "Selected" look; the check, not the colour, carries the state (WCAG 1.4.1) */
+    /* Figma's Selected option is Label/M Strong in text/primary with a trailing check; code keeps
+       the brand-subtle tint as well (M36). The check and the weight, not the colour, carry the
+       state (WCAG 1.4.1). Same tracking as Label/M, so only the weight changes. */
     &[data-selected] {
       background: var(--nz-bg-brand-subtle);
-      color: var(--nz-text-brand);
+      font: var(--nz-font-label-m-strong);
     }
 
-    /* under the pointer it swaps to the hover fill and keeps the brand label, as Menu's checked row */
+    /* under the pointer it swaps to the hover fill and keeps the strong label and the check */
     &[data-selected][data-highlighted] {
       background: var(--nz-bg-hover);
     }
@@ -195,18 +199,20 @@
     visibility: visible;
   }
 
+  /* the Select Group Label: Label/S in text/secondary, 8 / 12 / 4 / 12 */
   .nz-select-group-label {
-    padding-block: var(--nz-space-1-5) var(--nz-space-1);
-    padding-inline-start: var(--nz-space-3);
-    color: var(--nz-text-tertiary);
-    font: var(--nz-font-label-m);
-    letter-spacing: var(--nz-tracking-label-m);
+    padding-block: var(--nz-space-2) var(--nz-space-1);
+    padding-inline: var(--nz-space-3);
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-label-s);
+    letter-spacing: var(--nz-tracking-label-s);
   }
 
-  /* inset by the list padding and spaced only by the 2 px gaps, as Menu's */
+  /* the Select Divider: inset by the list padding, 4 px above and below */
   .nz-select-separator {
     flex: none;
     block-size: var(--nz-border-width-default);
+    margin-block: var(--nz-space-1);
     background: var(--nz-border-subtle);
   }
 

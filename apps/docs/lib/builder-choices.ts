@@ -326,7 +326,7 @@ const tsx = (path: string): string => `packages/react/src/${path}.tsx`;
 const W4_CHOICES: Record<number, BuilderChoiceW3> = {
   1: {
     chosen:
-      'Menu rows have a `2.25rem` (36 px) minimum height around `--nz-space-1-5` (6 px) block padding, so a one-line row is 36 px. Select rows share the recipe since the week 6 `select.css` pass (item 11).',
+      "Menu rows have a `2.25rem` (36 px) minimum height around `--nz-space-1-5` (6 px) block padding, so a one-line row is 36 px. Select rows shared the recipe from the week 6 `select.css` pass until 2026-10-18, when they took Figma's Select Option (item 11).",
     file: sheet('menu'),
     declarations: ['min-block-size: 2.25rem;', 'padding-block: var(--nz-space-1-5);'],
   },
@@ -401,17 +401,17 @@ const W4_CHOICES: Record<number, BuilderChoiceW3> = {
   },
   11: {
     chosen:
-      "Week 4 changed the entry motion: the popup enters on the spring pair with `--nz-scale-enter` and fades out, like Menu and Dialog (§12.2), so reduced motion keeps its fade. The week 6 `select.css` pass gave it the Menu recipe: `--nz-radius-lg`, a 1 px `--nz-border-subtle` border and `--nz-elevation-3`; 36 px rows 2 px apart with the inset ring; the selected row `--nz-bg-brand-subtle` with `--nz-text-brand` and a trailing check (the check, not the colour, carries the state; `indicator` replaces it); Label/M `--nz-text-tertiary` group labels; a separator spaced only by the gaps. The trigger gained NativeSelect's `--nz-radius-sm` at sm, invalid border and halo, and disabled border.",
+      "Week 4 changed the entry motion: the popup enters on the spring pair with `--nz-scale-enter` and fades out, like Menu and Dialog (§12.2), so reduced motion keeps its fade. Since 2026-10-18 (M36) the popup follows Figma's Select Menu (7356:406) and its parts (7356:401, 7356:402, 7356:404) instead of repeating Menu's recipe: `--nz-radius-md`, a 1 px `--nz-border-subtle` border and `--nz-elevation-4`, 4 px below the trigger; 36 px Label/M rows with 8 / 12 px padding and no gap, the inset ring; the selected row Label/M Strong in `--nz-text-primary` with a trailing `--nz-icon-brand` check (the check and the weight, not the colour, carry the state; `indicator` replaces it); Label/S `--nz-text-secondary` group labels; dividers with 4 px above and below. One value Figma does not draw is kept: the selected row's `--nz-bg-brand-subtle` tint (the maintainer's choice, M36). The trigger gained NativeSelect's `--nz-radius-sm` at sm, invalid border and halo, and disabled border.",
     file: sheet('select'),
     declarations: [
       'scale: var(--nz-scale-enter);',
       'scale var(--nz-duration-spring) var(--nz-easing-spring),',
-      'border-radius: var(--nz-radius-lg);',
-      'box-shadow: var(--nz-elevation-3);',
+      'border-radius: var(--nz-radius-md);',
+      'box-shadow: var(--nz-elevation-4);',
       'background: var(--nz-bg-brand-subtle);',
+      'font: var(--nz-font-label-m-strong);',
       'min-block-size: 2.25rem;',
-      'gap: var(--nz-space-0-5);',
-      'color: var(--nz-text-tertiary);',
+      'color: var(--nz-text-secondary);',
       '--_nz-select-radius: var(--nz-radius-sm);',
     ],
   },

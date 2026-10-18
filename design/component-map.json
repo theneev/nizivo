@@ -334,6 +334,46 @@
       "props": {
         "shape": ["line", "block", "circle"]
       }
+    },
+    "7356:401": {
+      "component": "select",
+      "role": "canonical",
+      "import": "@nizivo/react/select",
+      "export": "Select",
+      "parts": ["Root", "Trigger", "Value", "Popup", "Item", "Group", "GroupLabel", "Separator"],
+      "props": {
+        "size": ["sm", "md", "lg"]
+      }
+    },
+    "7356:402": {
+      "component": "select",
+      "role": "canonical",
+      "import": "@nizivo/react/select",
+      "export": "Select",
+      "parts": ["Root", "Trigger", "Value", "Popup", "Item", "Group", "GroupLabel", "Separator"],
+      "props": {
+        "size": ["sm", "md", "lg"]
+      }
+    },
+    "7356:404": {
+      "component": "select",
+      "role": "canonical",
+      "import": "@nizivo/react/select",
+      "export": "Select",
+      "parts": ["Root", "Trigger", "Value", "Popup", "Item", "Group", "GroupLabel", "Separator"],
+      "props": {
+        "size": ["sm", "md", "lg"]
+      }
+    },
+    "7356:406": {
+      "component": "select",
+      "role": "canonical",
+      "import": "@nizivo/react/select",
+      "export": "Select",
+      "parts": ["Root", "Trigger", "Value", "Popup", "Item", "Group", "GroupLabel", "Separator"],
+      "props": {
+        "size": ["sm", "md", "lg"]
+      }
     }
   }
 }

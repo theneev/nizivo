@@ -262,7 +262,7 @@
               "values": ["top", "bottom"]
             },
             {
-              "default": "8",
+              "default": "4",
               "description": "Distance from the trigger in px.",
               "name": "sideOffset",
               "required": false,

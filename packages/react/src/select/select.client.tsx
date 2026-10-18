@@ -121,7 +121,7 @@ export function SelectValue({ className, render, ...rest }: SelectValueProps): J
 export function SelectPopup({
   side = 'bottom',
   align = 'start',
-  sideOffset = 8,
+  sideOffset = 4,
   container,
   className,
   style,

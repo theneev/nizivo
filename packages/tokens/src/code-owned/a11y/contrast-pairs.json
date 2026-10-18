@@ -20,15 +20,15 @@
   "pairs": [
     {
       "fg": "text-primary",
-      "on": ["surfaces", "status-subtle", "bg-pressed"],
+      "on": ["surfaces", "status-subtle", "bg-pressed", "bg-brand-subtle"],
       "role": "text",
-      "use": "Alert body, Button secondary pressed"
+      "use": "Alert body, Button secondary pressed, Select selected row label"
     },
     {
       "fg": "text-secondary",
       "on": ["surfaces", "status-subtle"],
       "role": "text",
-      "use": "Alert description"
+      "use": "Alert description, Select group label"
     },
     {
       "fg": "text-tertiary",
@@ -76,7 +76,7 @@
       "fg": "icon-brand",
       "on": ["surfaces", "bg-brand-subtle"],
       "role": "non-text",
-      "use": "Menu checked item glyph and icon (also highlighted, on bg-hover)"
+      "use": "Menu checked item glyph and icon, Select selected row check (also highlighted, on bg-hover)"
     },
     {
       "fg": "bg-brand",

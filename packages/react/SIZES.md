@@ -104,7 +104,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 | Entry              | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | ------------------ | -------: | ---------: | ---------: | ----------: | -----------: |
-| `.`                |   86,198 |       84.2 |     72,769 |          93 |        9,034 |
+| `.`                |   86,200 |       84.2 |     72,778 |          93 |        9,032 |
 | /alert             |    1,282 |        1.3 |      1,187 |         1.4 |          151 |
 | /augment           |        0 |        0.0 |          0 |           0 |            — |
 | /badge             |      796 |        0.8 |        727 |         0.9 |          125 |
@@ -134,7 +134,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /progress-ring     |    1,194 |        1.2 |      1,097 |         1.3 |          137 |
 | /radio-group       |    2,200 |        2.1 |      2,025 |         2.4 |          257 |
 | /segmented-control |    2,371 |        2.3 |      2,171 |         2.6 |          291 |
-| /select            |   63,259 |       61.8 |     54,348 |          66 |        4,325 |
+| /select            |   63,259 |       61.8 |     54,337 |          66 |        4,325 |
 | /separator         |      772 |        0.8 |        700 |         0.9 |          149 |
 | /skeleton          |      716 |        0.7 |        652 |         0.8 |          103 |
 | /stack             |      703 |        0.7 |        640 |         0.8 |          116 |
@@ -150,9 +150,9 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 | Entry                      | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | -------------------------- | -------: | ---------: | ---------: | ----------: | -----------: |
-| dashboard set              |   77,378 |       75.6 |     65,516 |          76 |          446 |
+| dashboard set              |   77,380 |       75.6 |     65,426 |          76 |          444 |
 | { Button } from the barrel |    1,232 |        1.2 |      1,129 |         1.4 |          201 |
-| { Select } from the barrel |   63,189 |       61.7 |     54,281 |          68 |        6,443 |
+| { Select } from the barrel |   63,189 |       61.7 |     54,255 |          68 |        6,443 |
 
 #### `@nizivo/react`: Own code (one module minified alone, imports not counted)
 
@@ -176,7 +176,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | own: menu/menu.client                           |    1,035 |        1.0 |        932 |         1.2 |          193 |
 | own: radio-group/radio-group.client             |      614 |        0.6 |        541 |         0.7 |          102 |
 | own: segmented-control/segmented-control.client |    1,169 |        1.1 |      1,052 |         1.3 |          162 |
-| own: select/select.client                       |    1,146 |        1.1 |      1,054 |         1.3 |          185 |
+| own: select/select.client                       |    1,146 |        1.1 |      1,055 |         1.3 |          185 |
 | own: switch/switch.client                       |      552 |        0.5 |        475 |         0.6 |           62 |
 | own: tabs/tabs.client                           |      486 |        0.5 |        439 |         0.6 |          128 |
 | own: textarea/textarea.client                   |      316 |        0.3 |        276 |         0.4 |           93 |
@@ -220,7 +220,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/progress-ring.css     |      509 |        0.5 |        432 |         0.6 |          105 |
 | /css/radio-group.css       |      824 |        0.8 |        678 |         0.9 |           97 |
 | /css/segmented-control.css |      986 |        1.0 |        808 |         1.1 |          140 |
-| /css/select.css            |    1,244 |        1.2 |      1,050 |         1.4 |          189 |
+| /css/select.css            |    1,237 |        1.2 |      1,040 |         1.4 |          196 |
 | /css/separator.css         |      261 |        0.3 |        203 |         0.3 |           46 |
 | /css/skeleton.css          |      365 |        0.4 |        325 |         0.4 |           44 |
 | /css/stack.css             |      270 |        0.3 |        209 |         0.3 |           37 |
@@ -230,7 +230,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/text.css              |      574 |        0.6 |        487 |         0.7 |          142 |
 | /css/textarea.css          |      725 |        0.7 |        601 |         0.8 |           94 |
 | /css/tooltip.css           |      581 |        0.6 |        503 |         0.6 |           33 |
-| /styles.css                |   15,001 |       14.6 |     12,751 |          16 |        1,383 |
+| /styles.css                |   15,026 |       14.7 |     12,746 |          16 |        1,358 |
 
 #### `@nizivo/tokens`: Public JS entries (bundled with what they import, React Aria included)
 

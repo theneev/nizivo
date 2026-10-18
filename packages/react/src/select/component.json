@@ -14,7 +14,7 @@
   "cssDeps": ["base", "field", "popover"],
   "variants": { "size": ["sm", "md", "lg"] },
   "figma": {
-    "canonical": ["7275:11438"],
+    "canonical": ["7275:11438", "7356:401", "7356:402", "7356:404", "7356:406"],
     "ghosts": ["745:222"],
     "variantsSeen": ["745:188"],
     "related": ["746:204"]

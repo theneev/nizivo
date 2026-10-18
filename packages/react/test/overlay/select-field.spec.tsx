@@ -2,7 +2,7 @@
 // select.css pass (figma/13 §4.3): the trigger is named by the value plus the Field label, a label
 // click focuses the trigger and never opens the listbox, the Field's descriptions, flags and name
 // reach the trigger and the hidden native <select>, the trigger matches NativeSelect in every state,
-// and the rows follow Menu's recipe.
+// and the popup follows Figma's Select Menu, Option, Group Label and Divider (figma/14 §4, M36).
 import type { JSX } from 'react';
 import { describe, expect, test } from 'vitest';
 import { cdp, server, userEvent } from 'vitest/browser';
@@ -342,8 +342,27 @@ describe('select.css: the trigger matches NativeSelect', () => {
   });
 });
 
-describe("select.css: the rows follow Menu's recipe", () => {
-  test('the selected row is brand-subtle with a visible check; the others keep the column hidden', async () => {
+/** Where an element's first text starts, in viewport px. */
+function textStart(element: Element): number {
+  const text = [...element.childNodes].find((node) => node.nodeType === Node.TEXT_NODE);
+  if (text === undefined) throw new Error('no text');
+  const range = document.createRange();
+  range.selectNodeContents(text);
+  return range.getBoundingClientRect().left;
+}
+
+/** What a box-shadow value computes to here, read from a probe element. */
+function shadow(value: string): string {
+  const probe = document.createElement('div');
+  probe.style.boxShadow = value;
+  document.body.append(probe);
+  const out = getComputedStyle(probe).boxShadow;
+  probe.remove();
+  return out;
+}
+
+describe("select.css: the popup follows Figma's Select Menu and Select Option (M36)", () => {
+  test('the selected row keeps the tint, is Label/M Strong in the row colour, with a trailing check', async () => {
     const [recent, selected] = await open();
     if (recent === undefined || selected === undefined) throw new Error('no items');
     await until(() => expect(selected.hasAttribute('data-focus-visible')).toBe(true));
@@ -354,28 +373,65 @@ describe("select.css: the rows follow Menu's recipe", () => {
     // the check is not part of the option's name or of the trigger's value
     expect(selected.textContent).toBe('Last 30 days');
     expect(get('select-value').querySelector('svg')).toBeNull();
-    // the keyboard ring is inside the row, as on Menu rows
+    // the keyboard ring is inside the row
     const row = getComputedStyle(selected);
+    const plain = getComputedStyle(recent);
     expect(row.outlineStyle).toBe('solid');
     expect(row.outlineOffset).toBe('-2px');
-    expect(row.fontWeight).toBe(getComputedStyle(recent).fontWeight);
-    // the selected fill and label differ from a plain row's
-    expect(row.color).not.toBe(getComputedStyle(recent).color);
-    // 36 px rows, 2 px apart (layout boxes: the popup may still be scaling in)
+    // Label/M (14 px, 500) and Label/M Strong (600) in text/primary; the tint stays (M36 #2)
+    expect(plain.fontSize).toBe('14px');
+    expect(row.fontSize).toBe('14px');
+    expect(plain.fontWeight).toBe('500');
+    expect(row.fontWeight).toBe('600');
+    expect(row.color).toBe(plain.color);
+    expect(row.backgroundColor).not.toBe(plain.backgroundColor);
+    // 8 / 12 px padding, 36 px rows that touch (layout boxes: the popup may still be scaling in)
+    expect(row.paddingTop).toBe('8px');
+    expect(row.paddingInlineStart).toBe('12px');
     expect(selected.offsetHeight).toBe(36);
-    expect(selected.offsetTop - recent.offsetTop - recent.offsetHeight).toBe(2);
+    expect(selected.offsetTop - recent.offsetTop - recent.offsetHeight).toBe(0);
+    // the check's column is reserved on every row, so selection never moves the text
+    const column = indicator(recent);
+    if (!(column instanceof HTMLElement)) throw new Error('the indicator is not an element');
+    expect(column.offsetWidth).toBe(16);
+    expect(textStart(selected)).toBe(textStart(recent));
   });
 
-  test('the popup is the Dropdown surface: border, large radius, at least the trigger width', async () => {
+  test('group label is Label/S in text/secondary, 8 / 12 / 4 / 12; the divider has 4 px above and below', async () => {
+    const [recent] = await open();
+    if (recent === undefined) throw new Error('no items');
+    const group = getComputedStyle(get('select-group-label'));
+    expect(group.fontSize).toBe('12px');
+    expect(group.color).not.toBe(getComputedStyle(recent).color);
+    expect([group.paddingTop, group.paddingRight, group.paddingBottom, group.paddingLeft]).toEqual([
+      '8px',
+      '12px',
+      '4px',
+      '12px',
+    ]);
+    const separator = getComputedStyle(get('select-separator'));
+    expect(separator.blockSize).toBe('1px');
+    expect([separator.marginTop, separator.marginBottom]).toEqual(['4px', '4px']);
+  });
+
+  test('the popup is radius/md and Elevation/4, opens 4 px below the trigger, at least its width', async () => {
     await open();
     const popup = get('select-popup');
+    const trigger = get('select-trigger');
     const css = getComputedStyle(popup);
     expect(css.borderTopStyle).toBe('solid');
     expect(css.borderTopWidth).toBe('1px');
-    expect(css.boxShadow).not.toBe('none');
-    expect(css.borderTopLeftRadius).toBe('16px');
+    expect(css.borderTopLeftRadius).toBe('12px');
+    expect(css.paddingTop).toBe('0px');
+    expect(getComputedStyle(get('select-list')).paddingTop).toBe('6px');
+    expect(css.boxShadow).toBe(shadow('var(--nz-elevation-4)'));
+    // layout box, not the scaled one: the popup's top edge is 4 px under the trigger's bottom
+    await until(() => expect(popup.hasAttribute('data-entering')).toBe(false));
+    await settle(300);
+    const gap = popup.getBoundingClientRect().top - trigger.getBoundingClientRect().bottom;
+    expect(Math.round(gap)).toBe(4);
     expect(popup.getBoundingClientRect().width).toBeGreaterThanOrEqual(
-      Math.floor(get('select-trigger').getBoundingClientRect().width),
+      Math.floor(trigger.getBoundingClientRect().width),
     );
   });
 
