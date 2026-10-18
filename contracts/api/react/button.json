@@ -41,7 +41,7 @@
           "type": "boolean"
         },
         {
-          "description": "Overrides Button's strings, for example `labels={{ pending: 'Wird geladen…' }}`; `pending: ''` shows no text. Translation is per instance (no global labels in 0.1.0): an app wraps Button once to pass its own.",
+          "description": "Overrides Button's strings, for example `labels={{ pending: 'Wird geladen…' }}`; `pending: ''` shows no text and keeps the label visible. Translation is per instance (no global labels in 0.1.0): an app wraps Button once to pass its own.",
           "name": "labels",
           "required": false,
           "type": "Partial<ButtonLabels>"
@@ -53,7 +53,7 @@
         },
         {
           "default": "false",
-          "description": "An action is in flight: the spinner replaces the leading icon, the label stays, and the button stays focusable with `aria-disabled` and swallows clicks. The spinner turns once per `--nz-duration-spin`; under Reduced motion it stops and `labels.pending` (\"Loading…\") shows after the label. That text is visual only: the accessible name stays the label.",
+          "description": "An action is in flight: the spinner replaces the leading icon, the label stays, and the button stays focusable with `aria-disabled` and swallows clicks. The spinner turns once per `--nz-duration-spin`; under Reduced motion it stops and `labels.pending` (\"Loading…\") shows in the label's place, in a button that keeps its width. The label stays in the accessible name, after that text (\"Loading… Publish\").",
           "name": "pending",
           "required": false,
           "type": "boolean"
@@ -131,7 +131,7 @@
       "members": [
         {
           "default": "'Loading…'",
-          "description": "The text a pending button shows next to its label under Reduced motion, where the spinner stops (Figma: \"Spinner and skeleton loops stop; a text label shows\").",
+          "description": "The text a pending button shows in place of its label under Reduced motion, where the spinner stops (Figma: \"Spinner and skeleton loops stop; a text label shows\").",
           "name": "pending",
           "required": true,
           "type": "string"

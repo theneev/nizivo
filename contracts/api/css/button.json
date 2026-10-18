@@ -411,18 +411,6 @@
           "property": "gap",
           "selector": ".nz-button",
           "slot": "button"
-        },
-        {
-          "conditions": [],
-          "property": "margin-inline-start",
-          "selector": ".nz-button-pending-label",
-          "slot": "button-pending-label"
-        },
-        {
-          "conditions": [],
-          "property": "margin-inline",
-          "selector": ".nz-button-pending-label:before",
-          "slot": "button-pending-label"
         }
       ]
     },

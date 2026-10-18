@@ -142,43 +142,54 @@
     animation: nz-button-spin var(--nz-duration-spin) linear infinite;
   }
 
-  /* "Spinner and skeleton loops stop; a text label shows" (Figma Accessibility, M34): the pending
-     text after the label, shown under the two switches that swap the Reduced motion tokens
-     (prefers-reduced-motion and [data-nz-motion='reduce'], as in tokens.css). The markup is the same
-     in both modes (§13.2 rule 3); only this rule reads the preference. */
+  /* "Spinner and skeleton loops stop; a text label shows" (Figma Accessibility, M34): under the two
+     switches that swap the Reduced motion tokens (prefers-reduced-motion and [data-nz-motion='reduce'],
+     as in tokens.css), "Loading…" takes the label's place (M37). Both share one grid cell, so the
+     button keeps the wider one's width, and the label, only transparent, stays in the accessible name.
+     The markup is the same in both modes (§13.2 rule 3); only these rules read the preference. */
   .nz-button-pending-label {
     display: none;
-    /* Only the room the label leaves: a button that cannot grow (fullWidth, a narrow parent) shortens
-       this text to an ellipsis, then to nothing, before the label wraps. Basis 0, grown up to its own
-       width, so a button that can grow still fits it whole (overflow: hidden lets it reach 0). */
-    flex: 1 1 0;
-    max-inline-size: max-content;
+    grid-area: 1 / 2;
+    /* a button that cannot grow (fullWidth, a narrow parent) shortens it to an ellipsis */
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    /* the gap before it moves inside (::before), so a shortened-to-nothing text takes no room */
-    margin-inline-start: calc(-1 * var(--nz-button-gap, var(--_nz-button-gap)));
-
-    /* "Publish · Loading…": a status after the action, not a second label */
-    &::before {
-      content: '·';
-      margin-inline: var(--nz-button-gap, var(--_nz-button-gap));
-    }
+    text-align: center;
   }
 
-  /* no label (an icon-only Button named by aria-label): no separator before the text */
-  .nz-button-label:empty + .nz-button-pending-label::before {
-    content: none;
+  .nz-button-pending-label + .nz-button-label {
+    grid-area: 1 / 2;
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .nz-button[data-pending] {
+      display: inline-grid;
+      grid-auto-flow: column;
+      align-content: center;
+    }
+
     .nz-button-pending-label {
-      display: inline;
+      display: block;
+    }
+
+    .nz-button-pending-label + .nz-button-label {
+      opacity: 0;
     }
   }
 
+  [data-nz-motion='reduce'] .nz-button[data-pending] {
+    display: inline-grid;
+    grid-auto-flow: column;
+    /* a two-line label overflows evenly, as in the flex layout */
+    align-content: center;
+  }
+
   [data-nz-motion='reduce'] .nz-button-pending-label {
-    display: inline;
+    display: block;
+  }
+
+  [data-nz-motion='reduce'] .nz-button-pending-label + .nz-button-label {
+    opacity: 0;
   }
 
   @keyframes nz-button-spin {

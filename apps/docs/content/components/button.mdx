@@ -22,14 +22,15 @@ choose](/docs/guides/static-or-interactive/).
 `pending` replaces the leading icon with a spinner, keeps the label, and keeps the button focusable
 with `aria-disabled`, swallowing clicks. The spinner turns once every 800 ms (`--nz-duration-spin`,
 Figma's `duration/spin`). Under Reduced motion (the OS setting, or `data-nz-motion="reduce"` on an
-ancestor) it stops, and the text "Loading…" shows after the label, so the wait is still visible
-without movement (Figma's Accessibility page: "Spinner and skeleton loops stop; a text label
-shows"). The button grows by that text while it shows. Where it cannot grow (`fullWidth`, a narrow
-parent), the text shortens to an ellipsis and then to nothing before the label wraps.
+ancestor) it stops, and the text "Loading…" shows in the label's place, so the wait is still
+visible without movement (Figma's Accessibility page: "Spinner and skeleton loops stop; a text label
+shows"). The text and the label share one space, so the button keeps its width when `pending`
+starts (it grows only if "Loading…" is wider than the label). Where the text does not fit, it ends
+in an ellipsis.
 
 ```tsx
 <>
-  {/* Reduced motion: "Publishing · Loading…" */}
+  {/* Reduced motion: the spinner stops and "Loading…" replaces "Publishing" */}
   <Button pending>Publishing</Button>
   <Button pending labels={{ pending: 'Wird geladen…' }}>
     Veröffentlichen
@@ -37,8 +38,10 @@ parent), the text shortens to an ellipsis and then to nothing before the label w
 </>
 ```
 
-The text is visual only (`aria-hidden`): the accessible name stays the label, and assistive
-technology learns the state from `aria-disabled`. `labels={{ pending: '' }}` shows no text. The
+The label is only made transparent, so it stays in the accessible name, after the text on screen:
+"Loading… Publishing" (WCAG 2.5.3, the visible words are part of the name). Under default motion the
+text is not rendered visibly and the name is the label. Assistive technology also learns the state
+from `aria-disabled`. `labels={{ pending: '' }}` shows no text and keeps the label visible. The
 markup is the same in both motion modes; only CSS reads the preference.
 
 Translate the text with `labels.pending`. It is set per instance: 0.1.0 has no app-wide labels, and

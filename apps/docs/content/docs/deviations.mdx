@@ -91,11 +91,15 @@ now record Figma's values where they apply. What still differs, with the maintai
   text.
 - **The Select list is as wide as its trigger.** Figma's Select Menu says "matches its width (min
   240)"; the code keeps the trigger's width as the minimum, with no 240 px floor.
+- **A pending Button replaces its label under Reduced motion.** Figma's Button says "keep the
+  label"; under Reduced motion the code shows "Loading…" in the label's place instead, so the
+  button keeps its width when the wait starts. The label stays in the accessible name ("Loading…
+  Publishing"). Under default motion the label stays, with the spinner, as in Figma (M37).
 - **An icon-only pending button shows no text under Reduced motion.** Figma's Accessibility page
-  says "Spinner and skeleton loops stop; a text label shows". Button does that ("Publishing ·
-  Loading…"). IconButton has no room for text: its spinner stops and `aria-disabled` stays, and
-  nothing visible says it is loading. Show the progress in words next to it (a status line), or use
-  a Button where a label fits. Open for the maintainer.
+  says "Spinner and skeleton loops stop; a text label shows". Button does that. IconButton has no
+  room for text: its spinner stops and `aria-disabled` stays, and nothing visible says it is
+  loading. Show the progress in words next to it (a status line), or use a Button where a label
+  fits (M37: accepted).
 - **A Textarea's minimum height can be lowered.** Figma's 112 px minimum is the default;
   `--nz-textarea-min-block-size` changes it (for example to `0` for a one-line composer).
 
