@@ -589,6 +589,21 @@ describe('FieldStatic (M31): the function-child path as its own component', () =
     expect(html).not.toContain(' for=');
   });
 
+  test('Field passes the same second argument, and its type declares it (M37)', () => {
+    let seen: FieldStaticWiring | undefined;
+    const html = renderToString(
+      <Field ids={IDS} label="Range" group>
+        {(_, field: FieldStaticWiring) => {
+          seen = field;
+          return <div role="radiogroup" aria-labelledby={field.labelledBy} />;
+        }}
+      </Field>,
+    );
+    expect(seen?.ids).toEqual(IDS);
+    expect(seen?.labelledBy).toBe('l');
+    expect(html).toContain('<div role="radiogroup" aria-labelledby="l"></div>');
+  });
+
   test('render composes the root and receives the Field state', () => {
     const states: unknown[] = [];
     const html = renderToString(

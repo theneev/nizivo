@@ -104,11 +104,12 @@ export interface FieldProps extends Omit<ComponentPropsWithRef<'div'>, 'children
   render?: RenderProp<FieldState>;
   /**
    * The control. A function receives ready-made control attributes and renders with no client code
-   * at all (zero-JS mode, for Server-Component forms and plain elements). A NativeSelect placed
-   * directly inside is wired the same way, with no function. Client controls (Input, Checkbox, …)
-   * read the wiring through `useFieldControl`.
+   * at all (zero-JS mode, for Server-Component forms and plain elements); its second argument,
+   * `field`, carries the ids for anything else, as on `FieldStatic`. A NativeSelect placed directly
+   * inside is wired the same way, with no function. Client controls (Input, Checkbox, …) read the
+   * wiring through `useFieldControl`.
    */
-  children?: ReactNode | ((control: FieldControlProps) => ReactNode);
+  children?: ReactNode | ((control: FieldControlProps, field: FieldStaticWiring) => ReactNode);
 }
 
 /**

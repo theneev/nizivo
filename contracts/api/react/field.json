@@ -26,10 +26,10 @@
       "name": "Field",
       "props": [
         {
-          "description": "The control. A function receives ready-made control attributes and renders with no client code at all (zero-JS mode, for Server-Component forms and plain elements). A NativeSelect placed directly inside is wired the same way, with no function. Client controls (Input, Checkbox, …) read the wiring through `useFieldControl`.",
+          "description": "The control. A function receives ready-made control attributes and renders with no client code at all (zero-JS mode, for Server-Component forms and plain elements); its second argument, `field`, carries the ids for anything else, as on `FieldStatic`. A NativeSelect placed directly inside is wired the same way, with no function. Client controls (Input, Checkbox, …) read the wiring through `useFieldControl`.",
           "name": "children",
           "required": false,
-          "type": "ReactNode | ((control: FieldControlProps) => ReactNode)"
+          "type": "ReactNode | ((control: FieldControlProps, field: FieldStaticWiring) => ReactNode)"
         },
         {
           "description": "Help text under the control, joined to its `aria-describedby`.",
