@@ -1,6 +1,6 @@
-import type { JSX } from 'react';
+import type { ComponentPropsWithRef, JSX } from 'react';
 import { Inline } from '../inline/index';
-import { IconButton } from './index';
+import { IconButton, IconButtonStatic } from './index';
 
 /** Stand-ins for `@nizivo/icons` glyphs (20 px Lucide strokes). */
 function Bell(): JSX.Element {
@@ -115,5 +115,28 @@ export function IconButtonShortcutExample(): JSX.Element {
       shortcut="mod+b"
       tooltip={{ side: 'bottom' }}
     />
+  );
+}
+
+/** Stands in for a router link (Next `Link`, React Router `Link`). */
+function Link({ children, ...props }: ComponentPropsWithRef<'a'>): JSX.Element {
+  return <a {...props}>{children}</a>;
+}
+
+/**
+ * `IconButtonStatic` in a Server Component: no tooltip and no client code on the page. The name is
+ * `aria-label`. The second renders as a link, as a row action in a server-rendered table might.
+ */
+export function IconButtonStaticExample(): JSX.Element {
+  return (
+    <Inline gap="2">
+      <IconButtonStatic aria-label="Add product" icon={<Plus />} variant="primary" />
+      <IconButtonStatic
+        aria-label="Delete product"
+        icon={<Trash />}
+        variant="tertiary"
+        render={<Link href="/products/42/delete" />}
+      />
+    </Inline>
   );
 }

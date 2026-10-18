@@ -10,7 +10,7 @@ export type {
 export { Badge } from './badge/index';
 export type { BadgeProps, BadgeState, BadgeTone } from './badge/index';
 export { Button } from './button/index';
-export type { ButtonProps, ButtonState } from './button/index';
+export type { ButtonLabels, ButtonProps, ButtonState } from './button/index';
 export {
   Card,
   CardRoot,
@@ -103,10 +103,11 @@ export type {
 } from './grid/index';
 export { Heading } from './heading/index';
 export type { HeadingLevel, HeadingProps, HeadingState, HeadingVariant } from './heading/index';
-export { IconButton } from './icon-button/index';
+export { IconButton, IconButtonStatic } from './icon-button/index';
 export type {
   IconButtonProps,
   IconButtonState,
+  IconButtonStaticProps,
   IconButtonTooltipOptions,
 } from './icon-button/index';
 export { Image } from './image/index';

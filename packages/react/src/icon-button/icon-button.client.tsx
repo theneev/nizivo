@@ -1,14 +1,15 @@
 'use client';
 // The IconButton's tooltip leaf (ARCHITECTURE.md §9.5 "split"): the same <button> as the server shell,
-// made the trigger of a Tooltip that shows the label. It imports the element builder from the shell's
-// module, which imports this leaf: a cycle only in client bundles, where both are client code, and
-// nothing runs at module load (Field and FieldScope have the same shape).
+// made the trigger of a Tooltip that shows the label. The element builder comes from
+// icon-button-static.tsx, which imports no client module (M31), so there is no import cycle.
 import type { JSX } from 'react';
 import { TooltipPopup, TooltipRoot, TooltipTrigger } from '../tooltip/tooltip.client';
 import type { IconButtonTooltipOptions } from './icon-button.contract';
-import { iconButtonElement, type IconButtonElementProps } from './icon-button';
+import { iconButtonElement, type IconButtonElementProps } from './icon-button-static';
 
-export interface IconButtonTooltipProps extends IconButtonElementProps {
+export interface IconButtonTooltipProps extends Omit<IconButtonElementProps, 'label'> {
+  /** The accessible name and the tooltip text. */
+  label: string;
   tooltip: IconButtonTooltipOptions;
   shortcut?: string;
 }

@@ -76,6 +76,12 @@
     },
     {
       "definedIn": "./button",
+      "import": "import type { ButtonLabels } from '@nizivo/react'",
+      "kind": "type",
+      "name": "ButtonLabels"
+    },
+    {
+      "definedIn": "./button",
       "import": "import type { ButtonProps } from '@nizivo/react'",
       "kind": "type",
       "name": "ButtonProps"
@@ -619,6 +625,18 @@
       "import": "import type { IconButtonState } from '@nizivo/react'",
       "kind": "type",
       "name": "IconButtonState"
+    },
+    {
+      "definedIn": "./icon-button",
+      "import": "import { IconButtonStatic } from '@nizivo/react'",
+      "kind": "component",
+      "name": "IconButtonStatic"
+    },
+    {
+      "definedIn": "./icon-button",
+      "import": "import type { IconButtonStaticProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "IconButtonStaticProps"
     },
     {
       "definedIn": "./icon-button",

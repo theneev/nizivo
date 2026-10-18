@@ -221,8 +221,9 @@ export function DialogFooter({ className, render, ...rest }: DialogFooterProps):
 /**
  * With `render` or `children`, the consumer's button. With neither, an IconButton (tertiary, `md`)
  * showing the core close glyph (§12.3, §14.2), named by `labels.close`. Its markup is the IconButton
- * element's (`iconButtonElement` in icon-button.tsx), written out: importing that builder cost the
- * Dialog entry about 280 B gzip against its 31 KiB cap. An overlay-lane case compares the two.
+ * element's (`iconButtonElement`, icon-button-static.tsx since M31), written out: importing that
+ * builder cost the Dialog entry about 280 B gzip against its 31 KiB cap. An overlay-lane case
+ * compares the two.
  */
 export function DialogClose({
   className,

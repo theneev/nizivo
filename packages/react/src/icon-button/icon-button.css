@@ -146,7 +146,9 @@
     }
   }
 
-  /* the pending spinner keeps turning under reduced motion: it is essential feedback (§15.1) */
+  /* One turn per --nz-duration-spin (Figma duration/spin). Reduced motion sets it to 0 ms, so the
+     loop never runs and the glyph rests upright (§13.2). An icon-only button has no room for the
+     "Loading…" text Button shows then: the static glyph and aria-disabled are its whole cue. */
   .nz-icon-button[data-pending] .nz-glyph-spinner {
     animation: nz-icon-button-spin var(--nz-duration-spin) linear infinite;
   }

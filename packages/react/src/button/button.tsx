@@ -12,6 +12,16 @@ export interface ButtonState {
   disabled: boolean;
 }
 
+/** Button's own strings (§16.4): serialisable, English defaults. */
+export interface ButtonLabels {
+  /**
+   * The text a pending button shows next to its label under Reduced motion, where the spinner stops
+   * (Figma: "Spinner and skeleton loops stop; a text label shows").
+   * @default 'Loading…'
+   */
+  pending: string;
+}
+
 export interface ButtonProps extends Omit<ComponentPropsWithRef<'button'>, 'children'> {
   /**
    * Figma "Variant". One primary per view; secondary for everything else; tertiary inside dense rows.
@@ -23,7 +33,10 @@ export interface ButtonProps extends Omit<ComponentPropsWithRef<'button'>, 'chil
   leadingIcon?: ReactNode;
   trailingIcon?: ReactNode;
   /**
-   * An action is in flight: the button stays focusable with `aria-disabled` and swallows clicks.
+   * An action is in flight: the spinner replaces the leading icon, the label stays, and the button
+   * stays focusable with `aria-disabled` and swallows clicks. The spinner turns once per
+   * `--nz-duration-spin`; under Reduced motion it stops and `labels.pending` ("Loading…") shows after
+   * the label. That text is visual only: the accessible name stays the label.
    * @default false
    */
   pending?: boolean;
@@ -33,6 +46,12 @@ export interface ButtonProps extends Omit<ComponentPropsWithRef<'button'>, 'chil
   fullWidth?: boolean;
   /** Composition, for example `render={<Link href="/orders" />}`. */
   render?: RenderProp<ButtonState>;
+  /**
+   * Overrides Button's strings, for example `labels={{ pending: 'Wird geladen…' }}`; `pending: ''`
+   * shows no text. Translation is per instance (no global labels in 0.1.0): an app wraps Button once to
+   * pass its own.
+   */
+  labels?: Partial<ButtonLabels>;
   children?: ReactNode;
 }
 
@@ -49,6 +68,7 @@ export function Button({
   render,
   className,
   onClick,
+  labels,
   children,
   ...rest
 }: ButtonProps): ReactElement {
@@ -96,6 +116,19 @@ export function Button({
           <span className="nz-button-label" data-slot="button-label">
             {children}
           </span>
+          {pending && labels?.pending !== '' && (
+            // Shown only under Reduced motion (button.css), in every render: the markup does not
+            // depend on the motion preference (§13.2 rule 3). Hidden from assistive technology like
+            // the spinner it stands in for, so the name stays the label and only aria-disabled
+            // changes.
+            <span
+              className="nz-button-pending-label"
+              data-slot="button-pending-label"
+              aria-hidden="true"
+            >
+              {labels?.pending ?? 'Loading…'}
+            </span>
+          )}
           {trailingIcon != null && (
             <span className="nz-button-icon" data-slot="button-icon" aria-hidden="true">
               {trailingIcon}

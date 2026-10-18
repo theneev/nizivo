@@ -41,13 +41,19 @@
           "type": "boolean"
         },
         {
+          "description": "Overrides Button's strings, for example `labels={{ pending: 'Wird geladen…' }}`; `pending: ''` shows no text. Translation is per instance (no global labels in 0.1.0): an app wraps Button once to pass its own.",
+          "name": "labels",
+          "required": false,
+          "type": "Partial<ButtonLabels>"
+        },
+        {
           "name": "leadingIcon",
           "required": false,
           "type": "ReactNode"
         },
         {
           "default": "false",
-          "description": "An action is in flight: the button stays focusable with `aria-disabled` and swallows clicks.",
+          "description": "An action is in flight: the spinner replaces the leading icon, the label stays, and the button stays focusable with `aria-disabled` and swallows clicks. The spinner turns once per `--nz-duration-spin`; under Reduced motion it stops and `labels.pending` (\"Loading…\") shows after the label. That text is visual only: the accessible name stays the label.",
           "name": "pending",
           "required": false,
           "type": "boolean"
@@ -116,6 +122,24 @@
       },
       "slot": "button",
       "source": "packages/react/src/button/button.tsx"
+    },
+    {
+      "declaration": "interface",
+      "description": "Button's own strings (§16.4): serialisable, English defaults.",
+      "import": "import type { ButtonLabels } from '@nizivo/react/button'",
+      "kind": "type",
+      "members": [
+        {
+          "default": "'Loading…'",
+          "description": "The text a pending button shows next to its label under Reduced motion, where the spinner stops (Figma: \"Spinner and skeleton loops stop; a text label shows\").",
+          "name": "pending",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "name": "ButtonLabels",
+      "source": "packages/react/src/button/button.tsx",
+      "typeParameters": []
     },
     {
       "declaration": "interface",
@@ -198,6 +222,14 @@
       "part": false,
       "renderedBy": "Button",
       "slot": "button-label",
+      "stateIndicator": []
+    },
+    {
+      "attributes": [],
+      "interactive": false,
+      "part": false,
+      "renderedBy": "Button",
+      "slot": "button-pending-label",
       "stateIndicator": []
     }
   ],

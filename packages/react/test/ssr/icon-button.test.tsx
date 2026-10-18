@@ -1,5 +1,6 @@
 // IconButton (ARCHITECTURE.md §9.5 "split", §10.2): the server shell, the tooltip leaf across the RSC
-// boundary, and the markup both paths share. Tooltip behaviour in a browser: test/browser/icon-button.spec.tsx.
+// boundary, and the markup both paths share; IconButtonStatic (M31), the same element from a module
+// that reaches no client code. Tooltip behaviour in a browser: test/browser/icon-button.spec.tsx.
 import { isValidElement, type MouseEvent } from 'react';
 import { renderToString } from 'react-dom/server';
 import { afterEach, describe, expect, test, vi } from 'vitest';
@@ -19,8 +20,10 @@ import {
   withDispatcher,
   type ClientBoundary,
 } from '../helpers/rsc';
-import { IconButton, iconButtonElement } from '../../src/icon-button/icon-button';
+import { IconButton } from '../../src/icon-button/icon-button';
 import { IconButtonTooltip } from '../../src/icon-button/icon-button.client';
+import { IconButtonStatic, iconButtonElement } from '../../src/icon-button/icon-button-static';
+import type { IconButtonStaticProps } from '../../src/icon-button/icon-button.contract';
 
 const SRC = rekey(
   import.meta.glob('../../src/**/*.{ts,tsx,json}', {
@@ -75,6 +78,14 @@ describe('module graph', () => {
       ]),
     );
     expect(clients.every((file) => file.endsWith('.client.tsx'))).toBe(true);
+  });
+
+  test('IconButtonStatic reaches no client module, no package but react, and only react-server React', () => {
+    const { modules, externals } = graph(SRC, 'src/icon-button/icon-button-static.tsx');
+    expect([...modules].filter((file) => isClient(SRC.get(file) ?? ''))).toEqual([]);
+    expect([...modules]).not.toContain('src/icon-button/icon-button.tsx');
+    expect([...externals]).toEqual(['react']);
+    expect(reactImports(SRC, modules).filter((name) => !REACT_SERVER.has(name))).toEqual([]);
   });
 });
 
@@ -136,7 +147,7 @@ describe('react-server build, the leaf as a client reference', () => {
       [LEAF],
     );
     const examples = Object.values(loaded);
-    expect(examples).toHaveLength(4);
+    expect(examples).toHaveLength(5);
     for (const Example of examples) {
       const boundaries: ClientBoundary[] = [];
       const tree = JSON.stringify(withDispatcher(react, () => serverRender(Example(), boundaries)));
@@ -152,6 +163,27 @@ describe('react-server build, the leaf as a client reference', () => {
 const PLAIN =
   '<button data-slot="icon-button" data-variant="secondary" data-size="md" class="nz-icon-button nz-hit-target" type="button" aria-label="Notifications">' +
   '<span class="nz-icon-button-icon" data-slot="icon-button-icon" aria-hidden="true"><svg viewBox="0 0 24 24"></svg></span></button>';
+
+describe('IconButtonStatic under the react-server build', () => {
+  test('loads with no client module mocked and renders host elements only', async () => {
+    // No client reference is registered: a 'use client' module anywhere in the graph would fail to load.
+    const { loaded, react } = await underReactServer(
+      () => import('../../src/icon-button/icon-button-static'),
+    );
+    const boundaries: ClientBoundary[] = [];
+    const tree = JSON.stringify(
+      withDispatcher(react, () =>
+        serverRender(
+          loaded.IconButtonStatic({ 'aria-label': 'Delete', icon: Mark, pending: true }),
+          boundaries,
+        ),
+      ),
+    );
+    expect(boundaries).toEqual([]);
+    expect(tree).toContain('"data-slot":"icon-button"');
+    expect(tree).toContain('"aria-label":"Delete"');
+  });
+});
 
 describe('markup', () => {
   test('a secondary md button named by its label, with a decorative glyph', () => {
@@ -249,6 +281,61 @@ describe('markup', () => {
     );
     expect(html).toContain('aria-labelledby="dialog-title"');
     expect(html).toContain('aria-label="Close"');
+  });
+});
+
+describe('IconButtonStatic markup equals <IconButton tooltip={false}>', () => {
+  const cases: [string, Omit<IconButtonStaticProps, 'aria-label' | 'icon'>][] = [
+    ['the defaults', {}],
+    ['each variant and size', { variant: 'primary', size: 'lg' }],
+    ['tertiary sm', { variant: 'tertiary', size: 'sm' }],
+    ['critical', { variant: 'critical' }],
+    ['accent', { variant: 'accent' }],
+    ['a pressed toggle', { pressed: true }],
+    ['an unpressed toggle', { pressed: false }],
+    ['pending, which is never a submit', { pending: true, type: 'submit' }],
+    ['a custom pending indicator', { pending: true, pendingIndicator: <svg data-mark="" /> }],
+    ['disabled', { disabled: true }],
+    ['a submit button', { type: 'submit', name: 'intent', value: 'delete' }],
+    ['a link', { render: <a href="/settings" aria-label="Settings" />, disabled: true }],
+    ['aria-labelledby, with aria-label as the fallback', { 'aria-labelledby': 'title' }],
+    ['own attributes and class', { id: 'x', className: 'mine', 'aria-keyshortcuts': 'Alt+B' }],
+  ];
+  test.each(cases)('%s', (_name, props) => {
+    expect(renderToString(<IconButtonStatic aria-label="Delete" icon={Mark} {...props} />)).toBe(
+      renderToString(<IconButton label="Delete" icon={Mark} tooltip={false} {...props} />),
+    );
+  });
+
+  test('the plain button', () => {
+    expect(renderToString(<IconButtonStatic aria-label="Notifications" icon={Mark} />)).toBe(PLAIN);
+  });
+
+  test('types: a name is required, and the tooltip props are refused', () => {
+    // @ts-expect-error -- no accessible name
+    const unnamed = <IconButtonStatic icon={Mark} />;
+    // @ts-expect-error -- `label` is IconButton's; IconButtonStatic is named by aria-label
+    const labelled = <IconButtonStatic label="Delete" aria-label="Delete" icon={Mark} />;
+    // @ts-expect-error -- there is no tooltip: use IconButton
+    const tooltip = <IconButtonStatic aria-label="Delete" icon={Mark} tooltip={false} />;
+    // @ts-expect-error -- no shortcut: pass aria-keyshortcuts
+    const shortcut = <IconButtonStatic aria-label="Bold" icon={Mark} shortcut="mod+b" />;
+    const labelledBy = <IconButtonStatic aria-label="Close" aria-labelledby="title" icon={Mark} />;
+    expect([unnamed, labelled, tooltip, shortcut, labelledBy].every((e) => isValidElement(e))).toBe(
+      true,
+    );
+  });
+
+  test('an empty aria-label warns in development, unless aria-labelledby names it', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
+    renderToString(<IconButtonStatic aria-label=" " icon={Mark} />);
+    expect(warn).toHaveBeenCalledTimes(1);
+    expect(String(warn.mock.calls[0]?.[0])).toBe(
+      'Nizivo IconButtonStatic: `aria-label` is empty, so the button has no accessible name. Pass the action in words, for example aria-label="Delete product".',
+    );
+    renderToString(<IconButtonStatic aria-label="" aria-labelledby="title" icon={Mark} />);
+    renderToString(<IconButtonStatic aria-label="Delete" icon={Mark} />);
+    expect(warn).toHaveBeenCalledTimes(1);
   });
 });
 

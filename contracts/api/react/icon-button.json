@@ -42,7 +42,7 @@
         },
         {
           "default": "false",
-          "description": "An action is in flight: the spinner replaces the glyph, and the button stays focusable with `aria-disabled` and swallows clicks.",
+          "description": "An action is in flight: the spinner replaces the glyph, and the button stays focusable with `aria-disabled` and swallows clicks. The spinner turns once per `--nz-duration-spin` and stops under Reduced motion; an icon-only button has no room for the \"Loading…\" text Button shows then, so show the progress in words next to it when the wait is long (for example a status line).",
           "name": "pending",
           "required": false,
           "type": "boolean"
@@ -81,7 +81,7 @@
         },
         {
           "default": "true",
-          "description": "Pairs the button with a Tooltip that shows `label` (\"Always paired with a tooltip that names the action\", Figma). The tooltip is a client leaf; `false` keeps the button server-safe with no client code. Pass options to place it.",
+          "description": "Pairs the button with a Tooltip that shows `label` (\"Icon-only buttons have an aria-label and a Tooltip\", Figma). The tooltip is a client leaf; `false` renders the button with no client code running. Pass options to place it. Where visible text already names the action and the page should ship no JavaScript for the button, use `IconButtonStatic`: under Turbopack and `next dev` this module's import of the leaf ships the tooltip chain even with `tooltip={false}`.",
           "name": "tooltip",
           "required": false,
           "type": "boolean | IconButtonTooltipOptions"
@@ -151,6 +151,149 @@
       "name": "IconButtonState",
       "source": "packages/react/src/icon-button/icon-button.contract.ts",
       "stateOf": "IconButton",
+      "typeParameters": []
+    },
+    {
+      "client": false,
+      "description": "A server-safe IconButton with no tooltip: the same `<button>`, classes and CSS as `<IconButton tooltip={false}>`, from a module that imports no client code.\n\nUse it only where visible text already names the action for sighted users (a column header, a labelled row) and the page should ship no JavaScript for the button: a table row action that is a link (`render={<a href=\"/orders/42/edit\" />}`) under a header that says what it does, a submit button in a Server Action form (`type=\"submit\"` inside `<form action={deleteProduct}>`) beside its label. Under Turbopack and `next dev`, importing `IconButton` ships its tooltip code even with `tooltip={false}` (about 20 KB gzip in production); `IconButtonStatic` ships none.\n\nAn icon-only toolbar needs `IconButton`'s tooltip, so a sighted user can read what each glyph does (Figma: \"Icon-only buttons have an aria-label and a Tooltip\").\n\n`aria-label` is always required. You may also pass `aria-labelledby` pointing at visible text; it then names the button, with `aria-label` as the fallback. There is no `tooltip`, no `shortcut` (pass `aria-keyshortcuts` yourself, for example `\"Meta+B Control+B\"`) and no `label`.",
+      "import": "import { IconButtonStatic } from '@nizivo/react/icon-button'",
+      "inherits": [
+        {
+          "base": "ComponentPropsWithRef<\"button\">",
+          "element": "button",
+          "omitted": ["aria-label", "aria-pressed", "children"],
+          "overridden": [],
+          "text": "Omit<ComponentPropsWithRef<\"button\">, \"children\" | \"aria-label\" | \"aria-pressed\">"
+        }
+      ],
+      "kind": "component",
+      "name": "IconButtonStatic",
+      "props": [
+        {
+          "description": "The action, in words: the button's accessible name. Required, because the glyph alone names nothing.",
+          "name": "aria-label",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "description": "The glyph, decorative (`aria-hidden`): 16 px at `sm`, 20 px at `md`, 24 px at `lg`.",
+          "inheritedFrom": "IconButtonProps",
+          "name": "icon",
+          "required": true,
+          "type": "ReactNode"
+        },
+        {
+          "description": "IconButtonStatic has no tooltip and no `label`: name it with `aria-label`.",
+          "name": "label",
+          "required": false,
+          "type": "never"
+        },
+        {
+          "default": "false",
+          "description": "An action is in flight: the spinner replaces the glyph, and the button stays focusable with `aria-disabled` and swallows clicks. The spinner turns once per `--nz-duration-spin` and stops under Reduced motion; an icon-only button has no room for the \"Loading…\" text Button shows then, so show the progress in words next to it when the wait is long (for example a status line).",
+          "inheritedFrom": "IconButtonProps",
+          "name": "pending",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "description": "Replaces the internal spinner glyph.",
+          "inheritedFrom": "IconButtonProps",
+          "name": "pendingIndicator",
+          "required": false,
+          "type": "ReactNode"
+        },
+        {
+          "description": "Makes it a toggle button: `aria-pressed` is written as given, so `false` is an unpressed toggle. Leave it out for a plain action.",
+          "inheritedFrom": "IconButtonProps",
+          "name": "pressed",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "description": "Composition, for example `render={<Link href=\"/settings\" />}`.",
+          "inheritedFrom": "IconButtonProps",
+          "name": "render",
+          "required": false,
+          "type": "RenderProp<IconButtonState>"
+        },
+        {
+          "description": "IconButtonStatic has no tooltip to show a shortcut in: pass `aria-keyshortcuts` (`\"Meta+B Control+B\"`) to announce one, or use `IconButton` with `shortcut`.",
+          "name": "shortcut",
+          "required": false,
+          "type": "never"
+        },
+        {
+          "default": "'md'",
+          "description": "32 / 40 / 48 px square.",
+          "inheritedFrom": "IconButtonProps",
+          "name": "size",
+          "required": false,
+          "type": "ControlSize",
+          "values": ["sm", "md", "lg"]
+        },
+        {
+          "description": "IconButtonStatic has no tooltip: use `IconButton` for one.",
+          "name": "tooltip",
+          "required": false,
+          "type": "never"
+        },
+        {
+          "default": "'secondary'",
+          "description": "Figma \"Variant\".",
+          "inheritedFrom": "IconButtonProps",
+          "name": "variant",
+          "required": false,
+          "type": "ButtonVariant",
+          "values": ["primary", "secondary", "tertiary", "critical", "accent"]
+        }
+      ],
+      "propsType": "IconButtonStaticProps",
+      "render": {
+        "state": [
+          {
+            "name": "disabled",
+            "required": true,
+            "type": "boolean"
+          },
+          {
+            "name": "pending",
+            "required": true,
+            "type": "boolean"
+          },
+          {
+            "description": "`true` or `false` for a toggle (`pressed` given); `undefined` for a plain action.",
+            "name": "pressed",
+            "required": true,
+            "type": "boolean | undefined"
+          },
+          {
+            "name": "size",
+            "required": true,
+            "type": "ControlSize",
+            "values": ["sm", "md", "lg"]
+          },
+          {
+            "name": "variant",
+            "required": true,
+            "type": "ButtonVariant",
+            "values": ["primary", "secondary", "tertiary", "critical", "accent"]
+          }
+        ],
+        "stateType": "IconButtonState"
+      },
+      "slot": "icon-button",
+      "source": "packages/react/src/icon-button/icon-button-static.tsx"
+    },
+    {
+      "declaration": "interface",
+      "description": "IconButtonStatic's props: IconButton's, without the tooltip. `aria-label` is always required; an `aria-labelledby` pointing at visible text may be added, and then names the button, with `aria-label` as the fallback.",
+      "extends": ["Omit<IconButtonProps, \"label\" | \"tooltip\" | \"shortcut\">"],
+      "import": "import type { IconButtonStaticProps } from '@nizivo/react/icon-button'",
+      "kind": "type",
+      "name": "IconButtonStaticProps",
+      "propsOf": "IconButtonStatic",
+      "source": "packages/react/src/icon-button/icon-button.contract.ts",
       "typeParameters": []
     },
     {

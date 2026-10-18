@@ -136,9 +136,49 @@
     font-size: var(--_nz-button-icon-size);
   }
 
-  /* the pending spinner keeps turning under reduced motion: it is essential feedback (§15.1) */
+  /* One turn per --nz-duration-spin (Figma duration/spin). Reduced motion sets it to 0 ms, so the
+     loop never runs and the glyph rests upright (§13.2); the text below then says it is loading. */
   .nz-button[data-pending] .nz-glyph-spinner {
     animation: nz-button-spin var(--nz-duration-spin) linear infinite;
+  }
+
+  /* "Spinner and skeleton loops stop; a text label shows" (Figma Accessibility, M34): the pending
+     text after the label, shown under the two switches that swap the Reduced motion tokens
+     (prefers-reduced-motion and [data-nz-motion='reduce'], as in tokens.css). The markup is the same
+     in both modes (§13.2 rule 3); only this rule reads the preference. */
+  .nz-button-pending-label {
+    display: none;
+    /* Only the room the label leaves: a button that cannot grow (fullWidth, a narrow parent) shortens
+       this text to an ellipsis, then to nothing, before the label wraps. Basis 0, grown up to its own
+       width, so a button that can grow still fits it whole (overflow: hidden lets it reach 0). */
+    flex: 1 1 0;
+    max-inline-size: max-content;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    /* the gap before it moves inside (::before), so a shortened-to-nothing text takes no room */
+    margin-inline-start: calc(-1 * var(--nz-button-gap, var(--_nz-button-gap)));
+
+    /* "Publish · Loading…": a status after the action, not a second label */
+    &::before {
+      content: '·';
+      margin-inline: var(--nz-button-gap, var(--_nz-button-gap));
+    }
+  }
+
+  /* no label (an icon-only Button named by aria-label): no separator before the text */
+  .nz-button-label:empty + .nz-button-pending-label::before {
+    content: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nz-button-pending-label {
+      display: inline;
+    }
+  }
+
+  [data-nz-motion='reduce'] .nz-button-pending-label {
+    display: inline;
   }
 
   @keyframes nz-button-spin {

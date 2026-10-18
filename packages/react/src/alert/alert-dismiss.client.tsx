@@ -30,12 +30,13 @@ export interface AlertDismissProps extends Omit<ComponentPropsWithRef<'button'>,
   render?: RenderProp<Record<string, never>>;
 }
 
+// Its markup is the IconButton element's (`iconButtonElement`, icon-button-static.tsx since M31),
+// written out: week 8 did so because importing icon-button.tsx brought in the tooltip leaf and the
+// Tooltip chain (D-aa). The leaf-free icon-button-static.tsx could now be imported instead (a
+// follow-up in W9-RESULTS.md); a unit test compares the two.
 /**
  * With no `render`, an IconButton (tertiary, `sm`: the 16 px glyph Figma draws, in a 32 px target)
- * with no tooltip, as `Dialog.Close` does (week 6): its markup is the IconButton element's
- * (`iconButtonElement` in icon-button.tsx), written out, because importing that module brings in the
- * IconButton's tooltip leaf and the Tooltip chain (D-aa), and this leaf must stay the Alert's only
- * client module. A unit test compares the two.
+ * with no tooltip, as `Dialog.Close` does.
  */
 export function AlertDismiss({
   onDismiss,

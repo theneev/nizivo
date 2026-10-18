@@ -87,7 +87,7 @@
     },
     {
       "client": true,
-      "description": "With no `render`, an IconButton (tertiary, `sm`: the 16 px glyph Figma draws, in a 32 px target) with no tooltip, as `Dialog.Close` does (week 6): its markup is the IconButton element's (`iconButtonElement` in icon-button.tsx), written out, because importing that module brings in the IconButton's tooltip leaf and the Tooltip chain (D-aa), and this leaf must stay the Alert's only client module. A unit test compares the two.",
+      "description": "With no `render`, an IconButton (tertiary, `sm`: the 16 px glyph Figma draws, in a 32 px target) with no tooltip, as `Dialog.Close` does.",
       "import": "import { AlertDismiss } from '@nizivo/react/alert'",
       "inherits": [
         {
