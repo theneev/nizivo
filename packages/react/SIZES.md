@@ -104,7 +104,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 | Entry              | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | ------------------ | -------: | ---------: | ---------: | ----------: | -----------: |
-| `.`                |   86,200 |       84.2 |     72,778 |          93 |        9,032 |
+| `.`                |   86,200 |       84.2 |     72,774 |          93 |        9,032 |
 | /alert             |    1,282 |        1.3 |      1,187 |         1.4 |          151 |
 | /augment           |        0 |        0.0 |          0 |           0 |            — |
 | /badge             |      796 |        0.8 |        727 |         0.9 |          125 |
@@ -135,7 +135,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /radio-group       |    2,200 |        2.1 |      2,025 |         2.4 |          257 |
 | /segmented-control |    2,371 |        2.3 |      2,171 |         2.6 |          291 |
 | /select            |   63,259 |       61.8 |     54,337 |          66 |        4,325 |
-| /separator         |      772 |        0.8 |        700 |         0.9 |          149 |
+| /separator         |      772 |        0.8 |        699 |         0.9 |          149 |
 | /skeleton          |      716 |        0.7 |        652 |         0.8 |          103 |
 | /stack             |      703 |        0.7 |        640 |         0.8 |          116 |
 | /switch            |    1,735 |        1.7 |      1,593 |         1.9 |          210 |

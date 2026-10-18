@@ -12,15 +12,23 @@ export interface SeparatorState {
 export interface SeparatorProps extends Omit<ComponentPropsWithRef<'hr'>, 'children'> {
   /** A vertical separator stretches to the height of its flex row. @default 'horizontal' */
   orientation?: Orientation;
-  /** Purely visual: hidden from assistive technology (`role="none"`). @default false */
+  /**
+   * Purely visual, hidden from assistive technology (`role="none"`): the Figma Divider default
+   * (7370:95, M35). Pass `decorative={false}` for a separator that means something on its own, a
+   * break between two groups a screen reader should hear (an `<hr>`'s implicit `separator` role,
+   * with `aria-orientation` when vertical). @default true
+   */
   decorative?: boolean;
   render?: RenderProp<SeparatorState>;
 }
 
-/** An `<hr>`: a 1 px `border/subtle` line, the divider Figma draws inside menus, cards and drawers. */
+/**
+ * An `<hr>`: a 1 px `border/subtle` line, Figma's Divider (7370:95). Decorative by default; spacing
+ * comes first, a line only when spacing is not enough (the Figma doc).
+ */
 export function Separator({
   orientation = 'horizontal',
-  decorative = false,
+  decorative = true,
   render,
   className,
   ...rest
