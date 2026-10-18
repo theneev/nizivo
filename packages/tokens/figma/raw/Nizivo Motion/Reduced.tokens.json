@@ -1,10 +1,10 @@
 {
-  "Grove Motion": {
+  "Nizivo Motion": {
     "duration": {
       "instant": {
         "$type": "dimension",
         "$value": {
-          "value": 80,
+          "value": 0,
           "unit": "px"
         },
         "$description": "",
@@ -12,12 +12,12 @@
         "$extensions": {
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-duration-instant)"
+              "WEB": "var(--nz-duration-instant)"
             },
             "variableId": "VariableID:737:204",
             "collection": {
               "id": "VariableCollectionId:737:203",
-              "name": "Grove Motion",
+              "name": "Nizivo Motion",
               "defaultModeId": "737:4"
             }
           }
@@ -26,7 +26,7 @@
       "fast": {
         "$type": "dimension",
         "$value": {
-          "value": 140,
+          "value": 0,
           "unit": "px"
         },
         "$description": "",
@@ -34,12 +34,12 @@
         "$extensions": {
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-duration-fast)"
+              "WEB": "var(--nz-duration-fast)"
             },
             "variableId": "VariableID:737:205",
             "collection": {
               "id": "VariableCollectionId:737:203",
-              "name": "Grove Motion",
+              "name": "Nizivo Motion",
               "defaultModeId": "737:4"
             }
           }
@@ -48,7 +48,7 @@
       "base": {
         "$type": "dimension",
         "$value": {
-          "value": 220,
+          "value": 120,
           "unit": "px"
         },
         "$description": "",
@@ -56,12 +56,12 @@
         "$extensions": {
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-duration-base)"
+              "WEB": "var(--nz-duration-base)"
             },
             "variableId": "VariableID:737:206",
             "collection": {
               "id": "VariableCollectionId:737:203",
-              "name": "Grove Motion",
+              "name": "Nizivo Motion",
               "defaultModeId": "737:4"
             }
           }
@@ -70,7 +70,7 @@
       "slow": {
         "$type": "dimension",
         "$value": {
-          "value": 320,
+          "value": 120,
           "unit": "px"
         },
         "$description": "",
@@ -78,12 +78,12 @@
         "$extensions": {
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-duration-slow)"
+              "WEB": "var(--nz-duration-slow)"
             },
             "variableId": "VariableID:737:207",
             "collection": {
               "id": "VariableCollectionId:737:203",
-              "name": "Grove Motion",
+              "name": "Nizivo Motion",
               "defaultModeId": "737:4"
             }
           }
@@ -92,7 +92,7 @@
       "slower": {
         "$type": "dimension",
         "$value": {
-          "value": 480,
+          "value": 160,
           "unit": "px"
         },
         "$description": "",
@@ -100,12 +100,12 @@
         "$extensions": {
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-duration-slower)"
+              "WEB": "var(--nz-duration-slower)"
             },
             "variableId": "VariableID:737:208",
             "collection": {
               "id": "VariableCollectionId:737:203",
-              "name": "Grove Motion",
+              "name": "Nizivo Motion",
               "defaultModeId": "737:4"
             }
           }
@@ -114,7 +114,7 @@
       "count-up": {
         "$type": "dimension",
         "$value": {
-          "value": 900,
+          "value": 0,
           "unit": "px"
         },
         "$description": "",
@@ -122,12 +122,12 @@
         "$extensions": {
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-duration-count-up)"
+              "WEB": "var(--nz-duration-count-up)"
             },
             "variableId": "VariableID:737:209",
             "collection": {
               "id": "VariableCollectionId:737:203",
-              "name": "Grove Motion",
+              "name": "Nizivo Motion",
               "defaultModeId": "737:4"
             }
           }
@@ -136,7 +136,7 @@
       "chart-draw": {
         "$type": "dimension",
         "$value": {
-          "value": 700,
+          "value": 0,
           "unit": "px"
         },
         "$description": "",
@@ -144,12 +144,78 @@
         "$extensions": {
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-duration-chart-draw)"
+              "WEB": "var(--nz-duration-chart-draw)"
             },
             "variableId": "VariableID:737:210",
             "collection": {
               "id": "VariableCollectionId:737:203",
-              "name": "Grove Motion",
+              "name": "Nizivo Motion",
+              "defaultModeId": "737:4"
+            }
+          }
+        }
+      },
+      "fade": {
+        "$type": "dimension",
+        "$value": {
+          "value": 120,
+          "unit": "px"
+        },
+        "$description": "Opacity-only fades; survives Reduced motion (Q34).",
+        "scopes": [],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--nz-duration-fade)"
+            },
+            "variableId": "VariableID:7351:24",
+            "collection": {
+              "id": "VariableCollectionId:737:203",
+              "name": "Nizivo Motion",
+              "defaultModeId": "737:4"
+            }
+          }
+        }
+      },
+      "pulse": {
+        "$type": "dimension",
+        "$value": {
+          "value": 0,
+          "unit": "px"
+        },
+        "$description": "Skeleton / indeterminate progress loop; stops in Reduced.",
+        "scopes": [],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--nz-duration-pulse)"
+            },
+            "variableId": "VariableID:7351:25",
+            "collection": {
+              "id": "VariableCollectionId:737:203",
+              "name": "Nizivo Motion",
+              "defaultModeId": "737:4"
+            }
+          }
+        }
+      },
+      "spin": {
+        "$type": "dimension",
+        "$value": {
+          "value": 0,
+          "unit": "px"
+        },
+        "$description": "One spinner rotation (linear). 0 in Reduced: the spinner stops and a text label shows.",
+        "scopes": [],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--nz-duration-spin)"
+            },
+            "variableId": "VariableID:7369:175",
+            "collection": {
+              "id": "VariableCollectionId:737:203",
+              "name": "Nizivo Motion",
               "defaultModeId": "737:4"
             }
           }
@@ -159,18 +225,18 @@
     "easing": {
       "standard": {
         "$type": "string",
-        "$value": "cubic-bezier(0.2, 0, 0, 1)",
+        "$value": "linear",
         "$description": "",
         "scopes": [],
         "$extensions": {
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-easing-standard)"
+              "WEB": "var(--nz-easing-standard)"
             },
             "variableId": "VariableID:737:211",
             "collection": {
               "id": "VariableCollectionId:737:203",
-              "name": "Grove Motion",
+              "name": "Nizivo Motion",
               "defaultModeId": "737:4"
             }
           }
@@ -178,18 +244,18 @@
       },
       "enter": {
         "$type": "string",
-        "$value": "cubic-bezier(0, 0, 0, 1)",
+        "$value": "linear",
         "$description": "",
         "scopes": [],
         "$extensions": {
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-easing-enter)"
+              "WEB": "var(--nz-easing-enter)"
             },
             "variableId": "VariableID:737:212",
             "collection": {
               "id": "VariableCollectionId:737:203",
-              "name": "Grove Motion",
+              "name": "Nizivo Motion",
               "defaultModeId": "737:4"
             }
           }
@@ -197,18 +263,18 @@
       },
       "exit": {
         "$type": "string",
-        "$value": "cubic-bezier(0.3, 0, 1, 1)",
+        "$value": "linear",
         "$description": "",
         "scopes": [],
         "$extensions": {
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-easing-exit)"
+              "WEB": "var(--nz-easing-exit)"
             },
             "variableId": "VariableID:737:213",
             "collection": {
               "id": "VariableCollectionId:737:203",
-              "name": "Grove Motion",
+              "name": "Nizivo Motion",
               "defaultModeId": "737:4"
             }
           }
@@ -216,18 +282,18 @@
       },
       "spring": {
         "$type": "string",
-        "$value": "spring(1, 260, 24, 0)",
+        "$value": "linear",
         "$description": "",
         "scopes": [],
         "$extensions": {
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-easing-spring)"
+              "WEB": "var(--nz-easing-spring)"
             },
             "variableId": "VariableID:737:214",
             "collection": {
               "id": "VariableCollectionId:737:203",
-              "name": "Grove Motion",
+              "name": "Nizivo Motion",
               "defaultModeId": "737:4"
             }
           }
@@ -235,18 +301,18 @@
       },
       "spring-soft": {
         "$type": "string",
-        "$value": "spring(1, 170, 26, 0)",
+        "$value": "linear",
         "$description": "",
         "scopes": [],
         "$extensions": {
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-easing-spring-soft)"
+              "WEB": "var(--nz-easing-spring-soft)"
             },
             "variableId": "VariableID:737:215",
             "collection": {
               "id": "VariableCollectionId:737:203",
-              "name": "Grove Motion",
+              "name": "Nizivo Motion",
               "defaultModeId": "737:4"
             }
           }
@@ -257,7 +323,7 @@
       "lift": {
         "$type": "dimension",
         "$value": {
-          "value": 4,
+          "value": 0,
           "unit": "px"
         },
         "$description": "",
@@ -265,12 +331,12 @@
         "$extensions": {
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-distance-lift)"
+              "WEB": "var(--nz-distance-lift)"
             },
             "variableId": "VariableID:737:216",
             "collection": {
               "id": "VariableCollectionId:737:203",
-              "name": "Grove Motion",
+              "name": "Nizivo Motion",
               "defaultModeId": "737:4"
             }
           }
@@ -279,7 +345,7 @@
       "reveal": {
         "$type": "dimension",
         "$value": {
-          "value": 12,
+          "value": 0,
           "unit": "px"
         },
         "$description": "",
@@ -287,12 +353,12 @@
         "$extensions": {
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-distance-reveal)"
+              "WEB": "var(--nz-distance-reveal)"
             },
             "variableId": "VariableID:737:217",
             "collection": {
               "id": "VariableCollectionId:737:203",
-              "name": "Grove Motion",
+              "name": "Nizivo Motion",
               "defaultModeId": "737:4"
             }
           }
@@ -301,7 +367,7 @@
       "float": {
         "$type": "dimension",
         "$value": {
-          "value": 8,
+          "value": 0,
           "unit": "px"
         },
         "$description": "",
@@ -309,12 +375,12 @@
         "$extensions": {
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-distance-float)"
+              "WEB": "var(--nz-distance-float)"
             },
             "variableId": "VariableID:737:218",
             "collection": {
               "id": "VariableCollectionId:737:203",
-              "name": "Grove Motion",
+              "name": "Nizivo Motion",
               "defaultModeId": "737:4"
             }
           }
@@ -325,7 +391,7 @@
       "max-deg": {
         "$type": "dimension",
         "$value": {
-          "value": 6,
+          "value": 0,
           "unit": "px"
         },
         "$description": "",
@@ -333,12 +399,12 @@
         "$extensions": {
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-tilt-max-deg)"
+              "WEB": "var(--nz-tilt-max-deg)"
             },
             "variableId": "VariableID:737:219",
             "collection": {
               "id": "VariableCollectionId:737:203",
-              "name": "Grove Motion",
+              "name": "Nizivo Motion",
               "defaultModeId": "737:4"
             }
           }
@@ -349,7 +415,7 @@
       "press": {
         "$type": "dimension",
         "$value": {
-          "value": 0.98,
+          "value": 1,
           "unit": "px"
         },
         "$description": "",
@@ -357,12 +423,12 @@
         "$extensions": {
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-scale-press)"
+              "WEB": "var(--nz-scale-press)"
             },
             "variableId": "VariableID:737:220",
             "collection": {
               "id": "VariableCollectionId:737:203",
-              "name": "Grove Motion",
+              "name": "Nizivo Motion",
               "defaultModeId": "737:4"
             }
           }
@@ -371,7 +437,7 @@
       "hover": {
         "$type": "dimension",
         "$value": {
-          "value": 1.02,
+          "value": 1,
           "unit": "px"
         },
         "$description": "",
@@ -379,12 +445,34 @@
         "$extensions": {
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-scale-hover)"
+              "WEB": "var(--nz-scale-hover)"
             },
             "variableId": "VariableID:737:221",
             "collection": {
               "id": "VariableCollectionId:737:203",
-              "name": "Grove Motion",
+              "name": "Nizivo Motion",
+              "defaultModeId": "737:4"
+            }
+          }
+        }
+      },
+      "enter": {
+        "$type": "dimension",
+        "$value": {
+          "value": 1,
+          "unit": "px"
+        },
+        "$description": "Overlay enter scale (Dropdown, Popover); none in Reduced.",
+        "scopes": [],
+        "$extensions": {
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--nz-scale-enter)"
+            },
+            "variableId": "VariableID:7351:26",
+            "collection": {
+              "id": "VariableCollectionId:737:203",
+              "name": "Nizivo Motion",
               "defaultModeId": "737:4"
             }
           }
@@ -395,7 +483,7 @@
       "item": {
         "$type": "dimension",
         "$value": {
-          "value": 40,
+          "value": 0,
           "unit": "px"
         },
         "$description": "",
@@ -403,12 +491,12 @@
         "$extensions": {
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-stagger-item)"
+              "WEB": "var(--nz-stagger-item)"
             },
             "variableId": "VariableID:737:222",
             "collection": {
               "id": "VariableCollectionId:737:203",
-              "name": "Grove Motion",
+              "name": "Nizivo Motion",
               "defaultModeId": "737:4"
             }
           }
@@ -419,7 +507,7 @@
       "pull": {
         "$type": "dimension",
         "$value": {
-          "value": 6,
+          "value": 0,
           "unit": "px"
         },
         "$description": "",
@@ -427,12 +515,12 @@
         "$extensions": {
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-magnetic-pull)"
+              "WEB": "var(--nz-magnetic-pull)"
             },
             "variableId": "VariableID:737:223",
             "collection": {
               "id": "VariableCollectionId:737:203",
-              "name": "Grove Motion",
+              "name": "Nizivo Motion",
               "defaultModeId": "737:4"
             }
           }
@@ -445,13 +533,13 @@
         "spec": "https://www.designtokens.org/tr/2025.10/format/",
         "colorMode": "srgb-dtcg",
         "variableCollections": [
-          "Grove Primitives",
-          "Grove Color",
-          "Grove Space",
-          "Grove Motion",
-          "Grove Responsive"
+          "Nizivo Primitives",
+          "Nizivo Color",
+          "Nizivo Space",
+          "Nizivo Motion",
+          "Nizivo Responsive"
         ],
-        "createdAt": "2026-10-14T05:05:07.930Z"
+        "createdAt": "2026-10-18T07:15:27.502Z"
       }
     }
   }

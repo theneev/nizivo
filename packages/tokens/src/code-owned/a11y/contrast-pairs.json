@@ -70,7 +70,7 @@
       "fg": "icon-secondary",
       "on": ["surfaces", "status-subtle", "chart-track"],
       "role": "non-text",
-      "use": "Alert dismiss; ProgressBar, Meter and ProgressRing neutral fill"
+      "use": "Alert dismiss"
     },
     {
       "fg": "icon-brand",
@@ -93,8 +93,7 @@
     {
       "fg": "icon-success",
       "on": ["surfaces", "bg-success-subtle", "chart-track"],
-      "role": "non-text",
-      "use": "ProgressBar, Meter and ProgressRing success fill"
+      "role": "non-text"
     },
     { "fg": "icon-warning", "on": ["surfaces", "bg-warning-subtle"], "role": "non-text" },
     {
@@ -124,6 +123,18 @@
       "on": ["panels", "chart-track"],
       "role": "non-text",
       "use": "ProgressBar, Meter and ProgressRing brand fill"
+    },
+    {
+      "fg": "chart-success",
+      "on": ["panels", "chart-track"],
+      "role": "non-text",
+      "use": "ProgressBar, Meter and ProgressRing success fill"
+    },
+    {
+      "fg": "chart-neutral",
+      "on": ["panels", "chart-track"],
+      "role": "non-text",
+      "use": "ProgressBar, Meter and ProgressRing neutral fill"
     },
     {
       "fg": "chart-warning",

@@ -40,17 +40,6 @@
         "variableId": "VariableID:737:195"
       }
     },
-    "border-width.strong": {
-      "type": "dimension",
-      "cssVariable": "--nz-border-width-strong",
-      "public": true,
-      "value": "1.5px",
-      "provenance": "figma",
-      "figma": {
-        "name": "border-width/strong",
-        "variableId": "VariableID:737:194"
-      }
-    },
     "breakpoint.lg": {
       "type": "dimension",
       "cssVariable": null,
@@ -96,16 +85,43 @@
       "cssVariable": "--nz-bg-accent-hover",
       "public": true,
       "value": "#afd146",
-      "provenance": "proposal",
+      "provenance": "figma",
       "aliasOf": "color.p.lime.400",
       "modes": {
         "theme": {
           "dark": {
             "value": "#c6e06a",
-            "provenance": "proposal",
+            "provenance": "figma",
             "aliasOf": "color.p.lime.300"
           }
         }
+      },
+      "description": "Accent button hover. Light rest lime/300 → hover lime/400; Dark rest lime/400 → hover lime/300.",
+      "figma": {
+        "name": "bg/accent-hover",
+        "variableId": "VariableID:7351:11"
+      }
+    },
+    "color.bg.accent-pressed": {
+      "type": "color",
+      "cssVariable": "--nz-bg-accent-pressed",
+      "public": true,
+      "value": "#8db22b",
+      "provenance": "figma",
+      "aliasOf": "color.p.lime.500",
+      "modes": {
+        "theme": {
+          "dark": {
+            "value": "#dcec9c",
+            "provenance": "figma",
+            "aliasOf": "color.p.lime.200"
+          }
+        }
+      },
+      "description": "Accent button pressed. text/on-accent stays ≥ 6:1.",
+      "figma": {
+        "name": "bg/accent-pressed",
+        "variableId": "VariableID:7351:12"
       }
     },
     "color.bg.accent-subtle": {
@@ -255,6 +271,41 @@
         "variableId": "VariableID:737:114"
       }
     },
+    "color.bg.code": {
+      "type": "color",
+      "cssVariable": "--nz-bg-code",
+      "public": true,
+      "value": "#181b19",
+      "provenance": "figma",
+      "aliasOf": "color.p.neutral.900",
+      "modes": {
+        "theme": {
+          "dark": {
+            "value": "#101311",
+            "provenance": "figma",
+            "aliasOf": "color.p.neutral.950"
+          }
+        }
+      },
+      "description": "Code surfaces. Always dark in both modes.",
+      "figma": {
+        "name": "bg/code",
+        "variableId": "VariableID:7424:8334"
+      }
+    },
+    "color.bg.code-elevated": {
+      "type": "color",
+      "cssVariable": "--nz-bg-code-elevated",
+      "public": true,
+      "value": "#202421",
+      "provenance": "figma",
+      "aliasOf": "color.p.neutral.850",
+      "description": "Active tab / pressed state on code surfaces.",
+      "figma": {
+        "name": "bg/code-elevated",
+        "variableId": "VariableID:7424:8335"
+      }
+    },
     "color.bg.critical": {
       "type": "color",
       "cssVariable": "--nz-bg-critical",
@@ -262,15 +313,6 @@
       "value": "#b93a23",
       "provenance": "figma",
       "aliasOf": "color.p.red.600",
-      "modes": {
-        "theme": {
-          "dark": {
-            "value": "#b93a23",
-            "provenance": "override",
-            "aliasOf": "color.p.red.600"
-          }
-        }
-      },
       "figma": {
         "name": "bg/critical",
         "variableId": "VariableID:737:134"
@@ -281,8 +323,13 @@
       "cssVariable": "--nz-bg-critical-hover",
       "public": true,
       "value": "#8f2c1a",
-      "provenance": "proposal",
-      "aliasOf": "color.p.red.700"
+      "provenance": "figma",
+      "aliasOf": "color.p.red.700",
+      "description": "Critical button hover + pressed. White text 8.26:1.",
+      "figma": {
+        "name": "bg/critical-hover",
+        "variableId": "VariableID:7351:13"
+      }
     },
     "color.bg.critical-subtle": {
       "type": "color",
@@ -457,14 +504,19 @@
       "cssVariable": "--nz-bg-scrim",
       "public": true,
       "value": "rgb(24 27 25 / 0.32)",
-      "provenance": "proposal",
+      "provenance": "figma",
       "modes": {
         "theme": {
           "dark": {
             "value": "rgb(0 0 0 / 0.6)",
-            "provenance": "proposal"
+            "provenance": "figma"
           }
         }
+      },
+      "description": "Modal / drawer backdrop. neutral/900 @ 32% (Light), black @ 60% (Dark).",
+      "figma": {
+        "name": "bg/scrim",
+        "variableId": "VariableID:7351:23"
       }
     },
     "color.bg.subtle": {
@@ -478,7 +530,7 @@
         "theme": {
           "dark": {
             "value": "#151816",
-            "provenance": "override",
+            "provenance": "figma",
             "aliasOf": "color.p.neutral.925"
           }
         }
@@ -598,16 +650,21 @@
       "cssVariable": "--nz-border-control",
       "public": true,
       "value": "#828a81",
-      "provenance": "proposal",
+      "provenance": "figma",
       "aliasOf": "color.p.neutral.450",
       "modes": {
         "theme": {
           "dark": {
             "value": "#747c73",
-            "provenance": "proposal",
+            "provenance": "figma",
             "aliasOf": "color.p.neutral.500"
           }
         }
+      },
+      "description": "Edges of inputs, selects, checkboxes, radios, switch-off track. ≥ 3:1 (WCAG 1.4.11).",
+      "figma": {
+        "name": "border/control",
+        "variableId": "VariableID:7351:17"
       }
     },
     "color.border.control-hover": {
@@ -615,16 +672,21 @@
       "cssVariable": "--nz-border-control-hover",
       "public": true,
       "value": "#747c73",
-      "provenance": "proposal",
+      "provenance": "figma",
       "aliasOf": "color.p.neutral.500",
       "modes": {
         "theme": {
           "dark": {
             "value": "#9ea59c",
-            "provenance": "proposal",
+            "provenance": "figma",
             "aliasOf": "color.p.neutral.400"
           }
         }
+      },
+      "description": "Hover edge of form controls.",
+      "figma": {
+        "name": "border/control-hover",
+        "variableId": "VariableID:7351:18"
       }
     },
     "color.border.critical": {
@@ -650,7 +712,7 @@
         "theme": {
           "dark": {
             "value": "#414741",
-            "provenance": "override",
+            "provenance": "figma",
             "aliasOf": "color.p.neutral.700"
           }
         }
@@ -692,7 +754,7 @@
         "theme": {
           "dark": {
             "value": "#596058",
-            "provenance": "override",
+            "provenance": "figma",
             "aliasOf": "color.p.neutral.600"
           }
         }
@@ -713,7 +775,7 @@
         "theme": {
           "dark": {
             "value": "#2b302c",
-            "provenance": "override",
+            "provenance": "figma",
             "aliasOf": "color.p.neutral.800"
           }
         }
@@ -728,7 +790,7 @@
       "cssVariable": "--nz-border-warning",
       "public": true,
       "value": "#b07b0e",
-      "provenance": "override",
+      "provenance": "figma",
       "aliasOf": "color.p.amber.600",
       "modes": {
         "theme": {
@@ -748,9 +810,9 @@
       "type": "color",
       "cssVariable": "--nz-chart-cat-1",
       "public": true,
-      "value": "#138a55",
+      "value": "#1a573a",
       "provenance": "figma",
-      "aliasOf": "color.p.viz.green-500",
+      "aliasOf": "color.p.green.700",
       "modes": {
         "theme": {
           "dark": {
@@ -760,7 +822,7 @@
           }
         }
       },
-      "description": "Validated categorical slot (CVD ΔE≥14, light+dark). Fixed order, never cycled; 4th+ series fold into chart/neutral &quot;Other&quot;.",
+      "description": "Category 1. Light green/700 (8.51) — darker than cat-2 so the pair separates by lightness, not hue alone.",
       "figma": {
         "name": "chart/cat-1",
         "variableId": "VariableID:747:239"
@@ -770,9 +832,9 @@
       "type": "color",
       "cssVariable": "--nz-chart-cat-2",
       "public": true,
-      "value": "#8fbf2f",
+      "value": "#6b8a1e",
       "provenance": "figma",
-      "aliasOf": "color.p.viz.lime-500",
+      "aliasOf": "color.p.lime.600",
       "modes": {
         "theme": {
           "dark": {
@@ -782,7 +844,7 @@
           }
         }
       },
-      "description": "Validated categorical slot (CVD ΔE≥14, light+dark). Fixed order, never cycled; 4th+ series fold into chart/neutral &quot;Other&quot;.",
+      "description": "Category 2. Light lime/600 (3.98 on white); was 2.17.",
       "figma": {
         "name": "chart/cat-2",
         "variableId": "VariableID:747:240"
@@ -815,8 +877,13 @@
       "cssVariable": "--nz-chart-critical",
       "public": true,
       "value": "#d6492f",
-      "provenance": "proposal",
-      "aliasOf": "color.p.red.500"
+      "provenance": "figma",
+      "aliasOf": "color.p.red.500",
+      "description": "Progress Critical fill. 3.77 / 3.11 on chart/track.",
+      "figma": {
+        "name": "chart/critical",
+        "variableId": "VariableID:7351:20"
+      }
     },
     "color.chart.grid": {
       "type": "color",
@@ -855,18 +922,19 @@
       "type": "color",
       "cssVariable": "--nz-chart-neutral",
       "public": true,
-      "value": "#cbd0c8",
+      "value": "#747c73",
       "provenance": "figma",
-      "aliasOf": "color.p.neutral.300",
+      "aliasOf": "color.p.neutral.500",
       "modes": {
         "theme": {
           "dark": {
-            "value": "#414741",
+            "value": "#9ea59c",
             "provenance": "figma",
-            "aliasOf": "color.p.neutral.700"
+            "aliasOf": "color.p.neutral.400"
           }
         }
       },
+      "description": "Comparison lines, “Other” slices, neutral progress. 4.31 on white / 6.87 on dark surface; was 1.37 / 1.41.",
       "figma": {
         "name": "chart/neutral",
         "variableId": "VariableID:737:165"
@@ -882,12 +950,13 @@
       "modes": {
         "theme": {
           "dark": {
-            "value": "#4c9e71",
+            "value": "#79b993",
             "provenance": "figma",
-            "aliasOf": "color.p.green.400"
+            "aliasOf": "color.p.green.300"
           }
         }
       },
+      "description": "Main series. Dark moved to green/300 (7.58) so chart/secondary can dim against it.",
       "figma": {
         "name": "chart/primary",
         "variableId": "VariableID:737:162"
@@ -897,30 +966,63 @@
       "type": "color",
       "cssVariable": "--nz-chart-secondary",
       "public": true,
-      "value": "#aad3b9",
+      "value": "#4c9e71",
       "provenance": "figma",
-      "aliasOf": "color.p.green.200",
+      "aliasOf": "color.p.green.400",
       "modes": {
         "theme": {
           "dark": {
-            "value": "#15452f",
+            "value": "#2e8358",
             "provenance": "figma",
-            "aliasOf": "color.p.green.800"
+            "aliasOf": "color.p.green.500"
           }
         }
       },
+      "description": "Second series and dimmed bars on hover. 3.26 on white / 3.72 on dark surface (WCAG 1.4.11).",
       "figma": {
         "name": "chart/secondary",
         "variableId": "VariableID:737:163"
+      }
+    },
+    "color.chart.success": {
+      "type": "color",
+      "cssVariable": "--nz-chart-success",
+      "public": true,
+      "value": "#2e8358",
+      "provenance": "figma",
+      "aliasOf": "color.p.green.500",
+      "modes": {
+        "theme": {
+          "dark": {
+            "value": "#79b993",
+            "provenance": "figma",
+            "aliasOf": "color.p.green.300"
+          }
+        }
+      },
+      "description": "Progress / Meter Success fill. 4.07 / 5.87 on chart/track.",
+      "figma": {
+        "name": "chart/success",
+        "variableId": "VariableID:7351:21"
       }
     },
     "color.chart.tertiary": {
       "type": "color",
       "cssVariable": "--nz-chart-tertiary",
       "public": true,
-      "value": "#afd146",
+      "value": "#6b8a1e",
       "provenance": "figma",
-      "aliasOf": "color.p.lime.400",
+      "aliasOf": "color.p.lime.600",
+      "modes": {
+        "theme": {
+          "dark": {
+            "value": "#afd146",
+            "provenance": "figma",
+            "aliasOf": "color.p.lime.400"
+          }
+        }
+      },
+      "description": "Highlight series. Light lime/600 (3.98); was 1.75.",
       "figma": {
         "name": "chart/tertiary",
         "variableId": "VariableID:737:164"
@@ -952,16 +1054,21 @@
       "cssVariable": "--nz-chart-warning",
       "public": true,
       "value": "#b07b0e",
-      "provenance": "proposal",
+      "provenance": "figma",
       "aliasOf": "color.p.amber.600",
       "modes": {
         "theme": {
           "dark": {
             "value": "#d99a1b",
-            "provenance": "proposal",
+            "provenance": "figma",
             "aliasOf": "color.p.amber.500"
           }
         }
+      },
+      "description": "Progress Warning fill. 3.22 / 5.50 on chart/track.",
+      "figma": {
+        "name": "chart/warning",
+        "variableId": "VariableID:7351:19"
       }
     },
     "color.elevation.highlight": {
@@ -1018,7 +1125,7 @@
         "theme": {
           "dark": {
             "value": "#e47962",
-            "provenance": "override",
+            "provenance": "figma",
             "aliasOf": "color.p.red.400"
           }
         }
@@ -1033,16 +1140,21 @@
       "cssVariable": "--nz-icon-info",
       "public": true,
       "value": "#2e58b0",
-      "provenance": "proposal",
+      "provenance": "figma",
       "aliasOf": "color.p.blue.600",
       "modes": {
         "theme": {
           "dark": {
             "value": "#7098e0",
-            "provenance": "proposal",
+            "provenance": "figma",
             "aliasOf": "color.p.blue.400"
           }
         }
+      },
+      "description": "Alert Info icon. Light 6.01 on bg/info-subtle, Dark 4.65 on bg/hover.",
+      "figma": {
+        "name": "icon/info",
+        "variableId": "VariableID:7351:16"
       }
     },
     "color.icon.inverse": {
@@ -1134,7 +1246,7 @@
       "cssVariable": "--nz-icon-warning",
       "public": true,
       "value": "#b07b0e",
-      "provenance": "override",
+      "provenance": "figma",
       "aliasOf": "color.p.amber.600",
       "modes": {
         "theme": {
@@ -1232,7 +1344,12 @@
       "cssVariable": "--nz-p-blue-400",
       "public": false,
       "value": "#7098e0",
-      "provenance": "proposal"
+      "provenance": "figma",
+      "description": "Added from the Page 15 review (2026-10). Interpolated between ramp neighbours — check on real screens.",
+      "figma": {
+        "name": "blue/400",
+        "variableId": "VariableID:7351:10"
+      }
     },
     "color.p.blue.500": {
       "type": "color",
@@ -1558,7 +1675,12 @@
       "cssVariable": "--nz-p-neutral-450",
       "public": false,
       "value": "#828a81",
-      "provenance": "proposal"
+      "provenance": "figma",
+      "description": "Added from the Page 15 review (2026-10). Interpolated between ramp neighbours — check on real screens.",
+      "figma": {
+        "name": "neutral/450",
+        "variableId": "VariableID:7351:7"
+      }
     },
     "color.p.neutral.500": {
       "type": "color",
@@ -1631,7 +1753,12 @@
       "cssVariable": "--nz-p-neutral-925",
       "public": false,
       "value": "#151816",
-      "provenance": "proposal"
+      "provenance": "figma",
+      "description": "Added from the Page 15 review (2026-10). Interpolated between ramp neighbours — check on real screens.",
+      "figma": {
+        "name": "neutral/925",
+        "variableId": "VariableID:7351:8"
+      }
     },
     "color.p.neutral.950": {
       "type": "color",
@@ -1671,7 +1798,12 @@
       "cssVariable": "--nz-p-red-400",
       "public": false,
       "value": "#e47962",
-      "provenance": "proposal"
+      "provenance": "figma",
+      "description": "Added from the Page 15 review (2026-10). Interpolated between ramp neighbours — check on real screens.",
+      "figma": {
+        "name": "red/400",
+        "variableId": "VariableID:7351:9"
+      }
     },
     "color.p.red.500": {
       "type": "color",
@@ -1810,6 +1942,32 @@
         "variableId": "VariableID:737:143"
       }
     },
+    "color.text.code": {
+      "type": "color",
+      "cssVariable": "--nz-text-code",
+      "public": true,
+      "value": "#f6f7f4",
+      "provenance": "figma",
+      "aliasOf": "color.p.neutral.50",
+      "description": "Text and icons on bg/code (≥ 15:1).",
+      "figma": {
+        "name": "text/code",
+        "variableId": "VariableID:7424:8336"
+      }
+    },
+    "color.text.code-muted": {
+      "type": "color",
+      "cssVariable": "--nz-text-code-muted",
+      "public": true,
+      "value": "#9ea59c",
+      "provenance": "figma",
+      "aliasOf": "color.p.neutral.400",
+      "description": "Prompts, inactive tabs, comments on bg/code (≥ 6:1).",
+      "figma": {
+        "name": "text/code-muted",
+        "variableId": "VariableID:7424:8337"
+      }
+    },
     "color.text.critical": {
       "type": "color",
       "cssVariable": "--nz-text-critical",
@@ -1821,7 +1979,7 @@
         "theme": {
           "dark": {
             "value": "#e47962",
-            "provenance": "override",
+            "provenance": "figma",
             "aliasOf": "color.p.red.400"
           }
         }
@@ -1863,7 +2021,7 @@
         "theme": {
           "dark": {
             "value": "#7098e0",
-            "provenance": "override",
+            "provenance": "figma",
             "aliasOf": "color.p.blue.400"
           }
         }
@@ -1892,6 +2050,28 @@
       "figma": {
         "name": "text/inverse",
         "variableId": "VariableID:737:140"
+      }
+    },
+    "color.text.inverse-accent": {
+      "type": "color",
+      "cssVariable": "--nz-text-inverse-accent",
+      "public": true,
+      "value": "#c6e06a",
+      "provenance": "figma",
+      "aliasOf": "color.p.lime.300",
+      "modes": {
+        "theme": {
+          "dark": {
+            "value": "#1a573a",
+            "provenance": "figma",
+            "aliasOf": "color.p.green.700"
+          }
+        }
+      },
+      "description": "Action text on bg/inverse surfaces (Toast). Light 11.80:1 on neutral/900, Dark 8.51:1 on white. Replaces the proposed text/accent, whose modes were inverted (2.04 / 1.47).",
+      "figma": {
+        "name": "text/inverse-accent",
+        "variableId": "VariableID:7351:15"
       }
     },
     "color.text.on-accent": {
@@ -1932,8 +2112,26 @@
       "cssVariable": "--nz-text-on-critical",
       "public": true,
       "value": "#fff",
-      "provenance": "proposal",
-      "aliasOf": "color.p.neutral.0"
+      "provenance": "figma",
+      "aliasOf": "color.p.neutral.0",
+      "description": "Text on bg/critical. 5.69:1 on red/600.",
+      "figma": {
+        "name": "text/on-critical",
+        "variableId": "VariableID:7351:14"
+      }
+    },
+    "color.text.on-dark": {
+      "type": "color",
+      "cssVariable": "--nz-text-on-dark",
+      "public": true,
+      "value": "#fff",
+      "provenance": "figma",
+      "aliasOf": "color.p.neutral.0",
+      "description": "Text on surfaces that are dark in both modes (dark shaders, photography scrims). White in Light and Dark.",
+      "figma": {
+        "name": "text/on-dark",
+        "variableId": "VariableID:7425:12347"
+      }
     },
     "color.text.primary": {
       "type": "color",
@@ -1961,13 +2159,13 @@
       "cssVariable": "--nz-text-secondary",
       "public": true,
       "value": "#414741",
-      "provenance": "override",
+      "provenance": "figma",
       "aliasOf": "color.p.neutral.700",
       "modes": {
         "theme": {
           "dark": {
             "value": "#cbd0c8",
-            "provenance": "override",
+            "provenance": "figma",
             "aliasOf": "color.p.neutral.300"
           }
         }
@@ -2003,13 +2201,13 @@
       "cssVariable": "--nz-text-tertiary",
       "public": true,
       "value": "#596058",
-      "provenance": "override",
+      "provenance": "figma",
       "aliasOf": "color.p.neutral.600",
       "modes": {
         "theme": {
           "dark": {
             "value": "#9ea59c",
-            "provenance": "override",
+            "provenance": "figma",
             "aliasOf": "color.p.neutral.400"
           }
         }
@@ -2159,14 +2357,19 @@
       "cssVariable": "--nz-duration-fade",
       "public": true,
       "value": "140ms",
-      "provenance": "proposal",
+      "provenance": "figma",
       "modes": {
         "motion": {
           "reduced": {
             "value": "120ms",
-            "provenance": "proposal"
+            "provenance": "figma"
           }
         }
+      },
+      "description": "Opacity-only fades; survives Reduced motion (Q34).",
+      "figma": {
+        "name": "duration/fade",
+        "variableId": "VariableID:7351:24"
       }
     },
     "duration.fast": {
@@ -2212,14 +2415,19 @@
       "cssVariable": "--nz-duration-pulse",
       "public": true,
       "value": "2000ms",
-      "provenance": "proposal",
+      "provenance": "figma",
       "modes": {
         "motion": {
           "reduced": {
             "value": "0ms",
-            "provenance": "proposal"
+            "provenance": "figma"
           }
         }
+      },
+      "description": "Skeleton / indeterminate progress loop; stops in Reduced.",
+      "figma": {
+        "name": "duration/pulse",
+        "variableId": "VariableID:7351:25"
       }
     },
     "duration.slow": {
@@ -2264,9 +2472,21 @@
       "type": "duration",
       "cssVariable": "--nz-duration-spin",
       "public": true,
-      "value": "1000ms",
-      "provenance": "code-owned",
-      "description": "Pending spinner, one turn. Kept in Reduced mode: essential status feedback"
+      "value": "800ms",
+      "provenance": "figma",
+      "modes": {
+        "motion": {
+          "reduced": {
+            "value": "0ms",
+            "provenance": "figma"
+          }
+        }
+      },
+      "description": "One spinner rotation (linear). 0 in Reduced: the spinner stops and a text label shows.",
+      "figma": {
+        "name": "duration/spin",
+        "variableId": "VariableID:7369:175"
+      }
     },
     "duration.spring": {
       "type": "duration",
@@ -2393,16 +2613,26 @@
         "variableId": "VariableID:737:211"
       }
     },
+    "elevation.0": {
+      "type": "shadow",
+      "cssVariable": "--nz-elevation-0",
+      "public": true,
+      "value": "0 0 0 0 transparent",
+      "provenance": "figma",
+      "figma": {
+        "name": "Elevation/0 Flat"
+      }
+    },
     "elevation.1": {
       "type": "shadow",
       "cssVariable": "--nz-elevation-1",
       "public": true,
-      "value": "0 0 0 1px transparent, 0 1px 2px 0 rgb(16 19 17 / 0.04), 0 1px 1px 0 rgb(16 19 17 / 0.03)",
+      "value": "0 0 0 1px transparent, 0 1px 1px 0 rgb(16 19 17 / 0.03), 0 1px 2px 0 rgb(16 19 17 / 0.04)",
       "provenance": "figma",
       "modes": {
         "theme": {
           "dark": {
-            "value": "0 0 0 1px rgb(255 255 255 / 0.08), 0 1px 2px 0 rgb(0 0 0 / 0.24), 0 1px 1px 0 rgb(0 0 0 / 0.18)",
+            "value": "0 0 0 1px rgb(255 255 255 / 0.08), 0 1px 1px 0 rgb(0 0 0 / 0.18), 0 1px 2px 0 rgb(0 0 0 / 0.24)",
             "provenance": "figma"
           }
         }
@@ -2415,12 +2645,12 @@
       "type": "shadow",
       "cssVariable": "--nz-elevation-2",
       "public": true,
-      "value": "0 0 0 1px transparent, 0 2px 4px 0 rgb(16 19 17 / 0.04), 0 8px 16px -4px rgb(16 19 17 / 0.05)",
+      "value": "0 0 0 1px transparent, 0 8px 16px -4px rgb(16 19 17 / 0.05), 0 2px 4px 0 rgb(16 19 17 / 0.04)",
       "provenance": "figma",
       "modes": {
         "theme": {
           "dark": {
-            "value": "0 0 0 1px rgb(255 255 255 / 0.08), 0 2px 4px 0 rgb(0 0 0 / 0.24), 0 8px 16px -4px rgb(0 0 0 / 0.3)",
+            "value": "0 0 0 1px rgb(255 255 255 / 0.08), 0 8px 16px -4px rgb(0 0 0 / 0.3), 0 2px 4px 0 rgb(0 0 0 / 0.24)",
             "provenance": "figma"
           }
         }
@@ -2433,12 +2663,12 @@
       "type": "shadow",
       "cssVariable": "--nz-elevation-3",
       "public": true,
-      "value": "inset 0 1px 0 0 transparent, 0 0 0 1px transparent, 0 4px 8px 0 rgb(16 19 17 / 0.05), 0 16px 32px -8px rgb(16 19 17 / 0.08)",
+      "value": "inset 0 1px 0 0 transparent, 0 0 0 1px transparent, 0 16px 32px -8px rgb(16 19 17 / 0.08), 0 4px 8px 0 rgb(16 19 17 / 0.05)",
       "provenance": "figma",
       "modes": {
         "theme": {
           "dark": {
-            "value": "inset 0 1px 0 0 transparent, 0 0 0 1px rgb(255 255 255 / 0.08), 0 4px 8px 0 rgb(0 0 0 / 0.3), 0 16px 32px -8px rgb(0 0 0 / 0.48)",
+            "value": "inset 0 1px 0 0 transparent, 0 0 0 1px rgb(255 255 255 / 0.08), 0 16px 32px -8px rgb(0 0 0 / 0.48), 0 4px 8px 0 rgb(0 0 0 / 0.3)",
             "provenance": "figma"
           }
         }
@@ -2451,12 +2681,12 @@
       "type": "shadow",
       "cssVariable": "--nz-elevation-4",
       "public": true,
-      "value": "inset 0 1px 0 0 transparent, 0 0 0 1px transparent, 0 8px 16px 0 rgb(16 19 17 / 0.06), 0 32px 64px -12px rgb(16 19 17 / 0.14)",
+      "value": "inset 0 1px 0 0 transparent, 0 0 0 1px transparent, 0 32px 64px -12px rgb(16 19 17 / 0.14), 0 8px 16px 0 rgb(16 19 17 / 0.06)",
       "provenance": "figma",
       "modes": {
         "theme": {
           "dark": {
-            "value": "inset 0 1px 0 0 transparent, 0 0 0 1px rgb(255 255 255 / 0.08), 0 8px 16px 0 rgb(0 0 0 / 0.36), 0 32px 64px -12px rgb(0 0 0 / 0.6)",
+            "value": "inset 0 1px 0 0 transparent, 0 0 0 1px rgb(255 255 255 / 0.08), 0 32px 64px -12px rgb(0 0 0 / 0.6), 0 8px 16px 0 rgb(0 0 0 / 0.36)",
             "provenance": "figma"
           }
         }
@@ -2501,8 +2731,16 @@
       "type": "shadow",
       "cssVariable": "--nz-focus-ring",
       "public": true,
-      "value": "0 0 0 4px rgb(46 130 88 / 0.28)",
+      "value": "0 0 0 2px #fff, 0 0 0 4px #2e8358, 0 0 0 8px rgb(46 130 88 / 0.16)",
       "provenance": "figma",
+      "modes": {
+        "theme": {
+          "dark": {
+            "value": "0 0 0 2px #181b19, 0 0 0 4px #79b993, 0 0 0 8px rgb(46 130 88 / 0.16)",
+            "provenance": "figma"
+          }
+        }
+      },
       "figma": {
         "name": "Focus/Ring"
       }
@@ -2511,10 +2749,36 @@
       "type": "shadow",
       "cssVariable": "--nz-focus-ring-critical",
       "public": true,
-      "value": "0 0 0 4px rgb(214 74 46 / 0.25)",
+      "value": "0 0 0 2px #fff, 0 0 0 4px #2e8358, 0 0 0 8px rgb(214 74 46 / 0.22)",
       "provenance": "figma",
+      "modes": {
+        "theme": {
+          "dark": {
+            "value": "0 0 0 2px #181b19, 0 0 0 4px #79b993, 0 0 0 8px rgb(214 74 46 / 0.22)",
+            "provenance": "figma"
+          }
+        }
+      },
       "figma": {
         "name": "Focus/Ring Critical"
+      }
+    },
+    "focus.ring-raised": {
+      "type": "shadow",
+      "cssVariable": "--nz-focus-ring-raised",
+      "public": true,
+      "value": "0 1px 2px 0 rgb(10 33 26 / 0.18), inset 0 1px 0 0 rgb(255 255 255 / 0.16), 0 0 0 2px #fff, 0 0 0 4px #2e8358, 0 0 0 8px rgb(46 130 88 / 0.16)",
+      "provenance": "figma",
+      "modes": {
+        "theme": {
+          "dark": {
+            "value": "0 1px 2px 0 rgb(10 33 26 / 0.18), inset 0 1px 0 0 rgb(255 255 255 / 0.16), 0 0 0 2px #181b19, 0 0 0 4px #79b993, 0 0 0 8px rgb(46 130 88 / 0.16)",
+            "provenance": "figma"
+          }
+        }
+      },
+      "figma": {
+        "name": "Focus/Ring Raised"
       }
     },
     "font.body.l": {
@@ -2604,13 +2868,18 @@
         "lineHeight": "1.5",
         "letterSpacing": "0em"
       },
-      "provenance": "proposal",
+      "provenance": "figma",
       "parts": {
         "fontFamily": "--nz-font-body-s-font-family",
         "fontSize": "--nz-font-body-s-font-size",
         "fontWeight": "--nz-font-body-s-font-weight",
         "lineHeight": "--nz-font-body-s-line-height",
         "letterSpacing": "--nz-tracking-body-s"
+      },
+      "description": "Captions, helper text, table meta. 12px — text tokens must still reach 4.5:1.",
+      "figma": {
+        "name": "Body/S",
+        "styleId": "S:ab423e646b7688c5d01a9738eba4f8f1abce05ed,"
       }
     },
     "font.display.l": {
@@ -2864,13 +3133,18 @@
         "lineHeight": "1.4",
         "letterSpacing": "0em"
       },
-      "provenance": "proposal",
+      "provenance": "figma",
       "parts": {
         "fontFamily": "--nz-font-label-s-font-family",
         "fontSize": "--nz-font-label-s-font-size",
         "fontWeight": "--nz-font-label-s-font-weight",
         "lineHeight": "--nz-font-label-s-line-height",
         "letterSpacing": "--nz-tracking-label-s"
+      },
+      "description": "Badges, group labels, compact controls. 12px.",
+      "figma": {
+        "name": "Label/S",
+        "styleId": "S:3f6221f2db3772839d9c540e6dbc1dd609ac0cb9,"
       }
     },
     "font.mono.m": {
@@ -3277,14 +3551,19 @@
       "cssVariable": "--nz-scale-enter",
       "public": true,
       "value": "0.96",
-      "provenance": "proposal",
+      "provenance": "figma",
       "modes": {
         "motion": {
           "reduced": {
             "value": "1",
-            "provenance": "proposal"
+            "provenance": "figma"
           }
         }
+      },
+      "description": "Overlay enter scale (Dropdown, Popover); none in Reduced.",
+      "figma": {
+        "name": "scale/enter",
+        "variableId": "VariableID:7351:26"
       }
     },
     "scale.hover": {

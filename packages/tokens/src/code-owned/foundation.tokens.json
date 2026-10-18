@@ -20,16 +20,6 @@
       }
     }
   },
-  "duration": {
-    "spin": {
-      "$type": "duration",
-      "$value": {
-        "value": 1000,
-        "unit": "ms"
-      },
-      "$description": "Pending spinner, one turn. Kept in Reduced mode: essential status feedback"
-    }
-  },
   "elevation": {
     "button": {
       "$type": "shadow",

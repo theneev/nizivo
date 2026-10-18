@@ -117,8 +117,9 @@ describe('Terrazzo 2.8.0 token build', () => {
       '--nz-bg-surface: light-dark(var(--nz-p-neutral-0), var(--nz-p-neutral-900));',
     );
     expect(css).toContain('--nz-text-on-accent: var(--nz-p-green-950);');
+    // Figma's effect layers in CSS paint order: its last layer (Elevation/1's 1 px blur) is on top.
     expect(css).toContain(
-      '--nz-elevation-1: 0 0 0 1px var(--nz-elevation-ring), 0 1px 2px 0 light-dark(rgb(16 19 17 / 0.04), rgb(0 0 0 / 0.24)), 0 1px 1px 0 light-dark(rgb(16 19 17 / 0.03), rgb(0 0 0 / 0.18));',
+      '--nz-elevation-1: 0 0 0 1px var(--nz-elevation-ring), 0 1px 1px 0 light-dark(rgb(16 19 17 / 0.03), rgb(0 0 0 / 0.18)), 0 1px 2px 0 light-dark(rgb(16 19 17 / 0.04), rgb(0 0 0 / 0.24));',
     );
   });
 
@@ -127,8 +128,8 @@ describe('Terrazzo 2.8.0 token build', () => {
     expect(new Set(root).size).toBe(root.length);
     expect(css).not.toContain('[data-nz-theme="dark"] {\n    --nz-bg');
     const semantic = root.filter((name) => SEMANTIC.test(name));
-    // 58 Figma semantic colours and 10 proposals.
-    expect(semantic).toHaveLength(68);
+    // 75 Figma semantic colours and the text/accent proposal.
+    expect(semantic).toHaveLength(76);
     for (const name of declared(css, '[data-nz-theme="dark"]'))
       expect(name).toBe('--nz-scheme-inverse');
   });
@@ -139,10 +140,11 @@ describe('Terrazzo 2.8.0 token build', () => {
     );
     for (const header of ['@media (prefers-reduced-motion: reduce)', '[data-nz-motion="reduce"]']) {
       const reduced = declared(css, header);
-      // 20 Figma motion tokens, the 2 derived spring durations and the 3 motion proposals.
-      expect(reduced).toHaveLength(25);
+      // 24 Figma motion tokens (duration/spin among them since 2026-10-18) and the 2 derived
+      // spring durations.
+      expect(reduced).toHaveLength(26);
       expect(reduced.filter((name) => !MOTION.test(name))).toEqual([]);
-      expect(reduced).not.toContain('--nz-duration-spin');
+      expect(reduced).toContain('--nz-duration-spin');
     }
     for (const header of ['@media (width >= 40rem)', '@media (width >= 80rem)']) {
       const viewport = declared(css, header);

@@ -1,5 +1,5 @@
 {
-  "Grove Space": {
+  "Nizivo Space": {
     "space": {
       "0": {
         "$type": "dimension",
@@ -15,12 +15,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-space-0)"
+              "WEB": "var(--nz-space-0)"
             },
             "variableId": "VariableID:737:170",
             "collection": {
               "id": "VariableCollectionId:737:169",
-              "name": "Grove Space",
+              "name": "Nizivo Space",
               "defaultModeId": "737:3"
             }
           }
@@ -40,12 +40,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-space-1)"
+              "WEB": "var(--nz-space-1)"
             },
             "variableId": "VariableID:737:171",
             "collection": {
               "id": "VariableCollectionId:737:169",
-              "name": "Grove Space",
+              "name": "Nizivo Space",
               "defaultModeId": "737:3"
             }
           }
@@ -65,12 +65,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-space-2)"
+              "WEB": "var(--nz-space-2)"
             },
             "variableId": "VariableID:737:172",
             "collection": {
               "id": "VariableCollectionId:737:169",
-              "name": "Grove Space",
+              "name": "Nizivo Space",
               "defaultModeId": "737:3"
             }
           }
@@ -90,12 +90,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-space-3)"
+              "WEB": "var(--nz-space-3)"
             },
             "variableId": "VariableID:737:173",
             "collection": {
               "id": "VariableCollectionId:737:169",
-              "name": "Grove Space",
+              "name": "Nizivo Space",
               "defaultModeId": "737:3"
             }
           }
@@ -115,12 +115,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-space-4)"
+              "WEB": "var(--nz-space-4)"
             },
             "variableId": "VariableID:737:174",
             "collection": {
               "id": "VariableCollectionId:737:169",
-              "name": "Grove Space",
+              "name": "Nizivo Space",
               "defaultModeId": "737:3"
             }
           }
@@ -140,12 +140,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-space-5)"
+              "WEB": "var(--nz-space-5)"
             },
             "variableId": "VariableID:737:175",
             "collection": {
               "id": "VariableCollectionId:737:169",
-              "name": "Grove Space",
+              "name": "Nizivo Space",
               "defaultModeId": "737:3"
             }
           }
@@ -165,12 +165,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-space-6)"
+              "WEB": "var(--nz-space-6)"
             },
             "variableId": "VariableID:737:176",
             "collection": {
               "id": "VariableCollectionId:737:169",
-              "name": "Grove Space",
+              "name": "Nizivo Space",
               "defaultModeId": "737:3"
             }
           }
@@ -190,12 +190,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-space-8)"
+              "WEB": "var(--nz-space-8)"
             },
             "variableId": "VariableID:737:177",
             "collection": {
               "id": "VariableCollectionId:737:169",
-              "name": "Grove Space",
+              "name": "Nizivo Space",
               "defaultModeId": "737:3"
             }
           }
@@ -215,12 +215,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-space-10)"
+              "WEB": "var(--nz-space-10)"
             },
             "variableId": "VariableID:737:178",
             "collection": {
               "id": "VariableCollectionId:737:169",
-              "name": "Grove Space",
+              "name": "Nizivo Space",
               "defaultModeId": "737:3"
             }
           }
@@ -240,12 +240,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-space-12)"
+              "WEB": "var(--nz-space-12)"
             },
             "variableId": "VariableID:737:179",
             "collection": {
               "id": "VariableCollectionId:737:169",
-              "name": "Grove Space",
+              "name": "Nizivo Space",
               "defaultModeId": "737:3"
             }
           }
@@ -265,12 +265,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-space-16)"
+              "WEB": "var(--nz-space-16)"
             },
             "variableId": "VariableID:737:180",
             "collection": {
               "id": "VariableCollectionId:737:169",
-              "name": "Grove Space",
+              "name": "Nizivo Space",
               "defaultModeId": "737:3"
             }
           }
@@ -290,12 +290,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-space-20)"
+              "WEB": "var(--nz-space-20)"
             },
             "variableId": "VariableID:737:181",
             "collection": {
               "id": "VariableCollectionId:737:169",
-              "name": "Grove Space",
+              "name": "Nizivo Space",
               "defaultModeId": "737:3"
             }
           }
@@ -315,12 +315,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-space-24)"
+              "WEB": "var(--nz-space-24)"
             },
             "variableId": "VariableID:737:182",
             "collection": {
               "id": "VariableCollectionId:737:169",
-              "name": "Grove Space",
+              "name": "Nizivo Space",
               "defaultModeId": "737:3"
             }
           }
@@ -340,12 +340,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-space-0-5)"
+              "WEB": "var(--nz-space-0-5)"
             },
             "variableId": "VariableID:737:183",
             "collection": {
               "id": "VariableCollectionId:737:169",
-              "name": "Grove Space",
+              "name": "Nizivo Space",
               "defaultModeId": "737:3"
             }
           }
@@ -365,12 +365,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-space-1-5)"
+              "WEB": "var(--nz-space-1-5)"
             },
             "variableId": "VariableID:737:184",
             "collection": {
               "id": "VariableCollectionId:737:169",
-              "name": "Grove Space",
+              "name": "Nizivo Space",
               "defaultModeId": "737:3"
             }
           }
@@ -392,12 +392,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-radius-none)"
+              "WEB": "var(--nz-radius-none)"
             },
             "variableId": "VariableID:737:185",
             "collection": {
               "id": "VariableCollectionId:737:169",
-              "name": "Grove Space",
+              "name": "Nizivo Space",
               "defaultModeId": "737:3"
             }
           }
@@ -417,12 +417,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-radius-xs)"
+              "WEB": "var(--nz-radius-xs)"
             },
             "variableId": "VariableID:737:186",
             "collection": {
               "id": "VariableCollectionId:737:169",
-              "name": "Grove Space",
+              "name": "Nizivo Space",
               "defaultModeId": "737:3"
             }
           }
@@ -442,12 +442,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-radius-sm)"
+              "WEB": "var(--nz-radius-sm)"
             },
             "variableId": "VariableID:737:187",
             "collection": {
               "id": "VariableCollectionId:737:169",
-              "name": "Grove Space",
+              "name": "Nizivo Space",
               "defaultModeId": "737:3"
             }
           }
@@ -467,12 +467,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-radius-md)"
+              "WEB": "var(--nz-radius-md)"
             },
             "variableId": "VariableID:737:188",
             "collection": {
               "id": "VariableCollectionId:737:169",
-              "name": "Grove Space",
+              "name": "Nizivo Space",
               "defaultModeId": "737:3"
             }
           }
@@ -492,12 +492,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-radius-lg)"
+              "WEB": "var(--nz-radius-lg)"
             },
             "variableId": "VariableID:737:189",
             "collection": {
               "id": "VariableCollectionId:737:169",
-              "name": "Grove Space",
+              "name": "Nizivo Space",
               "defaultModeId": "737:3"
             }
           }
@@ -517,12 +517,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-radius-xl)"
+              "WEB": "var(--nz-radius-xl)"
             },
             "variableId": "VariableID:737:190",
             "collection": {
               "id": "VariableCollectionId:737:169",
-              "name": "Grove Space",
+              "name": "Nizivo Space",
               "defaultModeId": "737:3"
             }
           }
@@ -542,12 +542,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-radius-2xl)"
+              "WEB": "var(--nz-radius-2xl)"
             },
             "variableId": "VariableID:737:191",
             "collection": {
               "id": "VariableCollectionId:737:169",
-              "name": "Grove Space",
+              "name": "Nizivo Space",
               "defaultModeId": "737:3"
             }
           }
@@ -567,12 +567,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-radius-full)"
+              "WEB": "var(--nz-radius-full)"
             },
             "variableId": "VariableID:737:192",
             "collection": {
               "id": "VariableCollectionId:737:169",
-              "name": "Grove Space",
+              "name": "Nizivo Space",
               "defaultModeId": "737:3"
             }
           }
@@ -594,37 +594,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-border-width-default)"
+              "WEB": "var(--nz-border-width-default)"
             },
             "variableId": "VariableID:737:193",
             "collection": {
               "id": "VariableCollectionId:737:169",
-              "name": "Grove Space",
-              "defaultModeId": "737:3"
-            }
-          }
-        }
-      },
-      "strong": {
-        "$type": "dimension",
-        "$value": {
-          "value": 1.5,
-          "unit": "px"
-        },
-        "$description": "",
-        "scopes": [
-          "STROKE_FLOAT"
-        ],
-        "$extensions": {
-          "mode": {},
-          "figma": {
-            "codeSyntax": {
-              "WEB": "var(--grove-border-width-strong)"
-            },
-            "variableId": "VariableID:737:194",
-            "collection": {
-              "id": "VariableCollectionId:737:169",
-              "name": "Grove Space",
+              "name": "Nizivo Space",
               "defaultModeId": "737:3"
             }
           }
@@ -644,12 +619,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-border-width-focus)"
+              "WEB": "var(--nz-border-width-focus)"
             },
             "variableId": "VariableID:737:195",
             "collection": {
               "id": "VariableCollectionId:737:169",
-              "name": "Grove Space",
+              "name": "Nizivo Space",
               "defaultModeId": "737:3"
             }
           }
@@ -671,12 +646,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-size-control-sm)"
+              "WEB": "var(--nz-size-control-sm)"
             },
             "variableId": "VariableID:737:196",
             "collection": {
               "id": "VariableCollectionId:737:169",
-              "name": "Grove Space",
+              "name": "Nizivo Space",
               "defaultModeId": "737:3"
             }
           }
@@ -696,12 +671,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-size-control-md)"
+              "WEB": "var(--nz-size-control-md)"
             },
             "variableId": "VariableID:737:197",
             "collection": {
               "id": "VariableCollectionId:737:169",
-              "name": "Grove Space",
+              "name": "Nizivo Space",
               "defaultModeId": "737:3"
             }
           }
@@ -721,12 +696,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-size-control-lg)"
+              "WEB": "var(--nz-size-control-lg)"
             },
             "variableId": "VariableID:737:198",
             "collection": {
               "id": "VariableCollectionId:737:169",
-              "name": "Grove Space",
+              "name": "Nizivo Space",
               "defaultModeId": "737:3"
             }
           }
@@ -746,12 +721,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-size-icon-sm)"
+              "WEB": "var(--nz-size-icon-sm)"
             },
             "variableId": "VariableID:737:199",
             "collection": {
               "id": "VariableCollectionId:737:169",
-              "name": "Grove Space",
+              "name": "Nizivo Space",
               "defaultModeId": "737:3"
             }
           }
@@ -771,12 +746,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-size-icon-md)"
+              "WEB": "var(--nz-size-icon-md)"
             },
             "variableId": "VariableID:737:200",
             "collection": {
               "id": "VariableCollectionId:737:169",
-              "name": "Grove Space",
+              "name": "Nizivo Space",
               "defaultModeId": "737:3"
             }
           }
@@ -796,12 +771,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-size-icon-lg)"
+              "WEB": "var(--nz-size-icon-lg)"
             },
             "variableId": "VariableID:737:201",
             "collection": {
               "id": "VariableCollectionId:737:169",
-              "name": "Grove Space",
+              "name": "Nizivo Space",
               "defaultModeId": "737:3"
             }
           }
@@ -821,12 +796,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-size-touch-min)"
+              "WEB": "var(--nz-size-touch-min)"
             },
             "variableId": "VariableID:737:202",
             "collection": {
               "id": "VariableCollectionId:737:169",
-              "name": "Grove Space",
+              "name": "Nizivo Space",
               "defaultModeId": "737:3"
             }
           }
@@ -839,13 +814,13 @@
         "spec": "https://www.designtokens.org/tr/2025.10/format/",
         "colorMode": "srgb-dtcg",
         "variableCollections": [
-          "Grove Primitives",
-          "Grove Color",
-          "Grove Space",
-          "Grove Motion",
-          "Grove Responsive"
+          "Nizivo Primitives",
+          "Nizivo Color",
+          "Nizivo Space",
+          "Nizivo Motion",
+          "Nizivo Responsive"
         ],
-        "createdAt": "2026-10-14T05:05:07.930Z"
+        "createdAt": "2026-10-18T07:15:27.502Z"
       }
     }
   }

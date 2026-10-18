@@ -1,5 +1,5 @@
 {
-  "Grove Primitives": {
+  "Nizivo Primitives": {
     "green": {
       "25": {
         "$type": "color",
@@ -19,12 +19,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-green-25)"
+              "WEB": "var(--nz-p-green-25)"
             },
             "variableId": "VariableID:737:65",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -48,12 +48,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-green-50)"
+              "WEB": "var(--nz-p-green-50)"
             },
             "variableId": "VariableID:737:66",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -77,12 +77,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-green-100)"
+              "WEB": "var(--nz-p-green-100)"
             },
             "variableId": "VariableID:737:67",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -106,12 +106,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-green-200)"
+              "WEB": "var(--nz-p-green-200)"
             },
             "variableId": "VariableID:737:68",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -135,12 +135,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-green-300)"
+              "WEB": "var(--nz-p-green-300)"
             },
             "variableId": "VariableID:737:69",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -164,12 +164,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-green-400)"
+              "WEB": "var(--nz-p-green-400)"
             },
             "variableId": "VariableID:737:70",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -193,12 +193,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-green-500)"
+              "WEB": "var(--nz-p-green-500)"
             },
             "variableId": "VariableID:737:71",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -222,12 +222,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-green-600)"
+              "WEB": "var(--nz-p-green-600)"
             },
             "variableId": "VariableID:737:72",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -251,12 +251,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-green-700)"
+              "WEB": "var(--nz-p-green-700)"
             },
             "variableId": "VariableID:737:73",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -280,12 +280,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-green-800)"
+              "WEB": "var(--nz-p-green-800)"
             },
             "variableId": "VariableID:737:74",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -309,12 +309,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-green-900)"
+              "WEB": "var(--nz-p-green-900)"
             },
             "variableId": "VariableID:737:75",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -338,12 +338,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-green-950)"
+              "WEB": "var(--nz-p-green-950)"
             },
             "variableId": "VariableID:737:76",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -369,12 +369,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-lime-50)"
+              "WEB": "var(--nz-p-lime-50)"
             },
             "variableId": "VariableID:737:77",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -398,12 +398,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-lime-100)"
+              "WEB": "var(--nz-p-lime-100)"
             },
             "variableId": "VariableID:737:78",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -427,12 +427,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-lime-200)"
+              "WEB": "var(--nz-p-lime-200)"
             },
             "variableId": "VariableID:737:79",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -456,12 +456,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-lime-300)"
+              "WEB": "var(--nz-p-lime-300)"
             },
             "variableId": "VariableID:737:80",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -485,12 +485,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-lime-400)"
+              "WEB": "var(--nz-p-lime-400)"
             },
             "variableId": "VariableID:737:81",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -514,12 +514,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-lime-500)"
+              "WEB": "var(--nz-p-lime-500)"
             },
             "variableId": "VariableID:737:82",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -543,12 +543,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-lime-600)"
+              "WEB": "var(--nz-p-lime-600)"
             },
             "variableId": "VariableID:737:83",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -574,12 +574,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-neutral-0)"
+              "WEB": "var(--nz-p-neutral-0)"
             },
             "variableId": "VariableID:737:84",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -603,12 +603,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-neutral-25)"
+              "WEB": "var(--nz-p-neutral-25)"
             },
             "variableId": "VariableID:737:85",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -632,12 +632,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-neutral-50)"
+              "WEB": "var(--nz-p-neutral-50)"
             },
             "variableId": "VariableID:737:86",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -661,12 +661,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-neutral-100)"
+              "WEB": "var(--nz-p-neutral-100)"
             },
             "variableId": "VariableID:737:87",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -690,12 +690,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-neutral-200)"
+              "WEB": "var(--nz-p-neutral-200)"
             },
             "variableId": "VariableID:737:88",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -719,12 +719,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-neutral-300)"
+              "WEB": "var(--nz-p-neutral-300)"
             },
             "variableId": "VariableID:737:89",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -748,12 +748,41 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-neutral-400)"
+              "WEB": "var(--nz-p-neutral-400)"
             },
             "variableId": "VariableID:737:90",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
+              "defaultModeId": "737:0"
+            }
+          }
+        }
+      },
+      "450": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.5098039215686274,
+            0.5411764705882353,
+            0.5058823529411764
+          ],
+          "alpha": 1,
+          "hex": "#828a81"
+        },
+        "$description": "Added from the Page 15 review (2026-10). Interpolated between ramp neighbours — check on real screens.",
+        "scopes": [],
+        "$extensions": {
+          "mode": {},
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--nz-p-neutral-450)"
+            },
+            "variableId": "VariableID:7351:7",
+            "collection": {
+              "id": "VariableCollectionId:737:64",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -777,12 +806,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-neutral-500)"
+              "WEB": "var(--nz-p-neutral-500)"
             },
             "variableId": "VariableID:737:91",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -806,12 +835,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-neutral-600)"
+              "WEB": "var(--nz-p-neutral-600)"
             },
             "variableId": "VariableID:737:92",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -835,12 +864,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-neutral-700)"
+              "WEB": "var(--nz-p-neutral-700)"
             },
             "variableId": "VariableID:737:93",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -864,12 +893,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-neutral-800)"
+              "WEB": "var(--nz-p-neutral-800)"
             },
             "variableId": "VariableID:737:94",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -893,12 +922,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-neutral-850)"
+              "WEB": "var(--nz-p-neutral-850)"
             },
             "variableId": "VariableID:737:95",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -922,12 +951,41 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-neutral-900)"
+              "WEB": "var(--nz-p-neutral-900)"
             },
             "variableId": "VariableID:737:96",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
+              "defaultModeId": "737:0"
+            }
+          }
+        }
+      },
+      "925": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.08235294117647059,
+            0.09411764705882353,
+            0.08627450980392157
+          ],
+          "alpha": 1,
+          "hex": "#151816"
+        },
+        "$description": "Added from the Page 15 review (2026-10). Interpolated between ramp neighbours — check on real screens.",
+        "scopes": [],
+        "$extensions": {
+          "mode": {},
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--nz-p-neutral-925)"
+            },
+            "variableId": "VariableID:7351:8",
+            "collection": {
+              "id": "VariableCollectionId:737:64",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -951,12 +1009,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-neutral-950)"
+              "WEB": "var(--nz-p-neutral-950)"
             },
             "variableId": "VariableID:737:97",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -982,12 +1040,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-red-50)"
+              "WEB": "var(--nz-p-red-50)"
             },
             "variableId": "VariableID:737:98",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -1011,12 +1069,41 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-red-100)"
+              "WEB": "var(--nz-p-red-100)"
             },
             "variableId": "VariableID:737:99",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
+              "defaultModeId": "737:0"
+            }
+          }
+        }
+      },
+      "400": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.8941176470588236,
+            0.4745098039215686,
+            0.3843137254901961
+          ],
+          "alpha": 1,
+          "hex": "#e47962"
+        },
+        "$description": "Added from the Page 15 review (2026-10). Interpolated between ramp neighbours — check on real screens.",
+        "scopes": [],
+        "$extensions": {
+          "mode": {},
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--nz-p-red-400)"
+            },
+            "variableId": "VariableID:7351:9",
+            "collection": {
+              "id": "VariableCollectionId:737:64",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -1040,12 +1127,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-red-500)"
+              "WEB": "var(--nz-p-red-500)"
             },
             "variableId": "VariableID:737:100",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -1069,12 +1156,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-red-600)"
+              "WEB": "var(--nz-p-red-600)"
             },
             "variableId": "VariableID:737:101",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -1098,12 +1185,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-red-700)"
+              "WEB": "var(--nz-p-red-700)"
             },
             "variableId": "VariableID:737:102",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -1129,12 +1216,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-amber-50)"
+              "WEB": "var(--nz-p-amber-50)"
             },
             "variableId": "VariableID:737:103",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -1158,12 +1245,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-amber-100)"
+              "WEB": "var(--nz-p-amber-100)"
             },
             "variableId": "VariableID:737:104",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -1187,12 +1274,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-amber-500)"
+              "WEB": "var(--nz-p-amber-500)"
             },
             "variableId": "VariableID:737:105",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -1216,12 +1303,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-amber-600)"
+              "WEB": "var(--nz-p-amber-600)"
             },
             "variableId": "VariableID:737:106",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -1245,12 +1332,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-amber-700)"
+              "WEB": "var(--nz-p-amber-700)"
             },
             "variableId": "VariableID:737:107",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -1276,12 +1363,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-blue-50)"
+              "WEB": "var(--nz-p-blue-50)"
             },
             "variableId": "VariableID:737:108",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -1305,12 +1392,41 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-blue-100)"
+              "WEB": "var(--nz-p-blue-100)"
             },
             "variableId": "VariableID:737:109",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
+              "defaultModeId": "737:0"
+            }
+          }
+        }
+      },
+      "400": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.4392156862745098,
+            0.596078431372549,
+            0.8784313725490196
+          ],
+          "alpha": 1,
+          "hex": "#7098e0"
+        },
+        "$description": "Added from the Page 15 review (2026-10). Interpolated between ramp neighbours — check on real screens.",
+        "scopes": [],
+        "$extensions": {
+          "mode": {},
+          "figma": {
+            "codeSyntax": {
+              "WEB": "var(--nz-p-blue-400)"
+            },
+            "variableId": "VariableID:7351:10",
+            "collection": {
+              "id": "VariableCollectionId:737:64",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -1334,12 +1450,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-blue-500)"
+              "WEB": "var(--nz-p-blue-500)"
             },
             "variableId": "VariableID:737:110",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -1363,12 +1479,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-blue-600)"
+              "WEB": "var(--nz-p-blue-600)"
             },
             "variableId": "VariableID:737:111",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -1392,12 +1508,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-blue-700)"
+              "WEB": "var(--nz-p-blue-700)"
             },
             "variableId": "VariableID:737:112",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -1423,12 +1539,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-viz-green-500)"
+              "WEB": "var(--nz-p-viz-green-500)"
             },
             "variableId": "VariableID:747:233",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -1452,12 +1568,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-viz-green-600)"
+              "WEB": "var(--nz-p-viz-green-600)"
             },
             "variableId": "VariableID:747:234",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -1481,12 +1597,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-viz-lime-500)"
+              "WEB": "var(--nz-p-viz-lime-500)"
             },
             "variableId": "VariableID:747:235",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -1510,12 +1626,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-viz-lime-600)"
+              "WEB": "var(--nz-p-viz-lime-600)"
             },
             "variableId": "VariableID:747:236",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -1539,12 +1655,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-viz-teal-500)"
+              "WEB": "var(--nz-p-viz-teal-500)"
             },
             "variableId": "VariableID:747:237",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -1568,12 +1684,12 @@
           "mode": {},
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-p-viz-teal-400)"
+              "WEB": "var(--nz-p-viz-teal-400)"
             },
             "variableId": "VariableID:747:238",
             "collection": {
               "id": "VariableCollectionId:737:64",
-              "name": "Grove Primitives",
+              "name": "Nizivo Primitives",
               "defaultModeId": "737:0"
             }
           }
@@ -1586,13 +1702,13 @@
         "spec": "https://www.designtokens.org/tr/2025.10/format/",
         "colorMode": "srgb-dtcg",
         "variableCollections": [
-          "Grove Primitives",
-          "Grove Color",
-          "Grove Space",
-          "Grove Motion",
-          "Grove Responsive"
+          "Nizivo Primitives",
+          "Nizivo Color",
+          "Nizivo Space",
+          "Nizivo Motion",
+          "Nizivo Responsive"
         ],
-        "createdAt": "2026-10-14T05:05:07.930Z"
+        "createdAt": "2026-10-18T07:15:27.502Z"
       }
     }
   }

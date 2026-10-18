@@ -154,7 +154,7 @@ describe('tokens.json', () => {
       motion: { contexts: ['default', 'reduced'], default: 'default' },
       viewport: { contexts: ['mobile', 'tablet', 'desktop'], default: 'mobile' },
     });
-    expect(Object.keys(json.tokens)).toHaveLength(237);
+    expect(Object.keys(json.tokens)).toHaveLength(246);
     const unemitted = Object.entries(json.tokens).filter(([, t]) => t.cssVariable === null);
     expect(unemitted.map(([id]) => id)).toEqual([
       'breakpoint.lg',
@@ -199,8 +199,8 @@ describe('tokens.json', () => {
       }
     }
     expect(wrong).toEqual([]);
-    // 214 single values and 20 typography styles (shorthand and five parts), in 7 contexts.
-    expect(checked).toBe((214 + 20 * 6) * 7);
+    // 223 single values and 20 typography styles (shorthand and five parts), in 7 contexts.
+    expect(checked).toBe((223 + 20 * 6) * 7);
   });
 
   test('values are literals: no var(), no light-dark()', () => {
@@ -230,24 +230,28 @@ describe('tokens.json', () => {
   test('provenance follows the source markers, per context (plan §7.6, §15.4)', () => {
     const t = json.tokens;
     expect(t['color.bg.surface']?.provenance).toBe('figma');
-    expect(t['color.bg.scrim']?.provenance).toBe('proposal');
-    expect(t['color.p.neutral.450']?.provenance).toBe('proposal');
+    // Proposals Figma adopted on 2026-10-18 are Figma's now; text/accent is still proposed.
+    expect(t['color.bg.scrim']?.provenance).toBe('figma');
+    expect(t['color.p.neutral.450']?.provenance).toBe('figma');
+    expect(t['color.text.accent']?.provenance).toBe('proposal');
+    expect(t['color.text.accent']?.modes?.['theme']?.['dark']?.provenance).toBe('proposal');
     expect(t['font.family.sans']?.provenance).toBe('code-owned');
     expect(t['duration.spring']?.provenance).toBe('code-owned');
-    // An override in dark only: light keeps Figma's value.
+    // The former dark-only override: Figma holds red/400 itself now.
     expect(t['color.text.critical']?.provenance).toBe('figma');
     expect(t['color.text.critical']?.modes?.['theme']?.['dark']).toEqual({
       value: '#e47962',
-      provenance: 'override',
+      provenance: 'figma',
       aliasOf: 'color.p.red.400',
     });
+    expect(t['duration.spin']?.provenance).toBe('figma');
     const counts: Record<string, number> = {};
     for (const token of Object.values(t)) {
       for (const entry of [token, ...Object.values(token.modes ?? {}).flatMap(Object.values)]) {
         counts[entry.provenance] = (counts[entry.provenance] ?? 0) + 1;
       }
     }
-    // 14 overrides across both themes (CONTRAST.md); the default context holds the light ones.
+    // Figma adopted all 14 overrides on 2026-10-18 (CONTRAST.md); none is left in either theme.
     const overrides: string[] = [];
     for (const [id, token] of Object.entries(t)) {
       if (token.provenance === 'override') overrides.push(`${id} light`);
@@ -255,11 +259,10 @@ describe('tokens.json', () => {
         if (entry.provenance === 'override') overrides.push(`${id} ${name}`);
       }
     }
-    expect(overrides).toHaveLength(14);
+    expect(overrides).toEqual([]);
     expect(Object.keys(counts).toSorted(compareStrings)).toEqual([
       'code-owned',
       'figma',
-      'override',
       'proposal',
     ]);
   });

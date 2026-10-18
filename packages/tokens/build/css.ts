@@ -135,6 +135,19 @@ function shadowLayer(layer: ShadowValueNormalized, color: string): string {
   return [...(layer.inset ? ['inset'] : []), ...geometry, color].join(' ');
 }
 
+/**
+ * The colour of each shadow layer: `var()` of the colour token a layer is bound to (Figma's
+ * Focus/Ring binds two layers to border/focus and bg/surface), so the layer follows the theme;
+ * otherwise undefined, and the caller prints the literal. Never the resolved alias, which is the
+ * light value only.
+ */
+function layerAliases(token: TokenNormalized & { $type: 'shadow' }): (string | undefined)[] {
+  return token.$value.map((_, index) => {
+    const ref = token.partialAliasOf?.[index]?.color;
+    return ref === undefined ? undefined : `var(${variableName({ id: ref })})`;
+  });
+}
+
 /** A no-op layer: a flat elevation with no layers still composes in a comma-separated shadow list. */
 const NO_SHADOW = '0 0 0 0 transparent';
 
@@ -149,15 +162,24 @@ const NO_SHADOW = '0 0 0 0 transparent';
  * (one invisible drop shadow). The rule reads the layers, not the level, so a visible level 0 would
  * take the ring like any raised surface.
  */
-export function elevation(id: string, layers: ShadowValueNormalized[]): string {
+export function elevation(
+  id: string,
+  layers: ShadowValueNormalized[],
+  aliases: (string | undefined)[] = [],
+): string {
   const level = Number(id.split('.')[1]);
-  const themed = layers.map((layer) => {
+  const themed = layers.map((layer, index) => {
+    const bound = aliases[index];
+    if (bound !== undefined) return shadowLayer(layer, bound);
     const alpha = Math.min(DARK_SHADOW_MAX, round(layer.color.alpha * DARK_SHADOW_FACTOR, 3));
     const light = colorCss(layer.color);
     const dark = translucent({ colorSpace: 'srgb', components: [0, 0, 0], alpha }) ?? '#000';
     return shadowLayer(layer, light === dark ? light : `light-dark(${light}, ${dark})`);
   });
-  if (layers.every((layer) => layer.color.alpha === 0)) return themed.join(', ') || NO_SHADOW;
+  const flat = layers.every(
+    (layer, index) => aliases[index] === undefined && layer.color.alpha === 0,
+  );
+  if (flat) return themed.join(', ') || NO_SHADOW;
   const ring = `0 0 0 1px var(${variableName({ id: 'color.elevation.ring' })})`;
   const highlight = `inset 0 1px 0 0 var(${variableName({ id: 'color.elevation.highlight' })})`;
   return [...(level >= 3 ? [highlight] : []), ring, ...themed].join(', ');
@@ -222,10 +244,14 @@ export function tokenValue(
       return translucent(token.$value);
     case 'cubicBezier':
       return token.$value.join(',') === '0,0,1,1' ? 'linear' : undefined;
-    case 'shadow':
+    case 'shadow': {
+      const aliases = layerAliases(token);
       return /^elevation\.\d+$/.test(token.id)
-        ? elevation(token.id, token.$value)
-        : token.$value.map((layer) => shadowLayer(layer, colorCss(layer.color))).join(', ');
+        ? elevation(token.id, token.$value, aliases)
+        : token.$value
+            .map((layer, index) => shadowLayer(layer, aliases[index] ?? colorCss(layer.color)))
+            .join(', ');
+    }
     case 'string':
       return stringValue(token.$value, token.id, options);
     case 'typography':
@@ -332,7 +358,7 @@ export function permutations(version: string): Permutation[] {
 
   ${THEME_SCOPES}`;
 
-  // Scoped blocks: `only` keeps the set tokens (primitives, duration.spin) out, so each re-declares
+  // Scoped blocks: `only` keeps the set tokens (primitives) out, so each re-declares
   // just its own modifier's tokens. No permutation repeats the defaults: its id would collide with
   // the base block's (S3a).
   return [

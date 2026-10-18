@@ -1,7 +1,41 @@
 {
   "Effect-styles": {
-    "Grove": {
+    "Nizivo": {
       "Elevation": {
+        "0 Flat": {
+          "$type": "shadow",
+          "$value": [
+            {
+              "inset": false,
+              "color": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.06274509803921569,
+                  0.07450980392156863,
+                  0.06666666666666667
+                ],
+                "alpha": 0,
+                "hex": "#10131100"
+              },
+              "offsetX": {
+                "value": 0,
+                "unit": "px"
+              },
+              "offsetY": {
+                "value": 0,
+                "unit": "px"
+              },
+              "blur": {
+                "value": 0,
+                "unit": "px"
+              },
+              "spread": {
+                "value": 0,
+                "unit": "px"
+              }
+            }
+          ]
+        },
         "1 Card": {
           "$type": "shadow",
           "$value": [
@@ -268,8 +302,8 @@
                   0.5098039215686274,
                   0.34509803921568627
                 ],
-                "alpha": 0.28,
-                "hex": "#2e825847"
+                "alpha": 0.16,
+                "hex": "#2e825829"
               },
               "offsetX": {
                 "value": 0,
@@ -284,7 +318,47 @@
                 "unit": "px"
               },
               "spread": {
+                "value": 8,
+                "unit": "px"
+              }
+            },
+            {
+              "inset": false,
+              "color": "{Nizivo Color.border.focus}",
+              "offsetX": {
+                "value": 0,
+                "unit": "px"
+              },
+              "offsetY": {
+                "value": 0,
+                "unit": "px"
+              },
+              "blur": {
+                "value": 0,
+                "unit": "px"
+              },
+              "spread": {
                 "value": 4,
+                "unit": "px"
+              }
+            },
+            {
+              "inset": false,
+              "color": "{Nizivo Color.bg.surface}",
+              "offsetX": {
+                "value": 0,
+                "unit": "px"
+              },
+              "offsetY": {
+                "value": 0,
+                "unit": "px"
+              },
+              "blur": {
+                "value": 0,
+                "unit": "px"
+              },
+              "spread": {
+                "value": 2,
                 "unit": "px"
               }
             }
@@ -302,8 +376,8 @@
                   0.2901960784313726,
                   0.1803921568627451
                 ],
-                "alpha": 0.25,
-                "hex": "#d64a2e40"
+                "alpha": 0.22,
+                "hex": "#d64a2e38"
               },
               "offsetX": {
                 "value": 0,
@@ -318,7 +392,179 @@
                 "unit": "px"
               },
               "spread": {
+                "value": 8,
+                "unit": "px"
+              }
+            },
+            {
+              "inset": false,
+              "color": "{Nizivo Color.border.focus}",
+              "offsetX": {
+                "value": 0,
+                "unit": "px"
+              },
+              "offsetY": {
+                "value": 0,
+                "unit": "px"
+              },
+              "blur": {
+                "value": 0,
+                "unit": "px"
+              },
+              "spread": {
                 "value": 4,
+                "unit": "px"
+              }
+            },
+            {
+              "inset": false,
+              "color": "{Nizivo Color.bg.surface}",
+              "offsetX": {
+                "value": 0,
+                "unit": "px"
+              },
+              "offsetY": {
+                "value": 0,
+                "unit": "px"
+              },
+              "blur": {
+                "value": 0,
+                "unit": "px"
+              },
+              "spread": {
+                "value": 2,
+                "unit": "px"
+              }
+            }
+          ]
+        },
+        "Ring Raised": {
+          "$type": "shadow",
+          "$value": [
+            {
+              "inset": false,
+              "color": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.1803921568627451,
+                  0.5098039215686274,
+                  0.34509803921568627
+                ],
+                "alpha": 0.16,
+                "hex": "#2e825829"
+              },
+              "offsetX": {
+                "value": 0,
+                "unit": "px"
+              },
+              "offsetY": {
+                "value": 0,
+                "unit": "px"
+              },
+              "blur": {
+                "value": 0,
+                "unit": "px"
+              },
+              "spread": {
+                "value": 8,
+                "unit": "px"
+              }
+            },
+            {
+              "inset": false,
+              "color": "{Nizivo Color.border.focus}",
+              "offsetX": {
+                "value": 0,
+                "unit": "px"
+              },
+              "offsetY": {
+                "value": 0,
+                "unit": "px"
+              },
+              "blur": {
+                "value": 0,
+                "unit": "px"
+              },
+              "spread": {
+                "value": 4,
+                "unit": "px"
+              }
+            },
+            {
+              "inset": false,
+              "color": "{Nizivo Color.bg.surface}",
+              "offsetX": {
+                "value": 0,
+                "unit": "px"
+              },
+              "offsetY": {
+                "value": 0,
+                "unit": "px"
+              },
+              "blur": {
+                "value": 0,
+                "unit": "px"
+              },
+              "spread": {
+                "value": 2,
+                "unit": "px"
+              }
+            },
+            {
+              "inset": true,
+              "color": {
+                "colorSpace": "srgb",
+                "components": [
+                  1,
+                  1,
+                  1
+                ],
+                "alpha": 0.16,
+                "hex": "#ffffff29"
+              },
+              "offsetX": {
+                "value": 0,
+                "unit": "px"
+              },
+              "offsetY": {
+                "value": 1,
+                "unit": "px"
+              },
+              "blur": {
+                "value": 0,
+                "unit": "px"
+              },
+              "spread": {
+                "value": 0,
+                "unit": "px"
+              }
+            },
+            {
+              "inset": false,
+              "color": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.0392156862745098,
+                  0.12941176470588237,
+                  0.10196078431372549
+                ],
+                "alpha": 0.18,
+                "hex": "#0a211a2e"
+              },
+              "offsetX": {
+                "value": 0,
+                "unit": "px"
+              },
+              "offsetY": {
+                "value": 1,
+                "unit": "px"
+              },
+              "blur": {
+                "value": 2,
+                "unit": "px"
+              },
+              "spread": {
+                "value": 0,
                 "unit": "px"
               }
             }
@@ -378,13 +624,13 @@
         "spec": "https://www.designtokens.org/tr/2025.10/format/",
         "colorMode": "srgb-dtcg",
         "variableCollections": [
-          "Grove Primitives",
-          "Grove Color",
-          "Grove Space",
-          "Grove Motion",
-          "Grove Responsive"
+          "Nizivo Primitives",
+          "Nizivo Color",
+          "Nizivo Space",
+          "Nizivo Motion",
+          "Nizivo Responsive"
         ],
-        "createdAt": "2026-10-14T05:05:07.930Z"
+        "createdAt": "2026-10-18T07:15:27.502Z"
       }
     }
   }

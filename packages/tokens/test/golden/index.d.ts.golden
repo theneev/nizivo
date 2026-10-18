@@ -5,15 +5,21 @@ export declare const borderWidth: {
   readonly default: "var(--nz-border-width-default)";
   /** `--nz-border-width-focus` (dimension): `2px` */
   readonly focus: "var(--nz-border-width-focus)";
-  /** `--nz-border-width-strong` (dimension): `1.5px` */
-  readonly strong: "var(--nz-border-width-strong)";
 };
 /** `var()` references to the color tokens. */
 export declare const color: {
   /** `--nz-bg-accent` (color): `#c6e06a` · dark `#afd146` */
   readonly bgAccent: "var(--nz-bg-accent)";
-  /** `--nz-bg-accent-hover` (color): `#afd146` · dark `#c6e06a` */
+  /**
+   * `--nz-bg-accent-hover` (color): `#afd146` · dark `#c6e06a`
+   * Accent button hover. Light rest lime/300 → hover lime/400; Dark rest lime/400 → hover lime/300.
+   */
   readonly bgAccentHover: "var(--nz-bg-accent-hover)";
+  /**
+   * `--nz-bg-accent-pressed` (color): `#8db22b` · dark `#dcec9c`
+   * Accent button pressed. text/on-accent stays ≥ 6:1.
+   */
+  readonly bgAccentPressed: "var(--nz-bg-accent-pressed)";
   /** `--nz-bg-accent-subtle` (color): `#f6fae8` · dark `#0a211a` */
   readonly bgAccentSubtle: "var(--nz-bg-accent-subtle)";
   /** `--nz-bg-brand` (color): `#1a573a` · dark `#4c9e71` */
@@ -28,9 +34,22 @@ export declare const color: {
   readonly bgBrandSubtle: "var(--nz-bg-brand-subtle)";
   /** `--nz-bg-canvas` (color): `#f6f7f4` · dark `#101311` */
   readonly bgCanvas: "var(--nz-bg-canvas)";
-  /** `--nz-bg-critical` (color): `#b93a23` · dark `#b93a23` */
+  /**
+   * `--nz-bg-code` (color): `#181b19` · dark `#101311`
+   * Code surfaces. Always dark in both modes.
+   */
+  readonly bgCode: "var(--nz-bg-code)";
+  /**
+   * `--nz-bg-code-elevated` (color): `#202421`
+   * Active tab / pressed state on code surfaces.
+   */
+  readonly bgCodeElevated: "var(--nz-bg-code-elevated)";
+  /** `--nz-bg-critical` (color): `#b93a23` */
   readonly bgCritical: "var(--nz-bg-critical)";
-  /** `--nz-bg-critical-hover` (color): `#8f2c1a` */
+  /**
+   * `--nz-bg-critical-hover` (color): `#8f2c1a`
+   * Critical button hover + pressed. White text 8.26:1.
+   */
   readonly bgCriticalHover: "var(--nz-bg-critical-hover)";
   /** `--nz-bg-critical-subtle` (color): `#fdf1ee` · dark `#202421` */
   readonly bgCriticalSubtle: "var(--nz-bg-critical-subtle)";
@@ -48,7 +67,10 @@ export declare const color: {
   readonly bgMuted: "var(--nz-bg-muted)";
   /** `--nz-bg-pressed` (color): `#eef0ec` · dark `#414741` */
   readonly bgPressed: "var(--nz-bg-pressed)";
-  /** `--nz-bg-scrim` (color): `rgb(24 27 25 / 0.32)` · dark `rgb(0 0 0 / 0.6)` */
+  /**
+   * `--nz-bg-scrim` (color): `rgb(24 27 25 / 0.32)` · dark `rgb(0 0 0 / 0.6)`
+   * Modal / drawer backdrop. neutral/900 @ 32% (Light), black @ 60% (Dark).
+   */
   readonly bgScrim: "var(--nz-bg-scrim)";
   /** `--nz-bg-subtle` (color): `#fbfbf9` · dark `#151816` */
   readonly bgSubtle: "var(--nz-bg-subtle)";
@@ -62,9 +84,15 @@ export declare const color: {
   readonly bgWarningSubtle: "var(--nz-bg-warning-subtle)";
   /** `--nz-border-brand` (color): `#216c47` · dark `#4c9e71` */
   readonly borderBrand: "var(--nz-border-brand)";
-  /** `--nz-border-control` (color): `#828a81` · dark `#747c73` */
+  /**
+   * `--nz-border-control` (color): `#828a81` · dark `#747c73`
+   * Edges of inputs, selects, checkboxes, radios, switch-off track. ≥ 3:1 (WCAG 1.4.11).
+   */
   readonly borderControl: "var(--nz-border-control)";
-  /** `--nz-border-control-hover` (color): `#747c73` · dark `#9ea59c` */
+  /**
+   * `--nz-border-control-hover` (color): `#747c73` · dark `#9ea59c`
+   * Hover edge of form controls.
+   */
   readonly borderControlHover: "var(--nz-border-control-hover)";
   /** `--nz-border-critical` (color): `#d6492f` */
   readonly borderCritical: "var(--nz-border-critical)";
@@ -79,13 +107,13 @@ export declare const color: {
   /** `--nz-border-warning` (color): `#b07b0e` · dark `#d99a1b` */
   readonly borderWarning: "var(--nz-border-warning)";
   /**
-   * `--nz-chart-cat-1` (color): `#138a55` · dark `#1a7d4e`
-   * Validated categorical slot (CVD ΔE≥14, light+dark). Fixed order, never cycled; 4th+ series fold into chart/neutral &quot;Other&quot;.
+   * `--nz-chart-cat-1` (color): `#1a573a` · dark `#1a7d4e`
+   * Category 1. Light green/700 (8.51) — darker than cat-2 so the pair separates by lightness, not hue alone.
    */
   readonly chartCat1: "var(--nz-chart-cat-1)";
   /**
-   * `--nz-chart-cat-2` (color): `#8fbf2f` · dark `#88a02a`
-   * Validated categorical slot (CVD ΔE≥14, light+dark). Fixed order, never cycled; 4th+ series fold into chart/neutral &quot;Other&quot;.
+   * `--nz-chart-cat-2` (color): `#6b8a1e` · dark `#88a02a`
+   * Category 2. Light lime/600 (3.98 on white); was 2.17.
    */
   readonly chartCat2: "var(--nz-chart-cat-2)";
   /**
@@ -93,23 +121,46 @@ export declare const color: {
    * Validated categorical slot (CVD ΔE≥14, light+dark). Fixed order, never cycled; 4th+ series fold into chart/neutral &quot;Other&quot;.
    */
   readonly chartCat3: "var(--nz-chart-cat-3)";
-  /** `--nz-chart-critical` (color): `#d6492f` */
+  /**
+   * `--nz-chart-critical` (color): `#d6492f`
+   * Progress Critical fill. 3.77 / 3.11 on chart/track.
+   */
   readonly chartCritical: "var(--nz-chart-critical)";
   /** `--nz-chart-grid` (color): `#eef0ec` · dark `#202421` */
   readonly chartGrid: "var(--nz-chart-grid)";
   /** `--nz-chart-negative` (color): `#d6492f` */
   readonly chartNegative: "var(--nz-chart-negative)";
-  /** `--nz-chart-neutral` (color): `#cbd0c8` · dark `#414741` */
+  /**
+   * `--nz-chart-neutral` (color): `#747c73` · dark `#9ea59c`
+   * Comparison lines, “Other” slices, neutral progress. 4.31 on white / 6.87 on dark surface; was 1.37 / 1.41.
+   */
   readonly chartNeutral: "var(--nz-chart-neutral)";
-  /** `--nz-chart-primary` (color): `#216c47` · dark `#4c9e71` */
+  /**
+   * `--nz-chart-primary` (color): `#216c47` · dark `#79b993`
+   * Main series. Dark moved to green/300 (7.58) so chart/secondary can dim against it.
+   */
   readonly chartPrimary: "var(--nz-chart-primary)";
-  /** `--nz-chart-secondary` (color): `#aad3b9` · dark `#15452f` */
+  /**
+   * `--nz-chart-secondary` (color): `#4c9e71` · dark `#2e8358`
+   * Second series and dimmed bars on hover. 3.26 on white / 3.72 on dark surface (WCAG 1.4.11).
+   */
   readonly chartSecondary: "var(--nz-chart-secondary)";
-  /** `--nz-chart-tertiary` (color): `#afd146` */
+  /**
+   * `--nz-chart-success` (color): `#2e8358` · dark `#79b993`
+   * Progress / Meter Success fill. 4.07 / 5.87 on chart/track.
+   */
+  readonly chartSuccess: "var(--nz-chart-success)";
+  /**
+   * `--nz-chart-tertiary` (color): `#6b8a1e` · dark `#afd146`
+   * Highlight series. Light lime/600 (3.98); was 1.75.
+   */
   readonly chartTertiary: "var(--nz-chart-tertiary)";
   /** `--nz-chart-track` (color): `#eef0ec` · dark `#2b302c` */
   readonly chartTrack: "var(--nz-chart-track)";
-  /** `--nz-chart-warning` (color): `#b07b0e` · dark `#d99a1b` */
+  /**
+   * `--nz-chart-warning` (color): `#b07b0e` · dark `#d99a1b`
+   * Progress Warning fill. 3.22 / 5.50 on chart/track.
+   */
   readonly chartWarning: "var(--nz-chart-warning)";
   /** `--nz-elevation-highlight` (color): `transparent` */
   readonly elevationHighlight: "var(--nz-elevation-highlight)";
@@ -119,7 +170,10 @@ export declare const color: {
   readonly iconBrand: "var(--nz-icon-brand)";
   /** `--nz-icon-critical` (color): `#d6492f` · dark `#e47962` */
   readonly iconCritical: "var(--nz-icon-critical)";
-  /** `--nz-icon-info` (color): `#2e58b0` · dark `#7098e0` */
+  /**
+   * `--nz-icon-info` (color): `#2e58b0` · dark `#7098e0`
+   * Alert Info icon. Light 6.01 on bg/info-subtle, Dark 4.65 on bg/hover.
+   */
   readonly iconInfo: "var(--nz-icon-info)";
   /** `--nz-icon-inverse` (color): `#fff` · dark `#181b19` */
   readonly iconInverse: "var(--nz-icon-inverse)";
@@ -135,6 +189,16 @@ export declare const color: {
   readonly textAccent: "var(--nz-text-accent)";
   /** `--nz-text-brand` (color): `#1a573a` · dark `#79b993` */
   readonly textBrand: "var(--nz-text-brand)";
+  /**
+   * `--nz-text-code` (color): `#f6f7f4`
+   * Text and icons on bg/code (≥ 15:1).
+   */
+  readonly textCode: "var(--nz-text-code)";
+  /**
+   * `--nz-text-code-muted` (color): `#9ea59c`
+   * Prompts, inactive tabs, comments on bg/code (≥ 6:1).
+   */
+  readonly textCodeMuted: "var(--nz-text-code-muted)";
   /** `--nz-text-critical` (color): `#b93a23` · dark `#e47962` */
   readonly textCritical: "var(--nz-text-critical)";
   /** `--nz-text-disabled` (color): `#9ea59c` · dark `#596058` */
@@ -143,12 +207,25 @@ export declare const color: {
   readonly textInfo: "var(--nz-text-info)";
   /** `--nz-text-inverse` (color): `#fff` · dark `#181b19` */
   readonly textInverse: "var(--nz-text-inverse)";
+  /**
+   * `--nz-text-inverse-accent` (color): `#c6e06a` · dark `#1a573a`
+   * Action text on bg/inverse surfaces (Toast). Light 11.80:1 on neutral/900, Dark 8.51:1 on white. Replaces the proposed text/accent, whose modes were inverted (2.04 / 1.47).
+   */
+  readonly textInverseAccent: "var(--nz-text-inverse-accent)";
   /** `--nz-text-on-accent` (color): `#0a211a` */
   readonly textOnAccent: "var(--nz-text-on-accent)";
   /** `--nz-text-on-brand` (color): `#fff` · dark `#0a211a` */
   readonly textOnBrand: "var(--nz-text-on-brand)";
-  /** `--nz-text-on-critical` (color): `#fff` */
+  /**
+   * `--nz-text-on-critical` (color): `#fff`
+   * Text on bg/critical. 5.69:1 on red/600.
+   */
   readonly textOnCritical: "var(--nz-text-on-critical)";
+  /**
+   * `--nz-text-on-dark` (color): `#fff`
+   * Text on surfaces that are dark in both modes (dark shaders, photography scrims). White in Light and Dark.
+   */
+  readonly textOnDark: "var(--nz-text-on-dark)";
   /** `--nz-text-primary` (color): `#181b19` · dark `#f6f7f4` */
   readonly textPrimary: "var(--nz-text-primary)";
   /** `--nz-text-secondary` (color): `#414741` · dark `#cbd0c8` */
@@ -177,21 +254,27 @@ export declare const duration: {
   readonly chartDraw: "var(--nz-duration-chart-draw)";
   /** `--nz-duration-count-up` (duration): `900ms` · reduced `0ms` */
   readonly countUp: "var(--nz-duration-count-up)";
-  /** `--nz-duration-fade` (duration): `140ms` · reduced `120ms` */
+  /**
+   * `--nz-duration-fade` (duration): `140ms` · reduced `120ms`
+   * Opacity-only fades; survives Reduced motion (Q34).
+   */
   readonly fade: "var(--nz-duration-fade)";
   /** `--nz-duration-fast` (duration): `140ms` · reduced `0ms` */
   readonly fast: "var(--nz-duration-fast)";
   /** `--nz-duration-instant` (duration): `80ms` · reduced `0ms` */
   readonly instant: "var(--nz-duration-instant)";
-  /** `--nz-duration-pulse` (duration): `2000ms` · reduced `0ms` */
+  /**
+   * `--nz-duration-pulse` (duration): `2000ms` · reduced `0ms`
+   * Skeleton / indeterminate progress loop; stops in Reduced.
+   */
   readonly pulse: "var(--nz-duration-pulse)";
   /** `--nz-duration-slow` (duration): `320ms` · reduced `120ms` */
   readonly slow: "var(--nz-duration-slow)";
   /** `--nz-duration-slower` (duration): `480ms` · reduced `160ms` */
   readonly slower: "var(--nz-duration-slower)";
   /**
-   * `--nz-duration-spin` (duration): `1000ms`
-   * Pending spinner, one turn. Kept in Reduced mode: essential status feedback
+   * `--nz-duration-spin` (duration): `800ms` · reduced `0ms`
+   * One spinner rotation (linear). 0 in Reduced: the spinner stops and a text label shows.
    */
   readonly spin: "var(--nz-duration-spin)";
   /** `--nz-duration-spring` (duration): `493ms` · reduced `120ms` */
@@ -214,13 +297,15 @@ export declare const easing: {
 };
 /** `var()` references to the elevation tokens. */
 export declare const elevation: {
-  /** `--nz-elevation-1` (shadow): `0 0 0 1px transparent, 0 1px 2px 0 rgb(16 19 17 / 0.04), 0 1px 1px 0 rgb(16 19 17 / 0.03)` · dark `0 0 0 1px rgb(255 255 255 / 0.08), 0 1px 2px 0 rgb(0 0 0 / 0.24), 0 1px 1px 0 rgb(0 0 0 / 0.18)` */
+  /** `--nz-elevation-0` (shadow): `0 0 0 0 transparent` */
+  readonly "0": "var(--nz-elevation-0)";
+  /** `--nz-elevation-1` (shadow): `0 0 0 1px transparent, 0 1px 1px 0 rgb(16 19 17 / 0.03), 0 1px 2px 0 rgb(16 19 17 / 0.04)` · dark `0 0 0 1px rgb(255 255 255 / 0.08), 0 1px 1px 0 rgb(0 0 0 / 0.18), 0 1px 2px 0 rgb(0 0 0 / 0.24)` */
   readonly "1": "var(--nz-elevation-1)";
-  /** `--nz-elevation-2` (shadow): `0 0 0 1px transparent, 0 2px 4px 0 rgb(16 19 17 / 0.04), 0 8px 16px -4px rgb(16 19 17 / 0.05)` · dark `0 0 0 1px rgb(255 255 255 / 0.08), 0 2px 4px 0 rgb(0 0 0 / 0.24), 0 8px 16px -4px rgb(0 0 0 / 0.3)` */
+  /** `--nz-elevation-2` (shadow): `0 0 0 1px transparent, 0 8px 16px -4px rgb(16 19 17 / 0.05), 0 2px 4px 0 rgb(16 19 17 / 0.04)` · dark `0 0 0 1px rgb(255 255 255 / 0.08), 0 8px 16px -4px rgb(0 0 0 / 0.3), 0 2px 4px 0 rgb(0 0 0 / 0.24)` */
   readonly "2": "var(--nz-elevation-2)";
-  /** `--nz-elevation-3` (shadow): `inset 0 1px 0 0 transparent, 0 0 0 1px transparent, 0 4px 8px 0 rgb(16 19 17 / 0.05), 0 16px 32px -8px rgb(16 19 17 / 0.08)` · dark `inset 0 1px 0 0 transparent, 0 0 0 1px rgb(255 255 255 / 0.08), 0 4px 8px 0 rgb(0 0 0 / 0.3), 0 16px 32px -8px rgb(0 0 0 / 0.48)` */
+  /** `--nz-elevation-3` (shadow): `inset 0 1px 0 0 transparent, 0 0 0 1px transparent, 0 16px 32px -8px rgb(16 19 17 / 0.08), 0 4px 8px 0 rgb(16 19 17 / 0.05)` · dark `inset 0 1px 0 0 transparent, 0 0 0 1px rgb(255 255 255 / 0.08), 0 16px 32px -8px rgb(0 0 0 / 0.48), 0 4px 8px 0 rgb(0 0 0 / 0.3)` */
   readonly "3": "var(--nz-elevation-3)";
-  /** `--nz-elevation-4` (shadow): `inset 0 1px 0 0 transparent, 0 0 0 1px transparent, 0 8px 16px 0 rgb(16 19 17 / 0.06), 0 32px 64px -12px rgb(16 19 17 / 0.14)` · dark `inset 0 1px 0 0 transparent, 0 0 0 1px rgb(255 255 255 / 0.08), 0 8px 16px 0 rgb(0 0 0 / 0.36), 0 32px 64px -12px rgb(0 0 0 / 0.6)` */
+  /** `--nz-elevation-4` (shadow): `inset 0 1px 0 0 transparent, 0 0 0 1px transparent, 0 32px 64px -12px rgb(16 19 17 / 0.14), 0 8px 16px 0 rgb(16 19 17 / 0.06)` · dark `inset 0 1px 0 0 transparent, 0 0 0 1px rgb(255 255 255 / 0.08), 0 32px 64px -12px rgb(0 0 0 / 0.6), 0 8px 16px 0 rgb(0 0 0 / 0.36)` */
   readonly "4": "var(--nz-elevation-4)";
   /**
    * `--nz-elevation-button` (shadow): `inset 0 1px 0 0 rgb(255 255 255 / 0.16), 0 1px 2px 0 rgb(10 33 26 / 0.18)`
@@ -240,10 +325,12 @@ export declare const focus: {
    * The focus halo of an invalid control (Figma Focus/Ring Critical, same formula as focus.halo). Decoration only, like focus.halo
    */
   readonly haloCritical: "var(--nz-focus-halo-critical)";
-  /** `--nz-focus-ring` (shadow): `0 0 0 4px rgb(46 130 88 / 0.28)` */
+  /** `--nz-focus-ring` (shadow): `0 0 0 2px #fff, 0 0 0 4px #2e8358, 0 0 0 8px rgb(46 130 88 / 0.16)` · dark `0 0 0 2px #181b19, 0 0 0 4px #79b993, 0 0 0 8px rgb(46 130 88 / 0.16)` */
   readonly ring: "var(--nz-focus-ring)";
-  /** `--nz-focus-ring-critical` (shadow): `0 0 0 4px rgb(214 74 46 / 0.25)` */
+  /** `--nz-focus-ring-critical` (shadow): `0 0 0 2px #fff, 0 0 0 4px #2e8358, 0 0 0 8px rgb(214 74 46 / 0.22)` · dark `0 0 0 2px #181b19, 0 0 0 4px #79b993, 0 0 0 8px rgb(214 74 46 / 0.22)` */
   readonly ringCritical: "var(--nz-focus-ring-critical)";
+  /** `--nz-focus-ring-raised` (shadow): `0 1px 2px 0 rgb(10 33 26 / 0.18), inset 0 1px 0 0 rgb(255 255 255 / 0.16), 0 0 0 2px #fff, 0 0 0 4px #2e8358, 0 0 0 8px rgb(46 130 88 / 0.16)` · dark `0 1px 2px 0 rgb(10 33 26 / 0.18), inset 0 1px 0 0 rgb(255 255 255 / 0.16), 0 0 0 2px #181b19, 0 0 0 4px #79b993, 0 0 0 8px rgb(46 130 88 / 0.16)` */
+  readonly ringRaised: "var(--nz-focus-ring-raised)";
 };
 /** `var()` references to the font tokens. */
 export declare const font: {
@@ -253,7 +340,10 @@ export declare const font: {
   readonly bodyM: "var(--nz-font-body-m)";
   /** `--nz-font-body-m-strong` (typography): `500 0.875rem/1.5 "Geist", ui-sans-serif, system-ui, sans-serif` */
   readonly bodyMStrong: "var(--nz-font-body-m-strong)";
-  /** `--nz-font-body-s` (typography): `400 0.75rem/1.5 "Geist", ui-sans-serif, system-ui, sans-serif` */
+  /**
+   * `--nz-font-body-s` (typography): `400 0.75rem/1.5 "Geist", ui-sans-serif, system-ui, sans-serif`
+   * Captions, helper text, table meta. 12px — text tokens must still reach 4.5:1.
+   */
   readonly bodyS: "var(--nz-font-body-s)";
   /** `--nz-font-display-l` (typography): `600 3.5rem/1.04 "Geist", ui-sans-serif, system-ui, sans-serif` */
   readonly displayL: "var(--nz-font-display-l)";
@@ -277,7 +367,10 @@ export declare const font: {
   readonly labelM: "var(--nz-font-label-m)";
   /** `--nz-font-label-m-strong` (typography): `600 0.875rem/1.4 "Geist", ui-sans-serif, system-ui, sans-serif` */
   readonly labelMStrong: "var(--nz-font-label-m-strong)";
-  /** `--nz-font-label-s` (typography): `500 0.75rem/1.4 "Geist", ui-sans-serif, system-ui, sans-serif` */
+  /**
+   * `--nz-font-label-s` (typography): `500 0.75rem/1.4 "Geist", ui-sans-serif, system-ui, sans-serif`
+   * Badges, group labels, compact controls. 12px.
+   */
   readonly labelS: "var(--nz-font-label-s)";
   /** `--nz-font-mono-m` (typography): `400 0.875rem/1.4 "Geist Mono", ui-monospace, "SFMono-Regular", "Menlo", "Consolas", monospace` */
   readonly monoM: "var(--nz-font-mono-m)";
@@ -346,7 +439,10 @@ export declare const radius: {
 };
 /** `var()` references to the scale tokens. */
 export declare const scale: {
-  /** `--nz-scale-enter` (number): `0.96` · reduced `1` */
+  /**
+   * `--nz-scale-enter` (number): `0.96` · reduced `1`
+   * Overlay enter scale (Dropdown, Popover); none in Reduced.
+   */
   readonly enter: "var(--nz-scale-enter)";
   /** `--nz-scale-hover` (number): `1.02` · reduced `1` */
   readonly hover: "var(--nz-scale-hover)";
@@ -514,6 +610,7 @@ export declare const springs: {
 export type CssVariable =
   | "--nz-bg-accent"
   | "--nz-bg-accent-hover"
+  | "--nz-bg-accent-pressed"
   | "--nz-bg-accent-subtle"
   | "--nz-bg-brand"
   | "--nz-bg-brand-hover"
@@ -521,6 +618,8 @@ export type CssVariable =
   | "--nz-bg-brand-pressed"
   | "--nz-bg-brand-subtle"
   | "--nz-bg-canvas"
+  | "--nz-bg-code"
+  | "--nz-bg-code-elevated"
   | "--nz-bg-critical"
   | "--nz-bg-critical-hover"
   | "--nz-bg-critical-subtle"
@@ -548,7 +647,6 @@ export type CssVariable =
   | "--nz-border-warning"
   | "--nz-border-width-default"
   | "--nz-border-width-focus"
-  | "--nz-border-width-strong"
   | "--nz-chart-cat-1"
   | "--nz-chart-cat-2"
   | "--nz-chart-cat-3"
@@ -558,6 +656,7 @@ export type CssVariable =
   | "--nz-chart-neutral"
   | "--nz-chart-primary"
   | "--nz-chart-secondary"
+  | "--nz-chart-success"
   | "--nz-chart-tertiary"
   | "--nz-chart-track"
   | "--nz-chart-warning"
@@ -581,6 +680,7 @@ export type CssVariable =
   | "--nz-easing-spring"
   | "--nz-easing-spring-soft"
   | "--nz-easing-standard"
+  | "--nz-elevation-0"
   | "--nz-elevation-1"
   | "--nz-elevation-2"
   | "--nz-elevation-3"
@@ -592,6 +692,7 @@ export type CssVariable =
   | "--nz-focus-halo-critical"
   | "--nz-focus-ring"
   | "--nz-focus-ring-critical"
+  | "--nz-focus-ring-raised"
   | "--nz-font-body-l"
   | "--nz-font-body-l-font-family"
   | "--nz-font-body-l-font-size"
@@ -747,13 +848,17 @@ export type CssVariable =
   | "--nz-surface-inner-highlight"
   | "--nz-text-accent"
   | "--nz-text-brand"
+  | "--nz-text-code"
+  | "--nz-text-code-muted"
   | "--nz-text-critical"
   | "--nz-text-disabled"
   | "--nz-text-info"
   | "--nz-text-inverse"
+  | "--nz-text-inverse-accent"
   | "--nz-text-on-accent"
   | "--nz-text-on-brand"
   | "--nz-text-on-critical"
+  | "--nz-text-on-dark"
   | "--nz-text-primary"
   | "--nz-text-secondary"
   | "--nz-text-success"
@@ -792,11 +897,11 @@ export type CssVariable =
 export type TokenId =
   | "border-width.default"
   | "border-width.focus"
-  | "border-width.strong"
   | "breakpoint.lg"
   | "breakpoint.sm"
   | "color.bg.accent"
   | "color.bg.accent-hover"
+  | "color.bg.accent-pressed"
   | "color.bg.accent-subtle"
   | "color.bg.brand"
   | "color.bg.brand-hover"
@@ -804,6 +909,8 @@ export type TokenId =
   | "color.bg.brand-pressed"
   | "color.bg.brand-subtle"
   | "color.bg.canvas"
+  | "color.bg.code"
+  | "color.bg.code-elevated"
   | "color.bg.critical"
   | "color.bg.critical-hover"
   | "color.bg.critical-subtle"
@@ -838,6 +945,7 @@ export type TokenId =
   | "color.chart.neutral"
   | "color.chart.primary"
   | "color.chart.secondary"
+  | "color.chart.success"
   | "color.chart.tertiary"
   | "color.chart.track"
   | "color.chart.warning"
@@ -911,13 +1019,17 @@ export type TokenId =
   | "color.p.viz.teal-500"
   | "color.text.accent"
   | "color.text.brand"
+  | "color.text.code"
+  | "color.text.code-muted"
   | "color.text.critical"
   | "color.text.disabled"
   | "color.text.info"
   | "color.text.inverse"
+  | "color.text.inverse-accent"
   | "color.text.on-accent"
   | "color.text.on-brand"
   | "color.text.on-critical"
+  | "color.text.on-dark"
   | "color.text.primary"
   | "color.text.secondary"
   | "color.text.success"
@@ -943,6 +1055,7 @@ export type TokenId =
   | "easing.spring"
   | "easing.spring-soft"
   | "easing.standard"
+  | "elevation.0"
   | "elevation.1"
   | "elevation.2"
   | "elevation.3"
@@ -952,6 +1065,7 @@ export type TokenId =
   | "focus.halo-critical"
   | "focus.ring"
   | "focus.ring-critical"
+  | "focus.ring-raised"
   | "font.body.l"
   | "font.body.m"
   | "font.body.m-strong"

@@ -1,6 +1,6 @@
 {
   "Typography-styles": {
-    "Grove": {
+    "Nizivo": {
       "Display": {
         "L": {
           "$type": "typography",
@@ -257,6 +257,34 @@
           "$extensions": {
             "styleId": "S:641e026f76f992e585a4ea605c53c6dd59555efd,"
           }
+        },
+        "S": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Geist",
+            "fontWeight": 400,
+            "fontStyle": "normal",
+            "fontSize": {
+              "value": 12,
+              "unit": "px"
+            },
+            "lineHeight": "150%",
+            "letterSpacing": "0%",
+            "paragraphSpacing": {
+              "value": 0,
+              "unit": "px"
+            },
+            "paragraphIndent": {
+              "value": 0,
+              "unit": "px"
+            },
+            "textDecoration": "NONE",
+            "textCase": "ORIGINAL"
+          },
+          "$description": "Captions, helper text, table meta. 12px — text tokens must still reach 4.5:1.",
+          "$extensions": {
+            "styleId": "S:ab423e646b7688c5d01a9738eba4f8f1abce05ed,"
+          }
         }
       },
       "Label": {
@@ -342,6 +370,34 @@
           "$description": "",
           "$extensions": {
             "styleId": "S:244b8f1d4e31a7409b96eef0db3d1a93bc6b6cff,"
+          }
+        },
+        "S": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Geist",
+            "fontWeight": 500,
+            "fontStyle": "normal",
+            "fontSize": {
+              "value": 12,
+              "unit": "px"
+            },
+            "lineHeight": "140%",
+            "letterSpacing": "0%",
+            "paragraphSpacing": {
+              "value": 0,
+              "unit": "px"
+            },
+            "paragraphIndent": {
+              "value": 0,
+              "unit": "px"
+            },
+            "textDecoration": "NONE",
+            "textCase": "ORIGINAL"
+          },
+          "$description": "Badges, group labels, compact controls. 12px.",
+          "$extensions": {
+            "styleId": "S:3f6221f2db3772839d9c540e6dbc1dd609ac0cb9,"
           }
         }
       },
@@ -524,13 +580,13 @@
         "spec": "https://www.designtokens.org/tr/2025.10/format/",
         "colorMode": "srgb-dtcg",
         "variableCollections": [
-          "Grove Primitives",
-          "Grove Color",
-          "Grove Space",
-          "Grove Motion",
-          "Grove Responsive"
+          "Nizivo Primitives",
+          "Nizivo Color",
+          "Nizivo Space",
+          "Nizivo Motion",
+          "Nizivo Responsive"
         ],
-        "createdAt": "2026-10-14T05:05:07.930Z"
+        "createdAt": "2026-10-18T07:15:27.502Z"
       }
     }
   }

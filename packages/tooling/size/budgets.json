@@ -426,15 +426,15 @@
       "limitKiB": 0.6
     },
     "@nizivo/react/styles.css": {
-      "measured": 14937,
+      "measured": 15006,
       "limitKiB": 16
     },
     "@nizivo/tokens": {
-      "measured": 2309,
+      "measured": 2377,
       "limitKiB": 2.5
     },
     "@nizivo/tokens/contract.json": {
-      "measured": 3247,
+      "measured": 3316,
       "limitKiB": 3.5
     },
     "@nizivo/tokens/custom-media.css": {
@@ -442,15 +442,15 @@
       "limitKiB": 0.2
     },
     "@nizivo/tokens/tailwind.css": {
-      "measured": 764,
+      "measured": 817,
       "limitKiB": 0.9
     },
     "@nizivo/tokens/tokens.css": {
-      "measured": 3879,
+      "measured": 3957,
       "limitKiB": 4.2
     },
     "@nizivo/tokens/tokens.json": {
-      "measured": 8887,
+      "measured": 10399,
       "limitKiB": 12
     },
     "@nizivo/icons": {

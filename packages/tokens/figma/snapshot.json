@@ -4,158 +4,8 @@
     "fileKey": "BIzJFf1wm8KP0YG2AVI1tP",
     "extractedWith": "use_figma, scripts/figma/snapshot-*.figma.js (read-only)",
     "dropped": {
-      "collections": [
-        "Clario Tokens",
-        "Pipkin Tokens",
-        "Merit Tokens",
-        "Ashgrove Tokens",
-        "Noema Tokens",
-        "Pipkin Soft",
-        "Praxa Tokens",
-        "Pogo Tokens",
-        "Halden Tokens",
-        "Ardenfield Tokens"
-      ],
-      "textStyles": [
-        "Clario/Display",
-        "Clario/H1",
-        "Clario/H2",
-        "Clario/H3",
-        "Clario/H4",
-        "Clario/Numeral",
-        "Clario/Body Large",
-        "Clario/Body",
-        "Clario/Body Small",
-        "Clario/Label",
-        "Clario/Nav",
-        "Clario/Button",
-        "Clario/Caption",
-        "Pipkin/Display",
-        "Pipkin/H1",
-        "Pipkin/H2",
-        "Pipkin/H3",
-        "Pipkin/H4",
-        "Pipkin/Numeral",
-        "Pipkin/Body Large",
-        "Pipkin/Body",
-        "Pipkin/Body Small",
-        "Pipkin/Label",
-        "Pipkin/Nav",
-        "Pipkin/Button",
-        "Pipkin/Chip",
-        "Merit/Display",
-        "Merit/H1",
-        "Merit/H2",
-        "Merit/H3",
-        "Merit/H4",
-        "Merit/Figure",
-        "Merit/Figure S",
-        "Merit/Body Large",
-        "Merit/Body",
-        "Merit/Body Small",
-        "Merit/Label",
-        "Merit/Data",
-        "Merit/Data Bold",
-        "Merit/Nav",
-        "Merit/Button",
-        "Ashgrove/Display",
-        "Ashgrove/H1",
-        "Ashgrove/H2",
-        "Ashgrove/H3",
-        "Ashgrove/H4",
-        "Ashgrove/Quote",
-        "Ashgrove/Figure",
-        "Ashgrove/Lede",
-        "Ashgrove/Body Large",
-        "Ashgrove/Body",
-        "Ashgrove/Body Small",
-        "Ashgrove/Small Caps",
-        "Ashgrove/Index No",
-        "Ashgrove/Nav",
-        "Ashgrove/Button",
-        "Noema/Display",
-        "Noema/H1",
-        "Noema/H2",
-        "Noema/H3",
-        "Noema/H4",
-        "Noema/Metric",
-        "Noema/Body Large",
-        "Noema/Body",
-        "Noema/Body Small",
-        "Noema/Mono",
-        "Noema/Nav",
-        "Noema/Button",
-        "Noema/Chip",
-        "Pipkin/Display Italic",
-        "Pipkin/H1 Italic",
-        "Pipkin/H2 Italic",
-        "Pipkin/H3 Italic",
-        "Praxa/Display",
-        "Praxa/H1",
-        "Praxa/H2",
-        "Praxa/H3",
-        "Praxa/H4",
-        "Praxa/H5",
-        "Praxa/Body L",
-        "Praxa/Body",
-        "Praxa/Body Medium",
-        "Praxa/Label",
-        "Praxa/Eyebrow",
-        "Praxa/Mono",
-        "Praxa/Numeral",
-        "Praxa/Numeral M",
-        "Pogo/Display",
-        "Pogo/H1",
-        "Pogo/H2",
-        "Pogo/H3",
-        "Pogo/H4",
-        "Pogo/H5",
-        "Pogo/Body L",
-        "Pogo/Body",
-        "Pogo/Body S",
-        "Pogo/Body S Bold",
-        "Pogo/Caption",
-        "Pogo/Label",
-        "Pogo/Button",
-        "Pogo/Number",
-        "Halden/Hero 144",
-        "Halden/Display 96",
-        "Halden/Numeral 120",
-        "Halden/H1 64",
-        "Halden/H2 48",
-        "Halden/H3 32",
-        "Halden/Quote 32",
-        "Halden/H4 24",
-        "Halden/Title 20",
-        "Halden/Body L 18",
-        "Halden/Body 16",
-        "Halden/Body Strong 16",
-        "Halden/Button 16",
-        "Halden/Meta 14",
-        "Halden/Label 14",
-        "Ardenfield/Display",
-        "Ardenfield/Display Tablet",
-        "Ardenfield/Display Mobile",
-        "Ardenfield/H1",
-        "Ardenfield/H1 Mobile",
-        "Ardenfield/H2",
-        "Ardenfield/H2 Mobile",
-        "Ardenfield/H3",
-        "Ardenfield/H4",
-        "Ardenfield/Lead",
-        "Ardenfield/Body",
-        "Ardenfield/Body S",
-        "Ardenfield/Button",
-        "Ardenfield/Label",
-        "Ardenfield/Caption",
-        "Ardenfield/Numeral",
-        "Ardenfield/Numeral Mobile",
-        "Ardenfield/Serif Display",
-        "Ardenfield/Serif Display Mobile",
-        "Ardenfield/Quote",
-        "Ardenfield/Quote Mobile",
-        "Ardenfield/Serif Numeral"
-      ],
+      "collections": [],
+      "textStyles": [],
       "effectStyles": [],
       "paintStyles": [],
       "gridStyles": []
@@ -164,7 +14,7 @@
   "variableCollections": [
     {
       "id": "VariableCollectionId:737:64",
-      "name": "Grove Primitives",
+      "name": "Nizivo Primitives",
       "defaultModeId": "737:0",
       "modes": [
         {
@@ -226,13 +76,17 @@
         "VariableID:747:235",
         "VariableID:747:236",
         "VariableID:747:237",
-        "VariableID:747:238"
+        "VariableID:747:238",
+        "VariableID:7351:7",
+        "VariableID:7351:8",
+        "VariableID:7351:9",
+        "VariableID:7351:10"
       ],
       "hiddenFromPublishing": false
     },
     {
       "id": "VariableCollectionId:737:113",
-      "name": "Grove Color",
+      "name": "Nizivo Color",
       "defaultModeId": "737:1",
       "modes": [
         {
@@ -302,13 +156,30 @@
         "VariableID:737:168",
         "VariableID:747:239",
         "VariableID:747:240",
-        "VariableID:747:241"
+        "VariableID:747:241",
+        "VariableID:7351:11",
+        "VariableID:7351:12",
+        "VariableID:7351:13",
+        "VariableID:7351:14",
+        "VariableID:7351:15",
+        "VariableID:7351:16",
+        "VariableID:7351:17",
+        "VariableID:7351:18",
+        "VariableID:7351:19",
+        "VariableID:7351:20",
+        "VariableID:7351:21",
+        "VariableID:7351:23",
+        "VariableID:7424:8334",
+        "VariableID:7424:8335",
+        "VariableID:7424:8336",
+        "VariableID:7424:8337",
+        "VariableID:7425:12347"
       ],
       "hiddenFromPublishing": false
     },
     {
       "id": "VariableCollectionId:737:169",
-      "name": "Grove Space",
+      "name": "Nizivo Space",
       "defaultModeId": "737:3",
       "modes": [
         {
@@ -341,7 +212,6 @@
         "VariableID:737:191",
         "VariableID:737:192",
         "VariableID:737:193",
-        "VariableID:737:194",
         "VariableID:737:195",
         "VariableID:737:196",
         "VariableID:737:197",
@@ -355,7 +225,7 @@
     },
     {
       "id": "VariableCollectionId:737:203",
-      "name": "Grove Motion",
+      "name": "Nizivo Motion",
       "defaultModeId": "737:4",
       "modes": [
         {
@@ -387,13 +257,17 @@
         "VariableID:737:220",
         "VariableID:737:221",
         "VariableID:737:222",
-        "VariableID:737:223"
+        "VariableID:737:223",
+        "VariableID:7351:24",
+        "VariableID:7351:25",
+        "VariableID:7351:26",
+        "VariableID:7369:175"
       ],
       "hiddenFromPublishing": false
     },
     {
       "id": "VariableCollectionId:737:224",
-      "name": "Grove Responsive",
+      "name": "Nizivo Responsive",
       "defaultModeId": "737:6",
       "modes": [
         {
@@ -433,7 +307,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-green-25)"
+        "WEB": "var(--nz-p-green-25)"
       },
       "valuesByMode": {
         "737:0": {
@@ -452,7 +326,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-green-50)"
+        "WEB": "var(--nz-p-green-50)"
       },
       "valuesByMode": {
         "737:0": {
@@ -471,7 +345,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-green-100)"
+        "WEB": "var(--nz-p-green-100)"
       },
       "valuesByMode": {
         "737:0": {
@@ -490,7 +364,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-green-200)"
+        "WEB": "var(--nz-p-green-200)"
       },
       "valuesByMode": {
         "737:0": {
@@ -509,7 +383,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-green-300)"
+        "WEB": "var(--nz-p-green-300)"
       },
       "valuesByMode": {
         "737:0": {
@@ -528,7 +402,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-green-400)"
+        "WEB": "var(--nz-p-green-400)"
       },
       "valuesByMode": {
         "737:0": {
@@ -547,7 +421,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-green-500)"
+        "WEB": "var(--nz-p-green-500)"
       },
       "valuesByMode": {
         "737:0": {
@@ -566,7 +440,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-green-600)"
+        "WEB": "var(--nz-p-green-600)"
       },
       "valuesByMode": {
         "737:0": {
@@ -585,7 +459,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-green-700)"
+        "WEB": "var(--nz-p-green-700)"
       },
       "valuesByMode": {
         "737:0": {
@@ -604,7 +478,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-green-800)"
+        "WEB": "var(--nz-p-green-800)"
       },
       "valuesByMode": {
         "737:0": {
@@ -623,7 +497,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-green-900)"
+        "WEB": "var(--nz-p-green-900)"
       },
       "valuesByMode": {
         "737:0": {
@@ -642,7 +516,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-green-950)"
+        "WEB": "var(--nz-p-green-950)"
       },
       "valuesByMode": {
         "737:0": {
@@ -661,7 +535,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-lime-50)"
+        "WEB": "var(--nz-p-lime-50)"
       },
       "valuesByMode": {
         "737:0": {
@@ -680,7 +554,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-lime-100)"
+        "WEB": "var(--nz-p-lime-100)"
       },
       "valuesByMode": {
         "737:0": {
@@ -699,7 +573,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-lime-200)"
+        "WEB": "var(--nz-p-lime-200)"
       },
       "valuesByMode": {
         "737:0": {
@@ -718,7 +592,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-lime-300)"
+        "WEB": "var(--nz-p-lime-300)"
       },
       "valuesByMode": {
         "737:0": {
@@ -737,7 +611,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-lime-400)"
+        "WEB": "var(--nz-p-lime-400)"
       },
       "valuesByMode": {
         "737:0": {
@@ -756,7 +630,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-lime-500)"
+        "WEB": "var(--nz-p-lime-500)"
       },
       "valuesByMode": {
         "737:0": {
@@ -775,7 +649,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-lime-600)"
+        "WEB": "var(--nz-p-lime-600)"
       },
       "valuesByMode": {
         "737:0": {
@@ -794,7 +668,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-neutral-0)"
+        "WEB": "var(--nz-p-neutral-0)"
       },
       "valuesByMode": {
         "737:0": {
@@ -813,7 +687,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-neutral-25)"
+        "WEB": "var(--nz-p-neutral-25)"
       },
       "valuesByMode": {
         "737:0": {
@@ -832,7 +706,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-neutral-50)"
+        "WEB": "var(--nz-p-neutral-50)"
       },
       "valuesByMode": {
         "737:0": {
@@ -851,7 +725,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-neutral-100)"
+        "WEB": "var(--nz-p-neutral-100)"
       },
       "valuesByMode": {
         "737:0": {
@@ -870,7 +744,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-neutral-200)"
+        "WEB": "var(--nz-p-neutral-200)"
       },
       "valuesByMode": {
         "737:0": {
@@ -889,7 +763,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-neutral-300)"
+        "WEB": "var(--nz-p-neutral-300)"
       },
       "valuesByMode": {
         "737:0": {
@@ -908,7 +782,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-neutral-400)"
+        "WEB": "var(--nz-p-neutral-400)"
       },
       "valuesByMode": {
         "737:0": {
@@ -927,7 +801,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-neutral-500)"
+        "WEB": "var(--nz-p-neutral-500)"
       },
       "valuesByMode": {
         "737:0": {
@@ -946,7 +820,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-neutral-600)"
+        "WEB": "var(--nz-p-neutral-600)"
       },
       "valuesByMode": {
         "737:0": {
@@ -965,7 +839,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-neutral-700)"
+        "WEB": "var(--nz-p-neutral-700)"
       },
       "valuesByMode": {
         "737:0": {
@@ -984,7 +858,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-neutral-800)"
+        "WEB": "var(--nz-p-neutral-800)"
       },
       "valuesByMode": {
         "737:0": {
@@ -1003,7 +877,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-neutral-850)"
+        "WEB": "var(--nz-p-neutral-850)"
       },
       "valuesByMode": {
         "737:0": {
@@ -1022,7 +896,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-neutral-900)"
+        "WEB": "var(--nz-p-neutral-900)"
       },
       "valuesByMode": {
         "737:0": {
@@ -1041,7 +915,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-neutral-950)"
+        "WEB": "var(--nz-p-neutral-950)"
       },
       "valuesByMode": {
         "737:0": {
@@ -1060,7 +934,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-red-50)"
+        "WEB": "var(--nz-p-red-50)"
       },
       "valuesByMode": {
         "737:0": {
@@ -1079,7 +953,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-red-100)"
+        "WEB": "var(--nz-p-red-100)"
       },
       "valuesByMode": {
         "737:0": {
@@ -1098,7 +972,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-red-500)"
+        "WEB": "var(--nz-p-red-500)"
       },
       "valuesByMode": {
         "737:0": {
@@ -1117,7 +991,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-red-600)"
+        "WEB": "var(--nz-p-red-600)"
       },
       "valuesByMode": {
         "737:0": {
@@ -1136,7 +1010,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-red-700)"
+        "WEB": "var(--nz-p-red-700)"
       },
       "valuesByMode": {
         "737:0": {
@@ -1155,7 +1029,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-amber-50)"
+        "WEB": "var(--nz-p-amber-50)"
       },
       "valuesByMode": {
         "737:0": {
@@ -1174,7 +1048,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-amber-100)"
+        "WEB": "var(--nz-p-amber-100)"
       },
       "valuesByMode": {
         "737:0": {
@@ -1193,7 +1067,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-amber-500)"
+        "WEB": "var(--nz-p-amber-500)"
       },
       "valuesByMode": {
         "737:0": {
@@ -1212,7 +1086,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-amber-600)"
+        "WEB": "var(--nz-p-amber-600)"
       },
       "valuesByMode": {
         "737:0": {
@@ -1231,7 +1105,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-amber-700)"
+        "WEB": "var(--nz-p-amber-700)"
       },
       "valuesByMode": {
         "737:0": {
@@ -1250,7 +1124,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-blue-50)"
+        "WEB": "var(--nz-p-blue-50)"
       },
       "valuesByMode": {
         "737:0": {
@@ -1269,7 +1143,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-blue-100)"
+        "WEB": "var(--nz-p-blue-100)"
       },
       "valuesByMode": {
         "737:0": {
@@ -1288,7 +1162,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-blue-500)"
+        "WEB": "var(--nz-p-blue-500)"
       },
       "valuesByMode": {
         "737:0": {
@@ -1307,7 +1181,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-blue-600)"
+        "WEB": "var(--nz-p-blue-600)"
       },
       "valuesByMode": {
         "737:0": {
@@ -1326,7 +1200,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-blue-700)"
+        "WEB": "var(--nz-p-blue-700)"
       },
       "valuesByMode": {
         "737:0": {
@@ -1345,7 +1219,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-viz-green-500)"
+        "WEB": "var(--nz-p-viz-green-500)"
       },
       "valuesByMode": {
         "737:0": {
@@ -1364,7 +1238,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-viz-green-600)"
+        "WEB": "var(--nz-p-viz-green-600)"
       },
       "valuesByMode": {
         "737:0": {
@@ -1383,7 +1257,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-viz-lime-500)"
+        "WEB": "var(--nz-p-viz-lime-500)"
       },
       "valuesByMode": {
         "737:0": {
@@ -1402,7 +1276,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-viz-lime-600)"
+        "WEB": "var(--nz-p-viz-lime-600)"
       },
       "valuesByMode": {
         "737:0": {
@@ -1421,7 +1295,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-viz-teal-500)"
+        "WEB": "var(--nz-p-viz-teal-500)"
       },
       "valuesByMode": {
         "737:0": {
@@ -1440,13 +1314,89 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-p-viz-teal-400)"
+        "WEB": "var(--nz-p-viz-teal-400)"
       },
       "valuesByMode": {
         "737:0": {
           "r": 0.24313725531101227,
           "g": 0.6235294342041016,
           "b": 0.7686274647712708,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:7351:7",
+      "name": "neutral/450",
+      "variableCollectionId": "VariableCollectionId:737:64",
+      "resolvedType": "COLOR",
+      "description": "Added from the Page 15 review (2026-10). Interpolated between ramp neighbours — check on real screens.",
+      "scopes": [],
+      "codeSyntax": {
+        "WEB": "var(--nz-p-neutral-450)"
+      },
+      "valuesByMode": {
+        "737:0": {
+          "r": 0.5098039507865906,
+          "g": 0.5411764979362488,
+          "b": 0.5058823823928833,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:7351:8",
+      "name": "neutral/925",
+      "variableCollectionId": "VariableCollectionId:737:64",
+      "resolvedType": "COLOR",
+      "description": "Added from the Page 15 review (2026-10). Interpolated between ramp neighbours — check on real screens.",
+      "scopes": [],
+      "codeSyntax": {
+        "WEB": "var(--nz-p-neutral-925)"
+      },
+      "valuesByMode": {
+        "737:0": {
+          "r": 0.08235294371843338,
+          "g": 0.0941176488995552,
+          "b": 0.08627451211214066,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:7351:9",
+      "name": "red/400",
+      "variableCollectionId": "VariableCollectionId:737:64",
+      "resolvedType": "COLOR",
+      "description": "Added from the Page 15 review (2026-10). Interpolated between ramp neighbours — check on real screens.",
+      "scopes": [],
+      "codeSyntax": {
+        "WEB": "var(--nz-p-red-400)"
+      },
+      "valuesByMode": {
+        "737:0": {
+          "r": 0.8941176533699036,
+          "g": 0.4745098054409027,
+          "b": 0.3843137323856354,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:7351:10",
+      "name": "blue/400",
+      "variableCollectionId": "VariableCollectionId:737:64",
+      "resolvedType": "COLOR",
+      "description": "Added from the Page 15 review (2026-10). Interpolated between ramp neighbours — check on real screens.",
+      "scopes": [],
+      "codeSyntax": {
+        "WEB": "var(--nz-p-blue-400)"
+      },
+      "valuesByMode": {
+        "737:0": {
+          "r": 0.43921568989753723,
+          "g": 0.5960784554481506,
+          "b": 0.8784313797950745,
           "a": 1
         }
       }
@@ -1459,7 +1409,7 @@
       "description": "",
       "scopes": ["FRAME_FILL", "SHAPE_FILL"],
       "codeSyntax": {
-        "WEB": "var(--grove-bg-canvas)"
+        "WEB": "var(--nz-bg-canvas)"
       },
       "valuesByMode": {
         "737:1": {
@@ -1480,7 +1430,7 @@
       "description": "",
       "scopes": ["FRAME_FILL", "SHAPE_FILL"],
       "codeSyntax": {
-        "WEB": "var(--grove-bg-surface)"
+        "WEB": "var(--nz-bg-surface)"
       },
       "valuesByMode": {
         "737:1": {
@@ -1501,7 +1451,7 @@
       "description": "",
       "scopes": ["FRAME_FILL", "SHAPE_FILL"],
       "codeSyntax": {
-        "WEB": "var(--grove-bg-surface-raised)"
+        "WEB": "var(--nz-bg-surface-raised)"
       },
       "valuesByMode": {
         "737:1": {
@@ -1522,7 +1472,7 @@
       "description": "",
       "scopes": ["FRAME_FILL", "SHAPE_FILL"],
       "codeSyntax": {
-        "WEB": "var(--grove-bg-subtle)"
+        "WEB": "var(--nz-bg-subtle)"
       },
       "valuesByMode": {
         "737:1": {
@@ -1531,7 +1481,7 @@
         },
         "737:2": {
           "type": "VARIABLE_ALIAS",
-          "id": "VariableID:737:96"
+          "id": "VariableID:7351:8"
         }
       }
     },
@@ -1543,7 +1493,7 @@
       "description": "",
       "scopes": ["FRAME_FILL", "SHAPE_FILL"],
       "codeSyntax": {
-        "WEB": "var(--grove-bg-muted)"
+        "WEB": "var(--nz-bg-muted)"
       },
       "valuesByMode": {
         "737:1": {
@@ -1564,7 +1514,7 @@
       "description": "",
       "scopes": ["FRAME_FILL", "SHAPE_FILL"],
       "codeSyntax": {
-        "WEB": "var(--grove-bg-hover)"
+        "WEB": "var(--nz-bg-hover)"
       },
       "valuesByMode": {
         "737:1": {
@@ -1585,7 +1535,7 @@
       "description": "",
       "scopes": ["FRAME_FILL", "SHAPE_FILL"],
       "codeSyntax": {
-        "WEB": "var(--grove-bg-pressed)"
+        "WEB": "var(--nz-bg-pressed)"
       },
       "valuesByMode": {
         "737:1": {
@@ -1606,7 +1556,7 @@
       "description": "",
       "scopes": ["FRAME_FILL", "SHAPE_FILL"],
       "codeSyntax": {
-        "WEB": "var(--grove-bg-inverse)"
+        "WEB": "var(--nz-bg-inverse)"
       },
       "valuesByMode": {
         "737:1": {
@@ -1627,7 +1577,7 @@
       "description": "",
       "scopes": ["FRAME_FILL", "SHAPE_FILL"],
       "codeSyntax": {
-        "WEB": "var(--grove-bg-inverse-elevated)"
+        "WEB": "var(--nz-bg-inverse-elevated)"
       },
       "valuesByMode": {
         "737:1": {
@@ -1648,7 +1598,7 @@
       "description": "",
       "scopes": ["FRAME_FILL", "SHAPE_FILL"],
       "codeSyntax": {
-        "WEB": "var(--grove-bg-brand)"
+        "WEB": "var(--nz-bg-brand)"
       },
       "valuesByMode": {
         "737:1": {
@@ -1669,7 +1619,7 @@
       "description": "",
       "scopes": ["FRAME_FILL", "SHAPE_FILL"],
       "codeSyntax": {
-        "WEB": "var(--grove-bg-brand-hover)"
+        "WEB": "var(--nz-bg-brand-hover)"
       },
       "valuesByMode": {
         "737:1": {
@@ -1690,7 +1640,7 @@
       "description": "",
       "scopes": ["FRAME_FILL", "SHAPE_FILL"],
       "codeSyntax": {
-        "WEB": "var(--grove-bg-brand-pressed)"
+        "WEB": "var(--nz-bg-brand-pressed)"
       },
       "valuesByMode": {
         "737:1": {
@@ -1711,7 +1661,7 @@
       "description": "",
       "scopes": ["FRAME_FILL", "SHAPE_FILL"],
       "codeSyntax": {
-        "WEB": "var(--grove-bg-brand-subtle)"
+        "WEB": "var(--nz-bg-brand-subtle)"
       },
       "valuesByMode": {
         "737:1": {
@@ -1732,7 +1682,7 @@
       "description": "",
       "scopes": ["FRAME_FILL", "SHAPE_FILL"],
       "codeSyntax": {
-        "WEB": "var(--grove-bg-brand-muted)"
+        "WEB": "var(--nz-bg-brand-muted)"
       },
       "valuesByMode": {
         "737:1": {
@@ -1753,7 +1703,7 @@
       "description": "",
       "scopes": ["FRAME_FILL", "SHAPE_FILL"],
       "codeSyntax": {
-        "WEB": "var(--grove-bg-accent)"
+        "WEB": "var(--nz-bg-accent)"
       },
       "valuesByMode": {
         "737:1": {
@@ -1774,7 +1724,7 @@
       "description": "",
       "scopes": ["FRAME_FILL", "SHAPE_FILL"],
       "codeSyntax": {
-        "WEB": "var(--grove-bg-accent-subtle)"
+        "WEB": "var(--nz-bg-accent-subtle)"
       },
       "valuesByMode": {
         "737:1": {
@@ -1795,7 +1745,7 @@
       "description": "",
       "scopes": ["FRAME_FILL", "SHAPE_FILL"],
       "codeSyntax": {
-        "WEB": "var(--grove-bg-success-subtle)"
+        "WEB": "var(--nz-bg-success-subtle)"
       },
       "valuesByMode": {
         "737:1": {
@@ -1816,7 +1766,7 @@
       "description": "",
       "scopes": ["FRAME_FILL", "SHAPE_FILL"],
       "codeSyntax": {
-        "WEB": "var(--grove-bg-warning-subtle)"
+        "WEB": "var(--nz-bg-warning-subtle)"
       },
       "valuesByMode": {
         "737:1": {
@@ -1837,7 +1787,7 @@
       "description": "",
       "scopes": ["FRAME_FILL", "SHAPE_FILL"],
       "codeSyntax": {
-        "WEB": "var(--grove-bg-critical-subtle)"
+        "WEB": "var(--nz-bg-critical-subtle)"
       },
       "valuesByMode": {
         "737:1": {
@@ -1858,7 +1808,7 @@
       "description": "",
       "scopes": ["FRAME_FILL", "SHAPE_FILL"],
       "codeSyntax": {
-        "WEB": "var(--grove-bg-info-subtle)"
+        "WEB": "var(--nz-bg-info-subtle)"
       },
       "valuesByMode": {
         "737:1": {
@@ -1879,7 +1829,7 @@
       "description": "",
       "scopes": ["FRAME_FILL", "SHAPE_FILL"],
       "codeSyntax": {
-        "WEB": "var(--grove-bg-critical)"
+        "WEB": "var(--nz-bg-critical)"
       },
       "valuesByMode": {
         "737:1": {
@@ -1888,7 +1838,7 @@
         },
         "737:2": {
           "type": "VARIABLE_ALIAS",
-          "id": "VariableID:737:100"
+          "id": "VariableID:737:101"
         }
       }
     },
@@ -1900,7 +1850,7 @@
       "description": "",
       "scopes": ["FRAME_FILL", "SHAPE_FILL"],
       "codeSyntax": {
-        "WEB": "var(--grove-bg-disabled)"
+        "WEB": "var(--nz-bg-disabled)"
       },
       "valuesByMode": {
         "737:1": {
@@ -1921,7 +1871,7 @@
       "description": "",
       "scopes": ["TEXT_FILL"],
       "codeSyntax": {
-        "WEB": "var(--grove-text-primary)"
+        "WEB": "var(--nz-text-primary)"
       },
       "valuesByMode": {
         "737:1": {
@@ -1942,7 +1892,28 @@
       "description": "",
       "scopes": ["TEXT_FILL"],
       "codeSyntax": {
-        "WEB": "var(--grove-text-secondary)"
+        "WEB": "var(--nz-text-secondary)"
+      },
+      "valuesByMode": {
+        "737:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:737:93"
+        },
+        "737:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:737:89"
+        }
+      }
+    },
+    {
+      "id": "VariableID:737:138",
+      "name": "text/tertiary",
+      "variableCollectionId": "VariableCollectionId:737:113",
+      "resolvedType": "COLOR",
+      "description": "",
+      "scopes": ["TEXT_FILL"],
+      "codeSyntax": {
+        "WEB": "var(--nz-text-tertiary)"
       },
       "valuesByMode": {
         "737:1": {
@@ -1956,27 +1927,6 @@
       }
     },
     {
-      "id": "VariableID:737:138",
-      "name": "text/tertiary",
-      "variableCollectionId": "VariableCollectionId:737:113",
-      "resolvedType": "COLOR",
-      "description": "",
-      "scopes": ["TEXT_FILL"],
-      "codeSyntax": {
-        "WEB": "var(--grove-text-tertiary)"
-      },
-      "valuesByMode": {
-        "737:1": {
-          "type": "VARIABLE_ALIAS",
-          "id": "VariableID:737:91"
-        },
-        "737:2": {
-          "type": "VARIABLE_ALIAS",
-          "id": "VariableID:737:91"
-        }
-      }
-    },
-    {
       "id": "VariableID:737:139",
       "name": "text/disabled",
       "variableCollectionId": "VariableCollectionId:737:113",
@@ -1984,7 +1934,7 @@
       "description": "",
       "scopes": ["TEXT_FILL"],
       "codeSyntax": {
-        "WEB": "var(--grove-text-disabled)"
+        "WEB": "var(--nz-text-disabled)"
       },
       "valuesByMode": {
         "737:1": {
@@ -2005,7 +1955,7 @@
       "description": "",
       "scopes": ["TEXT_FILL"],
       "codeSyntax": {
-        "WEB": "var(--grove-text-inverse)"
+        "WEB": "var(--nz-text-inverse)"
       },
       "valuesByMode": {
         "737:1": {
@@ -2026,7 +1976,7 @@
       "description": "",
       "scopes": ["TEXT_FILL"],
       "codeSyntax": {
-        "WEB": "var(--grove-text-on-brand)"
+        "WEB": "var(--nz-text-on-brand)"
       },
       "valuesByMode": {
         "737:1": {
@@ -2047,7 +1997,7 @@
       "description": "",
       "scopes": ["TEXT_FILL"],
       "codeSyntax": {
-        "WEB": "var(--grove-text-on-accent)"
+        "WEB": "var(--nz-text-on-accent)"
       },
       "valuesByMode": {
         "737:1": {
@@ -2068,7 +2018,7 @@
       "description": "",
       "scopes": ["TEXT_FILL"],
       "codeSyntax": {
-        "WEB": "var(--grove-text-brand)"
+        "WEB": "var(--nz-text-brand)"
       },
       "valuesByMode": {
         "737:1": {
@@ -2089,7 +2039,7 @@
       "description": "",
       "scopes": ["TEXT_FILL"],
       "codeSyntax": {
-        "WEB": "var(--grove-text-success)"
+        "WEB": "var(--nz-text-success)"
       },
       "valuesByMode": {
         "737:1": {
@@ -2110,7 +2060,7 @@
       "description": "",
       "scopes": ["TEXT_FILL"],
       "codeSyntax": {
-        "WEB": "var(--grove-text-warning)"
+        "WEB": "var(--nz-text-warning)"
       },
       "valuesByMode": {
         "737:1": {
@@ -2131,7 +2081,7 @@
       "description": "",
       "scopes": ["TEXT_FILL"],
       "codeSyntax": {
-        "WEB": "var(--grove-text-critical)"
+        "WEB": "var(--nz-text-critical)"
       },
       "valuesByMode": {
         "737:1": {
@@ -2140,7 +2090,7 @@
         },
         "737:2": {
           "type": "VARIABLE_ALIAS",
-          "id": "VariableID:737:100"
+          "id": "VariableID:7351:9"
         }
       }
     },
@@ -2152,7 +2102,7 @@
       "description": "",
       "scopes": ["TEXT_FILL"],
       "codeSyntax": {
-        "WEB": "var(--grove-text-info)"
+        "WEB": "var(--nz-text-info)"
       },
       "valuesByMode": {
         "737:1": {
@@ -2161,7 +2111,7 @@
         },
         "737:2": {
           "type": "VARIABLE_ALIAS",
-          "id": "VariableID:737:110"
+          "id": "VariableID:7351:10"
         }
       }
     },
@@ -2173,7 +2123,7 @@
       "description": "",
       "scopes": ["STROKE_COLOR"],
       "codeSyntax": {
-        "WEB": "var(--grove-border-default)"
+        "WEB": "var(--nz-border-default)"
       },
       "valuesByMode": {
         "737:1": {
@@ -2182,7 +2132,7 @@
         },
         "737:2": {
           "type": "VARIABLE_ALIAS",
-          "id": "VariableID:737:94"
+          "id": "VariableID:737:93"
         }
       }
     },
@@ -2194,7 +2144,7 @@
       "description": "",
       "scopes": ["STROKE_COLOR"],
       "codeSyntax": {
-        "WEB": "var(--grove-border-subtle)"
+        "WEB": "var(--nz-border-subtle)"
       },
       "valuesByMode": {
         "737:1": {
@@ -2203,7 +2153,7 @@
         },
         "737:2": {
           "type": "VARIABLE_ALIAS",
-          "id": "VariableID:737:95"
+          "id": "VariableID:737:94"
         }
       }
     },
@@ -2215,7 +2165,7 @@
       "description": "",
       "scopes": ["STROKE_COLOR"],
       "codeSyntax": {
-        "WEB": "var(--grove-border-strong)"
+        "WEB": "var(--nz-border-strong)"
       },
       "valuesByMode": {
         "737:1": {
@@ -2224,7 +2174,7 @@
         },
         "737:2": {
           "type": "VARIABLE_ALIAS",
-          "id": "VariableID:737:93"
+          "id": "VariableID:737:92"
         }
       }
     },
@@ -2236,7 +2186,7 @@
       "description": "",
       "scopes": ["STROKE_COLOR"],
       "codeSyntax": {
-        "WEB": "var(--grove-border-brand)"
+        "WEB": "var(--nz-border-brand)"
       },
       "valuesByMode": {
         "737:1": {
@@ -2257,7 +2207,7 @@
       "description": "",
       "scopes": ["STROKE_COLOR"],
       "codeSyntax": {
-        "WEB": "var(--grove-border-focus)"
+        "WEB": "var(--nz-border-focus)"
       },
       "valuesByMode": {
         "737:1": {
@@ -2278,7 +2228,7 @@
       "description": "",
       "scopes": ["STROKE_COLOR"],
       "codeSyntax": {
-        "WEB": "var(--grove-border-critical)"
+        "WEB": "var(--nz-border-critical)"
       },
       "valuesByMode": {
         "737:1": {
@@ -2299,12 +2249,12 @@
       "description": "",
       "scopes": ["STROKE_COLOR"],
       "codeSyntax": {
-        "WEB": "var(--grove-border-warning)"
+        "WEB": "var(--nz-border-warning)"
       },
       "valuesByMode": {
         "737:1": {
           "type": "VARIABLE_ALIAS",
-          "id": "VariableID:737:105"
+          "id": "VariableID:737:106"
         },
         "737:2": {
           "type": "VARIABLE_ALIAS",
@@ -2320,7 +2270,7 @@
       "description": "",
       "scopes": ["SHAPE_FILL", "STROKE_COLOR"],
       "codeSyntax": {
-        "WEB": "var(--grove-icon-primary)"
+        "WEB": "var(--nz-icon-primary)"
       },
       "valuesByMode": {
         "737:1": {
@@ -2341,7 +2291,7 @@
       "description": "",
       "scopes": ["SHAPE_FILL", "STROKE_COLOR"],
       "codeSyntax": {
-        "WEB": "var(--grove-icon-secondary)"
+        "WEB": "var(--nz-icon-secondary)"
       },
       "valuesByMode": {
         "737:1": {
@@ -2362,7 +2312,7 @@
       "description": "",
       "scopes": ["SHAPE_FILL", "STROKE_COLOR"],
       "codeSyntax": {
-        "WEB": "var(--grove-icon-brand)"
+        "WEB": "var(--nz-icon-brand)"
       },
       "valuesByMode": {
         "737:1": {
@@ -2383,7 +2333,7 @@
       "description": "",
       "scopes": ["SHAPE_FILL", "STROKE_COLOR"],
       "codeSyntax": {
-        "WEB": "var(--grove-icon-inverse)"
+        "WEB": "var(--nz-icon-inverse)"
       },
       "valuesByMode": {
         "737:1": {
@@ -2404,7 +2354,7 @@
       "description": "",
       "scopes": ["SHAPE_FILL", "STROKE_COLOR"],
       "codeSyntax": {
-        "WEB": "var(--grove-icon-success)"
+        "WEB": "var(--nz-icon-success)"
       },
       "valuesByMode": {
         "737:1": {
@@ -2425,12 +2375,12 @@
       "description": "",
       "scopes": ["SHAPE_FILL", "STROKE_COLOR"],
       "codeSyntax": {
-        "WEB": "var(--grove-icon-warning)"
+        "WEB": "var(--nz-icon-warning)"
       },
       "valuesByMode": {
         "737:1": {
           "type": "VARIABLE_ALIAS",
-          "id": "VariableID:737:105"
+          "id": "VariableID:737:106"
         },
         "737:2": {
           "type": "VARIABLE_ALIAS",
@@ -2446,7 +2396,7 @@
       "description": "",
       "scopes": ["SHAPE_FILL", "STROKE_COLOR"],
       "codeSyntax": {
-        "WEB": "var(--grove-icon-critical)"
+        "WEB": "var(--nz-icon-critical)"
       },
       "valuesByMode": {
         "737:1": {
@@ -2455,7 +2405,7 @@
         },
         "737:2": {
           "type": "VARIABLE_ALIAS",
-          "id": "VariableID:737:100"
+          "id": "VariableID:7351:9"
         }
       }
     },
@@ -2464,10 +2414,10 @@
       "name": "chart/primary",
       "variableCollectionId": "VariableCollectionId:737:113",
       "resolvedType": "COLOR",
-      "description": "",
+      "description": "Main series. Dark moved to green/300 (7.58) so chart/secondary can dim against it.",
       "scopes": ["FRAME_FILL", "SHAPE_FILL", "STROKE_COLOR"],
       "codeSyntax": {
-        "WEB": "var(--grove-chart-primary)"
+        "WEB": "var(--nz-chart-primary)"
       },
       "valuesByMode": {
         "737:1": {
@@ -2476,7 +2426,7 @@
         },
         "737:2": {
           "type": "VARIABLE_ALIAS",
-          "id": "VariableID:737:70"
+          "id": "VariableID:737:69"
         }
       }
     },
@@ -2485,19 +2435,19 @@
       "name": "chart/secondary",
       "variableCollectionId": "VariableCollectionId:737:113",
       "resolvedType": "COLOR",
-      "description": "",
+      "description": "Second series and dimmed bars on hover. 3.26 on white / 3.72 on dark surface (WCAG 1.4.11).",
       "scopes": ["FRAME_FILL", "SHAPE_FILL", "STROKE_COLOR"],
       "codeSyntax": {
-        "WEB": "var(--grove-chart-secondary)"
+        "WEB": "var(--nz-chart-secondary)"
       },
       "valuesByMode": {
         "737:1": {
           "type": "VARIABLE_ALIAS",
-          "id": "VariableID:737:68"
+          "id": "VariableID:737:70"
         },
         "737:2": {
           "type": "VARIABLE_ALIAS",
-          "id": "VariableID:737:74"
+          "id": "VariableID:737:71"
         }
       }
     },
@@ -2506,15 +2456,15 @@
       "name": "chart/tertiary",
       "variableCollectionId": "VariableCollectionId:737:113",
       "resolvedType": "COLOR",
-      "description": "",
+      "description": "Highlight series. Light lime/600 (3.98); was 1.75.",
       "scopes": ["FRAME_FILL", "SHAPE_FILL", "STROKE_COLOR"],
       "codeSyntax": {
-        "WEB": "var(--grove-chart-tertiary)"
+        "WEB": "var(--nz-chart-tertiary)"
       },
       "valuesByMode": {
         "737:1": {
           "type": "VARIABLE_ALIAS",
-          "id": "VariableID:737:81"
+          "id": "VariableID:737:83"
         },
         "737:2": {
           "type": "VARIABLE_ALIAS",
@@ -2527,19 +2477,19 @@
       "name": "chart/neutral",
       "variableCollectionId": "VariableCollectionId:737:113",
       "resolvedType": "COLOR",
-      "description": "",
+      "description": "Comparison lines, “Other” slices, neutral progress. 4.31 on white / 6.87 on dark surface; was 1.37 / 1.41.",
       "scopes": ["FRAME_FILL", "SHAPE_FILL", "STROKE_COLOR"],
       "codeSyntax": {
-        "WEB": "var(--grove-chart-neutral)"
+        "WEB": "var(--nz-chart-neutral)"
       },
       "valuesByMode": {
         "737:1": {
           "type": "VARIABLE_ALIAS",
-          "id": "VariableID:737:89"
+          "id": "VariableID:737:91"
         },
         "737:2": {
           "type": "VARIABLE_ALIAS",
-          "id": "VariableID:737:93"
+          "id": "VariableID:737:90"
         }
       }
     },
@@ -2551,7 +2501,7 @@
       "description": "",
       "scopes": ["FRAME_FILL", "SHAPE_FILL", "STROKE_COLOR"],
       "codeSyntax": {
-        "WEB": "var(--grove-chart-track)"
+        "WEB": "var(--nz-chart-track)"
       },
       "valuesByMode": {
         "737:1": {
@@ -2572,7 +2522,7 @@
       "description": "",
       "scopes": ["STROKE_COLOR"],
       "codeSyntax": {
-        "WEB": "var(--grove-chart-grid)"
+        "WEB": "var(--nz-chart-grid)"
       },
       "valuesByMode": {
         "737:1": {
@@ -2593,7 +2543,7 @@
       "description": "",
       "scopes": ["FRAME_FILL", "SHAPE_FILL", "STROKE_COLOR"],
       "codeSyntax": {
-        "WEB": "var(--grove-chart-negative)"
+        "WEB": "var(--nz-chart-negative)"
       },
       "valuesByMode": {
         "737:1": {
@@ -2611,15 +2561,15 @@
       "name": "chart/cat-1",
       "variableCollectionId": "VariableCollectionId:737:113",
       "resolvedType": "COLOR",
-      "description": "Validated categorical slot (CVD ΔE≥14, light+dark). Fixed order, never cycled; 4th+ series fold into chart/neutral &quot;Other&quot;.",
+      "description": "Category 1. Light green/700 (8.51) — darker than cat-2 so the pair separates by lightness, not hue alone.",
       "scopes": ["FRAME_FILL", "SHAPE_FILL", "STROKE_COLOR"],
       "codeSyntax": {
-        "WEB": "var(--grove-chart-cat-1)"
+        "WEB": "var(--nz-chart-cat-1)"
       },
       "valuesByMode": {
         "737:1": {
           "type": "VARIABLE_ALIAS",
-          "id": "VariableID:747:233"
+          "id": "VariableID:737:73"
         },
         "737:2": {
           "type": "VARIABLE_ALIAS",
@@ -2632,15 +2582,15 @@
       "name": "chart/cat-2",
       "variableCollectionId": "VariableCollectionId:737:113",
       "resolvedType": "COLOR",
-      "description": "Validated categorical slot (CVD ΔE≥14, light+dark). Fixed order, never cycled; 4th+ series fold into chart/neutral &quot;Other&quot;.",
+      "description": "Category 2. Light lime/600 (3.98 on white); was 2.17.",
       "scopes": ["FRAME_FILL", "SHAPE_FILL", "STROKE_COLOR"],
       "codeSyntax": {
-        "WEB": "var(--grove-chart-cat-2)"
+        "WEB": "var(--nz-chart-cat-2)"
       },
       "valuesByMode": {
         "737:1": {
           "type": "VARIABLE_ALIAS",
-          "id": "VariableID:747:235"
+          "id": "VariableID:737:83"
         },
         "737:2": {
           "type": "VARIABLE_ALIAS",
@@ -2656,7 +2606,7 @@
       "description": "Validated categorical slot (CVD ΔE≥14, light+dark). Fixed order, never cycled; 4th+ series fold into chart/neutral &quot;Other&quot;.",
       "scopes": ["FRAME_FILL", "SHAPE_FILL", "STROKE_COLOR"],
       "codeSyntax": {
-        "WEB": "var(--grove-chart-cat-3)"
+        "WEB": "var(--nz-chart-cat-3)"
       },
       "valuesByMode": {
         "737:1": {
@@ -2670,6 +2620,367 @@
       }
     },
     {
+      "id": "VariableID:7351:11",
+      "name": "bg/accent-hover",
+      "variableCollectionId": "VariableCollectionId:737:113",
+      "resolvedType": "COLOR",
+      "description": "Accent button hover. Light rest lime/300 → hover lime/400; Dark rest lime/400 → hover lime/300.",
+      "scopes": ["FRAME_FILL", "SHAPE_FILL"],
+      "codeSyntax": {
+        "WEB": "var(--nz-bg-accent-hover)"
+      },
+      "valuesByMode": {
+        "737:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:737:81"
+        },
+        "737:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:737:80"
+        }
+      }
+    },
+    {
+      "id": "VariableID:7351:12",
+      "name": "bg/accent-pressed",
+      "variableCollectionId": "VariableCollectionId:737:113",
+      "resolvedType": "COLOR",
+      "description": "Accent button pressed. text/on-accent stays ≥ 6:1.",
+      "scopes": ["FRAME_FILL", "SHAPE_FILL"],
+      "codeSyntax": {
+        "WEB": "var(--nz-bg-accent-pressed)"
+      },
+      "valuesByMode": {
+        "737:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:737:82"
+        },
+        "737:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:737:79"
+        }
+      }
+    },
+    {
+      "id": "VariableID:7351:13",
+      "name": "bg/critical-hover",
+      "variableCollectionId": "VariableCollectionId:737:113",
+      "resolvedType": "COLOR",
+      "description": "Critical button hover + pressed. White text 8.26:1.",
+      "scopes": ["FRAME_FILL", "SHAPE_FILL"],
+      "codeSyntax": {
+        "WEB": "var(--nz-bg-critical-hover)"
+      },
+      "valuesByMode": {
+        "737:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:737:102"
+        },
+        "737:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:737:102"
+        }
+      }
+    },
+    {
+      "id": "VariableID:7351:14",
+      "name": "text/on-critical",
+      "variableCollectionId": "VariableCollectionId:737:113",
+      "resolvedType": "COLOR",
+      "description": "Text on bg/critical. 5.69:1 on red/600.",
+      "scopes": ["TEXT_FILL"],
+      "codeSyntax": {
+        "WEB": "var(--nz-text-on-critical)"
+      },
+      "valuesByMode": {
+        "737:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:737:84"
+        },
+        "737:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:737:84"
+        }
+      }
+    },
+    {
+      "id": "VariableID:7351:15",
+      "name": "text/inverse-accent",
+      "variableCollectionId": "VariableCollectionId:737:113",
+      "resolvedType": "COLOR",
+      "description": "Action text on bg/inverse surfaces (Toast). Light 11.80:1 on neutral/900, Dark 8.51:1 on white. Replaces the proposed text/accent, whose modes were inverted (2.04 / 1.47).",
+      "scopes": ["TEXT_FILL"],
+      "codeSyntax": {
+        "WEB": "var(--nz-text-inverse-accent)"
+      },
+      "valuesByMode": {
+        "737:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:737:80"
+        },
+        "737:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:737:73"
+        }
+      }
+    },
+    {
+      "id": "VariableID:7351:16",
+      "name": "icon/info",
+      "variableCollectionId": "VariableCollectionId:737:113",
+      "resolvedType": "COLOR",
+      "description": "Alert Info icon. Light 6.01 on bg/info-subtle, Dark 4.65 on bg/hover.",
+      "scopes": ["SHAPE_FILL", "STROKE_COLOR"],
+      "codeSyntax": {
+        "WEB": "var(--nz-icon-info)"
+      },
+      "valuesByMode": {
+        "737:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:737:111"
+        },
+        "737:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:7351:10"
+        }
+      }
+    },
+    {
+      "id": "VariableID:7351:17",
+      "name": "border/control",
+      "variableCollectionId": "VariableCollectionId:737:113",
+      "resolvedType": "COLOR",
+      "description": "Edges of inputs, selects, checkboxes, radios, switch-off track. ≥ 3:1 (WCAG 1.4.11).",
+      "scopes": ["FRAME_FILL", "SHAPE_FILL", "STROKE_COLOR"],
+      "codeSyntax": {
+        "WEB": "var(--nz-border-control)"
+      },
+      "valuesByMode": {
+        "737:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:7351:7"
+        },
+        "737:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:737:91"
+        }
+      }
+    },
+    {
+      "id": "VariableID:7351:18",
+      "name": "border/control-hover",
+      "variableCollectionId": "VariableCollectionId:737:113",
+      "resolvedType": "COLOR",
+      "description": "Hover edge of form controls.",
+      "scopes": ["STROKE_COLOR"],
+      "codeSyntax": {
+        "WEB": "var(--nz-border-control-hover)"
+      },
+      "valuesByMode": {
+        "737:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:737:91"
+        },
+        "737:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:737:90"
+        }
+      }
+    },
+    {
+      "id": "VariableID:7351:19",
+      "name": "chart/warning",
+      "variableCollectionId": "VariableCollectionId:737:113",
+      "resolvedType": "COLOR",
+      "description": "Progress Warning fill. 3.22 / 5.50 on chart/track.",
+      "scopes": ["FRAME_FILL", "SHAPE_FILL", "STROKE_COLOR"],
+      "codeSyntax": {
+        "WEB": "var(--nz-chart-warning)"
+      },
+      "valuesByMode": {
+        "737:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:737:106"
+        },
+        "737:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:737:105"
+        }
+      }
+    },
+    {
+      "id": "VariableID:7351:20",
+      "name": "chart/critical",
+      "variableCollectionId": "VariableCollectionId:737:113",
+      "resolvedType": "COLOR",
+      "description": "Progress Critical fill. 3.77 / 3.11 on chart/track.",
+      "scopes": ["FRAME_FILL", "SHAPE_FILL", "STROKE_COLOR"],
+      "codeSyntax": {
+        "WEB": "var(--nz-chart-critical)"
+      },
+      "valuesByMode": {
+        "737:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:737:100"
+        },
+        "737:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:737:100"
+        }
+      }
+    },
+    {
+      "id": "VariableID:7351:21",
+      "name": "chart/success",
+      "variableCollectionId": "VariableCollectionId:737:113",
+      "resolvedType": "COLOR",
+      "description": "Progress / Meter Success fill. 4.07 / 5.87 on chart/track.",
+      "scopes": ["FRAME_FILL", "SHAPE_FILL", "STROKE_COLOR"],
+      "codeSyntax": {
+        "WEB": "var(--nz-chart-success)"
+      },
+      "valuesByMode": {
+        "737:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:737:71"
+        },
+        "737:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:737:69"
+        }
+      }
+    },
+    {
+      "id": "VariableID:7351:23",
+      "name": "bg/scrim",
+      "variableCollectionId": "VariableCollectionId:737:113",
+      "resolvedType": "COLOR",
+      "description": "Modal / drawer backdrop. neutral/900 @ 32% (Light), black @ 60% (Dark).",
+      "scopes": ["FRAME_FILL", "SHAPE_FILL"],
+      "codeSyntax": {
+        "WEB": "var(--nz-bg-scrim)"
+      },
+      "valuesByMode": {
+        "737:1": {
+          "r": 0.0941176488995552,
+          "g": 0.10588235408067703,
+          "b": 0.09803921729326248,
+          "a": 0.3199999928474426
+        },
+        "737:2": {
+          "r": 0,
+          "g": 0,
+          "b": 0,
+          "a": 0.6000000238418579
+        }
+      }
+    },
+    {
+      "id": "VariableID:7424:8334",
+      "name": "bg/code",
+      "variableCollectionId": "VariableCollectionId:737:113",
+      "resolvedType": "COLOR",
+      "description": "Code surfaces. Always dark in both modes.",
+      "scopes": ["FRAME_FILL", "SHAPE_FILL"],
+      "codeSyntax": {
+        "WEB": "var(--nz-bg-code)"
+      },
+      "valuesByMode": {
+        "737:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:737:96"
+        },
+        "737:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:737:97"
+        }
+      }
+    },
+    {
+      "id": "VariableID:7424:8335",
+      "name": "bg/code-elevated",
+      "variableCollectionId": "VariableCollectionId:737:113",
+      "resolvedType": "COLOR",
+      "description": "Active tab / pressed state on code surfaces.",
+      "scopes": ["FRAME_FILL", "SHAPE_FILL"],
+      "codeSyntax": {
+        "WEB": "var(--nz-bg-code-elevated)"
+      },
+      "valuesByMode": {
+        "737:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:737:95"
+        },
+        "737:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:737:95"
+        }
+      }
+    },
+    {
+      "id": "VariableID:7424:8336",
+      "name": "text/code",
+      "variableCollectionId": "VariableCollectionId:737:113",
+      "resolvedType": "COLOR",
+      "description": "Text and icons on bg/code (≥ 15:1).",
+      "scopes": ["FRAME_FILL", "SHAPE_FILL", "TEXT_FILL", "STROKE_COLOR"],
+      "codeSyntax": {
+        "WEB": "var(--nz-text-code)"
+      },
+      "valuesByMode": {
+        "737:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:737:86"
+        },
+        "737:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:737:86"
+        }
+      }
+    },
+    {
+      "id": "VariableID:7424:8337",
+      "name": "text/code-muted",
+      "variableCollectionId": "VariableCollectionId:737:113",
+      "resolvedType": "COLOR",
+      "description": "Prompts, inactive tabs, comments on bg/code (≥ 6:1).",
+      "scopes": ["FRAME_FILL", "SHAPE_FILL", "TEXT_FILL", "STROKE_COLOR"],
+      "codeSyntax": {
+        "WEB": "var(--nz-text-code-muted)"
+      },
+      "valuesByMode": {
+        "737:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:737:90"
+        },
+        "737:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:737:90"
+        }
+      }
+    },
+    {
+      "id": "VariableID:7425:12347",
+      "name": "text/on-dark",
+      "variableCollectionId": "VariableCollectionId:737:113",
+      "resolvedType": "COLOR",
+      "description": "Text on surfaces that are dark in both modes (dark shaders, photography scrims). White in Light and Dark.",
+      "scopes": ["FRAME_FILL", "SHAPE_FILL", "TEXT_FILL", "STROKE_COLOR"],
+      "codeSyntax": {
+        "WEB": "var(--nz-text-on-dark)"
+      },
+      "valuesByMode": {
+        "737:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:737:84"
+        },
+        "737:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:737:84"
+        }
+      }
+    },
+    {
       "id": "VariableID:737:170",
       "name": "space/0",
       "variableCollectionId": "VariableCollectionId:737:169",
@@ -2677,7 +2988,7 @@
       "description": "",
       "scopes": ["GAP"],
       "codeSyntax": {
-        "WEB": "var(--grove-space-0)"
+        "WEB": "var(--nz-space-0)"
       },
       "valuesByMode": {
         "737:3": 0
@@ -2691,7 +3002,7 @@
       "description": "",
       "scopes": ["GAP"],
       "codeSyntax": {
-        "WEB": "var(--grove-space-1)"
+        "WEB": "var(--nz-space-1)"
       },
       "valuesByMode": {
         "737:3": 4
@@ -2705,7 +3016,7 @@
       "description": "",
       "scopes": ["GAP"],
       "codeSyntax": {
-        "WEB": "var(--grove-space-2)"
+        "WEB": "var(--nz-space-2)"
       },
       "valuesByMode": {
         "737:3": 8
@@ -2719,7 +3030,7 @@
       "description": "",
       "scopes": ["GAP"],
       "codeSyntax": {
-        "WEB": "var(--grove-space-3)"
+        "WEB": "var(--nz-space-3)"
       },
       "valuesByMode": {
         "737:3": 12
@@ -2733,7 +3044,7 @@
       "description": "",
       "scopes": ["GAP"],
       "codeSyntax": {
-        "WEB": "var(--grove-space-4)"
+        "WEB": "var(--nz-space-4)"
       },
       "valuesByMode": {
         "737:3": 16
@@ -2747,7 +3058,7 @@
       "description": "",
       "scopes": ["GAP"],
       "codeSyntax": {
-        "WEB": "var(--grove-space-5)"
+        "WEB": "var(--nz-space-5)"
       },
       "valuesByMode": {
         "737:3": 20
@@ -2761,7 +3072,7 @@
       "description": "",
       "scopes": ["GAP"],
       "codeSyntax": {
-        "WEB": "var(--grove-space-6)"
+        "WEB": "var(--nz-space-6)"
       },
       "valuesByMode": {
         "737:3": 24
@@ -2775,7 +3086,7 @@
       "description": "",
       "scopes": ["GAP"],
       "codeSyntax": {
-        "WEB": "var(--grove-space-8)"
+        "WEB": "var(--nz-space-8)"
       },
       "valuesByMode": {
         "737:3": 32
@@ -2789,7 +3100,7 @@
       "description": "",
       "scopes": ["GAP"],
       "codeSyntax": {
-        "WEB": "var(--grove-space-10)"
+        "WEB": "var(--nz-space-10)"
       },
       "valuesByMode": {
         "737:3": 40
@@ -2803,7 +3114,7 @@
       "description": "",
       "scopes": ["GAP"],
       "codeSyntax": {
-        "WEB": "var(--grove-space-12)"
+        "WEB": "var(--nz-space-12)"
       },
       "valuesByMode": {
         "737:3": 48
@@ -2817,7 +3128,7 @@
       "description": "",
       "scopes": ["GAP"],
       "codeSyntax": {
-        "WEB": "var(--grove-space-16)"
+        "WEB": "var(--nz-space-16)"
       },
       "valuesByMode": {
         "737:3": 64
@@ -2831,7 +3142,7 @@
       "description": "",
       "scopes": ["GAP"],
       "codeSyntax": {
-        "WEB": "var(--grove-space-20)"
+        "WEB": "var(--nz-space-20)"
       },
       "valuesByMode": {
         "737:3": 80
@@ -2845,7 +3156,7 @@
       "description": "",
       "scopes": ["GAP"],
       "codeSyntax": {
-        "WEB": "var(--grove-space-24)"
+        "WEB": "var(--nz-space-24)"
       },
       "valuesByMode": {
         "737:3": 96
@@ -2859,7 +3170,7 @@
       "description": "",
       "scopes": ["GAP"],
       "codeSyntax": {
-        "WEB": "var(--grove-space-0-5)"
+        "WEB": "var(--nz-space-0-5)"
       },
       "valuesByMode": {
         "737:3": 2
@@ -2873,7 +3184,7 @@
       "description": "",
       "scopes": ["GAP"],
       "codeSyntax": {
-        "WEB": "var(--grove-space-1-5)"
+        "WEB": "var(--nz-space-1-5)"
       },
       "valuesByMode": {
         "737:3": 6
@@ -2887,7 +3198,7 @@
       "description": "",
       "scopes": ["CORNER_RADIUS"],
       "codeSyntax": {
-        "WEB": "var(--grove-radius-none)"
+        "WEB": "var(--nz-radius-none)"
       },
       "valuesByMode": {
         "737:3": 0
@@ -2901,7 +3212,7 @@
       "description": "",
       "scopes": ["CORNER_RADIUS"],
       "codeSyntax": {
-        "WEB": "var(--grove-radius-xs)"
+        "WEB": "var(--nz-radius-xs)"
       },
       "valuesByMode": {
         "737:3": 4
@@ -2915,7 +3226,7 @@
       "description": "",
       "scopes": ["CORNER_RADIUS"],
       "codeSyntax": {
-        "WEB": "var(--grove-radius-sm)"
+        "WEB": "var(--nz-radius-sm)"
       },
       "valuesByMode": {
         "737:3": 8
@@ -2929,7 +3240,7 @@
       "description": "",
       "scopes": ["CORNER_RADIUS"],
       "codeSyntax": {
-        "WEB": "var(--grove-radius-md)"
+        "WEB": "var(--nz-radius-md)"
       },
       "valuesByMode": {
         "737:3": 12
@@ -2943,7 +3254,7 @@
       "description": "",
       "scopes": ["CORNER_RADIUS"],
       "codeSyntax": {
-        "WEB": "var(--grove-radius-lg)"
+        "WEB": "var(--nz-radius-lg)"
       },
       "valuesByMode": {
         "737:3": 16
@@ -2957,7 +3268,7 @@
       "description": "",
       "scopes": ["CORNER_RADIUS"],
       "codeSyntax": {
-        "WEB": "var(--grove-radius-xl)"
+        "WEB": "var(--nz-radius-xl)"
       },
       "valuesByMode": {
         "737:3": 20
@@ -2971,7 +3282,7 @@
       "description": "",
       "scopes": ["CORNER_RADIUS"],
       "codeSyntax": {
-        "WEB": "var(--grove-radius-2xl)"
+        "WEB": "var(--nz-radius-2xl)"
       },
       "valuesByMode": {
         "737:3": 28
@@ -2985,7 +3296,7 @@
       "description": "",
       "scopes": ["CORNER_RADIUS"],
       "codeSyntax": {
-        "WEB": "var(--grove-radius-full)"
+        "WEB": "var(--nz-radius-full)"
       },
       "valuesByMode": {
         "737:3": 999
@@ -2999,24 +3310,10 @@
       "description": "",
       "scopes": ["STROKE_FLOAT"],
       "codeSyntax": {
-        "WEB": "var(--grove-border-width-default)"
+        "WEB": "var(--nz-border-width-default)"
       },
       "valuesByMode": {
         "737:3": 1
-      }
-    },
-    {
-      "id": "VariableID:737:194",
-      "name": "border-width/strong",
-      "variableCollectionId": "VariableCollectionId:737:169",
-      "resolvedType": "FLOAT",
-      "description": "",
-      "scopes": ["STROKE_FLOAT"],
-      "codeSyntax": {
-        "WEB": "var(--grove-border-width-strong)"
-      },
-      "valuesByMode": {
-        "737:3": 1.5
       }
     },
     {
@@ -3027,7 +3324,7 @@
       "description": "",
       "scopes": ["STROKE_FLOAT"],
       "codeSyntax": {
-        "WEB": "var(--grove-border-width-focus)"
+        "WEB": "var(--nz-border-width-focus)"
       },
       "valuesByMode": {
         "737:3": 2
@@ -3041,7 +3338,7 @@
       "description": "",
       "scopes": ["WIDTH_HEIGHT"],
       "codeSyntax": {
-        "WEB": "var(--grove-size-control-sm)"
+        "WEB": "var(--nz-size-control-sm)"
       },
       "valuesByMode": {
         "737:3": 32
@@ -3055,7 +3352,7 @@
       "description": "",
       "scopes": ["WIDTH_HEIGHT"],
       "codeSyntax": {
-        "WEB": "var(--grove-size-control-md)"
+        "WEB": "var(--nz-size-control-md)"
       },
       "valuesByMode": {
         "737:3": 40
@@ -3069,7 +3366,7 @@
       "description": "",
       "scopes": ["WIDTH_HEIGHT"],
       "codeSyntax": {
-        "WEB": "var(--grove-size-control-lg)"
+        "WEB": "var(--nz-size-control-lg)"
       },
       "valuesByMode": {
         "737:3": 48
@@ -3083,7 +3380,7 @@
       "description": "",
       "scopes": ["WIDTH_HEIGHT"],
       "codeSyntax": {
-        "WEB": "var(--grove-size-icon-sm)"
+        "WEB": "var(--nz-size-icon-sm)"
       },
       "valuesByMode": {
         "737:3": 16
@@ -3097,7 +3394,7 @@
       "description": "",
       "scopes": ["WIDTH_HEIGHT"],
       "codeSyntax": {
-        "WEB": "var(--grove-size-icon-md)"
+        "WEB": "var(--nz-size-icon-md)"
       },
       "valuesByMode": {
         "737:3": 20
@@ -3111,7 +3408,7 @@
       "description": "",
       "scopes": ["WIDTH_HEIGHT"],
       "codeSyntax": {
-        "WEB": "var(--grove-size-icon-lg)"
+        "WEB": "var(--nz-size-icon-lg)"
       },
       "valuesByMode": {
         "737:3": 24
@@ -3125,7 +3422,7 @@
       "description": "",
       "scopes": ["WIDTH_HEIGHT"],
       "codeSyntax": {
-        "WEB": "var(--grove-size-touch-min)"
+        "WEB": "var(--nz-size-touch-min)"
       },
       "valuesByMode": {
         "737:3": 44
@@ -3139,7 +3436,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-duration-instant)"
+        "WEB": "var(--nz-duration-instant)"
       },
       "valuesByMode": {
         "737:4": 80,
@@ -3154,7 +3451,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-duration-fast)"
+        "WEB": "var(--nz-duration-fast)"
       },
       "valuesByMode": {
         "737:4": 140,
@@ -3169,7 +3466,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-duration-base)"
+        "WEB": "var(--nz-duration-base)"
       },
       "valuesByMode": {
         "737:4": 220,
@@ -3184,7 +3481,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-duration-slow)"
+        "WEB": "var(--nz-duration-slow)"
       },
       "valuesByMode": {
         "737:4": 320,
@@ -3199,7 +3496,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-duration-slower)"
+        "WEB": "var(--nz-duration-slower)"
       },
       "valuesByMode": {
         "737:4": 480,
@@ -3214,7 +3511,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-duration-count-up)"
+        "WEB": "var(--nz-duration-count-up)"
       },
       "valuesByMode": {
         "737:4": 900,
@@ -3229,7 +3526,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-duration-chart-draw)"
+        "WEB": "var(--nz-duration-chart-draw)"
       },
       "valuesByMode": {
         "737:4": 700,
@@ -3244,7 +3541,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-easing-standard)"
+        "WEB": "var(--nz-easing-standard)"
       },
       "valuesByMode": {
         "737:4": "cubic-bezier(0.2, 0, 0, 1)",
@@ -3259,7 +3556,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-easing-enter)"
+        "WEB": "var(--nz-easing-enter)"
       },
       "valuesByMode": {
         "737:4": "cubic-bezier(0, 0, 0, 1)",
@@ -3274,7 +3571,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-easing-exit)"
+        "WEB": "var(--nz-easing-exit)"
       },
       "valuesByMode": {
         "737:4": "cubic-bezier(0.3, 0, 1, 1)",
@@ -3289,7 +3586,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-easing-spring)"
+        "WEB": "var(--nz-easing-spring)"
       },
       "valuesByMode": {
         "737:4": "spring(1, 260, 24, 0)",
@@ -3304,7 +3601,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-easing-spring-soft)"
+        "WEB": "var(--nz-easing-spring-soft)"
       },
       "valuesByMode": {
         "737:4": "spring(1, 170, 26, 0)",
@@ -3319,7 +3616,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-distance-lift)"
+        "WEB": "var(--nz-distance-lift)"
       },
       "valuesByMode": {
         "737:4": 4,
@@ -3334,7 +3631,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-distance-reveal)"
+        "WEB": "var(--nz-distance-reveal)"
       },
       "valuesByMode": {
         "737:4": 12,
@@ -3349,7 +3646,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-distance-float)"
+        "WEB": "var(--nz-distance-float)"
       },
       "valuesByMode": {
         "737:4": 8,
@@ -3364,7 +3661,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-tilt-max-deg)"
+        "WEB": "var(--nz-tilt-max-deg)"
       },
       "valuesByMode": {
         "737:4": 6,
@@ -3379,7 +3676,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-scale-press)"
+        "WEB": "var(--nz-scale-press)"
       },
       "valuesByMode": {
         "737:4": 0.9800000190734863,
@@ -3394,7 +3691,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-scale-hover)"
+        "WEB": "var(--nz-scale-hover)"
       },
       "valuesByMode": {
         "737:4": 1.0199999809265137,
@@ -3409,7 +3706,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-stagger-item)"
+        "WEB": "var(--nz-stagger-item)"
       },
       "valuesByMode": {
         "737:4": 40,
@@ -3424,10 +3721,70 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-magnetic-pull)"
+        "WEB": "var(--nz-magnetic-pull)"
       },
       "valuesByMode": {
         "737:4": 6,
+        "737:5": 0
+      }
+    },
+    {
+      "id": "VariableID:7351:24",
+      "name": "duration/fade",
+      "variableCollectionId": "VariableCollectionId:737:203",
+      "resolvedType": "FLOAT",
+      "description": "Opacity-only fades; survives Reduced motion (Q34).",
+      "scopes": [],
+      "codeSyntax": {
+        "WEB": "var(--nz-duration-fade)"
+      },
+      "valuesByMode": {
+        "737:4": 140,
+        "737:5": 120
+      }
+    },
+    {
+      "id": "VariableID:7351:25",
+      "name": "duration/pulse",
+      "variableCollectionId": "VariableCollectionId:737:203",
+      "resolvedType": "FLOAT",
+      "description": "Skeleton / indeterminate progress loop; stops in Reduced.",
+      "scopes": [],
+      "codeSyntax": {
+        "WEB": "var(--nz-duration-pulse)"
+      },
+      "valuesByMode": {
+        "737:4": 2000,
+        "737:5": 0
+      }
+    },
+    {
+      "id": "VariableID:7351:26",
+      "name": "scale/enter",
+      "variableCollectionId": "VariableCollectionId:737:203",
+      "resolvedType": "FLOAT",
+      "description": "Overlay enter scale (Dropdown, Popover); none in Reduced.",
+      "scopes": [],
+      "codeSyntax": {
+        "WEB": "var(--nz-scale-enter)"
+      },
+      "valuesByMode": {
+        "737:4": 0.9599999785423279,
+        "737:5": 1
+      }
+    },
+    {
+      "id": "VariableID:7369:175",
+      "name": "duration/spin",
+      "variableCollectionId": "VariableCollectionId:737:203",
+      "resolvedType": "FLOAT",
+      "description": "One spinner rotation (linear). 0 in Reduced: the spinner stops and a text label shows.",
+      "scopes": [],
+      "codeSyntax": {
+        "WEB": "var(--nz-duration-spin)"
+      },
+      "valuesByMode": {
+        "737:4": 800,
         "737:5": 0
       }
     },
@@ -3439,7 +3796,7 @@
       "description": "",
       "scopes": [],
       "codeSyntax": {
-        "WEB": "var(--grove-grid-columns)"
+        "WEB": "var(--nz-grid-columns)"
       },
       "valuesByMode": {
         "737:6": 12,
@@ -3455,7 +3812,7 @@
       "description": "",
       "scopes": ["GAP"],
       "codeSyntax": {
-        "WEB": "var(--grove-grid-gutter)"
+        "WEB": "var(--nz-grid-gutter)"
       },
       "valuesByMode": {
         "737:6": 24,
@@ -3471,7 +3828,7 @@
       "description": "",
       "scopes": ["GAP"],
       "codeSyntax": {
-        "WEB": "var(--grove-grid-margin)"
+        "WEB": "var(--nz-grid-margin)"
       },
       "valuesByMode": {
         "737:6": 32,
@@ -3487,7 +3844,7 @@
       "description": "",
       "scopes": ["WIDTH_HEIGHT"],
       "codeSyntax": {
-        "WEB": "var(--grove-layout-viewport)"
+        "WEB": "var(--nz-layout-viewport)"
       },
       "valuesByMode": {
         "737:6": 1440,
@@ -3503,7 +3860,7 @@
       "description": "",
       "scopes": ["WIDTH_HEIGHT"],
       "codeSyntax": {
-        "WEB": "var(--grove-layout-sidebar)"
+        "WEB": "var(--nz-layout-sidebar)"
       },
       "valuesByMode": {
         "737:6": 264,
@@ -3519,7 +3876,7 @@
       "description": "",
       "scopes": ["WIDTH_HEIGHT"],
       "codeSyntax": {
-        "WEB": "var(--grove-layout-content-max)"
+        "WEB": "var(--nz-layout-content-max)"
       },
       "valuesByMode": {
         "737:6": 1280,
@@ -3535,7 +3892,7 @@
       "description": "",
       "scopes": ["FONT_SIZE"],
       "codeSyntax": {
-        "WEB": "var(--grove-type-display)"
+        "WEB": "var(--nz-type-display)"
       },
       "valuesByMode": {
         "737:6": 56,
@@ -3551,7 +3908,7 @@
       "description": "",
       "scopes": ["FONT_SIZE"],
       "codeSyntax": {
-        "WEB": "var(--grove-type-h1)"
+        "WEB": "var(--nz-type-h1)"
       },
       "valuesByMode": {
         "737:6": 32,
@@ -3567,7 +3924,7 @@
       "description": "",
       "scopes": ["FONT_SIZE"],
       "codeSyntax": {
-        "WEB": "var(--grove-type-kpi)"
+        "WEB": "var(--nz-type-kpi)"
       },
       "valuesByMode": {
         "737:6": 32,
@@ -3583,7 +3940,7 @@
       "description": "",
       "scopes": ["GAP"],
       "codeSyntax": {
-        "WEB": "var(--grove-section-gap)"
+        "WEB": "var(--nz-section-gap)"
       },
       "valuesByMode": {
         "737:6": 32,
@@ -3595,7 +3952,7 @@
   "textStyles": [
     {
       "id": "S:693640858cd02f557cc34e9b3b6957e42963298d,",
-      "name": "Grove/Display/L",
+      "name": "Nizivo/Display/L",
       "description": "",
       "fontName": {
         "family": "Geist",
@@ -3618,7 +3975,7 @@
     },
     {
       "id": "S:71499ae90898455eddd7b5813859866faf27486b,",
-      "name": "Grove/Display/M",
+      "name": "Nizivo/Display/M",
       "description": "",
       "fontName": {
         "family": "Geist",
@@ -3641,7 +3998,7 @@
     },
     {
       "id": "S:e0fc78f6efa68d6c9b10f8f4f34f68417ff00f5e,",
-      "name": "Grove/Heading/H1",
+      "name": "Nizivo/Heading/H1",
       "description": "",
       "fontName": {
         "family": "Geist",
@@ -3664,7 +4021,7 @@
     },
     {
       "id": "S:45036609048a5e51ecd6b55e8e1b52d0edb1e009,",
-      "name": "Grove/Heading/H2",
+      "name": "Nizivo/Heading/H2",
       "description": "",
       "fontName": {
         "family": "Geist",
@@ -3687,7 +4044,7 @@
     },
     {
       "id": "S:62f2bac776a789667fe7af32c987c3c55d342ce0,",
-      "name": "Grove/Heading/H3",
+      "name": "Nizivo/Heading/H3",
       "description": "",
       "fontName": {
         "family": "Geist",
@@ -3710,7 +4067,7 @@
     },
     {
       "id": "S:74e4754fde94df75b52e6fae4fa2aba2015397fa,",
-      "name": "Grove/Heading/H4",
+      "name": "Nizivo/Heading/H4",
       "description": "",
       "fontName": {
         "family": "Geist",
@@ -3733,7 +4090,7 @@
     },
     {
       "id": "S:e09fe186bea6d9bff8757c5399b50e731939ef47,",
-      "name": "Grove/Body/L",
+      "name": "Nizivo/Body/L",
       "description": "",
       "fontName": {
         "family": "Geist",
@@ -3756,7 +4113,7 @@
     },
     {
       "id": "S:113652e64303b5ad009e540a4c1bc30a27a1b20a,",
-      "name": "Grove/Body/M",
+      "name": "Nizivo/Body/M",
       "description": "",
       "fontName": {
         "family": "Geist",
@@ -3779,7 +4136,7 @@
     },
     {
       "id": "S:641e026f76f992e585a4ea605c53c6dd59555efd,",
-      "name": "Grove/Body/M Strong",
+      "name": "Nizivo/Body/M Strong",
       "description": "",
       "fontName": {
         "family": "Geist",
@@ -3802,7 +4159,7 @@
     },
     {
       "id": "S:05811903b8af7febb2815fe7b4b6cc699f8020af,",
-      "name": "Grove/Label/L",
+      "name": "Nizivo/Label/L",
       "description": "",
       "fontName": {
         "family": "Geist",
@@ -3825,7 +4182,7 @@
     },
     {
       "id": "S:50c505e883b896a71befe3e34573edf4ba46d481,",
-      "name": "Grove/Label/M",
+      "name": "Nizivo/Label/M",
       "description": "",
       "fontName": {
         "family": "Geist",
@@ -3848,7 +4205,7 @@
     },
     {
       "id": "S:244b8f1d4e31a7409b96eef0db3d1a93bc6b6cff,",
-      "name": "Grove/Label/M Strong",
+      "name": "Nizivo/Label/M Strong",
       "description": "",
       "fontName": {
         "family": "Geist",
@@ -3871,7 +4228,7 @@
     },
     {
       "id": "S:becf29e77e995f822ebb3c1e1fdb29dc30f21445,",
-      "name": "Grove/Numeric/Display",
+      "name": "Nizivo/Numeric/Display",
       "description": "Tabular figures (font-variant-numeric: tabular-nums). Animate with count-up, duration/count-up.",
       "fontName": {
         "family": "Geist",
@@ -3894,7 +4251,7 @@
     },
     {
       "id": "S:5842270f961470e28cd068bb30f380d3c9cdd03b,",
-      "name": "Grove/Numeric/KPI",
+      "name": "Nizivo/Numeric/KPI",
       "description": "Tabular figures (font-variant-numeric: tabular-nums). Animate with count-up, duration/count-up.",
       "fontName": {
         "family": "Geist",
@@ -3917,7 +4274,7 @@
     },
     {
       "id": "S:479c2807ceb462b5569a54fa4e1300f9db0f17ad,",
-      "name": "Grove/Numeric/L",
+      "name": "Nizivo/Numeric/L",
       "description": "Tabular figures (font-variant-numeric: tabular-nums). Animate with count-up, duration/count-up.",
       "fontName": {
         "family": "Geist",
@@ -3940,7 +4297,7 @@
     },
     {
       "id": "S:851ed51a0c81cb9a8069b6874a5f66a350d64b5b,",
-      "name": "Grove/Numeric/M",
+      "name": "Nizivo/Numeric/M",
       "description": "Tabular figures (font-variant-numeric: tabular-nums). Animate with count-up, duration/count-up.",
       "fontName": {
         "family": "Geist",
@@ -3963,7 +4320,7 @@
     },
     {
       "id": "S:20221c1bf6c9a51a7cd74c6db367067ffd156e14,",
-      "name": "Grove/Mono/M",
+      "name": "Nizivo/Mono/M",
       "description": "",
       "fontName": {
         "family": "Geist Mono",
@@ -3986,7 +4343,7 @@
     },
     {
       "id": "S:1073ec7b69f3bb0057e9130702e3c5d78573e132,",
-      "name": "Grove/Mono/M Strong",
+      "name": "Nizivo/Mono/M Strong",
       "description": "",
       "fontName": {
         "family": "Geist Mono",
@@ -4006,19 +4363,85 @@
       "textCase": "ORIGINAL",
       "textDecoration": "NONE",
       "boundVariables": {}
+    },
+    {
+      "id": "S:ab423e646b7688c5d01a9738eba4f8f1abce05ed,",
+      "name": "Nizivo/Body/S",
+      "description": "Captions, helper text, table meta. 12px — text tokens must still reach 4.5:1.",
+      "fontName": {
+        "family": "Geist",
+        "style": "Regular"
+      },
+      "fontSize": 12,
+      "letterSpacing": {
+        "value": 0,
+        "unit": "PERCENT"
+      },
+      "lineHeight": {
+        "value": 150,
+        "unit": "PERCENT"
+      },
+      "paragraphIndent": 0,
+      "paragraphSpacing": 0,
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE",
+      "boundVariables": {}
+    },
+    {
+      "id": "S:3f6221f2db3772839d9c540e6dbc1dd609ac0cb9,",
+      "name": "Nizivo/Label/S",
+      "description": "Badges, group labels, compact controls. 12px.",
+      "fontName": {
+        "family": "Geist",
+        "style": "Medium"
+      },
+      "fontSize": 12,
+      "letterSpacing": {
+        "value": 0,
+        "unit": "PERCENT"
+      },
+      "lineHeight": {
+        "value": 139.9999976158142,
+        "unit": "PERCENT"
+      },
+      "paragraphIndent": 0,
+      "paragraphSpacing": 0,
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE",
+      "boundVariables": {}
     }
   ],
   "effectStyles": [
     {
       "id": "S:d12ab6fddee4b902de5c93e30e2978c4a86c37bb,",
-      "name": "Grove/Elevation/0 Flat",
+      "name": "Nizivo/Elevation/0 Flat",
       "description": "",
-      "effects": [],
+      "effects": [
+        {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 0,
+          "boundVariables": {},
+          "color": {
+            "r": 0.062745101749897,
+            "g": 0.07450980693101883,
+            "b": 0.06666667014360428,
+            "a": 0
+          },
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": false
+        }
+      ],
       "boundVariables": {}
     },
     {
       "id": "S:316d51ea0495dbd547833b771e7073ccca287734,",
-      "name": "Grove/Elevation/1 Card",
+      "name": "Nizivo/Elevation/1 Card",
       "description": "",
       "effects": [
         {
@@ -4064,7 +4487,7 @@
     },
     {
       "id": "S:c09c43dfc0d01afa10c5dd5fc7887953570139ba,",
-      "name": "Grove/Elevation/2 Raised",
+      "name": "Nizivo/Elevation/2 Raised",
       "description": "",
       "effects": [
         {
@@ -4110,7 +4533,7 @@
     },
     {
       "id": "S:757549db8d13d42b9bf595a0700a909680123689,",
-      "name": "Grove/Elevation/3 Popover",
+      "name": "Nizivo/Elevation/3 Popover",
       "description": "",
       "effects": [
         {
@@ -4156,7 +4579,7 @@
     },
     {
       "id": "S:cca0fc695713c40d220a7c32851484f26152c35a,",
-      "name": "Grove/Elevation/4 Modal",
+      "name": "Nizivo/Elevation/4 Modal",
       "description": "",
       "effects": [
         {
@@ -4202,8 +4625,8 @@
     },
     {
       "id": "S:3d4f7da23415e32caa19dcda58cced8ece5d1992,",
-      "name": "Grove/Focus/Ring",
-      "description": "",
+      "name": "Nizivo/Focus/Ring",
+      "description": "Keyboard focus. 2 px gap (bg/surface) + 2 px border/focus outline (≥ 3:1) + soft halo. Never remove; pair with :focus-visible.",
       "effects": [
         {
           "type": "DROP_SHADOW",
@@ -4214,7 +4637,31 @@
             "r": 0.18000000715255737,
             "g": 0.5099999904632568,
             "b": 0.3449999988079071,
-            "a": 0.2800000011920929
+            "a": 0.1599999964237213
+          },
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "spread": 8,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": false
+        },
+        {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 0,
+          "boundVariables": {
+            "color": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:737:152"
+            }
+          },
+          "color": {
+            "r": 0.18039216101169586,
+            "g": 0.5137255191802979,
+            "b": 0.3450980484485626,
+            "a": 1
           },
           "offset": {
             "x": 0,
@@ -4222,15 +4669,50 @@
           },
           "spread": 4,
           "blendMode": "NORMAL",
-          "showShadowBehindNode": true
+          "showShadowBehindNode": false
+        },
+        {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 0,
+          "boundVariables": {
+            "color": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:737:115"
+            }
+          },
+          "color": {
+            "r": 1,
+            "g": 1,
+            "b": 1,
+            "a": 1
+          },
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "spread": 2,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": false
         }
       ],
-      "boundVariables": {}
+      "boundVariables": {
+        "effects": [
+          {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:737:115"
+          },
+          {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:737:152"
+          }
+        ]
+      }
     },
     {
       "id": "S:8fb6fb6ca4763ffabeb0036851a95f092a5212f9,",
-      "name": "Grove/Focus/Ring Critical",
-      "description": "",
+      "name": "Nizivo/Focus/Ring Critical",
+      "description": "Focus on an invalid field: outline stays green, only the halo turns red.",
       "effects": [
         {
           "type": "DROP_SHADOW",
@@ -4241,7 +4723,31 @@
             "r": 0.8399999737739563,
             "g": 0.28999999165534973,
             "b": 0.18000000715255737,
-            "a": 0.25
+            "a": 0.2199999988079071
+          },
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "spread": 8,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": false
+        },
+        {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 0,
+          "boundVariables": {
+            "color": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:737:152"
+            }
+          },
+          "color": {
+            "r": 0.18039216101169586,
+            "g": 0.5137255191802979,
+            "b": 0.3450980484485626,
+            "a": 1
           },
           "offset": {
             "x": 0,
@@ -4249,14 +4755,49 @@
           },
           "spread": 4,
           "blendMode": "NORMAL",
-          "showShadowBehindNode": true
+          "showShadowBehindNode": false
+        },
+        {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 0,
+          "boundVariables": {
+            "color": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:737:115"
+            }
+          },
+          "color": {
+            "r": 1,
+            "g": 1,
+            "b": 1,
+            "a": 1
+          },
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "spread": 2,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": false
         }
       ],
-      "boundVariables": {}
+      "boundVariables": {
+        "effects": [
+          {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:737:115"
+          },
+          {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:737:152"
+          }
+        ]
+      }
     },
     {
       "id": "S:31333373bf21c8b7bb56e8b9b7ebcaffe91154e7,",
-      "name": "Grove/Surface/Glass",
+      "name": "Nizivo/Surface/Glass",
       "description": "",
       "effects": [
         {
@@ -4290,7 +4831,7 @@
     },
     {
       "id": "S:3d04cfbf3062571d646c971a1fd265fb199f271c,",
-      "name": "Grove/Surface/Liquid Glass",
+      "name": "Nizivo/Surface/Liquid Glass",
       "description": "",
       "effects": [
         {
@@ -4309,7 +4850,7 @@
     },
     {
       "id": "S:5bcec46c504cc88813502ae54b3ffba3cd47ad00,",
-      "name": "Grove/Surface/Inner Highlight",
+      "name": "Nizivo/Surface/Inner Highlight",
       "description": "",
       "effects": [
         {
@@ -4332,6 +4873,129 @@
         }
       ],
       "boundVariables": {}
+    },
+    {
+      "id": "S:81c1a6c6ab65ee9453f8e514c73b98a144b9cc95,",
+      "name": "Nizivo/Focus/Ring Raised",
+      "description": "Focus for raised buttons (Primary, Critical, Accent): keeps the inner highlight and drop shadow, adds the focus ring.",
+      "effects": [
+        {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 0,
+          "boundVariables": {},
+          "color": {
+            "r": 0.18000000715255737,
+            "g": 0.5099999904632568,
+            "b": 0.3449999988079071,
+            "a": 0.1599999964237213
+          },
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "spread": 8,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": false
+        },
+        {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 0,
+          "boundVariables": {
+            "color": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:737:152"
+            }
+          },
+          "color": {
+            "r": 0.18039216101169586,
+            "g": 0.5137255191802979,
+            "b": 0.3450980484485626,
+            "a": 1
+          },
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "spread": 4,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": false
+        },
+        {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 0,
+          "boundVariables": {
+            "color": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:737:115"
+            }
+          },
+          "color": {
+            "r": 1,
+            "g": 1,
+            "b": 1,
+            "a": 1
+          },
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "spread": 2,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": false
+        },
+        {
+          "type": "INNER_SHADOW",
+          "visible": true,
+          "radius": 0,
+          "boundVariables": {},
+          "color": {
+            "r": 1,
+            "g": 1,
+            "b": 1,
+            "a": 0.1599999964237213
+          },
+          "offset": {
+            "x": 0,
+            "y": 1
+          },
+          "spread": 0,
+          "blendMode": "NORMAL"
+        },
+        {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 2,
+          "boundVariables": {},
+          "color": {
+            "r": 0.03999999910593033,
+            "g": 0.12999999523162842,
+            "b": 0.10000000149011612,
+            "a": 0.18000000715255737
+          },
+          "offset": {
+            "x": 0,
+            "y": 1
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      ],
+      "boundVariables": {
+        "effects": [
+          {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:737:115"
+          },
+          {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:737:152"
+          }
+        ]
+      }
     }
   ]
 }

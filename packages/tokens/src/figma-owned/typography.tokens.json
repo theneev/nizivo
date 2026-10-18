@@ -69,6 +69,30 @@
             "letterSpacingPercent": 0
           }
         }
+      },
+      "s": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "Geist",
+          "fontSize": {
+            "value": 0.75,
+            "unit": "rem"
+          },
+          "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "rem"
+          },
+          "lineHeight": 1.5
+        },
+        "$description": "Captions, helper text, table meta. 12px — text tokens must still reach 4.5:1.",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "styleId": "S:ab423e646b7688c5d01a9738eba4f8f1abce05ed,",
+            "name": "Body/S",
+            "letterSpacingPercent": 0
+          }
+        }
       }
     },
     "display": {
@@ -279,6 +303,30 @@
           "dev.nizivo.figma": {
             "styleId": "S:244b8f1d4e31a7409b96eef0db3d1a93bc6b6cff,",
             "name": "Label/M Strong",
+            "letterSpacingPercent": 0
+          }
+        }
+      },
+      "s": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "Geist",
+          "fontSize": {
+            "value": 0.75,
+            "unit": "rem"
+          },
+          "fontWeight": 500,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "rem"
+          },
+          "lineHeight": 1.4
+        },
+        "$description": "Badges, group labels, compact controls. 12px.",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "styleId": "S:3f6221f2db3772839d9c540e6dbc1dd609ac0cb9,",
+            "name": "Label/S",
             "letterSpacingPercent": 0
           }
         }

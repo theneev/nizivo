@@ -2,11 +2,11 @@
 export const borderWidth = {
   default: "var(--nz-border-width-default)",
   focus: "var(--nz-border-width-focus)",
-  strong: "var(--nz-border-width-strong)",
 };
 export const color = {
   bgAccent: "var(--nz-bg-accent)",
   bgAccentHover: "var(--nz-bg-accent-hover)",
+  bgAccentPressed: "var(--nz-bg-accent-pressed)",
   bgAccentSubtle: "var(--nz-bg-accent-subtle)",
   bgBrand: "var(--nz-bg-brand)",
   bgBrandHover: "var(--nz-bg-brand-hover)",
@@ -14,6 +14,8 @@ export const color = {
   bgBrandPressed: "var(--nz-bg-brand-pressed)",
   bgBrandSubtle: "var(--nz-bg-brand-subtle)",
   bgCanvas: "var(--nz-bg-canvas)",
+  bgCode: "var(--nz-bg-code)",
+  bgCodeElevated: "var(--nz-bg-code-elevated)",
   bgCritical: "var(--nz-bg-critical)",
   bgCriticalHover: "var(--nz-bg-critical-hover)",
   bgCriticalSubtle: "var(--nz-bg-critical-subtle)",
@@ -48,6 +50,7 @@ export const color = {
   chartNeutral: "var(--nz-chart-neutral)",
   chartPrimary: "var(--nz-chart-primary)",
   chartSecondary: "var(--nz-chart-secondary)",
+  chartSuccess: "var(--nz-chart-success)",
   chartTertiary: "var(--nz-chart-tertiary)",
   chartTrack: "var(--nz-chart-track)",
   chartWarning: "var(--nz-chart-warning)",
@@ -63,13 +66,17 @@ export const color = {
   iconWarning: "var(--nz-icon-warning)",
   textAccent: "var(--nz-text-accent)",
   textBrand: "var(--nz-text-brand)",
+  textCode: "var(--nz-text-code)",
+  textCodeMuted: "var(--nz-text-code-muted)",
   textCritical: "var(--nz-text-critical)",
   textDisabled: "var(--nz-text-disabled)",
   textInfo: "var(--nz-text-info)",
   textInverse: "var(--nz-text-inverse)",
+  textInverseAccent: "var(--nz-text-inverse-accent)",
   textOnAccent: "var(--nz-text-on-accent)",
   textOnBrand: "var(--nz-text-on-brand)",
   textOnCritical: "var(--nz-text-on-critical)",
+  textOnDark: "var(--nz-text-on-dark)",
   textPrimary: "var(--nz-text-primary)",
   textSecondary: "var(--nz-text-secondary)",
   textSuccess: "var(--nz-text-success)",
@@ -103,6 +110,7 @@ export const easing = {
   standard: "var(--nz-easing-standard)",
 };
 export const elevation = {
+  "0": "var(--nz-elevation-0)",
   "1": "var(--nz-elevation-1)",
   "2": "var(--nz-elevation-2)",
   "3": "var(--nz-elevation-3)",
@@ -114,6 +122,7 @@ export const focus = {
   haloCritical: "var(--nz-focus-halo-critical)",
   ring: "var(--nz-focus-ring)",
   ringCritical: "var(--nz-focus-ring-critical)",
+  ringRaised: "var(--nz-focus-ring-raised)",
 };
 export const font = {
   bodyL: "var(--nz-font-body-l)",

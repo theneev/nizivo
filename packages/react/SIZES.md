@@ -230,23 +230,23 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/text.css              |      574 |        0.6 |        487 |         0.7 |          142 |
 | /css/textarea.css          |      725 |        0.7 |        601 |         0.8 |           94 |
 | /css/tooltip.css           |      581 |        0.6 |        503 |         0.6 |           33 |
-| /styles.css                |   14,937 |       14.6 |     12,650 |          16 |        1,447 |
+| /styles.css                |   15,006 |       14.7 |     12,747 |          16 |        1,378 |
 
 #### `@nizivo/tokens`: Public JS entries (bundled with what they import, React Aria included)
 
 | Entry | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | ----- | -------: | ---------: | ---------: | ----------: | -----------: |
-| `.`   |    2,309 |        2.3 |      2,001 |         2.5 |          251 |
+| `.`   |    2,377 |        2.3 |      2,051 |         2.5 |          183 |
 
 #### `@nizivo/tokens`: CSS and JSON entries (the published file, gzip)
 
 | Entry             | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | ----------------- | -------: | ---------: | ---------: | ----------: | -----------: |
-| /contract.json    |    3,247 |        3.2 |      2,647 |         3.5 |          337 |
+| /contract.json    |    3,316 |        3.2 |      2,712 |         3.5 |          268 |
 | /custom-media.css |      166 |        0.2 |        126 |         0.2 |           38 |
-| /tailwind.css     |      764 |        0.7 |        664 |         0.9 |          157 |
-| /tokens.css       |    3,879 |        3.8 |      3,197 |         4.2 |          421 |
-| /tokens.json      |    8,887 |        8.7 |      6,972 |          12 |        3,401 |
+| /tailwind.css     |      817 |        0.8 |        715 |         0.9 |          104 |
+| /tokens.css       |    3,957 |        3.9 |      3,301 |         4.2 |          343 |
+| /tokens.json      |   10,399 |       10.2 |      8,267 |          12 |        1,889 |
 
 #### `@nizivo/icons`: Public JS entries (bundled with what they import, React Aria included)
 

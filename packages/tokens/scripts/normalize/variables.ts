@@ -80,7 +80,7 @@ export function alias(raw: string, where: string): string {
   return `{${[...spec.group, ...path].join('.')}}`;
 }
 
-const isAliasString = (value: unknown): value is string =>
+export const isAliasString = (value: unknown): value is string =>
   typeof value === 'string' && value.startsWith('{') && value.endsWith('}');
 
 interface Converted {

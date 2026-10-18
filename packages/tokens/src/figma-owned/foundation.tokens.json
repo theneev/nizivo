@@ -29,21 +29,6 @@
           "scopes": ["STROKE_FLOAT"]
         }
       }
-    },
-    "strong": {
-      "$type": "dimension",
-      "$value": {
-        "value": 1.5,
-        "unit": "px"
-      },
-      "$extensions": {
-        "dev.nizivo.figma": {
-          "variableId": "VariableID:737:194",
-          "collectionId": "VariableCollectionId:737:169",
-          "name": "border-width/strong",
-          "scopes": ["STROKE_FLOAT"]
-        }
-      }
     }
   },
   "radius": {

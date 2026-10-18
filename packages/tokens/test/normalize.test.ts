@@ -37,25 +37,38 @@ function countTokens(tree: Group | undefined): number {
   return count;
 }
 
-/** The raw export after the Figma rename (plan §20.3): collections, styles, or both. */
-function renamed(raw: RawFile[], { collections = true, styles = true } = {}): RawFile[] {
+/** Collection names as TokensBrücke writes them: in file paths, group keys and aliases. */
+const COLLECTION_NAME = /Nizivo (Primitives|Color|Space|Motion|Responsive)\b/g;
+
+/**
+ * The raw export as it was before the Figma rename (plan §20.3): collections, styles, or both under
+ * `Grove`. The committed export is the first one under the Nizivo names (2026-10-18).
+ */
+function groveNamed(raw: RawFile[], { collections = true, styles = true } = {}): RawFile[] {
   return raw.map(({ path, json }) => {
     const isStyle = path.endsWith('-styles.tokens.json');
     let text = JSON.stringify(json);
     if (collections) {
-      text = text.replaceAll('Grove ', 'Nizivo ').replaceAll('var(--grove-', 'var(--nz-');
+      text = text.replaceAll(COLLECTION_NAME, 'Grove $1').replaceAll('var(--nz-', 'var(--grove-');
     }
-    if (styles && isStyle) text = text.replaceAll('"Grove":', '"Nizivo":');
-    const renamedPath = collections ? path.replaceAll('Grove ', 'Nizivo ') : path;
+    if (styles && isStyle) text = text.replaceAll('"Nizivo":', '"Grove":');
+    const renamedPath = collections ? path.replaceAll(COLLECTION_NAME, 'Grove $1') : path;
     return { path: renamedPath, json: JSON.parse(text) };
   });
 }
 
-/** Applies `edit` to the `Grove Color` body of the given mode files of a cloned export. */
+/** The `Effect-styles` → `Nizivo` group of a raw style file, or undefined for another file. */
+function nizivoEffects(file: RawFile): Record<string, unknown> | undefined {
+  const styles = isRecord(file.json) ? file.json['Effect-styles'] : undefined;
+  const nizivo = isRecord(styles) ? styles.Nizivo : undefined;
+  return isRecord(nizivo) ? nizivo : undefined;
+}
+
+/** Applies `edit` to the `Nizivo Color` body of the given mode files of a cloned export. */
 function editColor(modes: string[], edit: (body: Record<string, unknown>) => void): RawFile[] {
   return structuredClone(RAW).map((file) => {
-    const body = isRecord(file.json) ? file.json['Grove Color'] : undefined;
-    if (isRecord(body) && modes.some((mode) => file.path === `Grove Color/${mode}.tokens.json`)) {
+    const body = isRecord(file.json) ? file.json['Nizivo Color'] : undefined;
+    if (isRecord(body) && modes.some((mode) => file.path === `Nizivo Color/${mode}.tokens.json`)) {
       edit(body);
     }
     return file;
@@ -91,17 +104,17 @@ describe('normalize: the real TokensBrücke export', () => {
       [...BASE.files].map(([file, tree]) => [file, countTokens(tree)]),
     );
     expect(counts).toEqual({
-      'primitives.tokens.json': 54,
-      'color/light.tokens.json': 58,
-      'color/dark.tokens.json': 58,
-      'foundation.tokens.json': 33,
-      'motion/default.tokens.json': 20,
-      'motion/reduced.tokens.json': 20,
+      'primitives.tokens.json': 58,
+      'color/light.tokens.json': 75,
+      'color/dark.tokens.json': 75,
+      'foundation.tokens.json': 32,
+      'motion/default.tokens.json': 24,
+      'motion/reduced.tokens.json': 24,
       'viewport/mobile.tokens.json': 10,
       'viewport/tablet.tokens.json': 10,
       'viewport/desktop.tokens.json': 10,
-      'typography.tokens.json': 18,
-      'effects.tokens.json': 7,
+      'typography.tokens.json': 20,
+      'effects.tokens.json': 9,
     });
   });
 
@@ -111,9 +124,21 @@ describe('normalize: the real TokensBrücke export', () => {
       value: 62.4375,
       unit: 'rem',
     });
-    expect(tokenValue('foundation.tokens.json', 'border-width.strong')).toEqual({
-      value: 1.5,
+    expect(tokenValue('foundation.tokens.json', 'border-width.focus')).toEqual({
+      value: 2,
       unit: 'px',
+    });
+    // Figma deleted border-width/strong on 2026-10-18 (M33: every border is 1 px).
+    expect(() => tokenValue('foundation.tokens.json', 'border-width.strong')).toThrow(
+      /no token border-width\.strong/,
+    );
+    expect(tokenValue('motion/default.tokens.json', 'duration.spin')).toEqual({
+      value: 800,
+      unit: 'ms',
+    });
+    expect(tokenValue('motion/reduced.tokens.json', 'duration.spin')).toEqual({
+      value: 0,
+      unit: 'ms',
     });
     expect(tokenValue('motion/default.tokens.json', 'duration.fast')).toEqual({
       value: 140,
@@ -211,20 +236,9 @@ describe('normalize: the real TokensBrücke export', () => {
 
   test('turns effect styles into shadow tokens with 6-digit hex and px geometry', () => {
     const effects = BASE.files.get('effects.tokens.json');
-    expect(Object.keys(effects?.elevation ?? {})).toEqual(['1', '2', '3', '4']);
+    expect(Object.keys(effects?.elevation ?? {})).toEqual(['0', '1', '2', '3', '4']);
+    // CSS paint order: Figma lists the 2 px blur first and paints it under the 16 px one.
     expect(token(BASE.files, 'effects.tokens.json', 'elevation.2').$value).toEqual([
-      {
-        color: {
-          colorSpace: 'srgb',
-          components: [0.06274509803921569, 0.07450980392156863, 0.06666666666666667],
-          alpha: 0.04,
-          hex: '#101311',
-        },
-        offsetX: { value: 0, unit: 'px' },
-        offsetY: { value: 2, unit: 'px' },
-        blur: { value: 4, unit: 'px' },
-        spread: { value: 0, unit: 'px' },
-      },
       {
         color: {
           colorSpace: 'srgb',
@@ -237,19 +251,74 @@ describe('normalize: the real TokensBrücke export', () => {
         blur: { value: 16, unit: 'px' },
         spread: { value: -4, unit: 'px' },
       },
+      {
+        color: {
+          colorSpace: 'srgb',
+          components: [0.06274509803921569, 0.07450980392156863, 0.06666666666666667],
+          alpha: 0.04,
+          hex: '#101311',
+        },
+        offsetX: { value: 0, unit: 'px' },
+        offsetY: { value: 2, unit: 'px' },
+        blur: { value: 4, unit: 'px' },
+        spread: { value: 0, unit: 'px' },
+      },
     ]);
     expect(
       token(BASE.files, 'effects.tokens.json', 'surface.inner-highlight').$value,
     ).toMatchObject([{ inset: true }]);
     expect(token(BASE.files, 'effects.tokens.json', 'focus.ring-critical').$type).toBe('shadow');
     expect(effects?.surface).not.toHaveProperty('glass');
-    expect(BASE.skipped).toEqual(['Effect-styles "Grove/Surface/Glass" (blur has no DTCG type)']);
+    expect(BASE.skipped).toEqual(['Effect-styles "Nizivo/Surface/Glass" (blur has no DTCG type)']);
+  });
+
+  test('a layer colour bound to a variable stays an alias, so the build can follow the theme', () => {
+    const zero = { value: 0, unit: 'px' };
+    const spread = (value: number) => ({
+      offsetX: zero,
+      offsetY: zero,
+      blur: zero,
+      spread: { value, unit: 'px' },
+    });
+    // Figma's Focus/Ring since 2026-10-18: halo (raw), outline (border/focus), gap (bg/surface),
+    // listed bottom first. The DTCG value lists the top layer first, as CSS box-shadow does.
+    expect(token(BASE.files, 'effects.tokens.json', 'focus.ring').$value).toEqual([
+      { color: '{color.bg.surface}', ...spread(2) },
+      { color: '{color.border.focus}', ...spread(4) },
+      {
+        color: {
+          colorSpace: 'srgb',
+          components: [0.1803921568627451, 0.5098039215686274, 0.34509803921568627],
+          alpha: 0.16,
+          hex: '#2e8258',
+        },
+        ...spread(8),
+      },
+    ]);
+    // Invalid + focused keeps the green outline; only the halo turns red (Figma page 7374:7).
+    expect(token(BASE.files, 'effects.tokens.json', 'focus.ring-critical').$value).toMatchObject([
+      { color: '{color.bg.surface}' },
+      { color: '{color.border.focus}' },
+      { color: { hex: '#d64a2e', alpha: 0.22 } },
+    ]);
+  });
+
+  test('a bound layer colour must point into an allowlisted collection', () => {
+    const raw = structuredClone(RAW).map((file) => {
+      const ring = nizivoEffects(file)?.Focus;
+      const layers = isRecord(ring) && isRecord(ring.Ring) ? ring.Ring.$value : undefined;
+      if (Array.isArray(layers) && isRecord(layers[1])) layers[1].color = '{Clario Tokens.focus}';
+      return file;
+    });
+    expect(() => normalize(raw)).toThrow(
+      /Nizivo\/Focus\/Ring \[1\]: alias \{Clario Tokens\.focus\} points outside the allowlisted collections/,
+    );
   });
 
   test('keys every variable on its Figma variable id and every text style on its style id', () => {
     const ids = figmaIds(BASE.files);
-    expect([...ids.keys()].filter((id) => id.startsWith('VariableID:'))).toHaveLength(175);
-    expect([...ids.keys()].filter((id) => id.startsWith('S:'))).toHaveLength(18);
+    expect([...ids.keys()].filter((id) => id.startsWith('VariableID:'))).toHaveLength(199);
+    expect([...ids.keys()].filter((id) => id.startsWith('S:'))).toHaveLength(20);
     expect(ids.get('VariableID:737:114')).toBe('color.bg.canvas');
     expect(figma(token(BASE.files, 'color/dark.tokens.json', 'color.bg.canvas'))).toEqual({
       variableId: 'VariableID:737:114',
@@ -261,49 +330,35 @@ describe('normalize: the real TokensBrücke export', () => {
 });
 
 describe('both prefixes map to nz (plan §7.1, §20.3)', () => {
-  test('the export renamed Grove → Nizivo normalizes to the same bytes', () => {
-    const nizivo = renamed(RAW);
-    // The fixture really is renamed: no "Grove" left in names, paths, aliases or code syntax.
-    expect(JSON.stringify(nizivo)).not.toMatch(/grove/i);
-    expect(nizivo.map((file) => file.path)).toContain('Nizivo Color/Light.tokens.json');
-    expect(renderAll(normalize(nizivo))).toEqual(renderAll(BASE));
+  test('the export under the Grove names normalizes to the same bytes', () => {
+    const grove = groveNamed(RAW);
+    // The fixture really is renamed: no Nizivo collection or style group left in it.
+    expect(JSON.stringify(grove)).not.toMatch(COLLECTION_NAME);
+    expect(JSON.stringify(grove)).not.toContain('"Nizivo":');
+    expect(grove.map((file) => file.path)).toContain('Grove Color/Light.tokens.json');
+    expect(renderAll(normalize(grove))).toEqual(renderAll(BASE));
   });
 
   test('a half-renamed export (collections renamed, styles not) normalizes the same', () => {
-    expect(renderAll(normalize(renamed(RAW, { styles: false })))).toEqual(renderAll(BASE));
-    expect(renderAll(normalize(renamed(RAW, { collections: false })))).toEqual(renderAll(BASE));
+    expect(renderAll(normalize(groveNamed(RAW, { styles: false })))).toEqual(renderAll(BASE));
+    expect(renderAll(normalize(groveNamed(RAW, { collections: false })))).toEqual(renderAll(BASE));
   });
 
-  test('a Nizivo export with the 2026-10-14 Elevation/0 Flat shadow only adds elevation.0', () => {
-    // Since 2026-10-14 the style holds one invisible drop shadow; this is the layer the
-    // TokensBrücke 3.18.0 CLI exports for it (alpha 0, offset 0, radius 0, spread 0).
+  test('Elevation/0 Flat (one invisible drop shadow since 2026-10-14) is elevation.0 and only that', () => {
+    // The layer the TokensBrücke 3.18.0 CLI exports for it: the shadow ink at alpha 0, offset 0,
+    // radius 0, spread 0.
     const zero = { value: 0, unit: 'px' };
-    const raw = renamed(RAW).map((file) => {
-      const styles = isRecord(file.json) ? file.json['Effect-styles'] : undefined;
-      const nizivo = isRecord(styles) ? styles.Nizivo : undefined;
-      if (isRecord(nizivo) && isRecord(nizivo.Elevation)) {
-        nizivo.Elevation['0 Flat'] = {
-          $type: 'shadow',
-          $value: [
-            {
-              inset: false,
-              color: { colorSpace: 'srgb', components: [0, 0, 0], alpha: 0, hex: '#00000000' },
-              offsetX: zero,
-              offsetY: zero,
-              blur: zero,
-              spread: zero,
-            },
-          ],
-        };
-      }
-      return file;
-    });
-    const result = normalize(raw);
+    const result = BASE;
     expect(token(result.files, 'effects.tokens.json', 'elevation.0')).toEqual({
       $type: 'shadow',
       $value: [
         {
-          color: { colorSpace: 'srgb', components: [0, 0, 0], alpha: 0, hex: '#000000' },
+          color: {
+            colorSpace: 'srgb',
+            components: [0.06274509803921569, 0.07450980392156863, 0.06666666666666667],
+            alpha: 0,
+            hex: '#101311',
+          },
           offsetX: zero,
           offsetY: zero,
           blur: zero,
@@ -312,19 +367,23 @@ describe('both prefixes map to nz (plan §7.1, §20.3)', () => {
       ],
       $extensions: { 'dev.nizivo.figma': { name: 'Elevation/0 Flat' } },
     });
-    expect(result.skipped).toEqual([
-      'Effect-styles "Nizivo/Surface/Glass" (blur has no DTCG type)',
-    ]);
-    const elevation = result.files.get('effects.tokens.json')?.elevation;
+    const without = normalize(
+      structuredClone(RAW).map((file) => {
+        const elevation = nizivoEffects(file)?.Elevation;
+        if (isRecord(elevation)) delete elevation['0 Flat'];
+        return file;
+      }),
+    );
+    const elevation = structuredClone(result.files.get('effects.tokens.json')?.elevation);
     if (!isRecord(elevation)) throw new Error('no elevation group');
     expect(Object.keys(elevation)).toEqual(['0', '1', '2', '3', '4']);
     delete elevation['0'];
-    expect(renderAll(result)).toEqual(renderAll(BASE));
+    expect(without.files.get('effects.tokens.json')?.elevation).toEqual(elevation);
   });
 
   test('one collection under both prefixes is an error, not a silent merge', () => {
-    const nizivoColor = renamed(RAW).filter((file) => file.path.startsWith('Nizivo Color/'));
-    expect(() => normalize([...RAW, ...nizivoColor])).toThrow(
+    const groveColor = groveNamed(RAW).filter((file) => file.path.startsWith('Grove Color/'));
+    expect(() => normalize([...RAW, ...groveColor])).toThrow(
       /a second collection maps to color\/dark/,
     );
   });

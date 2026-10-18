@@ -1,7 +1,8 @@
 // Figma text styles → `typography` tokens and effect styles → `shadow` tokens.
 import { isRecord } from '../figma/snapshot.ts';
-import { setToken, walkTokens, type Group } from './json.ts';
+import { setToken, walkTokens, type Group, type Json } from './json.ts';
 import { color, percent, pixels, px, rem, round } from './values.ts';
+import { alias, isAliasString } from './variables.ts';
 
 /** TokensBrücke's group names for exported styles. */
 export const TYPOGRAPHY_STYLES = 'Typography-styles';
@@ -58,10 +59,19 @@ function typography(raw: Record<string, unknown>, name: string, where: string): 
   };
 }
 
+/**
+ * A layer colour. A literal is an sRGB object; a colour bound to a variable (Figma's Focus/Ring
+ * since 2026-10-18) arrives as an alias string such as `{Nizivo Color.border.focus}` and stays a
+ * DTCG alias (`{color.border.focus}`), so the build prints `var(--nz-border-focus)` and the layer
+ * follows the theme instead of freezing the light value.
+ */
+const layerColor = (raw: unknown, where: string): Json =>
+  isAliasString(raw) ? alias(raw, where) : color(raw, where);
+
 function shadowLayer(raw: unknown, where: string): Group {
   if (!isRecord(raw)) throw new Error(`${where}: not a shadow layer`);
   const layer: Group = {
-    color: color(raw.color, where),
+    color: layerColor(raw.color, where),
     offsetX: pixels(px(raw.offsetX, where)),
     offsetY: pixels(px(raw.offsetY, where)),
     blur: pixels(px(raw.blur, where)),
@@ -80,6 +90,11 @@ function description(raw: Record<string, unknown>): Group {
 /**
  * Converts `Typography-styles` and `Effect-styles`. TokensBrücke exports no id for effect styles,
  * so their identity is the name. A `blur` effect (Surface/Glass) has no DTCG type and is skipped.
+ *
+ * Layer order: Figma paints an effect list bottom-up (the last effect is on top, as with fills),
+ * while CSS `box-shadow` and DTCG paint the first layer on top. Figma's Focus/Ring lists the 8 px
+ * halo, the 4 px border/focus ring, then the 2 px bg/surface gap; only the reversed order keeps the
+ * gap visible, as Figma draws it. So every shadow's layers are reversed here, once.
  */
 export function normalizeStyles(
   kind: typeof TYPOGRAPHY_STYLES | typeof EFFECT_STYLES,
@@ -112,7 +127,9 @@ export function normalizeStyles(
       }
       const token: Group = {
         $type: 'shadow',
-        $value: raw.$value.map((layer, index) => shadowLayer(layer, `${where} [${index}]`)),
+        $value: raw.$value
+          .map((layer, index) => shadowLayer(layer, `${where} [${index}]`))
+          .toReversed(),
         ...description(raw),
         $extensions: { 'dev.nizivo.figma': { name } },
       };

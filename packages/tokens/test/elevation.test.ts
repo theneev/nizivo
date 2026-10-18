@@ -1,8 +1,9 @@
 // Elevation 0 and the dark-mode ring (plan §7.1 "the first sync after the rename", §7.5). Since
-// 2026-10-14 Figma's `Elevation/0 Flat` holds one invisible drop shadow, so the next export brings
-// `elevation.0`. This builds a copy of src/ with that token added, exactly as the normalizer writes it
-// (test/normalize.test.ts pins that shape), through the pinned CLI and the real config, and checks
-// that the token draws no ring and that everything else equals the goldens byte for byte.
+// 2026-10-14 Figma's `Elevation/0 Flat` holds one invisible drop shadow; the 2026-10-18 export
+// brought it as `elevation.0`. This builds a copy of src/ with a flat `elevation.0` (black at alpha 0
+// in place of Figma's ink at alpha 0: the rule reads only the alpha), through the pinned CLI and the
+// real config, and checks that the token draws no ring and that everything else equals the goldens
+// byte for byte.
 import { spawnSync } from 'node:child_process';
 import { cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';

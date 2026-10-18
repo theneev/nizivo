@@ -123,6 +123,24 @@
             }
           }
         },
+        "400": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.4392156862745098, 0.596078431372549, 0.8784313725490196],
+            "alpha": 1,
+            "hex": "#7098e0"
+          },
+          "$description": "Added from the Page 15 review (2026-10). Interpolated between ramp neighbours — check on real screens.",
+          "$extensions": {
+            "dev.nizivo.figma": {
+              "variableId": "VariableID:7351:10",
+              "collectionId": "VariableCollectionId:737:64",
+              "name": "blue/400",
+              "scopes": []
+            }
+          }
+        },
         "500": {
           "$type": "color",
           "$value": {
@@ -622,6 +640,24 @@
             }
           }
         },
+        "450": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.5098039215686274, 0.5411764705882353, 0.5058823529411764],
+            "alpha": 1,
+            "hex": "#828a81"
+          },
+          "$description": "Added from the Page 15 review (2026-10). Interpolated between ramp neighbours — check on real screens.",
+          "$extensions": {
+            "dev.nizivo.figma": {
+              "variableId": "VariableID:7351:7",
+              "collectionId": "VariableCollectionId:737:64",
+              "name": "neutral/450",
+              "scopes": []
+            }
+          }
+        },
         "500": {
           "$type": "color",
           "$value": {
@@ -724,6 +760,24 @@
             }
           }
         },
+        "925": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.08235294117647059, 0.09411764705882353, 0.08627450980392157],
+            "alpha": 1,
+            "hex": "#151816"
+          },
+          "$description": "Added from the Page 15 review (2026-10). Interpolated between ramp neighbours — check on real screens.",
+          "$extensions": {
+            "dev.nizivo.figma": {
+              "variableId": "VariableID:7351:8",
+              "collectionId": "VariableCollectionId:737:64",
+              "name": "neutral/925",
+              "scopes": []
+            }
+          }
+        },
         "950": {
           "$type": "color",
           "$value": {
@@ -773,6 +827,24 @@
               "variableId": "VariableID:737:99",
               "collectionId": "VariableCollectionId:737:64",
               "name": "red/100",
+              "scopes": []
+            }
+          }
+        },
+        "400": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.8941176470588236, 0.4745098039215686, 0.3843137254901961],
+            "alpha": 1,
+            "hex": "#e47962"
+          },
+          "$description": "Added from the Page 15 review (2026-10). Interpolated between ramp neighbours — check on real screens.",
+          "$extensions": {
+            "dev.nizivo.figma": {
+              "variableId": "VariableID:7351:9",
+              "collectionId": "VariableCollectionId:737:64",
+              "name": "red/400",
               "scopes": []
             }
           }

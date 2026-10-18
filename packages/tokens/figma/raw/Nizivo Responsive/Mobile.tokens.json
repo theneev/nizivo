@@ -1,5 +1,5 @@
 {
-  "Grove Responsive": {
+  "Nizivo Responsive": {
     "grid": {
       "columns": {
         "$type": "dimension",
@@ -12,12 +12,12 @@
         "$extensions": {
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-grid-columns)"
+              "WEB": "var(--nz-grid-columns)"
             },
             "variableId": "VariableID:737:225",
             "collection": {
               "id": "VariableCollectionId:737:224",
-              "name": "Grove Responsive",
+              "name": "Nizivo Responsive",
               "defaultModeId": "737:6"
             }
           }
@@ -36,12 +36,12 @@
         "$extensions": {
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-grid-gutter)"
+              "WEB": "var(--nz-grid-gutter)"
             },
             "variableId": "VariableID:737:226",
             "collection": {
               "id": "VariableCollectionId:737:224",
-              "name": "Grove Responsive",
+              "name": "Nizivo Responsive",
               "defaultModeId": "737:6"
             }
           }
@@ -60,12 +60,12 @@
         "$extensions": {
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-grid-margin)"
+              "WEB": "var(--nz-grid-margin)"
             },
             "variableId": "VariableID:737:227",
             "collection": {
               "id": "VariableCollectionId:737:224",
-              "name": "Grove Responsive",
+              "name": "Nizivo Responsive",
               "defaultModeId": "737:6"
             }
           }
@@ -86,12 +86,12 @@
         "$extensions": {
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-layout-viewport)"
+              "WEB": "var(--nz-layout-viewport)"
             },
             "variableId": "VariableID:737:228",
             "collection": {
               "id": "VariableCollectionId:737:224",
-              "name": "Grove Responsive",
+              "name": "Nizivo Responsive",
               "defaultModeId": "737:6"
             }
           }
@@ -110,12 +110,12 @@
         "$extensions": {
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-layout-sidebar)"
+              "WEB": "var(--nz-layout-sidebar)"
             },
             "variableId": "VariableID:737:229",
             "collection": {
               "id": "VariableCollectionId:737:224",
-              "name": "Grove Responsive",
+              "name": "Nizivo Responsive",
               "defaultModeId": "737:6"
             }
           }
@@ -134,12 +134,12 @@
         "$extensions": {
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-layout-content-max)"
+              "WEB": "var(--nz-layout-content-max)"
             },
             "variableId": "VariableID:737:230",
             "collection": {
               "id": "VariableCollectionId:737:224",
-              "name": "Grove Responsive",
+              "name": "Nizivo Responsive",
               "defaultModeId": "737:6"
             }
           }
@@ -160,12 +160,12 @@
         "$extensions": {
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-type-display)"
+              "WEB": "var(--nz-type-display)"
             },
             "variableId": "VariableID:737:231",
             "collection": {
               "id": "VariableCollectionId:737:224",
-              "name": "Grove Responsive",
+              "name": "Nizivo Responsive",
               "defaultModeId": "737:6"
             }
           }
@@ -184,12 +184,12 @@
         "$extensions": {
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-type-h1)"
+              "WEB": "var(--nz-type-h1)"
             },
             "variableId": "VariableID:737:232",
             "collection": {
               "id": "VariableCollectionId:737:224",
-              "name": "Grove Responsive",
+              "name": "Nizivo Responsive",
               "defaultModeId": "737:6"
             }
           }
@@ -208,12 +208,12 @@
         "$extensions": {
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-type-kpi)"
+              "WEB": "var(--nz-type-kpi)"
             },
             "variableId": "VariableID:737:233",
             "collection": {
               "id": "VariableCollectionId:737:224",
-              "name": "Grove Responsive",
+              "name": "Nizivo Responsive",
               "defaultModeId": "737:6"
             }
           }
@@ -234,12 +234,12 @@
         "$extensions": {
           "figma": {
             "codeSyntax": {
-              "WEB": "var(--grove-section-gap)"
+              "WEB": "var(--nz-section-gap)"
             },
             "variableId": "VariableID:737:234",
             "collection": {
               "id": "VariableCollectionId:737:224",
-              "name": "Grove Responsive",
+              "name": "Nizivo Responsive",
               "defaultModeId": "737:6"
             }
           }
@@ -252,13 +252,13 @@
         "spec": "https://www.designtokens.org/tr/2025.10/format/",
         "colorMode": "srgb-dtcg",
         "variableCollections": [
-          "Grove Primitives",
-          "Grove Color",
-          "Grove Space",
-          "Grove Motion",
-          "Grove Responsive"
+          "Nizivo Primitives",
+          "Nizivo Color",
+          "Nizivo Space",
+          "Nizivo Motion",
+          "Nizivo Responsive"
         ],
-        "createdAt": "2026-10-14T05:05:07.930Z"
+        "createdAt": "2026-10-18T07:15:27.502Z"
       }
     }
   }

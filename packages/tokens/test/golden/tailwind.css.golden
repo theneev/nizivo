@@ -2,6 +2,7 @@
 @theme inline {
   --color-nz-bg-accent: var(--nz-bg-accent);
   --color-nz-bg-accent-hover: var(--nz-bg-accent-hover);
+  --color-nz-bg-accent-pressed: var(--nz-bg-accent-pressed);
   --color-nz-bg-accent-subtle: var(--nz-bg-accent-subtle);
   --color-nz-bg-brand: var(--nz-bg-brand);
   --color-nz-bg-brand-hover: var(--nz-bg-brand-hover);
@@ -9,6 +10,8 @@
   --color-nz-bg-brand-pressed: var(--nz-bg-brand-pressed);
   --color-nz-bg-brand-subtle: var(--nz-bg-brand-subtle);
   --color-nz-bg-canvas: var(--nz-bg-canvas);
+  --color-nz-bg-code: var(--nz-bg-code);
+  --color-nz-bg-code-elevated: var(--nz-bg-code-elevated);
   --color-nz-bg-critical: var(--nz-bg-critical);
   --color-nz-bg-critical-hover: var(--nz-bg-critical-hover);
   --color-nz-bg-critical-subtle: var(--nz-bg-critical-subtle);
@@ -43,6 +46,7 @@
   --color-nz-chart-neutral: var(--nz-chart-neutral);
   --color-nz-chart-primary: var(--nz-chart-primary);
   --color-nz-chart-secondary: var(--nz-chart-secondary);
+  --color-nz-chart-success: var(--nz-chart-success);
   --color-nz-chart-tertiary: var(--nz-chart-tertiary);
   --color-nz-chart-track: var(--nz-chart-track);
   --color-nz-chart-warning: var(--nz-chart-warning);
@@ -56,13 +60,17 @@
   --color-nz-icon-warning: var(--nz-icon-warning);
   --color-nz-text-accent: var(--nz-text-accent);
   --color-nz-text-brand: var(--nz-text-brand);
+  --color-nz-text-code: var(--nz-text-code);
+  --color-nz-text-code-muted: var(--nz-text-code-muted);
   --color-nz-text-critical: var(--nz-text-critical);
   --color-nz-text-disabled: var(--nz-text-disabled);
   --color-nz-text-info: var(--nz-text-info);
   --color-nz-text-inverse: var(--nz-text-inverse);
+  --color-nz-text-inverse-accent: var(--nz-text-inverse-accent);
   --color-nz-text-on-accent: var(--nz-text-on-accent);
   --color-nz-text-on-brand: var(--nz-text-on-brand);
   --color-nz-text-on-critical: var(--nz-text-on-critical);
+  --color-nz-text-on-dark: var(--nz-text-on-dark);
   --color-nz-text-primary: var(--nz-text-primary);
   --color-nz-text-secondary: var(--nz-text-secondary);
   --color-nz-text-success: var(--nz-text-success);
@@ -76,6 +84,7 @@
   --radius-nz-sm: var(--nz-radius-sm);
   --radius-nz-xl: var(--nz-radius-xl);
   --radius-nz-xs: var(--nz-radius-xs);
+  --shadow-nz-0: var(--nz-elevation-0);
   --shadow-nz-1: var(--nz-elevation-1);
   --shadow-nz-2: var(--nz-elevation-2);
   --shadow-nz-3: var(--nz-elevation-3);

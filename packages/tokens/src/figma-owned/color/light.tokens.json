@@ -13,6 +13,32 @@
           }
         }
       },
+      "accent-hover": {
+        "$type": "color",
+        "$value": "{color.p.lime.400}",
+        "$description": "Accent button hover. Light rest lime/300 → hover lime/400; Dark rest lime/400 → hover lime/300.",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:7351:11",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "bg/accent-hover",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL"]
+          }
+        }
+      },
+      "accent-pressed": {
+        "$type": "color",
+        "$value": "{color.p.lime.500}",
+        "$description": "Accent button pressed. text/on-accent stays ≥ 6:1.",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:7351:12",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "bg/accent-pressed",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL"]
+          }
+        }
+      },
       "accent-subtle": {
         "$type": "color",
         "$value": "{color.p.lime.50}",
@@ -97,6 +123,32 @@
           }
         }
       },
+      "code": {
+        "$type": "color",
+        "$value": "{color.p.neutral.900}",
+        "$description": "Code surfaces. Always dark in both modes.",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:7424:8334",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "bg/code",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL"]
+          }
+        }
+      },
+      "code-elevated": {
+        "$type": "color",
+        "$value": "{color.p.neutral.850}",
+        "$description": "Active tab / pressed state on code surfaces.",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:7424:8335",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "bg/code-elevated",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL"]
+          }
+        }
+      },
       "critical": {
         "$type": "color",
         "$value": "{color.p.red.600}",
@@ -105,6 +157,19 @@
             "variableId": "VariableID:737:134",
             "collectionId": "VariableCollectionId:737:113",
             "name": "bg/critical",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL"]
+          }
+        }
+      },
+      "critical-hover": {
+        "$type": "color",
+        "$value": "{color.p.red.700}",
+        "$description": "Critical button hover + pressed. White text 8.26:1.",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:7351:13",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "bg/critical-hover",
             "scopes": ["FRAME_FILL", "SHAPE_FILL"]
           }
         }
@@ -205,6 +270,24 @@
           }
         }
       },
+      "scrim": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.09411764705882353, 0.10588235294117647, 0.09803921568627451],
+          "alpha": 0.32,
+          "hex": "#181b19"
+        },
+        "$description": "Modal / drawer backdrop. neutral/900 @ 32% (Light), black @ 60% (Dark).",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:7351:23",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "bg/scrim",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL"]
+          }
+        }
+      },
       "subtle": {
         "$type": "color",
         "$value": "{color.p.neutral.25}",
@@ -279,6 +362,32 @@
           }
         }
       },
+      "control": {
+        "$type": "color",
+        "$value": "{color.p.neutral.450}",
+        "$description": "Edges of inputs, selects, checkboxes, radios, switch-off track. ≥ 3:1 (WCAG 1.4.11).",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:7351:17",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "border/control",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL", "STROKE_COLOR"]
+          }
+        }
+      },
+      "control-hover": {
+        "$type": "color",
+        "$value": "{color.p.neutral.500}",
+        "$description": "Hover edge of form controls.",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:7351:18",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "border/control-hover",
+            "scopes": ["STROKE_COLOR"]
+          }
+        }
+      },
       "critical": {
         "$type": "color",
         "$value": "{color.p.red.500}",
@@ -341,7 +450,7 @@
       },
       "warning": {
         "$type": "color",
-        "$value": "{color.p.amber.500}",
+        "$value": "{color.p.amber.600}",
         "$extensions": {
           "dev.nizivo.figma": {
             "variableId": "VariableID:737:154",
@@ -355,8 +464,8 @@
     "chart": {
       "cat-1": {
         "$type": "color",
-        "$value": "{color.p.viz.green-500}",
-        "$description": "Validated categorical slot (CVD ΔE≥14, light+dark). Fixed order, never cycled; 4th+ series fold into chart/neutral &quot;Other&quot;.",
+        "$value": "{color.p.green.700}",
+        "$description": "Category 1. Light green/700 (8.51) — darker than cat-2 so the pair separates by lightness, not hue alone.",
         "$extensions": {
           "dev.nizivo.figma": {
             "variableId": "VariableID:747:239",
@@ -368,8 +477,8 @@
       },
       "cat-2": {
         "$type": "color",
-        "$value": "{color.p.viz.lime-500}",
-        "$description": "Validated categorical slot (CVD ΔE≥14, light+dark). Fixed order, never cycled; 4th+ series fold into chart/neutral &quot;Other&quot;.",
+        "$value": "{color.p.lime.600}",
+        "$description": "Category 2. Light lime/600 (3.98 on white); was 2.17.",
         "$extensions": {
           "dev.nizivo.figma": {
             "variableId": "VariableID:747:240",
@@ -388,6 +497,19 @@
             "variableId": "VariableID:747:241",
             "collectionId": "VariableCollectionId:737:113",
             "name": "chart/cat-3",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL", "STROKE_COLOR"]
+          }
+        }
+      },
+      "critical": {
+        "$type": "color",
+        "$value": "{color.p.red.500}",
+        "$description": "Progress Critical fill. 3.77 / 3.11 on chart/track.",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:7351:20",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "chart/critical",
             "scopes": ["FRAME_FILL", "SHAPE_FILL", "STROKE_COLOR"]
           }
         }
@@ -418,7 +540,8 @@
       },
       "neutral": {
         "$type": "color",
-        "$value": "{color.p.neutral.300}",
+        "$value": "{color.p.neutral.500}",
+        "$description": "Comparison lines, “Other” slices, neutral progress. 4.31 on white / 6.87 on dark surface; was 1.37 / 1.41.",
         "$extensions": {
           "dev.nizivo.figma": {
             "variableId": "VariableID:737:165",
@@ -431,6 +554,7 @@
       "primary": {
         "$type": "color",
         "$value": "{color.p.green.600}",
+        "$description": "Main series. Dark moved to green/300 (7.58) so chart/secondary can dim against it.",
         "$extensions": {
           "dev.nizivo.figma": {
             "variableId": "VariableID:737:162",
@@ -442,7 +566,8 @@
       },
       "secondary": {
         "$type": "color",
-        "$value": "{color.p.green.200}",
+        "$value": "{color.p.green.400}",
+        "$description": "Second series and dimmed bars on hover. 3.26 on white / 3.72 on dark surface (WCAG 1.4.11).",
         "$extensions": {
           "dev.nizivo.figma": {
             "variableId": "VariableID:737:163",
@@ -452,9 +577,23 @@
           }
         }
       },
+      "success": {
+        "$type": "color",
+        "$value": "{color.p.green.500}",
+        "$description": "Progress / Meter Success fill. 4.07 / 5.87 on chart/track.",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:7351:21",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "chart/success",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL", "STROKE_COLOR"]
+          }
+        }
+      },
       "tertiary": {
         "$type": "color",
-        "$value": "{color.p.lime.400}",
+        "$value": "{color.p.lime.600}",
+        "$description": "Highlight series. Light lime/600 (3.98); was 1.75.",
         "$extensions": {
           "dev.nizivo.figma": {
             "variableId": "VariableID:737:164",
@@ -472,6 +611,19 @@
             "variableId": "VariableID:737:166",
             "collectionId": "VariableCollectionId:737:113",
             "name": "chart/track",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL", "STROKE_COLOR"]
+          }
+        }
+      },
+      "warning": {
+        "$type": "color",
+        "$value": "{color.p.amber.600}",
+        "$description": "Progress Warning fill. 3.22 / 5.50 on chart/track.",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:7351:19",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "chart/warning",
             "scopes": ["FRAME_FILL", "SHAPE_FILL", "STROKE_COLOR"]
           }
         }
@@ -498,6 +650,19 @@
             "variableId": "VariableID:737:161",
             "collectionId": "VariableCollectionId:737:113",
             "name": "icon/critical",
+            "scopes": ["SHAPE_FILL", "STROKE_COLOR"]
+          }
+        }
+      },
+      "info": {
+        "$type": "color",
+        "$value": "{color.p.blue.600}",
+        "$description": "Alert Info icon. Light 6.01 on bg/info-subtle, Dark 4.65 on bg/hover.",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:7351:16",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "icon/info",
             "scopes": ["SHAPE_FILL", "STROKE_COLOR"]
           }
         }
@@ -552,7 +717,7 @@
       },
       "warning": {
         "$type": "color",
-        "$value": "{color.p.amber.500}",
+        "$value": "{color.p.amber.600}",
         "$extensions": {
           "dev.nizivo.figma": {
             "variableId": "VariableID:737:160",
@@ -573,6 +738,32 @@
             "collectionId": "VariableCollectionId:737:113",
             "name": "text/brand",
             "scopes": ["TEXT_FILL"]
+          }
+        }
+      },
+      "code": {
+        "$type": "color",
+        "$value": "{color.p.neutral.50}",
+        "$description": "Text and icons on bg/code (≥ 15:1).",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:7424:8336",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "text/code",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL", "STROKE_COLOR", "TEXT_FILL"]
+          }
+        }
+      },
+      "code-muted": {
+        "$type": "color",
+        "$value": "{color.p.neutral.400}",
+        "$description": "Prompts, inactive tabs, comments on bg/code (≥ 6:1).",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:7424:8337",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "text/code-muted",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL", "STROKE_COLOR", "TEXT_FILL"]
           }
         }
       },
@@ -624,6 +815,19 @@
           }
         }
       },
+      "inverse-accent": {
+        "$type": "color",
+        "$value": "{color.p.lime.300}",
+        "$description": "Action text on bg/inverse surfaces (Toast). Light 11.80:1 on neutral/900, Dark 8.51:1 on white. Replaces the proposed text/accent, whose modes were inverted (2.04 / 1.47).",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:7351:15",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "text/inverse-accent",
+            "scopes": ["TEXT_FILL"]
+          }
+        }
+      },
       "on-accent": {
         "$type": "color",
         "$value": "{color.p.green.950}",
@@ -648,6 +852,32 @@
           }
         }
       },
+      "on-critical": {
+        "$type": "color",
+        "$value": "{color.p.neutral.0}",
+        "$description": "Text on bg/critical. 5.69:1 on red/600.",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:7351:14",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "text/on-critical",
+            "scopes": ["TEXT_FILL"]
+          }
+        }
+      },
+      "on-dark": {
+        "$type": "color",
+        "$value": "{color.p.neutral.0}",
+        "$description": "Text on surfaces that are dark in both modes (dark shaders, photography scrims). White in Light and Dark.",
+        "$extensions": {
+          "dev.nizivo.figma": {
+            "variableId": "VariableID:7425:12347",
+            "collectionId": "VariableCollectionId:737:113",
+            "name": "text/on-dark",
+            "scopes": ["FRAME_FILL", "SHAPE_FILL", "STROKE_COLOR", "TEXT_FILL"]
+          }
+        }
+      },
       "primary": {
         "$type": "color",
         "$value": "{color.p.neutral.900}",
@@ -662,7 +892,7 @@
       },
       "secondary": {
         "$type": "color",
-        "$value": "{color.p.neutral.600}",
+        "$value": "{color.p.neutral.700}",
         "$extensions": {
           "dev.nizivo.figma": {
             "variableId": "VariableID:737:137",
@@ -686,7 +916,7 @@
       },
       "tertiary": {
         "$type": "color",
-        "$value": "{color.p.neutral.500}",
+        "$value": "{color.p.neutral.600}",
         "$extensions": {
           "dev.nizivo.figma": {
             "variableId": "VariableID:737:138",

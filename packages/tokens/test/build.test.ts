@@ -121,7 +121,9 @@ describe('tokens.css', () => {
     expect(css).not.toContain('@property');
   });
 
-  test('the a11y overrides and proposals reach the CSS (plan §15.3)', () => {
+  // Figma adopted the a11y overrides and most proposals on 2026-10-18 with the same values, so these
+  // declarations now come from Figma; they guard against a sync that loses them.
+  test('the adopted a11y overrides and proposals reach the CSS (plan §15.3)', () => {
     const css = file('tokens.css');
     for (const declaration of [
       '--nz-text-secondary: light-dark(var(--nz-p-neutral-700), var(--nz-p-neutral-300));',
@@ -136,8 +138,9 @@ describe('tokens.css', () => {
       '--nz-border-control: light-dark(var(--nz-p-neutral-450), var(--nz-p-neutral-500));',
       '--nz-bg-scrim: light-dark(rgb(24 27 25 / 0.32), rgb(0 0 0 / 0.6));',
       '--nz-text-on-critical: var(--nz-p-neutral-0);',
-      '--nz-chart-warning: var(--nz-icon-warning);',
-      '--nz-chart-critical: var(--nz-chart-negative);',
+      '--nz-chart-warning: light-dark(var(--nz-p-amber-600), var(--nz-p-amber-500));',
+      '--nz-chart-critical: var(--nz-p-red-500);',
+      '--nz-text-accent: light-dark(var(--nz-p-green-700), var(--nz-p-lime-300));',
       '--nz-p-neutral-450: #828a81;',
       '--nz-p-neutral-925: #151816;',
       '--nz-p-red-400: #e47962;',
@@ -148,6 +151,22 @@ describe('tokens.css', () => {
     ]) {
       expect(css).toContain(declaration);
     }
+  });
+
+  test('Figma owns the spinner duration and the focus rings follow the theme (2026-10-18 sync)', () => {
+    const css = file('tokens.css');
+    // M34: duration/spin is 800 ms, and 0 ms (the spinner stops) under reduced motion, both scopes.
+    expect(css).toContain('--nz-duration-spin: 800ms;');
+    expect(css.match(/--nz-duration-spin: 0ms;/g)).toHaveLength(2);
+    // M33: Figma deleted border-width/strong; every border is 1 px.
+    expect(css).not.toContain('--nz-border-width-strong');
+    // The bound layers print as var(), in CSS paint order (Figma's last effect first).
+    expect(css).toContain(
+      '--nz-focus-ring: 0 0 0 2px var(--nz-bg-surface), 0 0 0 4px var(--nz-border-focus), 0 0 0 8px rgb(46 130 88 / 0.16);',
+    );
+    expect(css).toContain(
+      '--nz-focus-ring-critical: 0 0 0 2px var(--nz-bg-surface), 0 0 0 4px var(--nz-border-focus), 0 0 0 8px rgb(214 74 46 / 0.22);',
+    );
   });
 
   test('the spring pair comes from @nizivo/tooling/spring and matches its golden (plan §13.1)', () => {

@@ -35,13 +35,50 @@ afterAll(() => {
 /** A copy of src/ with `edit` applied to one JSON file, checked against the real build. */
 type Edit = (json: any) => void;
 
+/**
+ * Figma adopted every a11y override on 2026-10-18 (they were deleted), so the override checks run
+ * on a copy of src/ that holds this one: light text/tertiary one step deeper than Figma's n600.
+ * `ladder`, so the contrast redundancy rule (Figma's value passes) does not fire until a test asks.
+ */
+const OVERRIDE = {
+  color: {
+    text: {
+      tertiary: {
+        $type: 'color',
+        $value: '{color.p.neutral.700}',
+        $extensions: {
+          'app.nizivo.override': {
+            figmaVariableId: 'VariableID:737:138',
+            figmaVariable: 'Nizivo Color/text/tertiary (Light)',
+            figmaValueAtOverride: '{color.p.neutral.600}',
+            kind: 'ladder',
+            reason: 'Test fixture',
+            wcag: [],
+            issue: null,
+            approvedBy: ['maintainer'],
+            expires: '2027-01-31',
+          },
+        },
+      },
+    },
+  },
+};
+const OVERRIDE_FILE = 'code-owned/a11y/light.overrides.tokens.json';
+
 /** WCAG ratio of two CSS colours, as the matrix shows it. */
 const ratio = (a: string, b: string): string => shown(contrast(parseColor(a), parseColor(b)));
 
-function checkEdited(file: string, edit: Edit, today = TODAY) {
+/** A copy of src/ with the fixture override in it. */
+function srcWithOverride(): string {
   const src = mkdtempSync(join(tmpdir(), 'nz-tokens-src-'));
   copies.push(src);
   cpSync(join(PACKAGE, 'src'), src, { recursive: true });
+  writeFileSync(join(src, OVERRIDE_FILE), JSON.stringify(OVERRIDE));
+  return src;
+}
+
+function checkEdited(file: string, edit: Edit, today = TODAY) {
+  const src = srcWithOverride();
   const path = join(src, file);
   const json: unknown = JSON.parse(readFileSync(path, 'utf8'));
   edit(json);
@@ -81,9 +118,10 @@ describe('the contrast matrix on the built tokens.css', () => {
     expect(report.errors).toEqual([]);
     expect(report.warnings).toEqual([]);
     const checked = report.results.filter((r) => r.threshold !== undefined);
-    expect(checked.length).toBe(62);
-    expect(report.sources.overrides).toHaveLength(14);
-    expect(report.sources.proposals).toHaveLength(19);
+    expect(checked.length).toBe(66);
+    // Figma adopted the 14 overrides and 18 of the proposals on 2026-10-18; text/accent remains.
+    expect(report.sources.overrides).toHaveLength(0);
+    expect(report.sources.proposals.map((p) => p.id)).toEqual(['color.text.accent']);
   });
 
   test('CONTRAST.md is the current matrix (pnpm tokens:contrast rewrites it)', () => {
@@ -92,7 +130,7 @@ describe('the contrast matrix on the built tokens.css', () => {
     );
   });
 
-  test('without the overrides, the plan §15.2 failures come back', () => {
+  test("Figma's values from before it adopted the overrides still fail (plan §15.2)", () => {
     const pairs = readPairs();
     const figma = {
       '--nz-text-tertiary': 'var(--nz-p-neutral-500)',
@@ -103,7 +141,8 @@ describe('the contrast matrix on the built tokens.css', () => {
       measure(css, pairs, scheme, figma)
         .filter((r) => !r.pass)
         .map((r) => r.fg);
-    expect(failing('light')).toEqual(['text-tertiary', 'icon-warning', 'chart-warning']);
+    // chart/warning is Figma's own amber/600 since 2026-10-18, no longer an alias of icon/warning.
+    expect(failing('light')).toEqual(['text-tertiary', 'icon-warning']);
     expect(failing('dark')).toEqual(['text-tertiary', 'text-critical']);
   });
 
@@ -121,7 +160,8 @@ describe('the contrast matrix on the built tokens.css', () => {
 
 describe('override and proposal checks (plan §15.4 CI rules 2–4)', () => {
   test('every override names the Figma variable and value it replaces', () => {
-    const sources = readSources();
+    const sources = readSources(srcWithOverride());
+    expect(sources.overrides).toHaveLength(1);
     for (const o of sources.overrides) {
       const figma = sources.figmaVariables.get(
         `color/${o.scheme}.tokens.json#${o.figmaVariableId}`,
@@ -133,52 +173,54 @@ describe('override and proposal checks (plan §15.4 CI rules 2–4)', () => {
   });
 
   test('drift: Figma changed the overridden variable', () => {
-    const report = checkEdited('figma-owned/color/dark.tokens.json', (json) => {
-      json.color.text.critical.$value = '{color.p.red.600}';
+    expect(checkEdited(OVERRIDE_FILE, () => {}).errors).toEqual([]);
+    const report = checkEdited('figma-owned/color/light.tokens.json', (json) => {
+      json.color.text.tertiary.$value = '{color.p.neutral.500}';
     });
     expect(report.errors).toContain(
-      'dark override color.text.critical: Figma changed this token ("{color.p.red.500}" → "{color.p.red.600}"); re-evaluate the override',
+      'light override color.text.tertiary: Figma changed this token ("{color.p.neutral.600}" → "{color.p.neutral.500}"); re-evaluate the override',
     );
   });
 
   test('redundancy: Figma adopted the value, or a contrast override no longer needs to exist', () => {
     const adopted = checkEdited('figma-owned/color/light.tokens.json', (json) => {
-      json.color.text.secondary.$value = '{color.p.neutral.700}';
+      json.color.text.tertiary.$value = '{color.p.neutral.700}';
     });
     expect(adopted.errors).toContain(
-      'light override color.text.secondary: Figma now has this value; delete the override',
+      'light override color.text.tertiary: Figma now has this value; delete the override',
     );
 
-    const passes = checkEdited('code-owned/a11y/dark.overrides.tokens.json', (json) => {
-      const meta = json.color.icon.critical.$extensions['app.nizivo.override'];
+    const passes = checkEdited(OVERRIDE_FILE, (json) => {
+      const meta = json.color.text.tertiary.$extensions['app.nizivo.override'];
       meta.kind = 'contrast';
     });
     expect(passes.errors).toContain(
-      "dark override color.icon.critical: Figma's value passes on its own; delete the override",
+      "light override color.text.tertiary: Figma's value passes on its own; delete the override",
     );
   });
 
   test('redundancy: Figma now defines a proposed variable', () => {
     const report = checkEdited('figma-owned/color/light.tokens.json', (json) => {
-      json.color.bg.surface.$extensions['dev.nizivo.figma'].name = 'bg/scrim';
+      json.color.bg.surface.$extensions['dev.nizivo.figma'].name = 'text/accent';
     });
     expect(report.errors).toContain(
-      'proposal color.bg.scrim: Figma now defines bg/scrim; delete the proposal',
+      'proposal color.text.accent: Figma now defines text/accent; delete the proposal',
     );
   });
 
   test('expiry: warns 14 days ahead and fails after the date', () => {
-    const soon = check(css, { today: new Date('2027-01-20T09:00:00Z') });
+    const soon = checkEdited(OVERRIDE_FILE, () => {}, new Date('2027-01-20T09:00:00Z'));
     expect(soon.errors).toEqual([]);
     expect(soon.warnings).toContain(
       'light override color.text.tertiary expires on 2027-01-31 (11 days)',
     );
-    const late = check(css, { today: new Date('2027-02-01T09:00:00Z') });
+    expect(soon.warnings).toContain('proposal color.text.accent expires on 2027-01-31 (11 days)');
+    const late = checkEdited(OVERRIDE_FILE, () => {}, new Date('2027-02-01T09:00:00Z'));
     expect(late.errors).toContain(
       'light override color.text.tertiary expired on 2027-01-31; renew it with both owners or remove it',
     );
     expect(late.errors).toContain(
-      'proposal color.bg.scrim expired on 2027-01-31; renew it with both owners or remove it',
+      'proposal color.text.accent expired on 2027-01-31; renew it with both owners or remove it',
     );
   });
 
@@ -187,7 +229,7 @@ describe('override and proposal checks (plan §15.4 CI rules 2–4)', () => {
     ['issue', (meta: Record<string, unknown>) => delete meta.issue],
     ['an issue that is not a URL', (meta: Record<string, unknown>) => (meta.issue = '#12')],
   ])('metadata: an override without %s is rejected', (_, edit) => {
-    const report = checkEdited('code-owned/a11y/light.overrides.tokens.json', (json) => {
+    const report = checkEdited(OVERRIDE_FILE, (json) => {
       edit(json.color.text.tertiary.$extensions['app.nizivo.override']);
     });
     expect(

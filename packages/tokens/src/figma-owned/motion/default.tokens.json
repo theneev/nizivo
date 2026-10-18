@@ -92,6 +92,22 @@
         }
       }
     },
+    "fade": {
+      "$type": "duration",
+      "$value": {
+        "value": 140,
+        "unit": "ms"
+      },
+      "$description": "Opacity-only fades; survives Reduced motion (Q34).",
+      "$extensions": {
+        "dev.nizivo.figma": {
+          "variableId": "VariableID:7351:24",
+          "collectionId": "VariableCollectionId:737:203",
+          "name": "duration/fade",
+          "scopes": []
+        }
+      }
+    },
     "fast": {
       "$type": "duration",
       "$value": {
@@ -122,6 +138,22 @@
         }
       }
     },
+    "pulse": {
+      "$type": "duration",
+      "$value": {
+        "value": 2000,
+        "unit": "ms"
+      },
+      "$description": "Skeleton / indeterminate progress loop; stops in Reduced.",
+      "$extensions": {
+        "dev.nizivo.figma": {
+          "variableId": "VariableID:7351:25",
+          "collectionId": "VariableCollectionId:737:203",
+          "name": "duration/pulse",
+          "scopes": []
+        }
+      }
+    },
     "slow": {
       "$type": "duration",
       "$value": {
@@ -148,6 +180,22 @@
           "variableId": "VariableID:737:208",
           "collectionId": "VariableCollectionId:737:203",
           "name": "duration/slower",
+          "scopes": []
+        }
+      }
+    },
+    "spin": {
+      "$type": "duration",
+      "$value": {
+        "value": 800,
+        "unit": "ms"
+      },
+      "$description": "One spinner rotation (linear). 0 in Reduced: the spinner stops and a text label shows.",
+      "$extensions": {
+        "dev.nizivo.figma": {
+          "variableId": "VariableID:7369:175",
+          "collectionId": "VariableCollectionId:737:203",
+          "name": "duration/spin",
           "scopes": []
         }
       }
@@ -245,6 +293,19 @@
     }
   },
   "scale": {
+    "enter": {
+      "$type": "number",
+      "$value": 0.96,
+      "$description": "Overlay enter scale (Dropdown, Popover); none in Reduced.",
+      "$extensions": {
+        "dev.nizivo.figma": {
+          "variableId": "VariableID:7351:26",
+          "collectionId": "VariableCollectionId:737:203",
+          "name": "scale/enter",
+          "scopes": []
+        }
+      }
+    },
     "hover": {
       "$type": "number",
       "$value": 1.02,
