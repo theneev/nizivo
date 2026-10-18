@@ -4,10 +4,11 @@
       "accent": {
         "$type": "color",
         "$value": "{color.p.green.700}",
+        "$deprecated": "Figma will not add text/accent (NIZ-125). Use text/brand on page surfaces and text/inverse-accent on bg/inverse. Removed in 0.2.0.",
         "$extensions": {
           "app.nizivo.proposal": {
             "figmaVariable": "text/accent",
-            "reason": "Toast action text; Figma used bg/accent as text (1.75:1 on white in the dark Toast). Light green/700, dark lime/300",
+            "reason": "Kept only so 0.1.x does not lose a published name; no component reads it since M38 (Heading and Text tone=\"accent\" use text/brand). Light green/700, dark lime/300",
             "wcag": ["1.4.3"],
             "approvedBy": ["maintainer"],
             "expires": "2027-01-31"

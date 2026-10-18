@@ -78,7 +78,7 @@
   }
 
   .nz-heading[data-tone='accent'] {
-    --_nz-heading-fg: var(--nz-text-accent);
+    --_nz-heading-fg: var(--nz-text-brand);
   }
 
   .nz-heading[data-tone='success'] {

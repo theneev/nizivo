@@ -1919,7 +1919,8 @@
             "aliasOf": "color.p.lime.300"
           }
         }
-      }
+      },
+      "deprecated": "Figma will not add text/accent (NIZ-125). Use text/brand on page surfaces and text/inverse-accent on bg/inverse. Removed in 0.2.0."
     },
     "color.text.brand": {
       "type": "color",

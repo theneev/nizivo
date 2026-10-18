@@ -159,7 +159,7 @@
   }
 
   .nz-text[data-tone='accent'] {
-    --_nz-text-fg: var(--nz-text-accent);
+    --_nz-text-fg: var(--nz-text-brand);
   }
 
   .nz-text[data-tone='success'] {

@@ -42,7 +42,12 @@
       "role": "text",
       "use": "Menu checked item label (also highlighted, on bg-hover)"
     },
-    { "fg": "text-accent", "on": ["panels"], "role": "text", "use": "Toast action" },
+    {
+      "fg": "text-accent",
+      "on": ["panels"],
+      "role": "text",
+      "use": "No component since M38 (deprecated; removed in 0.2.0); guards the published value"
+    },
     {
       "fg": "text-inverse-accent",
       "on": ["bg-inverse"],

@@ -26,7 +26,10 @@ export type TextVariant =
   | 'mono-m'
   | 'mono-m-strong';
 
-/** The `text/*` colour tokens. `accent` and `on-critical` are code-owned proposals (§15.3). */
+/**
+ * The `text/*` colour tokens. `accent` paints `--nz-text-brand`, since Figma has no accent text for page
+ * surfaces (M38; `--nz-text-inverse-accent` is for `bg/inverse`).
+ */
 export type TextTone =
   | 'primary'
   | 'secondary'

@@ -121,6 +121,6 @@ Existing Figma variables re-pointed in `src/code-owned/a11y/*.overrides.tokens.j
 
 Variables and styles Figma does not have yet, in `src/code-owned/proposals*` (plan §7.6).
 
-| Token       | Figma name to create | Value                          | Expires    | Reason                                                                                                              |
-| ----------- | -------------------- | ------------------------------ | ---------- | ------------------------------------------------------------------------------------------------------------------- |
-| text-accent | text/accent          | light green.700, dark lime.300 | 2027-01-31 | Toast action text; Figma used bg/accent as text (1.75:1 on white in the dark Toast). Light green/700, dark lime/300 |
+| Token       | Figma name to create | Value                          | Expires    | Reason                                                                                                                                                             |
+| ----------- | -------------------- | ------------------------------ | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| text-accent | text/accent          | light green.700, dark lime.300 | 2027-01-31 | Kept only so 0.1.x does not lose a published name; no component reads it since M38 (Heading and Text tone="accent" use text/brand). Light green/700, dark lime/300 |
