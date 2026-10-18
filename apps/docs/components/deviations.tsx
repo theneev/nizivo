@@ -36,6 +36,14 @@ function Source({ path }: { path: string }): JSX.Element {
 
 export function OverridesTable(): JSX.Element {
   const rows = overrides();
+  if (rows.length === 0) {
+    return (
+      <p>
+        None. Every Figma variable is used as Figma defines it: the 14 contrast overrides the code
+        carried were adopted in Figma with the same values, and removed from the code on 2026-10-18.
+      </p>
+    );
+  }
   return (
     <>
       <p>

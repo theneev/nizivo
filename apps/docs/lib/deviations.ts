@@ -92,10 +92,13 @@ export interface OverrideRow {
 export function overrides(): OverrideRow[] {
   const dir = 'packages/tokens/src/code-owned/a11y';
   const rows: OverrideRow[] = [];
-  for (const file of readdirSync(repoPath(dir))
+  const files = readdirSync(repoPath(dir))
     .filter((f) => f.endsWith('.overrides.tokens.json'))
     .toSorted()
-    .toReversed()) {
+    .toReversed();
+  // Zero rows is a real state (Figma adopted all 14 on 2026-10-18); zero files is a broken path.
+  if (files.length === 0) throw new Error(`docs: no *.overrides.tokens.json files in ${dir}`);
+  for (const file of files) {
     const theme = file.replace('.overrides.tokens.json', '');
     for (const [path, node] of tokensIn(readRepoJson(`${dir}/${file}`, isRecord))) {
       const meta = node.$extensions?.['app.nizivo.override'];
@@ -112,7 +115,6 @@ export function overrides(): OverrideRow[] {
       });
     }
   }
-  if (rows.length === 0) throw new Error(`docs: no overrides found in ${dir}`);
   return rows;
 }
 

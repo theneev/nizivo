@@ -889,7 +889,25 @@ async function deviationsChecks(browser: Browser): Promise<void> {
     page.locator(`table[aria-label="${label}"] tbody tr`).count();
   const overrides = await rows('Overrides');
   const proposals = await rows('Proposals');
-  check(overrides > 0, `deviations: ${overrides} override rows`);
+  // The overrides table lists every entry of the a11y override files; with none left (Figma adopted
+  // all 14 on 2026-10-18) the page says so instead of drawing an empty table.
+  const overrideDir = join(import.meta.dirname, '../../../packages/tokens/src/code-owned/a11y');
+  const expectedOverrides = readdirSync(overrideDir)
+    .filter((file) => file.endsWith('.overrides.tokens.json'))
+    .reduce(
+      (sum, file) =>
+        sum +
+        (readFileSync(join(overrideDir, file), 'utf8').match(/"app\.nizivo\.override"/g) ?? [])
+          .length,
+      0,
+    );
+  check(
+    overrides === expectedOverrides &&
+      (expectedOverrides > 0 ||
+        (await page.getByText('None. Every Figma variable is used as Figma defines it').count()) ===
+          1),
+    `deviations: ${overrides} override rows (${expectedOverrides} in the override files)`,
+  );
   check(proposals > 0, `deviations: ${proposals} proposal rows`);
   const text = (await page.locator('article').textContent()) ?? '';
   // Every degradation (§18.2) and every builder default (§23.4) the plan holds is on the page.
