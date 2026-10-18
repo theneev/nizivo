@@ -3,7 +3,7 @@
   "status": "stable",
   "tier": "server",
   "parts": [],
-  "exports": ["Field", "useFieldControl"],
+  "exports": ["Field", "FieldStatic", "useFieldControl"],
   "cssDeps": ["base", "inline-error"],
   "variants": {},
   "figma": {

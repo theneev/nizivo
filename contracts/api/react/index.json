@@ -496,6 +496,24 @@
     },
     {
       "definedIn": "./field",
+      "import": "import { FieldStatic } from '@nizivo/react'",
+      "kind": "component",
+      "name": "FieldStatic"
+    },
+    {
+      "definedIn": "./field",
+      "import": "import type { FieldStaticProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "FieldStaticProps"
+    },
+    {
+      "definedIn": "./field",
+      "import": "import type { FieldStaticWiring } from '@nizivo/react'",
+      "kind": "type",
+      "name": "FieldStaticWiring"
+    },
+    {
+      "definedIn": "./field",
       "import": "import type { FieldValidatable } from '@nizivo/react'",
       "kind": "type",
       "name": "FieldValidatable"

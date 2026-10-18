@@ -2,16 +2,21 @@
 
 How a form control plugs into `Field` (ARCHITECTURE.md §10.6, §16.1, D16). Input, Textarea,
 Checkbox, Switch, SegmentedControl, NativeSelect and third-party controls build on this API;
-RadioGroup and checkbox groups build on `Fieldset` (last section). Tests that pin it:
-`test/ssr/field.test.tsx` (RSC boundary, markup, precedence), `test/browser/field.spec.tsx`
+RadioGroup and checkbox groups build on `Fieldset` (last section); `FieldStatic` is the same anatomy
+with no client code at all (M31, section "FieldStatic"). Tests that pin it:
+`test/ssr/field.test.tsx` (RSC boundary, module graphs, markup, precedence, FieldStatic's HTML and
+types), `test/browser/field.spec.tsx`
 (hydration, native validation; Chromium and WebKit) and `test/browser/field-announcer.spec.tsx`
 (the announcer; Chromium, WebKit and Firefox).
 
 ## The shape
 
 ```
-Field (field.tsx, NO directive, server-safe; calls useId and nothing else)
- ├─ children is a function ─► renders the anatomy itself, calls children(FieldControlProps)
+field-static.tsx (NO directive; imports no client module): the anatomy, fieldRootProps(), the
+                  types, and FieldStatic, which renders staticField() and nothing else
+Field (field.tsx, NO directive, server-safe; calls useId and nothing else; imports FieldScope)
+ ├─ children is a function ─► staticField(): the anatomy, children(FieldControlProps)
+ ├─ a NativeSelect directly ─► staticField(), the select cloned with the same props
  └─ otherwise ─────────────► <FieldScope anatomy name messages>{children}</FieldScope>
                               field-scope.client.tsx ('use client'):
                                ├─ provides the context useFieldControl() reads
@@ -26,7 +31,7 @@ provides none. It computes the ids with `useId` (the one hook a server part may 
 them, with the flags and the `label` / `description` / `error` nodes, to the `FieldScope` client
 leaf as **serialisable props** (a test walks them). FieldScope is the provider, so a client control
 rendered inside it reads the context whether `<Field>` was written in a Server or a Client
-Component. Both paths render one DOM shape, from `fieldRootProps()` in `field.tsx`:
+Component. Every path renders one DOM shape, from `fieldRootProps()` in `field-static.tsx`:
 
 ```
 div.nz-field             data-slot="field"  [data-disabled] [data-readonly] [data-required] [data-invalid] [data-validate-on]
@@ -314,8 +319,101 @@ takes the same path: Field recognises it by an internal mark on the component (`
 `_internal/field.ts`) and passes it the same props, its own winning (an explicit `false` included)
 and `aria-describedby` joined; its own `id`, if any, becomes the label's `for`. A NativeSelect inside a
 consumer's own wrapper component is not recognised: use the function child there. `field.tsx` still imports the FieldScope
-module, so a bundler that collects every `'use client'` module reachable from a route (Next) may
-load FieldScope's chunk on such a page without running it.
+module, so a bundler that collects every `'use client'` module reachable from a route ships
+FieldScope's chunk on such a page without running it (W7 measured `/field-zero-js` on the Next
+fixture: +3,035 B gzip under Turbopack prod, +7,800 B under `next dev`, nothing under webpack).
+`FieldStatic` (next section) is the same render from a module that imports no client leaf.
+
+## FieldStatic (M31): the anatomy with no client code
+
+```tsx
+import { FieldStatic } from '@nizivo/react/field';
+
+<FieldStatic label="Country" description="Where the order ships" error={state.errors?.country}>
+  {(control) => (
+    <NativeSelect {...control} defaultValue="IN">
+      …
+    </NativeSelect>
+  )}
+</FieldStatic>;
+```
+
+`FieldStatic` is Field's function-child path as its own component, exported from the same
+`./field` subpath (M31 amends M13's one export per subpath for the static variants only). Its
+module, `field-static.tsx`, imports no `'use client'` module (a graph test pins it, and a
+react-server test loads it with nothing mocked), so a page that imports it from `./field` reaches
+no Field client code. The root barrel is the same only under Turbopack or `optimizePackageImports`:
+plain webpack ships every client module the barrel lists. The Next fixture's `/field-static` page
+records 0 B over `/button-only` with no client marker in Turbopack, webpack, webpack with
+`optimizePackageImports` and `next dev` (fixtures/next/results, week 9).
+
+**Same markup.** It renders through `staticField()`, the code Field's function child and a
+directly placed NativeSelect use, so for the props they share, the HTML, the ids (`useId`, or
+`ids`), the classes and the CSS are identical (a test compares them byte for byte). Field's
+function child stays: it is public API and the same code. The one difference is the module graph:
+`<Field>{fn}</Field>` imports FieldScope's module, `<FieldStatic>{fn}</FieldStatic>` does not.
+
+**What it does not do**, since each of these needs client code:
+
+| Field                                                            | FieldStatic                                                           |
+| ---------------------------------------------------------------- | --------------------------------------------------------------------- |
+| provides context: Input, Checkbox, Select… wire themselves       | no context: the function child spreads `control` on the element       |
+| native messages inline (`messages`), focus to the first error    | the browser's own bubble; `messages` and `validateOn` are type errors |
+| `data-validate-on`, `validateOn="blur"`                          | neither                                                               |
+| the announcer (§16.5's one exception)                            | none: the focus move to the invalid control reads the error           |
+| `labelBehavior: 'focus'` for button controls                     | none: put `aria-labelledby={field.labelledBy}` on the button          |
+| a control may be placed directly (a client one, or NativeSelect) | `children` must be a function: an element is a type error             |
+
+**The consumer wires the control.** The function receives two arguments:
+
+- `control: FieldControlProps`: `id`, `name`, `required`, `disabled`, `readOnly`,
+  `aria-describedby` and `aria-invalid`, only the ones set (the object a Field function child
+  gets). Spread it on the element that holds the value: `<input {...control} />`,
+  `<NativeSelect {...control}>`, `<textarea {...control} />`.
+- `field: FieldStaticWiring`: `ids` (every id: `control`, `label`, `description`, `error`),
+  `labelledBy` (the label's id while a label renders), `describedBy`, and the state (`invalid`,
+  `required`, `disabled`, `readOnly`). For what `control` cannot cover: a group root (with `group`
+  on the FieldStatic, so the label has no `for`), a button, a count joined to `aria-describedby`.
+
+```tsx
+<FieldStatic label="Delivery window" group required error={errors.window}>
+  {(control, field) => (
+    <div role="radiogroup" aria-labelledby={field.labelledBy} aria-describedby={field.describedBy}>
+      <label>
+        <input type="radio" name="window" value="am" required={control.required} /> Morning
+      </label>
+      <label>
+        <input type="radio" name="window" value="pm" required={control.required} /> Evening
+      </label>
+    </div>
+  )}
+</FieldStatic>
+```
+
+A Nizivo client control may still be rendered by the function (`{(control) => <Input {...control} />}`):
+its props are ordinary attributes, and Input and Textarea read the `aria-invalid` they receive, so
+they show their invalid look as in a Field. But it is client code, so the page ships it anyway and
+gains nothing, and it shows no inline native message. Use Field there. An element child from plain
+JavaScript throws "FieldStatic: children must be a function".
+
+### Field or FieldStatic
+
+Use **FieldStatic** when the form is a Server Component, the control is a native element or a
+server-safe one (NativeSelect, `<input>`, `<textarea>`), and the browser's own validation bubble
+plus a server-returned `error` is enough. For example: a storefront's newsletter or "contact us"
+form, a search filter on a catalogue page, or a settings page posted to a Server Action that
+returns an `error` per field. The page ships no form JavaScript at all.
+
+Use **Field** when any of these matters: a Nizivo client control placed directly (Input with
+affixes, Textarea, Checkbox, Switch, SegmentedControl, Select), inline native messages in your own
+words (`messages`), `validateOn="blur"`, the announcer for an error that comes back while focus is
+in the field, or a button control whose label must focus it rather than press it. For example: a
+checkout address form with inline messages on blur and a Select for the state.
+
+Rule of thumb, for people and coding agents alike: start from **Field**; choose **FieldStatic** for
+a Server-Component form of native controls where shipping no client code matters. When the
+compiler rejects a FieldStatic (an element child, `messages`, `validateOn`), that is the signal to
+use Field.
 
 ## `Field` props
 
@@ -368,6 +466,9 @@ fieldset.nz-fieldset  data-slot="fieldset"  aria-describedby="{description} {err
 
 ## Shared helpers
 
+`field-static.tsx` (no directive, no client import): the anatomy every path renders
+(`fieldRootProps`, `fieldState`, `describedBy`, `fieldControlProps`, `resolveIds`, `staticField`)
+and the Field types, which `field.tsx` re-exports. It must never import `field.tsx` or FieldScope.
 `_internal/field.ts` (no directive): `presented(node)` (does an error or description node render
 anything) and `joinIds(...ids)` (an `aria-describedby` value, or `undefined`). A control that joins
 its own ids (a count, an affix) may use `joinIds`. No other shared control helper exists yet; add

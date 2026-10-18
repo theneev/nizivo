@@ -77,7 +77,7 @@ export type {
 } from './dialog/index';
 export { EmptyState } from './empty-state/index';
 export type { EmptyStateProps, EmptyStateTitleLevel } from './empty-state/index';
-export { Field, useFieldControl } from './field/index';
+export { Field, FieldStatic, useFieldControl } from './field/index';
 export type {
   FieldControl,
   FieldControlElementProps,
@@ -87,6 +87,8 @@ export type {
   FieldIds,
   FieldProps,
   FieldState,
+  FieldStaticProps,
+  FieldStaticWiring,
   FieldValidateOn,
   FieldValidityKey,
 } from './field/index';

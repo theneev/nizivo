@@ -104,20 +104,20 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 | Entry              | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | ------------------ | -------: | ---------: | ---------: | ----------: | -----------: |
-| `.`                |   86,290 |       84.3 |     72,898 |          93 |        8,942 |
+| `.`                |   86,523 |       84.5 |     73,003 |          93 |        8,709 |
 | /alert             |    1,282 |        1.3 |      1,187 |         1.4 |          151 |
 | /augment           |        0 |        0.0 |          0 |           0 |            — |
 | /badge             |      796 |        0.8 |        727 |         0.9 |          125 |
 | /button            |    1,275 |        1.2 |      1,177 |         1.4 |          158 |
 | /card              |    1,086 |        1.1 |        971 |         1.2 |          142 |
-| /checkbox          |    2,071 |        2.0 |      1,905 |         2.3 |          284 |
+| /checkbox          |    2,065 |        2.0 |      1,893 |         2.3 |          290 |
 | /config            |      165 |        0.2 |        152 |         0.2 |           39 |
 | /container         |      694 |        0.7 |        633 |         0.8 |          125 |
 | /contracts         |    1,021 |        1.0 |        915 |         1.1 |          105 |
 | /delta             |    1,012 |        1.0 |        932 |         1.1 |          114 |
 | /dialog            |   32,127 |       31.4 |     28,561 |          32 |          641 |
 | /empty-state       |      840 |        0.8 |        768 |           1 |          184 |
-| /field             |    3,463 |        3.4 |      3,153 |         3.9 |          530 |
+| /field             |    3,604 |        3.5 |      3,279 |         3.9 |          389 |
 | /fieldset          |    1,715 |        1.7 |      1,560 |         1.9 |          230 |
 | /grid              |      793 |        0.8 |        737 |         0.9 |          128 |
 | /heading           |      767 |        0.7 |        697 |         0.9 |          154 |
@@ -125,7 +125,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /image             |      794 |        0.8 |        723 |         0.9 |          127 |
 | /inline            |      703 |        0.7 |        639 |         0.8 |          116 |
 | /inline-error      |    1,046 |        1.0 |        953 |         1.2 |          182 |
-| /input             |    1,817 |        1.8 |      1,647 |           2 |          231 |
+| /input             |    1,833 |        1.8 |      1,658 |           2 |          215 |
 | /kbd               |    1,192 |        1.2 |      1,087 |         1.3 |          139 |
 | /menu              |   56,711 |       55.4 |     48,954 |          57 |        1,657 |
 | /meter             |    1,143 |        1.1 |      1,058 |         1.3 |          188 |
@@ -133,16 +133,16 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /progress-bar      |    1,137 |        1.1 |      1,039 |         1.3 |          194 |
 | /progress-ring     |    1,194 |        1.2 |      1,097 |         1.3 |          137 |
 | /radio-group       |    2,200 |        2.1 |      2,025 |         2.4 |          257 |
-| /segmented-control |    2,371 |        2.3 |      2,171 |         2.6 |          291 |
-| /select            |   63,259 |       61.8 |     54,337 |          66 |        4,325 |
+| /segmented-control |    2,368 |        2.3 |      2,160 |         2.6 |          294 |
+| /select            |   63,254 |       61.8 |     54,331 |          66 |        4,330 |
 | /separator         |      772 |        0.8 |        699 |         0.9 |          149 |
 | /skeleton          |      716 |        0.7 |        652 |         0.8 |          103 |
 | /stack             |      703 |        0.7 |        640 |         0.8 |          116 |
-| /switch            |    1,735 |        1.7 |      1,593 |         1.9 |          210 |
+| /switch            |    1,730 |        1.7 |      1,575 |         1.9 |          215 |
 | /tab-nav           |    1,031 |        1.0 |        949 |         1.2 |          197 |
 | /tabs              |   33,683 |       32.9 |     29,840 |          35 |        2,157 |
 | /text              |      716 |        0.7 |        653 |         0.8 |          103 |
-| /textarea          |    1,355 |        1.3 |      1,251 |         1.5 |          181 |
+| /textarea          |    1,364 |        1.3 |      1,247 |         1.5 |          172 |
 | /theme-script      |      363 |        0.4 |        289 |         0.4 |           46 |
 | /tooltip           |   16,372 |       16.0 |     14,812 |          16 |           12 |
 
@@ -150,9 +150,9 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 | Entry                      | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | -------------------------- | -------: | ---------: | ---------: | ----------: | -----------: |
-| dashboard set              |   77,380 |       75.6 |     65,426 |          76 |          444 |
+| dashboard set              |   77,362 |       75.5 |     65,479 |          76 |          462 |
 | { Button } from the barrel |    1,277 |        1.2 |      1,165 |         1.4 |          156 |
-| { Select } from the barrel |   63,189 |       61.7 |     54,255 |          68 |        6,443 |
+| { Select } from the barrel |   63,170 |       61.7 |     54,247 |          68 |        6,462 |
 
 #### `@nizivo/react`: Own code (one module minified alone, imports not counted)
 
@@ -170,16 +170,16 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | own: checkbox/checkbox.client                   |      750 |        0.7 |        692 |         0.9 |          171 |
 | own: config/config.client                       |      197 |        0.2 |        179 |         0.3 |          110 |
 | own: dialog/dialog.client                       |    1,309 |        1.3 |      1,182 |         1.4 |          124 |
-| own: field/field-scope.client                   |    1,490 |        1.5 |      1,315 |         1.6 |          148 |
+| own: field/field-scope.client                   |    1,496 |        1.5 |      1,315 |         1.6 |          142 |
 | own: icon-button/icon-button.client             |      353 |        0.3 |        302 |         0.4 |           56 |
-| own: input/input.client                         |      692 |        0.7 |        611 |         0.8 |          127 |
+| own: input/input.client                         |      721 |        0.7 |        639 |         0.8 |           98 |
 | own: menu/menu.client                           |    1,035 |        1.0 |        932 |         1.2 |          193 |
 | own: radio-group/radio-group.client             |      614 |        0.6 |        541 |         0.7 |          102 |
 | own: segmented-control/segmented-control.client |    1,169 |        1.1 |      1,052 |         1.3 |          162 |
 | own: select/select.client                       |    1,146 |        1.1 |      1,055 |         1.3 |          185 |
 | own: switch/switch.client                       |      552 |        0.5 |        475 |         0.6 |           62 |
 | own: tabs/tabs.client                           |      486 |        0.5 |        439 |         0.6 |          128 |
-| own: textarea/textarea.client                   |      316 |        0.3 |        276 |         0.4 |           93 |
+| own: textarea/textarea.client                   |      350 |        0.3 |        305 |         0.4 |           59 |
 | own: tooltip/tooltip.client                     |      519 |        0.5 |        460 |         0.6 |           95 |
 
 #### `@nizivo/react`: Seam helpers (seam ledger K6 and K7; React Aria external)

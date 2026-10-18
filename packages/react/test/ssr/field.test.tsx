@@ -14,6 +14,10 @@ import {
 } from '../helpers/rsc';
 import type { ClientBoundary } from '../helpers/rsc';
 import { Field } from '../../src/field/field';
+import { FieldStatic, type FieldStaticWiring } from '../../src/field/field-static';
+import { Input } from '../../src/input/input.client';
+import { NativeSelect } from '../../src/native-select/native-select';
+import { Textarea } from '../../src/textarea/textarea.client';
 import {
   useFieldControl,
   type FieldControl,
@@ -26,6 +30,15 @@ import { FieldsetErrorExample, FieldsetExample } from '../../src/fieldset/fields
 const SRC = rekey(
   import.meta.glob('../../src/**/*.{ts,tsx}', { query: '?raw', import: 'default', eager: true }),
   'src/',
+);
+
+const MANIFEST_TEXT: unknown = import.meta.glob('../../src/field/component.json', {
+  query: '?raw',
+  import: 'default',
+  eager: true,
+})['../../src/field/component.json'];
+const MANIFEST: { exports: string[] } = JSON.parse(
+  typeof MANIFEST_TEXT === 'string' ? MANIFEST_TEXT : '{"exports":[]}',
 );
 
 const FIELD_SCOPE = {
@@ -63,6 +76,28 @@ describe('module graph', () => {
     expect([...externals]).toEqual(['react']);
     expect(reactImports(SRC, modules).filter((name) => !REACT_SERVER.has(name))).toEqual([]);
   });
+
+  test('FieldStatic: no client module in its graph, not even Field or FieldScope (M31)', () => {
+    const { modules, externals } = graph(SRC, 'src/field/field-static.tsx');
+    expect([...modules].filter((file) => isClient(SRC.get(file) ?? ''))).toEqual([]);
+    expect(modules).not.toContain('src/field/field.tsx');
+    expect(modules).not.toContain('src/field/field-scope.client.tsx');
+    // the anatomy's own parts: InlineError and the glyph, both server-safe
+    expect(modules).toContain('src/inline-error/inline-error.tsx');
+    expect(modules).toContain('src/_internal/glyphs.tsx');
+    expect([...externals]).toEqual(['react']);
+    expect(reactImports(SRC, modules).filter((name) => !REACT_SERVER.has(name))).toEqual([]);
+  });
+
+  test('the shared anatomy has one home: Field and FieldScope import it, it imports neither', () => {
+    for (const file of ['src/field/field.tsx', 'src/field/field-scope.client.tsx']) {
+      expect(graph(SRC, file).modules).toContain('src/field/field-static.tsx');
+    }
+    // the old cycle (FieldScope importing field.tsx, which imports FieldScope) is gone
+    expect(graph(SRC, 'src/field/field-scope.client.tsx').modules).not.toContain(
+      'src/field/field.tsx',
+    );
+  });
 });
 
 describe('react-server build, client leaves as client references', () => {
@@ -74,7 +109,9 @@ describe('react-server build, client leaves as client references', () => {
       () => Promise.all([import('../../src/field/index'), import('../../src/field/field.example')]),
       [FIELD_SCOPE, INPUT],
     );
-    expect(Object.keys(entry).toSorted()).toEqual(['Field', 'useFieldControl']);
+    // component.json's exports, and nothing else (nz gen --check pins the barrel to that list)
+    expect(Object.keys(entry)).toEqual(expect.arrayContaining(['Field', 'useFieldControl']));
+    expect(Object.keys(entry).filter((name) => !MANIFEST.exports.includes(name))).toEqual([]);
     const zeroJs: ClientBoundary[] = [];
     const tree = JSON.stringify(
       withDispatcher(react, () => serverRender(examples.FieldZeroJsExample(), zeroJs)),
@@ -130,6 +167,43 @@ describe('react-server build, client leaves as client references', () => {
       },
       messages: { valueMissing: 'Enter a title' },
     });
+  });
+
+  test('FieldStatic: loads under react-server with no client module mocked; host elements only', async () => {
+    // Nothing is mocked: a client module in the graph would call createContext or useState, which
+    // the react-server build does not have, and fail here.
+    const { loaded, react } = await underReactServer(() =>
+      Promise.all([
+        import('../../src/field/field-static'),
+        import('../../src/native-select/native-select'),
+      ]),
+    );
+    const [{ FieldStatic: Static }, { NativeSelect: Select }] = loaded;
+    const boundaries: ClientBoundary[] = [];
+    const tree = JSON.stringify(
+      withDispatcher(react, () =>
+        serverRender(
+          Static({
+            label: 'Country',
+            description: 'Where the order ships.',
+            error: 'Choose a country.',
+            required: true,
+            children: (control) => (
+              <Select {...control} name="country">
+                <option value="IN">India</option>
+              </Select>
+            ),
+          }),
+          boundaries,
+        ),
+      ),
+    );
+    expect(boundaries).toEqual([]);
+    for (const slot of ['field', 'field-label', 'field-description', 'field-error']) {
+      expect(tree).toContain(`"data-slot":"${slot}"`);
+    }
+    expect(tree).toContain('"data-slot":"native-select-trigger"');
+    expect(tree).not.toContain('aria-live');
   });
 
   test('fieldset: the entry loads; every example renders its rows as client Checkboxes', async () => {
@@ -409,6 +483,183 @@ describe('Field markup', () => {
       </Field>,
     );
     expect(html).toMatch(/^<section data-slot="field" class="nz-field mine">/);
+  });
+});
+
+const input = (control: object): JSX.Element => <input {...control} />;
+
+/** Lines that only typecheck (`pnpm typecheck`): each misuse must be a compile error. */
+const misuse = (): JSX.Element[] => [
+  <FieldStatic key="1" label="Title">
+    {/* @ts-expect-error -- an element placed directly: FieldStatic gives it no context */}
+    <input />
+  </FieldStatic>,
+  // @ts-expect-error -- the control is required
+  <FieldStatic key="2" label="Title" />,
+  // @ts-expect-error -- nothing intercepts native validation, so there are no messages
+  <FieldStatic key="3" label="Title" messages={{ valueMissing: 'Enter a title' }}>
+    {input}
+  </FieldStatic>,
+  // @ts-expect-error -- nor a validateOn
+  <FieldStatic key="4" label="Title" validateOn="blur">
+    {input}
+  </FieldStatic>,
+];
+
+describe('FieldStatic (M31): the function-child path as its own component', () => {
+  const CASES: Array<[string, Record<string, unknown>]> = [
+    ['label and description', { label: 'Title', description: 'Shown on product pages.' }],
+    ['required', { label: 'Title', required: true }],
+    ['an error', { label: 'Price', description: 'In rupees.', error: 'Enter a price.' }],
+    ['disabled and read-only', { label: 'Title', disabled: true, readOnly: true }],
+    ['group', { label: 'Range', group: true }],
+    ['no label', { 'aria-label': 'Search' }],
+    ['root attributes', { label: 'Title', className: 'mine', id: 'root', 'data-x': 'y' }],
+    ['a name', { label: 'Title', name: 'title' }],
+    ['errorIcon', { label: 'Price', error: 'Too low', errorIcon: <i className="mine" /> }],
+  ];
+
+  test.each(CASES)('%s: the same HTML as Field with a function child', (_, props) => {
+    // given ids, and generated ones (each render starts its useId sequence afresh)
+    for (const ids of [{ ids: IDS }, {}]) {
+      const field = renderToString(
+        <Field {...props} {...ids}>
+          {input}
+        </Field>,
+      );
+      const fieldStatic = renderToString(
+        <FieldStatic {...props} {...ids}>
+          {input}
+        </FieldStatic>,
+      );
+      expect(fieldStatic).toBe(field);
+      expect(fieldStatic).not.toMatch(/data-validate-on|aria-live/);
+    }
+  });
+
+  test('the same HTML as a NativeSelect placed directly in a Field', () => {
+    const options = <option value="IN">India</option>;
+    expect(
+      renderToString(
+        <FieldStatic ids={IDS} label="Country" required>
+          {(control) => (
+            <NativeSelect name="country" {...control}>
+              {options}
+            </NativeSelect>
+          )}
+        </FieldStatic>,
+      ),
+    ).toBe(
+      renderToString(
+        <Field ids={IDS} label="Country" required>
+          <NativeSelect name="country">{options}</NativeSelect>
+        </Field>,
+      ),
+    );
+  });
+
+  test('the second argument: resolved ids, labelledBy, describedBy and the state', () => {
+    const seen: FieldStaticWiring[] = [];
+    const record = (wire: FieldStaticWiring): JSX.Element => {
+      seen.push(wire);
+      return <div role="radiogroup" aria-labelledby={wire.labelledBy} />;
+    };
+    const html = renderToString(
+      <>
+        <FieldStatic ids={IDS} label="Range" description="Days." error="Pick one." group required>
+          {(_, field) => record(field)}
+        </FieldStatic>
+        <FieldStatic aria-label="Search">{(_, field) => record(field)}</FieldStatic>
+      </>,
+    );
+    expect(seen[0]).toEqual({
+      ids: IDS,
+      labelledBy: 'l',
+      describedBy: 'd e',
+      invalid: true,
+      required: true,
+      disabled: false,
+      readOnly: false,
+    });
+    // no label: no labelledBy; generated ids, the same shape Field's useId gives
+    expect(seen[1]?.labelledBy).toBeUndefined();
+    expect(seen[1]?.describedBy).toBeUndefined();
+    expect(seen[1]?.ids.control).toMatch(/-control$/);
+    expect(html).toContain('<div role="radiogroup" aria-labelledby="l"></div>');
+    expect(html).not.toContain(' for=');
+  });
+
+  test('render composes the root and receives the Field state', () => {
+    const states: unknown[] = [];
+    const html = renderToString(
+      <FieldStatic
+        ids={IDS}
+        label="Title"
+        error="Required"
+        render={(props, state) => {
+          states.push(state);
+          return <section {...props} />;
+        }}
+      >
+        {input}
+      </FieldStatic>,
+    );
+    expect(html).toMatch(/^<section data-slot="field" data-invalid="" class="nz-field">/);
+    expect(states).toEqual([{ invalid: true, disabled: false, required: false, readOnly: false }]);
+  });
+
+  test('messages and validateOn from untyped code never reach the root element', () => {
+    const untyped = { messages: { valueMissing: 'Enter a title' }, validateOn: 'blur' } as object;
+    const html = renderToString(
+      <FieldStatic ids={IDS} label="Title" {...untyped}>
+        {input}
+      </FieldStatic>,
+    );
+    expect(html).toMatch(/^<div data-slot="field" class="nz-field">/);
+    expect(html).not.toMatch(/messages|validate/i);
+  });
+
+  test('misuse is a type error', () => {
+    expect(misuse).toBeTypeOf('function');
+  });
+
+  test('an element child from untyped code fails with a message that says what to do', () => {
+    expect(() =>
+      renderToString(
+        <FieldStatic label="Title">
+          {/* @ts-expect-error -- what plain JavaScript can pass */}
+          <input />
+        </FieldStatic>,
+      ),
+    ).toThrow('FieldStatic: children must be a function; put an element in a Field');
+  });
+
+  test('a Nizivo Input or Textarea in the child shows the invalid state the wiring announces', () => {
+    for (const html of [
+      renderToString(
+        <FieldStatic ids={IDS} label="Store name" error="Enter a store name">
+          {(control) => <Input {...control} />}
+        </FieldStatic>,
+      ),
+      renderToString(
+        <FieldStatic ids={IDS} label="Notes" error="Enter a note">
+          {(control) => <Textarea {...control} />}
+        </FieldStatic>,
+      ),
+    ]) {
+      // the control's own root (Input's box, the textarea itself) carries data-invalid, as in a Field
+      expect(html).toMatch(/data-slot="(input|textarea)"/);
+      expect(html).toMatch(/<(span|textarea)[^>]*data-invalid=""/);
+      expect(html).toContain('aria-invalid="true"');
+    }
+    // an explicit invalid={false} still wins over the wiring
+    expect(
+      renderToString(
+        <FieldStatic ids={IDS} label="Store name" error="Enter a store name">
+          {(control) => <Input {...control} invalid={false} />}
+        </FieldStatic>,
+      ),
+    ).not.toMatch(/data-slot="input"[^>]*data-invalid/);
   });
 });
 

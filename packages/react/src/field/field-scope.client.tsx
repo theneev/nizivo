@@ -2,7 +2,7 @@
 // FieldScope: the Field's client leaf (ARCHITECTURE.md §16.1). The server shell renders it with
 // serialisable props; it provides the context `useFieldControl` reads, owns the native validation
 // message and the Field's announcer (§16.5's one exception), and renders the same anatomy as the
-// zero-JS path. Contract: FIELD-CONTRACT.md.
+// zero-JS path (fieldRootProps in field-static.tsx). Contract: FIELD-CONTRACT.md.
 import {
   createContext,
   use,
@@ -27,7 +27,7 @@ import {
   fieldState,
   type FieldControlProps,
   type FieldValidityKey,
-} from './field';
+} from './field-static';
 
 /** A native element that takes part in constraint validation. */
 export type FieldValidatable = HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;

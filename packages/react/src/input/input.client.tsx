@@ -66,6 +66,7 @@ export function Input({
   disabled,
   readOnly,
   invalid,
+  'aria-invalid': ariaInvalid,
   'aria-describedby': describedBy,
   leadingIcon,
   trailingIcon,
@@ -86,7 +87,9 @@ export function Input({
     required,
     disabled,
     readOnly,
-    invalid,
+    // One rule with the Field contract, as NativeSelect: an explicit `invalid` wins, else an
+    // aria-invalid a FieldStatic (or Field's function child) passed.
+    invalid: invalid ?? (ariaInvalid === true || ariaInvalid === 'true' ? true : undefined),
     'aria-describedby': joinIds(describedBy, prefixId, suffixId),
   });
   const state: InputState = {

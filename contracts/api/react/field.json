@@ -277,7 +277,7 @@
       "import": "import type { FieldControlProps } from '@nizivo/react/field'",
       "kind": "type",
       "name": "FieldControlProps",
-      "source": "packages/react/src/field/field.tsx",
+      "source": "packages/react/src/field/field-static.tsx",
       "text": "{\n  id?: string | undefined;\n  name?: string | undefined;\n  required?: boolean | undefined;\n  disabled?: boolean | undefined;\n  readOnly?: boolean | undefined;\n  \"aria-describedby\"?: string | undefined;\n  \"aria-invalid\"?: boolean | undefined;\n}",
       "typeParameters": []
     },
@@ -309,7 +309,7 @@
         }
       ],
       "name": "FieldIds",
-      "source": "packages/react/src/field/field.tsx",
+      "source": "packages/react/src/field/field-static.tsx",
       "typeParameters": []
     },
     {
@@ -319,7 +319,7 @@
       "kind": "type",
       "name": "FieldProps",
       "propsOf": "Field",
-      "source": "packages/react/src/field/field.tsx",
+      "source": "packages/react/src/field/field-static.tsx",
       "typeParameters": []
     },
     {
@@ -327,8 +327,191 @@
       "import": "import type { FieldState } from '@nizivo/react/field'",
       "kind": "type",
       "name": "FieldState",
-      "source": "packages/react/src/field/field.tsx",
+      "source": "packages/react/src/field/field-static.tsx",
       "stateOf": "Field",
+      "typeParameters": []
+    },
+    {
+      "client": false,
+      "description": "The Field anatomy with no client code: label, control, description and error, the same HTML and ids as `Field` with a function child (M31). Server-safe, and its module imports no client leaf, so a page that renders only FieldStatic ships no Field JavaScript in any bundler. It provides no context and no announcer, and native validation shows the browser's own bubble; the function child wires the control (FIELD-CONTRACT.md \"FieldStatic\").",
+      "import": "import { FieldStatic } from '@nizivo/react/field'",
+      "inherits": [
+        {
+          "base": "ComponentPropsWithRef<\"div\">",
+          "element": "div",
+          "omitted": ["children"],
+          "overridden": [],
+          "text": "Omit<ComponentPropsWithRef<\"div\">, \"children\">"
+        }
+      ],
+      "kind": "component",
+      "name": "FieldStatic",
+      "props": [
+        {
+          "description": "The control, always a function: FieldStatic provides no context, so a Nizivo client control placed directly inside (`<Input />`) would not be wired, and that is a type error here (use `Field`). Spread `control` on the element that holds the value (`<input {...control} />`, `<NativeSelect {...control}>`); `field` carries the ids for anything else.",
+          "name": "children",
+          "required": true,
+          "type": "(control: FieldControlProps, field: FieldStaticWiring) => ReactNode"
+        },
+        {
+          "description": "Help text under the control, joined to its `aria-describedby`.",
+          "inheritedFrom": "FieldProps",
+          "name": "description",
+          "required": false,
+          "type": "ReactNode"
+        },
+        {
+          "default": "false",
+          "inheritedFrom": "FieldProps",
+          "name": "disabled",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "description": "The error message, rendered through InlineError with an icon (never colour alone). Its presence is what \"invalid\" means (§8.3): `aria-invalid` on the control and `data-invalid` on the Field. It is not a live region; around a client control, the Field's one announcer speaks a new error while focus is already in the Field (§16.5's one exception, FIELD-CONTRACT.md). `null`, `false` and `''` present no error.",
+          "inheritedFrom": "FieldProps",
+          "name": "error",
+          "required": false,
+          "type": "ReactNode"
+        },
+        {
+          "description": "Replaces the internal error mark (`circle-x`). Decorative.",
+          "inheritedFrom": "FieldProps",
+          "name": "errorIcon",
+          "required": false,
+          "type": "ReactNode"
+        },
+        {
+          "default": "false",
+          "description": "The control is a group of native controls under one root (SegmentedControl, a third-party picker), not one labelable element: the label then has no `for`, and names the group through the `aria-labelledby` the control puts on its root (FIELD-CONTRACT.md).",
+          "inheritedFrom": "FieldProps",
+          "name": "group",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "inheritedFrom": "FieldProps",
+          "name": "ids",
+          "required": false,
+          "type": "FieldIds"
+        },
+        {
+          "description": "The visible name, a `<label for>` the control.",
+          "inheritedFrom": "FieldProps",
+          "name": "label",
+          "required": false,
+          "type": "ReactNode"
+        },
+        {
+          "description": "Not on FieldStatic: nothing intercepts native validation, so the browser shows its own bubble. For inline native messages use `Field`.",
+          "name": "messages",
+          "required": false,
+          "type": "never"
+        },
+        {
+          "description": "Passed to the control.",
+          "inheritedFrom": "FieldProps",
+          "name": "name",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "default": "false",
+          "inheritedFrom": "FieldProps",
+          "name": "readOnly",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "description": "Composition of the root `<div>`.",
+          "inheritedFrom": "FieldProps",
+          "name": "render",
+          "required": false,
+          "type": "RenderProp<FieldState>"
+        },
+        {
+          "default": "false",
+          "description": "The control is required: native `required`, and an `aria-hidden` mark after the label.",
+          "inheritedFrom": "FieldProps",
+          "name": "required",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "description": "Not on FieldStatic: see `messages`.",
+          "name": "validateOn",
+          "required": false,
+          "type": "never"
+        }
+      ],
+      "propsType": "FieldStaticProps",
+      "render": {
+        "state": [
+          {
+            "name": "disabled",
+            "required": true,
+            "type": "boolean"
+          },
+          {
+            "description": "An error message is presented.",
+            "name": "invalid",
+            "required": true,
+            "type": "boolean"
+          },
+          {
+            "name": "readOnly",
+            "required": true,
+            "type": "boolean"
+          },
+          {
+            "name": "required",
+            "required": true,
+            "type": "boolean"
+          }
+        ],
+        "stateType": "FieldState"
+      },
+      "slot": "field",
+      "source": "packages/react/src/field/field-static.tsx"
+    },
+    {
+      "declaration": "interface",
+      "extends": ["Omit<FieldProps, \"children\" | \"messages\" | \"validateOn\">"],
+      "import": "import type { FieldStaticProps } from '@nizivo/react/field'",
+      "kind": "type",
+      "name": "FieldStaticProps",
+      "propsOf": "FieldStatic",
+      "source": "packages/react/src/field/field-static.tsx",
+      "typeParameters": []
+    },
+    {
+      "declaration": "interface",
+      "description": "What a FieldStatic function child receives as its second argument: the wiring FieldStatic does not do for you, since it provides no context. Use it for a control that is not one labelable element (`aria-labelledby` on a group root or a button) or to point other elements at the parts.",
+      "extends": ["FieldState"],
+      "import": "import type { FieldStaticWiring } from '@nizivo/react/field'",
+      "kind": "type",
+      "members": [
+        {
+          "description": "The description and error ids that render, in that order; the control's `aria-describedby`.",
+          "name": "describedBy",
+          "required": true,
+          "type": "string | undefined"
+        },
+        {
+          "description": "Every id the Field renders, generated or taken from `ids`.",
+          "name": "ids",
+          "required": true,
+          "type": "{\n    control: string;\n    label: string;\n    description: string;\n    error: string;\n  }"
+        },
+        {
+          "description": "The label's id while a label renders, for `aria-labelledby`; `undefined` without a label.",
+          "name": "labelledBy",
+          "required": true,
+          "type": "string | undefined"
+        }
+      ],
+      "name": "FieldStaticWiring",
+      "source": "packages/react/src/field/field-static.tsx",
       "typeParameters": []
     },
     {
@@ -347,7 +530,7 @@
       "import": "import type { FieldValidateOn } from '@nizivo/react/field'",
       "kind": "type",
       "name": "FieldValidateOn",
-      "source": "packages/react/src/field/field.tsx",
+      "source": "packages/react/src/field/field-static.tsx",
       "text": "\"submit\" | \"blur\"",
       "typeParameters": [],
       "values": ["submit", "blur"]
@@ -358,7 +541,7 @@
       "import": "import type { FieldValidityKey } from '@nizivo/react/field'",
       "kind": "type",
       "name": "FieldValidityKey",
-      "source": "packages/react/src/field/field.tsx",
+      "source": "packages/react/src/field/field-static.tsx",
       "text": "\"valueMissing\" | \"typeMismatch\" | \"patternMismatch\" | \"tooLong\" | \"tooShort\" | \"rangeUnderflow\" | \"rangeOverflow\" | \"stepMismatch\" | \"badInput\" | \"customError\"",
       "typeParameters": [],
       "values": [

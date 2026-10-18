@@ -1,7 +1,7 @@
 import type { JSX } from 'react';
 import { Input } from '../input/index';
 import { NativeSelect } from '../native-select/index';
-import { Field } from './index';
+import { Field, FieldStatic } from './index';
 
 /**
  * A client control inside a Field: Input reads the id, name, flags and description wiring through
@@ -43,5 +43,23 @@ export function FieldZeroJsExample(): JSX.Element {
         <option value="AE">United Arab Emirates</option>
       </NativeSelect>
     </Field>
+  );
+}
+
+/**
+ * FieldStatic: the same label, help and error as Field, from a module with no client code, for a
+ * Server Component form. The function child spreads the wiring on the control itself.
+ */
+export function FieldStaticExample(): JSX.Element {
+  return (
+    <FieldStatic label="Ships from" description="Shown on the order confirmation." required>
+      {(control) => (
+        <NativeSelect {...control} name="origin" placeholder="Choose a warehouse">
+          <option value="blr">Bengaluru</option>
+          <option value="sin">Singapore</option>
+          <option value="dxb">Dubai</option>
+        </NativeSelect>
+      )}
+    </FieldStatic>
   );
 }

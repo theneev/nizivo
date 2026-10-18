@@ -32,6 +32,7 @@ export function Textarea({
   disabled,
   readOnly,
   invalid,
+  'aria-invalid': ariaInvalid,
   'aria-describedby': describedBy,
   className,
   ...rest
@@ -43,7 +44,9 @@ export function Textarea({
     required,
     disabled,
     readOnly,
-    invalid,
+    // One rule with the Field contract, as NativeSelect: an explicit `invalid` wins, else an
+    // aria-invalid a FieldStatic (or Field's function child) passed.
+    invalid: invalid ?? (ariaInvalid === true || ariaInvalid === 'true' ? true : undefined),
     'aria-describedby': describedBy,
   });
   return (
