@@ -43,6 +43,36 @@
       "use": "Menu checked item label (also highlighted, on bg-hover)"
     },
     { "fg": "text-accent", "on": ["panels"], "role": "text", "use": "Toast action" },
+    {
+      "fg": "text-inverse-accent",
+      "on": ["bg-inverse"],
+      "role": "text",
+      "use": "No component yet (Figma: Toast action); guards the 2026-10-18 value"
+    },
+    {
+      "fg": "text-on-accent",
+      "on": ["bg-accent-pressed"],
+      "role": "text",
+      "use": "No component yet (NIZ-116: Button accent pressed); guards the 2026-10-18 value"
+    },
+    {
+      "fg": "text-code",
+      "on": ["bg-code", "bg-code-elevated"],
+      "role": "text",
+      "use": "No component yet (code surfaces); guards the 2026-10-18 value"
+    },
+    {
+      "fg": "text-code-muted",
+      "on": ["bg-code", "bg-code-elevated"],
+      "role": "text",
+      "use": "No component yet (code surfaces); guards the 2026-10-18 value"
+    },
+    {
+      "fg": "text-on-dark",
+      "on": ["bg-code"],
+      "role": "text",
+      "use": "No component yet (surfaces dark in both modes); guards the 2026-10-18 value"
+    },
     { "fg": "text-success", "on": ["surfaces", "bg-success-subtle"], "role": "text" },
     { "fg": "text-warning", "on": ["surfaces", "bg-warning-subtle"], "role": "text" },
     {
