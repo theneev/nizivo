@@ -24,7 +24,13 @@ export interface Outline {
   sections: Section[];
   toc: TOCItemType[];
   structuredData: StructuredData;
+  /** The page as Markdown, without the notes file's prose. */
   markdown: string;
+  /**
+   * `markdown` split where the page renders the notes prose (after Import), so llms-full.txt can
+   * put the notes' processed Markdown, which only loads asynchronously, in the same place.
+   */
+  markdownParts: { head: string; tail: string };
 }
 
 const plain = plainText;
@@ -89,6 +95,7 @@ export function outline(entry: CatalogEntry): Outline {
   if (css) md.push(`import '@nizivo/react/${css.entry.slice(2)}';`);
   md.push('```', '');
   contents.push({ heading: 'import', content: importLines(api, entry.specifier).join(' ') });
+  const headLength = md.length;
 
   for (const t of notes?.toc ?? []) {
     sections.push({
@@ -217,5 +224,17 @@ export function outline(entry: CatalogEntry): Outline {
     headings: sections.map((s) => ({ id: s.id, content: s.title })),
     contents,
   };
-  return { title, description, sections, toc, structuredData, markdown: md.join('\n') };
+  const markdownParts = {
+    head: md.slice(0, headLength).join('\n'),
+    tail: md.slice(headLength).join('\n'),
+  };
+  return {
+    title,
+    description,
+    sections,
+    toc,
+    structuredData,
+    markdown: md.join('\n'),
+    markdownParts,
+  };
 }

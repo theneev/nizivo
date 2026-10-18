@@ -12,6 +12,12 @@ keyboard:
 keyboardSource: react-aria-components 1.22.1 `ModalOverlay` and `Modal` (react-aria 3.53.1 `useModalOverlay`, which contains focus) through `_engines/react-aria/dialog.client.tsx`. React Aria focuses the dialog element; the first-focusable rule is Nizivo's (`initialFocus` on the engine seam, ARCHITECTURE.md §12.2), checked by the overlay lane (`test/overlay/dialog.spec.tsx`). apps/docs/scripts/smoke.ts checks opening with Enter, Tab staying inside, and Escape closing with focus back on the trigger; the Next fixture checks Escape and the Close part. An alertdialog does not close on an outside press.
 ---
 
+## Static or interactive
+
+**Client.** It always ships React Aria's dialog and overlay code (+61,402 B gzip under Turbopack for
+one Dialog on the Next.js fixture). The default `Dialog.Close` writes the IconButton markup itself,
+so it adds no Tooltip code. [How to choose](/docs/guides/static-or-interactive/).
+
 ## The trigger
 
 Compose a Button (or an IconButton) into the trigger; it is still the recommended look:

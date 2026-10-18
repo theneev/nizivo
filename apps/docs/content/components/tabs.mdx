@@ -14,6 +14,12 @@ keyboard:
 keyboardSource: react-aria-components 1.22.1 `Tabs`, `TabList`, `Tab` and `TabPanel` (react-aria 3.53.1 `useTabList`, `useTab` and `useTabPanel`) through `_engines/react-aria/tabs.client.tsx`. The browser lane (`test/browser/tabs.spec.tsx`) checks Tab entry, arrows, Home, End, wrapping, skipping a disabled tab, manual activation and the RTL flip, and that a `dir` on Tabs.Root overrides the NizivoConfig scope, that the nearest of nested scopes wins, that a strip nested in a `dir` root's panel follows that `dir`, that changing `dir` turns the arrows without remounting the tabs, and that a server render with `dir` hydrates without warnings.
 ---
 
+## Static or interactive
+
+**Client.** It always ships React Aria's tabs code (+38,812 B gzip under Turbopack for one Tabs on
+the Next.js fixture). When every view is a URL, TabNav does the job with no client code. [How to
+choose](/docs/guides/static-or-interactive/).
+
 ## Direction
 
 The strip's direction comes from the `NizivoConfig` scope: under a right-to-left `locale` (Arabic,

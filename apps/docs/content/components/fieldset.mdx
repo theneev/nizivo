@@ -2,3 +2,11 @@
 title: Fieldset
 description: A native fieldset and legend for related controls, such as a row of switches or checkboxes, with a shared description and error. Disabling it disables every control inside, with no client code.
 ---
+
+## Static or interactive
+
+**Server.** It ships no client JavaScript when a Server Component renders it, in every Next.js build
+mode; its code is bundled only when a client component (a `'use client'` file) imports it.
+`disabled` is the native attribute, so it disables the controls inside with no script; the controls
+themselves ship their own code (a Checkbox or a Switch is client kind). [How to
+choose](/docs/guides/static-or-interactive/).

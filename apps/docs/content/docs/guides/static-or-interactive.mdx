@@ -1,0 +1,662 @@
+---
+title: 'Static or interactive: choosing a component'
+description: Which Nizivo components ship client JavaScript, what makes them ship it, and when to use a static variant (IconButtonStatic, FieldStatic) instead of the normal component. A checklist, a table of all 37 components, the measured costs and worked examples.
+---
+
+Every Nizivo component renders its HTML on the server (an overlay's popup only while it is open). What differs is whether the browser also
+downloads and runs JavaScript for it. This page says, for each component, exactly when that happens,
+so a person or a coding agent can pick the right one without measuring. The rules apply to React
+Server Components (the Next.js App Router); [Outside Next.js](#outside-nextjs) covers Vite and Astro.
+
+## The three kinds
+
+- **Server.** The component's module has no `'use client'` and imports no client module. Rendered by
+  a Server Component and imported from its own subpath (`@nizivo/react/<name>`), it ships **no**
+  client JavaScript in any Next.js build mode (Turbopack, webpack, `next dev`). 23 components.
+- **Split.** A server shell plus a small client leaf that only certain props render. Without those
+  props no client code runs. 3 components: Alert, Field and IconButton. Alert's shell does not import
+  its leaf, so an Alert without `dismiss` ships nothing in every mode. **Field's and IconButton's
+  shells import their leaf**, and Turbopack and `next dev` ship every client module a page's server
+  code imports, rendered or not: those two ship their leaf even when the interactive path is off.
+  Their static variants exist to fix exactly that.
+- **Client.** The component is a client module (a thin leaf around a native control, or a React Aria
+  engine part). It always ships JavaScript, and its server HTML still works before hydration where the
+  native element allows it (a checkbox toggles, a form submits). 11 components.
+
+A **static variant** is a second export, from the same import path, that imports no client module:
+
+- `IconButtonStatic` from `@nizivo/react/icon-button`: the IconButton's markup, classes and CSS, with
+  no tooltip. `aria-label` is always required; you may also pass `aria-labelledby` pointing at visible
+  text, which then names the button, with `aria-label` as the fallback. It takes no `label`, `tooltip` or
+  `shortcut`; announce a shortcut with `aria-keyshortcuts` yourself.
+- `FieldStatic` from `@nizivo/react/field`: the Field's anatomy (label, description, error), with no
+  FieldScope. It renders no inline native validation message and no announcer, takes no `messages`
+  or `validateOn`, and you wire the control: its child is always a function that receives the
+  control's attributes (`id`, `name`, the flags, `aria-describedby`, `aria-invalid`) to spread on it,
+  and, as a second argument, the Field's ids, `labelledBy` and `describedBy` for a control that is not
+  one labelable element.
+
+A static variant renders the same HTML as the normal component for the props they share. It is not a
+cheaper copy: it drops a feature, so use it only when you do not need that feature.
+
+## Decide in eight steps
+
+Apply these in order; the first step that answers stops the walk.
+
+First, the import path. Import each component from its subpath (`@nizivo/react/<name>`). The root
+barrel (`@nizivo/react`) is safe only with Turbopack or `optimizePackageImports`; under plain webpack
+it ships every client module in the library, whatever the page renders (see
+[The barrel and webpack](/docs/getting-started/next/#the-barrel-and-webpack)). Every claim below
+assumes subpath imports.
+
+1. **Is the code a Server Component?** If the file, or any file that imports it, starts with
+   `'use client'`, or the app has no Server Components (a Vite single-page app, the Pages Router, an
+   Astro `client:*` island), every component you import ships its code whatever its kind. Choose by
+   behaviour; steps 6 to 8 still apply, because a static variant also keeps the Tooltip code or
+   FieldScope out of a client bundle when nothing else imports them.
+2. **Look up the component's kind** in [the table below](#every-component).
+3. **Server kind:** use it as it is. It ships nothing.
+4. **Client kind:** use it when you need what it does. If the table names a static alternative and
+   that alternative does the job (NativeSelect for Select, TabNav for Tabs when every view is a URL),
+   prefer the alternative.
+5. **Alert:** pass `dismiss` only when the alert can be dismissed. Nothing else changes what it ships.
+6. **IconButton:** does a sighted user need the hover or focus text to know what the button does?
+   - Yes (the usual case for an icon-only button, and Figma's rule: "Icon-only buttons have an
+     aria-label and a Tooltip"): use `IconButton`. If the name can be visible text instead, use a
+     `Button`, which needs no JavaScript.
+   - No, because something visible already names it (a column header, a heading, a visible label next
+     to it): use `IconButtonStatic` with `aria-label`.
+7. **Field:** is the control a Nizivo client control (Input, Textarea, Checkbox, Switch,
+   SegmentedControl, Select)?
+   - Yes: use `Field`. The control ships its own client code and reads FieldScope, so the page loads
+     FieldScope anyway, and `Field` adds the inline validation message and the announcer.
+   - No, it is a NativeSelect or a plain native element, and you want no JavaScript: use `FieldStatic`
+     with a function child that spreads its argument on the control.
+8. **Count modules, not instances.** The cost is per client module per page. If the page already
+   loads the Tooltip code (any `IconButton`, a `Tooltip`, a Menu whose trigger is an `IconButton`) or
+   FieldScope (any client control or Select inside a `Field`), a static variant saves nothing on that
+   page; use the normal component there for one behaviour throughout. `Dialog.Close` and
+   `AlertDismiss` do not count: they write the IconButton markup themselves and import no tooltip.
+
+A Server Component cannot pass a function to any component (`onClick`, `onChange`, a function
+`render`). Use links, a `<form action={serverAction}>`, a Server Action passed to a client part that
+takes one (`AlertDismiss onDismiss`), or move the interactive part into a client component.
+
+## Every component
+
+"Ships client JS" means the page's browser bundle contains a Nizivo `'use client'` module, inside a
+Server Component tree. The Next.js fixture checks this per page by markers planted in each client
+module.
+
+| Component                                               | Kind   | Ships client JS                                                                                                                         | Static alternative                                |
+| ------------------------------------------------------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| [Alert](/docs/components/alert/)                        | split  | Only with `dismiss` (the AlertDismiss leaf), in every build mode                                                                        | Leave out `dismiss`                               |
+| [Badge](/docs/components/badge/)                        | server | Never                                                                                                                                   | None needed                                       |
+| [Button](/docs/components/button/)                      | server | Never                                                                                                                                   | None needed                                       |
+| [Card](/docs/components/card/)                          | server | Never                                                                                                                                   | None needed                                       |
+| [Checkbox](/docs/components/checkbox/)                  | client | Always (Field wiring, `indeterminate`)                                                                                                  | None                                              |
+| [Container](/docs/components/container/)                | server | Never                                                                                                                                   | None needed                                       |
+| [Delta](/docs/components/delta/)                        | server | Never                                                                                                                                   | None needed                                       |
+| [Dialog](/docs/components/dialog/)                      | client | Always (React Aria)                                                                                                                     | None                                              |
+| [EmptyState](/docs/components/empty-state/)             | server | Never                                                                                                                                   | None needed                                       |
+| [Field](/docs/components/field/)                        | split  | FieldScope with any child but a function or a NativeSelect placed directly; under Turbopack and `next dev`, also on those zero-JS paths | `FieldStatic`                                     |
+| [Fieldset](/docs/components/fieldset/)                  | server | Never                                                                                                                                   | None needed                                       |
+| [Grid](/docs/components/grid/)                          | server | Never                                                                                                                                   | None needed                                       |
+| [Heading](/docs/components/heading/)                    | server | Never                                                                                                                                   | None needed                                       |
+| [IconButton](/docs/components/icon-button/)             | split  | The tooltip leaf and the Tooltip chain by default; under Turbopack and `next dev`, also with `tooltip={false}`                          | `IconButtonStatic`                                |
+| [Image](/docs/components/image/)                        | server | Never                                                                                                                                   | None needed                                       |
+| [Inline](/docs/components/inline/)                      | server | Never                                                                                                                                   | None needed                                       |
+| [InlineError](/docs/components/inline-error/)           | server | Never                                                                                                                                   | None needed                                       |
+| [Input](/docs/components/input/)                        | client | Always (Field wiring)                                                                                                                   | None                                              |
+| [Kbd](/docs/components/kbd/)                            | server | Never (CSS picks the platform's keys)                                                                                                   | None needed                                       |
+| [Menu](/docs/components/menu/)                          | client | Always (React Aria)                                                                                                                     | None                                              |
+| [Meter](/docs/components/meter/)                        | server | Never                                                                                                                                   | None needed                                       |
+| [NativeSelect](/docs/components/native-select/)         | server | Never; in a `Field` see Field                                                                                                           | It is the static alternative to Select            |
+| [ProgressBar](/docs/components/progress-bar/)           | server | Never                                                                                                                                   | None needed                                       |
+| [ProgressRing](/docs/components/progress-ring/)         | server | Never                                                                                                                                   | None needed                                       |
+| [RadioGroup](/docs/components/radio-group/)             | client | Always: the Fieldset shell is server HTML, the radios' leaf ships                                                                       | None                                              |
+| [SegmentedControl](/docs/components/segmented-control/) | client | Always (Field wiring)                                                                                                                   | TabNav, when each value is its own URL            |
+| [Select](/docs/components/select/)                      | client | Always (React Aria; FieldScope too)                                                                                                     | NativeSelect                                      |
+| [Separator](/docs/components/separator/)                | server | Never                                                                                                                                   | None needed                                       |
+| [Skeleton](/docs/components/skeleton/)                  | server | Never                                                                                                                                   | None needed                                       |
+| [Stack](/docs/components/stack/)                        | server | Never                                                                                                                                   | None needed                                       |
+| [Switch](/docs/components/switch/)                      | client | Always (Field wiring)                                                                                                                   | None                                              |
+| [TabNav](/docs/components/tab-nav/)                     | server | Never (links; a router's link component is the router's own code)                                                                       | It is the static alternative to Tabs              |
+| [Tabs](/docs/components/tabs/)                          | client | Always (React Aria)                                                                                                                     | TabNav, when each view is a URL                   |
+| [Text](/docs/components/text/)                          | server | Never                                                                                                                                   | None needed                                       |
+| [Textarea](/docs/components/textarea/)                  | client | Always (Field wiring)                                                                                                                   | None                                              |
+| [ThemeScript](/docs/components/theme-script/)           | server | No client module; it renders one inline `<script>` of 379 bytes that runs in `<head>`                                                   | None needed                                       |
+| [Tooltip](/docs/components/tooltip/)                    | client | Always (React Aria)                                                                                                                     | Visible text (a Button with words, a description) |
+
+The kinds come from each component's `component.json` (`tier`) and its source, and are tested:
+`test/ssr/t0.server.test.tsx` loads every server and split entry under React's `react-server` build
+and lists the only client modules a split subpath may reach; each client control's own test in
+`test/ssr/` lists the client modules its subpath reaches. "None" means v0.1 has no Nizivo equivalent
+without JavaScript; a plain native element (an `<input type="checkbox">`) works but carries no Nizivo
+styling.
+
+## What it costs
+
+Measured by the Next.js fixture (`fixtures/next`, Next 16.4.0, React 19.3.0, recorded in
+`fixtures/next/results/*.json` in week 9): the gzip of every JavaScript chunk a page loads, minus the
+page `/button-only` (three Buttons: 174,639 B under Turbopack, 171,889 B under webpack, 818,350 B
+under `next dev`, which is unminified). Each figure is per page, whatever the number of instances.
+
+- `/t0`, every server component of week 2 and a static Alert: 0 B in all three modes.
+- `/alert-dismiss`, an Alert with `dismiss`: Turbopack +1,490 B, webpack +1,576 B, `next dev`
+  +3,564 B.
+- `/field-zero-js`, two Fields on the zero-JS paths: Turbopack +3,364 B, webpack 0 B, `next dev`
+  +8,551 B.
+- `/icon-button`, one IconButton with `tooltip={false}`: Turbopack +20,802 B, webpack 0 B,
+  `next dev` +62,742 B.
+- `/icon-button-tooltip`, one IconButton with its tooltip: Turbopack +20,802 B, webpack +21,444 B,
+  `next dev` +62,742 B.
+- `/tooltip-default-open`, one Tooltip: Turbopack +19,625 B, webpack +20,334 B, `next dev`
+  +60,061 B.
+- `/forms`, Input, Textarea, Checkbox and SegmentedControl in Fields, a Fieldset of two Switches
+  and a RadioGroup: Turbopack +5,581 B, webpack +6,280 B, `next dev` +12,916 B.
+- `/tabs`, one Tabs: Turbopack +38,812 B, webpack +38,458 B, `next dev` +109,596 B.
+- `/dialog-default-open`, one Dialog: Turbopack +61,402 B, webpack +61,765 B, `next dev`
+  +193,504 B.
+- `/menu`, one Menu: Turbopack +61,399 B, webpack +61,199 B, `next dev` +191,452 B.
+- `/barrel-select`, one Select: Turbopack +72,949 B, webpack +90,253 B, `next dev` +227,148 B.
+
+The Select page also loads FieldScope, which Select reads. `/barrel-select` under webpack includes
+the barrel leak described in [Next.js](/docs/getting-started/next/#the-barrel-and-webpack).
+
+**The static variants.** The fixture's `/icon-button-static` page (one `IconButtonStatic`) and
+`/field-static` page (two `FieldStatic`s around NativeSelects, the markup of `/field-zero-js`) ship
+no Nizivo client module and measure 0 B over `/button-only` in every mode: Turbopack, webpack,
+webpack with `optimizePackageImports` and `next dev`. Against `/icon-button` and `/field-zero-js`
+above, that is 20,802 B and 3,364 B less under Turbopack, and 62,742 B and 8,551 B less under
+`next dev`. Production webpack already shipped nothing for the zero-JS paths. Week 7 also showed why
+a lazy import was not used instead (`packages/react/W7-RESULTS.md`, section "D-aa"): a shell that
+loads the leaf with `lazy(() => import())` still shipped the chain under Turbopack (+20,875 B),
+which ships every client module the server graph reaches, static or dynamic.
+
+## Examples
+
+Each example is a file for the Next.js App Router; `./data` stands for your own data layer. The
+stylesheets are imported once in the root layout, as [Next.js](/docs/getting-started/next/) shows.
+
+### A pricing page
+
+Everything here is server kind, so the page loads no Nizivo client module (the fixture's `/t0` page
+renders the same components and measures 0 B in every mode, and its `/icons-server` page shows icons
+rendered by a Server Component ship nothing). The call to action is a Button rendered as a plain
+link.
+
+```tsx title="app/pricing/page.tsx"
+// A Server Component: no 'use client' here or in any file that imports this one.
+import { Check } from '@nizivo/icons/check';
+import { Badge } from '@nizivo/react/badge';
+import { Button } from '@nizivo/react/button';
+import { Card } from '@nizivo/react/card';
+import { Container } from '@nizivo/react/container';
+import { Grid, GridItem } from '@nizivo/react/grid';
+import { Heading } from '@nizivo/react/heading';
+import { Separator } from '@nizivo/react/separator';
+import { Stack } from '@nizivo/react/stack';
+import { Text } from '@nizivo/react/text';
+
+interface Plan {
+  id: string;
+  name: string;
+  price: string;
+  summary: string;
+  features: string[];
+  popular?: boolean;
+}
+
+const PLANS: Plan[] = [
+  {
+    id: 'starter',
+    name: 'Starter',
+    price: '₹0',
+    summary: 'For your first store',
+    features: ['1 store', '50 orders a month', 'Email support'],
+  },
+  {
+    id: 'grow',
+    name: 'Grow',
+    price: '₹1,499',
+    summary: 'For a growing catalogue',
+    features: ['3 stores', 'Unlimited orders', 'Discount codes'],
+    popular: true,
+  },
+  {
+    id: 'scale',
+    name: 'Scale',
+    price: '₹4,999',
+    summary: 'For teams and wholesale',
+    features: ['10 stores', 'Staff accounts', 'Priority support'],
+  },
+];
+
+export default function PricingPage() {
+  return (
+    <Container render={<main />}>
+      <Stack gap="8">
+        <Stack gap="2">
+          <Heading level={1}>Pricing</Heading>
+          <Text tone="secondary">Prices are per month and include GST.</Text>
+        </Stack>
+        <Grid>
+          {PLANS.map((plan) => (
+            <GridItem key={plan.id} span={{ base: 'full', lg: 4 }}>
+              <Card.Root tone={plan.popular ? 'subtle' : 'surface'}>
+                <Card.Header>
+                  <Card.Title level={2}>{plan.name}</Card.Title>
+                  <Card.Description>{plan.summary}</Card.Description>
+                  {plan.popular && (
+                    <Card.Action>
+                      <Badge tone="brand" dot={false}>
+                        Most popular
+                      </Badge>
+                    </Card.Action>
+                  )}
+                </Card.Header>
+                <Card.Body>
+                  <Stack gap="4">
+                    <Text variant="numeric-kpi">{plan.price}</Text>
+                    <Separator />
+                    <Stack gap="2" render={<ul />}>
+                      {plan.features.map((feature) => (
+                        <li key={feature}>
+                          <Check /> {feature}
+                        </li>
+                      ))}
+                    </Stack>
+                  </Stack>
+                </Card.Body>
+                <Card.Footer>
+                  <Button
+                    variant={plan.popular ? 'primary' : 'secondary'}
+                    render={<a href={`/signup?plan=${plan.id}`} />}
+                    fullWidth
+                  >
+                    Choose {plan.name}
+                  </Button>
+                </Card.Footer>
+              </Card.Root>
+            </GridItem>
+          ))}
+        </Grid>
+      </Stack>
+    </Container>
+  );
+}
+```
+
+- A monthly and yearly switch would be a SegmentedControl, which is client kind. If each period is
+  its own URL (`/pricing?period=yearly`), a TabNav of two links does the same job with no Nizivo
+  client module.
+- `render={<Link href="…" />}` with `next/link` works too. That link is Next's own client component:
+  the fixture's `/tab-nav` page, three TabNav links rendered through `next/link`, loads no Nizivo
+  module and +3,302 B of Next's code under Turbopack.
+
+### Icon actions in a table row
+
+An admin table rendered on the server. Each action column has a header that names its action
+("Invoice", "Archive"), so a sighted user does not need hover text, and each button gets a unique
+`aria-label` for screen readers. That is step 6's "No": `IconButtonStatic`. The archive button
+submits a form to a Server Action, which works before hydration and with JavaScript off.
+
+```tsx title="app/orders/page.tsx"
+import { Archive } from '@nizivo/icons/archive';
+import { Download } from '@nizivo/icons/download';
+import { Badge } from '@nizivo/react/badge';
+import { IconButtonStatic } from '@nizivo/react/icon-button';
+import { archiveOrder } from './actions';
+import { getOrders } from './data';
+
+export default async function OrdersPage() {
+  const orders = await getOrders();
+  return (
+    <table>
+      <caption>Orders</caption>
+      <thead>
+        <tr>
+          <th scope="col">Order</th>
+          <th scope="col">Status</th>
+          <th scope="col">Total</th>
+          <th scope="col">Invoice</th>
+          <th scope="col">Archive</th>
+        </tr>
+      </thead>
+      <tbody>
+        {orders.map((order) => (
+          <tr key={order.id}>
+            <th scope="row">#{order.number}</th>
+            <td>
+              <Badge tone={order.paid ? 'success' : 'warning'}>
+                {order.paid ? 'Paid' : 'Pending'}
+              </Badge>
+            </td>
+            <td>{order.total}</td>
+            <td>
+              <IconButtonStatic
+                aria-label={`Download the invoice for order ${order.number}`}
+                icon={<Download />}
+                variant="tertiary"
+                size="sm"
+                render={<a href={`/orders/${order.id}/invoice.pdf`} download />}
+              />
+            </td>
+            <td>
+              <form action={archiveOrder}>
+                <input type="hidden" name="id" value={order.id} />
+                <IconButtonStatic
+                  aria-label={`Archive order ${order.number}`}
+                  icon={<Archive />}
+                  variant="tertiary"
+                  size="sm"
+                  type="submit"
+                />
+              </form>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+}
+```
+
+```ts title="app/orders/actions.ts"
+'use server';
+import { revalidatePath } from 'next/cache';
+import { archive } from './data';
+
+export async function archiveOrder(formData: FormData): Promise<void> {
+  await archive(String(formData.get('id')));
+  revalidatePath('/orders');
+}
+```
+
+If the row instead had several icon-only actions with no visible name for each (edit, duplicate,
+archive in one cell), sighted users would need the tooltips: use `IconButton`. That costs the same
++20,802 B under Turbopack for 1 row or 500, because the cost is per module.
+
+### A settings form posted to a Server Action
+
+Regional settings with three choices, each a NativeSelect. NativeSelect is server kind and
+`FieldStatic` imports no client module, so the form ships no Nizivo client module. The Server Action
+validates and redirects; a server error comes back in the URL and renders inline.
+
+```tsx title="app/settings/page.tsx"
+import { Button } from '@nizivo/react/button';
+import { FieldStatic } from '@nizivo/react/field';
+import { NativeSelect } from '@nizivo/react/native-select';
+import { Stack } from '@nizivo/react/stack';
+import { saveRegionalSettings } from './actions';
+import { getSettings } from './data';
+
+export default async function SettingsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ error?: string }>;
+}) {
+  const [settings, { error }] = await Promise.all([getSettings(), searchParams]);
+  return (
+    <form action={saveRegionalSettings}>
+      <Stack gap="6">
+        <FieldStatic label="Language" name="language" required>
+          {(control) => (
+            <NativeSelect {...control} defaultValue={settings.language}>
+              <option value="en-IN">English (India)</option>
+              <option value="hi-IN">हिन्दी</option>
+            </NativeSelect>
+          )}
+        </FieldStatic>
+        <FieldStatic
+          label="Time zone"
+          name="timeZone"
+          description="Order times and reports use it."
+          error={error === 'timeZone' ? 'Choose a time zone from the list.' : undefined}
+          required
+        >
+          {(control) => (
+            <NativeSelect {...control} defaultValue={settings.timeZone}>
+              <option value="Asia/Kolkata">India (IST)</option>
+              <option value="Europe/London">United Kingdom</option>
+              <option value="America/New_York">US Eastern</option>
+            </NativeSelect>
+          )}
+        </FieldStatic>
+        <FieldStatic label="Weekly summary email" name="digest">
+          {(control) => (
+            <NativeSelect {...control} defaultValue={settings.digest}>
+              <option value="off">Off</option>
+              <option value="mon">Mondays</option>
+              <option value="fri">Fridays</option>
+            </NativeSelect>
+          )}
+        </FieldStatic>
+        <Button type="submit" variant="primary">
+          Save
+        </Button>
+      </Stack>
+    </form>
+  );
+}
+```
+
+```ts title="app/settings/actions.ts"
+'use server';
+import { redirect } from 'next/navigation';
+import { updateSettings } from './data';
+
+const TIME_ZONES = new Set(['Asia/Kolkata', 'Europe/London', 'America/New_York']);
+
+export async function saveRegionalSettings(formData: FormData): Promise<void> {
+  const timeZone = String(formData.get('timeZone') ?? '');
+  if (!TIME_ZONES.has(timeZone)) redirect('/settings?error=timeZone');
+  await updateSettings({
+    language: String(formData.get('language')),
+    timeZone,
+    digest: String(formData.get('digest')),
+  });
+  redirect('/settings');
+}
+```
+
+What the form gives up, compared with `Field`:
+
+- `required` is checked by the browser with its own message bubble, not an inline message.
+- Nothing moves focus to the field that failed or speaks the server error: a screen reader reads it
+  when focus reaches the select (through its `aria-describedby`). `Field`'s announcer, which speaks a
+  new error while focus stays in the field, exists only with FieldScope.
+
+Adding a text field changes the answer. `Input` is client kind and reads FieldScope, so step 7 says
+`Field`. Once one `Field` with a client control is on the page, FieldScope is loaded, `FieldStatic`
+saves nothing, and the form validates one way only if every field uses `Field`:
+
+```tsx
+import { Field } from '@nizivo/react/field';
+import { Input } from '@nizivo/react/input';
+
+<Field label="Store name" name="storeName" required>
+  <Input />
+</Field>;
+```
+
+Mixing native-validated kinds in one form has a known catch: see
+[Validation in mixed forms](/docs/components/field/#validation-in-mixed-forms).
+
+### A dashboard card whose tooltip needs JavaScript
+
+A revenue card with an icon-only download action. Nothing on the card names the action in words, so
+sighted mouse and keyboard users need the tooltip: step 6's "Yes", the normal `IconButton`. The card
+stays a Server Component; only the IconButton's tooltip leaf and the Tooltip code it uses are client
+modules.
+
+```tsx title="app/dashboard/revenue-card.tsx"
+import { Download } from '@nizivo/icons/download';
+import { Card } from '@nizivo/react/card';
+import { Delta } from '@nizivo/react/delta';
+import { IconButton } from '@nizivo/react/icon-button';
+import { Meter } from '@nizivo/react/meter';
+import { Stack } from '@nizivo/react/stack';
+import { Text } from '@nizivo/react/text';
+import { getRevenue } from './data';
+
+export async function RevenueCard() {
+  const revenue = await getRevenue();
+  return (
+    <Card.Root>
+      <Card.Header>
+        <Card.Title>Revenue</Card.Title>
+        <Card.Description>This month</Card.Description>
+        <Card.Action>
+          <IconButton
+            label="Download revenue as CSV"
+            icon={<Download />}
+            variant="tertiary"
+            size="sm"
+            render={<a href="/reports/revenue.csv" download />}
+          />
+        </Card.Action>
+      </Card.Header>
+      <Card.Body>
+        <Stack gap="3">
+          <Text variant="numeric-kpi">{revenue.total}</Text>
+          <Delta value={revenue.change} comparison="vs last month" />
+          <Meter label="Monthly target" value={revenue.percentOfTarget} />
+        </Stack>
+      </Card.Body>
+    </Card.Root>
+  );
+}
+```
+
+The tooltip costs +20,802 B under Turbopack and +21,444 B under webpack for the page (the fixture's
+`/icon-button-tooltip`), once. A dashboard with ten such cards pays it once, and a page that already
+has a Tooltip pays most of it already. The `label` names the button and is the tooltip text; the
+button is not also described by the tooltip, so a screen reader hears the name once.
+
+### A dismissible notice from a Server Component
+
+A split component whose JavaScript follows one prop. The notice shows until the user dismisses it;
+the dismissal is a Server Action that sets a cookie, so the server stops rendering the Alert.
+
+```tsx title="app/(shop)/layout.tsx"
+import { cookies } from 'next/headers';
+import { Alert, AlertDismiss } from '@nizivo/react/alert';
+import { dismissPayoutNotice } from './actions';
+
+export default async function ShopLayout({ children }: { children: React.ReactNode }) {
+  const dismissed = (await cookies()).get('payout-notice')?.value === 'dismissed';
+  return (
+    <>
+      {!dismissed && (
+        <Alert
+          title="Payouts move to daily on Nov 1"
+          dismiss={<AlertDismiss onDismiss={dismissPayoutNotice} />}
+        >
+          No action needed.
+        </Alert>
+      )}
+      {children}
+    </>
+  );
+}
+```
+
+```ts title="app/(shop)/actions.ts"
+'use server';
+import { cookies } from 'next/headers';
+
+export async function dismissPayoutNotice(): Promise<void> {
+  (await cookies()).set('payout-notice', 'dismissed', { maxAge: 60 * 60 * 24 * 365 });
+}
+```
+
+With `dismiss`, the page loads one client module, `alert/alert-dismiss.client` (+1,490 B under
+Turbopack in the fixture's `/alert-dismiss`). Without it, the same Alert loads none.
+
+## Common mistakes
+
+**An IconButtonStatic with no name.** It has no tooltip and no `label`, so `aria-label` is its name.
+TypeScript rejects the first line (and `label="…"`, which IconButtonStatic does not take); without a
+name a screen reader announces only "button", and a development build warns in the console.
+
+```tsx
+<IconButtonStatic icon={<Trash />} />; // wrong: no accessible name
+<IconButtonStatic aria-label="Delete product" icon={<Trash />} />; // right
+```
+
+**FieldStatic around a Nizivo Input, expecting it to wire itself.** FieldStatic provides no context
+and wires only through its function child. TypeScript rejects a child that is not a function, and
+plain JavaScript that passes one fails at render with "FieldStatic: children must be a function".
+Spreading the argument on the Input
+passes it the ids and ARIA attributes, but saves nothing: Input is client kind and its module reaches
+FieldScope, and the inline native message and the announcer are still missing.
+
+```tsx
+// wrong: throws, the child is not a function
+<FieldStatic label="Store name">
+  <Input />
+</FieldStatic>;
+
+// wired, but no saving: use Field here
+<FieldStatic label="Store name">{(control) => <Input {...control} />}</FieldStatic>;
+
+// right
+<Field label="Store name">
+  <Input />
+</Field>;
+```
+
+**A tooltip on a static button.** IconButtonStatic takes no `tooltip` prop (TypeScript rejects it).
+Wrapping it in a Tooltip loads the same Tooltip code, and the tooltip then describes the button with
+its own name, so a screen reader hears it twice. Use IconButton, which pairs the tooltip without the
+duplicate description.
+
+```tsx
+// wrong: the Tooltip code ships anyway, and the name is read twice
+<Tooltip.Root content="Bold">
+  <Tooltip.Trigger render={<IconButtonStatic aria-label="Bold" icon={<Bold />} />} />
+</Tooltip.Root>;
+
+// right
+<IconButton label="Bold" icon={<Bold />} />;
+```
+
+**Expecting `tooltip={false}` to ship nothing.** It runs no client code, and production webpack ships
+none, but Turbopack and `next dev` still ship the tooltip chain (+20,802 B, +62,742 B). Use
+`IconButtonStatic` for zero bytes in every mode.
+
+**`'use client'` at the top of a page "to make it work".** Every component that file imports becomes
+client code, server kind included. Keep the page a Server Component and put only the interactive part
+in a small client component.
+
+**Passing `onClick` from a Server Component.** React cannot send a function from the server to the
+browser. Use a link, a form with a Server Action, or a client component that owns the handler.
+
+**Measuring with `next dev`.** It ships unminified code for every client module the server graph
+reaches. Compare production builds, and compare a page against the same page without the component.
+
+## Outside Next.js
+
+- **Vite (a single-page app):** there are no Server Components, so every imported component is in the
+  bundle and runs. The kind still says which components work in server-rendered HTML before
+  hydration. Vite drops modules a page does not use, so a static variant leaves out the Tooltip code
+  or FieldScope when nothing else imports them; this has not been measured for the static variants
+  yet.
+- **Astro:** a component rendered without a `client:*` directive is static HTML with no JavaScript,
+  whatever its kind. Server kind and the static variants need no directive. A client-kind component,
+  or a split one used with its interactive prop (an IconButton with its tooltip, an Alert with
+  `dismiss`), needs a `client:load` or `client:visible` island to work. See
+  [Astro](/docs/getting-started/astro/#islands).
+
+## Where the facts come from
+
+- Kinds: `packages/react/src/<name>/component.json` and the module directives; tested by
+  `packages/react/test/ssr/` (each entry loads under `react-server`, and the client modules each
+  subpath reaches are listed).
+- Page costs: the Next.js fixture (`fixtures/next`, results in `fixtures/next/results/`), which also
+  fails a page that loads a client module it should not.
+- The static variants' design and its trade-offs: `packages/react/W7-RESULTS.md`, section "D-aa".
+- Per-entry sizes as a client bundle (what a Vite app or a client component pays): `pnpm size`, with
+  the budgets in `packages/tooling/size/budgets.json`.

@@ -1,0 +1,32 @@
+---
+title: Separator
+---
+
+## Decorative by default
+
+A Separator is decorative unless you say otherwise: it renders `<hr role="none">`, so a screen
+reader skips it, as Figma's Divider (7370:95) intends ("spacing first, a line only when spacing is
+not enough"). Most lines between actions, rows or card sections only draw. Pass
+`decorative={false}` for a break that means something on its own, such as the rule above an order
+total or between two groups of settings: the `<hr>` keeps its implicit `separator` role, with
+`aria-orientation` when it is vertical.
+
+```tsx
+<>
+  <Separator decorative={false} />
+  <Inline gap="3">
+    <span>Edit</span>
+    <Separator orientation="vertical" />
+    <span>Archive</span>
+  </Inline>
+</>
+```
+
+Until 2026-10-18 the default was `decorative={false}` (the maintainer's decision M35 changed it
+before 0.1.0).
+
+## Static or interactive
+
+**Server.** It ships no client JavaScript when a Server Component renders it, in every Next.js build
+mode; its code is bundled only when a client component (a `'use client'` file) imports it. [How to
+choose](/docs/guides/static-or-interactive/).

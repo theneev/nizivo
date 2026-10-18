@@ -9,6 +9,12 @@ keyboard:
 keyboardSource: a native `<input>` (`input.client.tsx`); the box's mousedown handler forwards focus to it. The browser lane (`test/browser/text-controls.spec.tsx`) checks the focus outline, the hit area and inline validation on submit.
 ---
 
+## Static or interactive
+
+**Client.** It always ships its client leaf, which reads its Field through FieldScope, so a page
+with an Input also loads FieldScope. The server HTML is a native `<input>` that works before
+hydration. [How to choose](/docs/guides/static-or-interactive/).
+
 ## Text size on touch screens
 
 Under a coarse pointer (a phone or a tablet), the text, the placeholder and the affixes are 16 px

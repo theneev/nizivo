@@ -1,6 +1,6 @@
 ---
 title: Textarea
-description: A multi-line native text area, three rows tall by default, that grows with its content where the browser supports field-sizing and can be resized vertically. Inside a Field it is labelled, described and validated by the Field.
+description: A multi-line native text area, at least 112 px tall, that grows with its content where the browser supports field-sizing and can be resized vertically. Inside a Field it is labelled, described and validated by the Field.
 keyboard:
   - keys: Tab
     action: Moves focus to the text area (Tab is not captured, so it also leaves it).
@@ -9,10 +9,31 @@ keyboard:
 keyboardSource: a native `<textarea>` (`textarea.client.tsx`), which adds no key handling.
 ---
 
+## Static or interactive
+
+**Client.** It always ships its client leaf, which reads its Field through FieldScope, so a page
+with a Textarea also loads FieldScope. The server HTML is a native `<textarea>` that works before
+hydration. [How to choose](/docs/guides/static-or-interactive/).
+
+## Height and padding
+
+The box follows Figma's Textarea (7367:316): 12 px padding on every side and a minimum height of
+112 px. Its height is the larger of that minimum and `rows` (3 by default), so up to four rows of
+Body/M sit at 112 px and `rows={6}` is taller. Where the browser supports `field-sizing` (Chrome and
+Edge 123 and later, not Firefox 129 or Safari 17.5) it also grows with its content, never below that
+height; elsewhere the user drags it taller. For a one-line box, such as a chat composer, lower the
+minimum with the `--nz-textarea-min-block-size` hook (`0` leaves only `rows`).
+
+```css
+.composer .nz-textarea {
+  --nz-textarea-min-block-size: 0;
+}
+```
+
 ## Text size on touch screens
 
 Under a coarse pointer (a phone or a tablet), the text and the placeholder are 16 px (Body/L) instead
 of 14 px (Body/M), because iOS Safari zooms the page into a focused field whose text is smaller than
-16 px. Each row is then Body/L's 25.6 px line instead of 21 px, so three rows are taller there (Mobile
-Safari 17.5 rounds each row down to 25 px). `--nz-textarea-font` replaces the font on every pointer,
+16 px. Each row is then Body/L's 25.6 px line instead of 21 px, so a tall `rows` grows more there
+(Mobile Safari 17.5 rounds each row down to 25 px); the 112 px minimum is the same. `--nz-textarea-font` replaces the font on every pointer,
 so a page that sets it also decides whether iOS zooms.

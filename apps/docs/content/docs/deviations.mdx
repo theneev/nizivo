@@ -10,7 +10,8 @@ read at build time from the file that owns it; none of it is typed by hand.
 ## Contrast overrides
 
 Figma variables that the code points somewhere else, mostly to reach 4.5:1 for text and 3:1 for
-non-text. The contrast matrix in `packages/tokens/CONTRAST.md` checks every pair with these in place.
+non-text. The contrast matrix in `packages/tokens/CONTRAST.md` checks every pair with any of these in
+place.
 
 <OverridesTable />
 
@@ -74,6 +75,29 @@ One value that is not in the Figma file, the maintainer's decision of 2026-10-17
   in `icon/secondary`, 16 px from the inline-end edge, and the button reaches into the padding, so the
   row is no taller than the title's line. It replaces week 2's 24 px button, whose hover changed only
   the glyph colour.
+
+### Week 9
+
+Figma's file of 2026-10-18 settled several week 3 to week 6 choices (the Select list, the Textarea's
+padding and height, the chart fills, one border width, the spinner's speed), so the tables above
+now record Figma's values where they apply. What still differs, with the maintainer's decisions of
+2026-10-18:
+
+- **The selected Select row keeps a tint.** Figma's Select Option draws the selected row with only
+  Label/M Strong and a trailing check. The code also keeps the `--nz-bg-brand-subtle` fill it had
+  (M36: "keep tint, for label, follow figma").
+- **The Select check's column is always reserved.** Figma hides the check on unselected rows and the
+  label takes its place; the code keeps the 16 px column on every row, so selecting never moves the
+  text.
+- **The Select list is as wide as its trigger.** Figma's Select Menu says "matches its width (min
+  240)"; the code keeps the trigger's width as the minimum, with no 240 px floor.
+- **An icon-only pending button shows no text under Reduced motion.** Figma's Accessibility page
+  says "Spinner and skeleton loops stop; a text label shows". Button does that ("Publishing ·
+  Loading…"). IconButton has no room for text: its spinner stops and `aria-disabled` stays, and
+  nothing visible says it is loading. Show the progress in words next to it (a status line), or use
+  a Button where a label fits. Open for the maintainer.
+- **A Textarea's minimum height can be lowered.** Figma's 112 px minimum is the default;
+  `--nz-textarea-min-block-size` changes it (for example to `0` for a one-line composer).
 
 ## Builder defaults
 

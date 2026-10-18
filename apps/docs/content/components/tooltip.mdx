@@ -10,6 +10,13 @@ keyboard:
 keyboardSource: react-aria-components 1.22.1 `TooltipTrigger` (react-aria 3.53.1 `useTooltipTrigger`) through `_engines/react-aria/tooltip.client.tsx`. Showing on keyboard focus and hiding on Escape are checked by the Next fixture and by apps/docs/scripts/smoke.ts.
 ---
 
+## Static or interactive
+
+**Client.** It always ships React Aria's tooltip and overlay code (+19,625 B gzip under Turbopack
+for one Tooltip on the Next.js fixture), once per page however many tooltips it has. Information a
+user needs belongs in visible text; for an icon-only action, IconButton pairs the tooltip for you.
+[How to choose](/docs/guides/static-or-interactive/).
+
 ## The trigger
 
 Compose a Button into the trigger; it is still the recommended look:

@@ -8,3 +8,12 @@ keyboard:
     action: Follows the focused link.
 keyboardSource: native `<a>` elements in a `<nav>` (`tab-nav.tsx`, no client code). The browser lane (`test/browser/tabs.spec.tsx`) checks Tab between links and the focus outline.
 ---
+
+## Static or interactive
+
+**Server.** It ships no client JavaScript when a Server Component renders it, in every Next.js build
+mode; its code is bundled only when a client component (a `'use client'` file) imports it. Its links
+are plain `<a>` elements. A router link passed through `render` is the router's own code: on the
+Next.js fixture's `/tab-nav` page, three links through `next/link` load no Nizivo module and 3,302 B
+(gzip, Turbopack) of Next's. It is the static alternative to Tabs when every view is a URL. [How to
+choose](/docs/guides/static-or-interactive/).

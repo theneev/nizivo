@@ -9,6 +9,13 @@ keyboard:
 keyboardSource: The Alert shell (`alert.tsx`) renders the action before the dismiss slot; `AlertDismiss` is a native `<button type="button">` (`alert-dismiss.client.tsx`), and the Next fixture checks that it takes a click.
 ---
 
+## Static or interactive
+
+**Split.** An Alert ships one client module, the `AlertDismiss` leaf, only when you pass it in
+`dismiss` (+1,490 B gzip under Turbopack on the Next.js fixture's `/alert-dismiss` page). The shell
+does not import the leaf, so an Alert without `dismiss` ships nothing in every build mode. [How to
+choose](/docs/guides/static-or-interactive/).
+
 ## The dismiss button
 
 Pass an `AlertDismiss` in `dismiss`. With no `render` it is an IconButton (tertiary, `sm`) showing

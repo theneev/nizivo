@@ -9,3 +9,15 @@ keyboard:
     action: Turns it on or off.
 keyboardSource: a native `<input type="checkbox" role="switch">` (`switch.client.tsx`), which adds no key handling.
 ---
+
+## Static or interactive
+
+**Client.** It always ships its client leaf, which wires it to a Field, and inside a Field also
+FieldScope. The server HTML is a native checkbox with `role="switch"`, so it toggles and submits
+before hydration. [How to choose](/docs/guides/static-or-interactive/).
+
+## Invalid
+
+With an error, an unchecked Switch draws a 1 px `--nz-border-critical` ring inside its track
+(`--nz-border-width-default`), as every Figma border is 1 px; the message under it, with its icon,
+carries the state. The checked track keeps its brand fill.

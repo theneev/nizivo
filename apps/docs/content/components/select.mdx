@@ -24,6 +24,12 @@ keyboard:
 keyboardSource: react-aria-components 1.22.1 `Select` (react-aria 3.53.1 `useSelect`, `useMenuTrigger` and `useSelectableCollection`) through `_engines/react-aria/select.client.tsx`. apps/docs/scripts/smoke.ts checks ArrowDown opening on the selected option, ArrowDown and Enter choosing, Escape closing with focus back on the trigger, ArrowRight and ArrowLeft on the closed trigger, and typing on the trigger; the overlay lane (`test/overlay/select.spec.tsx`) checks Tab and Shift+Tab, which the adapter handles because React Aria keeps Tab inside its modal popover.
 ---
 
+## Static or interactive
+
+**Client.** It always ships React Aria's listbox and popup code and FieldScope (+72,949 B gzip under
+Turbopack for one Select on the Next.js fixture). NativeSelect is the static alternative when the
+browser's own picker fits. [How to choose](/docs/guides/static-or-interactive/).
+
 ## In a Field
 
 Inside a `Field`, Select reads the Field the way Input does: the label and the selected value name
@@ -41,14 +47,24 @@ the default value back in the trigger and in the submitted data.
 
 ## The selected row
 
-The selected row is `--nz-bg-brand-subtle` with `--nz-text-brand`, and a check at its end carries
-the state for readers who do not see the colour (WCAG 1.4.1). `indicator` on `Select.Item`
-replaces the check, and `indicator={null}` removes it. Rows, the group label and the separator
-share Menu's recipe: 36 px rows, 2 px apart, with the keyboard ring drawn inside the row.
+The selected row keeps a `--nz-bg-brand-subtle` tint, and its label turns Label/M Strong in
+`--nz-text-primary`. A check at its end (`--nz-icon-brand`) carries the state for readers who do not
+see the colour (WCAG 1.4.1). The check's 16 px column is reserved on every row, so selecting never
+moves the text. `indicator` on `Select.Item` replaces the check, and `indicator={null}` removes it.
+Figma draws no tint on the selected row; the code keeps it (the maintainer's decision of
+2026-10-18, listed under [Deviations](/docs/deviations/)).
+
+## The list
+
+The list follows Figma's Select Menu (7356:406): `--nz-radius-md`, `--nz-elevation-4`, 6 px inside,
+and 4 px below the trigger (`sideOffset` on `Select.Popup`). Rows are 36 px of Label/M with 8 / 12 px
+padding and no gap between them, and the keyboard ring is drawn inside the row. Group labels are
+Label/S in `--nz-text-secondary`, padded 8 / 12 / 4 / 12. A separator has 4 px above and below. The
+Dropdown Menu (Menu) keeps its own look.
 
 ## Text size on touch screens
 
 Under a coarse pointer (a phone or a tablet), the trigger's value and placeholder are 16 px (Label/L)
 instead of 14 px (Label/M) at every size, matching NativeSelect, so swapping one for the other does
-not change the text. The trigger keeps its 32, 40 or 48 px height. The list's rows and group labels
-stay at 14 px: they are not text fields, so iOS does not zoom into them.
+not change the text. The trigger keeps its 32, 40 or 48 px height. The list's rows stay at 14 px and
+its group labels at 12 px: they are not text fields, so iOS does not zoom into them.

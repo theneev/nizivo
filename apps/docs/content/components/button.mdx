@@ -8,3 +8,49 @@ keyboard:
     action: Activates the button. A pending button swallows the activation.
 keyboardSource: a native `<button>` (`button.tsx`); with `render={<a />}` it is a link and only Enter activates it.
 ---
+
+## Static or interactive
+
+**Server.** It ships no client JavaScript when a Server Component renders it, in every Next.js build
+mode; its code is bundled only when a client component (a `'use client'` file) imports it. A Server
+Component cannot pass it `onClick`: use `type="submit"` in a `<form action={serverAction}>`,
+`render={<a href="…" />}`, or a client component that owns the handler. [How to
+choose](/docs/guides/static-or-interactive/).
+
+## Pending
+
+`pending` replaces the leading icon with a spinner, keeps the label, and keeps the button focusable
+with `aria-disabled`, swallowing clicks. The spinner turns once every 800 ms (`--nz-duration-spin`,
+Figma's `duration/spin`). Under Reduced motion (the OS setting, or `data-nz-motion="reduce"` on an
+ancestor) it stops, and the text "Loading…" shows after the label, so the wait is still visible
+without movement (Figma's Accessibility page: "Spinner and skeleton loops stop; a text label
+shows"). The button grows by that text while it shows. Where it cannot grow (`fullWidth`, a narrow
+parent), the text shortens to an ellipsis and then to nothing before the label wraps.
+
+```tsx
+<>
+  {/* Reduced motion: "Publishing · Loading…" */}
+  <Button pending>Publishing</Button>
+  <Button pending labels={{ pending: 'Wird geladen…' }}>
+    Veröffentlichen
+  </Button>
+</>
+```
+
+The text is visual only (`aria-hidden`): the accessible name stays the label, and assistive
+technology learns the state from `aria-disabled`. `labels={{ pending: '' }}` shows no text. The
+markup is the same in both motion modes; only CSS reads the preference.
+
+Translate the text with `labels.pending`. It is set per instance: 0.1.0 has no app-wide labels, and
+Button, a server component, could not read them from context anyway. A localised app wraps Button
+once and uses the wrapper everywhere:
+
+```tsx
+import { Button, type ButtonProps } from '@nizivo/react/button';
+
+const strings = { loading: 'Wird geladen…' }; // the app's own message catalogue
+
+export function AppButton({ labels, ...props }: ButtonProps) {
+  return <Button labels={{ pending: strings.loading, ...labels }} {...props} />;
+}
+```

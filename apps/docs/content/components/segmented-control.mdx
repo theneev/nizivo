@@ -11,3 +11,10 @@ keyboard:
     action: Selects the previous item and focuses it, skipping disabled ones.
 keyboardSource: native `<input type="radio">` elements inside `<label>`s (`segmented-control.client.tsx`); its only key handler marks the item `data-focus-visible`, because WebKit matches no `:focus-visible` on a radio reached by an arrow key. The browser lane (`test/browser/segmented-control.spec.tsx`) checks Tab entry, arrows and skipping a disabled item.
 ---
+
+## Static or interactive
+
+**Client.** It always ships its client leaf, which wires it to a Field. The server HTML is a native
+radio group, so arrows and submission work before hydration. When each value is its own URL, a
+TabNav of links does the job with no client code. [How to
+choose](/docs/guides/static-or-interactive/).

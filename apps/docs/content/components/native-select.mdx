@@ -14,6 +14,15 @@ attributes with no client code. It keeps the browser's own validation bubble rat
 inline message, so do not mix it with Field-wired client controls in one native-validated form (see
 [Field](/docs/components/field/#validation-in-mixed-forms)).
 
+## Static or interactive
+
+**Server.** It ships no client JavaScript when a Server Component renders it, in every Next.js build
+mode; its code is bundled only when a client component (a `'use client'` file) imports it. It is the
+static alternative to Select when the browser's own picker fits. Inside a `Field` (placed directly
+or through a function child) it is wired with no client code, but Turbopack and `next dev` still
+ship the Field's FieldScope module; `FieldStatic` ships none. [How to
+choose](/docs/guides/static-or-interactive/).
+
 ## Text size on touch screens
 
 Under a coarse pointer (a phone or a tablet), the value is 16 px (Label/L) instead of 14 px (Label/M)

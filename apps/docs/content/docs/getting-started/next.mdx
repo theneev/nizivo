@@ -160,6 +160,8 @@ export default function Page() {
 - Pages are Server Components. Server-safe components (Button, Card, Text and the rest of the week 2
   set) ship **no** client JavaScript: the fixture's server-only pages load no `@nizivo` client module in
   any build.
+  Which components ship client JavaScript, and when to use `IconButtonStatic` or `FieldStatic`, is in
+  [Static or interactive](/docs/guides/static-or-interactive/).
 - Compound components work from Server Components through the namespace (`Select.Root`) and the flat
   names (`SelectRoot`).
 - Pass `render` as an element from server code (`render={<Button variant="tertiary" />}`). The function

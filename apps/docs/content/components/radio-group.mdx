@@ -17,3 +17,9 @@ keyboardSource: native `<input type="radio">` elements sharing one `name` (`radi
 A required RadioGroup keeps the browser's own validation bubble; it does not show an inline message
 or set `aria-invalid` until you pass `error`. Mixing it with Field-wired controls in one
 native-validated form is covered on [Field](/docs/components/field/#validation-in-mixed-forms).
+
+## Static or interactive
+
+**Client.** The fieldset, legend, description and error are server HTML, and the radios' client leaf
+always ships with them. Native radios that share a name keep arrow keys and one checked radio before
+hydration. [How to choose](/docs/guides/static-or-interactive/).

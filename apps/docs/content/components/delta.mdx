@@ -2,3 +2,10 @@
 title: Delta
 description: A signed change, such as +12.4%, coloured by direction and read with a visually hidden comparison. The sign carries the direction without colour.
 ---
+
+## Static or interactive
+
+**Server.** It ships no client JavaScript when a Server Component renders it, in every Next.js build
+mode; its code is bundled only when a client component (a `'use client'` file) imports it. The
+number is formatted on the server with `Intl.NumberFormat`. [How to
+choose](/docs/guides/static-or-interactive/).

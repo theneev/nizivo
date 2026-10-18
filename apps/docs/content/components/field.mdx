@@ -3,6 +3,35 @@ title: Field
 description: The label, help text and error around one form control. A server-safe shell; inside it, Nizivo controls pick up their id, name, flags and description wiring, and native validation messages show inline.
 ---
 
+## Static or interactive
+
+**Split.** A Field renders the FieldScope client leaf around any child except a function or a
+NativeSelect placed directly in it. On those zero-JS paths no client code runs, but Turbopack and
+`next dev` still ship FieldScope, because the shell imports it; `FieldStatic`, from the same import
+path, imports no client module. [How to choose](/docs/guides/static-or-interactive/).
+
+```tsx
+import { FieldStatic } from '@nizivo/react/field';
+import { NativeSelect } from '@nizivo/react/native-select';
+
+<FieldStatic label="Country" name="country" required>
+  {(control) => (
+    <NativeSelect {...control}>
+      <option value="IN">India</option>
+      <option value="GB">United Kingdom</option>
+    </NativeSelect>
+  )}
+</FieldStatic>;
+```
+
+`FieldStatic` gives the function child the attributes to spread on the control, and as a second
+argument the Field's ids, `labelledBy` and `describedBy` for a group or button control. Its child is
+always a function (TypeScript rejects `<FieldStatic><Input /></FieldStatic>`, which would leave the
+Input unwired). It shows no inline native validation message (the browser's bubble shows instead),
+takes no `messages` or `validateOn`, and has no announcer. Around a Nizivo Input, Textarea,
+Checkbox, Switch, SegmentedControl or Select, use `Field`: those controls read FieldScope, so the
+page loads it anyway.
+
 ## Validation in mixed forms
 
 A Field shows the browser's validation message inline and moves focus to the first invalid control
@@ -59,5 +88,9 @@ component, and production webpack ships none of the Field's client code for it. 
 `next dev` ship every client module a page's server code imports, rendered or not, so such a page
 still loads the Field's client leaf. Measured on the Next fixture (gzip of the page's client chunks,
 a page with two zero-JS Fields, a function child and a NativeSelect placed directly, minus a page
-with one Button; the cost is per module, not per Field): Turbopack production +3,377 B, production
-webpack 0 B, `next dev` +8,576 B (unminified). No other import path avoids it in this version.
+with one Button; the cost is per module, not per Field): Turbopack production +3,364 B, production
+webpack 0 B, `next dev` +8,551 B (unminified). `FieldStatic` avoids it: its module imports no
+client code, so a page whose fields are all `FieldStatic` ships no FieldScope in any mode (the
+fixture's `/field-static` page, the same two fields as FieldStatic: 0 B over the Button page under
+Turbopack, webpack and `next dev`). A page
+that also has a client control in a `Field` loads FieldScope anyway.

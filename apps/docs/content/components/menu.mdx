@@ -21,3 +21,9 @@ keyboard:
     action: Closes the menu and moves focus to the element after the trigger, or with Shift+Tab to the element before it.
 keyboardSource: react-aria-components 1.22.1 `MenuTrigger`, `Popover` and `Menu` (react-aria 3.53.1 `useMenuTrigger`, `useMenu` and `useMenuItem`) through `_engines/react-aria/menu.client.tsx`. React Aria keeps Tab inside its modal popover, so the adapter closes the menu on Tab and Shift+Tab and moves focus past the trigger (`useTabOut`). React Aria also renders a visually hidden Dismiss button at each end of the popup for screen-reader users; its text is the engine's own string. The overlay lane (`test/overlay/menu.spec.tsx`) checks every key above in Chromium and WebKit.
 ---
+
+## Static or interactive
+
+**Client.** It always ships React Aria's menu and popup code (+61,399 B gzip under Turbopack for one
+Menu on the Next.js fixture). An IconButton trigger with its default tooltip adds the Tooltip code
+too. [How to choose](/docs/guides/static-or-interactive/).

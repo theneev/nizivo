@@ -9,3 +9,10 @@ keyboard:
     action: Toggles it. A mixed checkbox becomes checked.
 keyboardSource: a native `<input type="checkbox">` (`checkbox.client.tsx`), which adds no key handling; the browser lane (`test/browser/toggles.spec.tsx`) checks the mixed state and form data.
 ---
+
+## Static or interactive
+
+**Client.** It always ships its client leaf, which wires it to a Field and sets `indeterminate` (a
+DOM property with no attribute), and inside a Field also FieldScope. The server HTML is a native
+checkbox, so it toggles and submits before hydration. [How to
+choose](/docs/guides/static-or-interactive/).
