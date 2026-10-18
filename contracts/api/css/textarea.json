@@ -124,20 +124,29 @@
     },
     {
       "fallback": {
+        "kind": "literal",
+        "value": "7rem"
+      },
+      "name": "--nz-textarea-min-block-size",
+      "reads": [
+        {
+          "conditions": [],
+          "property": "--_nz-textarea-min",
+          "selector": ".nz-textarea",
+          "slot": "textarea"
+        }
+      ]
+    },
+    {
+      "fallback": {
         "kind": "token",
-        "name": "--nz-space-2"
+        "name": "--nz-space-3"
       },
       "name": "--nz-textarea-padding-block",
       "reads": [
         {
-          "conditions": ["@supports (field-sizing: content)"],
-          "property": "min-block-size",
-          "selector": ".nz-textarea",
-          "slot": "textarea"
-        },
-        {
           "conditions": [],
-          "property": "padding-block",
+          "property": "--_nz-textarea-padding-block",
           "selector": ".nz-textarea",
           "slot": "textarea"
         }
@@ -209,7 +218,6 @@
     "--nz-font-body-l",
     "--nz-font-body-m",
     "--nz-radius-md",
-    "--nz-space-2",
     "--nz-space-3",
     "--nz-text-disabled",
     "--nz-text-primary",

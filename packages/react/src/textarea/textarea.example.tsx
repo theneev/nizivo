@@ -16,11 +16,14 @@ export function TextareaExample(): JSX.Element {
   );
 }
 
-/** `rows` sets the height; the user can drag it taller. */
+/**
+ * 112 px at least (Figma 7367:316); `rows` above that sets the height, and the user can drag it
+ * taller. Where the browser has `field-sizing`, it also grows as the text does.
+ */
 export function TextareaRowsExample(): JSX.Element {
   return (
     <div style={{ display: 'grid', gap: 12, maxInlineSize: 420 }}>
-      <Textarea rows={2} aria-label="Short note" placeholder="Two rows" />
+      <Textarea aria-label="Short note" placeholder="The 112 px minimum" />
       <Textarea rows={6} aria-label="Long note" placeholder="Six rows" />
     </div>
   );

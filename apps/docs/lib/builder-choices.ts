@@ -257,11 +257,12 @@ const W3_CHOICES: Record<number, BuilderChoiceW3> = {
   },
   22: {
     chosen:
-      'Block padding `--nz-space-2`, 3 rows, vertical resize. It grows with its content where `field-sizing` is supported (never below its rows); Firefox 129 and Safari 17.5 keep the rows height. No counter yet.',
+      "Settled by Figma's Textarea set (7367:316) on 2026-10-18: `--nz-space-3` (12 px) padding on every side and a 112 px minimum height (`--nz-textarea-min-block-size` lowers it); 3 rows, vertical resize. It grows with its content where `field-sizing` is supported (never below the larger of its rows and the minimum); Firefox 129 and Safari 17.5 keep that height. No counter yet. Until then the block padding was `--nz-space-2` with no minimum.",
     hook: '--nz-textarea-padding-block',
     file: sheet('textarea'),
     declarations: [
-      'padding-block: var(--nz-textarea-padding-block, var(--nz-space-2));',
+      '--_nz-textarea-padding-block: var(--nz-textarea-padding-block, var(--nz-space-3));',
+      '--_nz-textarea-min: var(--nz-textarea-min-block-size, 7rem);',
       'resize: vertical;',
       'field-sizing: content;',
     ],

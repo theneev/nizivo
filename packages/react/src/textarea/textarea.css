@@ -1,13 +1,16 @@
 @layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
 
-/* @nizivo/react/css/textarea.css (ARCHITECTURE.md §16.1). No Figma component: the Input skin
-   (7275:11397) on a native <textarea>, which is the bordered box itself and takes the 2 px focus
-   outline from nz.base (focusTarget "self"). Height is the native `rows`; the user resizes
-   vertically. Where field-sizing is supported (Chrome 123; not Firefox 129 or Safari 17.5) it also
-   grows with its content, never below its `rows`: field-sizing drops the rows height, so the
-   minimum is rebuilt from the attribute (rows 1 to 10; more fall back to 3) with no inline style.
-   Invalid reads [data-invalid], set when a message is presented (§8.3). Body/M, or Body/L under a
-   coarse pointer (M25), where each row is Body/L's 25.6 px line instead of 21 px. */
+/* @nizivo/react/css/textarea.css (ARCHITECTURE.md §16.1). Figma Textarea set 7367:316 (M36 #4):
+   the Input skin on a native <textarea>, which is the bordered box itself and takes the 2 px focus
+   outline from nz.base (focusTarget "self"), with 12 px (space/3) padding on every side and a
+   112 px minimum height. Height is the larger of that minimum and the native `rows` (rows={6} is
+   taller; rows 1 to 4 sit at the minimum, which --nz-textarea-min-block-size lowers, for example to
+   0 for a one-line composer); the user resizes vertically. Where field-sizing is supported (Chrome
+   123; not Firefox 129 or Safari 17.5) it also grows with its content, never below that height:
+   field-sizing drops the rows height, so the rows part is rebuilt from the attribute (rows 1 to 10;
+   more fall back to 3) with no inline style. Invalid reads [data-invalid], set when a message is
+   presented (§8.3). Body/M, or Body/L under a coarse pointer (M25), where each row is Body/L's
+   25.6 px line instead of 21 px. */
 @layer nz.components {
   .nz-textarea {
     --_nz-textarea-border: var(--nz-border-control);
@@ -15,12 +18,15 @@
     --_nz-textarea-bg: var(--nz-bg-surface);
     --_nz-textarea-halo: var(--nz-focus-halo);
     --_nz-textarea-font: var(--nz-font-body-m);
+    --_nz-textarea-padding-block: var(--nz-textarea-padding-block, var(--nz-space-3));
+    --_nz-textarea-min: var(--nz-textarea-min-block-size, 7rem);
 
     display: block;
     box-sizing: border-box;
     min-inline-size: 0;
     margin: 0;
-    padding-block: var(--nz-textarea-padding-block, var(--nz-space-2));
+    min-block-size: var(--_nz-textarea-min);
+    padding-block: var(--_nz-textarea-padding-block);
     padding-inline: var(--nz-textarea-padding-inline, var(--nz-space-3));
     border: var(--nz-border-width-default) solid
       var(--nz-textarea-border, var(--_nz-textarea-border));
@@ -35,9 +41,12 @@
 
     @supports (field-sizing: content) {
       field-sizing: content;
-      min-block-size: calc(
-        var(--_nz-textarea-rows, 3) * 1lh + 2 *
-          var(--nz-textarea-padding-block, var(--nz-space-2)) + 2 * var(--nz-border-width-default)
+      min-block-size: max(
+        var(--_nz-textarea-min),
+        calc(
+          var(--_nz-textarea-rows, 3) * 1lh + 2 * var(--_nz-textarea-padding-block) + 2 *
+            var(--nz-border-width-default)
+        )
       );
     }
 

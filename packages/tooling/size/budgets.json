@@ -418,7 +418,7 @@
       "limitKiB": 0.7
     },
     "@nizivo/react/css/textarea.css": {
-      "measured": 725,
+      "measured": 751,
       "limitKiB": 0.8
     },
     "@nizivo/react/css/tooltip.css": {
@@ -426,7 +426,7 @@
       "limitKiB": 0.6
     },
     "@nizivo/react/styles.css": {
-      "measured": 15026,
+      "measured": 15058,
       "limitKiB": 16
     },
     "@nizivo/tokens": {

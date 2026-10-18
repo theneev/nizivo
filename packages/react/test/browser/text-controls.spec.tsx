@@ -292,8 +292,12 @@ describe('NativeSelect has the Select trigger geometry', () => {
   });
 });
 
-describe('Textarea height', () => {
-  test('rows sets the minimum height, with or without field-sizing', async () => {
+/** The block size `rows` asks for: its lines, the 12 px padding twice and the 1 px border twice. */
+const rowsHeight = (el: HTMLTextAreaElement, rows: number): number =>
+  rows * Number.parseFloat(getComputedStyle(el).lineHeight) + 2 * 12 + 2 * 1;
+
+describe('Textarea height (Figma 7367:316, M36 #4)', () => {
+  test('12 px padding on every side; 112 px minimum; more rows than that grow it', async () => {
     const container = await mount(
       <>
         <Textarea aria-label="Two" rows={2} />
@@ -302,14 +306,25 @@ describe('Textarea height', () => {
     );
     const [two, six] = [...container.querySelectorAll<HTMLTextAreaElement>('.nz-textarea')];
     if (two === undefined || six === undefined) throw new Error('no textareas');
-    const line = Number.parseFloat(getComputedStyle(two).lineHeight);
-    expect(six.getBoundingClientRect().height - two.getBoundingClientRect().height).toBeCloseTo(
-      4 * line,
-      0,
-    );
+    const computed = getComputedStyle(two);
+    for (const side of ['top', 'right', 'bottom', 'left']) {
+      expect(computed.getPropertyValue(`padding-${side}`)).toBe('12px');
+    }
+    // with or without field-sizing: rows 2 asks for 2 × 21 + 26 = 68 px, under the minimum
+    expect(two.getBoundingClientRect().height).toBeCloseTo(112, 0);
+    expect(six.getBoundingClientRect().height).toBeCloseTo(rowsHeight(six, 6), 0);
+    expect(rowsHeight(six, 6)).toBeGreaterThan(112);
   });
 
-  test('grows with its content where field-sizing is supported, and keeps rows elsewhere', async () => {
+  test('--nz-textarea-min-block-size lowers the minimum, and rows set the height again', async () => {
+    const container = await mount(<Textarea aria-label="Message" rows={1} />);
+    const composer = container.querySelector<HTMLTextAreaElement>('.nz-textarea');
+    if (composer === null) throw new Error('no textarea');
+    composer.style.setProperty('--nz-textarea-min-block-size', '0px');
+    expect(composer.getBoundingClientRect().height).toBeCloseTo(rowsHeight(composer, 1), 0);
+  });
+
+  test('grows with its content where field-sizing is supported, and keeps its height elsewhere', async () => {
     const lines = Array.from({ length: 8 }, (_, i) => `line ${i + 1}`).join('\n');
     const container = await mount(
       <>
@@ -319,12 +334,11 @@ describe('Textarea height', () => {
     );
     const [empty, full] = [...container.querySelectorAll<HTMLTextAreaElement>('.nz-textarea')];
     if (empty === undefined || full === undefined) throw new Error('no textareas');
-    const line = Number.parseFloat(getComputedStyle(empty).lineHeight);
-    const grown = full.getBoundingClientRect().height - empty.getBoundingClientRect().height;
-    // Six more lines than rows=2 where field-sizing applies (Chromium, WebKit); none on the floor's
-    // Firefox 129 and Safari 17.5, which keep the rows height (fixtures/floor-lane w3-controls).
-    const expected = CSS.supports('field-sizing', 'content') ? 6 * line : 0;
-    expect(grown).toBeCloseTo(expected, 0);
+    expect(empty.getBoundingClientRect().height).toBeCloseTo(112, 0);
+    // Eight lines where field-sizing applies (Chromium, WebKit); the floor's Firefox 129 and Safari
+    // 17.5 keep the minimum and scroll (fixtures/floor-lane w3-controls).
+    const expected = CSS.supports('field-sizing', 'content') ? rowsHeight(full, 8) : 112;
+    expect(full.getBoundingClientRect().height).toBeCloseTo(expected, 0);
   });
 });
 

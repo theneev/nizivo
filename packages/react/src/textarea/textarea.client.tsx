@@ -1,8 +1,8 @@
 'use client';
 // Textarea: a native <textarea> in a thin client leaf (ARCHITECTURE.md §9.5, §16.1 D20). Client only
 // to read the Field's FieldScope context through useFieldControl, as Input; no state, complete
-// server HTML. Its height is the native `rows`, and the user can resize it vertically; where the
-// browser has `field-sizing` it also grows with its content, never below `rows` (textarea.css).
+// server HTML. Its height is the native `rows`, never under 112 px, and the user can resize it
+// vertically; where the browser has `field-sizing` it also grows with its content (textarea.css).
 import type { ComponentPropsWithRef, JSX } from 'react';
 import { mergeProps } from '../contracts/merge-props';
 import { stateAttrs } from '../contracts/state';
@@ -11,8 +11,10 @@ import { useFieldControl } from '../field/field-scope.client';
 
 export interface TextareaProps extends Omit<ComponentPropsWithRef<'textarea'>, 'children'> {
   /**
-   * Visible lines of text, and the minimum height where it grows with its content (1 to 10; a
-   * larger value keeps a 3-line minimum there). @default 3
+   * Visible lines of text. The height is the larger of these rows and 112 px (Figma 7367:316; the
+   * `--nz-textarea-min-block-size` hook lowers it), so up to 4 rows of Body/M sit at 112 px. Where
+   * the textarea grows with its content, that is also its minimum (1 to 10; a larger value keeps a
+   * 3-line minimum there). @default 3
    */
   rows?: number;
   /**
