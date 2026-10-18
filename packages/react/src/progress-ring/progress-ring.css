@@ -52,8 +52,9 @@
     --_nz-progress-ring-size: 6rem;
   }
 
+  /* chart/success, Figma's fill (4.07 light, 5.87 dark on chart/track); icon/success's colours */
   .nz-progress-ring[data-tone='success'] {
-    --_nz-progress-ring-fill: var(--nz-icon-success);
+    --_nz-progress-ring-fill: var(--nz-chart-success);
   }
 
   .nz-progress-ring[data-tone='warning'] {
@@ -64,9 +65,10 @@
     --_nz-progress-ring-fill: var(--nz-chart-critical);
   }
 
+  /* chart/neutral (neutral 500 / 400 since the 2026-10-18 sync, the colours icon/secondary drew
+     before) reaches 3:1 on chart/track in both themes (1.4.11) */
   .nz-progress-ring[data-tone='neutral'] {
-    /* chart/neutral is 1.4:1 on the track; icon/secondary reaches 3:1 there in both themes (1.4.11) */
-    --_nz-progress-ring-fill: var(--nz-icon-secondary);
+    --_nz-progress-ring-fill: var(--nz-chart-neutral);
   }
 
   /* fill and stroke are forced too, which would merge the track and the arc: keep two system colours */

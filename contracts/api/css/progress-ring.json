@@ -32,7 +32,7 @@
           {
             "conditions": [],
             "selector": ".nz-progress-ring[data-tone=\"neutral\"]",
-            "value": "var(--nz-icon-secondary)",
+            "value": "var(--nz-chart-neutral)",
             "when": {
               "data-tone": "neutral"
             }
@@ -40,7 +40,7 @@
           {
             "conditions": [],
             "selector": ".nz-progress-ring[data-tone=\"success\"]",
-            "value": "var(--nz-icon-success)",
+            "value": "var(--nz-chart-success)",
             "when": {
               "data-tone": "success"
             }
@@ -146,14 +146,14 @@
   "runtime": [],
   "tokens": [
     "--nz-chart-critical",
+    "--nz-chart-neutral",
     "--nz-chart-primary",
+    "--nz-chart-success",
     "--nz-chart-track",
     "--nz-chart-warning",
     "--nz-duration-base",
     "--nz-easing-standard",
     "--nz-font-label-m-strong",
-    "--nz-icon-secondary",
-    "--nz-icon-success",
     "--nz-text-primary"
   ],
   "version": 1

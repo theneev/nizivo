@@ -32,7 +32,7 @@
           {
             "conditions": [],
             "selector": ".nz-progress-bar[data-tone=\"neutral\"]",
-            "value": "var(--nz-icon-secondary)",
+            "value": "var(--nz-chart-neutral)",
             "when": {
               "data-tone": "neutral"
             }
@@ -40,7 +40,7 @@
           {
             "conditions": [],
             "selector": ".nz-progress-bar[data-tone=\"success\"]",
-            "value": "var(--nz-icon-success)",
+            "value": "var(--nz-chart-success)",
             "when": {
               "data-tone": "success"
             }
@@ -170,7 +170,9 @@
   "runtime": [],
   "tokens": [
     "--nz-chart-critical",
+    "--nz-chart-neutral",
     "--nz-chart-primary",
+    "--nz-chart-success",
     "--nz-chart-track",
     "--nz-chart-warning",
     "--nz-duration-base",
@@ -178,8 +180,6 @@
     "--nz-easing-standard",
     "--nz-font-label-m",
     "--nz-font-numeric-m",
-    "--nz-icon-secondary",
-    "--nz-icon-success",
     "--nz-radius-full",
     "--nz-space-2",
     "--nz-space-3",

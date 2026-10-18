@@ -26,7 +26,7 @@
           {
             "conditions": [],
             "selector": ".nz-meter[data-tone=\"neutral\"]",
-            "value": "var(--nz-icon-secondary)",
+            "value": "var(--nz-chart-neutral)",
             "when": {
               "data-tone": "neutral"
             }
@@ -34,7 +34,7 @@
           {
             "conditions": [],
             "selector": ".nz-meter[data-tone=\"success\"]",
-            "value": "var(--nz-icon-success)",
+            "value": "var(--nz-chart-success)",
             "when": {
               "data-tone": "success"
             }
@@ -170,13 +170,13 @@
   "runtime": [],
   "tokens": [
     "--nz-chart-critical",
+    "--nz-chart-neutral",
     "--nz-chart-primary",
+    "--nz-chart-success",
     "--nz-chart-track",
     "--nz-chart-warning",
     "--nz-font-label-m",
     "--nz-font-numeric-m",
-    "--nz-icon-secondary",
-    "--nz-icon-success",
     "--nz-radius-full",
     "--nz-space-1-5",
     "--nz-space-2",

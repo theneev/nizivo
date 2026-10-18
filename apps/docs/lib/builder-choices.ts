@@ -71,12 +71,12 @@ const CHOICES: BuilderChoice[] = [
     component: 'ProgressBar',
     property: 'Success, Neutral',
     chosen:
-      'Success fills with `--nz-icon-success`. Neutral fills with `--nz-icon-secondary`: `chart/neutral` is 1.4:1 on the track, and `icon/secondary` reaches 3:1 in both themes. Meter and ProgressRing use the same fills.',
+      'Settled by Figma on 2026-10-18: success fills with `--nz-chart-success` and neutral with `--nz-chart-neutral`, the chart variables Figma added (both reach 3:1 on the track in both themes). Until then the code used `--nz-icon-success` and `--nz-icon-secondary`, the same colours. Meter and ProgressRing use the same fills.',
     hook: '--nz-progress-bar-fill',
     file: src('progress-bar'),
     declarations: [
-      '--_nz-progress-bar-fill: var(--nz-icon-success);',
-      '--_nz-progress-bar-fill: var(--nz-icon-secondary);',
+      '--_nz-progress-bar-fill: var(--nz-chart-success);',
+      '--_nz-progress-bar-fill: var(--nz-chart-neutral);',
     ],
   },
   {

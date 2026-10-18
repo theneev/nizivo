@@ -362,7 +362,7 @@
       "limitKiB": 1.2
     },
     "@nizivo/react/css/meter.css": {
-      "measured": 663,
+      "measured": 657,
       "limitKiB": 0.8
     },
     "@nizivo/react/css/native-select.css": {
@@ -370,11 +370,11 @@
       "limitKiB": 1
     },
     "@nizivo/react/css/progress-bar.css": {
-      "measured": 807,
+      "measured": 800,
       "limitKiB": 0.9
     },
     "@nizivo/react/css/progress-ring.css": {
-      "measured": 519,
+      "measured": 509,
       "limitKiB": 0.6
     },
     "@nizivo/react/css/radio-group.css": {
@@ -426,7 +426,7 @@
       "limitKiB": 0.6
     },
     "@nizivo/react/styles.css": {
-      "measured": 15006,
+      "measured": 15001,
       "limitKiB": 16
     },
     "@nizivo/tokens": {

@@ -83,8 +83,9 @@
     background: var(--nz-chart-critical);
   }
 
+  /* chart/success, Figma's fill (4.07 light, 5.87 dark on chart/track); icon/success's colours */
   .nz-meter[data-tone='success'] {
-    --_nz-meter-fill: var(--nz-icon-success);
+    --_nz-meter-fill: var(--nz-chart-success);
   }
 
   .nz-meter[data-tone='warning'] {
@@ -95,9 +96,10 @@
     --_nz-meter-fill: var(--nz-chart-critical);
   }
 
+  /* chart/neutral (neutral 500 / 400 since the 2026-10-18 sync, the colours icon/secondary drew
+     before) reaches 3:1 on chart/track in both themes (1.4.11) */
   .nz-meter[data-tone='neutral'] {
-    /* chart/neutral is 1.4:1 on the track; icon/secondary reaches 3:1 there in both themes (1.4.11) */
-    --_nz-meter-fill: var(--nz-icon-secondary);
+    --_nz-meter-fill: var(--nz-chart-neutral);
   }
 
   /* Backgrounds are replaced: the border shows the track's extent and every region's fill is a system

@@ -214,10 +214,10 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/input.css             |      844 |        0.8 |        710 |         0.9 |           77 |
 | /css/kbd.css               |      377 |        0.4 |        303 |         0.5 |          135 |
 | /css/menu.css              |    1,050 |        1.0 |        867 |         1.2 |          178 |
-| /css/meter.css             |      663 |        0.6 |        546 |         0.8 |          156 |
+| /css/meter.css             |      657 |        0.6 |        537 |         0.8 |          162 |
 | /css/native-select.css     |      930 |        0.9 |        778 |           1 |           94 |
-| /css/progress-bar.css      |      807 |        0.8 |        671 |         0.9 |          114 |
-| /css/progress-ring.css     |      519 |        0.5 |        438 |         0.6 |           95 |
+| /css/progress-bar.css      |      800 |        0.8 |        664 |         0.9 |          121 |
+| /css/progress-ring.css     |      509 |        0.5 |        432 |         0.6 |          105 |
 | /css/radio-group.css       |      824 |        0.8 |        678 |         0.9 |           97 |
 | /css/segmented-control.css |      986 |        1.0 |        808 |         1.1 |          140 |
 | /css/select.css            |    1,244 |        1.2 |      1,050 |         1.4 |          189 |
@@ -230,7 +230,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/text.css              |      574 |        0.6 |        487 |         0.7 |          142 |
 | /css/textarea.css          |      725 |        0.7 |        601 |         0.8 |           94 |
 | /css/tooltip.css           |      581 |        0.6 |        503 |         0.6 |           33 |
-| /styles.css                |   15,006 |       14.7 |     12,747 |          16 |        1,378 |
+| /styles.css                |   15,001 |       14.6 |     12,751 |          16 |        1,383 |
 
 #### `@nizivo/tokens`: Public JS entries (bundled with what they import, React Aria included)
 
