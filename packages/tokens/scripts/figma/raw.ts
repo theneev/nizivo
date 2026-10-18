@@ -24,9 +24,9 @@ const KEEP = new Set(['.gitkeep']);
  * effects crashes the whole export with "Cannot read properties of undefined (reading 'type')".
  * Such a style carries no token, so it is left out of the CLI input; snapshot.json itself stays a
  * verbatim copy of the file. `Elevation/0 Flat` was the one such style. Since 2026-10-14 it holds
- * one invisible DROP_SHADOW (alpha 0, offset 0, radius 0, spread 0), so the next export should
- * not crash on it and will carry an `elevation.0` token. Keep this filter until a fresh export
- * shows nothing is left out.
+ * one invisible DROP_SHADOW (alpha 0, offset 0, radius 0, spread 0); the 2026-10-18 export left
+ * nothing out and carries `elevation.0`. The filter stays as a guard: an empty effect style is
+ * easy to make in Figma and would otherwise stop every sync.
  */
 const hasNoEffects = (style: Style) => !Array.isArray(style.effects) || style.effects.length === 0;
 

@@ -3,7 +3,7 @@
 // return under the ~20 KB cap using the payloadBytes from snapshot-inventory.figma.js.
 // Output: the TokensBrücke snapshot `variables` shape, copied onto plain objects.
 const COLLECTION = 'Nizivo Primitives';
-const SLICE = [0, 27];
+const SLICE = [0, 29];
 
 const fnv1a = (text) => {
   let hash = 0x811c9dc5;
