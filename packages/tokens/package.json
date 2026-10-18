@@ -1,6 +1,6 @@
 {
   "name": "@nizivo/tokens",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Framework-neutral design tokens for Nizivo: CSS variables, theme scopes, motion and typed references",
   "keywords": [
     "css-variables",

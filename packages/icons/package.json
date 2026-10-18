@@ -1,6 +1,6 @@
 {
   "name": "@nizivo/icons",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Tree-shakable Lucide icons for Nizivo at the Figma stroke, plus brand glyphs",
   "keywords": [
     "icons",
