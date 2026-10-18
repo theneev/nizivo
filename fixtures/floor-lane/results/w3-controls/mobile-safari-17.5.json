@@ -2,7 +2,7 @@
   "engine": "mobile-safari",
   "version": "17.5",
   "driver": "xcrun simctl openurl on iPhone 15, iOS 17.5 (21F79) Simulator; the page posts its result back; simctl io screenshot",
-  "runAt": "2026-10-16T20:40:26.766Z",
+  "runAt": "2026-10-18T08:01:38.827Z",
   "tokens": "packages/tokens/dist/tokens.css",
   "pages": {
     "w3-controls.light": {
@@ -15,7 +15,7 @@
         "hasSelector": true
       },
       "summary": {
-        "pass": 20,
+        "pass": 22,
         "fail": 0,
         "info": 0
       },
@@ -26,7 +26,7 @@
         "switch": 3,
         "radio": 1,
         "segmented": 5,
-        "textarea": 2,
+        "textarea": 4,
         "input": 1,
         "native-select": 1
       },
@@ -50,8 +50,10 @@
         "segmented | has-disabled": "rgb(158, 165, 156)",
         "segmented | focus-rule": "solid",
         "segmented | fit-content": 0,
-        "textarea | rows": 100,
-        "textarea | field-sizing": 0,
+        "textarea | padding": 26,
+        "textarea | minimum": 112,
+        "textarea | rows": 176,
+        "textarea | field-sizing": 112,
         "input | is-has-disabled": "rgb(238, 240, 236)",
         "native-select | has-placeholder": "rgb(89, 96, 88)"
       }
@@ -66,7 +68,7 @@
         "hasSelector": true
       },
       "summary": {
-        "pass": 20,
+        "pass": 22,
         "fail": 0,
         "info": 0
       },
@@ -77,7 +79,7 @@
         "switch": 3,
         "radio": 1,
         "segmented": 5,
-        "textarea": 2,
+        "textarea": 4,
         "input": 1,
         "native-select": 1
       },
@@ -101,8 +103,10 @@
         "segmented | has-disabled": "rgb(158, 165, 156)",
         "segmented | focus-rule": "solid",
         "segmented | fit-content": 0,
-        "textarea | rows": 100,
-        "textarea | field-sizing": 0,
+        "textarea | padding": 26,
+        "textarea | minimum": 112,
+        "textarea | rows": 176,
+        "textarea | field-sizing": 112,
         "input | is-has-disabled": "rgb(238, 240, 236)",
         "native-select | has-placeholder": "rgb(89, 96, 88)"
       }

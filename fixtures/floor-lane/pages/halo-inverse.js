@@ -55,6 +55,17 @@ const probes = {
   },
 };
 
+// A box-shadow's layers in a fixed order. The probe asks which theme resolved, not which layer paints
+// on top: the plan sample lists elevation's layers in Figma's order and the synced tokens.css (since
+// 2026-10-18) in CSS paint order, so both must classify the same. Other values pass through.
+function layers(value) {
+  return value
+    .split(/,(?![^(]*\))/)
+    .map((layer) => layer.trim())
+    .toSorted()
+    .join(', ');
+}
+
 function opposite(scheme) {
   return scheme === 'L' ? 'D' : 'L';
 }
@@ -141,8 +152,13 @@ function runHaloInverse() {
     for (const [groupId, want] of Object.entries(expected)) {
       for (const probe of document.getElementById(groupId).children) {
         const name = probe.dataset.probe;
-        const value = getComputedStyle(probe)[probes[name].prop];
-        const got = value === refs[name].light ? 'L' : value === refs[name].dark ? 'D' : value;
+        const value = layers(getComputedStyle(probe)[probes[name].prop]);
+        const got =
+          value === layers(refs[name].light)
+            ? 'L'
+            : value === layers(refs[name].dark)
+              ? 'D'
+              : value;
         const group = `html=${theme} | ${groupId}`;
         if (want === null)
           check(group, name, null, got, null, 'plan is silent on inverse inside inverse');

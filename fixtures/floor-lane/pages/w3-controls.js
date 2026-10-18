@@ -168,30 +168,38 @@ function run() {
     'min-inline-size: fit-content keeps every label whole',
   );
 
-  // Textarea: rows sets the minimum; with field-sizing it grows with its content, else not.
+  // Textarea (Figma 7367:316, M36 #4): 12 px padding on every side and a 112 px (7rem) minimum, so
+  // rows={2} sits at the minimum and rows={6} is 6 lines plus the padding and borders; with
+  // field-sizing it grows with its content, else the rows height holds.
   const lh = px(style('#ta-2').lineHeight);
+  const ta = style('#ta-2');
+  const chrome =
+    px(ta.paddingTop) + px(ta.paddingBottom) + px(ta.borderTopWidth) + px(ta.borderBottomWidth);
+  const minimum = 112;
   const h2 = $('#ta-2').getBoundingClientRect().height;
   const h6 = $('#ta-6').getBoundingClientRect().height;
   const full = $('#ta-full').getBoundingClientRect().height;
+  check('textarea', 'padding', near(chrome, 26), chrome, 26, '12 px block padding, 1 px borders');
+  check('textarea', 'minimum', near(h2, minimum), h2, minimum, 'rows 2 sits at the 112 px minimum');
   // Mobile Safari 17.5 floors each row to a whole pixel: under a coarse pointer (M25) a row is
-  // Body/L's 25.6 px line and 4 rows measure 100 px, so each row may lose its fraction.
+  // Body/L's 25.6 px line, so each row may lose its fraction.
   check(
     'textarea',
     'rows',
-    near(h6 - h2, 4 * lh, 1 + 4 * (lh % 1)),
-    h6 - h2,
-    4 * lh,
+    near(h6, 6 * lh + chrome, 1 + 6 * (lh % 1)),
+    h6,
+    6 * lh + chrome,
     lh % 1 ? 'each row may round down to whole pixels' : null,
   );
   check(
     'textarea',
     'field-sizing',
-    meta.fieldSizing ? near(full - h2, 6 * lh, 1) : near(full, h2, 0.5),
-    full - h2,
-    meta.fieldSizing ? 6 * lh : 0,
+    meta.fieldSizing ? near(full, 8 * lh + chrome, 1) : near(full, minimum, 0.5),
+    full,
+    meta.fieldSizing ? 8 * lh + chrome : minimum,
     meta.fieldSizing
       ? 'grows with its content'
-      : 'no field-sizing: the @supports block is skipped and rows holds',
+      : 'no field-sizing: the @supports block is skipped and the minimum holds',
   );
 
   // Input: a fieldset-disabled control greys the box through :is(…, :has(> input:disabled)).

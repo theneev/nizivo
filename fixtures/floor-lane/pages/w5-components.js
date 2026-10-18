@@ -429,26 +429,32 @@ function run() {
     },
     'prefix on the right',
   );
-  const lh = px(cs($('#ta-2')).lineHeight);
-  const h2 = box($('#ta-2')).height;
+  // Textarea (Figma 7367:316, M36 #4): 12 px padding on every side and a 112 px (7rem) minimum.
+  const ta = cs($('#ta-2'));
+  const lh = px(ta.lineHeight);
+  const chrome =
+    px(ta.paddingTop) + px(ta.paddingBottom) + px(ta.borderTopWidth) + px(ta.borderBottomWidth);
+  const textareaMin = 112;
+  distance('textarea', 'padding', chrome, 26, '12 px block padding, 1 px borders');
+  distance('textarea', 'minimum', box($('#ta-2')).height, textareaMin, 'rows 2 sits at 112 px');
   // Mobile Safari 17.5 floors each row to a whole pixel: under a coarse pointer a row is Body/L's
-  // 25.6 px line and 4 rows measure 100 px, so each row may lose its fraction.
+  // 25.6 px line, so each row may lose its fraction.
   distance(
     'textarea',
     'rows',
-    box($('#ta-6')).height - h2,
-    4 * lh,
+    box($('#ta-6')).height,
+    6 * lh + chrome,
     lh % 1 ? 'each row may round down to whole pixels' : null,
-    1 + 4 * (lh % 1),
+    1 + 6 * (lh % 1),
   );
   distance(
     'textarea',
     'field-sizing',
-    box($('#ta-full')).height - h2,
-    meta.supports.fieldSizing ? 6 * lh : 0,
+    box($('#ta-full')).height,
+    meta.supports.fieldSizing ? 8 * lh + chrome : textareaMin,
     meta.supports.fieldSizing
       ? 'grows with its content'
-      : 'no field-sizing: the @supports block is skipped and rows holds',
+      : 'no field-sizing: the @supports block is skipped and the minimum holds',
     1,
   );
   for (const dir of ['ltr', 'rtl']) {
@@ -532,13 +538,21 @@ function run() {
     'min-inline-size: var(--nz-trigger-width)',
   );
   const options = $$('.nz-select-item', popup);
-  // The select.css pass (week 6, figma/13 §4.3): Select's rows share Menu's recipe. Figma's 36 px
-  // row, padding included, on a page with no reset (§8.1), 2 px apart.
+  // Figma's Select Option and Select Menu (7356:401, 7356:406; M36, 2026-10-18): a 36 px Label/M
+  // row, padding included, on a page with no reset (§8.1), rows touching; the selected row is
+  // Label/M Strong in text/primary on the brand-subtle tint code keeps, with the check.
   height('select', 'row-min-height', options[0], 36, '2.25rem, padding included');
-  distance('select', 'row-gap', box(options[1]).top - box(options[0]).bottom, len('space-0-5'));
+  distance('select', 'row-gap', box(options[1]).top - box(options[0]).bottom, 0);
   equal('select', 'item-highlight', cs(options[0]).backgroundColor, colour('bg-hover'));
   equal('select', 'item-selected-fill', cs(options[1]).backgroundColor, colour('bg-brand-subtle'));
-  equal('select', 'item-selected-text', cs(options[1]).color, colour('text-brand', 'color'));
+  equal('select', 'item-selected-text', cs(options[1]).color, colour('text-primary', 'color'));
+  equal(
+    'select',
+    'item-selected-weight',
+    cs(options[1]).fontWeight,
+    probe('font:var(--nz-font-label-m-strong)', (el) => cs(el).fontWeight),
+    'Label/M Strong',
+  );
   equal(
     'select',
     'selected-indicator',
@@ -557,29 +571,37 @@ function run() {
     'select',
     'group-label',
     cs($('.nz-select-group-label', popup)).color,
-    colour('text-tertiary', 'color'),
+    colour('text-secondary', 'color'),
   );
   height('select', 'separator', $('.nz-select-separator', popup), len('border-width-default'));
+  equal(
+    'select',
+    'separator-margin',
+    px(cs($('.nz-select-separator', popup)).marginTop),
+    len('space-1'),
+    'the Select Divider: 4 px above and below',
+  );
   equal('select', 'list-padding', px(cs($('.nz-select-list', popup)).paddingTop), len('space-1-5'));
   const popupStyle = cs(popup);
+  const elevation4 = probe('box-shadow:var(--nz-elevation-4)', (el) => cs(el).boxShadow);
   check(
     'select',
     'popup-edge',
     px(popupStyle.borderTopWidth) === len('border-width-default') &&
       popupStyle.borderTopStyle === 'solid' &&
-      px(popupStyle.borderTopLeftRadius) === len('radius-lg') &&
-      popupStyle.boxShadow !== 'none',
+      px(popupStyle.borderTopLeftRadius) === len('radius-md') &&
+      popupStyle.boxShadow === elevation4,
     {
       border: `${popupStyle.borderTopWidth} ${popupStyle.borderTopStyle}`,
       radius: popupStyle.borderTopLeftRadius,
-      shadow: popupStyle.boxShadow !== 'none',
+      shadow: popupStyle.boxShadow === elevation4,
     },
     {
       border: `${len('border-width-default')}px solid`,
-      radius: `${len('radius-lg')}px`,
+      radius: `${len('radius-md')}px`,
       shadow: true,
     },
-    'border-subtle, radius-lg and elevation-3, as the Menu popup',
+    "border-subtle, radius-md and elevation-4: Figma's Select Menu (7356:406)",
   );
   const scaleEnter = probe('scale:var(--nz-scale-enter)', (el) => cs(el).scale);
   meta.scaleEnter = scaleEnter;

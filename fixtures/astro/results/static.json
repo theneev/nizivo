@@ -9,7 +9,7 @@
     "react-aria-components": "1.22.1",
     "browser": "Chromium 156.0.8078.4"
   },
-  "buildSeconds": 1.7,
+  "buildSeconds": 1.9,
   "buildWarnings": [],
   "pass": true,
   "failures": [],
@@ -30,8 +30,8 @@
       "stored": {
         "frames": 90,
         "wrong": [],
-        "firstPaint": 16,
-        "firstContentfulPaint": 16,
+        "firstPaint": 20,
+        "firstContentfulPaint": 20,
         "firstTheme": "dark",
         "lastTheme": "dark",
         "pixel": "rgb(16, 19, 17)",
@@ -41,8 +41,8 @@
       "static": {
         "frames": 90,
         "wrong": [],
-        "firstPaint": 20,
-        "firstContentfulPaint": 20,
+        "firstPaint": 24,
+        "firstContentfulPaint": 24,
         "firstTheme": "dark",
         "lastTheme": "dark",
         "pixel": "rgb(16, 19, 17)",
@@ -64,10 +64,10 @@
         "frames": 90,
         "wrong": [
           "5:light dark/rgb(246, 247, 244)",
-          "22:light dark/rgb(246, 247, 244)",
+          "21:light dark/rgb(246, 247, 244)",
           "38:light dark/rgb(246, 247, 244)",
           "55:light dark/rgb(246, 247, 244)",
-          "72:light dark/rgb(246, 247, 244)"
+          "71:light dark/rgb(246, 247, 244)"
         ],
         "firstPaint": 16,
         "firstContentfulPaint": 16,
@@ -79,8 +79,8 @@
       }
     },
     "lightDark": {
-      "packed": 68,
-      "loaded": 68,
+      "packed": 74,
+      "loaded": 74,
       "stylesheets": 1,
       "ok": true
     },
@@ -332,8 +332,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 15,
-        "bytes": 453952,
-        "gzip": 145997
+        "bytes": 453313,
+        "gzip": 145740
       },
       "failures": []
     },
@@ -386,8 +386,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 14,
-        "bytes": 246782,
-        "gzip": 79179
+        "bytes": 247292,
+        "gzip": 79385
       },
       "failures": []
     },
@@ -439,8 +439,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 13,
-        "bytes": 399828,
-        "gzip": 128201
+        "bytes": 400003,
+        "gzip": 128250
       },
       "failures": []
     },
@@ -548,8 +548,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 11,
-        "bytes": 233926,
-        "gzip": 75163
+        "bytes": 234168,
+        "gzip": 75277
       },
       "failures": []
     }

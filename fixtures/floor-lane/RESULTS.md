@@ -1,6 +1,6 @@
 # Browser floor lane: results
 
-Status: run on 2026-10-14 on macOS 27.0.1 (arm64), Node 24.16.0; Mobile Safari 17.5 added on 2026-10-15 (iOS 17.5 Simulator, see Week 4 below); every v0.1 component's CSS added on 2026-10-15 (see Week 5 below); the coarse-pointer text checks and `--touch` on 2026-10-17 (see Week 7 below); the Alert dismiss as an IconButton on 2026-10-17 (see Week 8 below). This is the W1 floor lane from ARCHITECTURE.md §21.1 (exit criterion 6): the S1 nesting matrix, the halo/inverse probe and the `@starting-style` overlay entry, run on the floor browsers.
+Status: run on 2026-10-14 on macOS 27.0.1 (arm64), Node 24.16.0; Mobile Safari 17.5 added on 2026-10-15 (iOS 17.5 Simulator, see Week 4 below); every v0.1 component's CSS added on 2026-10-15 (see Week 5 below); the coarse-pointer text checks and `--touch` on 2026-10-17 (see Week 7 below); the Alert dismiss as an IconButton on 2026-10-17 (see Week 8 below); the 2026-10-18 tokens, the Select list and the Textarea on 2026-10-18 (see Week 9 below). This is the W1 floor lane from ARCHITECTURE.md §21.1 (exit criterion 6): the S1 nesting matrix, the halo/inverse probe and the `@starting-style` overlay entry, run on the floor browsers.
 
 ## Verdict
 
@@ -230,6 +230,30 @@ Recorded with the commands of Week 5 on the three week 5 pages (`--results fixtu
 
 - The glyph is 16 px from the inline-end edge in both directions on every engine (`dismiss-at-end-ltr` and `-rtl`).
 - The Simulator run created and deleted its own device; `xcrun simctl list devices | grep nz-floor` is empty afterwards.
+
+## Week 9: the 2026-10-18 tokens, the Select list and the Textarea (2026-10-18)
+
+Week 9 synced the tokens from Figma (ARCHITECTURE.md §7.6, "The 2026-10-18 sync") and built the maintainer's decisions M33–M36 (§23.3). The pages follow:
+
+- **`w3-controls.js` and `w5-components.js`, Textarea (M36 #4):** a new `padding` check (12 px block padding and 1 px borders, 26 px) and a `minimum` check (`rows={2}` sits at 112 px); `rows` now expects `rows={6}` at 6 lines plus 26 px, and `field-sizing` expects 8 lines plus 26 px where `field-sizing` exists, else the 112 px minimum. So `w3-controls` goes from 20 to 22 checks per scheme.
+- **`w5-components.js`, Select (M36 #2 and #3):** rows touch (`row-gap` 0, was 2 px); the selected row's text is `text/primary` and a new `item-selected-weight` check expects Label/M Strong's weight; the group label is `text/secondary`; a new `separator-margin` check expects 4 px; `popup-edge` expects `radius/md` and exactly `--nz-elevation-4`. So `w5-components` goes from 219 to 223 per scheme (291 per scheme over the three week 5 pages).
+- **`halo-inverse.js`:** the elevation probe compares a `box-shadow`'s layers as a set. The synced `tokens.css` lists elevation's layers in CSS paint order (the normalizer now reverses Figma's order), the plan sample in Figma's order; the probe asks which theme resolved, so both must classify the same. Without this, 48 cells per scheme failed on every engine with the right theme's value.
+- **`gen-w5.ts`:** Separator is decorative by default now (M35); the page keeps one of each, `#sep-h` with `decorative: false` and `#sep-v` with the default, so `w5-components.html` is unchanged.
+
+Recorded with the commands of Weeks 2, 3 and 5 on the built packages (`--tokens packages/tokens/dist/tokens.css`, `--react-css packages/react/dist/css`), Firefox 129.0 from Mozilla's release archive (week 7's download), plus `--touch` in Chromium and WebKit and `--ios-sim`:
+
+| Run (both OS schemes; per scheme)                        | `w3-controls` | `w5-components` | `w5-paint` | `w5-grid` |
+| -------------------------------------------------------- | ------------: | --------------: | ---------: | --------: |
+| Firefox 129.0                                            |         22/22 |         223/223 |      29/29 |     39/39 |
+| Chromium 156.0.8078.4                                    |         22/22 |         223/223 |      29/29 |     39/39 |
+| WebKit 27.2                                              |         22/22 |         223/223 |      29/29 |     39/39 |
+| Chromium 156.0.8078.4, `--touch`                         |         22/22 |         223/223 |      29/29 |     39/39 |
+| WebKit 27.2, `--touch`                                   |         22/22 |         223/223 |      29/29 |     39/39 |
+| Mobile Safari 17.5 (iOS 17.5 Simulator, coarse natively) |         22/22 |         223/223 |      29/29 |     39/39 |
+
+- The Textarea's 112 px minimum holds without `field-sizing` (Firefox 129, WebKit 27.2, Mobile Safari 17.5): `min-block-size` applies on its own.
+- The Week 2 pages on the synced `tokens.css` (`--pages nesting,halo-inverse,overlay-entry,paint.html-none,paint.html-dark --results fixtures/floor-lane/results/w2-real-tokens`): every summary equals the week 2 table above on all four engines, and Firefox 129.0 fails the same 166 D1 cells and no other.
+- Each Simulator run created and deleted its own device; `xcrun simctl list devices | grep -c nz-floor` printed 0 afterwards.
 
 ## Browsers
 

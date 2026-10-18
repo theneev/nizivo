@@ -201,6 +201,12 @@ export const PAGES: Record<string, PageSpec> = {
     imports: ['icon-button'],
     slots: ['icon-button', 'icon-button-icon'],
   },
+  // M31: the static twins, through the same subpaths, may ship no @nizivo client module at all.
+  '/icon-button-static': { renders: [], slots: ['icon-button', 'icon-button-icon'] },
+  '/field-static': {
+    renders: [],
+    slots: ['field', 'field-label', 'field-description', 'native-select', 'native-select-trigger'],
+  },
   '/icon-button-tooltip': {
     renders: ['icon-button'],
     iconButtonTooltip: 'Bold',

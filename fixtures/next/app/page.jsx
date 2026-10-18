@@ -19,6 +19,8 @@ const pages = [
   ['/field-zero-js', 'a Field with a function child around a NativeSelect'],
   ['/icon-button', 'IconButton with tooltip={false}'],
   ['/icon-button-tooltip', 'IconButton with its default tooltip and a shortcut'],
+  ['/icon-button-static', 'server-only: IconButtonStatic, the IconButton with no tooltip code'],
+  ['/field-static', 'server-only: FieldStatic around two NativeSelects'],
   ['/menu', 'a Menu open on the server (defaultOpen), a server Button as its trigger'],
   ['/tabs', 'Tabs: the selected panel in the server HTML'],
   ['/tab-nav', 'TabNav with next/link through render: no @nizivo client module'],
