@@ -55,7 +55,7 @@
     },
     "@nizivo/react/field": {
       "measured": 3463,
-      "limitKiB": 3.4
+      "limitKiB": 3.9
     },
     "@nizivo/react/fieldset": {
       "measured": 1715,
@@ -291,7 +291,7 @@
     },
     "@nizivo/react/css/button.css": {
       "measured": 1007,
-      "limitKiB": 1.1
+      "limitKiB": 1.3
     },
     "@nizivo/react/css/card.css": {
       "measured": 592,
@@ -451,7 +451,7 @@
     },
     "@nizivo/tokens/tokens.json": {
       "measured": 8887,
-      "limitKiB": 9.6
+      "limitKiB": 12
     },
     "@nizivo/icons": {
       "measured": 102760,

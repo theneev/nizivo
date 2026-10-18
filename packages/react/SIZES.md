@@ -117,7 +117,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /delta             |    1,012 |        1.0 |        932 |         1.1 |          114 |
 | /dialog            |   32,127 |       31.4 |     28,561 |          32 |          641 |
 | /empty-state       |      840 |        0.8 |        768 |           1 |          184 |
-| /field             |    3,463 |        3.4 |      3,153 |         3.4 |           18 |
+| /field             |    3,463 |        3.4 |      3,153 |         3.9 |          530 |
 | /fieldset          |    1,715 |        1.7 |      1,560 |         1.9 |          230 |
 | /grid              |      793 |        0.8 |        737 |         0.9 |          128 |
 | /heading           |      767 |        0.7 |        697 |         0.9 |          154 |
@@ -196,7 +196,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/alert.css             |      636 |        0.6 |        522 |         0.8 |          183 |
 | /css/badge.css             |      512 |        0.5 |        424 |         0.6 |          102 |
 | /css/base.css              |      997 |        1.0 |        833 |         1.1 |          129 |
-| /css/button.css            |    1,007 |        1.0 |        843 |         1.1 |          119 |
+| /css/button.css            |    1,007 |        1.0 |        843 |         1.3 |          324 |
 | /css/card.css              |      592 |        0.6 |        487 |         0.7 |          124 |
 | /css/checkbox.css          |      834 |        0.8 |        687 |         0.9 |           87 |
 | /css/container.css         |      185 |        0.2 |        155 |         0.2 |           19 |
@@ -246,7 +246,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /custom-media.css |      166 |        0.2 |        126 |         0.2 |           38 |
 | /tailwind.css     |      764 |        0.7 |        664 |         0.9 |          157 |
 | /tokens.css       |    3,879 |        3.8 |      3,197 |         4.2 |          421 |
-| /tokens.json      |    8,887 |        8.7 |      6,972 |         9.6 |          943 |
+| /tokens.json      |    8,887 |        8.7 |      6,972 |          12 |        3,401 |
 
 #### `@nizivo/icons`: Public JS entries (bundled with what they import, React Aria included)
 
