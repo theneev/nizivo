@@ -40,18 +40,29 @@ overrides are always the last source of their theme context (§15.4).
 
 - **Code-owned by nature** (no metadata): `foundation.tokens.json` (breakpoints `sm` 40rem and `lg`
   80rem with `app.nizivo.status: "provisional"`, z-index, `font.family.sans/mono`, `scheme.inverse`,
-  `duration.spin`, `elevation.button`, `focus.halo`), `color/{light,dark}` (`elevation.ring`,
+  `elevation.button`, `focus.halo`), `color/{light,dark}` (`elevation.ring`,
   `elevation.highlight`), `motion/reduced` (the spring durations at 120 ms) and the generated
   `motion-derived.tokens.json`.
 - **Proposals** (`app.nizivo.proposal`: `figmaVariable` or `figmaStyle`, `reason`, `wcag`,
-  `approvedBy`, `expires`): `proposals.tokens.json` holds the mode-independent ones (four primitives,
-  `Body/S`, `Label/S`); a proposal with a value per mode sits in `proposals/color/{light,dark}` or
-  `proposals/motion/{default,reduced}`, with the same metadata in each.
+  `approvedBy`, `expires`): `proposals.tokens.json` holds the mode-independent ones; a proposal with
+  a value per mode sits in `proposals/color/{light,dark}` or `proposals/motion/{default,reduced}`,
+  with the same metadata in each. A file with nothing left in it stays as `{}`, so the resolver keeps
+  its place in the order.
 - **Overrides** (`app.nizivo.override`: `figmaVariableId`, `figmaVariable`, `figmaValueAtOverride`,
   `kind`, `reason`, `wcag`, `issue`, `approvedBy`, `expires`): `a11y/{light,dark}.overrides.tokens.json`.
   `kind` is `contrast`, `ladder` (Option A text ladder, the dark surface and border ladder) or
   `pairing` (dark `icon/critical` follows `text/critical`; Figma's red/500 passes 3:1 on its own).
 - `a11y/contrast-pairs.json` lists the pairs the matrix checks; it is not a token source.
+
+**The 2026-10-18 sync** (the first export under the Nizivo names): Figma adopted all 14 overrides
+and 18 of the 19 proposals with the same values (the four primitives, `Body/S`, `Label/S`,
+`bg/scrim`, `bg/accent-hover`, `bg/critical-hover`, `text/on-critical`, `icon/info`,
+`border/control(-hover)`, `chart/warning`, `chart/critical`, `duration/fade`, `duration/pulse`,
+`scale/enter`), so they were deleted; the override files and the motion proposal files are `{}`.
+`text.accent` stays a proposal: Figma added `text/inverse-accent` with the modes swapped instead.
+Figma now owns `duration/spin` (800 ms, 0 in Reduced: the spinner stops, decision M34), so the
+code-owned `duration.spin` (1000 ms, kept turning in Reduced) is gone, and Figma deleted
+`border-width/strong` (M33), so `--nz-border-width-strong` is no longer emitted.
 
 ## Outputs (`dist/`, exported from `package.json`)
 
@@ -72,15 +83,23 @@ overrides are always the last source of their theme context (§15.4).
   (Deviations D1; asserted). `:root` sets no `color-scheme` (opt-in light); `[data-nz-theme]`
   `light`, `dark` and `system` set `color-scheme` and `--nz-scheme-inverse`;
   `[data-nz-scheme="inverse"]` takes `color-scheme: var(--nz-scheme-inverse)`.
+- **Shadow layers:** Figma paints an effect list bottom-up (its last effect on top, as with fills);
+  CSS `box-shadow` paints its first layer on top. The normalizer reverses every effect style's
+  layers once, so `src/figma-owned/effects.tokens.json` and every output are in CSS order. Figma's
+  Focus/Ring shows why: it lists the 8 px halo, the 4 px `border/focus` ring and the 2 px
+  `bg/surface` gap, and only the reversed order keeps the gap visible. A layer colour bound to a
+  variable is exported as an alias string (`{Nizivo Color.border.focus}`); the normalizer keeps it
+  as a DTCG alias (`{color.border.focus}`) and the CSS prints `var(--nz-border-focus)`, so the ring
+  follows the theme. `tokens.json` resolves it per theme.
 - **Elevation 1–4:** a `0 0 0 1px var(--nz-elevation-ring)` layer (levels 3–4 also the inset
   `--nz-elevation-highlight`), then Figma's layers with each colour as `light-dark(<Figma>, black at
   min(0.6, 6 × alpha))` (gap report C §2.3; one colour when the two are equal).
 - **Flat elevations:** an `elevation.<n>` whose every layer has alpha 0 paints nothing in either
   theme, so it takes no ring and no highlight: only Figma's layers, or `0 0 0 0 transparent` when
   it has none. The rule reads the layers, not the level. Figma's `Elevation/0 Flat` (one invisible
-  drop shadow since 2026-10-14) arrives with the next export and builds as
-  `--nz-elevation-0: 0 0 0 0 transparent`; `test/elevation.test.ts` builds a copy of `src/` with it
-  and checks that the three goldens change only by that token.
+  drop shadow since 2026-10-14) arrived with the 2026-10-18 export and builds as
+  `--nz-elevation-0: 0 0 0 0 transparent`; `test/elevation.test.ts` builds `src/` with the flat
+  shape and checks that the goldens differ only by that token.
 - **Typography:** `--nz-font-<style>` is the shorthand of its `var()` sub-values; `-font-family`
   is `var(--nz-font-family-sans|mono)`; letter spacing is renamed by `subValueVariableName` to
   `--nz-tracking-<style>` in `em` (Figma's percent ÷ 100). `--nz-font-family-sans` is
@@ -90,12 +109,15 @@ overrides are always the last source of their theme context (§15.4).
   `--nz-duration-spring(-soft)` its settle time (493 / 702 ms), equal to
   `@nizivo/tooling/spring/spring.golden.json`. Reduced mode: `linear` and 120 ms.
 - **Scoped blocks:** reduced motion (`@media (prefers-reduced-motion: reduce)` and
-  `[data-nz-motion="reduce"]`, 25 tokens each) and the two viewport media queries (9 each) use
+  `[data-nz-motion="reduce"]`, 26 tokens each) and the two viewport media queries (9 each) use
   `only: { modifiers, sets: [] }`, so they hold only their own modifier's tokens.
 - Translucent colours print as `rgb(r g b / a)`, `[0, 0, 1, 1]` easings as `linear`; Figma
   descriptions are not copied into the CSS. `--nz-css-version` carries the package version.
 
 Sizes on 2026-10-14: `tokens.css` 22.6 KB (3.9 KB gzip), 334 declared names; `tailwind.css` 4.5 KB.
+
+2026-10-18 sync: `tokens.css` 23.7 KB (4.0 KB gzip), 344 declared names; `tailwind.css` 4.9 KB;
+`tokens.json` 109.0 KB (10.8 KB gzip, 246 tokens); `index.js` 13.6 KB (2.4 KB gzip).
 
 Week 4 (2026-10-15): `tokens.json` 99.8 KB (8.9 KB gzip, 237 tokens); `index.js` 13.2 KB (2.4 KB gzip);
 `index.d.ts` 49.6 KB (types only).
@@ -107,7 +129,7 @@ Runs in `pnpm build` after `tz build`, and in the tests. It fails on:
 1. **Contrast:** any pair in `contrast-pairs.json` below its threshold in light or dark, computed
    from the built `tokens.css` (WCAG 2.2 relative luminance, ported from
    `docs/research/phase2/scripts/contrast`). Text 4.5:1 at every size, 12 px included; non-text and
-   focus 3:1; decorative and disabled rows are reported only. 56 checked pairs pass today.
+   focus 3:1; decorative and disabled rows are reported only. 66 checked pairs pass today.
 2. **Drift:** an override's `figmaVariableId` no longer holds `figmaValueAtOverride` in Figma.
 3. **Redundancy:** Figma now has an override's value; a `contrast` override whose Figma value passes
    every pair it touches; a proposal whose `figmaVariable` or `figmaStyle` Figma now defines.

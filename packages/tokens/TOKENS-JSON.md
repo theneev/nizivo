@@ -58,7 +58,7 @@ The source of truth in DTCG form remains `src/**` with `src/nizivo.resolver.json
     "motion": { "contexts": ["default", "reduced"], "default": "default" },
     "viewport": { "contexts": ["mobile", "tablet", "desktop"], "default": "mobile" },
   },
-  "tokens": { "<token id>": { … } }, // 237 tokens, sorted by id (numeric-aware)
+  "tokens": { "<token id>": { … } }, // 246 tokens, sorted by id (numeric-aware)
 }
 ```
 
@@ -74,7 +74,7 @@ The source of truth in DTCG form remains `src/**` with `src/nizivo.resolver.json
   "aliasOf": "color.p.red.600",        // the token it aliases in that context, when it is an alias
   "modes": {                           // only the contexts whose entry differs from the default
     "theme": {
-      "dark": { "value": "#e47962", "provenance": "override", "aliasOf": "color.p.red.400" }
+      "dark": { "value": "#e47962", "provenance": "figma", "aliasOf": "color.p.red.400" }
     }
   },
   "figma": { "name": "text/critical", "variableId": "VariableID:737:146" }
@@ -127,9 +127,10 @@ Read per context from the markers in the token sources (§7.6, §15.4), stronges
 | `code-owned` | none, or `app.nizivo.derived`        | code-owned by nature (breakpoints, z-index, families, focus), or generated from Figma (the spring `linear()` pairs) |
 | `figma`      | `$extensions["dev.nizivo.figma"]`    | Figma's value, as the normaliser wrote it                                                                           |
 
-An override can apply to one theme only: `color.text.critical` is `figma` in light and `override`
-in dark. Today: 194 tokens are `figma`, 20 `code-owned`, 19 `proposal` and 4 `override` in the default
-context; the 14 overrides of CONTRAST.md are the light ones plus those under `modes.theme.dark`.
+An override can apply to one theme only (an entry under `modes.theme.dark` with `override`, the
+light value staying `figma`). Today, after the 2026-10-18 sync in which Figma adopted all 14
+overrides and 18 of the 19 proposals: 226 tokens are `figma`, 19 `code-owned` and 1 `proposal`
+(`color.text.accent`) in the default context, and no token is an `override` in any context.
 
 ### Value formats
 
@@ -143,7 +144,7 @@ Values are the CSS text `tokens.css` computes, with every `var()` and `light-dar
 | `number`      | `"12"`, `"0.96"`                                                                                                            | a string, as in CSS; `Number()` it                                                                        |
 | `cubicBezier` | `"cubic-bezier(0.2, 0, 0, 1)"`, `"linear"`                                                                                  |                                                                                                           |
 | `string`      | `"linear(0, 0.007 1.5%, …)"`, `"color-mix(in oklab, #2e8358 28%, transparent)"`                                             | the spring easings, focus halo and ring, the inverse scheme                                               |
-| `shadow`      | `"0 0 0 1px transparent, 0 4px 8px 0 rgb(16 19 17 / 0.05)"`                                                                 | the elevation ring and highlight included, per theme                                                      |
+| `shadow`      | `"0 0 0 1px transparent, 0 4px 8px 0 rgb(16 19 17 / 0.05)"`                                                                 | the elevation ring and highlight, and the focus rings' bound layers, per theme                            |
 | `fontFamily`  | `"\"Geist\", ui-sans-serif, system-ui, sans-serif"`                                                                         | the `next/font` hook resolves to its fallback                                                             |
 | `typography`  | `{ "font": "500 0.875rem/1.4 \"Geist\", …", "fontFamily", "fontSize", "fontWeight", "lineHeight", "letterSpacing": "0em" }` | `font` is the shorthand (`ctx.font` accepts it); `letterSpacing` is the tracking the shorthand leaves out |
 
