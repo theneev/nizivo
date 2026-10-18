@@ -54,8 +54,9 @@
     --_nz-switch-bg: var(--nz-switch-accent, var(--nz-bg-brand));
   }
 
+  /* 1 px, as every Figma border (M33: border-width/strong is gone; Getting Started "All borders 1 px") */
   .nz-switch-input[aria-invalid='true']:not(:checked) {
-    box-shadow: inset 0 0 0 var(--nz-border-width-strong) var(--nz-border-critical);
+    box-shadow: inset 0 0 0 var(--nz-border-width-default) var(--nz-border-critical);
   }
 
   @media (hover: hover) {

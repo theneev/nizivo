@@ -402,7 +402,7 @@
       "limitKiB": 0.3
     },
     "@nizivo/react/css/switch.css": {
-      "measured": 884,
+      "measured": 883,
       "limitKiB": 1
     },
     "@nizivo/react/css/tab-nav.css": {
@@ -426,7 +426,7 @@
       "limitKiB": 0.6
     },
     "@nizivo/react/styles.css": {
-      "measured": 14942,
+      "measured": 14937,
       "limitKiB": 16
     },
     "@nizivo/tokens": {

@@ -224,13 +224,13 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/separator.css         |      261 |        0.3 |        203 |         0.3 |           46 |
 | /css/skeleton.css          |      365 |        0.4 |        325 |         0.4 |           44 |
 | /css/stack.css             |      270 |        0.3 |        209 |         0.3 |           37 |
-| /css/switch.css            |      884 |        0.9 |        738 |           1 |          140 |
+| /css/switch.css            |      883 |        0.9 |        738 |           1 |          141 |
 | /css/tab-nav.css           |      842 |        0.8 |        690 |           1 |          182 |
 | /css/tabs.css              |      972 |        0.9 |        792 |         1.1 |          154 |
 | /css/text.css              |      574 |        0.6 |        487 |         0.7 |          142 |
 | /css/textarea.css          |      725 |        0.7 |        601 |         0.8 |           94 |
 | /css/tooltip.css           |      581 |        0.6 |        503 |         0.6 |           33 |
-| /styles.css                |   14,942 |       14.6 |     12,648 |          16 |        1,442 |
+| /styles.css                |   14,937 |       14.6 |     12,650 |          16 |        1,447 |
 
 #### `@nizivo/tokens`: Public JS entries (bundled with what they import, React Aria included)
 
