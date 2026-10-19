@@ -1,0 +1,111 @@
+---
+title: Legend
+description: The series key of a chart, rendered on the server as a list. Its mark follows the series (a line, a dashed line or a dot); the vertical form adds values and shares, as the donut's legend does.
+---
+
+import { ChartExample, ChartImport } from '../../../components/chart-example';
+import { ChartsTable } from '../../../components/charts-table';
+import {
+  LegendExample,
+  LegendVerticalExample,
+} from '../../../components/charts-live/legend.example';
+
+<Callout type="warn" title="Not yet published (v0.2)">
+  `@nizivo/charts` is not on npm yet; it publishes at 0.2.0. Until then its API can change. The
+  Import section below shows the entry that works in the repository today. See
+  [Charts](/docs/charts/).
+</Callout>
+
+## Import
+
+<ChartImport part="legend" names="Legend" />
+
+## Static or interactive
+
+**Server.** Legend has no `'use client'` and imports no client module. It is a list, not a control:
+a series toggle would be a later, additive change. [How to
+choose](/docs/guides/static-or-interactive/).
+
+Pass it to a [ChartFrame](/docs/charts/chart-frame/) as `legend`; the frame renders it between the
+caption and the plot in every status. AreaChart builds its own when it has a comparison series, and
+DonutChart always does.
+
+## Examples
+
+### Basic
+
+<ChartExample part="legend" name="LegendExample" title="Basic" live={<LegendExample />} />
+
+### Vertical
+
+<ChartExample
+  part="legend"
+  name="LegendVerticalExample"
+  title="Vertical"
+  live={<LegendVerticalExample />}
+/>
+
+## Props
+
+From `legend.tsx` in `packages/charts/src/legend` (`nz api` does not cover `@nizivo/charts` yet). Legend
+also takes every attribute of `<ul>` except `children`.
+
+<ChartsTable label="Legend props">
+
+| Prop          | Type                         | Default        | Description                                                                           |
+| ------------- | ---------------------------- | -------------- | ------------------------------------------------------------------------------------- |
+| `items`       | `readonly LegendItem[]`      | required       | One entry per series or category.                                                     |
+| `orientation` | `'horizontal' \| 'vertical'` | `'horizontal'` | `horizontal` wraps in a row (line charts); `vertical` is the donut's table-like list. |
+| `render`      | `RenderProp<LegendState>`    |                | Replace or wrap the root element; a function receives `{ orientation }`.              |
+
+</ChartsTable>
+
+`LegendItem`:
+
+<ChartsTable label="Legend LegendItem fields">
+
+| Field    | Type          | Description                                                                                                            |
+| -------- | ------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `id`     | `string`      | A stable key; the label when absent.                                                                                   |
+| `label`  | `string`      | The series' name.                                                                                                      |
+| `series` | `ChartSeries` | `'current' \| 'previous' \| 'cat-1' \| 'cat-2' \| 'cat-3' \| 'other'`: the colour role, shared with the chart's marks. |
+| `value`  | `string`      | A pre-formatted value (Numeric/M).                                                                                     |
+| `share`  | `string`      | A pre-formatted share, for example "52%" (Mono/M, tertiary).                                                           |
+
+</ChartsTable>
+
+## Other exports
+
+The types `LegendProps`, `LegendItem`, `LegendState` and `ChartSeries`.
+
+## Data attributes and slots
+
+<ChartsTable label="Legend data attributes and slots">
+
+| Element                                                        | Attributes                                                                                                         |
+| -------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `ul.nz-legend`                                                 | `data-slot="legend"`, `data-orientation`                                                                           |
+| `li.nz-legend-item`                                            | `data-slot="legend-item"`                                                                                          |
+| `span.nz-legend-mark`                                          | `data-series`, `aria-hidden`: a line (`current`), a dashed line (`previous`) or a dot (the categories and `other`) |
+| `span.nz-legend-label`, `.nz-legend-value`, `.nz-legend-share` | The text                                                                                                           |
+
+</ChartsTable>
+
+The mark's colour follows `data-series`: `current` in `chart/primary`, `previous` in
+`chart/neutral`, `cat-1` to `cat-3` in `chart/cat-1` to `chart/cat-3`, `other` in `chart/neutral`.
+
+## Accessibility
+
+- A plain list: each item's text is its label, then its value and share when given. The mark is
+  `aria-hidden`, so the name, not the colour, identifies the series.
+- Forced colours: the marks take system colours that match the marks they name: the current series
+  `CanvasText`, the comparison `GrayText` (still dashed), and categories as DonutChart's segments
+  (`Highlight`, hollow `Canvas`, `CanvasText`, `GrayText`, each outlined in `CanvasText`). Only
+  Chromium's forced-colours emulation has been looked at; the treatment awaits an accessibility
+  review.
+
+## Figma
+
+Chart Legend Item, `7275:13291`: `Mark=Line` `7275:13292` (92 × 21), `Mark=Dashed` `7275:13296`
+(92 × 21) and `Mark=Dot` `7275:13300` (86 × 21). Figma's donut legend is a custom row with a 10 px
+dot, not this component; code draws both from Legend. Notes: `docs/figma/03-data-viz.md` §4.1.

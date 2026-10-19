@@ -1,0 +1,186 @@
+---
+title: AreaChart
+description: A time series drawn on the server, this period in brand green with a 10% wash and an optional dashed comparison, with one interactive layer for the crosshair, the tooltip and keyboard access to every point.
+---
+
+import { ChartExample, ChartImport } from '../../../components/chart-example';
+import { ChartsTable } from '../../../components/charts-table';
+
+<Callout type="warn" title="Not yet published (v0.2)">
+  `@nizivo/charts` is not on npm yet; it publishes at 0.2.0. Until then its API can change. The
+  Import section below shows the entry that works in the repository today. See
+  [Charts](/docs/charts/).
+</Callout>
+
+## Import
+
+<ChartImport part="area-chart" names="AreaChart" />
+
+## Static or interactive
+
+**Split.** AreaChart's SVG, tick labels, legend and data table are server HTML. Its module imports
+one client module, the ChartInteraction island, which it renders only when the status is `'ready'`
+and `interaction` is `'nizivo'` (the default). With `interaction="none"` it renders no island and
+the plot has no Tab stop. The data table is then the screen-reader path; pass
+`tableView="details"` so sighted keyboard users can reach the values too.
+
+As with Field and IconButton in `@nizivo/react`, the shell imports its leaf: Turbopack and
+`next dev` ship a client module that a page's server code imports, rendered or not. This site's own
+build (Next.js 16, Turbopack) loaded the island on a page that rendered only
+`<AreaChart interaction="none" />`. To ship no chart JavaScript, draw the chart with a part that
+imports no client module. The Next.js fixture's page for this case
+(`fixtures/next/app/chart-area-static`, recorded in week 10) shows the same: Turbopack and
+`next dev` ship the imported island (1,056 B gzip under Turbopack), and webpack ships nothing
+(`fixtures/next/RESULTS.md`, "Week 10"). [How to choose](/docs/guides/static-or-interactive/).
+
+**Long series.** Every point costs the page about 280 B of server HTML (the paths and a table row)
+and, with the island, about 335 B of JSON in the RSC payload: a year of daily points is about 100 KB
+of HTML and 120 KB of island props. Above about 90 points, bucket daily data weekly before passing
+it in.
+
+## Examples
+
+### Basic
+
+<ChartExample part="area-chart" name="AreaChartExample" title="Basic" />
+
+### Single
+
+<ChartExample part="area-chart" name="AreaChartSingleExample" title="Single" />
+
+### Static
+
+<ChartExample part="area-chart" name="AreaChartStaticExample" title="Static" />
+
+### Status
+
+<ChartExample part="area-chart" name="AreaChartStatusExample" title="Status" />
+
+### Rtl
+
+<ChartExample part="area-chart" name="AreaChartRtlExample" title="Rtl" />
+
+## Props
+
+From `area-chart.tsx` in `packages/charts/src/area-chart` (`nz api` does not cover `@nizivo/charts`
+yet). AreaChart also takes every [ChartFrame](/docs/charts/chart-frame/) prop except `table`,
+`ticks`, `legend`, `labels` and `children` (it builds those itself), and every `<figure>`
+attribute.
+
+<ChartsTable label="AreaChart props">
+
+| Prop             | Type                                                             | Default                                                | Description                                                                                                        |
+| ---------------- | ---------------------------------------------------------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
+| `data`           | `readonly T[]`                                                   | required                                               | One datum per point, in x order.                                                                                   |
+| `x`              | `Accessor<T, string>`                                            | required                                               | The x value: an ISO plain date (daily or weekly buckets) or any label. A key of `T`, or `(datum, index) => value`. |
+| `y`              | `Accessor<T, number \| null \| undefined>`                       | required                                               | A value that is not a finite number leaves a gap.                                                                  |
+| `compare`        | `Accessor<T, number \| null \| undefined>`                       |                                                        | The comparison series, drawn dashed in `chart/neutral`. Decorative: the data table carries its values.             |
+| `locale`         | `string`                                                         | `'en-US'`                                              | The BCP 47 locale every number and date is formatted in, on the server.                                            |
+| `format`         | `'number' \| 'compact' \| 'percent' \| Intl.NumberFormatOptions` | `'number'`                                             | Values in the tooltip and the table.                                                                               |
+| `axisFormat`     | the same                                                         | `format` in compact notation, at most 1 fraction digit | The y labels ("$8K").                                                                                              |
+| `dateFormat`     | `Intl.DateTimeFormatOptions`                                     | `{ month: 'short', day: 'numeric' }`                   | Date tick labels ("Oct 1").                                                                                        |
+| `longDateFormat` | `Intl.DateTimeFormatOptions`                                     | `{ weekday: 'short', month: 'short', day: 'numeric' }` | A point's date in the tooltip and the table.                                                                       |
+| `xTickEvery`     | `number`                                                         | about 6 labels; daily dates tick on whole weeks        | Points between x labels. The last point always has one.                                                            |
+| `curve`          | d3-shape `CurveFactory`                                          | `curveMonotoneX`                                       | Any d3-shape curve. The default does not overshoot below the baseline.                                             |
+| `legend`         | `ReactNode`                                                      | shown when there is a `compare` series                 | `true` or `false` to force it, or your own node.                                                                   |
+| `labels`         | `Partial<AreaChartLabels>`                                       |                                                        | The strings below, plus ChartFrame's.                                                                              |
+
+</ChartsTable>
+
+`labels` (`AreaChartLabels`, English defaults in `areaChartLabels`), on top of
+[ChartFrame's](/docs/charts/chart-frame/#props):
+
+<ChartsTable label="AreaChart labels">
+
+| Key           | Default                                                                 | Where                                                     |
+| ------------- | ----------------------------------------------------------------------- | --------------------------------------------------------- |
+| `x`           | `Date`                                                                  | The data table's first column header, for date data       |
+| `category`    | `Category`                                                              | The data table's first column header, for label data      |
+| `current`     | `This period`                                                           | The series' name in the legend, the tooltip and the table |
+| `previous`    | `Previous`                                                              | The comparison's name                                     |
+| `delta`       | `vs previous`                                                           | After the tooltip's change ("+28.0% vs previous")         |
+| `missing`     | `No value`                                                              | A value the series does not have at that point            |
+| `interaction` | `interactive chart`                                                     | The interactive layer's `aria-roledescription`            |
+| `hint`        | `Arrow keys move between points; Home and End go to the first and last` | The layer's description (`aria-describedby`)              |
+| `points`      | `Chart points`                                                          | The layer's name when `title` is not a string             |
+
+</ChartsTable>
+
+## Other exports
+
+`areaChartLabels`, and the types `AreaChartProps`, `AreaChartElementProps`, `AreaChartLabels`,
+`Accessor`, `ChartNumberFormat` and `CurveFactory`.
+
+## Data attributes and slots
+
+Inside the [ChartFrame](/docs/charts/chart-frame/#data-attributes-and-slots) root, which carries
+`nz-area-chart`:
+
+<ChartsTable label="AreaChart data attributes and slots">
+
+| Element                                         | Attributes                                                                                                         |
+| ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `svg.nz-chart-svg`                              | `viewBox="0 0 100 100"`, `preserveAspectRatio="none"`, `aria-hidden`                                               |
+| `line.nz-chart-grid`, `line.nz-chart-baseline`  | One grid line per tick other than 0; the baseline at 0                                                             |
+| `path.nz-chart-area`, `path.nz-chart-line`      | `data-series="current"`, or `"previous"` for the dashed comparison                                                 |
+| `path.nz-area-chart-halo`, `.nz-area-chart-dot` | The last value's dot                                                                                               |
+| `div.nz-chart-interaction`                      | The island's layer: `role="application"`, `tabindex="0"`, `aria-label`, `aria-roledescription`, `aria-describedby` |
+
+</ChartsTable>
+
+## CSS hooks
+
+<ChartsTable label="AreaChart CSS hooks">
+
+| Hook                   | Default                | What it sets                                     |
+| ---------------------- | ---------------------- | ------------------------------------------------ |
+| `--nz-area-chart-halo` | `var(--nz-bg-surface)` | The ring around the end dot, for tinted surfaces |
+
+</ChartsTable>
+
+The aspect ratio is ChartFrame's `--nz-chart-frame-aspect` (18 / 7).
+
+## Accessibility
+
+- The picture is `aria-hidden`; the data table (one row per point, every series in a column) is the
+  accessible alternative. The comparison line is decorative and its values are in the table.
+- With the island, the plot is one Tab stop: a `role="application"` layer named by the title, with
+  the `labels.interaction` role description and the `labels.hint` description, both rendered on
+  the server. `application` is the role that lets a screen reader pass the arrow keys through; it is
+  provisional until the manual screen-reader pass.
+- One polite live region (`aria-live="polite"`, `aria-atomic="true"`), empty in the server HTML,
+  speaks the point a key move reaches. Leaving the layer empties it, so coming back by keyboard
+  speaks the active point again. A key that does not move the point (End at the last point) says
+  nothing, as a slider at its end does. A pointer shows the point and says nothing (Figma 03).
+- The tooltip card is `aria-hidden`: it repeats what the live region and the table say.
+- Showing a point moves nothing in the layout, and moving it adds no layout shift: the crosshair
+  and the dots move by `translate` (`chart-interaction.spec.tsx` sweeps a pointer across the plot).
+- A card shown by the pointer hides with Escape only while the layer has focus. WCAG 1.4.13 asks
+  for Escape without moving focus too; it does not fit the island's size budget yet (an open item).
+
+### Keyboard
+
+<ChartsTable label="AreaChart keyboard">
+
+| Keys                   | Action                                                                                          |
+| ---------------------- | ----------------------------------------------------------------------------------------------- |
+| Tab                    | Focuses the layer. A keyboard focus shows and speaks the active point, the last point at first. |
+| ArrowRight / ArrowLeft | The next or previous point; under `xDirection="rtl"` the arrows follow the screen.              |
+| Home / End             | The first or last point.                                                                        |
+| Escape                 | Hides the card; the point stays active.                                                         |
+
+</ChartsTable>
+
+Source: `chart-interaction.client.tsx` in `packages/charts/src/_island`, checked in Chromium, WebKit and
+Firefox by `chart-interaction.spec.tsx` in `packages/charts/test/browser`. Touch: a tap shows the point
+and keeps the card after the finger lifts (synthetic pointer events only; real touch hardware is
+not tested).
+
+## Figma
+
+Area Chart, `7275:13336`: `State=Default` `7275:13337` and `State=Hover` `7275:13358`, 720 × 280.
+"Time series, 1 axis. Hover: crosshair + ringed dots + Chart Tooltip (Series=2)." The hover
+variant places the duplicate tooltip set `747:287`; code treats `7275:13303` as the source.
+Figma's reveal path-trims the line and fades the area in after 120 ms; code reveals both by
+`clip-path`, because `pathLength` with non-scaling strokes is unverified. Notes:
+`docs/figma/03-data-viz.md` §4.4.

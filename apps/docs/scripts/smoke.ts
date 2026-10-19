@@ -73,6 +73,9 @@ const NIZIVO_CLIENT_MARKERS = [
   'segmented-control-input',
   'tabs-tab',
   'menu-popup',
+  // @nizivo/charts' ChartInteraction island: every hand-written MDX page shares one module graph,
+  // so a live AreaChart would ship it on every docs route (measured in W10)
+  'nz-chart-interaction',
 ];
 
 /**

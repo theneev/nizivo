@@ -1,0 +1,13 @@
+{
+  "title": "Charts",
+  "pages": [
+    "index",
+    "chart-frame",
+    "area-chart",
+    "bar-chart",
+    "donut-chart",
+    "sparkline",
+    "legend",
+    "chart-tooltip"
+  ]
+}

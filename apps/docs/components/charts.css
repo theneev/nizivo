@@ -1,0 +1,30 @@
+/* @nizivo/charts on the docs site: its one stylesheet inside Tailwind's `components` layer, as the
+ * Tailwind recipe puts @nizivo/react's (app/global.css, ARCHITECTURE.md §7.8), so its nz.* layers
+ * merge with react's under `components`. Imported by components/chart-example.tsx; every hand-written
+ * page shares that module graph, so this sheet loads on every page until generate.ts lists charts
+ * stylesheets in .generated/nizivo.css. */
+@import '@nizivo/charts/styles.css' layer(components);
+
+@layer components {
+  /* A chart (a figure, or an example's wrapper of several) fills the preview, not a row item sized
+     by its content. Cards, legends and sparklines keep their own size. */
+  .nz-docs-chart-preview > :is(figure, div:not([data-slot])) {
+    flex: 1 1 100%;
+    min-inline-size: 0;
+  }
+  /* The status examples stack their three charts. */
+  .nz-docs-chart-preview > div:not([data-slot]) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .nz-docs-chart-preview > div:not([data-slot]) > * {
+    inline-size: 100%;
+  }
+}
+
+/* Inside a ChartsTable (components/charts-table.tsx), Fumadocs' own table wrapper stops scrolling so
+   the focusable outer one does. Unlayered, to win over the wrapper's Tailwind utilities. */
+.nz-docs-charts-table > div {
+  overflow: visible;
+  margin-block: 0;
+}

@@ -1,0 +1,127 @@
+---
+title: ChartTooltip
+description: The tooltip card of a chart point, rendered from pre-formatted strings, so it works on the server, inside the ChartInteraction island and inside a third-party renderer alike.
+---
+
+import { ChartExample, ChartImport } from '../../../components/chart-example';
+import { ChartsTable } from '../../../components/charts-table';
+import {
+  ChartTooltipCompareExample,
+  ChartTooltipDownExample,
+  ChartTooltipExample,
+} from '../../../components/charts-live/chart-tooltip.example';
+
+<Callout type="warn" title="Not yet published (v0.2)">
+  `@nizivo/charts` is not on npm yet; it publishes at 0.2.0. Until then its API can change. The
+  Import section below shows the entry that works in the repository today. See
+  [Charts](/docs/charts/).
+</Callout>
+
+## Import
+
+<ChartImport part="chart-tooltip" names="ChartTooltip" />
+
+## Static or interactive
+
+**Server.** ChartTooltip has no `'use client'` and imports no client module
+(`island-graph.test.ts` in `packages/charts/test/unit`). It is only the card: showing it at a point,
+placing it and announcing the point are the ChartInteraction island's job, which AreaChart renders.
+The island imports this card, so a page with an interactive AreaChart ships it as part of the
+island. [How to choose](/docs/guides/static-or-interactive/).
+
+## Examples
+
+### Basic
+
+<ChartExample
+  part="chart-tooltip"
+  name="ChartTooltipExample"
+  title="Basic"
+  live={<ChartTooltipExample />}
+/>
+
+### Compare
+
+<ChartExample
+  part="chart-tooltip"
+  name="ChartTooltipCompareExample"
+  title="Compare"
+  live={<ChartTooltipCompareExample />}
+/>
+
+### Down
+
+<ChartExample
+  part="chart-tooltip"
+  name="ChartTooltipDownExample"
+  title="Down"
+  live={<ChartTooltipDownExample />}
+/>
+
+## Props
+
+From `chart-tooltip.tsx` in `packages/charts/src/chart-tooltip` (`nz api` does not cover
+`@nizivo/charts` yet). ChartTooltip also takes every attribute of `<div>` except `title` and
+`children`.
+
+<ChartsTable label="ChartTooltip props">
+
+| Prop    | Type                         | Default  | Description                                                    |
+| ------- | ---------------------------- | -------- | -------------------------------------------------------------- |
+| `title` | `string`                     | required | The point, for example "Tue, Oct 14" (Label/M Strong).         |
+| `rows`  | `readonly ChartTooltipRow[]` | required | One row per series; Figma's `Series` variant is `rows.length`. |
+| `delta` | `ChartTooltipDelta`          |          | The change against the comparison.                             |
+
+</ChartsTable>
+
+`ChartTooltipRow`: `label` (the series name), `value` (pre-formatted, Numeric/M, tabular) and
+`series` (a `ChartSeries`, the swatch's colour role). `ChartTooltipDelta`: `value` (the change with
+its sign, for example "+28.0%"), `label` (for example "vs previous") and `trend`
+(`'up' | 'down' | 'flat'`).
+
+## Other exports
+
+The types `ChartTooltipProps`, `ChartTooltipRow`, `ChartTooltipDelta` and `ChartTrend`.
+
+## Data attributes and slots
+
+<ChartsTable label="ChartTooltip data attributes and slots">
+
+| Element                    | Attributes                                                                                                                                                            |
+| -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `div.nz-chart-tooltip`     | `data-slot="chart-tooltip"`                                                                                                                                           |
+| `p.nz-chart-tooltip-title` | The title                                                                                                                                                             |
+| `dl.nz-chart-tooltip-rows` | One `div.nz-chart-tooltip-row` per row: `dt.nz-chart-tooltip-label` (with `span.nz-chart-tooltip-swatch[data-series]`, `aria-hidden`) and `dd.nz-chart-tooltip-value` |
+| `p.nz-chart-tooltip-delta` | `data-trend`: `span.nz-chart-tooltip-change` and `span.nz-chart-tooltip-comparison`                                                                                   |
+
+</ChartsTable>
+
+The change reads `text/success` for `up`, `text/critical` for `down` and `text/secondary` for
+`flat`.
+
+## CSS hooks
+
+<ChartsTable label="ChartTooltip CSS hooks">
+
+| Hook                       | Default                | What it sets                                                 |
+| -------------------------- | ---------------------- | ------------------------------------------------------------ |
+| `--nz-chart-tooltip-width` | `12.5rem`              | The card's width (Figma: a fixed 200 px)                     |
+| `--nz-chart-tooltip-halo`  | `var(--nz-bg-surface)` | The ring around the island's point dots, for tinted surfaces |
+
+</ChartsTable>
+
+## Accessibility
+
+- The rows are a description list: each series name is a `<dt>`, its value the `<dd>`. The swatch is
+  `aria-hidden`.
+- The sign of the change ("+", "−") carries its direction without colour.
+- Inside the island the whole card is `aria-hidden`: the island's polite live region speaks the
+  point, and the chart's data table carries every value. Rendered on its own, the card is ordinary
+  text.
+
+## Figma
+
+Chart Tooltip, `7275:13303`: `Series=1` `7275:13304` (200 × 75) and `Series=2` `7275:13310`
+(200 × 133, with the delta row). "Follows the crosshair; flips side near edges. Fade + 4px travel,
+duration/fast. Values in Numeric/M (tabular)." The Area and Bar hover variants use a duplicate set,
+`747:287`, which is on no page; code follows `7275:13303`. Notes: `docs/figma/03-data-viz.md` §4.2.
