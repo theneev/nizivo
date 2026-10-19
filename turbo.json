@@ -171,6 +171,11 @@
         ".next/types/**",
         "next-env.d.ts"
       ]
+    },
+    "@nizivo/docs#smoke": {
+      "dependsOn": ["build"],
+      "inputs": ["$TURBO_DEFAULT$", "!RESULTS.md"],
+      "outputs": []
     }
   }
 }

@@ -19,7 +19,7 @@
     "check:a11y": "node packages/tokens/scripts/a11y.ts --check",
     "check:release": "node packages/tooling/release/check.ts",
     "size": "pnpm --filter @nizivo/react size",
-    "docs:check": "turbo run build --filter=@nizivo/docs && pnpm --filter @nizivo/docs smoke",
+    "docs:check": "turbo run smoke --filter=@nizivo/docs",
     "floor:check": "node fixtures/floor-lane/gen-w5.ts --check",
     "check": "pnpm install --frozen-lockfile && pnpm typecheck && pnpm lint && pnpm gen:check && pnpm test && pnpm build && pnpm check:a11y && pnpm size && pnpm floor:check && pnpm test:dist && pnpm check:release && pnpm docs:check",
     "format": "oxfmt",

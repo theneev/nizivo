@@ -38,7 +38,7 @@ import { parseArgs } from 'node:util';
 import { allowedFiles, type TaskInfo, undeclared } from './verdict.ts';
 
 /** The turbo tasks `pnpm check` runs. */
-const TASKS = ['build', 'typecheck', 'test', 'lint'];
+const TASKS = ['build', 'typecheck', 'test', 'lint', 'smoke'];
 /** Kept in every copy: pnpm and Node look for them. Not allowed reads: a task that reads one is told. */
 const ROOT_FILES = [
   'package.json',
