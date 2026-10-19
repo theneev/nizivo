@@ -8,6 +8,9 @@
 //   or functional-allowlist data-* attributes and no engine class (§8.3 rule 3, §9.6 case 3),
 // - @nizivo/icons: a page ships exactly the icon modules its client code imports (pack.ts plants
 //   `nzim[...]` markers), and none from a Server Component,
+// - @nizivo/charts: a page ships exactly the charts client modules its charts render (pack.ts plants
+//   `nzcm[...]` markers: the ChartInteraction island), every other page none; a chart page's server
+//   HTML has the chart's SVG and data table, and the island's keyboard claim holds after hydration,
 // - axe-core (WCAG 2.0–2.2 A and AA) on the page as first rendered, in light, again with each
 //   interaction-opened popup open and after a server-open overlay closes, then on the first render
 //   again in forced colours (Chromium's emulation) and with reduced motion (all blocking), and once
@@ -15,7 +18,7 @@
 // - and once per build, checkThemeFlash: no light frame before the theme applies (theme.ts).
 // The same spec runs the Next, Vite and Astro fixtures; SpecOptions says how each one differs.
 /* oxlint-disable no-await-in-loop -- pages and interaction steps run one after another in one browser */
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { dirname, join, normalize } from 'node:path';
 import { gzipSync } from 'node:zlib';
@@ -95,6 +98,14 @@ export interface PageSpec {
    * and the shared base must ship; [] for icons rendered only by Server Components.
    */
   icons?: string[];
+  /**
+   * @nizivo/charts on this page: its charts client modules (dist paths without `dist/` and `.js`)
+   * that must ship (`modules`) and that may ship without running (`imports`: a server part that
+   * imports the island statically but does not render it), and what draws the plot: a Nizivo
+   * renderer (its SVG and, with the island, the keyboard claim) or a third-party child (no
+   * keyboard stop in the figure). Every page without `charts` must ship no charts module.
+   */
+  charts?: { modules: string[]; imports?: string[]; plot: 'nizivo' | 'third-party' };
 }
 
 /** One documented part of each week 2 T0 component (§21.1 W2 "server-safe components"). */
@@ -223,6 +234,26 @@ export const PAGES: Record<string, PageSpec> = {
   '/tab-nav': { renders: [], tabNav: true, slots: ['tab-nav', 'tab-nav-link'] },
   '/icons-server': { renders: [], icons: [] },
   '/icons-client': { renders: [], icons: ['bell', 'calendar', 'search'] },
+  // v0.2 week 1: @nizivo/charts. An AreaChart on the server: full SVG and data table in the HTML,
+  // and only the ChartInteraction island as client code. With interaction="none" nothing runs; the
+  // island may still ship where a bundler ships statically imported client modules (Turbopack).
+  '/chart-area': {
+    renders: [],
+    slots: ['chart-frame', 'chart-frame-plot', 'chart-frame-table', 'legend'],
+    charts: { modules: ['_island/chart-interaction.client'], plot: 'nizivo' },
+  },
+  '/chart-area-static': {
+    renders: [],
+    slots: ['chart-frame', 'chart-frame-plot', 'chart-frame-table'],
+    charts: { modules: [], imports: ['_island/chart-interaction.client'], plot: 'nizivo' },
+  },
+  // K9: a third-party-style client renderer inside the server ChartFrame (interaction="none"): the
+  // frame's caption, table and legend, no charts module and no keyboard stop in the figure.
+  '/chart-third-party': {
+    renders: [],
+    slots: ['chart-frame', 'chart-frame-plot', 'chart-frame-table', 'legend'],
+    charts: { modules: [], plot: 'third-party' },
+  },
 };
 
 export interface PageResult {
@@ -238,6 +269,12 @@ export interface PageResult {
   unexpected: string[];
   /** @nizivo/icons modules found in the page's client chunks (`icons/calendar`, `_internal/icon`). */
   icons?: string[];
+  /**
+   * @nizivo/charts client modules found in the page's client chunks, and each chunk that carries
+   * one, raw and gzip -9 bytes (a Next chunk holds the module plus the bundler's wrapper, and the
+   * planted marker statement is subtracted).
+   */
+  charts?: { modules: string[]; chunks: Array<{ url: string; bytes: number; gzip: number }> };
   /** axe-core WCAG 2.2 A/AA violations on the page as first rendered, in light: `rule [impact] (n): target`. */
   axe: string[];
   /** The same run with the OS in dark mode (`data-nz-theme="system"`): reported, never a failure. */
@@ -304,7 +341,7 @@ export async function axe(page: Page): Promise<string[]> {
  * those are still checked as they are. Every element, because the fill is inherited. No Nizivo
  * stylesheet sets `-webkit-text-fill-color`; an inline one is left alone.
  */
-async function axeForced(page: Page): Promise<string[]> {
+export async function axeForced(page: Page): Promise<string[]> {
   await page.evaluate(() => {
     for (const element of document.querySelectorAll<HTMLElement>('body *')) {
       if (element.style.webkitTextFillColor !== '') continue;
@@ -330,7 +367,7 @@ async function axeForced(page: Page): Promise<string[]> {
  * controls' colours (Button's background, for one), and axe must read the end colours, not a frame
  * in between.
  */
-async function transitionsDone(page: Page): Promise<void> {
+export async function transitionsDone(page: Page): Promise<void> {
   await page.evaluate(async () => {
     await new Promise((resolve) => requestAnimationFrame(resolve));
     // Transitions only: a Skeleton's shimmer or a spinner runs forever and never finishes.
@@ -474,6 +511,8 @@ export interface Markers {
   all: Map<string, string>;
   /** Icon marker → dist path in @nizivo/icons (pack.ts, icon-markers.json). */
   icons: Map<string, string>;
+  /** Charts marker → dist path in @nizivo/charts (pack.ts, chart-markers.json; empty if absent). */
+  charts: Map<string, string>;
   /** Markers of the client modules that the leaves of the rendered components reach. */
   allowed: (renders: Component[]) => Set<string>;
 }
@@ -487,10 +526,13 @@ function readMarkers(file: string): Map<string, string> {
 export function loadMarkers(packageRoot: string, markersFile: string): Markers {
   const all = readMarkers(markersFile);
   const icons = readMarkers(join(dirname(markersFile), 'icon-markers.json'));
+  const chartsFile = join(dirname(markersFile), 'chart-markers.json');
+  const charts = existsSync(chartsFile) ? readMarkers(chartsFile) : new Map<string, string>();
   const markerOf = new Map([...all].map(([marker, path]) => [path, marker]));
   return {
     all,
     icons,
+    charts,
     allowed: (renders) => {
       const allowed = new Set<string>();
       for (const component of renders) {
@@ -1153,6 +1195,87 @@ async function checkIcons(page: Page): Promise<Record<string, string | boolean>>
 }
 
 /**
+ * A chart page. Server HTML: the frame's figure, its data table and the plot's drawing (a Nizivo
+ * renderer's percent-space SVG with its line, or the third-party child's SVG). A Nizivo chart with
+ * the island: Tab reaches the interaction layer (role group, named, "interactive chart"), its
+ * polite region is empty until a key moves the point, ArrowLeft speaks a point and shows the
+ * card, Escape hides it. A third-party child: no keyboard stop and no live region in the figure.
+ */
+async function checkChart(
+  page: Page,
+  html: string,
+  chart: NonNullable<PageSpec['charts']>,
+): Promise<Record<string, string | boolean>> {
+  const figure = /<figure data-slot="chart-frame"[\s\S]*?<\/figure>/.exec(html)?.[0] ?? '';
+  const serverTable = /<table[^>]*data-slot="chart-frame-table"/.test(figure);
+  const serverSvg =
+    chart.plot === 'nizivo'
+      ? /<svg class="nz-chart-svg"[^>]*>[\s\S]*?<path class="nz-chart-line"/.test(figure)
+      : /<div class="nz-chart-frame-plot"[^>]*><svg/.test(figure);
+  const styles = (figure.match(/\sstyle="/g) ?? []).length;
+  const result: Record<string, string | boolean> = {
+    serverFigure: figure !== '',
+    serverTable,
+    serverSvg,
+    serverStyleAttributes: String(styles),
+  };
+  let ok = figure !== '' && serverTable && serverSvg && styles === 0;
+  if (chart.modules.includes('_island/chart-interaction.client')) {
+    // the island's layer: the plot's one tab stop
+    const layer = page.locator('[data-slot="chart-frame-plot"] [tabindex="0"]');
+    const region = layer.locator('[aria-live="polite"]');
+    const regionEmpty = /aria-live="polite"[^>]*><\/span>/.test(figure);
+    let focused = false;
+    for (let i = 0; i < 12 && !focused; i++) {
+      await page.keyboard.press('Tab');
+      focused = await layer.evaluate((el) => el === document.activeElement);
+    }
+    const name = (await layer.getAttribute('aria-label')) ?? '';
+    const roledescription = (await layer.getAttribute('aria-roledescription')) ?? '';
+    await page.keyboard.press('ArrowLeft');
+    await page.waitForFunction(
+      (el) => (el?.textContent ?? '') !== '',
+      await region.elementHandle(),
+      {
+        timeout: TIMEOUT,
+      },
+    );
+    const announced = (await region.textContent()) ?? '';
+    const cardShown = (await layer.locator('.nz-chart-interaction-tip').count()) === 1;
+    await page.keyboard.press('Escape');
+    const cardHidden = (await layer.locator('.nz-chart-interaction-tip').count()) === 0;
+    Object.assign(result, {
+      serverRegionEmpty: regionEmpty,
+      focused,
+      name,
+      roledescription,
+      announced,
+      cardShown,
+      cardHidden,
+    });
+    ok &&=
+      regionEmpty &&
+      focused &&
+      name !== '' &&
+      roledescription !== '' &&
+      announced !== '' &&
+      cardShown &&
+      cardHidden;
+  } else {
+    const claims = await page.evaluate(
+      () =>
+        document.querySelectorAll(
+          '[data-slot="chart-frame"] :is([tabindex], [aria-live], [role="status"], [role="alert"])',
+        ).length,
+    );
+    result['keyboardStops'] = String(claims);
+    ok &&= claims === 0;
+  }
+  result['ok'] = ok;
+  return result;
+}
+
+/**
  * Astro, two islands on one page: every id in the document is unique, so the islands' `useId`
  * prefixes differ (§11.1: handled by @astrojs/react 7), and every IDREF resolves.
  */
@@ -1343,6 +1466,10 @@ async function runPage(
   if (failures.length === 0 && spec.icons !== undefined) {
     steps.push(['icons', () => checkIcons(page)]);
   }
+  const chart = spec.charts;
+  if (failures.length === 0 && chart !== undefined) {
+    steps.push(['chart', () => checkChart(page, html, chart)]);
+  }
   if (failures.length === 0 && spec.renders.includes('select')) {
     steps.push(['select', () => checkSelect(page, spec.select)]);
   }
@@ -1389,12 +1516,34 @@ async function runPage(
       : await importClosure([...nextChunkUrls(serverHtml, base), ...loaded], base, false);
   const found = new Set<string>();
   const iconsFound = new Set<string>();
+  const chartsFound = new Set<string>();
+  const chartChunks: Array<{ url: string; bytes: number; gzip: number }> = [];
   let bytes = 0;
   let gzip = 0;
-  for (const source of sources.values()) {
+  for (const [url, source] of sources) {
     const buffer = Buffer.from(source);
     bytes += buffer.length;
     gzip += gzipSync(buffer, { level: 9 }).length;
+    if (source.includes('nzcm[')) {
+      let own = source;
+      for (const [marker, distPath] of markers.charts) {
+        if (!source.includes(marker)) continue;
+        chartsFound.add(distPath.replace(/^dist\//, '').replace(/\.js$/, ''));
+        // the planted statement, as the minifier left it, is not the island's own bytes
+        own = own.replace(
+          new RegExp(
+            `[^;{}]*__NZ_FIXTURE_MARKERS__[^;]*${marker.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}[^;]*;?`,
+          ),
+          '',
+        );
+      }
+      const ownBuffer = Buffer.from(own);
+      chartChunks.push({
+        url: new URL(url).pathname,
+        bytes: ownBuffer.length,
+        gzip: gzipSync(ownBuffer, { level: 9 }).length,
+      });
+    }
     for (const marker of markers.all.keys()) if (source.includes(marker)) found.add(marker);
     if (source.includes('nzim[')) {
       for (const [marker, distPath] of markers.icons) {
@@ -1410,6 +1559,7 @@ async function runPage(
     if (sources.size > 0) failures.push(`server-only page loads ${sources.size} script(s)`);
   }
   const shippedIcons = [...iconsFound].toSorted();
+  const shippedCharts = [...chartsFound].toSorted();
   const allowed = markers.allowed([...spec.renders, ...(spec.imports ?? [])]);
   const expectedLeaves = spec.renders.map((c) => `nzfm[${LEAF[c]}]`);
   const missing = expectedLeaves.filter((marker) => !found.has(marker));
@@ -1432,6 +1582,18 @@ async function runPage(
         `icon modules: ${shippedIcons.length} shipped; extra ${extra.length} (${extra.slice(0, 5).join(', ')}), missing ${absent.join(', ') || 'none'}`,
       );
     }
+    // Charts: exactly the rendered charts modules, plus any merely imported; every other page none.
+    const chartModules = spec.charts?.modules ?? [];
+    const chartImports = spec.charts?.imports ?? [];
+    const chartMissing = chartModules.filter((m) => !shippedCharts.includes(m));
+    const chartExtra = shippedCharts.filter(
+      (m) => !chartModules.includes(m) && !chartImports.includes(m),
+    );
+    if (chartMissing.length > 0 || chartExtra.length > 0) {
+      failures.push(
+        `charts modules: missing ${chartMissing.join(', ') || 'none'}, unexpected ${chartExtra.join(', ') || 'none'}`,
+      );
+    }
   }
   await context.close();
   return {
@@ -1442,6 +1604,9 @@ async function runPage(
     missing,
     unexpected,
     ...(spec.icons === undefined && shippedIcons.length === 0 ? {} : { icons: shippedIcons }),
+    ...(spec.charts === undefined && shippedCharts.length === 0
+      ? {}
+      : { charts: { modules: shippedCharts, chunks: chartChunks } }),
     axe: axeLines,
     axeDark,
     axeForcedColors,

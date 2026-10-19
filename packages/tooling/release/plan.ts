@@ -60,6 +60,22 @@ export const RELEASE_LANES: readonly Lane[] = [
     script: 'test:overlay',
     env: { NZ_BROWSER: browser },
   })),
+  // @nizivo/charts (v0.2): its browser specs (the stroke check, the island, the marks, bars and
+  // donut) in all three engines, then the charts-only fixture (tokens.css + charts' styles.css, no
+  // @nizivo/react CSS; §14.1) on the packed tarballs. Both read the built dist/.
+  ...(['chromium', 'webkit', 'firefox'] as const).map((browser) => ({
+    id: `charts-${browser}`,
+    why: `@nizivo/charts browser specs in ${browser} (§14.1, R14)`,
+    dir: 'packages/charts',
+    script: 'test:browser',
+    env: { NZ_BROWSER: browser },
+  })),
+  {
+    id: 'fixture-charts',
+    why: 'the charts-only fixture: axe, focus-visible, visually hidden, CSP Profile B (§14.1)',
+    dir: 'fixtures/runner',
+    script: 'fixture:charts',
+  },
   ...(['next', 'vite', 'astro'] as const).map((fixture) => ({
     id: `fixture-${fixture}`,
     why: `the ${fixture} fixture on the packed packages (§18.1, exit criterion 2)`,
@@ -70,6 +86,12 @@ export const RELEASE_LANES: readonly Lane[] = [
     id: 'visual',
     why: 'in-repo visual regression; baselines hold on darwin-arm64 only (§18.1)',
     dir: 'packages/react',
+    script: 'test:visual',
+  },
+  {
+    id: 'visual-charts',
+    why: '@nizivo/charts visual regression, the same harness and baseline policy (§18.1)',
+    dir: 'packages/charts',
     script: 'test:visual',
   },
 ];

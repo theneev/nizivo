@@ -61,10 +61,10 @@
       "late": {
         "frames": 90,
         "wrong": [
-          "6:light dark/rgb(246, 247, 244)",
+          "5:light dark/rgb(246, 247, 244)",
           "22:light dark/rgb(246, 247, 244)",
           "39:light dark/rgb(246, 247, 244)",
-          "56:light dark/rgb(246, 247, 244)",
+          "55:light dark/rgb(246, 247, 244)",
           "72:light dark/rgb(246, 247, 244)"
         ],
         "firstPaint": 20,
@@ -113,8 +113,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 5,
-        "bytes": 562495,
-        "gzip": 171889
+        "bytes": 562507,
+        "gzip": 171899
       },
       "failures": []
     },
@@ -139,8 +139,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 5,
-        "bytes": 562495,
-        "gzip": 171889
+        "bytes": 562507,
+        "gzip": 171899
       },
       "failures": []
     },
@@ -211,8 +211,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 13,
-        "bytes": 800570,
-        "gzip": 252306
+        "bytes": 800582,
+        "gzip": 252316
       },
       "failures": []
     },
@@ -283,8 +283,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 13,
-        "bytes": 800570,
-        "gzip": 252306
+        "bytes": 800582,
+        "gzip": 252316
       },
       "failures": []
     },
@@ -340,8 +340,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 12,
-        "bytes": 756237,
-        "gzip": 237444
+        "bytes": 756249,
+        "gzip": 237454
       },
       "failures": []
     },
@@ -419,8 +419,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 16,
-        "bytes": 831562,
-        "gzip": 262142
+        "bytes": 831574,
+        "gzip": 262152
       },
       "failures": []
     },
@@ -477,8 +477,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 11,
-        "bytes": 747180,
-        "gzip": 233654
+        "bytes": 747192,
+        "gzip": 233664
       },
       "failures": []
     },
@@ -532,8 +532,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 9,
-        "bytes": 616753,
-        "gzip": 192223
+        "bytes": 616765,
+        "gzip": 192233
       },
       "failures": []
     },
@@ -578,8 +578,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 11,
-        "bytes": 780952,
-        "gzip": 244766
+        "bytes": 780964,
+        "gzip": 244776
       },
       "failures": []
     },
@@ -624,8 +624,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 11,
-        "bytes": 780952,
-        "gzip": 244766
+        "bytes": 780964,
+        "gzip": 244776
       },
       "failures": []
     },
@@ -654,8 +654,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 5,
-        "bytes": 562495,
-        "gzip": 171889
+        "bytes": 562507,
+        "gzip": 171899
       },
       "failures": []
     },
@@ -684,8 +684,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 5,
-        "bytes": 562495,
-        "gzip": 171889
+        "bytes": 562507,
+        "gzip": 171899
       },
       "failures": []
     },
@@ -716,8 +716,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 6,
-        "bytes": 565943,
-        "gzip": 173465
+        "bytes": 565955,
+        "gzip": 173475
       },
       "failures": []
     },
@@ -770,8 +770,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 7,
-        "bytes": 581071,
-        "gzip": 178169
+        "bytes": 581083,
+        "gzip": 178179
       },
       "failures": []
     },
@@ -796,8 +796,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 5,
-        "bytes": 562495,
-        "gzip": 171889
+        "bytes": 562507,
+        "gzip": 171899
       },
       "failures": []
     },
@@ -822,8 +822,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 5,
-        "bytes": 562495,
-        "gzip": 171889
+        "bytes": 562507,
+        "gzip": 171899
       },
       "failures": []
     },
@@ -848,8 +848,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 5,
-        "bytes": 562495,
-        "gzip": 171889
+        "bytes": 562507,
+        "gzip": 171899
       },
       "failures": []
     },
@@ -874,8 +874,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 5,
-        "bytes": 562495,
-        "gzip": 171889
+        "bytes": 562507,
+        "gzip": 171899
       },
       "failures": []
     },
@@ -900,8 +900,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 5,
-        "bytes": 562495,
-        "gzip": 171889
+        "bytes": 562507,
+        "gzip": 171899
       },
       "failures": []
     },
@@ -939,8 +939,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 9,
-        "bytes": 619245,
-        "gzip": 193333
+        "bytes": 619257,
+        "gzip": 193343
       },
       "failures": []
     },
@@ -992,8 +992,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 10,
-        "bytes": 745909,
-        "gzip": 233088
+        "bytes": 745921,
+        "gzip": 233098
       },
       "failures": []
     },
@@ -1038,8 +1038,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 9,
-        "bytes": 683353,
-        "gzip": 210347
+        "bytes": 683365,
+        "gzip": 210357
       },
       "failures": []
     },
@@ -1073,8 +1073,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 7,
-        "bytes": 570339,
-        "gzip": 175318
+        "bytes": 570351,
+        "gzip": 175328
       },
       "failures": []
     },
@@ -1104,8 +1104,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 5,
-        "bytes": 562495,
-        "gzip": 171889
+        "bytes": 562507,
+        "gzip": 171899
       },
       "failures": []
     },
@@ -1135,8 +1135,134 @@
       "axeReducedMotion": [],
       "js": {
         "files": 6,
-        "bytes": 564350,
-        "gzip": 172790
+        "bytes": 564362,
+        "gzip": 172800
+      },
+      "failures": []
+    },
+    "/chart-area": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "chart-frame chart-frame-body chart-frame-caption chart-frame-legend chart-frame-plot chart-frame-table chart-frame-x-ticks chart-frame-y-ticks legend legend-item",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "chart": {
+          "serverFigure": true,
+          "serverTable": true,
+          "serverSvg": true,
+          "serverStyleAttributes": "0",
+          "serverRegionEmpty": true,
+          "focused": true,
+          "name": "Sales",
+          "roledescription": "interactive chart",
+          "announced": "Tue, Oct 13, This period, $7,910, Previous, $6,570, +20.4%, vs previous",
+          "cardShown": true,
+          "cardHidden": true,
+          "ok": true
+        }
+      },
+      "chunks": 6,
+      "markers": [],
+      "missing": [],
+      "unexpected": [],
+      "charts": {
+        "modules": ["_island/chart-interaction.client"],
+        "chunks": [
+          {
+            "url": "/_next/static/chunks/app/chart-area/page-61d729a2f406ee28.js",
+            "bytes": 2668,
+            "gzip": 1198
+          }
+        ]
+      },
+      "axe": [],
+      "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
+      "js": {
+        "files": 6,
+        "bytes": 565358,
+        "gzip": 173205
+      },
+      "failures": []
+    },
+    "/chart-area-static": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "chart-frame chart-frame-body chart-frame-caption chart-frame-plot chart-frame-table chart-frame-x-ticks chart-frame-y-ticks",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "chart": {
+          "serverFigure": true,
+          "serverTable": true,
+          "serverSvg": true,
+          "serverStyleAttributes": "0",
+          "keyboardStops": "0",
+          "ok": true
+        }
+      },
+      "chunks": 5,
+      "markers": [],
+      "missing": [],
+      "unexpected": [],
+      "charts": {
+        "modules": [],
+        "chunks": []
+      },
+      "axe": [],
+      "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
+      "js": {
+        "files": 5,
+        "bytes": 562507,
+        "gzip": 171899
+      },
+      "failures": []
+    },
+    "/chart-third-party": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "chart-frame chart-frame-body chart-frame-caption chart-frame-legend chart-frame-plot chart-frame-table legend legend-item",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "chart": {
+          "serverFigure": true,
+          "serverTable": true,
+          "serverSvg": true,
+          "serverStyleAttributes": "0",
+          "keyboardStops": "0",
+          "ok": true
+        }
+      },
+      "chunks": 6,
+      "markers": [],
+      "missing": [],
+      "unexpected": [],
+      "charts": {
+        "modules": [],
+        "chunks": []
+      },
+      "axe": [],
+      "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
+      "js": {
+        "files": 6,
+        "bytes": 563422,
+        "gzip": 172483
       },
       "failures": []
     }

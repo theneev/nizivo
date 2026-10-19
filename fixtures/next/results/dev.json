@@ -17,8 +17,8 @@
       "osDark": {
         "frames": 90,
         "wrong": [],
-        "firstPaint": 48,
-        "firstContentfulPaint": 48,
+        "firstPaint": 44,
+        "firstContentfulPaint": 44,
         "firstTheme": "system",
         "lastTheme": "system",
         "pixel": "rgb(16, 19, 17)",
@@ -39,8 +39,8 @@
       "static": {
         "frames": 90,
         "wrong": [],
-        "firstPaint": 40,
-        "firstContentfulPaint": 40,
+        "firstPaint": 36,
+        "firstContentfulPaint": 36,
         "firstTheme": "dark",
         "lastTheme": "dark",
         "pixel": "rgb(16, 19, 17)",
@@ -61,11 +61,11 @@
       "late": {
         "frames": 90,
         "wrong": [
-          "21:light dark/rgb(246, 247, 244)",
-          "38:light dark/rgb(246, 247, 244)",
-          "54:light dark/rgb(246, 247, 244)",
-          "87:light dark/rgb(246, 247, 244)",
-          "104:light dark/rgb(246, 247, 244)"
+          "19:light dark/rgb(246, 247, 244)",
+          "35:light dark/rgb(246, 247, 244)",
+          "52:light dark/rgb(246, 247, 244)",
+          "69:light dark/rgb(246, 247, 244)",
+          "85:light dark/rgb(246, 247, 244)"
         ],
         "firstPaint": 36,
         "firstContentfulPaint": 36,
@@ -1111,6 +1111,138 @@
         "files": 17,
         "bytes": 3759437,
         "gzip": 823904
+      },
+      "failures": []
+    },
+    "/chart-area": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "chart-frame chart-frame-body chart-frame-caption chart-frame-legend chart-frame-plot chart-frame-table chart-frame-x-ticks chart-frame-y-ticks legend legend-item",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "chart": {
+          "serverFigure": true,
+          "serverTable": true,
+          "serverSvg": true,
+          "serverStyleAttributes": "0",
+          "serverRegionEmpty": true,
+          "focused": true,
+          "name": "Sales",
+          "roledescription": "interactive chart",
+          "announced": "Tue, Oct 13, This period, $7,910, Previous, $6,570, +20.4%, vs previous",
+          "cardShown": true,
+          "cardHidden": true,
+          "ok": true
+        }
+      },
+      "chunks": 17,
+      "markers": [],
+      "missing": [],
+      "unexpected": [],
+      "charts": {
+        "modules": ["_island/chart-interaction.client"],
+        "chunks": [
+          {
+            "url": "/_next/static/chunks/0emn_%40nizivo_charts_dist_142h0rnhd_su7._.js",
+            "bytes": 16339,
+            "gzip": 2251
+          }
+        ]
+      },
+      "axe": [],
+      "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
+      "js": {
+        "files": 17,
+        "bytes": 3747719,
+        "gzip": 820708
+      },
+      "failures": []
+    },
+    "/chart-area-static": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "chart-frame chart-frame-body chart-frame-caption chart-frame-plot chart-frame-table chart-frame-x-ticks chart-frame-y-ticks",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "chart": {
+          "serverFigure": true,
+          "serverTable": true,
+          "serverSvg": true,
+          "serverStyleAttributes": "0",
+          "keyboardStops": "0",
+          "ok": true
+        }
+      },
+      "chunks": 17,
+      "markers": [],
+      "missing": [],
+      "unexpected": [],
+      "charts": {
+        "modules": ["_island/chart-interaction.client"],
+        "chunks": [
+          {
+            "url": "/_next/static/chunks/0emn_%40nizivo_charts_dist_142h0rnhd_su7._.js",
+            "bytes": 16339,
+            "gzip": 2251
+          }
+        ]
+      },
+      "axe": [],
+      "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
+      "js": {
+        "files": 17,
+        "bytes": 3747719,
+        "gzip": 820708
+      },
+      "failures": []
+    },
+    "/chart-third-party": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "chart-frame chart-frame-body chart-frame-caption chart-frame-legend chart-frame-plot chart-frame-table legend legend-item",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "chart": {
+          "serverFigure": true,
+          "serverTable": true,
+          "serverSvg": true,
+          "serverStyleAttributes": "0",
+          "keyboardStops": "0",
+          "ok": true
+        }
+      },
+      "chunks": 17,
+      "markers": [],
+      "missing": [],
+      "unexpected": [],
+      "charts": {
+        "modules": [],
+        "chunks": []
+      },
+      "axe": [],
+      "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
+      "js": {
+        "files": 17,
+        "bytes": 3750279,
+        "gzip": 823058
       },
       "failures": []
     }

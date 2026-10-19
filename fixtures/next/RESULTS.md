@@ -74,6 +74,24 @@ Gzip -9 of every chunk the page loads, minus `/button-only` (174,639 B Turbopack
 
 Week 7's measurement of the same design on a copy of the repo (W7-RESULTS.md "D-aa": `/icon-button` +20,805 B Turbopack and +62,124 B dev, `/field-zero-js` +3,035 B and +7,800 B, the static exports 0 B) holds on the packed package. Every other page keeps week 8's set of client modules in every mode; their bytes move by −143 to +456 B (`/icon-button` and `/icon-button-tooltip` +456 B under `next dev`: the element builder moved into its own module).
 
+## Week 10 (2026-10-19): `@nizivo/charts`
+
+Three pages for v0.2's charts (ARCHITECTURE.md §14.1, §10.8), on a fourth packed tarball (`@nizivo/charts`, private until 0.2; `pack.ts` marks its one `'use client'` module, the ChartInteraction island, with `nzcm[...]`): `/chart-area` (an AreaChart with a comparison series), `/chart-area-static` (the same with `interaction="none"`) and `/chart-third-party` (a stand-in client renderer inside a server `ChartFrame` with `interaction="none"`, the K9 case). The two AreaChart pages import the barrel, `@nizivo/charts`: `./area-chart` is not in the exports map this week (its size against §17.2 is open, `packages/charts/W10-RESULTS.md`). The spec checks the server HTML (the figure, the SVG with its line, the data table, no `style` attribute, an empty polite region), then Tab to the layer, its name and role description, ArrowLeft speaking a point, the card shown and Escape hiding it.
+
+**Verdict: all 28 pages pass under Turbopack, webpack, webpack + `optimizePackageImports` and `next dev`, with 0 console messages, 0 axe violations and no build warnings.** Recorded with `node fixtures/runner/next.ts --record` (Turbopack, webpack and webpack + OPI; webpack failed once on the react page `/namespace`, a 5 s tooltip wait, and passed on the rerun of both webpack variants), then `--record --variants turbopack --dev`. **Re-recorded after the week 10 review** with `--dev --record` (all four modes in one run, all pass): the island now moves its marks by `translate` and empties its live region on blur, 13 to 24 B more per chart page; the table below is that run.
+
+Gzip -9 of every chunk the page loads, minus `/button-only` (174,639 B Turbopack, 171,899 B webpack and webpack + OPI, 818,350 B `next dev`), and the island's chunk:
+
+| Page                 | Turbopack | webpack | webpack + OPI | `next dev` | `@nizivo/charts` client modules (island chunk, gzip)                            |
+| -------------------- | --------: | ------: | ------------: | ---------: | ------------------------------------------------------------------------------- |
+| `/chart-area`        |    +1,230 |  +1,306 |        +1,306 |     +2,358 | the island in every mode (1,056 B Turbopack, 1,198 B webpack)                   |
+| `/chart-area-static` |    +1,230 |       0 |             0 |     +2,358 | the island under Turbopack and dev (imported, not rendered); none under webpack |
+| `/chart-third-party` |      +522 |    +584 |          +584 |     +4,708 | none (the bytes are the page's own stand-in client renderer)                    |
+
+- **Under RSC a chart page pays only the island.** The SVG, the table and the legend are server HTML; the island chunk carries the island, ChartTooltip and `cx` (the island's own code is 813 B in `pnpm size`, 1,080 B with its imports).
+- **Turbopack ships an imported island even when nothing renders it**, as it does for react's `IconButton` (week 9, D-aa); webpack does not. The spec allows it through `imports`.
+- **The react pages:** Turbopack and `next dev` are byte-identical to week 9. Under both webpack variants every react page is **+10 B gzip** (+12 B raw): the shared webpack runtime chunk grew from 3,271 to 3,283 B with the three new routes (a probe build without the chart pages gave 3,271 B). No react module changed.
+
 ## Setup
 
 |                   |                                                                                                                                                                                        |

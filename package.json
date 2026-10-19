@@ -30,6 +30,7 @@
     "fixture:next": "pnpm --filter @nizivo/fixture-runner fixture:next",
     "fixture:vite": "pnpm --filter @nizivo/fixture-runner fixture:vite",
     "fixture:astro": "pnpm --filter @nizivo/fixture-runner fixture:astro",
+    "fixture:charts": "pnpm --filter @nizivo/fixture-runner fixture:charts",
     "floor": "node fixtures/floor-lane/run.ts",
     "floor:gen": "node fixtures/floor-lane/gen-w5.ts",
     "check:full": "pnpm check && node packages/tooling/release/lanes.ts",

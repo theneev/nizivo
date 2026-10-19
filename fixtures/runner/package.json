@@ -10,7 +10,8 @@
     "pack:fixture": "node pack.ts",
     "fixture:next": "node next.ts",
     "fixture:vite": "node vite.ts",
-    "fixture:astro": "node astro.ts"
+    "fixture:astro": "node astro.ts",
+    "fixture:charts": "node charts.ts --engines chromium,webkit,firefox"
   },
   "devDependencies": {
     "@nizivo/tsconfig": "workspace:*",

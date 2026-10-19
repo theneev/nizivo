@@ -385,7 +385,14 @@ function world(w: World = {}) {
     );
     files.set(
       join(REPO_ROOT, 'fixtures/runner/package.json'),
-      JSON.stringify({ scripts: scripts(['fixture:next', 'fixture:vite', 'fixture:astro']) }),
+      JSON.stringify({
+        scripts: scripts(['fixture:charts', 'fixture:next', 'fixture:vite', 'fixture:astro']),
+      }),
+    );
+    // @nizivo/charts is private until 0.2 (not in PUBLISHED), but its lanes run in every release
+    files.set(
+      join(REPO_ROOT, 'packages/charts/package.json'),
+      JSON.stringify({ name: '@nizivo/charts', scripts: scripts(['test:browser', 'test:visual']) }),
     );
     for (const { name, dir } of PUBLISHED) {
       files.set(
@@ -584,6 +591,16 @@ describe('release', () => {
         .filter((c) => c.args.includes('test:overlay'))
         .map((c) => c.options.env?.['NZ_BROWSER']),
     ).toEqual(['chromium', 'webkit', 'firefox']);
+    expect(
+      calls
+        .filter((c) => c.options.cwd === join(REPO_ROOT, 'packages/charts'))
+        .map((c) => `${c.args.at(-1) ?? ''} ${c.options.env?.['NZ_BROWSER'] ?? ''}`.trim()),
+    ).toEqual([
+      'test:browser chromium',
+      'test:browser webkit',
+      'test:browser firefox',
+      'test:visual',
+    ]);
     expect(logs.join('\n')).toContain(
       'a real run creates the local tag @nizivo/react@0.1.0 on HEAD',
     );
@@ -909,17 +926,22 @@ describe('release', () => {
     }
   });
 
-  test('the lanes cover the browser, overlay, fixture and visual lanes', () => {
+  test('the lanes cover the browser, overlay, charts, fixture and visual lanes', () => {
     expect(RELEASE_LANES.map((l) => l.id)).toEqual([
       'browser',
       'browser-firefox',
       'overlay-chromium',
       'overlay-webkit',
       'overlay-firefox',
+      'charts-chromium',
+      'charts-webkit',
+      'charts-firefox',
+      'fixture-charts',
       'fixture-next',
       'fixture-vite',
       'fixture-astro',
       'visual',
+      'visual-charts',
     ]);
   });
 });

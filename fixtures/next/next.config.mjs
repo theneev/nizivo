@@ -12,7 +12,11 @@ const config = {
   // A test fixture: `next dev` must not write AGENTS.md here when it detects a coding agent.
   agentRules: false,
   ...(variant === 'webpack-opi'
-    ? { experimental: { optimizePackageImports: ['@nizivo/react', '@nizivo/icons'] } }
+    ? {
+        experimental: {
+          optimizePackageImports: ['@nizivo/react', '@nizivo/icons', '@nizivo/charts'],
+        },
+      }
     : {}),
 };
 

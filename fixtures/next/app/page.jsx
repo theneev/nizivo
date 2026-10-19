@@ -26,6 +26,9 @@ const pages = [
   ['/tab-nav', 'TabNav with next/link through render: no @nizivo client module'],
   ['/icons-server', 'server-only: three icons from the @nizivo/icons barrel'],
   ['/icons-client', 'three icons from the @nizivo/icons barrel in a client component'],
+  ['/chart-area', 'v0.2: an AreaChart on the server; the island is the only client module'],
+  ['/chart-area-static', 'v0.2: the AreaChart with interaction="none"'],
+  ['/chart-third-party', 'v0.2: a third-party-style client renderer inside ChartFrame'],
 ];
 
 export default function Home() {

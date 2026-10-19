@@ -62,10 +62,10 @@
         "frames": 90,
         "wrong": [
           "6:light dark/rgb(246, 247, 244)",
-          "22:light dark/rgb(246, 247, 244)",
-          "39:light dark/rgb(246, 247, 244)",
+          "23:light dark/rgb(246, 247, 244)",
+          "40:light dark/rgb(246, 247, 244)",
           "56:light dark/rgb(246, 247, 244)",
-          "72:light dark/rgb(246, 247, 244)"
+          "73:light dark/rgb(246, 247, 244)"
         ],
         "firstPaint": 20,
         "firstContentfulPaint": 20,
@@ -1111,6 +1111,138 @@
         "files": 8,
         "bytes": 570411,
         "gzip": 175491
+      },
+      "failures": []
+    },
+    "/chart-area": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "chart-frame chart-frame-body chart-frame-caption chart-frame-legend chart-frame-plot chart-frame-table chart-frame-x-ticks chart-frame-y-ticks legend legend-item",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "chart": {
+          "serverFigure": true,
+          "serverTable": true,
+          "serverSvg": true,
+          "serverStyleAttributes": "0",
+          "serverRegionEmpty": true,
+          "focused": true,
+          "name": "Sales",
+          "roledescription": "interactive chart",
+          "announced": "Tue, Oct 13, This period, $7,910, Previous, $6,570, +20.4%, vs previous",
+          "cardShown": true,
+          "cardHidden": true,
+          "ok": true
+        }
+      },
+      "chunks": 8,
+      "markers": [],
+      "missing": [],
+      "unexpected": [],
+      "charts": {
+        "modules": ["_island/chart-interaction.client"],
+        "chunks": [
+          {
+            "url": "/_next/static/chunks/0lmddbs3k4dge.js",
+            "bytes": 2366,
+            "gzip": 1056
+          }
+        ]
+      },
+      "axe": [],
+      "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
+      "js": {
+        "files": 8,
+        "bytes": 571342,
+        "gzip": 175869
+      },
+      "failures": []
+    },
+    "/chart-area-static": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "chart-frame chart-frame-body chart-frame-caption chart-frame-plot chart-frame-table chart-frame-x-ticks chart-frame-y-ticks",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "chart": {
+          "serverFigure": true,
+          "serverTable": true,
+          "serverSvg": true,
+          "serverStyleAttributes": "0",
+          "keyboardStops": "0",
+          "ok": true
+        }
+      },
+      "chunks": 8,
+      "markers": [],
+      "missing": [],
+      "unexpected": [],
+      "charts": {
+        "modules": ["_island/chart-interaction.client"],
+        "chunks": [
+          {
+            "url": "/_next/static/chunks/0lmddbs3k4dge.js",
+            "bytes": 2366,
+            "gzip": 1056
+          }
+        ]
+      },
+      "axe": [],
+      "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
+      "js": {
+        "files": 8,
+        "bytes": 571342,
+        "gzip": 175869
+      },
+      "failures": []
+    },
+    "/chart-third-party": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "chart-frame chart-frame-body chart-frame-caption chart-frame-legend chart-frame-plot chart-frame-table legend legend-item",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "chart": {
+          "serverFigure": true,
+          "serverTable": true,
+          "serverSvg": true,
+          "serverStyleAttributes": "0",
+          "keyboardStops": "0",
+          "ok": true
+        }
+      },
+      "chunks": 8,
+      "markers": [],
+      "missing": [],
+      "unexpected": [],
+      "charts": {
+        "modules": [],
+        "chunks": []
+      },
+      "axe": [],
+      "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
+      "js": {
+        "files": 8,
+        "bytes": 569404,
+        "gzip": 175161
       },
       "failures": []
     }

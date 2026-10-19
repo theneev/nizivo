@@ -1,5 +1,5 @@
-// Packs @nizivo/tokens, @nizivo/react and @nizivo/icons and unpacks each tarball into
-// <fixture>/.packed/{tokens,react,icons}
+// Packs @nizivo/tokens, @nizivo/react, @nizivo/icons and @nizivo/charts and unpacks each tarball
+// into <fixture>/.packed/{tokens,react,icons,charts}
 // (ARCHITECTURE.md §18.1: fixtures install packed tarballs, never workspace links). A fixture depends
 // on those folders with `file:`, which pnpm copies into its store: the files are exactly the
 // tarball's, and the fixture's lockfile stays the same across library builds (a tarball's integrity
@@ -14,6 +14,10 @@
 // criterion 2). The marker map is written to <fixture>/.packed/markers.json.
 // Icon modules have no directive, so they get their own markers (`nzim[icons/calendar]`), in
 // <fixture>/.packed/icon-markers.json: spec.ts checks that a page ships exactly the icons it imports.
+// @nizivo/charts is private until v0.2 (it is packed here, never published from here); its 'use
+// client' modules (the ChartInteraction island) get `nzcm[...]` markers in
+// <fixture>/.packed/chart-markers.json, so spec.ts can check that a server chart ships only the
+// island and a third-party child inside ChartFrame ships no charts module at all.
 //
 // `pack` and `unpack` are also the pack step of the release checks (packages/tooling/release), which
 // lint the tarballs themselves and never plant markers.
@@ -69,15 +73,23 @@ export function unpack(tarball: string, to: string): string {
   return to;
 }
 
+/** `nzcm[_island/chart-interaction.client]`: a @nizivo/charts client module. */
+export function chartMarkerFor(distPath: string): string {
+  return `nzcm[${distPath.replace(/^dist\//, '').replace(/\.js$/, '')}]`;
+}
+
 /** Plants the markers in an unpacked package; returns { marker: dist path }. */
-export function plantMarkers(packageDir: string): Record<string, string> {
+export function plantMarkers(
+  packageDir: string,
+  markerOf: (distPath: string) => string = markerFor,
+): Record<string, string> {
   const markers: Record<string, string> = {};
   for (const file of files(join(packageDir, 'dist')).toSorted()) {
     if (!file.endsWith('.js')) continue;
     const source = readFileSync(file, 'utf8');
     if (!source.startsWith(DIRECTIVE)) continue;
     const distPath = relative(packageDir, file).split(sep).join('/');
-    const marker = markerFor(distPath);
+    const marker = markerOf(distPath);
     const plant = `globalThis.__NZ_FIXTURE_MARKERS__ = [...(globalThis.__NZ_FIXTURE_MARKERS__ ?? []), ${JSON.stringify(marker)}];\n`;
     writeFileSync(file, source + plant);
     markers[marker] = distPath;
@@ -121,6 +133,13 @@ export function packInto(fixtureDir: string, options: { build: boolean }): Recor
   if (Object.keys(icons).length === 0)
     throw new Error('no icon module found in @nizivo/icons dist');
   writeFileSync(join(packed, 'icon-markers.json'), `${JSON.stringify(icons, null, 2)}\n`);
+  const charts = plantMarkers(
+    unpack(pack('packages/charts', stage), join(packed, 'charts')),
+    chartMarkerFor,
+  );
+  if (Object.keys(charts).length === 0)
+    throw new Error('no "use client" module in @nizivo/charts dist');
+  writeFileSync(join(packed, 'chart-markers.json'), `${JSON.stringify(charts, null, 2)}\n`);
 
   rmSync(stage, { recursive: true, force: true });
   return markers;
@@ -133,6 +152,6 @@ if (import.meta.main) {
   const fixtureDir = join(REPO_ROOT, 'fixtures', values.fixture);
   const markers = packInto(fixtureDir, { build: values['no-build'] !== true });
   console.log(
-    `packed fixtures/${values.fixture}/.packed/{tokens,react,icons} (${Object.keys(markers).length} client modules marked)`,
+    `packed fixtures/${values.fixture}/.packed/{tokens,react,icons,charts} (${Object.keys(markers).length} client modules marked)`,
   );
 }
