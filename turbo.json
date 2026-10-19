@@ -46,7 +46,12 @@
         "$TURBO_ROOT$/packages/react/package.json",
         "$TURBO_ROOT$/packages/tokens/package.json",
         "$TURBO_ROOT$/packages/icons/package.json",
+        "$TURBO_ROOT$/packages/charts/package.json",
         "$TURBO_ROOT$/packages/react/src/**/*.client.tsx",
+        "$TURBO_ROOT$/packages/charts/src/**/*.client.tsx",
+        "$TURBO_ROOT$/packages/charts/src/_shared/**",
+        "$TURBO_ROOT$/packages/react/src/contracts/**",
+        "$TURBO_ROOT$/packages/react/src/_internal/cx.ts",
         "$TURBO_ROOT$/fixtures/runner/pack.ts"
       ],
       "outputs": []
@@ -89,6 +94,21 @@
       ],
       "outputs": []
     },
+    "@nizivo/charts#build": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "!**/*.test.ts",
+        "!**/*.test.tsx",
+        "!**/*.example.tsx",
+        "!test/**",
+        "!README.md",
+        "!W*-RESULTS.md",
+        "$TURBO_ROOT$/packages/react/scripts/css/**",
+        "$TURBO_ROOT$/packages/tooling/stylelint-config/**"
+      ],
+      "outputs": ["dist/**"]
+    },
     "@nizivo/docs#build": {
       "dependsOn": ["^build"],
       "inputs": [
@@ -106,7 +126,11 @@
         "$TURBO_ROOT$/docs/figma/11-w2-server-safe-components.md",
         "$TURBO_ROOT$/docs/figma/12-w3-forms.md",
         "$TURBO_ROOT$/docs/figma/13-w4-menu-tabs.md",
-        "$TURBO_ROOT$/fixtures/floor-lane/RESULTS.md"
+        "$TURBO_ROOT$/fixtures/floor-lane/RESULTS.md",
+        "$TURBO_ROOT$/packages/charts/package.json",
+        "$TURBO_ROOT$/packages/charts/src/index.ts",
+        "$TURBO_ROOT$/packages/charts/src/**/*.example.tsx",
+        "$TURBO_ROOT$/packages/charts/src/**/*.tsx"
       ],
       "outputs": ["out/**"]
     },

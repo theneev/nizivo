@@ -297,8 +297,20 @@
     {
       "name": "data-x-direction",
       "values": ["ltr", "rtl", "auto"],
-      "on": "chart plot",
+      "on": "ChartFrame root (the figure)",
       "meaning": "The chart's xDirection prop: axes do not mirror by default (ltr); rtl and auto are opt-in (§14.1)"
+    },
+    {
+      "name": "data-series",
+      "values": ["current", "previous", "cat-1", "cat-2", "cat-3", "other"],
+      "on": "chart marks (lines, areas, bars, arcs, dots) and legend marks",
+      "meaning": "The series' colour role, shared by a mark and its legend swatch: current is chart/primary, previous the dashed chart/neutral comparison, cat-1 to cat-3 the categorical colours (never cycled), other the folded remainder (§14.1)"
+    },
+    {
+      "name": "data-trend",
+      "values": ["up", "down", "flat"],
+      "on": "Sparkline root; ChartTooltip delta",
+      "meaning": "The direction of a change. On Sparkline, derived from the data (last against first); on ChartTooltip, the caller's delta.trend (AreaChart derives it from the change). Sparkline's down draws in chart/neutral, not chart/negative (Figma 03 §4.3)"
     },
     {
       "name": "data-focus-inset",

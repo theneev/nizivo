@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { graph, isClient, rekey, resolve, specifiers } from '../helpers/graph';
+import { graph, isClient, join, rekey, resolve, specifiers } from '../helpers/graph';
 
 const SRC = rekey(
   import.meta.glob('../../src/**/*.{ts,tsx,json}', {
@@ -68,5 +68,43 @@ describe("'use client' placement (ARCHITECTURE.md §8.2, §9.2)", () => {
           .map((m) => `${file} → ${m}`);
       });
     expect(leaks).toEqual([]);
+  });
+});
+
+/** Relative specifiers that resolve outside src/, as `file → specifier` (none may). */
+function escapes(sources: Map<string, string>): string[] {
+  return [...sources].flatMap(([file, text]) =>
+    specifiers(text)
+      .filter((s) => s.startsWith('.'))
+      .filter((s) => !join(file.slice(0, file.lastIndexOf('/')), s).startsWith('src/'))
+      .map((s) => `${file} → ${s}`),
+  );
+}
+
+describe('heavy modules stay out of core (ARCHITECTURE.md §4.1 L6, seam ledger K8)', () => {
+  const MANIFEST = Object.values(
+    import.meta.glob('../../package.json', { query: '?raw', import: 'default', eager: true }),
+  )[0];
+
+  test('no source or example imports @nizivo/charts: core reaches charts only through slots', () => {
+    const all = [...SRC.keys()].filter((file) => /\.tsx?$/.test(file));
+    const offenders = all.flatMap((file) =>
+      specifiers(SRC.get(file) ?? '')
+        .filter((s) => s === '@nizivo/charts' || s.startsWith('@nizivo/charts/'))
+        .map((s) => `${file} → ${s}`),
+    );
+    expect(all.length).toBeGreaterThan(100);
+    expect(offenders).toEqual([]);
+  });
+
+  test('no relative import leaves src/ (a path into ../charts/src would bundle charts code)', () => {
+    expect(escapes(SRC)).toEqual([]);
+    const probe = new Map([['src/button/probe.ts', "import { x } from '../../../charts/src/x';"]]);
+    expect(escapes(probe)).toEqual(['src/button/probe.ts → ../../../charts/src/x']);
+  });
+
+  test('package.json declares no @nizivo/charts dependency of any kind', () => {
+    expect(MANIFEST).toContain('"@nizivo/tokens"');
+    expect(MANIFEST).not.toContain('"@nizivo/charts"');
   });
 });

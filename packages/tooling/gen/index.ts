@@ -1,7 +1,8 @@
 /**
  * `nz gen [--check] [--root <dir>]`: derives barrels, `engine.ts`, `*.parts.ts`, the @nizivo/react
  * exports map, design/component-map.json and styles/base.css from each `component.json`
- * (ARCHITECTURE.md §6, §8.5).
+ * (ARCHITECTURE.md §6, §8.5), and copies core's render/merge-props helpers into
+ * packages/charts/src/_shared (vendor.ts; §14.1).
  * `--check` writes nothing and exits 1 when any file would change (the CI drift check).
  */
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
@@ -10,6 +11,7 @@ import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
 import { generateBaseCss } from './base-css.ts';
 import { generate, type GenResult } from './generate.ts';
+import { generateVendored } from './vendor.ts';
 
 const REPO_ROOT = fileURLToPath(new URL('../../../', import.meta.url));
 const USAGE = 'Usage: nz gen [--check] [--root <repo root>]';
@@ -32,6 +34,9 @@ export function gen(args: string[]): number {
     if (result.errors.length === 0) {
       const base = generateBaseCss(root);
       result.files.set(base.file, base.content);
+      const vendored = generateVendored(root);
+      result.errors.push(...vendored.errors);
+      for (const [file, content] of vendored.files) result.files.set(file, content);
     }
   } catch (error) {
     console.error(`nz gen: ${error instanceof Error ? error.message : String(error)}`);

@@ -1,0 +1,298 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* ChartFrame (ARCHITECTURE.md §14.1, §10.8) and the base every chart shares. Charts need no
+   @nizivo/react CSS: the focus outline and the visually-hidden rule below are charts' own, scoped
+   to .nz-chart-* (§5.2), and tokens come from either route (tokens.css or react's styles.css). */
+@layer nz.components {
+  /* A chart has no intrinsic width: it fills its container, flex and grid items included. */
+  .nz-chart-frame {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-3);
+    inline-size: 100%;
+    margin: 0;
+    min-inline-size: 0;
+    color: var(--nz-text-primary);
+    font: var(--nz-font-body-m);
+  }
+
+  .nz-chart-frame-caption {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-1);
+  }
+
+  .nz-chart-frame-title {
+    font: var(--nz-font-label-m-strong);
+  }
+
+  .nz-chart-frame-summary {
+    color: var(--nz-text-secondary);
+  }
+
+  /* The plot with its tick labels. The aspect ratio is the body's, so the plot's height does not
+     depend on the width of the y labels, and the box is the same in all four statuses (§16.5). */
+  .nz-chart-frame-body {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto;
+    aspect-ratio: var(--nz-chart-frame-aspect, 18 / 7); /* Figma 03's area chart, 720 × 280 */
+    padding-block-start: var(--_nz-chart-frame-half-line);
+    --_nz-chart-frame-line: calc(
+      var(--nz-font-body-m-font-size) * var(--nz-font-body-m-line-height)
+    );
+    --_nz-chart-frame-half-line: calc(var(--_nz-chart-frame-line) / 2);
+  }
+
+  .nz-chart-frame-plot {
+    position: relative;
+    grid-column: 2;
+    grid-row: 1;
+    min-inline-size: 0;
+    min-block-size: 0;
+    /* time and value axes do not mirror by default (xDirection="ltr", §14.1) */
+    direction: ltr;
+  }
+
+  /* axes="none": the child fills the body */
+  .nz-chart-frame-plot:only-child {
+    grid-column: 1 / -1;
+    grid-row: 1 / -1;
+  }
+
+  .nz-chart-frame-y-ticks,
+  .nz-chart-frame-x-ticks {
+    display: grid;
+    color: var(--nz-text-tertiary);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  /* Figma: no axis line, labels right-aligned in a fixed 44 px gutter (fixed, so the plot keeps
+     its width while the labels are absent: loading, empty, error) */
+  .nz-chart-frame-y-ticks {
+    grid-column: 1;
+    grid-row: 1;
+    grid-auto-rows: minmax(0, 1fr);
+    inline-size: var(--nz-chart-frame-gutter, 2.75rem);
+    padding-inline-end: var(--nz-space-2);
+  }
+
+  .nz-chart-frame-x-ticks {
+    grid-column: 2;
+    grid-row: 2;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+    min-block-size: var(--_nz-chart-frame-x-row);
+    padding-block-start: var(--nz-space-2);
+    direction: ltr;
+    --_nz-chart-frame-x-row: calc(
+      var(--nz-font-body-m-font-size) * var(--nz-font-body-m-line-height) + var(--nz-space-2)
+    );
+  }
+
+  .nz-chart-frame[data-x-direction='rtl'] :is(.nz-chart-frame-plot, .nz-chart-frame-x-ticks) {
+    direction: rtl;
+  }
+
+  .nz-chart-frame[data-x-direction='auto'] :is(.nz-chart-frame-plot, .nz-chart-frame-x-ticks) {
+    direction: inherit;
+  }
+
+  /* One track per position. A tick is a zero-size flex box on a track edge (or in a band's
+     centre) whose text overflows evenly around it, so no label carries a position of its own. */
+  .nz-chart-frame-cell {
+    display: flex;
+    justify-content: space-between;
+    min-inline-size: 0;
+  }
+
+  .nz-chart-frame-y-ticks > .nz-chart-frame-cell {
+    flex-direction: column;
+  }
+
+  .nz-chart-frame-tick {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    inline-size: 0;
+  }
+
+  .nz-chart-frame-y-ticks .nz-chart-frame-tick {
+    justify-content: flex-end;
+    inline-size: auto;
+    block-size: 0;
+  }
+
+  /* the first and last x labels are clamped inward (Figma 03) */
+  .nz-chart-frame-x-ticks:not(.nz-chart-frame-x-ticks-band)
+    > .nz-chart-frame-cell:first-child
+    > .nz-chart-frame-tick:first-child {
+    justify-content: flex-start;
+  }
+
+  .nz-chart-frame-x-ticks:not(.nz-chart-frame-x-ticks-band)
+    > .nz-chart-frame-cell:last-child
+    > .nz-chart-frame-tick:last-child {
+    justify-content: flex-end;
+  }
+
+  .nz-chart-frame-x-ticks-band > .nz-chart-frame-cell {
+    justify-content: center;
+  }
+
+  .nz-chart-frame-skeleton {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--nz-radius-md);
+    background: var(--nz-bg-subtle);
+  }
+
+  .nz-chart-frame-message {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    margin: 0;
+    color: var(--nz-text-secondary);
+    text-align: center;
+  }
+
+  .nz-chart-frame-details-summary {
+    inline-size: fit-content;
+    border-radius: var(--nz-radius-sm);
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-label-m);
+    cursor: pointer;
+  }
+
+  .nz-chart-frame-details[data-disabled] > .nz-chart-frame-details-summary {
+    color: var(--nz-text-disabled);
+    cursor: default;
+  }
+
+  .nz-chart-frame-table {
+    border-collapse: collapse;
+    margin-block-start: var(--nz-space-2);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .nz-chart-frame-table :is(th, td) {
+    padding-block: var(--nz-space-1);
+    padding-inline: var(--nz-space-2);
+    border-block-end: var(--nz-border-width-default) solid var(--nz-border-subtle);
+    text-align: start;
+  }
+
+  /* The shared mark base of every Nizivo renderer: a percent-space SVG that fills the plot, with
+     non-scaling strokes (verified in Chromium, Firefox and WebKit, R14) and a clip-path reveal
+     that is 0 ms under Reduced motion (--nz-duration-chart-draw). */
+  .nz-chart-svg {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    overflow: visible;
+    animation: nz-chart-reveal var(--nz-duration-chart-draw) var(--nz-easing-standard) both;
+  }
+
+  .nz-chart-frame[data-x-direction='rtl'] .nz-chart-svg {
+    scale: -1 1;
+  }
+
+  .nz-chart-grid {
+    stroke: var(--nz-chart-grid);
+    stroke-width: 1px;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .nz-chart-baseline {
+    stroke: var(--nz-border-default);
+    stroke-width: 1px;
+    vector-effect: non-scaling-stroke;
+  }
+
+  /* Lines and areas, shared by AreaChart and Sparkline. The comparison is dashed chart/neutral,
+     never a second hue, and decorative: the data table carries its values (§14.1). */
+  .nz-chart-line {
+    fill: none;
+    stroke: var(--nz-chart-primary);
+    stroke-width: 2px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .nz-chart-line[data-series='previous'] {
+    stroke: var(--nz-chart-neutral);
+    stroke-dasharray: 5 4;
+  }
+
+  .nz-chart-area {
+    fill: var(--nz-chart-primary);
+    fill-opacity: 0.1;
+    stroke: none;
+  }
+
+  /* The sweep is outset on the three edges it does not move, by more than an end dot and its halo
+     (6 px): it ends on clip-path, not none (fill-mode both), so an inset(0) end would keep cutting
+     the dot and the half of a stroke that lies past the plot's edge (test/browser/marks.spec.tsx). */
+  @keyframes nz-chart-reveal {
+    from {
+      clip-path: inset(-0.75rem 100% -0.75rem -0.75rem);
+    }
+
+    to {
+      clip-path: inset(-0.75rem);
+    }
+  }
+
+  /* Forced colours (W10 default, D-ax): SVG fill and stroke are forced too, which would paint every
+     mark one colour, so the shared marks keep system colours of their own: the current series
+     CanvasText, the dashed comparison GrayText (the dash still tells them apart), the grid
+     GrayText. The same mapping as BarChart's bars and the legend's marks. */
+  @media (forced-colors: active) {
+    .nz-chart-svg {
+      forced-color-adjust: none;
+    }
+
+    .nz-chart-svg .nz-chart-grid {
+      stroke: GrayText;
+    }
+
+    .nz-chart-svg .nz-chart-baseline {
+      stroke: CanvasText;
+    }
+
+    .nz-chart-svg .nz-chart-line {
+      stroke: CanvasText;
+    }
+
+    .nz-chart-svg .nz-chart-line[data-series='previous'] {
+      stroke: GrayText;
+    }
+
+    .nz-chart-svg .nz-chart-area {
+      fill: CanvasText;
+    }
+  }
+
+  /* The focus indicator of anything focusable in a chart or a legend (core's is in @nizivo/react's
+     nz.base, which charts do not need, §8.5) */
+  :where(.nz-chart-frame, .nz-legend) :where(a, button, summary, [tabindex]):focus-visible {
+    outline: var(--nz-border-width-focus) solid var(--nz-border-focus);
+    outline-offset: 2px;
+  }
+
+  .nz-chart-visually-hidden {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}

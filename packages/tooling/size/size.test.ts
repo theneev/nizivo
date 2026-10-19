@@ -1,5 +1,5 @@
 // The size budgets' bookkeeping (ARCHITECTURE.md §17): the limit rule, and that budgets.json, the
-// checks and the three packages' public exports agree. Reads package.json and src/ only, so it runs
+// checks and the four packages' public exports agree. Reads package.json and src/ only, so it runs
 // without a build; the sizes themselves are `pnpm --filter @nizivo/react size`.
 import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -7,13 +7,14 @@ import { join } from 'node:path';
 import { afterAll, describe, expect, test } from 'vitest';
 import {
   BUDGETS,
+  limitOf,
   ownCodeOnly,
   sizeEntries,
   sizeLimitChecks,
   uncoveredExports,
   WILDCARD_REPRESENTATIVES,
 } from './checks.ts';
-import { limitBytes, limitKiB, limitString, PLAN_LIMITS_KIB } from './method.ts';
+import { CHART_TARGETS_KIB, limitBytes, limitKiB, limitString, PLAN_LIMITS_KIB } from './method.ts';
 import { engineImports, layer } from './seam/seam.ts';
 
 describe('limitKiB: measured + 10%, rounded up', () => {
@@ -50,7 +51,7 @@ describe('budgets.json', () => {
   const entries = sizeEntries();
   const names = entries.map((e) => e.name);
 
-  test('every public export of react, tokens and icons is measured', () => {
+  test('every public export of react, tokens, icons and charts is measured', () => {
     expect(uncoveredExports(entries)).toEqual([]);
   });
 
@@ -60,8 +61,8 @@ describe('budgets.json', () => {
     }
   });
 
-  test('every entry has a budget and every budget an entry', () => {
-    expect(names.filter((name) => BUDGETS[name] === undefined)).toEqual([]);
+  test('every entry has a budget (or a charts target) and every budget an entry', () => {
+    expect(names.filter((name) => limitOf(name) === undefined)).toEqual([]);
     expect(Object.keys(BUDGETS).filter((name) => !names.includes(name))).toEqual([]);
     expect(new Set(names).size).toBe(names.length);
   });
@@ -71,6 +72,27 @@ describe('budgets.json', () => {
       expect(names).toContain(name);
       expect(BUDGETS[name]?.limitKiB).toBeLessThanOrEqual(plan);
     }
+  });
+
+  test('the charts targets: @nizivo/charts names only, never below a recorded budget', () => {
+    expect(
+      Object.keys(CHART_TARGETS_KIB).filter((n) => !/^@nizivo\/charts( |\/|$)/.test(n)),
+    ).toEqual([]);
+    for (const [name, target] of Object.entries(CHART_TARGETS_KIB)) {
+      expect(BUDGETS[name]?.limitKiB ?? target).toBeLessThanOrEqual(target);
+    }
+    // §17.2's figures, as the plan writes them
+    expect(CHART_TARGETS_KIB['@nizivo/charts/area-chart']).toBe(3.6);
+    expect(CHART_TARGETS_KIB['@nizivo/charts own: _island/chart-interaction.client']).toBe(0.8);
+    expect(CHART_TARGETS_KIB['@nizivo/charts/donut-chart']).toBe(3.2);
+    expect(CHART_TARGETS_KIB['@nizivo/charts/sparkline']).toBe(2);
+    expect(CHART_TARGETS_KIB['@nizivo/charts']).toBe(12);
+  });
+
+  test('a charts entry is checked from its export on, at its target until measured', () => {
+    const chart = sizeEntries().filter((e) => e.pkg === 'charts');
+    expect(chart.map((e) => e.name)).toContain('@nizivo/charts/chart-frame');
+    for (const e of chart) expect(limitOf(e.name)).toBeDefined();
   });
 
   test('every recorded measurement is within its limit', () => {

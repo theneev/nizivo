@@ -1,0 +1,91 @@
+{
+  "name": "@nizivo/charts",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Nizivo charts: server-first SVG charts with one small interaction island, themed by @nizivo/tokens",
+  "keywords": [
+    "charts",
+    "design-system",
+    "nizivo",
+    "react",
+    "rsc",
+    "svg"
+  ],
+  "homepage": "https://nizivo.neevtechnologies.in",
+  "bugs": "https://github.com/theneev/nizivo/issues",
+  "license": "Apache-2.0",
+  "author": "Neev Technologies",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theneev/nizivo.git",
+    "directory": "packages/charts"
+  },
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./chart-frame": {
+      "types": "./dist/chart-frame/index.d.ts",
+      "default": "./dist/chart-frame/index.js"
+    },
+    "./legend": {
+      "types": "./dist/legend/index.d.ts",
+      "default": "./dist/legend/index.js"
+    },
+    "./styles.css": "./dist/styles.css",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "tsdown && node scripts/build-css.ts",
+    "typecheck": "tsc --noEmit -p . && tsc --noEmit -p test && tsc --noEmit -p scripts",
+    "test": "vitest run --fsModuleCachePath node_modules/.vitest-cache",
+    "test:browser": "vitest run --config test/browser/vitest.config.ts",
+    "test:visual": "node ../react/scripts/visual/run.ts --package charts",
+    "lint": "stylelint \"src/**/*.css\" --allow-empty-input"
+  },
+  "dependencies": {
+    "@nizivo/tokens": "workspace:*",
+    "d3-array": "catalog:",
+    "d3-shape": "catalog:"
+  },
+  "devDependencies": {
+    "@nizivo/stylelint-config": "workspace:*",
+    "@nizivo/tsconfig": "workspace:*",
+    "@nizivo/tsdown-preset": "workspace:*",
+    "@types/d3-array": "catalog:",
+    "@types/d3-shape": "catalog:",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitest/browser-playwright": "catalog:",
+    "playwright": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "stylelint": "catalog:",
+    "tsdown": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:",
+    "vitest-browser-react": "catalog:"
+  },
+  "peerDependencies": {
+    "@types/react": "^19.2.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    }
+  },
+  "engines": {
+    "node": ">=22.12"
+  }
+}

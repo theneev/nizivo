@@ -13,6 +13,7 @@
     "smoke": "node scripts/smoke.ts"
   },
   "dependencies": {
+    "@nizivo/charts": "workspace:*",
     "@nizivo/icons": "workspace:*",
     "@nizivo/react": "workspace:*",
     "@nizivo/tokens": "workspace:*",

@@ -11,7 +11,7 @@ export const REACT_DIR = join(PACKAGES_DIR, 'react');
 export const SIZE_DIR = import.meta.dirname;
 
 /** The packages whose public entries carry budgets, in report order. */
-export const PACKAGE_NAMES = ['react', 'tokens', 'icons'] as const;
+export const PACKAGE_NAMES = ['react', 'tokens', 'icons', 'charts'] as const;
 export type PackageName = (typeof PACKAGE_NAMES)[number];
 
 /**
@@ -63,6 +63,32 @@ export const PLAN_LIMITS_KIB: Readonly<Record<string, number>> = {
   '@nizivo/react/menu': 57,
   '@nizivo/react/select': 66,
   '@nizivo/react dashboard set': 76,
+};
+
+/**
+ * The @nizivo/charts limits (KiB) while v0.2 builds it: §17.2's figures, plus scaffold defaults
+ * where §17.2 has none. An entry named here needs no budgets.json record: its limit is this figure
+ * until `measure.ts --write` records measured + 10%, which is then never above it (as with
+ * PLAN_LIMITS_KIB). Unlike PLAN_LIMITS_KIB, a name may be a part that is not built yet: its check
+ * starts when its `exports` entry (or its `*.client.tsx` module) does.
+ */
+export const CHART_TARGETS_KIB: Readonly<Record<string, number>> = {
+  // §17.2: AreaChart 3.6, the ChartInteraction island 0.8, Donut 3.2, Sparkline ≤ 2, and all charts
+  // together ≤ 12, which is the barrel (every chart and the core helpers in one bundle).
+  '@nizivo/charts/area-chart': 3.6,
+  '@nizivo/charts own: _island/chart-interaction.client': 0.8,
+  '@nizivo/charts/donut-chart': 3.2,
+  '@nizivo/charts/sparkline': 2,
+  '@nizivo/charts': 12,
+  // No §17.2 figure (scaffold defaults, 2026-10-19, for the maintainer to confirm): BarChart as
+  // AreaChart; Legend and ChartTooltip at §17.2's "≤ 1 KB each" for server-safe parts; ChartFrame at
+  // its scaffold measurement + 10% (1,799 B, the vendored render/merge-props helpers included); the
+  // one stylesheet at about 1 KB per part (1,555 B for ChartFrame and Legend).
+  '@nizivo/charts/bar-chart': 3.6,
+  '@nizivo/charts/chart-tooltip': 1,
+  '@nizivo/charts/chart-frame': 2,
+  '@nizivo/charts/legend': 1,
+  '@nizivo/charts/styles.css': 5,
 };
 
 /** A KiB figure as size-limit parses it (`KiB` is 1,024; `KB` would be 1,000). */

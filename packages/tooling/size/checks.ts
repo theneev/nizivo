@@ -1,8 +1,9 @@
-// The size budgets of every public entry of @nizivo/react, @nizivo/tokens and @nizivo/icons, as
-// size-limit 14.2 checks (ARCHITECTURE.md §17, §18.1 "Performance"). packages/react/.size-limit.ts
-// exports sizeLimitChecks(); `pnpm --filter @nizivo/react size` runs it against the built dist/ of all
-// three packages (size-limit loads its plugins from the package it runs in, and only @nizivo/react
-// has them). Budgets live in budgets.json, written by measure.ts; the method is in method.ts.
+// The size budgets of every public entry of @nizivo/react, @nizivo/tokens, @nizivo/icons and
+// @nizivo/charts, as size-limit 14.2 checks (ARCHITECTURE.md §17, §18.1 "Performance").
+// packages/react/.size-limit.ts exports sizeLimitChecks(); `pnpm --filter @nizivo/react size` runs it
+// against the built dist/ of every package (size-limit loads its plugins from the package it runs
+// in, and only @nizivo/react has them). Budgets live in budgets.json, written by measure.ts; the
+// method is in method.ts. A charts entry without a budget is limited by its CHART_TARGETS_KIB figure.
 //
 // Families (SIZES.md explains each):
 //   entry      a public JS subpath, bundled with what it imports (React Aria included)
@@ -11,10 +12,11 @@
 //              the component.json `measuredKB` method)
 //   seam       the shared adapter helpers of seam ledger K6 and K7, React Aria external
 //   file       a CSS or JSON entry, gzipped as published (no bundler)
-import { readdirSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
 import budgets from './budgets.json' with { type: 'json' };
 import {
+  CHART_TARGETS_KIB,
   ENGINE,
   ESBUILD_METHOD,
   limitString,
@@ -74,9 +76,10 @@ export function publicExports(pkg: PackageName): Array<{ key: string; file: stri
     });
 }
 
-/** Every `*.client.tsx` module under packages/react/src, as its dist path relative to dist/. */
-export function clientModules(): string[] {
-  const src = join(PACKAGES_DIR, 'react', 'src');
+/** Every `*.client.tsx` module under packages/<pkg>/src, as its dist path relative to dist/. */
+export function clientModules(pkg: 'react' | 'charts' = 'react'): string[] {
+  const src = join(PACKAGES_DIR, pkg, 'src');
+  if (!existsSync(src)) return [];
   return readdirSync(src, { recursive: true, withFileTypes: true })
     .filter((entry) => entry.isFile() && entry.name.endsWith('.client.tsx'))
     .map((entry) =>
@@ -147,6 +150,17 @@ export function sizeEntries(): SizeEntry[] {
           path: entry('seam-k7.js'),
         },
       );
+    }
+    if (pkg === 'charts') {
+      // The ChartInteraction island (§14.1, §17.2 ≤ 0.8 KB): own code, minified alone.
+      for (const module of clientModules('charts')) {
+        out.push({
+          name: `@nizivo/charts own: ${module}`,
+          pkg,
+          family: 'own',
+          path: join(dir, 'dist', `${module}.js`),
+        });
+      }
     }
     if (pkg === 'icons') {
       out.push(
@@ -243,7 +257,12 @@ export interface CheckOptions {
   brotli?: boolean;
 }
 
-/** The size-limit config. Throws when an entry has no budget or a budget names no entry. */
+/** The limit of an entry: its recorded budget, else its CHART_TARGETS_KIB figure. */
+export function limitOf(name: string): number | undefined {
+  return BUDGETS[name]?.limitKiB ?? CHART_TARGETS_KIB[name];
+}
+
+/** The size-limit config. Throws when an entry has no limit or a budget names no entry. */
 export function sizeLimitChecks({
   measure = false,
   brotli = false,
@@ -252,7 +271,7 @@ export function sizeLimitChecks({
   const limited = !measure && !brotli;
   if (limited) {
     const names = new Set(entries.map((e) => e.name));
-    const missing = entries.filter((e) => BUDGETS[e.name] === undefined).map((e) => e.name);
+    const missing = entries.filter((e) => limitOf(e.name) === undefined).map((e) => e.name);
     const stale = Object.keys(BUDGETS).filter((name) => !names.has(name));
     const uncovered = uncoveredExports(entries);
     if (missing.length > 0 || stale.length > 0 || uncovered.length > 0) {
@@ -269,8 +288,8 @@ export function sizeLimitChecks({
   return entries.map((e) => {
     const check: SizeLimitCheck = { name: e.name, path: e.path };
     if (!brotli) check.gzip = true;
-    const budget = BUDGETS[e.name];
-    if (limited && budget !== undefined) check.limit = limitString(budget.limitKiB);
+    const limit = limitOf(e.name);
+    if (limited && limit !== undefined) check.limit = limitString(limit);
     if (e.family === 'file') {
       check.disablePlugins = ['@size-limit/esbuild'];
       return check;

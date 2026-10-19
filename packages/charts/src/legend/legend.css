@@ -1,0 +1,128 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* Legend (Figma 03 "Chart Legend Item"): mark + label, and the donut's value and share columns.
+   The mark is drawn in currentColor, set from the series' colour role (data-series). */
+@layer nz.components {
+  .nz-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--nz-space-2) var(--nz-space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-body-m);
+  }
+
+  .nz-legend[data-orientation='vertical'] {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto auto;
+    column-gap: var(--nz-space-2);
+  }
+
+  .nz-legend-item {
+    display: flex;
+    align-items: center;
+    gap: var(--nz-space-2);
+  }
+
+  .nz-legend[data-orientation='vertical'] > .nz-legend-item {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: subgrid;
+  }
+
+  /* Figma 03 §4.1: a 14 px line swatch, 2 px thick (14 px is off the space scale) */
+  .nz-legend-mark {
+    flex: none;
+    inline-size: 0.875rem;
+    block-size: 2px;
+    border-radius: var(--nz-radius-full);
+    background: currentColor;
+  }
+
+  .nz-legend-mark[data-series='current'] {
+    color: var(--nz-chart-primary);
+  }
+
+  /* Figma's legend dash is 4,3: drawn as a gradient, so every engine draws the same two dashes (a
+     dashed border's pattern is the engine's own) */
+  .nz-legend-mark[data-series='previous'] {
+    background: repeating-linear-gradient(to right, currentColor 0 4px, transparent 4px 7px);
+    color: var(--nz-chart-neutral);
+  }
+
+  .nz-legend-mark:is(
+    [data-series='cat-1'],
+    [data-series='cat-2'],
+    [data-series='cat-3'],
+    [data-series='other']
+  ) {
+    inline-size: var(--nz-space-2);
+    block-size: var(--nz-space-2);
+  }
+
+  .nz-legend-mark[data-series='cat-1'] {
+    color: var(--nz-chart-cat-1);
+  }
+
+  .nz-legend-mark[data-series='cat-2'] {
+    color: var(--nz-chart-cat-2);
+  }
+
+  .nz-legend-mark[data-series='cat-3'] {
+    color: var(--nz-chart-cat-3);
+  }
+
+  .nz-legend-mark[data-series='other'] {
+    color: var(--nz-chart-neutral);
+  }
+
+  .nz-legend-value {
+    color: var(--nz-text-primary);
+    font: var(--nz-font-numeric-m);
+    text-align: end;
+  }
+
+  .nz-legend-share {
+    color: var(--nz-text-tertiary);
+    font: var(--nz-font-mono-m);
+    text-align: end;
+  }
+
+  /* Forced colours (D-ax): system colours that match the marks they name, with the series rules'
+     specificity so they win (a bare .nz-legend-mark lost to them). Lines: the current series
+     CanvasText, the comparison GrayText and dashed. Categories, as DonutChart's segments: cat-1
+     Highlight, cat-2 Canvas (hollow), cat-3 CanvasText, Other GrayText, each outlined. */
+  @media (forced-colors: active) {
+    .nz-legend-mark {
+      forced-color-adjust: none;
+    }
+
+    .nz-legend-mark:is([data-series='current'], [data-series='cat-3']) {
+      color: CanvasText;
+    }
+
+    .nz-legend-mark:is([data-series='previous'], [data-series='other']) {
+      color: GrayText;
+    }
+
+    .nz-legend-mark[data-series='cat-1'] {
+      color: Highlight;
+    }
+
+    .nz-legend-mark[data-series='cat-2'] {
+      color: Canvas;
+    }
+
+    .nz-legend-mark:is(
+      [data-series='cat-1'],
+      [data-series='cat-2'],
+      [data-series='cat-3'],
+      [data-series='other']
+    ) {
+      outline: 1px solid CanvasText;
+      outline-offset: -1px;
+    }
+  }
+}

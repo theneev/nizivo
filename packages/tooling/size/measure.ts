@@ -5,7 +5,8 @@
 //                                                    entries that have none, and SIZES.md's tables
 //   node packages/tooling/size/measure.ts --write --rebase
 //                                                    also reset every limit to measured + 10%
-// A limit never exceeds the entry's §17.1 plan limit (method.ts PLAN_LIMITS_KIB).
+// A limit never exceeds the entry's §17.1 plan limit (method.ts PLAN_LIMITS_KIB), nor a charts
+// entry's §17.2 target (CHART_TARGETS_KIB).
 //
 // Run after `pnpm build`. The gate is `pnpm --filter @nizivo/react size`, which reads budgets.json.
 // --write never raises an existing limit: that is --rebase, in a labelled PR (§17.3).
@@ -15,9 +16,11 @@ import { join } from 'node:path';
 import { parseArgs } from 'node:util';
 import { BUDGETS, sizeEntries, type Budget, type Family, type SizeEntry } from './checks.ts';
 import {
+  CHART_TARGETS_KIB,
   kib,
   limitBytes,
   limitKiB,
+  PACKAGE_NAMES,
   PLAN_LIMITS_KIB,
   REACT_DIR,
   REPO_ROOT,
@@ -86,7 +89,7 @@ export function tables(
   brotli: ReadonlyMap<string, number>,
 ): string {
   const out: string[] = [];
-  for (const pkg of ['react', 'tokens', 'icons'] as const) {
+  for (const pkg of PACKAGE_NAMES) {
     for (const family of FAMILIES) {
       const rows = entries.filter((e) => e.pkg === pkg && e.family === family);
       if (rows.length === 0) continue;
@@ -144,7 +147,7 @@ function main(): void {
     // size-limit subtracts an empty bundle's bytes, so an empty module reads below 0.
     const measured = Math.max(0, size);
     const recorded = BUDGETS[e.name];
-    const plan = PLAN_LIMITS_KIB[e.name];
+    const plan = PLAN_LIMITS_KIB[e.name] ?? CHART_TARGETS_KIB[e.name];
     const base =
       recorded === undefined || values.rebase === true ? limitKiB(measured) : recorded.limitKiB;
     // never above the plan's §17.1 limit, a recorded budget included

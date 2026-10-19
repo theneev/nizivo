@@ -117,7 +117,8 @@ const componentSets = new Map();
 
 /**
  * Every packages/react/src/<name>/component.json and src/unstable/<name>/component.json, read as
- * plain JSON (nz gen validates them): the component name, its slot prefixes and its variants.
+ * plain JSON (nz gen validates them): the component name, its slot prefixes and its variants. Then
+ * every @nizivo/charts part with a stylesheet (src/<name>/<name>.css), named by its folder.
  */
 export function loadComponents(root = REPO_ROOT) {
   const cached = componentSets.get(root);
@@ -146,6 +147,14 @@ export function loadComponents(root = REPO_ROOT) {
       prefixes: [...new Set([raw.name, ...exports.map(kebabCase)])],
       variants,
     });
+  }
+  // @nizivo/charts parts have no component.json (nz gen does not manage them): each
+  // src/<name>/<name>.css is a part whose hooks are --nz-<name>-*, with no variants (§14.1).
+  for (const dir of subdirs(join(root, 'packages', 'charts', 'src'))) {
+    const name = basename(dir);
+    if (!KEBAB.test(name) || !existsSync(join(dir, `${name}.css`)) || components.has(name))
+      continue;
+    components.set(name, { name, prefixes: [name], variants: {} });
   }
   componentSets.set(root, components);
   return components;

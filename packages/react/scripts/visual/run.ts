@@ -44,6 +44,11 @@
  * than that, so it fails the compare. --update uses the same rule, so it re-records exactly what
  * a compare would fail and a baseline never lags the CSS.
  *
+ * `--package charts` runs the same lane on @nizivo/charts (its `src/<part>/<part>.example.tsx`,
+ * through its built dist/ and dist/styles.css, with tokens.css and no @nizivo/react CSS: the
+ * charts-only route of §5.2), with baselines in packages/charts/test/visual. Charts parts have no
+ * component.json, so their shots are rest and focus (Tab stops) only; the harness is this lane's.
+ *
  * Run from packages/react after `pnpm build` (it reads dist/ and @nizivo/tokens' dist/). Baselines
  * hold one machine's rasterisation: manifest.json records the platform, Chromium and the font
  * build, and a compare on another refuses to run (the plan's pinned Docker image is the way to
@@ -71,11 +76,32 @@ import { build, type Rolldown } from 'tsdown';
 import { compare, decodePng, encodePng, solid, toRgb, type Image } from './png.ts';
 import type { Control, ExampleRef, Rect, VisualApi } from './protocol.ts';
 
-const PACKAGE = fileURLToPath(new URL('../../', import.meta.url));
-const REPO = join(PACKAGE, '..', '..');
+const { values: args } = parseArgs({
+  options: {
+    update: { type: 'boolean', default: false },
+    review: { type: 'boolean', default: false },
+    only: { type: 'string' },
+    package: { type: 'string', default: 'react' },
+    tolerance: { type: 'string', default: '2' },
+    threshold: { type: 'string' },
+    'max-diff-pixels': { type: 'string', default: '3' },
+    aa: { type: 'boolean', default: false },
+  },
+});
+/** The packages this lane shoots: their examples, built dist/ and baselines. */
+const TARGETS = ['react', 'charts'] as const;
+type Target = (typeof TARGETS)[number];
+const TARGET: Target | undefined = TARGETS.find((t) => t === args.package);
+if (TARGET === undefined) throw new Error(`--package must be one of ${TARGETS.join(', ')}`);
+
+const REACT = fileURLToPath(new URL('../../', import.meta.url));
+const REPO = join(REACT, '..', '..');
+const PACKAGE = join(REPO, 'packages', TARGET);
 const SRC = join(PACKAGE, 'src');
 const DIST = join(PACKAGE, 'dist');
 const TOKENS_CSS = join(REPO, 'packages', 'tokens', 'dist', 'tokens.css');
+/** The browser half: one harness for every package (it imports only React). */
+const HARNESS = join(REACT, 'test', 'visual', 'harness.tsx');
 const LANE = join(PACKAGE, 'test', 'visual');
 const BASELINES = join(LANE, 'baselines');
 const DIFFS = join(LANE, '.diff');
@@ -102,17 +128,6 @@ const WORKERS = Math.max(1, Math.min(4, Math.floor(availableParallelism() / 2)))
  */
 const TOOLTIP_WAIT = 1000;
 
-const { values: args } = parseArgs({
-  options: {
-    update: { type: 'boolean', default: false },
-    review: { type: 'boolean', default: false },
-    only: { type: 'string' },
-    tolerance: { type: 'string', default: '2' },
-    threshold: { type: 'string' },
-    'max-diff-pixels': { type: 'string', default: '3' },
-    aa: { type: 'boolean', default: false },
-  },
-});
 const tolerance = Number(args.tolerance);
 const threshold = args.threshold === undefined ? undefined : Number(args.threshold);
 const maxDiffPixels = Number(args['max-diff-pixels']);
@@ -146,7 +161,13 @@ function components(): Component[] {
   for (const name of readdirSync(SRC).toSorted()) {
     const manifest = join(SRC, name, 'component.json');
     const example = join(SRC, name, `${name}.example.tsx`);
-    if (!existsSync(manifest) || !existsSync(example)) continue;
+    if (!existsSync(example)) continue;
+    // a charts part has no manifest: no interactive slots of its own, no overlay
+    if (!existsSync(manifest)) {
+      if (TARGET === 'react') continue;
+      found.push({ name, example, interactive: [], overlay: false });
+      continue;
+    }
     const json: unknown = JSON.parse(readFileSync(manifest, 'utf8'));
     if (!isRecord(json)) throw new Error(`${rel(manifest)} is not an object`);
     const interactive = Array.isArray(json['interactive'])
@@ -158,18 +179,26 @@ function components(): Component[] {
   return found;
 }
 
-function requireBuilt(): string[] {
+/** The stylesheets the page links after tokens.css, as [URL path, file]. */
+function requireBuilt(): Array<[string, string]> {
   const css = join(DIST, 'css');
-  const missing = [TOKENS_CSS, join(css, 'base.css'), join(DIST, 'index.js')].filter(
-    (f) => !existsSync(f),
-  );
+  const needed =
+    TARGET === 'react'
+      ? [TOKENS_CSS, join(css, 'base.css'), join(DIST, 'index.js')]
+      : [TOKENS_CSS, join(DIST, 'styles.css'), join(DIST, 'index.js')];
+  const missing = needed.filter((f) => !existsSync(f));
   if (missing.length > 0) {
     throw new Error(`not built: ${missing.map(rel).join(', ')}. Run \`pnpm build\` first.`);
   }
+  // charts: its one sheet and no @nizivo/react CSS, the charts-only route (§5.2, §14.1)
+  if (TARGET === 'charts') return [['/css/styles.css', join(DIST, 'styles.css')]];
   const sheets = readdirSync(css).filter((f) => f.endsWith('.css'));
   // base.css first, as the docs and the CSS import rule order them; the layer statement on line 1
   // of every file makes the rest order-independent
-  return ['base.css', ...sheets.filter((f) => f !== 'base.css').toSorted()];
+  return ['base.css', ...sheets.filter((f) => f !== 'base.css').toSorted()].map((f) => [
+    `/css/${f}`,
+    join(css, f),
+  ]);
 }
 
 function fonts(): { sans: string; mono: string; version: string } {
@@ -224,7 +253,7 @@ function distImports(): Rolldown.Plugin {
 
 async function bundle(list: Component[], out: string): Promise<string> {
   const entry = join(out, 'entry.ts');
-  const lines = [`import { start } from ${JSON.stringify(join(LANE, 'harness.tsx'))};`];
+  const lines = [`import { start } from ${JSON.stringify(HARNESS)};`];
   list.forEach((c, i) => lines.push(`import * as m${i} from ${JSON.stringify(c.example)};`));
   const modules = list.map((c, i) => `${JSON.stringify(c.name)}: m${i}`).join(', ');
   const interactive = Object.fromEntries(list.map((c) => [c.name, c.interactive]));
@@ -262,8 +291,8 @@ async function bundle(list: Component[], out: string): Promise<string> {
 
 // --- server -------------------------------------------------------------------------------------
 
-function page(sheets: string[]): string {
-  const links = ['/tokens.css', ...sheets.map((s) => `/css/${s}`)]
+function page(sheets: ReadonlyArray<[string, string]>): string {
+  const links = ['/tokens.css', ...sheets.map(([href]) => href)]
     .map((href) => `<link rel="stylesheet" href="${href}">`)
     .join('\n');
   return `<!doctype html>
@@ -297,7 +326,7 @@ body { margin: 0; font: var(--nz-font-body-m); }
 
 function serve(
   js: string,
-  sheets: string[],
+  sheets: ReadonlyArray<[string, string]>,
   font: { sans: string; mono: string },
 ): Promise<Server> {
   const files = new Map<string, [string, string]>([
@@ -305,7 +334,7 @@ function serve(
     ['/fonts/geist-sans.woff2', [font.sans, 'font/woff2']],
     ['/fonts/geist-mono.woff2', [font.mono, 'font/woff2']],
   ]);
-  for (const s of sheets) files.set(`/css/${s}`, [join(DIST, 'css', s), 'text/css']);
+  for (const [href, file] of sheets) files.set(href, [file, 'text/css']);
   for (const f of readdirSync(js)) files.set(`/js/${f}`, [join(js, f), 'text/javascript']);
   const html = page(sheets);
   // ImageExample loads /media/*.jpg, files of the reader's app: a flat placeholder stands in
