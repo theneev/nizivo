@@ -1902,7 +1902,7 @@ export function AreaChart({ data, x, y, compare, title, summary, locale = 'en-US
 - Bars in `BarChart` are SVG `<rect>` elements with percentage attributes, not HTML with a `--v` style.
 - The draw-in uses `clip-path`, because `pathLength` combined with non-scaling strokes is UNVERIFIED.
 - **Renderer seam:** `<ChartFrame title summary status table={…} interaction="none"><RechartsArea …/></ChartFrame>` keeps Nizivo's caption, data table, legend and status around any third-party renderer. The caller supplies `table`; keyboard access to points is only claimed for Nizivo renderers ([§14.1](#141-charts-nizivocharts-v02)).
-- **WebKit `non-scaling-stroke` in percent space is UNVERIFIED** (r6 risk 2). It is the first task of v0.2.
+- **WebKit `non-scaling-stroke` in percent space** (r6 risk 2; the first task of v0.2): **VERIFIED 2026-10-19** in Chromium 156, Firefox 157 and WebKit 27.2 (Playwright), at DPR 1 and 2: in a `0 0 100 100` viewBox with `preserveAspectRatio="none"`, a 2 px non-scaling stroke measured exactly 2 device px (4 at DPR 2) for horizontal and vertical lines at 600×160, 300×300, 1200×120 and 160×600, after a resize from 300×300 to 900×150, under `scale: -1 1` and after a `clip-path` reveal; diagonal antialiased strokes matched 2 / cos θ within 6 % at three aspect ratios. So the pixel-space fallback is not needed. Not covered: real Safari, and the Safari 17.5 floor (Playwright's WebKit is current); the check becomes a browser spec in `@nizivo/charts`.
 
 ---
 
@@ -2127,7 +2127,7 @@ The O-tests come from gap report C §1.10 and run against each engine family's `
 - **Charts imports nothing from `@nizivo/react`.** It depends only on `@nizivo/tokens` (CSS variables) and vendors the ~40-line `render`/`mergeProps` helpers, which `nz gen` generates from core's and CI diffs. Its CSS carries its own focus outline and visually-hidden rule scoped to `.nz-chart-*`, so it never relies on `@nizivo/react`'s `nz.base`. A charts-only fixture (`tokens.css` + `charts/styles.css`, no react CSS) runs axe and focus-visible checks. Core reaches charts only through slots (`KpiTile chart={<Sparkline/>}`), so either package can be used without the other.
 - **Figma rules kept:** Donut folds to at most 3 categories plus "Other"; categorical colours `chart/cat-1..3` never cycle; the comparison series is dashed `chart/neutral` (decorative; the data table carries the values).
 - **RTL:** time and value axes do not mirror by default (`xDirection="ltr"`; `"rtl"` and `"auto"` are opt-in). Chart chrome follows `dir`.
-- **First v0.2 task:** a WebKit screenshot check of `non-scaling-stroke` in percent space (UNVERIFIED). The fallback is a pixel-space `viewBox` per container size.
+- **First v0.2 task:** a WebKit screenshot check of `non-scaling-stroke` in percent space. **Passed 2026-10-19** in Chromium, Firefox and WebKit (Playwright builds; real Safari and the 17.5 floor not covered), so the pixel-space `viewBox` fallback is not needed.
 - **v0.3:** Funnel and Heatmap (HTML/CSS). The heatmap needs solid sequential `chart/seq-1..5` colours from design.
 
 ### 14.2 Icons (`@nizivo/icons`)
@@ -2812,7 +2812,7 @@ The v0.1 exit requires at least one real sync merged end to end.
 
 ### 21.2 v0.2 — "Dashboard, shell and overlays" (≈ weeks 9–14)
 
-- **First task:** a WebKit `non-scaling-stroke` check for percent-space charts.
+- **First task:** a WebKit `non-scaling-stroke` check for percent-space charts. **Done 2026-10-19: passes** ([§10](#10-component-api-conventions-with-code), the chart notes).
 - **`@nizivo/charts`:** ChartFrame, AreaChart, BarChart, DonutChart, Sparkline, Legend, ChartTooltip.
 - **Dashboard:** Metric, NumberValue, KpiTile, TrendCard, RankedList, `CountUp` (`@nizivo/react/motion`).
 - **Overlays:** Toast + LiveAnnouncer (**gate: O-06**), Popover, Drawer/Sheet.
@@ -2885,7 +2885,7 @@ The v0.1 exit requires at least one real sync merged end to end.
 | R11 | **React Aria Tabs weight** (31.9 KB) on Tabs-only pages | Medium / low | `TabNav` for link tabs (0 KB); budgets; the hooks escape hatch | A budget failure |
 | R12 | **The a11y override layer becomes permanent debt** | Medium / medium | Expiry, redundancy and drift checks; the public deviations page; the release gate | Each expiry date |
 | R13 | **CSP:** React Aria's inline `VisuallyHidden` styles break under Profile B | High for Profile B users / medium | Profile A is the default; B is guaranteed for server-safe parts; per-release grep of engine inline styles | v0.3 fixtures |
-| R14 | **Percent-space SVG in Safari** (`non-scaling-stroke`), clip-path draw in RTL | Medium / medium | First v0.2 task; pixel-space fallback; `xDirection` default `ltr` | v0.2 week 1 |
+| R14 | **Percent-space SVG in Safari** (`non-scaling-stroke`), clip-path draw in RTL | Low / medium (was medium; the stroke check passed in WebKit 27.2 on 2026-10-19, also under `scale: -1 1` and after a clip-path reveal) | Pixel-space fallback kept in reserve; `xDirection` default `ltr`; real Safari and the 17.5 floor still to check | v0.2 week 1 |
 | R15 | **Locale-string weight** (+4.8 KB on the dashboard set; +13.4 KB for date pickers) without the optimise plugin | High / low | Budgets measured with all locales; per-framework plugin recipes | — |
 | R16 | **The Safari 17.5 floor sits above Next 16 and Tailwind 4 (16.4)** | Low / medium | Documented; a lower floor needs a new theme mechanism and ships as a major ([§4.2](#42-seam-ledger), [§21.5](#215-explicitly-deferred)) | A consumer asks |
 | R17 | **Spring parameter order is wrong** | Low / low | Golden test pins the interpretation; the maintainer accepted the order on 2026-10-14 (M12); a fix is a token patch | Design reports a different order |
