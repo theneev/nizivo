@@ -118,7 +118,7 @@ describe('the contrast matrix on the built tokens.css', () => {
     expect(report.errors).toEqual([]);
     expect(report.warnings).toEqual([]);
     const checked = report.results.filter((r) => r.threshold !== undefined);
-    expect(checked.length).toBe(76);
+    expect(checked.length).toBe(82);
     // Figma adopted the 14 overrides and 18 of the proposals on 2026-10-18; text/accent remains.
     expect(report.sources.overrides).toHaveLength(0);
     expect(report.sources.proposals.map((p) => p.id)).toEqual(['color.text.accent']);

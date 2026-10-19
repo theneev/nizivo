@@ -129,7 +129,7 @@ Runs in `pnpm build` after `tz build`, and in the tests. It fails on:
 1. **Contrast:** any pair in `contrast-pairs.json` below its threshold in light or dark, computed
    from the built `tokens.css` (WCAG 2.2 relative luminance, ported from
    `docs/research/phase2/scripts/contrast`). Text 4.5:1 at every size, 12 px included; non-text and
-   focus 3:1; decorative and disabled rows are reported only. 76 checked pairs pass today.
+   focus 3:1; decorative and disabled rows are reported only. 82 checked pairs pass today.
 2. **Drift:** an override's `figmaVariableId` no longer holds `figmaValueAtOverride` in Figma.
 3. **Redundancy:** Figma now has an override's value; a `contrast` override whose Figma value passes
    every pair it touches; a proposal whose `figmaVariable` or `figmaStyle` Figma now defines.

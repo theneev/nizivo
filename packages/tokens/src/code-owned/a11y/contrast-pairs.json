@@ -184,6 +184,24 @@
       "use": "ProgressBar, Meter and ProgressRing critical fill"
     },
     {
+      "fg": "chart-cat-1",
+      "on": ["panels"],
+      "role": "non-text",
+      "use": "@nizivo/charts DonutChart segment, legend and tooltip swatch, first category"
+    },
+    {
+      "fg": "chart-cat-2",
+      "on": ["panels"],
+      "role": "non-text",
+      "use": "@nizivo/charts DonutChart segment, legend and tooltip swatch, second category"
+    },
+    {
+      "fg": "chart-cat-3",
+      "on": ["panels"],
+      "role": "non-text",
+      "use": "@nizivo/charts DonutChart segment, legend and tooltip swatch, third category"
+    },
+    {
       "fg": "border-focus",
       "on": ["surfaces", "bg-brand-subtle", "status-subtle"],
       "role": "focus",
