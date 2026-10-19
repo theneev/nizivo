@@ -89,6 +89,12 @@ export const CHART_TARGETS_KIB: Readonly<Record<string, number>> = {
   '@nizivo/charts/chart-frame': 2,
   '@nizivo/charts/legend': 1,
   '@nizivo/charts/styles.css': 5,
+  // Interim ceilings, not §17.2 figures (2026-10-19, for the maintainer): AreaChart ships through
+  // the barrel while D-bc holds its subpath back (6,209 B against §17.2's 3.6), and the island's
+  // client graph (the island with ChartTooltip and cx) is what a page downloads, where §17.2's 0.8
+  // gates the island's own code. Both at measured + 10 %, so growth fails until a figure is decided.
+  '@nizivo/charts { AreaChart } from the barrel': 6.7,
+  '@nizivo/charts island with its imports': 1.2,
 };
 
 /** A KiB figure as size-limit parses it (`KiB` is 1,024; `KB` would be 1,000). */

@@ -1,0 +1,36 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* AreaChart (Figma 03 "Area Chart", 7275:13336). The grid, the baseline, the 10% wash, the 2 px
+   line and the dashed comparison are the shared marks in chart-frame.css; this sheet adds the
+   current value's end dot: 8 px with a 2 px bg/surface halo (Figma's OUTSIDE stroke), a
+   zero-length round-capped path so it stays round in percent space. Tinted surfaces set the halo
+   through --nz-area-chart-halo. */
+@layer nz.components {
+  .nz-area-chart-halo,
+  .nz-area-chart-dot {
+    fill: none;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .nz-area-chart-halo {
+    stroke: var(--nz-area-chart-halo, var(--nz-bg-surface));
+    stroke-width: 12px;
+  }
+
+  .nz-area-chart-dot {
+    stroke: var(--nz-chart-primary);
+    stroke-width: 8px;
+  }
+
+  /* Forced colours: the end dot as the line it ends (CanvasText, chart-frame.css), on a Canvas halo */
+  @media (forced-colors: active) {
+    .nz-area-chart-halo {
+      stroke: Canvas;
+    }
+
+    .nz-area-chart-dot {
+      stroke: CanvasText;
+    }
+  }
+}

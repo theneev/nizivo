@@ -152,6 +152,20 @@ export function sizeEntries(): SizeEntry[] {
       );
     }
     if (pkg === 'charts') {
+      out.push(
+        {
+          name: '@nizivo/charts { AreaChart } from the barrel',
+          pkg,
+          family: 'composite',
+          path: entry('charts-barrel-area-chart.js'),
+        },
+        {
+          name: '@nizivo/charts island with its imports',
+          pkg,
+          family: 'composite',
+          path: entry('charts-island.js'),
+        },
+      );
       // The ChartInteraction island (§14.1, §17.2 ≤ 0.8 KB): own code, minified alone.
       for (const module of clientModules('charts')) {
         out.push({

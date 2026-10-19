@@ -104,11 +104,11 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 | Entry              | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | ------------------ | -------: | ---------: | ---------: | ----------: | -----------: |
-| `.`                |   86,523 |       84.5 |     73,003 |          93 |        8,709 |
+| `.`                |   86,521 |       84.5 |     73,084 |          93 |        8,711 |
 | /alert             |    1,282 |        1.3 |      1,187 |         1.4 |          151 |
 | /augment           |        0 |        0.0 |          0 |           0 |            — |
 | /badge             |      796 |        0.8 |        727 |         0.9 |          125 |
-| /button            |    1,275 |        1.2 |      1,177 |         1.4 |          158 |
+| /button            |    1,275 |        1.2 |      1,178 |         1.4 |          158 |
 | /card              |    1,086 |        1.1 |        971 |         1.2 |          142 |
 | /checkbox          |    2,065 |        2.0 |      1,893 |         2.3 |          290 |
 | /config            |      165 |        0.2 |        152 |         0.2 |           39 |
@@ -151,7 +151,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | Entry                      | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | -------------------------- | -------: | ---------: | ---------: | ----------: | -----------: |
 | dashboard set              |   77,362 |       75.5 |     65,479 |          76 |          462 |
-| { Button } from the barrel |    1,277 |        1.2 |      1,165 |         1.4 |          156 |
+| { Button } from the barrel |    1,277 |        1.2 |      1,167 |         1.4 |          156 |
 | { Select } from the barrel |   63,170 |       61.7 |     54,247 |          68 |        6,462 |
 
 #### `@nizivo/react`: Own code (one module minified alone, imports not counted)
@@ -196,7 +196,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/alert.css             |      636 |        0.6 |        522 |         0.8 |          183 |
 | /css/badge.css             |      512 |        0.5 |        424 |         0.6 |          102 |
 | /css/base.css              |      997 |        1.0 |        833 |         1.1 |          129 |
-| /css/button.css            |    1,164 |        1.1 |        987 |         1.3 |          167 |
+| /css/button.css            |    1,153 |        1.1 |        974 |         1.3 |          178 |
 | /css/card.css              |      592 |        0.6 |        487 |         0.7 |          124 |
 | /css/checkbox.css          |      834 |        0.8 |        687 |         0.9 |           87 |
 | /css/container.css         |      185 |        0.2 |        155 |         0.2 |           19 |
@@ -206,7 +206,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/field.css             |      330 |        0.3 |        264 |         0.4 |           79 |
 | /css/fieldset.css          |      362 |        0.4 |        293 |         0.4 |           47 |
 | /css/grid.css              |      531 |        0.5 |        423 |         0.6 |           83 |
-| /css/heading.css           |      390 |        0.4 |        305 |         0.5 |          122 |
+| /css/heading.css           |      390 |        0.4 |        318 |         0.5 |          122 |
 | /css/icon-button.css       |    1,004 |        1.0 |        852 |         1.1 |          122 |
 | /css/image.css             |      243 |        0.2 |        191 |         0.3 |           64 |
 | /css/inline-error.css      |      273 |        0.3 |        217 |         0.3 |           34 |
@@ -227,10 +227,10 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/switch.css            |      883 |        0.9 |        738 |           1 |          141 |
 | /css/tab-nav.css           |      842 |        0.8 |        690 |           1 |          182 |
 | /css/tabs.css              |      972 |        0.9 |        792 |         1.1 |          154 |
-| /css/text.css              |      574 |        0.6 |        487 |         0.7 |          142 |
+| /css/text.css              |      574 |        0.6 |        489 |         0.7 |          142 |
 | /css/textarea.css          |      751 |        0.7 |        624 |         0.8 |           68 |
 | /css/tooltip.css           |      581 |        0.6 |        503 |         0.6 |           33 |
-| /styles.css                |   15,173 |       14.8 |     12,945 |          16 |        1,211 |
+| /styles.css                |   15,159 |       14.8 |     12,901 |          16 |        1,225 |
 
 #### `@nizivo/tokens`: Public JS entries (bundled with what they import, React Aria included)
 
@@ -245,8 +245,8 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /contract.json    |    3,316 |        3.2 |      2,712 |         3.5 |          268 |
 | /custom-media.css |      166 |        0.2 |        126 |         0.2 |           38 |
 | /tailwind.css     |      817 |        0.8 |        715 |         0.9 |          104 |
-| /tokens.css       |    3,957 |        3.9 |      3,301 |         4.2 |          343 |
-| /tokens.json      |   10,399 |       10.2 |      8,267 |          12 |        1,889 |
+| /tokens.css       |    3,957 |        3.9 |      3,307 |         4.2 |          343 |
+| /tokens.json      |   10,468 |       10.2 |      8,304 |          12 |        1,820 |
 
 #### `@nizivo/icons`: Public JS entries (bundled with what they import, React Aria included)
 
@@ -263,6 +263,37 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | ---------------------------- | -------: | ---------: | ---------: | ----------: | -----------: |
 | { Calendar } from the barrel |      473 |        0.5 |        424 |         0.6 |          141 |
 | 10 icons from the barrel     |    1,117 |        1.1 |        988 |         1.2 |          111 |
+
+#### `@nizivo/charts`: Public JS entries (bundled with what they import, React Aria included)
+
+| Entry          | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
+| -------------- | -------: | ---------: | ---------: | ----------: | -----------: |
+| `.`            |    8,502 |        8.3 |      7,726 |         9.1 |          816 |
+| /bar-chart     |    3,660 |        3.6 |      3,325 |         3.6 |           26 |
+| /chart-frame   |    1,786 |        1.7 |      1,600 |           2 |          262 |
+| /chart-tooltip |      413 |        0.4 |        373 |         0.5 |           99 |
+| /donut-chart   |    3,093 |        3.0 |      2,805 |         3.2 |          183 |
+| /legend        |      870 |        0.8 |        796 |           1 |          154 |
+| /sparkline     |    1,575 |        1.5 |      1,490 |         1.7 |          165 |
+
+#### `@nizivo/charts`: Composite bundles (one bundle; React Aria counted once)
+
+| Entry                         | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
+| ----------------------------- | -------: | ---------: | ---------: | ----------: | -----------: |
+| { AreaChart } from the barrel |    6,209 |        6.1 |      5,677 |         6.7 |          651 |
+| island with its imports       |    1,080 |        1.1 |        980 |         1.2 |          148 |
+
+#### `@nizivo/charts`: Own code (one module minified alone, imports not counted)
+
+| Entry                                 | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
+| ------------------------------------- | -------: | ---------: | ---------: | ----------: | -----------: |
+| own: _island/chart-interaction.client |      813 |        0.8 |        731 |         0.8 |            6 |
+
+#### `@nizivo/charts`: CSS and JSON entries (the published file, gzip)
+
+| Entry       | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
+| ----------- | -------: | ---------: | ---------: | ----------: | -----------: |
+| /styles.css |    3,382 |        3.3 |      2,988 |         3.6 |          304 |
 
 <!-- size:tables:end -->
 

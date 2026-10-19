@@ -1,0 +1,224 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* ChartTooltip (Figma 03 "Chart Tooltip", Series=1|2): a raised card of pre-formatted rows, and the
+   layer the ChartInteraction island draws it in (src/_island has no stylesheet of its own: a part
+   ships one, src/<name>/<name>.css, and the card is what the layer shows). */
+@layer nz.components {
+  .nz-chart-tooltip {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-2);
+    box-sizing: border-box;
+    inline-size: var(--nz-chart-tooltip-width, 12.5rem); /* Figma: a fixed 200 px */
+    padding-block: var(--nz-space-3);
+    padding-inline: var(--nz-space-4); /* Figma's 14 px is off the scale (03 §6.1: space/4) */
+    border: var(--nz-border-width-default) solid var(--nz-border-subtle);
+    border-radius: var(--nz-radius-md);
+    background: var(--nz-bg-surface-raised);
+    box-shadow: var(--nz-elevation-3);
+    color: var(--nz-text-primary);
+    font: var(--nz-font-body-m);
+  }
+
+  .nz-chart-tooltip-title {
+    margin: 0;
+    font: var(--nz-font-label-m-strong);
+  }
+
+  .nz-chart-tooltip-rows {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-2);
+    margin: 0;
+  }
+
+  .nz-chart-tooltip-row {
+    display: flex;
+    align-items: center;
+    gap: var(--nz-space-2);
+  }
+
+  .nz-chart-tooltip-label {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    gap: var(--nz-space-2);
+    min-inline-size: 0;
+    color: var(--nz-text-secondary);
+  }
+
+  /* Figma: a 10 × 3 swatch in the series' colour */
+  .nz-chart-tooltip-swatch {
+    flex: none;
+    inline-size: 0.625rem;
+    block-size: 0.1875rem;
+    border-radius: var(--nz-radius-full);
+    background: currentColor;
+    color: var(--nz-chart-primary);
+  }
+
+  .nz-chart-tooltip-swatch:is([data-series='previous'], [data-series='other']) {
+    color: var(--nz-chart-neutral);
+  }
+
+  .nz-chart-tooltip-swatch[data-series='cat-1'] {
+    color: var(--nz-chart-cat-1);
+  }
+
+  .nz-chart-tooltip-swatch[data-series='cat-2'] {
+    color: var(--nz-chart-cat-2);
+  }
+
+  .nz-chart-tooltip-swatch[data-series='cat-3'] {
+    color: var(--nz-chart-cat-3);
+  }
+
+  .nz-chart-tooltip-value {
+    margin: 0;
+    font: var(--nz-font-numeric-m);
+    font-variant-numeric: tabular-nums;
+    unicode-bidi: isolate;
+  }
+
+  .nz-chart-tooltip-delta {
+    margin: 0;
+    color: var(--nz-text-tertiary);
+  }
+
+  /* The sign carries the direction too ("+28.0%"), so the colour is never the only cue */
+  .nz-chart-tooltip-change {
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-label-m-strong);
+    font-variant-numeric: tabular-nums;
+    unicode-bidi: isolate;
+  }
+
+  .nz-chart-tooltip-delta[data-trend='up'] > .nz-chart-tooltip-change {
+    color: var(--nz-text-success);
+  }
+
+  .nz-chart-tooltip-delta[data-trend='down'] > .nz-chart-tooltip-change {
+    color: var(--nz-text-critical);
+  }
+
+  /* The island's layer: one tab stop over the whole plot, full-band hit area (WCAG 2.5.8). It is
+     out of the flow, so showing the crosshair and the card moves nothing. Its coordinates are
+     physical (direction: ltr): the island mirrors them itself with the plot (xDirection="rtl"). It
+     is a size container: the island moves the crosshair and the dots by `translate` in cqi and cqb
+     (percentages of the plot), which never counts as a layout shift. Its box comes from the plot
+     (absolute, inset 0), never from its content, so size containment changes nothing. */
+  .nz-chart-interaction {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--nz-radius-sm);
+    direction: ltr;
+    touch-action: pan-y;
+    container-type: size;
+  }
+
+  /* The active point: a 1 px column centred on it, which is the crosshair (Figma: border/strong)
+     and carries the dots and the card. It sits at the plot's left edge; the island translates it. */
+  .nz-chart-interaction-point {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    inline-size: var(--nz-border-width-default);
+    margin-inline-start: calc(var(--nz-border-width-default) / -2);
+    background: var(--nz-border-strong);
+    pointer-events: none;
+  }
+
+  /* Figma: 10 px dots with a 2 px bg/surface halo, centred on the column at the plot's top; the
+     island translates each down to its value */
+  .nz-chart-interaction-dot {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 50%;
+    box-sizing: border-box;
+    inline-size: 0.625rem;
+    block-size: 0.625rem;
+    margin-block-start: -0.3125rem;
+    margin-inline-start: -0.3125rem;
+    border-radius: var(--nz-radius-full);
+    background: var(--nz-chart-primary);
+    box-shadow: 0 0 0 2px var(--nz-chart-tooltip-halo, var(--nz-bg-surface));
+  }
+
+  .nz-chart-interaction-dot[data-series='previous'] {
+    background: var(--nz-chart-neutral);
+  }
+
+  /* The card beside the crosshair, 14 px off (Figma, no token), on the side the island picks; at
+     most half the plot wide, so that side always fits it. Its text follows the page's direction,
+     not the plot's: no inline inset, so the card keeps its static position at the column's left
+     edge whatever its own direction. Fade and 4 px travel over duration/fast, both 0 under Reduced
+     motion. */
+  .nz-chart-interaction-tip {
+    position: absolute;
+    inset-block-start: var(--nz-space-2);
+    z-index: 1;
+    max-inline-size: calc(50cqi - 0.875rem);
+    translate: 0.875rem 0;
+    animation: nz-chart-tooltip-in var(--nz-duration-fast) var(--nz-easing-enter) both;
+  }
+
+  .nz-chart-interaction-tip[data-side='left'] {
+    translate: calc(-100% - 0.875rem) 0;
+  }
+
+  .nz-chart-interaction-tip:dir(rtl) {
+    direction: rtl;
+  }
+
+  /* The lift is a transform (it composes with the side's `translate`), not a margin: a transform
+     never counts as a layout shift */
+  @keyframes nz-chart-tooltip-in {
+    from {
+      opacity: 0;
+      transform: translateY(var(--nz-distance-lift));
+    }
+  }
+
+  /* Forced colours drop backgrounds and shadows (D-ax): the crosshair keeps CanvasText, and the
+     swatches and dots take the legend's system colours (legend.css), with the series rules'
+     specificity so they win: the current series CanvasText (the dots Highlight, to stand out on the
+     line), the comparison and Other GrayText, cat-1 Highlight, cat-2 Canvas outlined, cat-3
+     CanvasText */
+  @media (forced-colors: active) {
+    .nz-chart-tooltip-swatch,
+    .nz-chart-interaction-point,
+    .nz-chart-interaction-dot {
+      forced-color-adjust: none;
+      color: CanvasText;
+    }
+
+    .nz-chart-tooltip-swatch:is([data-series='previous'], [data-series='other']) {
+      color: GrayText;
+    }
+
+    .nz-chart-tooltip-swatch[data-series='cat-1'] {
+      color: Highlight;
+    }
+
+    .nz-chart-tooltip-swatch[data-series='cat-2'] {
+      color: Canvas;
+      outline: 1px solid CanvasText;
+    }
+
+    .nz-chart-tooltip-swatch[data-series='cat-3'] {
+      color: CanvasText;
+    }
+
+    .nz-chart-interaction-point {
+      background: CanvasText;
+    }
+
+    .nz-chart-interaction-dot {
+      background: Highlight;
+    }
+
+    .nz-chart-interaction-dot[data-series='previous'] {
+      background: GrayText;
+    }
+  }
+}

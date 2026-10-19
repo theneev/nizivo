@@ -1,0 +1,9 @@
+{
+  "environment": {
+    "platform": "darwin-arm64",
+    "browser": "chromium 156.0.8078.4",
+    "playwright": "1.64.0",
+    "fonts": "geist 1.7.2",
+    "viewport": "960x720@1x"
+  }
+}

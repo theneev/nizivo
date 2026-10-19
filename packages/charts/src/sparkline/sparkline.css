@@ -1,0 +1,72 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* Sparkline (Figma 03, 112 × 36): the shared line and wash of chart-frame.css, in a fixed inline
+   box (--nz-sparkline-width, --nz-sparkline-height; the KPI tile draws it at 88 × 28), with room at
+   the top and the end for the end dot: 8 px with a 2 px halo (Figma's OUTSIDE stroke), the halo
+   following the surface it sits on (--nz-sparkline-halo, for tinted tiles). Time does not mirror:
+   the box is always left to right. */
+@layer nz.components {
+  .nz-sparkline {
+    position: relative;
+    display: inline-block;
+    flex: none;
+    box-sizing: border-box;
+    inline-size: var(--nz-sparkline-width, 7rem);
+    block-size: var(--nz-sparkline-height, 2.25rem);
+    vertical-align: middle;
+    direction: ltr;
+  }
+
+  .nz-sparkline > .nz-chart-svg {
+    inset-block-start: var(--nz-space-1-5);
+    inset-inline-start: 0;
+    inline-size: calc(100% - var(--nz-space-1-5));
+    block-size: calc(100% - var(--nz-space-1-5));
+  }
+
+  .nz-sparkline[data-trend='down'] .nz-chart-line {
+    stroke: var(--nz-chart-neutral);
+  }
+
+  .nz-sparkline[data-trend='down'] .nz-chart-area {
+    fill: var(--nz-chart-neutral);
+  }
+
+  .nz-sparkline-halo,
+  .nz-sparkline-dot {
+    fill: none;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .nz-sparkline-halo {
+    stroke: var(--nz-sparkline-halo, var(--nz-bg-surface));
+    stroke-width: 12px;
+  }
+
+  .nz-sparkline-dot {
+    stroke: var(--nz-chart-primary);
+    stroke-width: 8px;
+  }
+
+  .nz-sparkline[data-trend='down'] .nz-sparkline-dot {
+    stroke: var(--nz-chart-neutral);
+  }
+
+  /* Forced colours: the end dot as the line it ends (CanvasText, chart-frame.css), on a Canvas halo */
+  @media (forced-colors: active) {
+    .nz-sparkline-halo {
+      stroke: Canvas;
+    }
+
+    /* the trend rules' specificity, so a falling line is forced too */
+    .nz-sparkline[data-trend] .nz-sparkline-dot,
+    .nz-sparkline[data-trend] .nz-chart-line {
+      stroke: CanvasText;
+    }
+
+    .nz-sparkline[data-trend] .nz-chart-area {
+      fill: CanvasText;
+    }
+  }
+}

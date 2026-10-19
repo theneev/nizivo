@@ -2,7 +2,7 @@
   "$comment": "Size budgets (ARCHITECTURE.md §17), written by `node packages/tooling/size/measure.ts --write`. measured: bytes, gzip -9, as size-limit 14.2 reports them. limitKiB: measured + 10%, rounded up (method.ts limitKiB), never above the entry's §17.1 plan limit (method.ts PLAN_LIMITS_KIB). Limits only go up through a labelled PR (§17.3).",
   "entries": {
     "@nizivo/react": {
-      "measured": 86523,
+      "measured": 86521,
       "limitKiB": 93
     },
     "@nizivo/react/alert": {
@@ -290,7 +290,7 @@
       "limitKiB": 1.1
     },
     "@nizivo/react/css/button.css": {
-      "measured": 1164,
+      "measured": 1153,
       "limitKiB": 1.3
     },
     "@nizivo/react/css/card.css": {
@@ -426,7 +426,7 @@
       "limitKiB": 0.6
     },
     "@nizivo/react/styles.css": {
-      "measured": 15173,
+      "measured": 15159,
       "limitKiB": 16
     },
     "@nizivo/tokens": {
@@ -450,7 +450,7 @@
       "limitKiB": 4.2
     },
     "@nizivo/tokens/tokens.json": {
-      "measured": 10399,
+      "measured": 10468,
       "limitKiB": 12
     },
     "@nizivo/icons": {
@@ -476,6 +476,50 @@
     "@nizivo/icons/brands/instagram": {
       "measured": 1193,
       "limitKiB": 1.3
+    },
+    "@nizivo/charts": {
+      "measured": 8502,
+      "limitKiB": 9.1
+    },
+    "@nizivo/charts/bar-chart": {
+      "measured": 3660,
+      "limitKiB": 3.6
+    },
+    "@nizivo/charts/chart-frame": {
+      "measured": 1786,
+      "limitKiB": 2
+    },
+    "@nizivo/charts/chart-tooltip": {
+      "measured": 413,
+      "limitKiB": 0.5
+    },
+    "@nizivo/charts/donut-chart": {
+      "measured": 3093,
+      "limitKiB": 3.2
+    },
+    "@nizivo/charts/legend": {
+      "measured": 870,
+      "limitKiB": 1
+    },
+    "@nizivo/charts/sparkline": {
+      "measured": 1575,
+      "limitKiB": 1.7
+    },
+    "@nizivo/charts { AreaChart } from the barrel": {
+      "measured": 6209,
+      "limitKiB": 6.7
+    },
+    "@nizivo/charts island with its imports": {
+      "measured": 1080,
+      "limitKiB": 1.2
+    },
+    "@nizivo/charts own: _island/chart-interaction.client": {
+      "measured": 813,
+      "limitKiB": 0.8
+    },
+    "@nizivo/charts/styles.css": {
+      "measured": 3382,
+      "limitKiB": 3.6
     }
   }
 }

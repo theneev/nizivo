@@ -32,13 +32,29 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
+    "./bar-chart": {
+      "types": "./dist/bar-chart/index.d.ts",
+      "default": "./dist/bar-chart/index.js"
+    },
     "./chart-frame": {
       "types": "./dist/chart-frame/index.d.ts",
       "default": "./dist/chart-frame/index.js"
     },
+    "./chart-tooltip": {
+      "types": "./dist/chart-tooltip/index.d.ts",
+      "default": "./dist/chart-tooltip/index.js"
+    },
+    "./donut-chart": {
+      "types": "./dist/donut-chart/index.d.ts",
+      "default": "./dist/donut-chart/index.js"
+    },
     "./legend": {
       "types": "./dist/legend/index.d.ts",
       "default": "./dist/legend/index.js"
+    },
+    "./sparkline": {
+      "types": "./dist/sparkline/index.d.ts",
+      "default": "./dist/sparkline/index.js"
     },
     "./styles.css": "./dist/styles.css",
     "./package.json": "./package.json"

@@ -1,0 +1,188 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* DonutChart (Figma 03 "Donut Chart", 7275:13455; ARCHITECTURE.md §14.1). The ring sits in the
+   frame's body, the legend (value and share columns) beside it, as Figma lays them out; the body is
+   a square of fixed size in every status, so nothing moves when the data arrives (§16.5).
+   Hover, CSS only: the other segments dim to 35 %, the other legend rows to 45 %, and the centre
+   swaps to the segment's share and name; hovering a legend row does the same for its segment.
+   Forced colours: segments keep four system styles that differ in every high-contrast theme
+   (cat-1 Highlight, cat-2 hollow Canvas, cat-3 CanvasText, Other GrayText), each outlined in
+   CanvasText, and the legend marks inside the chart match them. */
+@layer nz.components {
+  .nz-donut-chart {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    column-gap: var(--nz-space-8);
+    container-type: inline-size;
+  }
+
+  .nz-donut-chart > * {
+    grid-column: 1 / -1;
+  }
+
+  /* Figma's 200 px ring; it shrinks to 40 % of a narrow chart so the legend keeps its room */
+  .nz-donut-chart > .nz-chart-frame-body {
+    grid-row: 2;
+    grid-column: 1;
+    inline-size: min(var(--nz-donut-chart-size, 12.5rem), 40cqi);
+    aspect-ratio: 1;
+    padding: 0;
+  }
+
+  /* the legend hugs its columns (Figma: name, value, share side by side) */
+  .nz-donut-chart > .nz-chart-frame-legend {
+    grid-row: 2;
+    grid-column: 2;
+    justify-self: start;
+  }
+
+  .nz-donut-chart .nz-chart-frame-skeleton {
+    border-radius: var(--nz-radius-full);
+  }
+
+  .nz-donut-chart-svg {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    overflow: visible;
+    animation: nz-donut-chart-reveal var(--nz-duration-chart-draw) var(--nz-easing-standard) both;
+  }
+
+  .nz-donut-chart-segment {
+    transition: opacity var(--nz-duration-fast) var(--nz-easing-standard);
+  }
+
+  .nz-donut-chart-segment[data-series='cat-1'] {
+    fill: var(--nz-chart-cat-1);
+  }
+
+  .nz-donut-chart-segment[data-series='cat-2'] {
+    fill: var(--nz-chart-cat-2);
+  }
+
+  .nz-donut-chart-segment[data-series='cat-3'] {
+    fill: var(--nz-chart-cat-3);
+  }
+
+  .nz-donut-chart-segment[data-series='other'] {
+    fill: var(--nz-chart-neutral);
+  }
+
+  /* the total, or a hovered segment's share and name (Numeric/L over Body/M, Figma) */
+  .nz-donut-chart-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 15%;
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-body-m);
+    text-align: center;
+    pointer-events: none;
+  }
+
+  .nz-donut-chart-center[data-series] {
+    visibility: hidden;
+  }
+
+  .nz-donut-chart-value {
+    color: var(--nz-text-primary);
+    font: var(--nz-font-numeric-l);
+  }
+
+  /* Figma's donut legend (7275:13455): a 120 px name column, rows 14 px apart and 10 px dots. The
+     gaps take Figma 03's own on-scale fix (14/10 → space/3, space/2); the name column is Figma's
+     120 px at most, so values line up, and gives way on a narrow chart (a longer name wraps). */
+  .nz-donut-chart .nz-legend[data-orientation='vertical'] {
+    grid-template-columns: auto minmax(0, 7.5rem) auto auto;
+    row-gap: var(--nz-space-3);
+  }
+
+  .nz-donut-chart .nz-legend-mark[data-series] {
+    inline-size: 0.625rem;
+    block-size: 0.625rem;
+    border-radius: var(--nz-radius-full);
+  }
+
+  .nz-donut-chart .nz-legend-item {
+    transition: opacity var(--nz-duration-fast) var(--nz-easing-standard);
+  }
+
+  /* a series is focused: dim every segment and legend row and hide the total… */
+  .nz-donut-chart:has(.nz-donut-chart-segment:hover, .nz-legend-item:hover)
+    .nz-donut-chart-segment {
+    opacity: 0.35;
+  }
+
+  .nz-donut-chart:has(.nz-donut-chart-segment:hover, .nz-legend-item:hover) .nz-legend-item {
+    opacity: 0.45;
+  }
+
+  .nz-donut-chart:has(.nz-donut-chart-segment:hover, .nz-legend-item:hover)
+    .nz-donut-chart-center:not([data-series]) {
+    visibility: hidden;
+  }
+
+  /* …except its own segment, legend row and centre */
+  .nz-donut-chart:has(
+      [data-series='cat-1']:is(.nz-donut-chart-segment:hover, .nz-legend-item:hover > *)
+    )
+    :is([data-series='cat-1'], .nz-legend-item:has(> [data-series='cat-1'])),
+  .nz-donut-chart:has(
+      [data-series='cat-2']:is(.nz-donut-chart-segment:hover, .nz-legend-item:hover > *)
+    )
+    :is([data-series='cat-2'], .nz-legend-item:has(> [data-series='cat-2'])),
+  .nz-donut-chart:has(
+      [data-series='cat-3']:is(.nz-donut-chart-segment:hover, .nz-legend-item:hover > *)
+    )
+    :is([data-series='cat-3'], .nz-legend-item:has(> [data-series='cat-3'])),
+  .nz-donut-chart:has(
+      [data-series='other']:is(.nz-donut-chart-segment:hover, .nz-legend-item:hover > *)
+    )
+    :is([data-series='other'], .nz-legend-item:has(> [data-series='other'])) {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  /* Figma has no donut motion: a short fade and settle, 0 ms under Reduced motion */
+  @keyframes nz-donut-chart-reveal {
+    from {
+      opacity: 0;
+      scale: 0.92;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .nz-donut-chart-svg {
+      forced-color-adjust: none;
+    }
+
+    /* 1 CSS px at every ring size (a viewBox unit is 0.6 px on a 120 px ring): the outline is the
+       hollow cat-2 segment's only edge */
+    .nz-donut-chart-segment {
+      stroke: CanvasText;
+      stroke-width: 1px;
+      vector-effect: non-scaling-stroke;
+    }
+
+    .nz-donut-chart-segment[data-series='cat-1'] {
+      fill: Highlight;
+    }
+
+    .nz-donut-chart-segment[data-series='cat-2'] {
+      fill: Canvas;
+    }
+
+    .nz-donut-chart-segment[data-series='cat-3'] {
+      fill: CanvasText;
+    }
+
+    .nz-donut-chart-segment[data-series='other'] {
+      fill: GrayText;
+    }
+  }
+}

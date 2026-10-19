@@ -1,0 +1,174 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* BarChart (Figma 03 "Bar Chart", 7275:13387; ARCHITECTURE.md §14.1). The plot holds a grid svg
+   (gridlines and the zero baseline, percentage attributes, no viewBox) under an n-column grid of
+   bands, one per datum; each band holds its bar's svg and its tooltip. Hover (or the island's
+   data-highlighted) dims the other bars by opacity and shows the band's tooltip: CSS only.
+   Forced colours: the bars keep one system colour (CanvasText, the active bar Highlight) and the
+   gaps between them separate the bars; a single series needs no pattern. */
+@layer nz.components {
+  /* Figma's bar chart is 640 × 260 */
+  .nz-bar-chart > .nz-chart-frame-body {
+    aspect-ratio: var(--nz-bar-chart-aspect, 32 / 13);
+  }
+
+  .nz-bar-chart-grid,
+  .nz-bar-chart-bands {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  .nz-bar-chart-grid {
+    overflow: visible;
+  }
+
+  /* the same tracks as ChartFrame's band x labels (xAlign="band") */
+  .nz-bar-chart-bands {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+    /* one row exactly the plot's height: an svg's intrinsic 150 px must not size it */
+    grid-template-rows: minmax(0, 1fr);
+  }
+
+  /* the whole column is the hit area (Figma 03) */
+  .nz-bar-chart-band {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    min-inline-size: 0;
+  }
+
+  /* No viewBox: one user unit is one CSS pixel, so the cap is a real 22 px (Figma: 22 px bars in a
+     42.3 px step, 52 %), and the bar narrows with its band when the plot is small. */
+  .nz-bar-chart-svg {
+    flex: none;
+    inline-size: min(var(--nz-bar-chart-bar-size, 1.375rem), 52%);
+    block-size: 100%;
+    overflow: visible;
+    animation: nz-bar-chart-grow var(--nz-duration-chart-draw) var(--nz-easing-standard) both;
+  }
+
+  /* the clip at the baseline: only the data-end corners of the bar show */
+  .nz-bar-chart-svg > svg {
+    overflow: hidden;
+  }
+
+  .nz-bar-chart-bar {
+    fill: var(--nz-chart-primary);
+    transition: opacity var(--nz-duration-fast) var(--nz-easing-standard);
+  }
+
+  /* Dimmed siblings use opacity, not chart/secondary (§14.1). The bands fill their grid, so the
+     grid is hovered exactly when a band is: `:hover` on the grid, not `:has(> :hover)`, which
+     WebKit does not re-evaluate for the other bands' bars (seen in the browser lane). */
+  .nz-bar-chart-bands:is(:hover, :has(> [data-highlighted]))
+    > :not(:hover, [data-highlighted])
+    .nz-bar-chart-bar {
+    opacity: 0.35;
+  }
+
+  /* Figma's Chart Tooltip (Series=1): beside the active band, never over its bar; bands in the
+     second half open it toward the start. Fades in with a 4 px travel over duration/fast. */
+  .nz-bar-chart-tooltip {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 100%;
+    z-index: 1;
+    /* display, not visibility: a hidden tooltip must not widen the page's scrollable area */
+    display: none;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--nz-space-2);
+    inline-size: max-content;
+    max-inline-size: 12.5rem;
+    padding: var(--nz-space-3);
+    border: var(--nz-border-width-default) solid var(--nz-border-subtle);
+    border-radius: var(--nz-radius-md);
+    background: var(--nz-bg-surface-raised);
+    box-shadow: var(--nz-elevation-3);
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-body-m);
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    translate: 0 4px;
+    transition:
+      opacity var(--nz-duration-fast) var(--nz-easing-standard),
+      translate var(--nz-duration-fast) var(--nz-easing-standard),
+      display var(--nz-duration-fast) allow-discrete;
+  }
+
+  .nz-bar-chart-band-end > .nz-bar-chart-tooltip {
+    inset-inline: auto 100%;
+  }
+
+  .nz-bar-chart-band:is(:hover, [data-highlighted]) > .nz-bar-chart-tooltip {
+    display: grid;
+    opacity: 1;
+    translate: none;
+  }
+
+  @starting-style {
+    .nz-bar-chart-band:is(:hover, [data-highlighted]) > .nz-bar-chart-tooltip {
+      opacity: 0;
+      translate: 0 4px;
+    }
+  }
+
+  .nz-bar-chart-tooltip-title {
+    grid-column: 1 / -1;
+    color: var(--nz-text-primary);
+    font: var(--nz-font-label-m-strong);
+  }
+
+  /* Figma's 10 × 3 swatch, drawn as a border so forced colours keep it */
+  .nz-bar-chart-tooltip-mark {
+    inline-size: 0.625rem;
+    border-block-start: 3px solid var(--nz-chart-primary);
+    border-radius: var(--nz-radius-full);
+  }
+
+  .nz-bar-chart-tooltip-value {
+    color: var(--nz-text-primary);
+    font: var(--nz-font-numeric-m);
+    text-align: end;
+  }
+
+  /* bars grow from the bottom of the plot; 0 ms under Reduced motion (--nz-duration-chart-draw) */
+  @keyframes nz-bar-chart-grow {
+    from {
+      clip-path: inset(100% 0 0);
+    }
+
+    to {
+      clip-path: inset(0);
+    }
+  }
+
+  /* SVG fill and stroke are forced too, which would paint every mark one colour: keep system colours */
+  @media (forced-colors: active) {
+    .nz-bar-chart-grid,
+    .nz-bar-chart-svg {
+      forced-color-adjust: none;
+    }
+
+    .nz-bar-chart-grid .nz-chart-grid {
+      stroke: GrayText;
+    }
+
+    .nz-bar-chart-grid .nz-chart-baseline {
+      stroke: CanvasText;
+    }
+
+    .nz-bar-chart-bar {
+      fill: CanvasText;
+    }
+
+    .nz-bar-chart-band:is(:hover, [data-highlighted]) .nz-bar-chart-bar {
+      fill: Highlight;
+    }
+  }
+}
