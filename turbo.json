@@ -2,6 +2,8 @@
   "$schema": "./node_modules/turbo/schema.json",
   "agentGuidance": false,
   "globalDependencies": [
+    "package.json",
+    "pnpm-workspace.yaml",
     "packages/tooling/tsconfig/*.json",
     "packages/tooling/tsdown-preset/index.ts",
     "contracts/layers.css",
@@ -39,9 +41,10 @@
       "outputs": []
     },
     "@nizivo/tooling#test": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["^build", "@nizivo/react#build", "@nizivo/tokens#build"],
       "inputs": [
         "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/RELEASING.md",
         "$TURBO_ROOT$/contracts/api/**",
         "$TURBO_ROOT$/packages/react/package.json",
         "$TURBO_ROOT$/packages/tokens/package.json",
@@ -68,7 +71,8 @@
         "!.size-limit.ts",
         "!SIZES.md",
         "!README.md",
-        "!W*-RESULTS.md"
+        "!W*-RESULTS.md",
+        "$TURBO_ROOT$/packages/charts/src/*/*.css"
       ],
       "outputs": ["dist/**"]
     },
@@ -90,8 +94,14 @@
         "!test/visual/**",
         "!scripts/visual/**",
         "!SIZES.md",
-        "!W*-RESULTS.md"
+        "!W*-RESULTS.md",
+        "$TURBO_ROOT$/packages/charts/src/*/*.css"
       ],
+      "outputs": []
+    },
+    "@nizivo/react#lint": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/packages/charts/src/*/*.css"],
       "outputs": []
     },
     "@nizivo/charts#build": {
@@ -105,9 +115,20 @@
         "!README.md",
         "!W*-RESULTS.md",
         "$TURBO_ROOT$/packages/react/scripts/css/**",
-        "$TURBO_ROOT$/packages/tooling/stylelint-config/**"
+        "$TURBO_ROOT$/packages/tooling/stylelint-config/**",
+        "$TURBO_ROOT$/packages/react/src/**/component.json"
       ],
       "outputs": ["dist/**"]
+    },
+    "@nizivo/charts#typecheck": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/packages/react/scripts/css/**"],
+      "outputs": []
+    },
+    "@nizivo/charts#lint": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/packages/react/src/**/component.json"],
+      "outputs": []
     },
     "@nizivo/docs#build": {
       "dependsOn": ["^build"],
