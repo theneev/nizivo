@@ -1,7 +1,10 @@
 // Browser smoke test of the built docs (apps/docs/out) in Playwright Chromium, served by
 // scripts/serve.ts like GitHub Pages serves it. Run after `pnpm --filter @nizivo/docs build`:
 //
-//   node scripts/smoke.ts [--port 4417] [--json <file>]
+//   node scripts/smoke.ts [--port <n>] [--pages <n>] [--json <file>]
+//
+// The server takes a free port unless --port names one, so runs can overlap. Pages load --pages at a
+// time (default 6), each in its own tab, and their failures are reported in page order.
 //
 // Every page of the export loads with HTTP 200, zero console errors or warnings and zero page errors
 // (React reports hydration failures there), hydrates, and makes no request outside the local server:
@@ -32,7 +35,7 @@
 // - the Deviations page lists the overrides, proposals, every builder-chosen value and builder
 //   default, and every degradation (D1, D2, …) the plan records.
 // Exit code 1 on any failure.
-/* oxlint-disable no-await-in-loop -- pages and steps run one after another in one browser */
+/* oxlint-disable no-await-in-loop -- steps run one after another in a page, pages in a pool */
 import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import type { Server } from 'node:http';
@@ -46,8 +49,10 @@ const arg = (name: string): string | undefined => {
   const i = process.argv.indexOf(name);
   return i >= 0 ? process.argv[i + 1] : undefined;
 };
-const PORT = Number(arg('--port') ?? '4417');
-const ORIGIN = `http://127.0.0.1:${PORT}`;
+const PORT = Number(arg('--port') ?? '0');
+const PAGES_AT_ONCE = Math.max(1, Number(arg('--pages') ?? '6'));
+/** Set once the server listens: `http://127.0.0.1:<port>`. */
+let ORIGIN = '';
 
 /** Computed colours the checks expect, as Chromium prints them (tokens.css values). */
 const RGB = {
@@ -216,7 +221,7 @@ function htmlPages(): string[] {
 const sizeCache = new Map<string, { bytes: number; gzip: number; text: string }>();
 
 /** The scripts a page's HTML loads: `<script src>` tags and the chunks its RSC payload names. */
-function pageJs(path: string): Js {
+function pageJs(path: string, fail = failures): Js {
   const html = readFileSync(join(OUT, path, 'index.html'), 'utf8');
   const noModule = new Set(
     [
@@ -236,7 +241,7 @@ function pageJs(path: string): Js {
   for (const c of chunks) {
     const file = join(OUT, c);
     if (!existsSync(file)) {
-      failures.push(`${path}: references ${c}, which is not in out/`);
+      fail.push(`${path}: references ${c}, which is not in out/`);
       continue;
     }
     let entry = sizeCache.get(c);
@@ -289,11 +294,12 @@ async function context(
 async function visit(
   ctx: BrowserContext,
   path: string,
+  fail = failures,
 ): Promise<{ page: Page; messages: string[]; external: string[] }> {
   const page = await ctx.newPage();
   const probe = instrument(page);
   const res = await page.goto(`${ORIGIN}${path}`, { waitUntil: 'networkidle' });
-  if (res?.status() !== 200) failures.push(`${path}: HTTP ${res?.status() ?? 'no response'}`);
+  if (res?.status() !== 200) fail.push(`${path}: HTTP ${res?.status() ?? 'no response'}`);
   // Hydration: React has attached to the page heading.
   await page
     .waitForFunction(
@@ -304,8 +310,20 @@ async function visit(
       undefined,
       { timeout: 10_000 },
     )
-    .catch(() => failures.push(`${path}: did not hydrate`));
+    .catch(() => fail.push(`${path}: did not hydrate`));
   return { page, ...probe };
+}
+
+/** Runs `job` on every item, PAGES_AT_ONCE at a time; the results keep the items' order. */
+async function pool<T, R>(items: readonly T[], job: (item: T) => Promise<R>): Promise<R[]> {
+  const out: R[] = [];
+  // one iterator for every worker: each takes the next item when it is free
+  const queue = items.entries();
+  const worker = async (): Promise<void> => {
+    for (const [i, item] of queue) out[i] = await job(item);
+  };
+  await Promise.all(Array.from({ length: Math.min(PAGES_AT_ONCE, items.length) }, worker));
+  return out;
 }
 
 /**
@@ -1033,6 +1051,9 @@ async function main(): Promise<void> {
   let server: Server;
   try {
     server = await serve(OUT, PORT);
+    const address = server.address();
+    if (address === null || typeof address === 'string') throw new Error('no TCP address');
+    ORIGIN = `http://127.0.0.1:${address.port}`;
   } catch (error) {
     console.error(`smoke: cannot serve ${OUT} on port ${PORT}: ${String(error)}`);
     process.exit(1);
@@ -1043,23 +1064,28 @@ async function main(): Promise<void> {
     const paths = htmlPages();
     if (paths.length === 0) throw new Error('no pages in out/; run the docs build first');
     const ctx = await context(browser, 'light');
-    for (const path of paths) {
-      const { page, messages, external } = await visit(ctx, path);
+    const light = await pool(paths, async (path) => {
+      const fail: string[] = [];
+      const { page, messages, external } = await visit(ctx, path, fail);
       const found = await axe(page, true);
       const r: PageResult = {
         path,
         messages,
         external,
-        js: pageJs(path),
+        js: pageJs(path, fail),
         axe: found.filter((v) => !v.startsWith('best-practice: ')),
         bestPractice: found.filter((v) => v.startsWith('best-practice: ')),
       };
-      for (const t of await rawMarkdown(page)) failures.push(`${path}: raw Markdown in "${t}"`);
+      for (const t of await rawMarkdown(page)) fail.push(`${path}: raw Markdown in "${t}"`);
       await page.close();
+      if (messages.length > 0) fail.push(`${path}: ${messages.join(' | ')}`);
+      if (external.length > 0) fail.push(`${path}: external requests ${external.join(', ')}`);
+      for (const v of r.axe) fail.push(`${path}: axe (light) ${v}`);
+      return { r, fail };
+    });
+    for (const { r, fail } of light) {
       results.push(r);
-      if (messages.length > 0) failures.push(`${path}: ${messages.join(' | ')}`);
-      if (external.length > 0) failures.push(`${path}: external requests ${external.join(', ')}`);
-      for (const v of r.axe) failures.push(`${path}: axe (light) ${v}`);
+      failures.push(...fail);
     }
     await ctx.close();
     check(
@@ -1084,13 +1110,19 @@ async function main(): Promise<void> {
     // Dark runs at phone width, so the same pass checks reflow (WCAG 1.4.10, 320 CSS px of content).
     const dark = await context(browser, 'dark', 375);
     const darkViolations: string[] = [];
-    for (const path of paths) {
-      const { page } = await visit(dark, path);
-      for (const v of await axe(page)) darkViolations.push(`${path}: ${v}`);
+    const darkPages = await pool(paths, async (path) => {
+      const fail: string[] = [];
+      const { page } = await visit(dark, path, fail);
+      const violations = (await axe(page)).map((v) => `${path}: ${v}`);
       for (const c of await clipped(page)) {
-        failures.push(`${path}: at 375px, ${c} is cut off with no scroller to reach it`);
+        fail.push(`${path}: at 375px, ${c} is cut off with no scroller to reach it`);
       }
       await page.close();
+      return { violations, fail };
+    });
+    for (const { violations, fail } of darkPages) {
+      darkViolations.push(...violations);
+      failures.push(...fail);
     }
     await dark.close();
     check(
