@@ -33,6 +33,7 @@
     "fixture:charts": "pnpm --filter @nizivo/fixture-runner fixture:charts",
     "floor": "node fixtures/floor-lane/run.ts",
     "floor:gen": "node fixtures/floor-lane/gen-w5.ts",
+    "cache:audit": "node packages/tooling/cache-audit/audit.ts",
     "check:full": "pnpm check && node packages/tooling/release/lanes.ts",
     "release": "node packages/tooling/release/release.ts"
   },
