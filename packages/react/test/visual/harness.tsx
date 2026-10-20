@@ -215,7 +215,12 @@ export function start(input: HarnessInput): void {
       if (id !== undefined) {
         const target = document.querySelector(`[data-nz-visual="${id}"]`);
         if (!target) throw new Error(`harness: no element marked ${id}`);
-        return union([target.getBoundingClientRect(), ...popups]);
+        // a charts island's card may open outside the plot it belongs to (DonutChart's, toward the
+        // legend: week 12 review R2-5), so a focus shot takes it whole
+        const cards = [...target.querySelectorAll('.nz-chart-interaction-tip')].map((card) =>
+          card.getBoundingClientRect(),
+        );
+        return union([target.getBoundingClientRect(), ...popups, ...cards]);
       }
       // A visually hidden element paints nothing, but its 1 px box sits 1 px outside its parent
       // (base.css: margin -1px), so it would grow the crop (Field's announcer, M29)

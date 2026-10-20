@@ -80,9 +80,10 @@ const NIZIVO_CLIENT_MARKERS = [
   'menu-popup',
   // CountUp (@nizivo/react/motion, M41): its digits' slot
   'count-up-value',
-  // @nizivo/charts' ChartInteraction island (AreaChart's point mode, BarChart's column mode). The
-  // charts parts have their own generated routes (app/docs/(generated)/charts), so it may load on
-  // those two pages only; on any other page it means a charts import joined the shared MDX graph.
+  // @nizivo/charts' ChartInteraction island (AreaChart's point mode, BarChart's column mode,
+  // DonutChart's item mode). The charts parts have their own generated routes
+  // (app/docs/(generated)/charts), so it may load on those three pages only; on any other page it
+  // means a charts import joined the shared MDX graph.
   'nz-chart-interaction',
 ];
 
@@ -115,10 +116,11 @@ const CLIENT_PAGES: Record<string, string[]> = {
   '/docs/components/menu/': ['menu-popup', 'tooltip-popup'],
   // CountUp is the one client part of the dashboard set (M41); its page is titled by its subpath.
   '/docs/components/motion/': ['count-up-value'],
-  // AreaChart and BarChart render the island by default (interaction="nizivo", M40); the other
-  // charts pages import no client module.
+  // AreaChart, BarChart (M40) and DonutChart (M41) render the island by default
+  // (interaction="nizivo"); the other charts pages import no client module.
   '/docs/charts/area-chart/': ['nz-chart-interaction'],
   '/docs/charts/bar-chart/': ['nz-chart-interaction'],
+  '/docs/charts/donut-chart/': ['nz-chart-interaction'],
 };
 
 /** Pages whose JavaScript the run prints. */
@@ -143,6 +145,7 @@ const REPORT = [
   '/docs/foundations/javascript/',
   '/docs/charts/area-chart/',
   '/docs/charts/bar-chart/',
+  '/docs/charts/donut-chart/',
   '/docs/components/motion/',
 ];
 

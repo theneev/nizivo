@@ -77,11 +77,14 @@ export const CHART_TARGETS_KIB: Readonly<Record<string, number>> = {
   // the island graph included) at its week 11 measurement + 10 %; the island's figure applies to its
   // client graph (the island with ChartTooltip and cx: what a page downloads), 1.2 KiB for W10's
   // 1,080 B, then + 10 % over 1,457 B with the approved Escape, column mode, island-side direction,
-  // compact payload and the week 11 review's fixes; Donut 3.2, Sparkline ≤ 2, all charts together
-  // ≤ 12 (the barrel).
+  // compact payload and the week 11 review's fixes, then 1.7 KiB for DonutChart's item mode (M41
+  // item 2, 2026-10-20: 1,457 B + 10 items + 20 centre + 71 element hit test + 11 swatch = 1,569 B,
+  // + 10 %; 1,580 B after the week 12 review's Escape stop, still 1.7); Donut 3.2, then 5.3 KiB for
+  // its keyboard through the island (M41 item 2: 4,845 B with the island graph inside, + 10 %; 4,856
+  // B after the review); Sparkline ≤ 2, all charts together ≤ 12 (the barrel).
   '@nizivo/charts/area-chart': 7.1,
-  '@nizivo/charts island with its imports': 1.6,
-  '@nizivo/charts/donut-chart': 3.2,
+  '@nizivo/charts island with its imports': 1.7,
+  '@nizivo/charts/donut-chart': 5.3,
   '@nizivo/charts/sparkline': 2,
   '@nizivo/charts': 12,
   // The scaffold defaults, confirmed as §17.2 figures by M40 item 3: BarChart 3.6 (then raised by

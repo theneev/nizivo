@@ -1,6 +1,7 @@
-// What each part pulls into a bundle (ARCHITECTURE.md §14.1, §17.2): AreaChart's and BarChart's
-// server graphs reach exactly one client module, the ChartInteraction island (point mode and column
-// mode, M40); Sparkline, ChartTooltip and DonutChart reach none (no island, zero client JS under RSC). The island's own graph is tiny and
+// What each part pulls into a bundle (ARCHITECTURE.md §14.1, §17.2): AreaChart's, BarChart's and
+// DonutChart's server graphs reach exactly one client module, the ChartInteraction island (point
+// mode and column mode, M40; item mode, M41); Sparkline and ChartTooltip reach none (no island, zero
+// client JS under RSC). The island's own graph is tiny and
 // server-safe: React, the tooltip card and a type, never d3 or ChartFrame, so the client bundle of
 // an interactive chart is the island and the card alone.
 import { dirname, join, normalize, relative, sep } from 'node:path';
@@ -46,14 +47,14 @@ const clientModules = (entry: string): string[] =>
   graph(entry).modules.filter((file) => isClient(SRC.get(file) ?? ''));
 
 describe('client modules per entry', () => {
-  test.each(['src/area-chart/index.ts', 'src/bar-chart/index.ts'])(
+  test.each(['src/area-chart/index.ts', 'src/bar-chart/index.ts', 'src/donut-chart/index.ts'])(
     '%s reaches exactly one: the ChartInteraction island',
     (entry) => {
       expect(clientModules(entry)).toEqual(['src/_island/chart-interaction.client.tsx']);
     },
   );
 
-  test.each(['src/sparkline/index.ts', 'src/chart-tooltip/index.ts', 'src/donut-chart/index.ts'])(
+  test.each(['src/sparkline/index.ts', 'src/chart-tooltip/index.ts'])(
     '%s reaches none',
     (entry) => {
       expect(clientModules(entry)).toEqual([]);

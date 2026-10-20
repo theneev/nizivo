@@ -13,23 +13,41 @@
 // 0.03 rad at the outer edge), and segment ends are flat. The paths are written here, in a dozen
 // lines, instead of with d3-shape's arc and pie, which would cost more than the whole ring.
 //
-// Hover, in CSS alone (donut-chart.css): a hovered segment dims the others to 35 % and its legend
-// rows to 45 % (Figma), and the centre swaps to the segment's share and name. The legend, with
-// every value and share, and the data table carry the same information without a pointer, so the
-// frame makes no keyboard claim (`interaction="none"`). The table is visually hidden (screen readers
-// only); `tableView="details"` shows it to sighted keyboard users. A keyboard mode over the
-// segments is still open (M40 answered BarChart's, not DonutChart's).
-import type { ReactElement, ReactNode } from 'react';
+// Interaction. By default (`interaction="nizivo"`, M41 item 2) the ChartInteraction island's item
+// mode drives the segments: one tab stop over the ring, ArrowLeft / ArrowRight (clockwise is data
+// order: the ring is never mirrored) and Home / End rove over the slices, the first slice first (or
+// the last one shown);
+// the active segment gets `data-highlighted` (donut-chart.css dims the other segments and legend
+// rows by opacity, swaps the centre to its share and name, and thickens its outline under forced
+// colours); the island shows Figma 03's ChartTooltip card at the slice's centre (its value, and
+// its share "of total"), and the polite region speaks "slice, value label, value, share, of total";
+// a pointer does the same without speaking, picking the segment under it; Escape dismisses the card
+// wherever focus is, and is consumed only on the ring itself (M41 item 1). Every string the island
+// shows or speaks is formatted here, on the server. Before hydration the ring, the legend and the
+// visually hidden data table are in the markup; nothing reacts until the island hydrates. A sliver
+// thinner than the gap still has its (empty) segment, so the keys reach every slice in the table.
+// `interaction="none"` renders no island (webpack then ships no chart JavaScript; Turbopack and
+// next dev still ship the imported island module, as AreaChart's /chart-area-static measures):
+// hover works in CSS alone (a segment, or its legend row, dims the others to 35 % and 45 %, Figma,
+// and swaps the centre), and the frame makes no keyboard claim. In both modes the legend and the
+// data table carry every value and share without a pointer; `tableView="details"` shows the table.
+import { useId, type ReactElement, type ReactNode } from 'react';
 import {
   accessor,
   compactOf,
   finite,
   INTL_DEFAULT,
+  listSeparators,
   type Accessor,
   type ChartFramePassthrough,
 } from '../_core/api';
 import { num } from '../_core/geometry';
 import { cx } from '../_shared/cx';
+import {
+  ChartInteraction,
+  type ChartInteractionItem,
+  type ChartInteractionPoint,
+} from '../_island/chart-interaction.client';
 import { ChartFrame, chartFrameLabels } from '../chart-frame/chart-frame';
 import type { ChartFrameLabels } from '../chart-frame/chart-frame.contract';
 import { Legend, type ChartSeries } from '../legend/legend';
@@ -46,6 +64,14 @@ export interface DonutChartLabels extends ChartFrameLabels {
   other: string;
   /** Under the total in the centre. */
   total: string;
+  /** After a slice's share in the card and in what the island speaks, for example "52% of total". */
+  ofTotal: string;
+  /** The interactive layer's role, as assistive technology names it. */
+  interaction: string;
+  /** The interactive layer's keyboard instructions. */
+  hint: string;
+  /** The interactive layer's name when `title` is not a string. */
+  points: string;
 }
 
 /** English defaults (§16.4); pass `labels` to translate per instance. */
@@ -56,6 +82,10 @@ export const donutChartLabels: DonutChartLabels = {
   share: 'Share',
   other: 'Other',
   total: 'Total',
+  ofTotal: 'of total',
+  interaction: 'interactive chart',
+  hint: 'Arrow keys move between slices; Home and End go to the first and last',
+  points: 'Chart slices',
 };
 
 export type DonutChartSort = 'value' | 'none';
@@ -102,6 +132,8 @@ export function foldCategories(
 
 const OUTER = 100;
 const INNER = 74;
+/** The middle of the ring, in percent of the plot from its centre (the card's anchor). */
+const MID = (OUTER + INNER) / 4;
 /** The gap between segments, in viewBox units (3 px on a 200 px ring). */
 const GAP = 3;
 const TAU = Math.PI * 2;
@@ -133,11 +165,12 @@ export function donutPath(a0: number, a1: number): string {
 
 /**
  * DonutChart's props: its data and formats in the charts' one shape (`_core/api.ts`) and ChartFrame's,
- * the `<figure>`'s attributes included. It draws no axes, its legend is its own and it makes no
- * keyboard claim (`tableView="details"` shows the values to everyone).
+ * the `<figure>`'s attributes included. It draws no axes, its legend is its own, the ring is never
+ * mirrored, and `interaction` (default `'nizivo'`) is the island's keyboard and pointer mode over the
+ * slices or, with `'none'`, a static ring with CSS-only hover and no keyboard claim.
  */
 export interface DonutChartProps<T> extends ChartFramePassthrough<
-  'axes' | 'interaction' | 'legend' | 'xDirection'
+  'axes' | 'legend' | 'xDirection'
 > {
   /** One datum per category, in any order (`sort` orders the slices). */
   data: readonly T[];
@@ -175,10 +208,13 @@ export function DonutChart<T>({
   center,
   status = 'ready',
   labels,
+  title,
+  interaction = 'nizivo',
   className,
   ...frame
 }: DonutChartProps<T>): ReactElement {
   const L: DonutChartLabels = { ...donutChartLabels, ...labels };
+  const hintId = useId();
   const labelOf = accessor(category);
   const valueOf = accessor(value);
   const slices = foldCategories(
@@ -201,32 +237,44 @@ export function DonutChart<T>({
     share: share.format(slice.value / total),
   }));
 
+  // one pass: each slice's segment (an empty path for a sliver thinner than the gap, so the
+  // island's n-th point is the n-th segment), its point (the card's title, value and share) and
+  // its centre on the plot, in percent from the top left, half-way through the ring
   const segments: ReactElement[] = [];
+  const points: ChartInteractionPoint[] = [];
+  const items: ChartInteractionItem[] = [];
   for (let i = 0, start = 0; i < slices.length; i += 1) {
     const slice = slices[i];
-    if (slice === undefined) continue;
+    const row = rows[i];
+    if (slice === undefined || row === undefined) continue;
     const end = start + (slice.value / total) * TAU;
-    const d = donutPath(start, end);
+    const middle = (start + end) / 2;
+    segments.push(
+      <path
+        key={slice.series}
+        className="nz-donut-chart-segment"
+        data-series={slice.series}
+        data-slot="donut-chart-segment"
+        d={donutPath(start, end)}
+      />,
+    );
+    points.push([row.label, [row.value], [], row.share]);
+    items.push([
+      Number(num(50 + MID * Math.sin(middle), 2)),
+      Number(num(50 - MID * Math.cos(middle), 2)),
+      slice.series,
+    ]);
     start = end;
-    if (d !== '') {
-      segments.push(
-        <path
-          key={slice.series}
-          className="nz-donut-chart-segment"
-          data-series={slice.series}
-          d={d}
-        />,
-      );
-    }
   }
 
   return (
     <ChartFrame
       {...frame}
       className={cx('nz-donut-chart', className)}
+      title={title}
       labels={L}
       axes="none"
-      interaction="none"
+      interaction={interaction}
       table={{
         columns: [L.category, L.value, L.share],
         rows: rows.map((row) => [row.label, row.value, row.share]),
@@ -270,6 +318,26 @@ export function DonutChart<T>({
           <span className="nz-donut-chart-label">{row.label}</span>
         </div>
       ))}
+      {interaction === 'nizivo' && (
+        // item mode: the island roves over the segments (data-slot="donut-chart-segment") and
+        // shows the card; it paints over the ring, so CSS :hover on a segment no longer fires
+        <>
+          <span id={hintId} className="nz-chart-visually-hidden">
+            {L.hint}
+          </span>
+          <ChartInteraction
+            series={[{ label: L.value, series: 'cat-1' }]}
+            points={points}
+            delta={L.ofTotal}
+            separators={listSeparators(locale)}
+            columns="donut-chart-segment"
+            items={items}
+            aria-label={typeof title === 'string' ? title : L.points}
+            aria-roledescription={L.interaction}
+            aria-describedby={hintId}
+          />
+        </>
+      )}
     </ChartFrame>
   );
 }

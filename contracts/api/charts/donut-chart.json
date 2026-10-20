@@ -63,6 +63,14 @@
           "type": "Intl.NumberFormatOptions"
         },
         {
+          "default": "'nizivo'",
+          "inheritedFrom": "ChartFrameProps",
+          "name": "interaction",
+          "required": false,
+          "type": "ChartInteractionMode",
+          "values": ["nizivo", "none"]
+        },
+        {
           "name": "labels",
           "required": false,
           "type": "Partial<DonutChartLabels>"
@@ -193,8 +201,32 @@
           "type": "string"
         },
         {
+          "description": "The interactive layer's keyboard instructions.",
+          "name": "hint",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "description": "The interactive layer's role, as assistive technology names it.",
+          "name": "interaction",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "description": "After a slice's share in the card and in what the island speaks, for example \"52% of total\".",
+          "name": "ofTotal",
+          "required": true,
+          "type": "string"
+        },
+        {
           "description": "The folded remainder.",
           "name": "other",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "description": "The interactive layer's name when `title` is not a string.",
+          "name": "points",
           "required": true,
           "type": "string"
         },
@@ -223,10 +255,8 @@
     },
     {
       "declaration": "interface",
-      "description": "DonutChart's props: its data and formats in the charts' one shape (`_core/api.ts`) and ChartFrame's, the `<figure>`'s attributes included. It draws no axes, its legend is its own and it makes no keyboard claim (`tableView=\"details\"` shows the values to everyone).",
-      "extends": [
-        "ChartFramePassthrough<\"axes\" | \"interaction\" | \"legend\" | \"xDirection\">"
-      ],
+      "description": "DonutChart's props: its data and formats in the charts' one shape (`_core/api.ts`) and ChartFrame's, the `<figure>`'s attributes included. It draws no axes, its legend is its own, the ring is never mirrored, and `interaction` (default `'nizivo'`) is the island's keyboard and pointer mode over the slices or, with `'none'`, a static ring with CSS-only hover and no keyboard claim.",
+      "extends": ["ChartFramePassthrough<\"axes\" | \"legend\" | \"xDirection\">"],
       "import": "import type { DonutChartProps } from '@nizivo/charts/donut-chart'",
       "kind": "type",
       "name": "DonutChartProps",

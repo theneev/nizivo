@@ -3,11 +3,14 @@
 /* DonutChart (Figma 03 "Donut Chart", 7275:13455; ARCHITECTURE.md §14.1). The ring sits in the
    frame's body, the legend (value and share columns) beside it, as Figma lays them out; the body is
    a square of fixed size in every status, so nothing moves when the data arrives (§16.5).
-   Hover, CSS only: the other segments dim to 35 %, the other legend rows to 45 %, and the centre
-   swaps to the segment's share and name; hovering a legend row does the same for its segment.
+   A focused segment (hovered, its legend row hovered, or data-highlighted, which the
+   ChartInteraction island's item mode sets on the active one): the other segments dim to 35 %, the
+   other legend rows to 45 %, and the centre swaps to the segment's share and name. By default the
+   island lies over the ring (so :hover on a segment does not fire) and draws the card; with
+   interaction="none" there is no island and a segment's :hover does the same in CSS alone.
    Forced colours: segments keep four system styles that differ in every high-contrast theme
    (cat-1 Highlight, cat-2 hollow Canvas, cat-3 CanvasText, Other GrayText), each outlined in
-   CanvasText, and the legend marks inside the chart match them. */
+   CanvasText (the active one 3 px), and the legend marks inside the chart match them. */
 @layer nz.components {
   .nz-donut-chart {
     display: grid;
@@ -112,40 +115,81 @@
     transition: opacity var(--nz-duration-fast) var(--nz-easing-standard);
   }
 
-  /* a series is focused: dim every segment and legend row and hide the total… */
-  .nz-donut-chart:has(.nz-donut-chart-segment:hover, .nz-legend-item:hover)
+  /* a series is focused: dim every segment and legend row and hide the total… (only a segment
+     carries data-highlighted) */
+  .nz-donut-chart:has(.nz-donut-chart-segment:hover, [data-highlighted], .nz-legend-item:hover)
     .nz-donut-chart-segment {
     opacity: 0.35;
   }
 
-  .nz-donut-chart:has(.nz-donut-chart-segment:hover, .nz-legend-item:hover) .nz-legend-item {
+  .nz-donut-chart:has(.nz-donut-chart-segment:hover, [data-highlighted], .nz-legend-item:hover)
+    .nz-legend-item {
     opacity: 0.45;
   }
 
-  .nz-donut-chart:has(.nz-donut-chart-segment:hover, .nz-legend-item:hover)
+  .nz-donut-chart:has(.nz-donut-chart-segment:hover, [data-highlighted], .nz-legend-item:hover)
     .nz-donut-chart-center:not([data-series]) {
     visibility: hidden;
   }
 
   /* …except its own segment, legend row and centre */
   .nz-donut-chart:has(
-      [data-series='cat-1']:is(.nz-donut-chart-segment:hover, .nz-legend-item:hover > *)
+      [data-series='cat-1']:is(
+        .nz-donut-chart-segment:hover,
+        [data-highlighted],
+        .nz-legend-item:hover > *
+      )
     )
     :is([data-series='cat-1'], .nz-legend-item:has(> [data-series='cat-1'])),
   .nz-donut-chart:has(
-      [data-series='cat-2']:is(.nz-donut-chart-segment:hover, .nz-legend-item:hover > *)
+      [data-series='cat-2']:is(
+        .nz-donut-chart-segment:hover,
+        [data-highlighted],
+        .nz-legend-item:hover > *
+      )
     )
     :is([data-series='cat-2'], .nz-legend-item:has(> [data-series='cat-2'])),
   .nz-donut-chart:has(
-      [data-series='cat-3']:is(.nz-donut-chart-segment:hover, .nz-legend-item:hover > *)
+      [data-series='cat-3']:is(
+        .nz-donut-chart-segment:hover,
+        [data-highlighted],
+        .nz-legend-item:hover > *
+      )
     )
     :is([data-series='cat-3'], .nz-legend-item:has(> [data-series='cat-3'])),
   .nz-donut-chart:has(
-      [data-series='other']:is(.nz-donut-chart-segment:hover, .nz-legend-item:hover > *)
+      [data-series='other']:is(
+        .nz-donut-chart-segment:hover,
+        [data-highlighted],
+        .nz-legend-item:hover > *
+      )
     )
     :is([data-series='other'], .nz-legend-item:has(> [data-series='other'])) {
     visibility: visible;
     opacity: 1;
+  }
+
+  /* The island's item mode (interaction="nizivo"): its focus ring is round, around the ring; the
+     active point is a spot at the slice's centre (no crosshair column); the card opens beside it
+     toward the legend (the inline end, on either side of the island's own pick), centred on it,
+     at most 150cqi - 14 px wide: the ring is at most 40 % of the chart's width, so the card never
+     passes the chart's inline end (and never its start). */
+  .nz-donut-chart .nz-chart-interaction {
+    border-radius: var(--nz-radius-full);
+  }
+
+  .nz-donut-chart .nz-chart-interaction-point {
+    inset-block-end: auto;
+  }
+
+  .nz-donut-chart .nz-chart-interaction-tip[data-side] {
+    inset-block-start: 0;
+    max-inline-size: calc(150cqi - 0.875rem);
+    translate: 0.875rem -50%;
+  }
+
+  .nz-donut-chart .nz-chart-interaction-tip[data-side]:dir(rtl) {
+    translate: calc(-100% - 0.875rem) -50%;
   }
 
   /* Figma has no donut motion: a short fade and settle, 0 ms under Reduced motion */
@@ -183,6 +227,11 @@
 
     .nz-donut-chart-segment[data-series='other'] {
       fill: GrayText;
+    }
+
+    /* the active segment: a 3 px outline, as opacity alone is a weak cue on a system palette */
+    .nz-donut-chart-segment[data-highlighted] {
+      stroke-width: 3px;
     }
   }
 }

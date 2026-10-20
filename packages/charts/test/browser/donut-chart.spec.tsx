@@ -1,9 +1,10 @@
 // DonutChart in a real layout engine (ARCHITECTURE.md §14.1; Figma 03 "Donut Chart"): the ring is a
 // 200 px square beside its legend (40 % of a narrow chart), the gaps between segments are real gaps
-// (the page shows through), and hover works in CSS alone: a segment, or its legend row, dims the
-// other segments to 35 % and the other legend rows to 45 %, and the centre swaps the total for the
-// segment's share and name. Those rules lean on `:has()`; this spec is what shows WebKit re-styles
-// them on hover. Every engine: `NZ_BROWSER=webkit pnpm test:browser` (or firefox). Styled by the
+// (the page shows through), and with interaction="none" hover works in CSS alone: a segment, or its
+// legend row, dims the other segments to 35 % and the other legend rows to 45 %, and the centre
+// swaps the total for the segment's share and name. Those rules lean on `:has()`; this spec is
+// what shows WebKit re-styles them on hover. The island's item mode (the default) is
+// donut-chart-interaction.spec.tsx. Every engine: `NZ_BROWSER=webkit pnpm test:browser` (or firefox). Styled by the
 // shipped stylesheets only (tokens.css and dist/styles.css), so build first.
 import { flushSync } from 'react-dom';
 import { createRoot, type Root } from 'react-dom/client';
@@ -48,7 +49,10 @@ afterEach(() => {
   host = undefined;
 });
 
-async function mount(probe: 'probe-wide' | 'probe-narrow'): Promise<void> {
+async function mount(
+  probe: 'probe-wide' | 'probe-narrow',
+  interaction: 'nizivo' | 'none' = 'nizivo',
+): Promise<void> {
   host = document.createElement('div');
   host.className = probe;
   document.body.append(host);
@@ -62,6 +66,7 @@ async function mount(probe: 'probe-wide' | 'probe-narrow'): Promise<void> {
         category={(d) => d.name}
         value={(d) => d.sales}
         format={{ style: 'currency', currency: 'USD', maximumFractionDigits: 0 }}
+        interaction={interaction}
       />,
     );
   });
@@ -152,9 +157,9 @@ describe('DonutChart geometry', () => {
   });
 });
 
-describe('DonutChart hover (CSS only)', () => {
+describe('DonutChart hover (CSS only, interaction="none")', () => {
   test('a segment dims the others, its legend row stays, the centre shows its share', async () => {
-    await mount('probe-wide');
+    await mount('probe-wide', 'none');
     expect(shownCentres()).toEqual(['$123.3KTotal']);
     await userEvent.hover(one('.nz-donut-chart-svg'), { position: onRing(middleOf(1)) });
     await settled();
@@ -168,7 +173,7 @@ describe('DonutChart hover (CSS only)', () => {
   });
 
   test('a legend row focuses its segment', async () => {
-    await mount('probe-wide');
+    await mount('probe-wide', 'none');
     const row = all('.nz-legend-item')[3];
     if (row === undefined) throw new Error('no row');
     await userEvent.hover(row);

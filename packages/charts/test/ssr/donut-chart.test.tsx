@@ -1,7 +1,8 @@
 // DonutChart's server markup and maths (ARCHITECTURE.md §14.1, §16.4, §16.5; Figma 03 "Donut
 // Chart"): the documented fold to three categories plus "Other", fixed colours that never cycle,
 // flat-ended segments with real gaps, the legend and table through ChartFrame, the centre, status
-// passthrough, locale formatting and no inline style.
+// passthrough, locale formatting, no inline style, and the ChartInteraction island's item mode in
+// the server markup by default (M41 item 2), none with interaction="none".
 import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, test } from 'vitest';
 import { donutPath } from '../../src/donut-chart/donut-chart';
@@ -191,9 +192,53 @@ describe('DonutChart', () => {
     expect(html({ data: [{ name: 'a', sales: 0 }] })).toContain('data-empty=""');
   });
 
-  test('makes no keyboard claim; tableView="details" shows the values to everyone', () => {
-    expect(html()).not.toContain('tabindex');
-    expect(html()).not.toContain('aria-live');
+  test('by default the island is in the server markup: one tab stop, one empty polite region', () => {
+    const out = html();
+    expect(out.match(/tabindex="0"/g)).toHaveLength(1);
+    expect(out).toContain('role="application"');
+    expect(out).toContain('aria-label="Sales by channel"');
+    expect(out).toContain('aria-roledescription="interactive chart"');
+    expect(out).toContain(
+      'Arrow keys move between slices; Home and End go to the first and last</span>',
+    );
+    expect(out).toContain('aria-live="polite" aria-atomic="true"></span>');
+    // nothing shown or highlighted before a key or a pointer, and no inline style
+    expect(out).not.toContain('nz-chart-tooltip');
+    expect(out).not.toContain('data-highlighted');
+    expect(out).not.toContain('style=');
+    // the island lies over the ring: last in the plot
+    expect(out).toMatch(
+      /<div aria-label="Sales by channel"[^>]*class="nz-chart-interaction nz-chart-interaction-columns"[^]*<\/div><\/div><\/div>/,
+    );
+  });
+
+  test('every slice has a segment for the island, a sliver thinner than the gap an empty one', () => {
+    const out = html({
+      data: [
+        { name: 'Big', sales: 1000 },
+        { name: 'Tiny', sales: 1 },
+      ],
+    });
+    expect(
+      [
+        ...out.matchAll(
+          /<path class="nz-donut-chart-segment" data-series="([^"]+)" data-slot="donut-chart-segment" d="([^"]*)"/g,
+        ),
+      ].map((m) => [m[1], m[2] === '']),
+    ).toEqual([
+      ['cat-1', false],
+      ['cat-2', true],
+    ]);
+    // the sliver is in the legend and the table as before
+    expect(out).toContain('<span class="nz-legend-label">Tiny</span>');
+  });
+
+  test('interaction="none": no tab stop, no live region; tableView="details" shows the values', () => {
+    const out = html({ interaction: 'none' });
+    expect(out).not.toContain('tabindex');
+    expect(out).not.toContain('aria-live');
+    expect(out).not.toContain('nz-chart-interaction');
+    expect(html({ interaction: 'none', tableView: 'details' })).toContain('<details');
     expect(html({ tableView: 'details' })).toContain('<details');
   });
 });
