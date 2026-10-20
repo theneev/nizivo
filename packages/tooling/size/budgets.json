@@ -342,7 +342,7 @@
       "limitKiB": 1.3
     },
     "@nizivo/react/css/card.css": {
-      "measured": 614,
+      "measured": 665,
       "limitKiB": 0.7
     },
     "@nizivo/react/css/checkbox.css": {
@@ -354,7 +354,7 @@
       "limitKiB": 0.2
     },
     "@nizivo/react/css/delta.css": {
-      "measured": 453,
+      "measured": 472,
       "limitKiB": 0.5
     },
     "@nizivo/react/css/dialog.css": {
@@ -502,7 +502,7 @@
       "limitKiB": 0.5
     },
     "@nizivo/react/styles.css": {
-      "measured": 17184,
+      "measured": 17232,
       "limitKiB": 19
     },
     "@nizivo/tokens": {

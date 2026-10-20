@@ -29,6 +29,11 @@ export type TextVariant =
 /**
  * The `text/*` colour tokens. `accent` paints `--nz-text-brand`, since Figma has no accent text for page
  * surfaces (M38; `--nz-text-inverse-accent` is for `bg/inverse`).
+ *
+ * Deprecated: `'accent'`, which looks exactly like `'brand'`; use `'brand'`. It keeps working; its
+ * removal is deferred to 1.0, or to when Figma adds an accent text for page surfaces (M42).
+ * TypeScript cannot deprecate one member of a union type, so this note is the marker. Card's and
+ * KpiTile's `tone="accent"`, a surface, are not deprecated.
  */
 export type TextTone =
   | 'primary'
@@ -54,7 +59,10 @@ export interface TextState {
 export interface TextProps extends ComponentPropsWithRef<'p'> {
   /** The text style. 12 px exists only as `body-s` and `label-s` (§15.1). @default 'body-m' */
   variant?: TextVariant;
-  /** A `text/*` colour. Absent, the colour is inherited from the surface. */
+  /**
+   * A `text/*` colour. Absent, the colour is inherited from the surface. Deprecated value:
+   * `'accent'`, which paints `--nz-text-brand`; use `'brand'` (M42; removal deferred to 1.0).
+   */
   tone?: TextTone;
   /** Another element or component, for example `render={<span />}` or `render={<label htmlFor="sku" />}`. */
   render?: RenderProp<TextState>;

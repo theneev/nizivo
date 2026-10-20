@@ -37,7 +37,12 @@ export interface AvatarProps extends Omit<ComponentPropsWithRef<'span'>, 'childr
    * source of the initials.
    */
   name: string;
-  /** The photo. Without it (or `image`), the initials show. */
+  /**
+   * The photo. Without it (or `image`), the initials show. Pass it only when the image is known to
+   * load: if it fails, Chromium and Firefox show the initials, but WebKit (Safari) draws its
+   * broken-image mark over them, and no script-free markup avoids that. For a URL that may be gone,
+   * check it on the server and leave `src` out (the initials render), or render the initials alone.
+   */
   src?: string;
   /** Passed to the `<img>` with `src`. */
   srcSet?: string;
@@ -78,6 +83,12 @@ export function avatarInitials(name: string): string {
   return (letter(first) + (last === undefined ? '' : letter(last))).toUpperCase();
 }
 
+/**
+ * A person's or store's photo laid over their initials, with no script: the initials are always
+ * rendered, so a missing photo needs no `onError`. Known limit: a `src` that fails to load shows
+ * WebKit's (Safari's) broken-image mark over the initials, with no script-free fix; pass `src` only
+ * when it is known to load, or leave it out and the initials show.
+ */
 export function Avatar({
   name,
   src,

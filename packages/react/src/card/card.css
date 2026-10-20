@@ -1,7 +1,9 @@
 @layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
 
 /* @nizivo/react/css/card.css (Figma Card 7275:13757, ARCHITECTURE.md §10.5). Tones set ONLY --_nz-*
-   privates; public --nz-card-* hooks are read once, at the property, and never assigned here. */
+   privates; public --nz-card-* hooks are read once, at the property, and never assigned here. The one
+   public variable Card declares is --nz-surface (M42 item 6): the surface it paints, for any child to
+   read (a chart's halo); it is not a token, so a read outside a Card takes its fallback. */
 @layer nz.components {
   .nz-card {
     /* defaults = Figma Surface, with no shadow at rest (design question Q j) */
@@ -9,6 +11,9 @@
     --_nz-card-border: var(--nz-border-subtle);
     --_nz-card-padding: var(--nz-space-6);
     --_nz-card-shadow: none;
+    /* the Delta pill fill a tinted Card sets for the Deltas inside it (below); an untinted Card
+       resets it, so a Delta follows its nearest Card */
+    --_nz-card-pill: initial;
 
     display: flex;
     flex-direction: column;
@@ -18,6 +23,9 @@
     border: var(--nz-border-width-default) solid var(--nz-card-border, var(--_nz-card-border));
     border-radius: var(--nz-card-radius, var(--nz-radius-xl));
     background: var(--nz-card-bg, var(--_nz-card-bg));
+    /* the surface painted above, hook included, for children; a light-dark() value stays unresolved
+       in a custom property, so it resolves in the reader's scheme (the inverse one inside inverse) */
+    --nz-surface: var(--nz-card-bg, var(--_nz-card-bg));
     box-shadow: var(--nz-card-shadow, var(--_nz-card-shadow));
     color: var(--nz-text-primary);
   }
@@ -32,11 +40,24 @@
   .nz-card[data-tone='brand'] {
     --_nz-card-bg: var(--nz-bg-brand-subtle);
     --_nz-card-border: transparent;
+    --_nz-card-pill: var(--nz-bg-surface);
   }
 
   .nz-card[data-tone='accent'] {
     --_nz-card-bg: var(--nz-bg-accent-subtle);
     --_nz-card-border: transparent;
+    --_nz-card-pill: var(--nz-bg-surface);
+  }
+
+  /* A Delta pill on a tinted surface is a bg/surface pill (M42 item 4, a deviation from Figma 04 gap
+     4): bg/success-subtle equals bg/brand-subtle (green/50; all three tints are green/950 in dark),
+     so Figma's pill vanishes on a brand tile. The pill keeps its text colour, and with it its
+     contrast: text/success, text/critical and text/secondary on bg/surface (CONTRAST.md). The fill
+     is the nearest Card's --_nz-card-pill (inherited; untinted Cards reset it), so a Delta in an
+     untinted Card nested in a tinted one keeps its own pill. Delta's fill slot takes it over its
+     tone; a consumer's --nz-delta-bg still wins. */
+  .nz-card:is([data-tone='brand'], [data-tone='accent']) .nz-delta {
+    --_nz-delta-fill: var(--_nz-card-pill);
   }
 
   .nz-card[data-padding='sm'] {

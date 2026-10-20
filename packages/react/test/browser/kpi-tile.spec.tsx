@@ -9,6 +9,7 @@ import { renderToString } from 'react-dom/server';
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import { Button } from '../../src/button/button';
 import { CardRoot } from '../../src/card/card';
+import { Delta } from '../../src/delta/delta';
 import { InlineError } from '../../src/inline-error/inline-error';
 import { KpiTile } from '../../src/kpi-tile/kpi-tile';
 import { Metric, type MetricDataProps } from '../../src/metric/metric';
@@ -370,4 +371,189 @@ describe('Card tones (M41)', () => {
     expect(trend.paddingTop).toBe('24px');
     expect(trend.rowGap).toBe('24px');
   });
+});
+
+/** `rgb(r, g, b)`, `rgba(r, g, b, a)` or `color(srgb r g b)` → sRGB 0–255 channels (opaque only). */
+function channels(color: string): [number, number, number] {
+  const rgb =
+    /^rgba?\((\d+(?:\.\d+)?),?\s*(\d+(?:\.\d+)?),?\s*(\d+(?:\.\d+)?)(?:[,/]\s*([\d.]+))?\)$/.exec(
+      color,
+    );
+  if (rgb !== null && (rgb[4] === undefined || Number(rgb[4]) === 1)) {
+    return [Number(rgb[1]), Number(rgb[2]), Number(rgb[3])];
+  }
+  const srgb = /^color\(srgb ([\d.]+) ([\d.]+) ([\d.]+)\)$/.exec(color);
+  if (srgb !== null) return [Number(srgb[1]) * 255, Number(srgb[2]) * 255, Number(srgb[3]) * 255];
+  throw new Error(`not an opaque colour: ${color}`);
+}
+
+/** An sRGB channel (0–255) in linear light. */
+function linear(c: number): number {
+  const v = c / 255;
+  return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4;
+}
+
+/** WCAG 2.2 relative luminance of an opaque computed colour. */
+function luminance(color: string): number {
+  const [r, g, bl] = channels(color);
+  return 0.2126 * linear(r) + 0.7152 * linear(g) + 0.0722 * linear(bl);
+}
+
+/** WCAG 2.2 contrast ratio of two opaque computed colours. */
+function contrast(a: string, b: string): number {
+  const [x, y] = [luminance(a), luminance(b)];
+  return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05);
+}
+
+/** A span painted from `var(--nz-surface, <fallback>)`: what a child reading the variable gets. */
+const Probe = ({ id }: { id: string }): ReactNode => (
+  <span
+    data-probe={id}
+    style={{ display: 'block', background: 'var(--nz-surface, rgb(1, 2, 3))', blockSize: 4 }}
+  />
+);
+
+describe('the shared surface variable, --nz-surface (M42 item 6)', () => {
+  for (const theme of ['light', 'dark'] as const) {
+    test(`a child reads the surface its Card paints, every tone (${theme})`, async () => {
+      const tones = ['surface', 'subtle', 'brand', 'accent', 'inverse'] as const;
+      const { container } = await hydrate(
+        <div data-nz-theme={theme} style={{ inlineSize: 300 }}>
+          <Probe id="outside" />
+          {tones.map((tone) => (
+            <CardRoot key={tone} tone={tone} data-test={tone}>
+              <div>
+                <Probe id={tone} />
+              </div>
+            </CardRoot>
+          ))}
+          <CardRoot
+            data-test="hook"
+            style={{ '--nz-card-bg': 'rgb(10, 20, 30)' } as Record<string, string>}
+          >
+            <Probe id="hook" />
+          </CardRoot>
+          <CardRoot tone="brand" data-test="outer">
+            <CardRoot tone="inverse" data-test="nested">
+              <Probe id="nested" />
+            </CardRoot>
+          </CardRoot>
+          <KpiTile label="K" value={1} tone="accent" chart={<Probe id="kpi" />} />
+          <TrendCard label="T" value={2} tone="brand" chart={<Probe id="trend" />} />
+        </div>,
+      );
+      const probe = (id: string): string =>
+        getComputedStyle(element(`[data-probe="${id}"]`, container)).backgroundColor;
+      const card = (id: string): string =>
+        getComputedStyle(element(`[data-test="${id}"]`, container)).backgroundColor;
+      // not a token: undefined outside a Card, so a read takes its fallback
+      expect(probe('outside')).toBe('rgb(1, 2, 3)');
+      for (const tone of tones) expect([tone, probe(tone)]).toEqual([tone, card(tone)]);
+      // the five tones are four colours at least (brand and accent are equal in dark, Figma 04 #5)
+      expect(new Set(tones.map(probe)).size).toBeGreaterThanOrEqual(4);
+      // inverse resolves in the inverse scheme, as the Card does
+      expect(probe('inverse')).not.toBe(probe('surface'));
+      // a consumer's --nz-card-bg flows through; the nearest Card wins
+      expect(probe('hook')).toBe('rgb(10, 20, 30)');
+      expect(probe('nested')).toBe(card('nested'));
+      expect(probe('nested')).not.toBe(card('outer'));
+      // KpiTile and TrendCard are Cards
+      expect(probe('kpi')).toBe(
+        getComputedStyle(element('.nz-kpi-tile', container)).backgroundColor,
+      );
+      expect(probe('trend')).toBe(
+        getComputedStyle(element('.nz-trend-card', container)).backgroundColor,
+      );
+    });
+  }
+});
+
+describe('the Delta pill on a tinted surface is bg/surface (M42 item 4)', () => {
+  for (const theme of ['light', 'dark'] as const) {
+    test(`visible on brand and accent, its text at least 4.5:1 on it (${theme})`, async () => {
+      const { container } = await hydrate(
+        <div data-nz-theme={theme} style={{ inlineSize: 400 }}>
+          <span data-token="surface" style={{ background: 'var(--nz-bg-surface)' }} />
+          <span data-token="success-subtle" style={{ background: 'var(--nz-bg-success-subtle)' }} />
+          {(['brand', 'accent'] as const).map((tone) => (
+            <div key={tone} data-test={tone}>
+              <KpiTile label="Up" value={1} delta={0.124} tone={tone} />
+              <KpiTile label="Down" value={1} delta={-0.05} tone={tone} />
+              <KpiTile label="Flat" value={1} delta={0} tone={tone} />
+              <TrendCard label="Up" value={1} delta={0.124} tone={tone} />
+              <CardRoot tone={tone}>
+                <Delta value={0.2} />
+              </CardRoot>
+            </div>
+          ))}
+          <div data-test="surface">
+            <KpiTile label="Up" value={1} delta={0.124} />
+          </div>
+          <div data-test="hook">
+            <KpiTile
+              label="Up"
+              value={1}
+              delta={0.124}
+              tone="brand"
+              style={{ '--nz-delta-bg': 'rgb(10, 20, 30)' } as Record<string, string>}
+            />
+          </div>
+          {/* the nearest Card decides: an untinted Card nested in a tinted one keeps Delta's pill */}
+          <CardRoot tone="brand">
+            <CardRoot data-test="nested-surface">
+              <Delta value={0.2} />
+              <CardRoot tone="accent" data-test="nested-tint">
+                <Delta value={0.2} />
+              </CardRoot>
+            </CardRoot>
+            <CardRoot tone="inverse" data-test="nested-inverse">
+              <Delta value={0.2} />
+            </CardRoot>
+          </CardRoot>
+        </div>,
+      );
+      const token = (name: string): string =>
+        getComputedStyle(element(`[data-token="${name}"]`, container)).backgroundColor;
+      for (const tone of ['brand', 'accent']) {
+        const group = element(`[data-test="${tone}"]`, container);
+        const pills = [...group.querySelectorAll<HTMLElement>('.nz-delta')];
+        expect(pills).toHaveLength(5);
+        expect(new Set(pills.map((pill) => pill.dataset['tone']))).toEqual(
+          new Set(['success', 'critical', 'neutral']),
+        );
+        for (const pill of pills) {
+          const css = getComputedStyle(pill);
+          const owner = pill.closest('.nz-card');
+          if (!(owner instanceof HTMLElement)) throw new Error('a pill outside a Card');
+          const surface = getComputedStyle(owner).backgroundColor;
+          expect([tone, pill.dataset['tone'], css.backgroundColor]).toEqual([
+            tone,
+            pill.dataset['tone'],
+            token('surface'),
+          ]);
+          // the pill shows on the tint
+          expect(css.backgroundColor).not.toBe(surface);
+          // measured: the pill's text on the pill, WCAG 1.4.3
+          expect(contrast(css.color, css.backgroundColor)).toBeGreaterThanOrEqual(4.5);
+        }
+      }
+      // the surface tile keeps Figma's pill; a consumer's --nz-delta-bg still wins
+      const surfacePill = element('[data-test="surface"] .nz-delta', container);
+      expect(getComputedStyle(surfacePill).backgroundColor).toBe(token('success-subtle'));
+      const hookPill = element('[data-test="hook"] .nz-delta', container);
+      expect(getComputedStyle(hookPill).backgroundColor).toBe('rgb(10, 20, 30)');
+      const nestedPill = element('[data-test="nested-surface"] > .nz-delta', container);
+      expect(getComputedStyle(nestedPill).backgroundColor).toBe(token('success-subtle'));
+      expect(getComputedStyle(nestedPill).backgroundColor).not.toBe(
+        getComputedStyle(element('[data-test="nested-surface"]', container)).backgroundColor,
+      );
+      const tintPill = element('[data-test="nested-tint"] .nz-delta', container);
+      expect(getComputedStyle(tintPill).backgroundColor).toBe(token('surface'));
+      // inverse: Delta's own pill in the inverse scheme, not the inverse Card's surface
+      const inverse = element('[data-test="nested-inverse"]', container);
+      const inversePill = getComputedStyle(element('.nz-delta', inverse)).backgroundColor;
+      expect(inversePill).not.toBe(getComputedStyle(inverse).backgroundColor);
+      expect(inversePill).not.toBe(token('surface'));
+    });
+  }
 });

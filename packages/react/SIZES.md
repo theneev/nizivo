@@ -209,10 +209,10 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/base.css              |    1,045 |        1.0 |        873 |         1.1 |           81 |
 | /css/breadcrumb.css        |      551 |        0.5 |        431 |         0.6 |           63 |
 | /css/button.css            |    1,153 |        1.1 |        974 |         1.3 |          178 |
-| /css/card.css              |      614 |        0.6 |        510 |         0.7 |          102 |
+| /css/card.css              |      665 |        0.6 |        560 |         0.7 |           51 |
 | /css/checkbox.css          |      834 |        0.8 |        687 |         0.9 |           87 |
 | /css/container.css         |      185 |        0.2 |        155 |         0.2 |           19 |
-| /css/delta.css             |      453 |        0.4 |        370 |         0.5 |           59 |
+| /css/delta.css             |      472 |        0.5 |        383 |         0.5 |           40 |
 | /css/dialog.css            |      944 |        0.9 |        787 |           1 |           80 |
 | /css/empty-state.css       |      476 |        0.5 |        373 |         0.6 |          138 |
 | /css/field.css             |      330 |        0.3 |        264 |         0.4 |           79 |
@@ -249,7 +249,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/textarea.css          |      751 |        0.7 |        624 |         0.8 |           68 |
 | /css/tooltip.css           |      581 |        0.6 |        503 |         0.6 |           33 |
 | /css/trend-card.css        |      403 |        0.4 |        346 |         0.5 |          109 |
-| /styles.css                |   17,184 |       16.8 |     14,556 |          19 |        2,272 |
+| /styles.css                |   17,232 |       16.8 |     14,602 |          19 |        2,224 |
 
 #### `@nizivo/tokens`: Public JS entries (bundled with what they import, React Aria included)
 

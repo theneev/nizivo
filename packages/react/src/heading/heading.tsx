@@ -30,7 +30,10 @@ export interface HeadingProps extends ComponentPropsWithRef<'h2'> {
    * @default the style named after the level, and `heading-h4` for levels 5 and 6 (Figma has no H5 or H6)
    */
   variant?: HeadingVariant;
-  /** A `text/*` colour. Absent, the colour is inherited from the surface. */
+  /**
+   * A `text/*` colour. Absent, the colour is inherited from the surface. Deprecated value:
+   * `'accent'`, which paints `--nz-text-brand`; use `'brand'` (M42; removal deferred to 1.0).
+   */
   tone?: TextTone;
   render?: RenderProp<HeadingState>;
 }

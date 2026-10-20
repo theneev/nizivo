@@ -7,7 +7,8 @@
     "nz-card-description",
     "nz-card-footer",
     "nz-card-header",
-    "nz-card-title"
+    "nz-card-title",
+    "nz-delta"
   ],
   "component": "card",
   "entry": "./css/card.css",
@@ -51,6 +52,12 @@
       },
       "name": "--nz-card-bg",
       "reads": [
+        {
+          "conditions": [],
+          "property": "--nz-surface",
+          "selector": ".nz-card",
+          "slot": "card"
+        },
         {
           "conditions": [],
           "property": "background",

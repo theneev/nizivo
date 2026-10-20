@@ -158,6 +158,7 @@
     --_nz-text-fg: var(--nz-text-brand);
   }
 
+  /* deprecated (M42): the same colour as brand; removal deferred to 1.0 */
   .nz-text[data-tone='accent'] {
     --_nz-text-fg: var(--nz-text-brand);
   }

@@ -24,6 +24,9 @@ export interface CardRootState {
 export interface CardRootProps extends ComponentPropsWithRef<'div'> {
   /**
    * `inverse` sets `data-nz-scheme="inverse"`, so every token inside resolves in the inverse scheme.
+   * Every tone declares `--nz-surface`, the colour the card paints, for children to read with a
+   * fallback (`var(--nz-surface, var(--nz-bg-surface))`); on `brand` and `accent` a Delta pill
+   * inside is `bg/surface`, so it shows on the tint (M42).
    * @default 'surface'
    */
   tone?: CardTone;

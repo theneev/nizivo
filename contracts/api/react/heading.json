@@ -56,7 +56,7 @@
           "type": "RenderProp<HeadingState>"
         },
         {
-          "description": "A `text/*` colour. Absent, the colour is inherited from the surface.",
+          "description": "A `text/*` colour. Absent, the colour is inherited from the surface. Deprecated value: `'accent'`, which paints `--nz-text-brand`; use `'brand'` (M42; removal deferred to 1.0).",
           "name": "tone",
           "required": false,
           "type": "TextTone",

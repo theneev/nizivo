@@ -5,7 +5,10 @@
 @layer nz.components {
   .nz-delta {
     /* defaults = Figma Flat */
-    --_nz-delta-bg: var(--nz-bg-subtle);
+    /* --_nz-delta-fill is a fill set from outside, over the tone's: a tinted Card's bg/surface pill
+       (card.css, M42 item 4) */
+    --_nz-delta-fill: initial;
+    --_nz-delta-bg: var(--_nz-delta-fill, var(--nz-bg-subtle));
     --_nz-delta-fg: var(--nz-text-secondary);
 
     display: inline-flex;
@@ -37,12 +40,12 @@
   }
 
   .nz-delta[data-tone='success'] {
-    --_nz-delta-bg: var(--nz-bg-success-subtle);
+    --_nz-delta-bg: var(--_nz-delta-fill, var(--nz-bg-success-subtle));
     --_nz-delta-fg: var(--nz-text-success);
   }
 
   .nz-delta[data-tone='critical'] {
-    --_nz-delta-bg: var(--nz-bg-critical-subtle);
+    --_nz-delta-bg: var(--_nz-delta-fill, var(--nz-bg-critical-subtle));
     --_nz-delta-fg: var(--nz-text-critical);
   }
 

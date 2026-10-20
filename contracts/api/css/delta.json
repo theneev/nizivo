@@ -12,13 +12,13 @@
           {
             "conditions": [],
             "selector": ".nz-delta",
-            "value": "var(--nz-bg-subtle)",
+            "value": "var(--_nz-delta-fill, var(--nz-bg-subtle))",
             "when": {}
           },
           {
             "conditions": [],
             "selector": ".nz-delta[data-tone=\"critical\"]",
-            "value": "var(--nz-bg-critical-subtle)",
+            "value": "var(--_nz-delta-fill, var(--nz-bg-critical-subtle))",
             "when": {
               "data-tone": "critical"
             }
@@ -26,7 +26,7 @@
           {
             "conditions": [],
             "selector": ".nz-delta[data-tone=\"success\"]",
-            "value": "var(--nz-bg-success-subtle)",
+            "value": "var(--_nz-delta-fill, var(--nz-bg-success-subtle))",
             "when": {
               "data-tone": "success"
             }
