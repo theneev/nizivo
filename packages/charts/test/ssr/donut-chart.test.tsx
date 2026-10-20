@@ -308,3 +308,15 @@ describe("DonutChart props: the charts' one API shape (M40 item 9)", () => {
     expect(donutChartLabels.empty).toBe('No data to show');
   });
 });
+
+describe('DonutChart: titleVisibility (M42, one prop in every chart)', () => {
+  test('"hidden" reaches the frame: the caption visually hidden, in the HTML, naming the figure', () => {
+    const out = html({ summary: 'By channel', titleVisibility: 'hidden' });
+    expect(out).toMatch(
+      /<figcaption class="nz-chart-frame-caption nz-chart-visually-hidden" data-slot="chart-frame-caption"><span class="nz-chart-frame-title" id="([^"]+)">Sales by channel<\/span><span class="nz-chart-frame-summary">By channel<\/span><\/figcaption>/,
+    );
+    const id = /class="nz-chart-frame-title" id="([^"]+)"/.exec(out)?.[1];
+    expect(out).toContain(`data-slot="chart-frame-table" aria-labelledby="${id ?? ''}"`);
+    expect(html()).toContain('<figcaption class="nz-chart-frame-caption" data-slot');
+  });
+});

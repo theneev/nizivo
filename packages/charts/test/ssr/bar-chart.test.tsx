@@ -331,3 +331,15 @@ describe("BarChart props: the charts' one API shape (M40 item 9)", () => {
     expect(barChartLabels.empty).toBe('No data to show');
   });
 });
+
+describe('BarChart: titleVisibility (M42, one prop in every chart)', () => {
+  test('"hidden" reaches the frame: the caption visually hidden, in the HTML, naming the figure', () => {
+    const out = html({ summary: 'Daily orders', titleVisibility: 'hidden' });
+    expect(out).toMatch(
+      /<figcaption class="nz-chart-frame-caption nz-chart-visually-hidden" data-slot="chart-frame-caption"><span class="nz-chart-frame-title" id="([^"]+)">Orders<\/span><span class="nz-chart-frame-summary">Daily orders<\/span><\/figcaption>/,
+    );
+    const id = /class="nz-chart-frame-title" id="([^"]+)"/.exec(out)?.[1];
+    expect(out).toContain(`data-slot="chart-frame-table" aria-labelledby="${id ?? ''}"`);
+    expect(html()).toContain('<figcaption class="nz-chart-frame-caption" data-slot');
+  });
+});

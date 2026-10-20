@@ -3,8 +3,10 @@
 /* Sparkline (Figma 03, 112 × 36): the shared line and wash of chart-frame.css, in a fixed inline
    box (--nz-sparkline-width, --nz-sparkline-height; the KPI tile draws it at 88 × 28), with room at
    the top and the end for the end dot: 8 px with a 2 px halo (Figma's OUTSIDE stroke), the halo
-   following the surface it sits on (--nz-sparkline-halo, for tinted tiles). Time does not mirror:
-   the box is always left to right. */
+   following the surface it sits on: --nz-sparkline-halo if set, else the shared --nz-surface a
+   Card (KpiTile, TrendCard) declares for its children (M42), else bg/surface. --nz-surface is read
+   optionally, never required: with no @nizivo/react on the page it is unset and the halo is
+   bg/surface. Time does not mirror: the box is always left to right. */
 @layer nz.components {
   .nz-sparkline {
     position: relative;
@@ -40,7 +42,7 @@
   }
 
   .nz-sparkline-halo {
-    stroke: var(--nz-sparkline-halo, var(--nz-bg-surface));
+    stroke: var(--nz-sparkline-halo, var(--nz-surface, var(--nz-bg-surface)));
     stroke-width: 12px;
   }
 

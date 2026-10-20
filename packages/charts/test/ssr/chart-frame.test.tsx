@@ -59,6 +59,50 @@ describe('ChartFrame: the figure', () => {
   });
 });
 
+describe('ChartFrame: titleVisibility (M42)', () => {
+  test('"hidden": the caption is visually hidden, never removed, and still names the figure', () => {
+    const out = html(
+      <ChartFrame
+        title="Sales"
+        summary="Daily sales, Oct 1–3"
+        titleVisibility="hidden"
+        table={table}
+      >
+        {svg}
+      </ChartFrame>,
+    );
+    // the figcaption, the figure's first child, names it (HTML-AAM): no aria-label stands in
+    expect(out).toMatch(
+      /^<figure data-slot="chart-frame" class="nz-chart-frame" data-x-direction="ltr">/,
+    );
+    expect(out).toContain(
+      '<figcaption class="nz-chart-frame-caption nz-chart-visually-hidden" data-slot="chart-frame-caption">' +
+        '<span class="nz-chart-frame-title" id="_R_0_">Sales</span>' +
+        '<span class="nz-chart-frame-summary">Daily sales, Oct 1–3</span></figcaption>',
+    );
+    expect(out).not.toMatch(/aria-label=/);
+    // the title still names the data table
+    expect(out).toContain('data-slot="chart-frame-table" aria-labelledby="_R_0_"');
+  });
+
+  test('"visible" is the default and renders as no prop does', () => {
+    const plain = html(<ChartFrame title="Sales" table={table} />);
+    expect(html(<ChartFrame title="Sales" table={table} titleVisibility="visible" />)).toBe(plain);
+    expect(plain).toContain('<figcaption class="nz-chart-frame-caption" data-slot');
+  });
+
+  test('"hidden" in every status, the box (the slots) unchanged', () => {
+    for (const status of ['ready', 'loading', 'empty', 'error'] as const) {
+      const shown = html(<ChartFrame title="S" status={status} table={table} />);
+      const hidden = html(
+        <ChartFrame title="S" status={status} table={table} titleVisibility="hidden" />,
+      );
+      expect(hidden).toContain('class="nz-chart-frame-caption nz-chart-visually-hidden"');
+      expect(skeleton(hidden)).toEqual(skeleton(shown));
+    }
+  });
+});
+
 describe('ChartFrame: the data table, server-rendered', () => {
   test('visually hidden by default, named by the title, row headers in the first column', () => {
     const out = html(

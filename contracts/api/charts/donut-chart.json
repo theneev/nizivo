@@ -147,6 +147,15 @@
           "type": "ReactNode"
         },
         {
+          "default": "'visible'",
+          "description": "`'hidden'` hides the title and summary visually; they still name the figure.",
+          "inheritedFrom": "ChartFrameProps",
+          "name": "titleVisibility",
+          "required": false,
+          "type": "ChartTitleVisibility",
+          "values": ["visible", "hidden"]
+        },
+        {
           "default": "`format` in compact notation with at most one fraction digit",
           "description": "The total in the centre.",
           "name": "totalFormat",

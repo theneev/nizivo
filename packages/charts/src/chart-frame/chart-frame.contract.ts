@@ -51,6 +51,14 @@ export type ChartTickAlign = 'point' | 'band';
  */
 export type ChartXDirection = 'ltr' | 'rtl' | 'auto';
 
+/**
+ * Whether the caption shows. `'visible'`: the title and summary above the plot. `'hidden'`: both
+ * visually hidden (clipped to a 1 × 1 box out of flow, never `display: none`), for a chart whose
+ * container already titles it (a card header, Figma's Revenue Card): the caption takes no layout
+ * space, stays in the HTML and still names the figure and its data table.
+ */
+export type ChartTitleVisibility = 'visible' | 'hidden';
+
 /** HTML tick labels on CSS grid tracks: one track per position, so no label needs a position of its own. */
 export interface ChartTicks {
   /** One label per x position, `''` where no tick falls (`tickLabels()` builds it). */
@@ -82,6 +90,8 @@ export interface ChartFrameProps {
   title: ReactNode;
   /** One line under the title, for example "Daily sales, Oct 1–30, vs previous period". */
   summary?: ReactNode;
+  /** `'hidden'` hides the title and summary visually; they still name the figure. @default 'visible' */
+  titleVisibility?: ChartTitleVisibility;
   /** @default 'ready'; a ready chart with no table rows renders as `'empty'`. */
   status?: DataStatus;
   /** A refresh is in flight while the chart shows data (§16.5): `aria-busy` and `data-pending`. */

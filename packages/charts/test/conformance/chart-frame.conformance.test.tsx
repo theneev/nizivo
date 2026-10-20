@@ -1,5 +1,6 @@
 // K9's own case (ARCHITECTURE.md §14.1, §10.8): ChartFrame around a dummy third-party <svg> with
-// interaction="none" guarantees caption, data table, legend and status and makes no keyboard claim.
+// interaction="none" guarantees caption (visible or, with titleVisibility="hidden", visually hidden),
+// data table, legend and status and makes no keyboard claim.
 // Then the controls that show the suite fails when its claims break: a stand-in Nizivo renderer
 // passes the keyboard branch, and each broken variant is caught.
 import { createElement, type ReactElement } from 'react';
@@ -216,6 +217,28 @@ describe('the suite fails when a claim breaks (negative controls)', () => {
     });
     expect(problems).toContain('loading: the plot does not say "Diagramm wird geladen"');
     expect(problems).toContain('empty: the plot does not say "Keine Daten"');
+  });
+
+  test('a renderer that drops titleVisibility, or hides its caption on its own', () => {
+    const dropped = caseProblems({
+      part: 'x',
+      interaction: 'nizivo',
+      render: ({ status }) => framed({ status }, nizivoPlot(ISLAND), 'nizivo'),
+    });
+    expect(dropped).toContain(
+      'ready: the caption is not visually hidden with titleVisibility="hidden"',
+    );
+    const always = statusProblems(
+      {
+        part: 'x',
+        interaction: 'nizivo',
+        render: (f) => framed({ ...f, titleVisibility: 'hidden' }, nizivoPlot(ISLAND), 'nizivo'),
+      },
+      { status: 'ready' },
+    );
+    expect(always).toContain(
+      'ready: the caption is visually hidden without titleVisibility="hidden"',
+    );
   });
 
   test('a renderer that hides the legend in some statuses: the box moves', () => {

@@ -136,7 +136,8 @@
   }
 
   /* Figma: 10 px dots with a 2 px bg/surface halo, centred on the column at the plot's top; the
-     island translates each down to its value */
+     island translates each down to its value. The halo is the surface behind the chart:
+     --nz-chart-tooltip-halo, else a Card's shared --nz-surface (M42, optional), else bg/surface. */
   .nz-chart-interaction-dot {
     position: absolute;
     inset-block-start: 0;
@@ -148,7 +149,7 @@
     margin-inline-start: -0.3125rem;
     border-radius: var(--nz-radius-full);
     background: var(--nz-chart-primary);
-    box-shadow: 0 0 0 2px var(--nz-chart-tooltip-halo, var(--nz-bg-surface));
+    box-shadow: 0 0 0 2px var(--nz-chart-tooltip-halo, var(--nz-surface, var(--nz-bg-surface)));
   }
 
   .nz-chart-interaction-dot[data-series='previous'] {

@@ -168,6 +168,15 @@
           "type": "ReactNode"
         },
         {
+          "default": "'visible'",
+          "description": "`'hidden'` hides the title and summary visually; they still name the figure.",
+          "inheritedFrom": "ChartFrameProps",
+          "name": "titleVisibility",
+          "required": false,
+          "type": "ChartTitleVisibility",
+          "values": ["visible", "hidden"]
+        },
+        {
           "description": "The x value: an ISO plain date (`'2026-10-14'`, formatted per `locale`) or any label.",
           "inheritedFrom": "CartesianChartOptions",
           "name": "x",

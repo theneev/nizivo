@@ -134,6 +134,15 @@
           "type": "ReactNode"
         },
         {
+          "default": "'visible'",
+          "description": "`'hidden'` hides the title and summary visually; they still name the figure.",
+          "inheritedFrom": "ChartFrameProps",
+          "name": "titleVisibility",
+          "required": false,
+          "type": "ChartTitleVisibility",
+          "values": ["visible", "hidden"]
+        },
+        {
           "default": "'ltr'",
           "inheritedFrom": "ChartFrameProps",
           "name": "xDirection",
@@ -323,6 +332,14 @@
           "type": "ReactNode"
         },
         {
+          "default": "'visible'",
+          "description": "`'hidden'` hides the title and summary visually; they still name the figure.",
+          "name": "titleVisibility",
+          "required": false,
+          "type": "ChartTitleVisibility",
+          "values": ["visible", "hidden"]
+        },
+        {
           "default": "'ltr'",
           "name": "xDirection",
           "required": false,
@@ -429,6 +446,17 @@
       "name": "ChartTicks",
       "source": "packages/charts/src/chart-frame/chart-frame.contract.ts",
       "typeParameters": []
+    },
+    {
+      "declaration": "type",
+      "description": "Whether the caption shows. `'visible'`: the title and summary above the plot. `'hidden'`: both visually hidden (clipped to a 1 × 1 box out of flow, never `display: none`), for a chart whose container already titles it (a card header, Figma's Revenue Card): the caption takes no layout space, stays in the HTML and still names the figure and its data table.",
+      "import": "import type { ChartTitleVisibility } from '@nizivo/charts/chart-frame'",
+      "kind": "type",
+      "name": "ChartTitleVisibility",
+      "source": "packages/charts/src/chart-frame/chart-frame.contract.ts",
+      "text": "\"visible\" | \"hidden\"",
+      "typeParameters": [],
+      "values": ["visible", "hidden"]
     },
     {
       "declaration": "type",

@@ -33,6 +33,14 @@
     padding: 0;
   }
 
+  /* titleVisibility="hidden": the caption is out of flow, so the ring and the legend take the first
+     row (an empty first row would keep the frame's row gap above them, and the details row would
+     move into it) */
+  .nz-donut-chart:has(> .nz-chart-frame-caption.nz-chart-visually-hidden)
+    > :is(.nz-chart-frame-body, .nz-chart-frame-legend) {
+    grid-row: 1;
+  }
+
   /* the legend hugs its columns (Figma: name, value, share side by side) */
   .nz-donut-chart > .nz-chart-frame-legend {
     grid-row: 2;

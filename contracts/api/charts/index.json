@@ -277,6 +277,12 @@
       "name": "ChartTicks"
     },
     {
+      "definedIn": "./chart-frame",
+      "import": "import type { ChartTitleVisibility } from '@nizivo/charts'",
+      "kind": "type",
+      "name": "ChartTitleVisibility"
+    },
+    {
       "definedIn": "./chart-tooltip",
       "import": "import { ChartTooltip } from '@nizivo/charts'",
       "kind": "component",

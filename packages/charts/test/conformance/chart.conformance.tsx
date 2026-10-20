@@ -4,7 +4,8 @@
 // - the figure and its caption, the title naming the server-rendered data table (§16),
 // - the status contract (§16.5): data-loading | data-empty | data-error, aria-busy while loading,
 //   the plot's child only while ready, the same box (the same slots) in all four statuses,
-// - the frame's strings forwarded (`labels`, §16.4),
+// - the frame's strings forwarded (`labels`, §16.4), and `titleVisibility` (M42): with `'hidden'`
+//   the caption is visually hidden, not removed, so it still names the figure,
 // - no inline style (CSP Profile B, §19.3), classes `nz-*` and data-* from contracts/vocabulary.json,
 // - and the keyboard claim, which depends on who draws the plot:
 //   `interaction: 'nizivo'`: a Nizivo renderer, whose ChartInteraction island is in the SERVER markup
@@ -21,7 +22,8 @@
 //
 //   chartConformance({ part: 'area-chart', interaction: 'nizivo', render: (frame) => <AreaChart {...PROPS} {...frame} /> });
 //
-// `frame` carries only what every renderer forwards to ChartFrame (status, labels). The run is on
+// `frame` carries only what every renderer forwards to ChartFrame (status, labels,
+// titleVisibility). The run is on
 // react-dom/server output, where a 'use client' island renders its initial markup, which is what a
 // user without JavaScript (or before hydration) gets. test/conformance/coverage.test.ts fails while a
 // part that renders ChartFrame has no registration.
@@ -33,6 +35,7 @@ import { describe, expect, test } from 'vitest';
 import type {
   ChartFrameLabels,
   ChartInteractionMode,
+  ChartTitleVisibility,
   DataStatus,
 } from '../../src/chart-frame/chart-frame.contract';
 import { PACKAGE_DIR } from '../helpers/source';
@@ -54,6 +57,7 @@ import {
 export interface FrameForward {
   status: DataStatus;
   labels?: Partial<ChartFrameLabels>;
+  titleVisibility?: ChartTitleVisibility;
 }
 
 export interface ChartConformanceCase {
@@ -179,6 +183,15 @@ export function statusProblems(c: ChartConformanceCase, frame: FrameForward): st
     `${titles.length} titles, or the title is outside the caption`,
   );
   flag(titleId !== '' && textOf(title ?? figure).trim() !== '', 'the title has no id or no text');
+  // titleVisibility (M42): 'hidden' hides the caption visually and keeps it in the markup, so the
+  // figcaption still names the figure and the title the table
+  const hidden = first !== undefined && classes(first).includes('nz-chart-visually-hidden');
+  flag(
+    hidden === (frame.titleVisibility === 'hidden'),
+    hidden
+      ? 'the caption is visually hidden without titleVisibility="hidden"'
+      : `the caption is not visually hidden with titleVisibility="${frame.titleVisibility ?? 'visible'}"`,
+  );
   flag(figure.attrs.has('data-x-direction'), 'no data-x-direction on the figure');
   flag(plot !== undefined, 'no chart-frame-plot');
 
@@ -346,6 +359,7 @@ export function caseProblems(c: ChartConformanceCase): string[] {
   });
   for (const status of STATUSES) {
     problems.push(...statusProblems(c, { status, labels: FORWARDED }));
+    problems.push(...statusProblems(c, { status, titleVisibility: 'hidden' }));
   }
   return problems;
 }
@@ -360,7 +374,7 @@ export function chartConformance(c: ChartConformanceCase): void {
       },
     );
 
-    test('the same box in all four statuses; the frame’s strings come through', () => {
+    test('the same box in all four statuses; the frame’s strings and titleVisibility come through', () => {
       expect(caseProblems(c)).toEqual([]);
     });
   });

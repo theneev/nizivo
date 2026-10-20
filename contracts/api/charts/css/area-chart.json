@@ -6,8 +6,9 @@
   "hooks": [
     {
       "fallback": {
-        "kind": "token",
-        "name": "--nz-bg-surface"
+        "kind": "expression",
+        "tokens": ["--nz-bg-surface"],
+        "value": "var(--nz-surface, var(--nz-bg-surface))"
       },
       "name": "--nz-area-chart-halo",
       "reads": [
@@ -22,7 +23,7 @@
   ],
   "layers": ["nz.components"],
   "package": "@nizivo/charts",
-  "runtime": [],
+  "runtime": ["--nz-surface"],
   "tokens": ["--nz-bg-surface", "--nz-chart-primary"],
   "version": 1
 }

@@ -7,7 +7,9 @@
 // - the x labels are `xTicks: { every?, max? }` and the y labels `yTicks` (about how many);
 // - a chart's strings are `XLabels extends ChartFrameLabels`, defaults in `xLabels`, and `labels`
 //   takes `Partial<XLabels>`;
-// - a chart's `XProps` includes the `<figure>`'s attributes (ChartFrame's), as react's parts do.
+// - a chart's `XProps` includes the `<figure>`'s attributes (ChartFrame's), as react's parts do,
+//   and ChartFrame's own props through `ChartFramePassthrough` (`title`, `summary`,
+//   `titleVisibility`, `status`, `tableView`…), so every chart takes them identically (M42).
 import type { ChartFrameElementProps } from '../chart-frame/chart-frame';
 
 /** A datum's field by key (serialisable from a Server Component), or a function of the datum. */
@@ -61,8 +63,10 @@ export interface CartesianChartOptions<T> {
 
 /**
  * ChartFrame's props a chart passes through, with the `<figure>`'s attributes: everything but what
- * the chart computes itself (`table`, `ticks`, `children`) and its own `labels`. `Omitted` names
- * what a chart also decides itself (BarChart: `'axes' | 'interaction'`).
+ * the chart computes itself (`table`, `ticks`, `children`) and its own `labels`, so `title`,
+ * `summary`, `titleVisibility` (`'hidden'` keeps the caption as the figure's accessible name only),
+ * `status`, `pending` and `tableView` are one prop in every chart. `Omitted` names what a chart
+ * also decides itself (BarChart: `'axes'`).
  */
 export type ChartFramePassthrough<Omitted extends keyof ChartFrameElementProps = never> = Omit<
   ChartFrameElementProps,

@@ -47,6 +47,7 @@ const present = (on: boolean): '' | undefined => (on ? '' : undefined);
 export function ChartFrame({
   title,
   summary,
+  titleVisibility = 'visible',
   status = 'ready',
   pending = false,
   table,
@@ -106,7 +107,15 @@ export function ChartFrame({
       'aria-busy': busy || undefined,
       children: (
         <>
-          <figcaption className="nz-chart-frame-caption" data-slot="chart-frame-caption">
+          {/* titleVisibility="hidden": visually hidden, never display: none, so the figcaption
+              still names the figure (and the title the table) */}
+          <figcaption
+            className={cx(
+              'nz-chart-frame-caption',
+              titleVisibility === 'hidden' && 'nz-chart-visually-hidden',
+            )}
+            data-slot="chart-frame-caption"
+          >
             <span className="nz-chart-frame-title" id={titleId}>
               {title}
             </span>

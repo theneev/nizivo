@@ -554,19 +554,19 @@
       "limitKiB": 1.3
     },
     "@nizivo/charts": {
-      "measured": 9274,
+      "measured": 9296,
       "limitKiB": 9.7
     },
     "@nizivo/charts/area-chart": {
-      "measured": 6692,
+      "measured": 6711,
       "limitKiB": 7.1
     },
     "@nizivo/charts/bar-chart": {
-      "measured": 5380,
+      "measured": 5407,
       "limitKiB": 5.7
     },
     "@nizivo/charts/chart-frame": {
-      "measured": 1793,
+      "measured": 1820,
       "limitKiB": 2
     },
     "@nizivo/charts/chart-tooltip": {
@@ -574,7 +574,7 @@
       "limitKiB": 0.5
     },
     "@nizivo/charts/donut-chart": {
-      "measured": 4856,
+      "measured": 4885,
       "limitKiB": 5.3
     },
     "@nizivo/charts/legend": {
@@ -586,7 +586,7 @@
       "limitKiB": 1.8
     },
     "@nizivo/charts { AreaChart } from the barrel": {
-      "measured": 6687,
+      "measured": 6709,
       "limitKiB": 7.1
     },
     "@nizivo/charts island with its imports": {
@@ -594,7 +594,7 @@
       "limitKiB": 1.7
     },
     "@nizivo/charts/styles.css": {
-      "measured": 3473,
+      "measured": 3506,
       "limitKiB": 3.7
     }
   }

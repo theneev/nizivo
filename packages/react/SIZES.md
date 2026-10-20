@@ -287,12 +287,12 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 | Entry          | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | -------------- | -------: | ---------: | ---------: | ----------: | -----------: |
-| `.`            |    9,274 |        9.1 |      8,416 |         9.7 |          658 |
-| /area-chart    |    6,692 |        6.5 |      6,094 |         7.1 |          578 |
-| /bar-chart     |    5,380 |        5.3 |      4,857 |         5.7 |          456 |
-| /chart-frame   |    1,793 |        1.8 |      1,604 |           2 |          255 |
+| `.`            |    9,296 |        9.1 |      8,381 |         9.7 |          636 |
+| /area-chart    |    6,711 |        6.6 |      6,082 |         7.1 |          559 |
+| /bar-chart     |    5,407 |        5.3 |      4,875 |         5.7 |          429 |
+| /chart-frame   |    1,820 |        1.8 |      1,629 |           2 |          228 |
 | /chart-tooltip |      413 |        0.4 |        373 |         0.5 |           99 |
-| /donut-chart   |    4,856 |        4.7 |      4,369 |         5.3 |          571 |
+| /donut-chart   |    4,885 |        4.8 |      4,390 |         5.3 |          542 |
 | /legend        |      870 |        0.8 |        796 |           1 |          154 |
 | /sparkline     |    1,618 |        1.6 |      1,526 |         1.8 |          225 |
 
@@ -300,14 +300,14 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 | Entry                         | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | ----------------------------- | -------: | ---------: | ---------: | ----------: | -----------: |
-| { AreaChart } from the barrel |    6,687 |        6.5 |      6,068 |         7.1 |          583 |
+| { AreaChart } from the barrel |    6,709 |        6.6 |      6,074 |         7.1 |          561 |
 | island with its imports       |    1,580 |        1.5 |      1,420 |         1.7 |          160 |
 
 #### `@nizivo/charts`: CSS and JSON entries (the published file, gzip)
 
 | Entry       | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | ----------- | -------: | ---------: | ---------: | ----------: | -----------: |
-| /styles.css |    3,473 |        3.4 |      3,073 |         3.7 |          315 |
+| /styles.css |    3,506 |        3.4 |      3,101 |         3.7 |          282 |
 
 <!-- size:tables:end -->
 

@@ -339,3 +339,15 @@ describe('AreaChart: ChartFrame passthrough', () => {
     }
   });
 });
+
+describe('AreaChart: titleVisibility (M42, one prop in every chart)', () => {
+  test('"hidden" reaches the frame: the caption visually hidden, in the HTML, naming the figure', () => {
+    const out = html({ summary: 'Daily sales', titleVisibility: 'hidden' });
+    expect(out).toMatch(
+      /<figcaption class="nz-chart-frame-caption nz-chart-visually-hidden" data-slot="chart-frame-caption"><span class="nz-chart-frame-title" id="([^"]+)">Sales<\/span><span class="nz-chart-frame-summary">Daily sales<\/span><\/figcaption>/,
+    );
+    const id = /class="nz-chart-frame-title" id="([^"]+)"/.exec(out)?.[1];
+    expect(out).toContain(`data-slot="chart-frame-table" aria-labelledby="${id ?? ''}"`);
+    expect(html()).toContain('<figcaption class="nz-chart-frame-caption" data-slot');
+  });
+});

@@ -9,6 +9,7 @@ export type {
   ChartTableView,
   ChartTickAlign,
   ChartTicks,
+  ChartTitleVisibility,
   ChartXDirection,
   DataStatus,
 } from './chart-frame.contract';

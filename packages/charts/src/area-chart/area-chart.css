@@ -3,8 +3,9 @@
 /* AreaChart (Figma 03 "Area Chart", 7275:13336). The grid, the baseline, the 10% wash, the 2 px
    line and the dashed comparison are the shared marks in chart-frame.css; this sheet adds the
    current value's end dot: 8 px with a 2 px bg/surface halo (Figma's OUTSIDE stroke), a
-   zero-length round-capped path so it stays round in percent space. Tinted surfaces set the halo
-   through --nz-area-chart-halo. */
+   zero-length round-capped path so it stays round in percent space. The halo is the surface behind
+   the chart: --nz-area-chart-halo if set, else the shared --nz-surface a Card (TrendCard) declares
+   (M42, read optionally: unset without @nizivo/react), else bg/surface. */
 @layer nz.components {
   .nz-area-chart-halo,
   .nz-area-chart-dot {
@@ -14,7 +15,7 @@
   }
 
   .nz-area-chart-halo {
-    stroke: var(--nz-area-chart-halo, var(--nz-bg-surface));
+    stroke: var(--nz-area-chart-halo, var(--nz-surface, var(--nz-bg-surface)));
     stroke-width: 12px;
   }
 
