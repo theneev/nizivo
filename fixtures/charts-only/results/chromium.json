@@ -1,0 +1,226 @@
+{
+  "engine": "chromium",
+  "browser": "chromium 156.0.8078.4",
+  "csp": "default-src 'none'; style-src 'self'; style-src-attr 'none'; script-src 'self'; img-src 'self'; font-src 'self'; base-uri 'none'; form-action 'none'",
+  "pass": true,
+  "failures": [],
+  "pages": {
+    "/csp-control": {
+      "sheets": ["/tokens.css", "/charts.css", "/page.css"],
+      "violations": ["style-src-attr: inline"],
+      "checks": {},
+      "axe": [],
+      "axeDark": [],
+      "axeReducedMotion": [],
+      "console": [
+        "error: Applying inline style violates the following Content Security Policy directive 'style-src-attr 'none''. Either the 'unsafe-inline' keyword, a hash ('sha256-NerDAUWfwD31YdZHveMrq0GLjsNFMwxLpZl0dPUeCcw='), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply t"
+      ],
+      "failures": []
+    },
+    "/frame": {
+      "sheets": ["/tokens.css", "/charts.css", "/page.css"],
+      "violations": [],
+      "checks": {
+        "layout": {
+          "plots": 2,
+          "plotsWithoutBox": 0,
+          "ticksOutsideFrame": "",
+          "ok": true
+        },
+        "visuallyHidden": {
+          "width": 1,
+          "height": 1,
+          "position": "absolute",
+          "clipPath": "inset(50%)",
+          "overflow": "hidden",
+          "display": "block",
+          "visibility": "visible",
+          "text": 141,
+          "hitsItself": false,
+          "pageOverflowX": false,
+          "exposed": 1,
+          "ok": true
+        },
+        "forcedColors": {
+          "marks": [
+            "nz-legend-mark current: rgb(0, 0, 0)",
+            "nz-legend-mark previous: rgb(96, 0, 0)",
+            "nz-legend-mark current: rgb(0, 0, 0)",
+            "nz-legend-mark previous: rgb(96, 0, 0)"
+          ],
+          "currentLine": "rgb(0, 0, 0)",
+          "kept": [],
+          "ok": true
+        },
+        "focusVisible": {
+          "tabbed": true,
+          "focusVisible": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "2px",
+          "outlineOffset": "2px",
+          "tokenWidth": "2px",
+          "outlineColor": "rgb(46, 131, 88)",
+          "tokenColor": "rgb(46, 131, 88)",
+          "ringMinPixels": 280,
+          "ringDrawn": true,
+          "pointer": {
+            "focused": true,
+            "focusVisible": false,
+            "open": true
+          },
+          "ok": true
+        }
+      },
+      "axe": [],
+      "axeDark": [],
+      "axeReducedMotion": [],
+      "console": [],
+      "failures": [],
+      "axeForcedColors": []
+    },
+    "/statuses": {
+      "sheets": ["/tokens.css", "/charts.css", "/page.css"],
+      "violations": [],
+      "checks": {
+        "layout": {
+          "plots": 1,
+          "plotsWithoutBox": 0,
+          "ticksOutsideFrame": "",
+          "ok": true
+        },
+        "visuallyHidden": {
+          "width": 1,
+          "height": 1,
+          "position": "absolute",
+          "clipPath": "inset(50%)",
+          "overflow": "hidden",
+          "display": "block",
+          "visibility": "visible",
+          "text": 13,
+          "hitsItself": false,
+          "pageOverflowX": false,
+          "exposed": 1,
+          "ok": true
+        }
+      },
+      "axe": [],
+      "axeDark": [],
+      "axeReducedMotion": [],
+      "console": [],
+      "failures": [],
+      "axeForcedColors": []
+    },
+    "/third-party": {
+      "sheets": ["/tokens.css", "/charts.css", "/page.css"],
+      "violations": [],
+      "checks": {
+        "layout": {
+          "plots": 1,
+          "plotsWithoutBox": 0,
+          "ticksOutsideFrame": "",
+          "ok": true
+        },
+        "noKeyboardClaim": {
+          "stops": 0,
+          "focusInside": false,
+          "liveRegions": 0,
+          "ok": true
+        }
+      },
+      "axe": [],
+      "axeDark": [],
+      "axeReducedMotion": [],
+      "console": [],
+      "failures": [],
+      "axeForcedColors": []
+    },
+    "/parts": {
+      "sheets": ["/tokens.css", "/charts.css", "/page.css"],
+      "violations": [],
+      "checks": {
+        "layout": {
+          "plots": 3,
+          "plotsWithoutBox": 0,
+          "ticksOutsideFrame": "",
+          "ok": true
+        },
+        "forcedColors": {
+          "marks": [
+            "nz-legend-mark current: rgb(0, 0, 0)",
+            "nz-legend-mark previous: rgb(96, 0, 0)",
+            "nz-legend-mark cat-1: rgba(5, 0, 73, 0.8)",
+            "nz-legend-mark cat-2: rgb(255, 255, 255)",
+            "nz-legend-mark cat-3: rgb(0, 0, 0)",
+            "nz-legend-mark other: rgb(96, 0, 0)",
+            "nz-chart-tooltip-swatch current: rgb(0, 0, 0)",
+            "nz-chart-tooltip-swatch previous: rgb(96, 0, 0)",
+            "nz-chart-tooltip-swatch cat-1: rgba(5, 0, 73, 0.8)",
+            "nz-chart-tooltip-swatch cat-2: rgb(255, 255, 255)",
+            "nz-chart-tooltip-swatch cat-3: rgb(0, 0, 0)",
+            "nz-chart-tooltip-swatch other: rgb(96, 0, 0)"
+          ],
+          "currentLine": "rgb(0, 0, 0)",
+          "kept": [],
+          "ok": true
+        },
+        "focusVisible": {
+          "tabbed": true,
+          "focusVisible": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "2px",
+          "outlineOffset": "2px",
+          "tokenWidth": "2px",
+          "outlineColor": "rgb(46, 131, 88)",
+          "tokenColor": "rgb(46, 131, 88)",
+          "ringMinPixels": 1934,
+          "ringDrawn": true,
+          "pointer": {
+            "focused": true,
+            "focusVisible": false,
+            "open": false
+          },
+          "ok": true
+        }
+      },
+      "axe": [],
+      "axeDark": [],
+      "axeReducedMotion": [],
+      "console": [],
+      "failures": [],
+      "axeForcedColors": []
+    },
+    "/rtl": {
+      "sheets": ["/tokens.css", "/charts.css", "/page.css"],
+      "violations": [],
+      "checks": {
+        "layout": {
+          "plots": 2,
+          "plotsWithoutBox": 0,
+          "ticksOutsideFrame": "",
+          "ok": true
+        },
+        "rightToLeft": {
+          "default": {
+            "caption": "rtl",
+            "plot": "ltr",
+            "scale": "none",
+            "firstTickLeftOfLast": true
+          },
+          "mirrored": {
+            "caption": "rtl",
+            "plot": "rtl",
+            "scale": "-1 1",
+            "firstTickLeftOfLast": false
+          },
+          "ok": true
+        }
+      },
+      "axe": [],
+      "axeDark": [],
+      "axeReducedMotion": [],
+      "console": [],
+      "failures": [],
+      "axeForcedColors": []
+    }
+  }
+}

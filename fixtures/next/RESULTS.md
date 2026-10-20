@@ -74,6 +74,20 @@ Gzip -9 of every chunk the page loads, minus `/button-only` (174,639 B Turbopack
 
 Week 7's measurement of the same design on a copy of the repo (W7-RESULTS.md "D-aa": `/icon-button` +20,805 B Turbopack and +62,124 B dev, `/field-zero-js` +3,035 B and +7,800 B, the static exports 0 B) holds on the packed package. Every other page keeps week 8's set of client modules in every mode; their bytes move by −143 to +456 B (`/icon-button` and `/icon-button-tooltip` +456 B under `next dev`: the element builder moved into its own module).
 
+## Week 11 (2026-10-20): the island after M40
+
+No page changed. The packed `@nizivo/charts` carries the week 11 island (M40, `packages/charts/W11-RESULTS.md`): Escape for a pointer-shown card wherever focus is, the column mode BarChart uses, the plot direction read after hydration, and the compact payload (series names once, points as tuples, the spoken text joined on the client). The two AreaChart pages still import the barrel; `./area-chart` is now in the exports map.
+
+**Verdict: all 28 pages pass under Turbopack, webpack, webpack + `optimizePackageImports` and `next dev`.** Run read-only first with `node fixtures/runner/next.ts --dev`; only the two AreaChart pages differed from the week 10 record, by the island chunk, so the four modes were re-recorded with `--skip-pack --skip-install --dev --record` (all pass). The rest of the diff is the theme-flash timings, which move by a frame from run to run.
+
+| Page                 | Turbopack | webpack | webpack + OPI | `next dev` | Island chunk, gzip (week 10 → 11)                              |
+| -------------------- | --------: | ------: | ------------: | ---------: | -------------------------------------------------------------- |
+| `/chart-area`        |    +1,588 |  +1,663 |        +1,658 |     +2,964 | 1,056 → 1,423 B Turbopack, 1,198 → 1,556 B webpack (OPI 1,552) |
+| `/chart-area-static` |    +1,588 |       0 |             0 |     +2,964 | the same chunk under Turbopack and dev; none under webpack     |
+| `/chart-third-party` |      +522 |    +584 |          +584 |     +4,708 | none (unchanged)                                               |
+
+The island chunk grew by 354 to 367 B gzip (`pnpm size` measures the island's client graph at 1,457 B, from 1,080 B). These figures are from the re-record after the week's review fixes (Escape on the focused plot keeps an enclosing dialog open, and hiding the card empties the live region: 6 to 14 B gzip more than the first week 11 record). The fixture records JavaScript only; the AreaChart page's RSC payload shrinks with the compact payload, measured outside the fixture (`packages/charts/W11-RESULTS.md`, "Long series"). The react pages are byte-identical to week 10 in every mode.
+
 ## Week 10 (2026-10-19): `@nizivo/charts`
 
 Three pages for v0.2's charts (ARCHITECTURE.md §14.1, §10.8), on a fourth packed tarball (`@nizivo/charts`, private until 0.2; `pack.ts` marks its one `'use client'` module, the ChartInteraction island, with `nzcm[...]`): `/chart-area` (an AreaChart with a comparison series), `/chart-area-static` (the same with `interaction="none"`) and `/chart-third-party` (a stand-in client renderer inside a server `ChartFrame` with `interaction="none"`, the K9 case). The two AreaChart pages import the barrel, `@nizivo/charts`: `./area-chart` is not in the exports map this week (its size against §17.2 is open, `packages/charts/W10-RESULTS.md`). The spec checks the server HTML (the figure, the SVG with its line, the data table, no `style` attribute, an empty polite region), then Tab to the layer, its name and role description, ArrowLeft speaking a point, the card shown and Escape hiding it.

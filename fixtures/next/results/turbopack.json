@@ -63,7 +63,7 @@
         "wrong": [
           "6:light dark/rgb(246, 247, 244)",
           "23:light dark/rgb(246, 247, 244)",
-          "40:light dark/rgb(246, 247, 244)",
+          "39:light dark/rgb(246, 247, 244)",
           "56:light dark/rgb(246, 247, 244)",
           "73:light dark/rgb(246, 247, 244)"
         ],
@@ -1147,9 +1147,9 @@
         "modules": ["_island/chart-interaction.client"],
         "chunks": [
           {
-            "url": "/_next/static/chunks/0lmddbs3k4dge.js",
-            "bytes": 2366,
-            "gzip": 1056
+            "url": "/_next/static/chunks/34bt2uvcyvjmi.js",
+            "bytes": 3140,
+            "gzip": 1423
           }
         ]
       },
@@ -1159,8 +1159,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 8,
-        "bytes": 571342,
-        "gzip": 175869
+        "bytes": 572130,
+        "gzip": 176227
       },
       "failures": []
     },
@@ -1191,9 +1191,9 @@
         "modules": ["_island/chart-interaction.client"],
         "chunks": [
           {
-            "url": "/_next/static/chunks/0lmddbs3k4dge.js",
-            "bytes": 2366,
-            "gzip": 1056
+            "url": "/_next/static/chunks/34bt2uvcyvjmi.js",
+            "bytes": 3140,
+            "gzip": 1423
           }
         ]
       },
@@ -1203,8 +1203,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 8,
-        "bytes": 571342,
-        "gzip": 175869
+        "bytes": 572130,
+        "gzip": 176227
       },
       "failures": []
     },

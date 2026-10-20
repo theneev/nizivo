@@ -29,6 +29,11 @@
 //      xDirection="rtl" mirrors it.
 // The axe passes run in a second context that bypasses CSP, because axe-core is injected as a
 // script; everything else runs with the policy enforced.
+//
+// The results are deterministic, so a re-record changes only what the run found: pages in
+// pages.ts order, checks in the order they run, no timestamps, and every string scrubbed of the
+// run's own origin (the server listens on a free port), its temporary folder and the repo's path
+// (`portable()`), so a CSP report, a console line or an error names `<origin>/frame`, not a port.
 /* oxlint-disable no-await-in-loop -- engines and pages run one after another in one browser */
 import { spawnSync } from 'node:child_process';
 import { mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync } from 'node:fs';
@@ -318,13 +323,18 @@ async function focusVisible(
     open: el.closest('details')?.open === true,
   }));
   const widthMatches = ring.tokenWidth !== '' && ring.outlineWidth === ring.tokenWidth;
+  // A ring paints at least its box's perimeter in the focus colour. The count itself is not
+  // recorded: where the plot's own green sits inside the clip (AreaChart's layer, whose card and
+  // crosshair show on focus), it moves by a few pixels from run to run, and committed results must
+  // not change unless the outcome does.
+  const ringMinPixels = 2 * Math.round(box.width + box.height);
   return {
     tabbed,
     ...ring,
     outlineColor,
     tokenColor: `rgb(${want.join(', ')})`,
-    ringPixelsBefore: before,
-    ringPixelsAfter: after,
+    ringMinPixels,
+    ringDrawn: after - before >= ringMinPixels,
     pointer,
     ok:
       tabbed &&
@@ -332,7 +342,7 @@ async function focusVisible(
       ring.outlineStyle === 'solid' &&
       widthMatches &&
       colorMatches &&
-      after - before >= 2 * Math.round(box.width + box.height) &&
+      after - before >= ringMinPixels &&
       !pointer.focusVisible &&
       (!disclosure || pointer.open),
   };
@@ -605,6 +615,31 @@ async function checkPage(
   return result;
 }
 
+/**
+ * `value` with every string's run-specific parts replaced: the server's origin (a free port) by
+ * `<origin>`, the run's temporary folder by `<work>`, the repo by `<repo>`, the OS temporary folder
+ * by `<tmp>`. Keys and order are kept.
+ */
+export function portable(value: object, origin: string, work: string): object {
+  const pairs: [string, string][] = [
+    [origin, '<origin>'],
+    [work, '<work>'],
+    [REPO_ROOT.replace(/\/$/, ''), '<repo>'],
+    [tmpdir().replace(/\/$/, ''), '<tmp>'],
+  ].filter((pair): pair is [string, string] => pair[0] !== '');
+  const scrub = (item: unknown): unknown => {
+    if (typeof item === 'string') {
+      return pairs.reduce((text, [from, to]) => text.replaceAll(from, to), item);
+    }
+    if (Array.isArray(item)) return item.map(scrub);
+    if (typeof item === 'object' && item !== null) {
+      return Object.fromEntries(Object.entries(item).map(([key, entry]) => [key, scrub(entry)]));
+    }
+    return item;
+  };
+  return Object.fromEntries(Object.entries(value).map(([key, entry]) => [key, scrub(entry)]));
+}
+
 async function main(): Promise<number> {
   const { values } = parseArgs({
     options: {
@@ -713,7 +748,10 @@ async function main(): Promise<number> {
             failures,
             pages: results,
           };
-          writeResults(resultsFile(FIXTURE_DIR, `${engine}.json`, values.record === true), result);
+          writeResults(
+            resultsFile(FIXTURE_DIR, `${engine}.json`, values.record === true),
+            portable(result, base, work),
+          );
           console.log(`${engine}: ${result.pass ? 'pass' : `FAIL\n  ${failures.join('\n  ')}`}`);
           if (!result.pass) failed += 1;
         } finally {
@@ -729,4 +767,4 @@ async function main(): Promise<number> {
   }
 }
 
-process.exitCode = await main();
+if (import.meta.main) process.exitCode = await main();

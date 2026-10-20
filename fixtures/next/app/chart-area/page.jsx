@@ -2,7 +2,8 @@
 // Component. The server HTML carries the whole SVG, the data table and the legend; the only client
 // module is the ChartInteraction island, which receives pre-formatted strings.
 import '@nizivo/charts/styles.css';
-// The barrel: `./area-chart` is not exported this week (its size against §17.2 is open; W10-RESULTS.md).
+// The barrel on purpose, now that `./area-chart` is exported (M40): it checks that the barrel
+// tree-shakes to AreaChart.
 import { AreaChart } from '@nizivo/charts';
 import { SALES, USD } from './data.js';
 

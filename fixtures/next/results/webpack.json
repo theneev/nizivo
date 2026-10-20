@@ -61,10 +61,10 @@
       "late": {
         "frames": 90,
         "wrong": [
-          "5:light dark/rgb(246, 247, 244)",
+          "6:light dark/rgb(246, 247, 244)",
           "22:light dark/rgb(246, 247, 244)",
           "39:light dark/rgb(246, 247, 244)",
-          "55:light dark/rgb(246, 247, 244)",
+          "56:light dark/rgb(246, 247, 244)",
           "72:light dark/rgb(246, 247, 244)"
         ],
         "firstPaint": 20,
@@ -1173,9 +1173,9 @@
         "modules": ["_island/chart-interaction.client"],
         "chunks": [
           {
-            "url": "/_next/static/chunks/app/chart-area/page-61d729a2f406ee28.js",
-            "bytes": 2668,
-            "gzip": 1198
+            "url": "/_next/static/chunks/app/chart-area/page-8b2375d5b8ad97e9.js",
+            "bytes": 3463,
+            "gzip": 1556
           }
         ]
       },
@@ -1185,8 +1185,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 6,
-        "bytes": 565358,
-        "gzip": 173205
+        "bytes": 566153,
+        "gzip": 173562
       },
       "failures": []
     },

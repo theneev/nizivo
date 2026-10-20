@@ -50,8 +50,8 @@
       "light": {
         "frames": 90,
         "wrong": [],
-        "firstPaint": 36,
-        "firstContentfulPaint": 36,
+        "firstPaint": 32,
+        "firstContentfulPaint": 32,
         "firstTheme": "system",
         "lastTheme": "system",
         "pixel": "rgb(246, 247, 244)",
@@ -61,10 +61,10 @@
       "late": {
         "frames": 90,
         "wrong": [
-          "19:light dark/rgb(246, 247, 244)",
+          "18:light dark/rgb(246, 247, 244)",
           "35:light dark/rgb(246, 247, 244)",
           "52:light dark/rgb(246, 247, 244)",
-          "69:light dark/rgb(246, 247, 244)",
+          "68:light dark/rgb(246, 247, 244)",
           "85:light dark/rgb(246, 247, 244)"
         ],
         "firstPaint": 36,
@@ -1148,8 +1148,8 @@
         "chunks": [
           {
             "url": "/_next/static/chunks/0emn_%40nizivo_charts_dist_142h0rnhd_su7._.js",
-            "bytes": 16339,
-            "gzip": 2251
+            "bytes": 20601,
+            "gzip": 2855
           }
         ]
       },
@@ -1159,8 +1159,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 17,
-        "bytes": 3747719,
-        "gzip": 820708
+        "bytes": 3751981,
+        "gzip": 821314
       },
       "failures": []
     },
@@ -1192,8 +1192,8 @@
         "chunks": [
           {
             "url": "/_next/static/chunks/0emn_%40nizivo_charts_dist_142h0rnhd_su7._.js",
-            "bytes": 16339,
-            "gzip": 2251
+            "bytes": 20601,
+            "gzip": 2855
           }
         ]
       },
@@ -1203,8 +1203,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 17,
-        "bytes": 3747719,
-        "gzip": 820708
+        "bytes": 3751981,
+        "gzip": 821314
       },
       "failures": []
     },
