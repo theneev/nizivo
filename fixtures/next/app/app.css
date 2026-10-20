@@ -5,7 +5,44 @@ body {
   color: var(--nz-text-primary);
 }
 
-/* The home page's link list: spaced so each link meets WCAG 2.2 target size (2.5.8). */
-li {
+/* The home page's link list: spaced so each link meets WCAG 2.2 target size (2.5.8). Only that
+   list: a page's Nizivo lists (RankedList, Breadcrumb, Pagination) keep their own spacing. */
+main > ul > li {
   margin-block: 0.5rem;
+}
+
+/* The overview dashboard pages (Figma 08): the KPI row's gap is 16 (not the gutter), four tiles
+   from 1024 px, two below; the sales row is the TrendCard (8 columns) beside "Top channels" (4). */
+.dashboard {
+  display: grid;
+  gap: var(--nz-space-6);
+  max-inline-size: 70.5rem;
+  margin-inline: auto;
+  padding: var(--nz-space-6);
+}
+
+.dashboard-kpis {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--nz-space-4);
+}
+
+.dashboard-sales {
+  display: grid;
+  gap: var(--nz-space-6);
+}
+
+@media (min-width: 64rem) {
+  .dashboard-kpis {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .dashboard-sales {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+.dashboard-aside {
+  max-inline-size: 22.5rem;
 }

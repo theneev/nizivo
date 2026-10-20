@@ -39,8 +39,8 @@
       "static": {
         "frames": 90,
         "wrong": [],
-        "firstPaint": 28,
-        "firstContentfulPaint": 28,
+        "firstPaint": 24,
+        "firstContentfulPaint": 24,
         "firstTheme": "dark",
         "lastTheme": "dark",
         "pixel": "rgb(16, 19, 17)",
@@ -1114,6 +1114,160 @@
       },
       "failures": []
     },
+    "/count-up": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "count-up count-up-value heading",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        }
+      },
+      "chunks": 8,
+      "markers": ["nzfm[motion/count-up.client]"],
+      "missing": [],
+      "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
+      "js": {
+        "files": 8,
+        "bytes": 572161,
+        "gzip": 176379
+      },
+      "failures": []
+    },
+    "/t0-nav": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "avatar avatar-group avatar-group-more avatar-initials breadcrumb breadcrumb-current breadcrumb-item breadcrumb-link breadcrumb-list breadcrumb-separator heading pagination pagination-ellipsis pagination-icon pagination-list pagination-next pagination-page pagination-previous pagination-summary",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        }
+      },
+      "chunks": 7,
+      "markers": [],
+      "missing": [],
+      "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
+      "js": {
+        "files": 7,
+        "bytes": 568619,
+        "gzip": 174639
+      },
+      "failures": []
+    },
+    "/dashboard-kpi": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "delta delta-value heading kpi-tile metric metric-change metric-chart metric-comparison metric-label metric-value-row number-value ranked-list ranked-list-action ranked-list-bar ranked-list-header ranked-list-item ranked-list-label ranked-list-list ranked-list-title ranked-list-track sparkline",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "dashboard": {
+          "serverTiles": "4",
+          "serverFallbackTiles": "0",
+          "fallbackFirst": true,
+          "sparklines": "4",
+          "rankedList": true,
+          "liveRegionsInTiles": "0",
+          "readyTiles": "4",
+          "cls": "0.0000",
+          "layoutShifts": "0",
+          "resolvedMs": "548",
+          "ok": true
+        }
+      },
+      "chunks": 7,
+      "markers": [],
+      "missing": [],
+      "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
+      "js": {
+        "files": 7,
+        "bytes": 568619,
+        "gzip": 174639
+      },
+      "failures": []
+    },
+    "/dashboard": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "chart-frame chart-frame-body chart-frame-caption chart-frame-plot chart-frame-table chart-frame-x-ticks chart-frame-y-ticks delta delta-value heading kpi-tile legend legend-item metric metric-change metric-chart metric-comparison metric-label metric-value-row native-select native-select-chevron native-select-trigger number-value ranked-list ranked-list-action ranked-list-bar ranked-list-header ranked-list-item ranked-list-label ranked-list-list ranked-list-title ranked-list-track sparkline trend-card trend-card-action trend-card-chart trend-card-header trend-card-legend",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "dashboard": {
+          "serverTiles": "4",
+          "serverFallbackTiles": "4",
+          "fallbackFirst": true,
+          "sparklines": "4",
+          "rankedList": true,
+          "liveRegionsInTiles": "0",
+          "readyTiles": "4",
+          "cls": "0.0000",
+          "layoutShifts": "0",
+          "resolvedMs": "1352",
+          "ok": true
+        },
+        "chart": {
+          "serverFigure": true,
+          "serverTable": true,
+          "serverSvg": true,
+          "serverStyleAttributes": "0",
+          "serverRegionEmpty": true,
+          "focused": true,
+          "name": "Sales",
+          "roledescription": "interactive chart",
+          "announced": "Tue, Oct 13, This period, $7,910, Previous, $6,570, +20.4%, vs previous",
+          "cardShown": true,
+          "cardHidden": true,
+          "ok": true
+        }
+      },
+      "chunks": 8,
+      "markers": [],
+      "missing": [],
+      "unexpected": [],
+      "charts": {
+        "modules": ["_island/chart-interaction.client"],
+        "chunks": [
+          {
+            "url": "/_next/static/chunks/0st3l2f_g3upq.js",
+            "bytes": 3415,
+            "gzip": 1537
+          }
+        ]
+      },
+      "axe": [],
+      "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
+      "js": {
+        "files": 8,
+        "bytes": 572417,
+        "gzip": 176342
+      },
+      "failures": []
+    },
     "/chart-area": {
       "console": [],
       "interactions": {
@@ -1147,9 +1301,9 @@
         "modules": ["_island/chart-interaction.client"],
         "chunks": [
           {
-            "url": "/_next/static/chunks/34bt2uvcyvjmi.js",
-            "bytes": 3140,
-            "gzip": 1423
+            "url": "/_next/static/chunks/0st3l2f_g3upq.js",
+            "bytes": 3415,
+            "gzip": 1537
           }
         ]
       },
@@ -1159,8 +1313,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 8,
-        "bytes": 572130,
-        "gzip": 176227
+        "bytes": 572417,
+        "gzip": 176342
       },
       "failures": []
     },
@@ -1191,9 +1345,9 @@
         "modules": ["_island/chart-interaction.client"],
         "chunks": [
           {
-            "url": "/_next/static/chunks/34bt2uvcyvjmi.js",
-            "bytes": 3140,
-            "gzip": 1423
+            "url": "/_next/static/chunks/0st3l2f_g3upq.js",
+            "bytes": 3415,
+            "gzip": 1537
           }
         ]
       },
@@ -1203,8 +1357,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 8,
-        "bytes": 572130,
-        "gzip": 176227
+        "bytes": 572417,
+        "gzip": 176342
       },
       "failures": []
     },

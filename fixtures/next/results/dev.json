@@ -39,8 +39,8 @@
       "static": {
         "frames": 90,
         "wrong": [],
-        "firstPaint": 36,
-        "firstContentfulPaint": 36,
+        "firstPaint": 40,
+        "firstContentfulPaint": 40,
         "firstTheme": "dark",
         "lastTheme": "dark",
         "pixel": "rgb(16, 19, 17)",
@@ -50,8 +50,8 @@
       "light": {
         "frames": 90,
         "wrong": [],
-        "firstPaint": 32,
-        "firstContentfulPaint": 32,
+        "firstPaint": 36,
+        "firstContentfulPaint": 36,
         "firstTheme": "system",
         "lastTheme": "system",
         "pixel": "rgb(246, 247, 244)",
@@ -61,11 +61,11 @@
       "late": {
         "frames": 90,
         "wrong": [
-          "18:light dark/rgb(246, 247, 244)",
-          "35:light dark/rgb(246, 247, 244)",
-          "52:light dark/rgb(246, 247, 244)",
-          "68:light dark/rgb(246, 247, 244)",
-          "85:light dark/rgb(246, 247, 244)"
+          "20:light dark/rgb(246, 247, 244)",
+          "37:light dark/rgb(246, 247, 244)",
+          "54:light dark/rgb(246, 247, 244)",
+          "70:light dark/rgb(246, 247, 244)",
+          "87:light dark/rgb(246, 247, 244)"
         ],
         "firstPaint": 36,
         "firstContentfulPaint": 36,
@@ -114,7 +114,7 @@
       "js": {
         "files": 16,
         "bytes": 3731120,
-        "gzip": 818350
+        "gzip": 818353
       },
       "failures": []
     },
@@ -140,7 +140,7 @@
       "js": {
         "files": 16,
         "bytes": 3731120,
-        "gzip": 818350
+        "gzip": 818353
       },
       "failures": []
     },
@@ -211,8 +211,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 25,
-        "bytes": 5957216,
-        "gzip": 1061553
+        "bytes": 5957770,
+        "gzip": 1061645
       },
       "failures": []
     },
@@ -283,8 +283,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 25,
-        "bytes": 5957216,
-        "gzip": 1061553
+        "bytes": 5957770,
+        "gzip": 1061645
       },
       "failures": []
     },
@@ -340,8 +340,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 20,
-        "bytes": 5539274,
-        "gzip": 1020161
+        "bytes": 5539828,
+        "gzip": 1020257
       },
       "failures": []
     },
@@ -386,8 +386,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 25,
-        "bytes": 5752657,
-        "gzip": 1045498
+        "bytes": 5753211,
+        "gzip": 1045586
       },
       "failures": []
     },
@@ -444,8 +444,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 19,
-        "bytes": 5446141,
-        "gzip": 1011854
+        "bytes": 5446695,
+        "gzip": 1011952
       },
       "failures": []
     },
@@ -500,7 +500,7 @@
       "js": {
         "files": 17,
         "bytes": 4204158,
-        "gzip": 878411
+        "gzip": 878413
       },
       "failures": []
     },
@@ -545,8 +545,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 25,
-        "bytes": 5752657,
-        "gzip": 1045498
+        "bytes": 5753211,
+        "gzip": 1045586
       },
       "failures": []
     },
@@ -591,8 +591,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 25,
-        "bytes": 5752657,
-        "gzip": 1045498
+        "bytes": 5753211,
+        "gzip": 1045586
       },
       "failures": []
     },
@@ -622,7 +622,7 @@
       "js": {
         "files": 16,
         "bytes": 3731120,
-        "gzip": 818350
+        "gzip": 818353
       },
       "failures": []
     },
@@ -652,7 +652,7 @@
       "js": {
         "files": 16,
         "bytes": 3731120,
-        "gzip": 818350
+        "gzip": 818353
       },
       "failures": []
     },
@@ -683,8 +683,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 17,
-        "bytes": 3753238,
-        "gzip": 821914
+        "bytes": 3753792,
+        "gzip": 822009
       },
       "failures": []
     },
@@ -737,8 +737,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 17,
-        "bytes": 3868328,
-        "gzip": 831266
+        "bytes": 3868882,
+        "gzip": 831363
       },
       "failures": []
     },
@@ -764,7 +764,7 @@
       "js": {
         "files": 16,
         "bytes": 3731120,
-        "gzip": 818350
+        "gzip": 818353
       },
       "failures": []
     },
@@ -789,8 +789,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 17,
-        "bytes": 3795620,
-        "gzip": 826901
+        "bytes": 3796174,
+        "gzip": 826993
       },
       "failures": []
     },
@@ -822,8 +822,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 17,
-        "bytes": 4227214,
-        "gzip": 881092
+        "bytes": 4227768,
+        "gzip": 881180
       },
       "failures": []
     },
@@ -849,7 +849,7 @@
       "js": {
         "files": 16,
         "bytes": 3731120,
-        "gzip": 818350
+        "gzip": 818353
       },
       "failures": []
     },
@@ -875,7 +875,7 @@
       "js": {
         "files": 16,
         "bytes": 3731120,
-        "gzip": 818350
+        "gzip": 818353
       },
       "failures": []
     },
@@ -913,8 +913,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 17,
-        "bytes": 4227214,
-        "gzip": 881092
+        "bytes": 4227768,
+        "gzip": 881180
       },
       "failures": []
     },
@@ -966,8 +966,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 20,
-        "bytes": 5412550,
-        "gzip": 1009802
+        "bytes": 5413104,
+        "gzip": 1009882
       },
       "failures": []
     },
@@ -1013,7 +1013,7 @@
       "js": {
         "files": 17,
         "bytes": 4649986,
-        "gzip": 927946
+        "gzip": 927948
       },
       "failures": []
     },
@@ -1048,7 +1048,7 @@
       "js": {
         "files": 17,
         "bytes": 3769204,
-        "gzip": 827259
+        "gzip": 827261
       },
       "failures": []
     },
@@ -1079,7 +1079,7 @@
       "js": {
         "files": 16,
         "bytes": 3731120,
-        "gzip": 818350
+        "gzip": 818353
       },
       "failures": []
     },
@@ -1110,7 +1110,161 @@
       "js": {
         "files": 17,
         "bytes": 3759437,
-        "gzip": 823904
+        "gzip": 823906
+      },
+      "failures": []
+    },
+    "/count-up": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "count-up count-up-value heading",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        }
+      },
+      "chunks": 17,
+      "markers": ["nzfm[motion/count-up.client]"],
+      "missing": [],
+      "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
+      "js": {
+        "files": 17,
+        "bytes": 3755840,
+        "gzip": 822841
+      },
+      "failures": []
+    },
+    "/t0-nav": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "avatar avatar-group avatar-group-more avatar-initials breadcrumb breadcrumb-current breadcrumb-item breadcrumb-link breadcrumb-list breadcrumb-separator heading pagination pagination-ellipsis pagination-icon pagination-list pagination-next pagination-page pagination-previous pagination-summary",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        }
+      },
+      "chunks": 16,
+      "markers": [],
+      "missing": [],
+      "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
+      "js": {
+        "files": 16,
+        "bytes": 3731120,
+        "gzip": 818353
+      },
+      "failures": []
+    },
+    "/dashboard-kpi": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "delta delta-value heading kpi-tile metric metric-change metric-chart metric-comparison metric-label metric-value-row number-value ranked-list ranked-list-action ranked-list-bar ranked-list-header ranked-list-item ranked-list-label ranked-list-list ranked-list-title ranked-list-track sparkline",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "dashboard": {
+          "serverTiles": "4",
+          "serverFallbackTiles": "0",
+          "fallbackFirst": true,
+          "sparklines": "4",
+          "rankedList": true,
+          "liveRegionsInTiles": "0",
+          "readyTiles": "4",
+          "cls": "0.0000",
+          "layoutShifts": "0",
+          "resolvedMs": "691",
+          "ok": true
+        }
+      },
+      "chunks": 16,
+      "markers": [],
+      "missing": [],
+      "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
+      "js": {
+        "files": 16,
+        "bytes": 3731186,
+        "gzip": 818387
+      },
+      "failures": []
+    },
+    "/dashboard": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "chart-frame chart-frame-body chart-frame-caption chart-frame-plot chart-frame-table chart-frame-x-ticks chart-frame-y-ticks delta delta-value heading kpi-tile legend legend-item metric metric-change metric-chart metric-comparison metric-label metric-value-row native-select native-select-chevron native-select-trigger number-value ranked-list ranked-list-action ranked-list-bar ranked-list-header ranked-list-item ranked-list-label ranked-list-list ranked-list-title ranked-list-track sparkline trend-card trend-card-action trend-card-chart trend-card-header trend-card-legend",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "dashboard": {
+          "serverTiles": "4",
+          "serverFallbackTiles": "4",
+          "fallbackFirst": true,
+          "sparklines": "4",
+          "rankedList": true,
+          "liveRegionsInTiles": "0",
+          "readyTiles": "4",
+          "cls": "0.0000",
+          "layoutShifts": "0",
+          "resolvedMs": "1458",
+          "ok": true
+        },
+        "chart": {
+          "serverFigure": true,
+          "serverTable": true,
+          "serverSvg": true,
+          "serverStyleAttributes": "0",
+          "serverRegionEmpty": true,
+          "focused": true,
+          "name": "Sales",
+          "roledescription": "interactive chart",
+          "announced": "Tue, Oct 13, This period, $7,910, Previous, $6,570, +20.4%, vs previous",
+          "cardShown": true,
+          "cardHidden": true,
+          "ok": true
+        }
+      },
+      "chunks": 17,
+      "markers": [],
+      "missing": [],
+      "unexpected": [],
+      "charts": {
+        "modules": ["_island/chart-interaction.client"],
+        "chunks": [
+          {
+            "url": "/_next/static/chunks/0emn_%40nizivo_charts_dist_142h0rnhd_su7._.js",
+            "bytes": 21200,
+            "gzip": 3016
+          }
+        ]
+      },
+      "axe": [],
+      "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
+      "js": {
+        "files": 17,
+        "bytes": 3752580,
+        "gzip": 821475
       },
       "failures": []
     },
@@ -1148,8 +1302,8 @@
         "chunks": [
           {
             "url": "/_next/static/chunks/0emn_%40nizivo_charts_dist_142h0rnhd_su7._.js",
-            "bytes": 20601,
-            "gzip": 2855
+            "bytes": 21200,
+            "gzip": 3016
           }
         ]
       },
@@ -1159,8 +1313,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 17,
-        "bytes": 3751981,
-        "gzip": 821314
+        "bytes": 3752580,
+        "gzip": 821475
       },
       "failures": []
     },
@@ -1192,8 +1346,8 @@
         "chunks": [
           {
             "url": "/_next/static/chunks/0emn_%40nizivo_charts_dist_142h0rnhd_su7._.js",
-            "bytes": 20601,
-            "gzip": 2855
+            "bytes": 21200,
+            "gzip": 3016
           }
         ]
       },
@@ -1203,8 +1357,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 17,
-        "bytes": 3751981,
-        "gzip": 821314
+        "bytes": 3752580,
+        "gzip": 821475
       },
       "failures": []
     },
@@ -1242,7 +1396,7 @@
       "js": {
         "files": 17,
         "bytes": 3750279,
-        "gzip": 823058
+        "gzip": 823059
       },
       "failures": []
     }

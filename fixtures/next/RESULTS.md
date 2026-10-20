@@ -74,6 +74,22 @@ Gzip -9 of every chunk the page loads, minus `/button-only` (174,639 B Turbopack
 
 Week 7's measurement of the same design on a copy of the repo (W7-RESULTS.md "D-aa": `/icon-button` +20,805 B Turbopack and +62,124 B dev, `/field-zero-js` +3,035 B and +7,800 B, the static exports 0 B) holds on the packed package. Every other page keeps week 8's set of client modules in every mode; their bytes move by −143 to +456 B (`/icon-button` and `/icon-button-tooltip` +456 B under `next dev`: the element builder moved into its own module).
 
+## Week 12 (2026-10-20): the overview dashboard (M41, the v0.2 exit)
+
+Two new pages rebuild the 08 overview's KPI row, a TrendCard and "Top channels" from Nizivo parts only (`app/_dashboard/`): four KpiTiles with a Sparkline in each `chart` slot, a TrendCard whose `chart` is an AreaChart with a comparison series (its legend in the TrendCard's own `legend` slot, below the plot as Figma draws it), and a RankedList. `/dashboard-kpi` renders the KPI row and RankedList on the server. `/dashboard` (`dynamic = 'force-dynamic'`) streams both behind Suspense, each fallback the same part with `status="loading"`, beside the TrendCard. Two more pages come from the week 12 review (R2-6): `/count-up` (CountUp alone, `@nizivo/react/motion`) and `/t0-nav` (Avatar, AvatarGroup, Breadcrumb and Pagination through their subpaths). The layout imports the nine new leaf stylesheets, and the home page's `li` spacing is scoped to its own list (`main > ul > li`), so RankedList's rows keep their spacing (R2-9). `spec.ts` gains a `dashboard` check: the tiles, their Sparklines and the list in the server HTML, no live region in a tile, the loading fallbacks before the resolved tiles in the streamed response, and the load's CLS (an observer installed before the page's scripts sums every `layout-shift` without recent input until the tiles and the list resolve, plus two frames and 500 ms) under 0.01; and a `count-up` client leaf (`motion/count-up.client`), so `/count-up` must ship it and nothing else.
+
+**Verdict: all 32 pages pass under Turbopack, webpack, webpack + `optimizePackageImports` and `next dev`; re-recorded after the week 12 review (`node fixtures/runner/next.ts --dev`, its results copied over the committed files).** CLS is 0.0000 (0 shifts) on both dashboard pages in every mode. Negative control, not recorded (integration run): with the KPI row's fallback replaced by `<p>Loading…</p>`, Turbopack measured one shift of 0.0557 and the check failed.
+
+| Page             | Turbopack | webpack | webpack + OPI | `next dev` | Nizivo client modules                                       |
+| ---------------- | --------: | ------: | ------------: | ---------: | ----------------------------------------------------------- |
+| `/dashboard-kpi` |         0 |       0 |             0 |        +34 | none, in every mode (dev: the page's own development chunk) |
+| `/t0-nav`        |         0 |       0 |             0 |          0 | none, in every mode                                         |
+| `/count-up`      |    +1,740 |  +1,822 |        +1,822 |     +4,488 | `motion/count-up.client` only                               |
+| `/dashboard`     |    +1,703 |  +1,776 |        +1,782 |     +3,122 | the ChartInteraction island only                            |
+| `/chart-area`    |    +1,703 |  +1,782 |        +1,782 |     +3,122 | the island (unchanged set)                                  |
+
+Bytes are gzip over `/button-only`. The island chunk grew with DonutChart's item mode (M41 item 2) and the review's Escape fix: 1,423 → 1,537 B under Turbopack, 1,556 → 1,677 B under webpack, 1,552 → 1,677 B with OPI, 2,855 → 3,016 B under `next dev`. The other react pages move by 0 to 3 B, except plain webpack's `/barrel-select` (+847 B: the S2c barrel leak now also carries CountUp's module; with `optimizePackageImports` it moves by 1 B).
+
 ## Week 11 (2026-10-20): the island after M40
 
 No page changed. The packed `@nizivo/charts` carries the week 11 island (M40, `packages/charts/W11-RESULTS.md`): Escape for a pointer-shown card wherever focus is, the column mode BarChart uses, the plot direction read after hydration, and the compact payload (series names once, points as tuples, the spoken text joined on the client). The two AreaChart pages still import the barrel; `./area-chart` is now in the exports map.

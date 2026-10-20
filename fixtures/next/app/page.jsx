@@ -29,6 +29,10 @@ const pages = [
   ['/chart-area', 'v0.2: an AreaChart on the server; the island is the only client module'],
   ['/chart-area-static', 'v0.2: the AreaChart with interaction="none"'],
   ['/chart-third-party', 'v0.2: a third-party-style client renderer inside ChartFrame'],
+  ['/dashboard', 'v0.2 exit: the overview (08) streamed, KPI row and Top channels behind Suspense'],
+  ['/dashboard-kpi', 'v0.2 exit: the KPI row and Top channels, no Nizivo client module'],
+  ['/count-up', 'v0.2: CountUp alone; its own client module and no other'],
+  ['/t0-nav', 'v0.2: Avatar, Breadcrumb and Pagination; no Nizivo client module'],
 ];
 
 export default function Home() {

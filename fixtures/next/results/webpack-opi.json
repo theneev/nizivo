@@ -61,11 +61,11 @@
       "late": {
         "frames": 90,
         "wrong": [
-          "6:light dark/rgb(246, 247, 244)",
-          "22:light dark/rgb(246, 247, 244)",
-          "39:light dark/rgb(246, 247, 244)",
-          "56:light dark/rgb(246, 247, 244)",
-          "72:light dark/rgb(246, 247, 244)"
+          "7:light dark/rgb(246, 247, 244)",
+          "23:light dark/rgb(246, 247, 244)",
+          "40:light dark/rgb(246, 247, 244)",
+          "57:light dark/rgb(246, 247, 244)",
+          "73:light dark/rgb(246, 247, 244)"
         ],
         "firstPaint": 24,
         "firstContentfulPaint": 24,
@@ -1107,6 +1107,160 @@
       },
       "failures": []
     },
+    "/count-up": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "count-up count-up-value heading",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        }
+      },
+      "chunks": 6,
+      "markers": ["nzfm[motion/count-up.client]"],
+      "missing": [],
+      "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
+      "js": {
+        "files": 6,
+        "bytes": 566212,
+        "gzip": 173721
+      },
+      "failures": []
+    },
+    "/t0-nav": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "avatar avatar-group avatar-group-more avatar-initials breadcrumb breadcrumb-current breadcrumb-item breadcrumb-link breadcrumb-list breadcrumb-separator heading pagination pagination-ellipsis pagination-icon pagination-list pagination-next pagination-page pagination-previous pagination-summary",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        }
+      },
+      "chunks": 5,
+      "markers": [],
+      "missing": [],
+      "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
+      "js": {
+        "files": 5,
+        "bytes": 562507,
+        "gzip": 171899
+      },
+      "failures": []
+    },
+    "/dashboard-kpi": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "delta delta-value heading kpi-tile metric metric-change metric-chart metric-comparison metric-label metric-value-row number-value ranked-list ranked-list-action ranked-list-bar ranked-list-header ranked-list-item ranked-list-label ranked-list-list ranked-list-title ranked-list-track sparkline",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "dashboard": {
+          "serverTiles": "4",
+          "serverFallbackTiles": "0",
+          "fallbackFirst": true,
+          "sparklines": "4",
+          "rankedList": true,
+          "liveRegionsInTiles": "0",
+          "readyTiles": "4",
+          "cls": "0.0000",
+          "layoutShifts": "0",
+          "resolvedMs": "545",
+          "ok": true
+        }
+      },
+      "chunks": 5,
+      "markers": [],
+      "missing": [],
+      "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
+      "js": {
+        "files": 5,
+        "bytes": 562507,
+        "gzip": 171899
+      },
+      "failures": []
+    },
+    "/dashboard": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "chart-frame chart-frame-body chart-frame-caption chart-frame-plot chart-frame-table chart-frame-x-ticks chart-frame-y-ticks delta delta-value heading kpi-tile legend legend-item metric metric-change metric-chart metric-comparison metric-label metric-value-row native-select native-select-chevron native-select-trigger number-value ranked-list ranked-list-action ranked-list-bar ranked-list-header ranked-list-item ranked-list-label ranked-list-list ranked-list-title ranked-list-track sparkline trend-card trend-card-action trend-card-chart trend-card-header trend-card-legend",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "dashboard": {
+          "serverTiles": "4",
+          "serverFallbackTiles": "4",
+          "fallbackFirst": true,
+          "sparklines": "4",
+          "rankedList": true,
+          "liveRegionsInTiles": "0",
+          "readyTiles": "4",
+          "cls": "0.0000",
+          "layoutShifts": "0",
+          "resolvedMs": "1350",
+          "ok": true
+        },
+        "chart": {
+          "serverFigure": true,
+          "serverTable": true,
+          "serverSvg": true,
+          "serverStyleAttributes": "0",
+          "serverRegionEmpty": true,
+          "focused": true,
+          "name": "Sales",
+          "roledescription": "interactive chart",
+          "announced": "Tue, Oct 13, This period, $7,910, Previous, $6,570, +20.4%, vs previous",
+          "cardShown": true,
+          "cardHidden": true,
+          "ok": true
+        }
+      },
+      "chunks": 6,
+      "markers": [],
+      "missing": [],
+      "unexpected": [],
+      "charts": {
+        "modules": ["_island/chart-interaction.client"],
+        "chunks": [
+          {
+            "url": "/_next/static/chunks/app/dashboard/page-0cf6d110210a0269.js",
+            "bytes": 3748,
+            "gzip": 1677
+          }
+        ]
+      },
+      "axe": [],
+      "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
+      "js": {
+        "files": 6,
+        "bytes": 566438,
+        "gzip": 173681
+      },
+      "failures": []
+    },
     "/chart-area": {
       "console": [],
       "interactions": {
@@ -1140,9 +1294,9 @@
         "modules": ["_island/chart-interaction.client"],
         "chunks": [
           {
-            "url": "/_next/static/chunks/app/chart-area/page-abb0bb312bf151a4.js",
-            "bytes": 3456,
-            "gzip": 1552
+            "url": "/_next/static/chunks/app/chart-area/page-0cf6d110210a0269.js",
+            "bytes": 3748,
+            "gzip": 1677
           }
         ]
       },
@@ -1152,8 +1306,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 6,
-        "bytes": 566146,
-        "gzip": 173557
+        "bytes": 566438,
+        "gzip": 173681
       },
       "failures": []
     },

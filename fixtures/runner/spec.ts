@@ -39,7 +39,8 @@ export type Component =
   | 'segmented-control'
   | 'icon-button'
   | 'menu'
-  | 'tabs';
+  | 'tabs'
+  | 'count-up';
 
 /** Each rendered component's client leaf, as its dist path without `dist/` and `.js`. */
 const LEAF: Record<Component, string> = {
@@ -61,6 +62,8 @@ const LEAF: Record<Component, string> = {
   'icon-button': 'icon-button/icon-button.client',
   menu: 'menu/menu.client',
   tabs: 'tabs/tabs.client',
+  // CountUp (M41) is @nizivo/react/motion's one client module.
+  'count-up': 'motion/count-up.client',
 };
 
 export interface PageSpec {
@@ -106,6 +109,14 @@ export interface PageSpec {
    * keyboard stop in the figure). Every page without `charts` must ship no charts module.
    */
   charts?: { modules: string[]; imports?: string[]; plot: 'nizivo' | 'third-party' };
+  /**
+   * The overview dashboard (v0.2 exit, M41): `tiles` KpiTiles with Sparkline slots and a RankedList
+   * in the server HTML, no live region in a tile. `streamed`: the KPI row and the list stream in
+   * behind Suspense, so the HTML carries their loading fallbacks first (the same parts with
+   * status="loading", §16.5); the layout shifts of the load, measured until both have resolved,
+   * must add up to less than 0.01 (CLS, §17.3).
+   */
+  dashboard?: { tiles: number; streamed: boolean };
 }
 
 /** One documented part of each week 2 T0 component (§21.1 W2 "server-safe components"). */
@@ -234,6 +245,38 @@ export const PAGES: Record<string, PageSpec> = {
   '/tab-nav': { renders: [], tabNav: true, slots: ['tab-nav', 'tab-nav-link'] },
   '/icons-server': { renders: [], icons: [] },
   '/icons-client': { renders: [], icons: ['bell', 'calendar', 'search'] },
+  // v0.2 exit (week 12, M41): the overview dashboard. /dashboard-kpi is the server KPI row and Top
+  // channels alone: no @nizivo client module at all. /dashboard streams both behind Suspense beside
+  // a TrendCard whose AreaChart is the page's one interactive chart, so the island is its only
+  // Nizivo client module.
+  // CountUp alone ships its own module and nothing else; the server navigation parts ship none
+  // (week 12 review R2-6).
+  '/count-up': { renders: ['count-up'], slots: ['count-up', 'count-up-value'] },
+  '/t0-nav': {
+    renders: [],
+    slots: [
+      'avatar',
+      'avatar-group',
+      'breadcrumb',
+      'breadcrumb-link',
+      'breadcrumb-current',
+      'pagination',
+      'pagination-page',
+      'pagination-previous',
+      'pagination-next',
+    ],
+  },
+  '/dashboard-kpi': {
+    renders: [],
+    slots: ['kpi-tile', 'metric', 'number-value', 'delta', 'sparkline', 'ranked-list'],
+    dashboard: { tiles: 4, streamed: false },
+  },
+  '/dashboard': {
+    renders: [],
+    slots: ['kpi-tile', 'trend-card', 'ranked-list', 'sparkline', 'chart-frame', 'native-select'],
+    charts: { modules: ['_island/chart-interaction.client'], plot: 'nizivo' },
+    dashboard: { tiles: 4, streamed: true },
+  },
   // v0.2 week 1: @nizivo/charts. An AreaChart on the server: full SVG and data table in the HTML,
   // and only the ChartInteraction island as client code. With interaction="none" nothing runs; the
   // island may still ship where a bundler ships statically imported client modules (Turbopack).
@@ -1275,6 +1318,112 @@ async function checkChart(
   return result;
 }
 
+interface DashboardLoad {
+  /** The sum of the load's layout-shift values (no recent input), until the streamed parts resolved. */
+  cls: number;
+  shifts: number;
+  /** Milliseconds from navigation start until every tile and the list were ready. */
+  resolvedAt: number;
+}
+
+/** Runs before the page's own scripts: collects every layout shift of the load (the CLS inputs). */
+function observeLayoutShifts(): void {
+  const shifts: number[] = [];
+  Reflect.set(globalThis, '__nzShifts', shifts);
+  new PerformanceObserver((list) => {
+    for (const entry of list.getEntries()) {
+      if (Reflect.get(entry, 'hadRecentInput') !== true) {
+        shifts.push(Number(Reflect.get(entry, 'value') ?? 0));
+      }
+    }
+  }).observe({ type: 'layout-shift', buffered: true });
+}
+
+/** Waits for the tiles and the list to leave `loading`, two frames and 500 ms, then reads the shifts. */
+async function settleDashboard(
+  page: Page,
+  board: NonNullable<PageSpec['dashboard']>,
+): Promise<DashboardLoad> {
+  await page.waitForFunction(
+    (tiles) =>
+      document.querySelectorAll('[data-slot="kpi-tile"]:not([data-loading])').length === tiles &&
+      document.querySelectorAll('[data-slot="ranked-list"][data-loading]').length === 0,
+    board.tiles,
+    { timeout: 30_000 },
+  );
+  const resolvedAt = await page.evaluate(() => performance.now());
+  await page.evaluate(
+    () =>
+      new Promise<void>((resolve) =>
+        requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(resolve, 500))),
+      ),
+  );
+  const shifts = await page.evaluate(() => {
+    const list: unknown = Reflect.get(globalThis, '__nzShifts');
+    return Array.isArray(list) ? list.map(Number) : [];
+  });
+  return {
+    cls: shifts.reduce((sum, value) => sum + value, 0),
+    shifts: shifts.length,
+    resolvedAt: Math.round(resolvedAt),
+  };
+}
+
+/**
+ * The overview dashboard (M41). Server HTML: the tiles, a Sparkline in each tile, the RankedList,
+ * and no live region inside a tile (§16.5: static text, aria-busy). Streamed: the loading fallbacks
+ * come before the resolved tiles in the response, and the load's CLS stays under 0.01.
+ */
+async function checkDashboard(
+  page: Page,
+  html: string,
+  board: NonNullable<PageSpec['dashboard']>,
+  load: DashboardLoad | undefined,
+): Promise<Record<string, string | boolean>> {
+  const count = (pattern: RegExp) => (html.match(pattern) ?? []).length;
+  const tileTags = html.match(/<div[^>]*data-slot="kpi-tile"[^>]*>/g) ?? [];
+  const loadingTiles = tileTags.filter((tag) => /\sdata-loading=""/.test(tag)).length;
+  const readyTiles = tileTags.length - loadingTiles;
+  const sparklines = count(/data-slot="sparkline"/g);
+  const rankedLists = count(/data-slot="ranked-list"/g);
+  const firstLoading = html.search(/<div[^>]*data-slot="kpi-tile"[^>]*\sdata-loading=""/);
+  const firstReady = html.search(/<div[^>]*data-slot="kpi-tile"(?![^>]*\sdata-loading="")[^>]*>/);
+  const streamedFirst = board.streamed
+    ? loadingTiles === board.tiles && firstLoading !== -1 && firstLoading < firstReady
+    : loadingTiles === 0;
+  const live = await page.evaluate(
+    () =>
+      document.querySelectorAll(
+        '[data-slot="kpi-tile"] :is([aria-live], [role="status"], [role="alert"])',
+      ).length,
+  );
+  const readyInDom = await page.evaluate(
+    () => document.querySelectorAll('[data-slot="kpi-tile"]:not([data-loading])').length,
+  );
+  const cls = load?.cls ?? Number.NaN;
+  const result: Record<string, string | boolean> = {
+    serverTiles: String(readyTiles),
+    serverFallbackTiles: String(loadingTiles),
+    fallbackFirst: streamedFirst,
+    sparklines: String(sparklines),
+    rankedList: rankedLists > 0,
+    liveRegionsInTiles: String(live),
+    readyTiles: String(readyInDom),
+    cls: Number.isNaN(cls) ? 'not measured' : cls.toFixed(4),
+    layoutShifts: String(load?.shifts ?? 'not measured'),
+    resolvedMs: String(load?.resolvedAt ?? 'not measured'),
+  };
+  result['ok'] =
+    readyTiles === board.tiles &&
+    streamedFirst &&
+    sparklines >= board.tiles &&
+    rankedLists > 0 &&
+    live === 0 &&
+    readyInDom === board.tiles &&
+    cls < 0.01;
+  return result;
+}
+
 /**
  * Astro, two islands on one page: every id in the document is unique, so the islands' `useId`
  * prefixes differ (§11.1: handled by @astrojs/react 7), and every IDREF resolves.
@@ -1385,6 +1534,8 @@ async function runPage(
   let axeForcedColors: string[] = [];
   let axeReducedMotion: string[] = [];
   const ready = options.ready ?? hydratedHeading;
+  let dashboardLoad: DashboardLoad | undefined;
+  if (spec.dashboard !== undefined) await page.addInitScript(observeLayoutShifts);
   try {
     const response = await page.goto(base + path, { waitUntil: 'networkidle', timeout: 60_000 });
     serverHtml = (await response?.text()) ?? '';
@@ -1392,6 +1543,8 @@ async function runPage(
       failures.push(`served by another build (no ${options.buildId} in the HTML)`);
     }
     await ready(page, spec);
+    // Before anything else changes the page: the streamed parts resolve, then the shifts are read.
+    if (spec.dashboard !== undefined) dashboardLoad = await settleDashboard(page, spec.dashboard);
     // A single-page app's HTML is an empty shell: the checks that read "the HTML before any
     // interaction" read the first client render instead.
     html = options.initialHtml === 'rendered' ? await page.content() : serverHtml;
@@ -1465,6 +1618,10 @@ async function runPage(
   }
   if (failures.length === 0 && spec.icons !== undefined) {
     steps.push(['icons', () => checkIcons(page)]);
+  }
+  const board = spec.dashboard;
+  if (failures.length === 0 && board !== undefined) {
+    steps.push(['dashboard', () => checkDashboard(page, serverHtml, board, dashboardLoad)]);
   }
   const chart = spec.charts;
   if (failures.length === 0 && chart !== undefined) {
