@@ -103,6 +103,25 @@ now record Figma's values where they apply. What still differs, with the maintai
 - **A Textarea's minimum height can be lowered.** Figma's 112 px minimum is the default;
   `--nz-textarea-min-block-size` changes it (for example to `0` for a one-line composer).
 
+### Week 12
+
+The dashboard parts (Figma 04), with the maintainer's decisions of 2026-10-20 (M42):
+
+- **The Delta pill is `bg/surface` on a tinted surface.** Figma draws the Up pill in
+  `bg/success-subtle`, the same green-50 as `bg/brand-subtle` (and in dark mode all three tints
+  are green-950), so on a tinted KPI tile the pill shows no fill (Figma 04 gap 4). Inside a Card,
+  KpiTile or TrendCard with `tone="brand"` or `"accent"`, every Delta pill is `bg/surface` instead,
+  including the Down pill on an accent tile, which Figma draws in `bg/critical-subtle` and which
+  does show there: the pills in a tinted row match.
+  Its text keeps Figma's colour: `text/success`, `text/critical` and `text/secondary` on
+  `bg/surface` are at least 5.68:1 in light and 5.96:1 in dark.
+- **A chart's halo follows the surface it sits on.** Figma rings the Sparkline's end dot in
+  `bg/surface`, which shows as a white ring on a tinted tile. The halo reads the surface a Card
+  declares (`--nz-surface`), so on a tinted tile it is the tint; outside a Card it is `bg/surface`
+  as drawn.
+- **`brand` and `accent` look the same in dark mode** (both green-950). That is Figma's design, and
+  the code follows it for now (Figma 04 issue 5); it is listed here because it reads like a defect.
+
 ## Builder defaults
 
 <BuilderDefaults />

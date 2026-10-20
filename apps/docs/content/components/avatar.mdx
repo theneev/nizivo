@@ -24,3 +24,15 @@ The avatar is `role="img"` named by `name`; the image inside it has `alt=""` and
 `aria-hidden`. When the name is printed next to the avatar, pass `decorative`: the avatar is then
 `aria-hidden`. Inside an AvatarGroup every avatar is decorative and the group is one `role="img"`
 named by the list of names, joined with `Intl.ListFormat` in the group's `locale`.
+
+## A photo that fails to load in WebKit
+
+The fallback to the initials needs no script in Chromium and Firefox. WebKit (Safari) is different:
+when `src` fails to load it draws its own broken-image mark, a "?" glyph, over the middle of the
+initials, and nothing script-free avoids it. No CSS can tell a broken image from a loaded one in
+WebKit; an SVG `<image>` shows the mark in Chromium and WebKit too, and `<object>` is blocked by a
+strict Content Security Policy's `object-src` (D-bf, kept by the maintainer's decision M42). So:
+
+- pass `src` (or `image`) only when the photo is known to load, for example a URL your server has
+  just checked, or one from your own storage;
+- when it may be gone, leave `src` out and the initials render, the same markup in every engine.

@@ -14,5 +14,32 @@ to choose](/docs/guides/static-or-interactive/).
 
 `tone="brand"` and `tone="accent"` (week 12) are in the repository and ship in 0.2.0; the 0.1.0 on
 npm has `surface`, `subtle` and `inverse` only. In dark mode `bg/brand-subtle` and `bg/accent-subtle`
-are both green-950, so the two tints look the same there: a token question for design (Figma 04
-issue 5), recorded as a known deviation.
+are both green-950, so the two tints look the same there. That is Figma's design, and the code
+follows it for now (Figma 04 issue 5; the maintainer's decision M42).
+
+On `brand` and `accent`, a [Delta](/docs/components/delta/) inside the Card is drawn as a
+`bg/surface` pill, so it shows on the tint: Figma's `bg/success-subtle` pill is the same colour as
+`bg/brand-subtle` (green-50 in light, and all three are green-950 in dark), so it would show no fill.
+This is a deviation from Figma 04 (gap 4) that the maintainer chose (M42). The pill's text keeps its
+colour, at least 5.68:1 on `bg/surface` in light and 5.96:1 in dark (`text/critical`; CONTRAST.md).
+The nearest Card decides: a Delta inside an untinted Card nested in a tinted one keeps its own
+pill. A `--nz-delta-bg` you set still wins.
+
+## The surface variable
+
+Card declares `--nz-surface`, the colour it paints, in every tone (and so do KpiTile and TrendCard,
+which are Cards). Any child can read it to match the surface it sits on, for example a ring or a gap
+that should look cut out of the card:
+
+```css
+.my-marker {
+  box-shadow: 0 0 0 2px var(--nz-surface, var(--nz-bg-surface));
+}
+```
+
+- It is read-only: Card sets it; set `--nz-card-bg` to change the surface, and `--nz-surface`
+  follows.
+- It is not a token. Outside a Card it is undefined, so always read it with a fallback.
+- Inside `tone="inverse"` it resolves in the inverse colour scheme, as every token there does.
+- `@nizivo/charts` reads it with a fallback: a Sparkline's end-dot halo, for example, takes the
+  tinted tile's colour instead of a white ring, and still works on a page without `@nizivo/react`.

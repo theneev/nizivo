@@ -75,7 +75,12 @@ There is no `trend` prop: the trend is the last defined value against the first.
 <ChartCssHooks />
 
 `--nz-sparkline-width` and `--nz-sparkline-height` are Figma 03's 112 × 36 px; Figma 04's KPI tile
-uses 88 × 28 px. `--nz-sparkline-halo` is the ring around the end dot, for tinted surfaces.
+uses 88 × 28 px. `--nz-sparkline-halo` is the ring around the end dot: the surface behind the
+sparkline. When the hook is unset, the ring takes the shared `--nz-surface` that `@nizivo/react`'s
+[Card](/docs/components/card/) declares for its children (KpiTile and TrendCard are Cards, so a
+tinted tile's halo is its own surface), else `--nz-bg-surface`. Charts read `--nz-surface` only if
+it is there: without `@nizivo/react` on the page it is unset and the halo is `--nz-bg-surface`, and
+`@nizivo/charts` does not depend on `@nizivo/react` (M42).
 
 ## Accessibility
 

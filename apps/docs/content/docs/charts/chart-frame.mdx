@@ -56,6 +56,28 @@ props include them too (one API shape across the charts, M40). With point-aligne
 element, except the last cell, which holds both edge labels: a long daily series sends hundreds of
 empty positions. `xDirection` is explained under [Right to left](/docs/charts/#right-to-left).
 
+### Hiding the caption
+
+`titleVisibility="hidden"` hides the title and summary visually, for a chart whose container
+already titles it, such as a card header (Figma's Revenue Card draws no chart caption). The default
+is `"visible"`. The caption is not removed: the `<figcaption>` gets `nz-chart-visually-hidden` (a
+1 × 1 clipped box out of flow, never `display: none`), so it takes no layout space, stays in the
+server HTML, and still names the figure and its data table. Every chart takes the same prop
+(`ChartFramePassthrough`, M40's one API shape):
+
+```tsx
+<AreaChart
+  title="Revenue"
+  summary="Daily, Oct 1–30"
+  titleVisibility="hidden"
+  data={days}
+  x="date"
+  y="sales"
+/>
+```
+
+Keep `title` meaningful when it is hidden: it is still what a screen reader announces for the chart.
+
 The English defaults of `labels` (`ChartFrameLabels`), in `chartFrameLabels`:
 
 <ChartsTable label="ChartFrame labels">
@@ -77,15 +99,15 @@ The English defaults of `labels` (`ChartFrameLabels`), in `chartFrameLabels`:
 
 <ChartsTable label="ChartFrame data attributes and slots">
 
-| Element                                  | Attributes                                                                                                             |
-| ---------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| `figure.nz-chart-frame`                  | `data-slot="chart-frame"`, `data-x-direction`, `data-loading`, `data-empty`, `data-error`, `data-pending`, `aria-busy` |
-| `figcaption.nz-chart-frame-caption`      | `data-slot="chart-frame-caption"`: `.nz-chart-frame-title`, `.nz-chart-frame-summary`                                  |
-| `div.nz-chart-frame-legend`              | `data-slot="chart-frame-legend"`, when `legend` is passed                                                              |
-| `div.nz-chart-frame-body`                | `data-slot="chart-frame-body"`: the y labels, the plot and the x labels                                                |
-| `div.nz-chart-frame-plot`                | `data-slot="chart-frame-plot"`: the child while ready, else the skeleton or the message                                |
-| `div.nz-chart-frame-y-ticks`, `-x-ticks` | `aria-hidden="true"`, with `axes="frame"`                                                                              |
-| `table.nz-chart-frame-table`             | `aria-labelledby` the title; inside `details.nz-chart-frame-details` with `tableView="details"`                        |
+| Element                                  | Attributes                                                                                                                                         |
+| ---------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `figure.nz-chart-frame`                  | `data-slot="chart-frame"`, `data-x-direction`, `data-loading`, `data-empty`, `data-error`, `data-pending`, `aria-busy`                             |
+| `figcaption.nz-chart-frame-caption`      | `data-slot="chart-frame-caption"`: `.nz-chart-frame-title`, `.nz-chart-frame-summary`; `.nz-chart-visually-hidden` with `titleVisibility="hidden"` |
+| `div.nz-chart-frame-legend`              | `data-slot="chart-frame-legend"`, when `legend` is passed                                                                                          |
+| `div.nz-chart-frame-body`                | `data-slot="chart-frame-body"`: the y labels, the plot and the x labels                                                                            |
+| `div.nz-chart-frame-plot`                | `data-slot="chart-frame-plot"`: the child while ready, else the skeleton or the message                                                            |
+| `div.nz-chart-frame-y-ticks`, `-x-ticks` | `aria-hidden="true"`, with `axes="frame"`                                                                                                          |
+| `table.nz-chart-frame-table`             | `aria-labelledby` the title; inside `details.nz-chart-frame-details` with `tableView="details"`                                                    |
 
 </ChartsTable>
 
@@ -106,6 +128,11 @@ labels can be wider than the 2.75rem gutter; widen it with the hook.
 
 - A `<figure>` named by its `<figcaption>`. The tick labels are `aria-hidden`: the data table
   carries the values.
+- `titleVisibility="hidden"` keeps that name: the caption is visually hidden, not removed, so the
+  figure is named the same and the table is still labelled by the title. The browser lane checks
+  that the hidden caption takes no layout space and that the name does not change, in Chromium,
+  WebKit and Firefox (`caption.spec.tsx`); `chart.conformance.tsx` checks that every framed part
+  forwards the prop.
 - The data table is rendered on the server. With `tableView="hidden"` it is in the HTML only while
   the status is `'ready'`. With `tableView="details"` the disclosure renders in every status (an
   inert line until ready), so the frame's box does not move between statuses (§16.5).

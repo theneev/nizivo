@@ -125,7 +125,11 @@ Inside the [ChartFrame](/docs/charts/chart-frame/#data-attributes-and-slots) roo
 
 <ChartCssHooks />
 
-`--nz-area-chart-halo` is the ring around the end dot, for tinted surfaces. The aspect ratio is ChartFrame's `--nz-chart-frame-aspect` (18 / 7).
+`--nz-area-chart-halo` is the ring around the end dot: the surface behind the chart. When the hook is unset, the ring takes the shared `--nz-surface` that `@nizivo/react`'s
+[Card](/docs/components/card/) declares for its children (KpiTile and TrendCard are Cards, so a
+tinted tile's halo is its own surface), else `--nz-bg-surface`. Charts read `--nz-surface` only if
+it is there: without `@nizivo/react` on the page it is unset and the halo is `--nz-bg-surface`, and
+`@nizivo/charts` does not depend on `@nizivo/react` (M42). The aspect ratio is ChartFrame's `--nz-chart-frame-aspect` (18 / 7).
 
 ## Accessibility
 

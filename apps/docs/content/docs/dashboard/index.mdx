@@ -179,7 +179,7 @@ import { TrendCard } from '@nizivo/react/trend-card';
   format={{ style: 'currency', currency: 'USD' }}
   delta={0.182}
   action={<PeriodPicker />}
-  chart={<AreaChart data={days} x="date" y="sales" title="Total sales" />}
+  chart={<AreaChart data={days} x="date" y="sales" title="Total sales" titleVisibility="hidden" />}
   legend={<Legend items={series} />}
 />;
 ```

@@ -93,7 +93,10 @@ Every chart takes its data, formats and strings the same way (M40), from one mod
 - A chart's strings are `XLabels extends ChartFrameLabels`, with English defaults in `xLabels`
   (`areaChartLabels`), and `labels` takes `Partial<XLabels>`.
 - A chart's props (`AreaChartProps` and the others) include the `<figure>`'s attributes, as
-  `@nizivo/react`'s parts do.
+  `@nizivo/react`'s parts do, and ChartFrame's own props it passes through (`ChartFramePassthrough`):
+  `title`, `summary`, `titleVisibility`, `status`, `pending`, `tableView` and the rest, the same in
+  every chart. `titleVisibility="hidden"` hides the caption visually and keeps it as the figure's
+  accessible name ([ChartFrame](/docs/charts/chart-frame/#hiding-the-caption)).
 
 ## The one island
 

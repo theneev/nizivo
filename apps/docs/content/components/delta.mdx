@@ -9,3 +9,10 @@ description: A signed change, such as +12.4%, coloured by direction and read wit
 mode; its code is bundled only when a client component (a `'use client'` file) imports it. The
 number is formatted on the server with `Intl.NumberFormat`. [How to
 choose](/docs/guides/static-or-interactive/).
+
+## On a tinted surface
+
+Inside a Card, KpiTile or TrendCard with `tone="brand"` or `tone="accent"`, the pill is
+`bg/surface`, because Figma's `bg/success-subtle` is the same colour as `bg/brand-subtle` and the
+pill would show no fill there (a deviation from Figma 04 gap 4, M42). Its text colour, and so its
+contrast, is unchanged. Set `--nz-delta-bg` to choose another fill.

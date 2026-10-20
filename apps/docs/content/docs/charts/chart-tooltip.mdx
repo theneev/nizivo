@@ -71,7 +71,12 @@ The change reads `text/success` for `up`, `text/critical` for `down` and `text/s
 <ChartCssHooks />
 
 `--nz-chart-tooltip-width` is the card's width (Figma: a fixed 200 px), and
-`--nz-chart-tooltip-halo` the ring around the island's point dots, for tinted surfaces.
+`--nz-chart-tooltip-halo` the ring around the island's point dots: the surface behind the chart.
+When the hook is unset, the ring takes the shared `--nz-surface` that `@nizivo/react`'s
+[Card](/docs/components/card/) declares for its children (KpiTile and TrendCard are Cards, so a
+tinted tile's halo is its own surface), else `--nz-bg-surface`. Charts read `--nz-surface` only if
+it is there: without `@nizivo/react` on the page it is unset and the halo is `--nz-bg-surface`, and
+`@nizivo/charts` does not depend on `@nizivo/react` (M42).
 
 ## Accessibility
 
