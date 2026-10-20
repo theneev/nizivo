@@ -26,6 +26,13 @@ export const RUNTIME_VARIABLES = new Set([
   '--nz-layout-bottom-inset',
 ]);
 
+/**
+ * Surface variables (M42 item 6): public, read-only for consumers and not tokens, like the runtime
+ * variables, but declared in CSS by the one stylesheet named here, so any child can read the
+ * surface it sits on. Undefined outside that component, so every read needs a fallback.
+ */
+export const SURFACE_VARIABLES = new Map([['--nz-surface', 'card']]);
+
 /** Native overlay state exists only for native overlays, so it is never public (§8.3 rule 2). */
 export const NATIVE_OVERLAY_STATE = new Set([':popover-open', ':modal', '::backdrop', '[open]']);
 
@@ -246,7 +253,7 @@ export function classifyVariable(name, context) {
   if (name.startsWith('--_nz-')) return 'private';
   if (!name.startsWith('--nz-')) return 'foreign';
   if (name.startsWith('--nz-p-')) return 'primitive';
-  if (RUNTIME_VARIABLES.has(name)) return 'runtime';
+  if (RUNTIME_VARIABLES.has(name) || SURFACE_VARIABLES.has(name)) return 'runtime';
   if (context.tokens?.has(name) === true) return 'token';
   // Without the token names, a hook-shaped name may be a token (--nz-grid-columns in grid.css).
   const tokens = context.tokens;
@@ -271,6 +278,9 @@ export function classifyVariable(name, context) {
  */
 export function variableProblem(variable, context) {
   const { name, hasFallback } = variable;
+  if (SURFACE_VARIABLES.has(name) && !hasFallback) {
+    return `"${name}" is undefined outside ${SURFACE_VARIABLES.get(name)}: read it with a fallback, var(${name}, var(--nz-bg-surface)) (M42)`;
+  }
   switch (classifyVariable(name, context)) {
     case 'foreign':
       return `"${name}" is not a Nizivo variable: read --nz-* tokens and hooks or --_nz-* privates (§8.2)`;

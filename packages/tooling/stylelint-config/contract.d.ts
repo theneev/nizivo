@@ -21,6 +21,8 @@ export type Components = ReadonlyMap<string, ComponentManifest>;
 export declare const REPO_ROOT: string;
 export declare const CLASS_PATTERN: RegExp;
 export declare const RUNTIME_VARIABLES: ReadonlySet<string>;
+/** Surface variables (M42): name → the one component whose stylesheet declares it. */
+export declare const SURFACE_VARIABLES: ReadonlyMap<string, string>;
 export declare const NATIVE_OVERLAY_STATE: ReadonlySet<string>;
 
 export declare function layerStatement(root?: string): string;

@@ -10,6 +10,8 @@ const LAYERS = layerStatement();
 const BUTTON = '/repo/packages/react/src/button/button.css';
 const BASE = '/repo/packages/react/styles/base.css';
 const TEXT = '/repo/packages/react/src/text/text.css';
+const CARD = '/repo/packages/react/src/card/card.css';
+const SPARKLINE = '/repo/packages/charts/src/sparkline/sparkline.css';
 const TOKENS_PACKAGE = '/repo/packages/tokens/src/tokens.css';
 
 /** Wraps rules in the file's layer, after the canonical statement. */
@@ -78,9 +80,16 @@ suite(
   [
     { code: layered('.nz-button { --_nz-button-bg: red; }') },
     { code: ':root { --nz-bg-surface: red; }', file: TOKENS_PACKAGE },
+    // the shared surface variable is declared by Card's sheet alone (M42 item 6)
+    { code: layered('.nz-card { --nz-surface: var(--_nz-card-bg); }'), file: CARD },
   ],
   [
     [{ code: layered('.nz-button { --nz-button-bg: red; }') }, /"--nz-button-bg" is public/],
+    [{ code: layered('.nz-button { --nz-surface: red; }') }, /"--nz-surface" is public/],
+    [
+      { code: layered('.nz-sparkline { --nz-surface: red; }'), file: SPARKLINE },
+      /"--nz-surface" is public/,
+    ],
     [{ code: layered('.x .nz-button { --nz-bg-surface: red; }') }, /declare a --_nz-\* private/],
   ],
 );
@@ -99,9 +108,21 @@ suite(
     { code: layered('.nz-button { inline-size: var(--nz-trigger-width); }') },
     { code: layered('.nz-button { gap: var(--nz-space-2, 0.5rem); }') },
     { code: ':root { color: var(--nz-p-green-700); }', file: TOKENS_PACKAGE },
+    // the shared surface variable is read anywhere, with a fallback (M42 item 6)
+    { code: layered('.nz-button { background: var(--nz-surface, var(--nz-bg-surface)); }') },
+    {
+      code: layered(
+        '.nz-sparkline-halo { stroke: var(--nz-sparkline-halo, var(--nz-surface, var(--nz-bg-surface))); }',
+      ),
+      file: SPARKLINE,
+    },
   ],
   [
     [{ code: layered('.nz-button { color: var(--brand); }') }, /not a Nizivo variable/],
+    [
+      { code: layered('.nz-button { background: var(--nz-surface); }') },
+      /"--nz-surface" is undefined outside card: read it with a fallback/,
+    ],
     [{ code: layered('.nz-button { color: var(--nz-p-green-700); }') }, /private primitive/],
     [{ code: layered('.nz-button { color: var(--nz-bg-surfce); }') }, /not a token/],
     [

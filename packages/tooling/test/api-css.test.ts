@@ -106,6 +106,19 @@ describe('extractCss', () => {
     expect(file.runtime).toEqual(['--nz-trigger-width']);
   });
 
+  test('the shared surface variable is a runtime read, and a hook falling back to it an expression', () => {
+    const file = extract(`@layer nz.components{.nz-chip{
+      background:var(--nz-chip-bg,var(--nz-surface,var(--nz-bg-neutral)));
+      border-color:var(--nz-surface,var(--nz-bg-critical));
+    }}`);
+    expect(file.runtime).toEqual(['--nz-surface']);
+    expect(file.hooks[0]?.fallback).toEqual({
+      kind: 'expression',
+      tokens: ['--nz-bg-neutral'],
+      value: 'var(--nz-surface, var(--nz-bg-neutral))',
+    });
+  });
+
   test('a rule with a selector list gives one read per selector', () => {
     const file = extract(
       `@layer nz.components{.nz-chip,.nz-chip-text:is(.nz-chip-a,.nz-chip-b){gap:var(--nz-chip-gap,var(--nz-space-1))}}`,
