@@ -3,22 +3,15 @@ title: Legend
 description: The series key of a chart, rendered on the server as a list. Its mark follows the series (a line, a dashed line or a dot); the vertical form adds values and shares, as the donut's legend does.
 ---
 
-import { ChartExample, ChartImport } from '../../../components/chart-example';
-import { ChartsTable } from '../../../components/charts-table';
-import {
-  LegendExample,
-  LegendVerticalExample,
-} from '../../../components/charts-live/legend.example';
-
 <Callout type="warn" title="Not yet published (v0.2)">
   `@nizivo/charts` is not on npm yet; it publishes at 0.2.0. Until then its API can change. The
-  Import section below shows the entry that works in the repository today. See
+  Import section below shows the entry the package's exports map has in the repository today. See
   [Charts](/docs/charts/).
 </Callout>
 
 ## Import
 
-<ChartImport part="legend" names="Legend" />
+<ChartImport names="Legend" />
 
 ## Static or interactive
 
@@ -34,49 +27,25 @@ DonutChart always does.
 
 ### Basic
 
-<ChartExample part="legend" name="LegendExample" title="Basic" live={<LegendExample />} />
+<ChartExample name="LegendExample" />
 
 ### Vertical
 
-<ChartExample
-  part="legend"
-  name="LegendVerticalExample"
-  title="Vertical"
-  live={<LegendVerticalExample />}
-/>
+<ChartExample name="LegendVerticalExample" />
 
 ## Props
 
-From `legend.tsx` in `packages/charts/src/legend` (`nz api` does not cover `@nizivo/charts` yet). Legend
-also takes every attribute of `<ul>` except `children`.
+<ChartProps />
 
-<ChartsTable label="Legend props">
-
-| Prop          | Type                         | Default        | Description                                                                           |
-| ------------- | ---------------------------- | -------------- | ------------------------------------------------------------------------------------- |
-| `items`       | `readonly LegendItem[]`      | required       | One entry per series or category.                                                     |
-| `orientation` | `'horizontal' \| 'vertical'` | `'horizontal'` | `horizontal` wraps in a row (line charts); `vertical` is the donut's table-like list. |
-| `render`      | `RenderProp<LegendState>`    |                | Replace or wrap the root element; a function receives `{ orientation }`.              |
-
-</ChartsTable>
-
-`LegendItem`:
-
-<ChartsTable label="Legend LegendItem fields">
-
-| Field    | Type          | Description                                                                                                            |
-| -------- | ------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| `id`     | `string`      | A stable key; the label when absent.                                                                                   |
-| `label`  | `string`      | The series' name.                                                                                                      |
-| `series` | `ChartSeries` | `'current' \| 'previous' \| 'cat-1' \| 'cat-2' \| 'cat-3' \| 'other'`: the colour role, shared with the chart's marks. |
-| `value`  | `string`      | A pre-formatted value (Numeric/M).                                                                                     |
-| `share`  | `string`      | A pre-formatted share, for example "52%" (Mono/M, tertiary).                                                           |
-
-</ChartsTable>
+`items` holds one `LegendItem` per series or category (its fields are under
+[Other exports](#other-exports)): `series` is the colour role, shared with the chart's marks
+(`'current' | 'previous' | 'cat-1' | 'cat-2' | 'cat-3' | 'other'`); `value` and `share` are
+pre-formatted (Numeric/M, and Mono/M tertiary, for example "52%"). `orientation="horizontal"` wraps
+in a row (line charts); `vertical` is the donut's table-like list.
 
 ## Other exports
 
-The types `LegendProps`, `LegendItem`, `LegendState` and `ChartSeries`.
+<ChartOtherExports />
 
 ## Data attributes and slots
 

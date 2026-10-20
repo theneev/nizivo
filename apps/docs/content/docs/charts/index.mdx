@@ -9,30 +9,30 @@ import { ChartsTable } from '../../../components/charts-table';
   `@nizivo/charts` is in the repository as a private package (`"private": true`, version 0.1.0) and
   is not on npm. It joins the fixed release group with `@nizivo/tokens`, `@nizivo/react` and
   `@nizivo/icons` and publishes at 0.2.0. Until then the API on these pages can change. Each part
-  will have its own subpath; each page's Import section shows the entry that works in the repository
-  today.
+  page's Import section shows the entry the package's exports map has in the repository today.
 </Callout>
 
 ## The parts
 
 <ChartsTable label="Charts parts">
 
-| Part                                        | Import (planned subpath)       | Kind   | Ships client JS under React Server Components                                                     |
-| ------------------------------------------- | ------------------------------ | ------ | ------------------------------------------------------------------------------------------------- |
-| [ChartFrame](/docs/charts/chart-frame/)     | `@nizivo/charts/chart-frame`   | server | Never                                                                                             |
-| [AreaChart](/docs/charts/area-chart/)       | `@nizivo/charts/area-chart`    | split  | The ChartInteraction island, when `status` is `'ready'` and `interaction` is `'nizivo'` (default) |
-| [BarChart](/docs/charts/bar-chart/)         | `@nizivo/charts/bar-chart`     | server | Never (hover is CSS only)                                                                         |
-| [DonutChart](/docs/charts/donut-chart/)     | `@nizivo/charts/donut-chart`   | server | Never (hover is CSS only)                                                                         |
-| [Sparkline](/docs/charts/sparkline/)        | `@nizivo/charts/sparkline`     | server | Never                                                                                             |
-| [Legend](/docs/charts/legend/)              | `@nizivo/charts/legend`        | server | Never                                                                                             |
-| [ChartTooltip](/docs/charts/chart-tooltip/) | `@nizivo/charts/chart-tooltip` | server | Never                                                                                             |
+| Part                                        | Import                         | Kind   | Ships client JS under React Server Components                                                                    |
+| ------------------------------------------- | ------------------------------ | ------ | ---------------------------------------------------------------------------------------------------------------- |
+| [ChartFrame](/docs/charts/chart-frame/)     | `@nizivo/charts/chart-frame`   | server | Never                                                                                                            |
+| [AreaChart](/docs/charts/area-chart/)       | `@nizivo/charts/area-chart`    | split  | The ChartInteraction island, when `status` is `'ready'` and `interaction` is `'nizivo'` (default)                |
+| [BarChart](/docs/charts/bar-chart/)         | `@nizivo/charts/bar-chart`     | split  | The ChartInteraction island in column mode, when `status` is `'ready'` and `interaction` is `'nizivo'` (default) |
+| [DonutChart](/docs/charts/donut-chart/)     | `@nizivo/charts/donut-chart`   | server | Never (hover is CSS only)                                                                                        |
+| [Sparkline](/docs/charts/sparkline/)        | `@nizivo/charts/sparkline`     | server | Never                                                                                                            |
+| [Legend](/docs/charts/legend/)              | `@nizivo/charts/legend`        | server | Never                                                                                                            |
+| [ChartTooltip](/docs/charts/chart-tooltip/) | `@nizivo/charts/chart-tooltip` | server | Never                                                                                                            |
 
 </ChartsTable>
 
 The kinds are the ones the [static or interactive guide](/docs/guides/static-or-interactive/) uses
-for `@nizivo/react`. AreaChart is the only part whose module imports a client module; the others
-import none (`island-graph.test.ts` in `packages/charts/test/unit` checks AreaChart, Sparkline and
-ChartTooltip; for BarChart and DonutChart, no file in their folders imports `src/_island`).
+for `@nizivo/react`. AreaChart and BarChart are the parts whose modules import a client module, the
+island; the others import none. `island-graph.test.ts` in `packages/charts/test/unit` checks that
+AreaChart and BarChart reach exactly the island and that DonutChart, Sparkline and ChartTooltip
+reach no client module.
 
 ## Install
 
@@ -51,7 +51,10 @@ import '@nizivo/charts/styles.css';
 `react` and `react-dom` `^19.2.0` as peers. It does not need `@nizivo/react` or any of its CSS:
 `styles.css` carries its own focus outline and visually hidden rule, scoped to the chart classes.
 The charts-only lane (`node fixtures/runner/charts.ts`) serves only `tokens.css` and the charts
-`styles.css` and runs axe and keyboard-focus checks on that page set.
+`styles.css` and runs axe and keyboard-focus checks on that page set;
+`node fixtures/runner/charts.ts --engines chromium,webkit,firefox --record` commits its results per
+engine to `fixtures/charts-only/results/` (`chromium.json`, `webkit.json`, `firefox.json`), like the
+other fixtures (without `--engines` it runs, and records, Chromium only).
 
 ## Server first
 
@@ -67,33 +70,65 @@ The geometry needs no client code:
   (`preserveAspectRatio="none"`), with `vector-effect: non-scaling-stroke`, so a 2 px line stays
   2 px at any size. This was verified on 2026-10-19 in Chromium 156, Firefox 157 and WebKit 27.2
   (Playwright builds), and `stroke.spec.tsx` in `packages/charts/test/browser` keeps checking it in the
-  three engines. Real Safari and the Safari 17.5 floor are not covered.
+  three engines. Real Safari and the Safari 17.5 floor are not covered. Path coordinates are
+  rounded to 2 decimals (`PATH_DIGITS` in `packages/charts/src/_core/path.ts`): 0.01 of the plot is
+  0.07 px on Figma 03's 720 px plot.
 - Tick labels are HTML on CSS grid tracks, so no label needs a position of its own.
 - Bars are `<rect>` elements in percentage units; BarChart caps them at 22 px with CSS.
+
+## One API shape
+
+Every chart takes its data, formats and strings the same way (M40), from one module,
+`_core/api.ts` in `packages/charts/src`:
+
+- A datum's value is an `Accessor`: a key of the datum whose values have the right type
+  (`x="date"`, which a Server Component can pass) or a `(datum, index) => value` function. AreaChart
+  and BarChart take `x` and `y`, DonutChart `category` and `value`, AreaChart's comparison
+  `compare`, and Sparkline an optional `y`.
+- Every `*Format` prop is plain `Intl.NumberFormatOptions` or `Intl.DateTimeFormatOptions`, as
+  `@nizivo/react`'s Delta and Meter take them; there are no presets. `format` defaults to
+  `Intl.NumberFormat`'s own options (`{}`) in every chart.
+- The cartesian charts (AreaChart, BarChart) share `CartesianChartOptions`: `xTicks: { every?, max? }`
+  for the x labels and `yTicks` (about how many y labels, default 4).
+- A chart's strings are `XLabels extends ChartFrameLabels`, with English defaults in `xLabels`
+  (`areaChartLabels`), and `labels` takes `Partial<XLabels>`.
+- A chart's props (`AreaChartProps` and the others) include the `<figure>`'s attributes, as
+  `@nizivo/react`'s parts do.
 
 ## The one island
 
 The only client module in the package is the ChartInteraction island
-(`chart-interaction.client.tsx` in `src/_island`). AreaChart renders it over the plot when its status is
-`'ready'` and `interaction` is `'nizivo'`. It receives plain JSON (positions as numbers, every label
-and value already formatted), and adds:
+(`chart-interaction.client.tsx` in `src/_island`). AreaChart and BarChart render it over the plot
+when their status is `'ready'` and `interaction` is `'nizivo'`. It receives plain JSON: every label
+and value already formatted, each series' name once and one short entry per point, so it formats
+nothing and reads no locale. It adds:
 
 - one Tab stop over the plot, with the arrow keys, Home, End and Escape;
-- a crosshair, a dot per series and the [ChartTooltip](/docs/charts/chart-tooltip/) card at the
-  active point;
+- in point mode (AreaChart), a crosshair, a dot per series and the
+  [ChartTooltip](/docs/charts/chart-tooltip/) card at the active point;
+- in column mode (BarChart), `data-highlighted` on the active bar column, whose CSS dims the
+  others, and the same card beside it;
 - one polite live region, empty in the server HTML, that speaks a point when the keyboard reaches it
-  (never on hover).
+  (never on hover), joined with the list separators `Intl.ListFormat` gives the chart's `locale`.
 
-Its own code measures 813 B gzip against the 0.8 KiB target of §17.2, and 1,080 B with
-ChartTooltip and `cx`, what a page downloads (`node packages/tooling/size/measure.ts`, 2026-10-19). If the island fails to load, the
-server-rendered chart and its data table stay.
+Against WCAG 1.4.13 (Content on Hover or Focus), in both modes, the card is dismissable (Escape
+hides it wherever focus is; Escape on the focused plot hides only the card, so an enclosing dialog
+stays open) and persistent (no timeout), and it never hides while the pointer is over the plot or
+the card. It follows the point or band under the pointer, though, so it cannot be held on one
+point: it is not "hoverable" in 1.4.13's sense. If the island fails to load, the server-rendered
+chart and its data table stay.
 
-Bars and donut segments have no island: their hover states are CSS, and their frames pass
-`interaction="none"`. The donut's legend shows every value. A bar's exact value is in the data
-table, which is hidden by default and read only by assistive technology, so a sighted keyboard user
-reaches the values only with `tableView="details"` (a native disclosure, one Tab stop, no
-JavaScript). Give BarChart, and AreaChart with `interaction="none"`, `tableView="details"` wherever
-keyboard users need the numbers.
+What a page downloads for it, the island with ChartTooltip and `cx`, measured 1,457 B gzip on
+2026-10-20 (M40, size-limit's method, React external). Week 10's was 1,080 B; M40 added Escape for a
+card the pointer opened (+56 B), column mode (+114 B), the resolved `xDirection="auto"` (+41 B), the
+compact payload for long series (+148 B) and the week's review fixes (+18 B: Escape on the plot
+keeps an enclosing dialog open, and hiding the card empties the live region). §17.2's island figure applies to this client graph:
+1.6 KiB, the measurement + 10 % (M40).
+
+DonutChart has no island: its hover states are CSS and its frame passes `interaction="none"`. Its
+legend shows every value and share as text; a keyboard mode for the segments is an open item, so
+pass `tableView="details"` (a native disclosure, one Tab stop, no JavaScript) wherever keyboard
+users need the data table. The same goes for AreaChart and BarChart with `interaction="none"`.
 
 ## The data table
 
@@ -193,11 +228,23 @@ attributes are outside this guarantee.
 
 ## Right to left
 
-Time and value axes do not mirror by default: `xDirection` is `'ltr'`. `xDirection="rtl"` mirrors
-the plot (`scale: -1 1` on the SVG) and the x labels, and the island's arrow keys follow the screen
-(ArrowRight goes back in time). The caption, the legend and the y labels follow the page's `dir`
-whatever `xDirection` is. `xDirection="auto"` lays the x labels out in the page's direction but does
-not mirror the plot yet; use `'rtl'` for a mirrored chart.
+Time and value axes do not mirror by default: `xDirection` is `'ltr'`. The caption, the legend and
+the y labels follow the page's `dir` whatever `xDirection` is.
+
+- `xDirection="rtl"` mirrors the plot (`scale: -1 1` on the SVG) and the x labels, on every page.
+- `xDirection="auto"` mirrors them when the chart's HTML directionality is right to left (a `dir`
+  attribute, CSS `:dir(rtl)`), and draws exactly as `'ltr'` otherwise.
+
+Either way the mirroring is CSS on the server HTML, so a right-to-left page shows the mirrored
+chart, marks and x labels, before any script runs, and nothing moves when the island hydrates
+(`chart-interaction.spec.tsx` checks that no box moves). Until then the plot has no interaction, as
+on any page. After hydration the island reads the plot's resolved direction once, so the
+crosshair, the pointer and the arrow keys follow the screen (ArrowRight goes back in time). Two
+limits: `'auto'` follows the `dir` attribute, not the CSS `direction` property, so a page that sets
+only `direction: rtl` in CSS gets a left-to-right chart; and the island reads the direction once.
+A new `xDirection` prop remounts the island (AreaChart and BarChart key it by the prop), so it
+follows; a chart whose `dir` changes at runtime under `'auto'` must be remounted. An engine without `:dir()` drops only
+the `'auto'` mirroring; `'rtl'` has rules of its own.
 
 ## Reduced motion
 
@@ -218,30 +265,30 @@ is stale. `@nizivo/react` will reach charts only through element slots (a planne
 
 ## Sizes
 
-Gzip, React and ReactDOM external, d3 included, recorded with
-`node packages/tooling/size/measure.ts --write` (2026-10-19) and enforced by `pnpm size`: the limit
-is the measurement + 10%, never above §17.2's figure (`CHART_TARGETS_KIB` in
-`packages/tooling/size/method.ts`), or a default still to be confirmed where §17.2 gives none.
+Gzip, React and ReactDOM external, d3 included, measured with `node packages/tooling/size/measure.ts`
+on 2026-10-20 and enforced by `pnpm size`: the limit is the measurement + 10%, never above the
+entry's §17.2 figure (`CHART_TARGETS_KIB` in `packages/tooling/size/method.ts`;
+`packages/react/SIZES.md` records the limits). The figures §17.2 had no number for until week 11
+were confirmed by the maintainer in M40.
 
 <ChartsTable label="Charts sizes">
 
-| Entry                              | Measured |   Limit | Source of the cap   |
-| ---------------------------------- | -------: | ------: | ------------------- |
-| ChartInteraction island (own code) |    813 B | 0.8 KiB | §17.2               |
-| The island with its imports        |  1,080 B | 1.2 KiB | interim ceiling     |
-| `@nizivo/charts/bar-chart`         |  3,660 B | 3.6 KiB | default             |
-| `@nizivo/charts/donut-chart`       |  3,093 B | 3.2 KiB | §17.2               |
-| `@nizivo/charts/sparkline`         |  1,575 B | 1.7 KiB | §17.2 (≤ 2)         |
-| `@nizivo/charts/chart-frame`       |  1,786 B |   2 KiB | default             |
-| `@nizivo/charts/legend`            |    870 B |   1 KiB | default             |
-| `@nizivo/charts/chart-tooltip`     |    413 B | 0.5 KiB | default             |
-| `@nizivo/charts/styles.css`        |  3,382 B | 3.6 KiB | default             |
-| `@nizivo/charts` (the barrel)      |  8,502 B | 9.1 KiB | §17.2, "all charts" |
+| Entry                                      | Measured | §17.2 figure | Source of the figure                            |
+| ------------------------------------------ | -------: | -----------: | ----------------------------------------------- |
+| The island with ChartTooltip and `cx`      |  1,457 B |      1.6 KiB | M40: the client graph, measured + 10 %          |
+| `@nizivo/charts/area-chart`                |  6,570 B |      7.1 KiB | M40: the framed subpath, measured + 10 %        |
+| `@nizivo/charts/bar-chart`                 |  5,258 B |      5.7 KiB | M40: 3.6 confirmed, then raised for column mode |
+| `@nizivo/charts/donut-chart`               |  3,162 B |      3.2 KiB | §17.2                                           |
+| `@nizivo/charts/sparkline`                 |  1,618 B |        2 KiB | §17.2 (≤ 2)                                     |
+| `@nizivo/charts/chart-frame`               |  1,793 B |        2 KiB | M40: confirmed                                  |
+| `@nizivo/charts/legend`                    |    870 B |        1 KiB | M40: confirmed                                  |
+| `@nizivo/charts/chart-tooltip`             |    413 B |        1 KiB | M40: confirmed                                  |
+| `@nizivo/charts/styles.css`                |  3,405 B |        5 KiB | M40: confirmed                                  |
+| `@nizivo/charts` (the barrel, every chart) |  8,980 B |       12 KiB | §17.2, "all charts"                             |
 
 </ChartsTable>
 
-AreaChart is not a subpath yet: imported from the barrel it measures 6,209 B (ChartFrame, Legend,
-the island and ChartTooltip included) against §17.2's 3.6 KiB, which r6 measured for the renderer
-alone; even that scope measures about 3.8 KB. Whether to raise the figure or gate a narrower scope is
-an open decision, so AreaChart ships through the barrel until then, and `pnpm size` holds
-`{ AreaChart }` from the barrel to an interim 6.7 KiB so it cannot grow unnoticed.
+The AreaChart and BarChart subpaths include the island's client graph. Under React Server
+Components a page pays that graph only: the renderers stay on the server. The Next.js fixture
+records `/chart-area` at +1,588 B gzip under Turbopack against `/button-only` (+1,230 B in week 10,
+before M40 grew the island; `fixtures/next/RESULTS.md`, "Week 11").

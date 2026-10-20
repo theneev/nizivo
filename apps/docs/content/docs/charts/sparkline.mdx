@@ -3,84 +3,59 @@ title: Sparkline
 description: An inline trend line, 112 × 36, drawn on the server. Decorative by default, one named image with `label`; its colour follows the trend the data shows, and down is neutral grey, not red.
 ---
 
-import { ChartExample, ChartImport } from '../../../components/chart-example';
-import { ChartsTable } from '../../../components/charts-table';
-import {
-  SparklineDownExample,
-  SparklineExample,
-  SparklineGapExample,
-  SparklineLabelledExample,
-} from '../../../components/charts-live/sparkline.example';
-
 <Callout type="warn" title="Not yet published (v0.2)">
   `@nizivo/charts` is not on npm yet; it publishes at 0.2.0. Until then its API can change. The
-  Import section below shows the entry that works in the repository today. See
+  Import section below shows the entry the package's exports map has in the repository today. See
   [Charts](/docs/charts/).
 </Callout>
 
 ## Import
 
-<ChartImport part="sparkline" names="Sparkline" />
+<ChartImport names="Sparkline" />
 
 ## Static or interactive
 
 **Server.** Sparkline has no `'use client'` and imports no client module
-(`island-graph.test.ts` in `packages/charts/test/unit`); it has no interaction. The previews on this page import it
-from the entry the Import section shows; with the barrel, this site's build (Turbopack) shipped no
-chart JavaScript for them (2026-10-19). Under webpack without `optimizePackageImports` the charts
-barrel has not been measured: prefer the subpath once it exists. [How to choose](/docs/guides/static-or-interactive/).
+(`island-graph.test.ts` in `packages/charts/test/unit`); it has no interaction. The previews on this
+page import it from `@nizivo/charts/sparkline`, and the docs smoke check fails any page outside the
+AreaChart and BarChart pages that loads the charts island. Prefer the subpath to the barrel: under
+webpack without `optimizePackageImports` the barrel has not been measured.
+[How to choose](/docs/guides/static-or-interactive/).
 
 ## Examples
 
 ### Basic
 
-<ChartExample part="sparkline" name="SparklineExample" title="Basic" live={<SparklineExample />} />
+<ChartExample name="SparklineExample" />
 
 ### Down
 
-<ChartExample
-  part="sparkline"
-  name="SparklineDownExample"
-  title="Down"
-  live={<SparklineDownExample />}
-/>
+<ChartExample name="SparklineDownExample" />
 
 ### Labelled
 
-<ChartExample
-  part="sparkline"
-  name="SparklineLabelledExample"
-  title="Labelled"
-  live={<SparklineLabelledExample />}
-/>
+<ChartExample name="SparklineLabelledExample" />
 
 ### Gap
 
-<ChartExample
-  part="sparkline"
-  name="SparklineGapExample"
-  title="Gap"
-  live={<SparklineGapExample />}
-/>
+<ChartExample name="SparklineGapExample" />
 
 ## Props
 
-From `sparkline.tsx` in `packages/charts/src/sparkline` (`nz api` does not cover `@nizivo/charts` yet).
-Sparkline also takes every attribute of `<span>` except `children`.
+<ChartProps />
 
-<ChartsTable label="Sparkline props">
-
-| Prop    | Type                                         | Default          | Description                                                                                   |
-| ------- | -------------------------------------------- | ---------------- | --------------------------------------------------------------------------------------------- |
-| `data`  | `ReadonlyArray<number \| null \| undefined>` | required         | The values in order, evenly spaced along x. A value that is not a finite number leaves a gap. |
-| `label` | `string`                                     |                  | An accessible name ("Sales, up 28% over 30 days"): the sparkline becomes `role="img"`.        |
-| `curve` | d3-shape `CurveFactory`                      | `curveMonotoneX` | Any d3-shape curve.                                                                           |
-| `area`  | `boolean`                                    | `true`           | The 10% wash under the line.                                                                  |
-| `dot`   | `boolean`                                    | `true`           | The last value's dot.                                                                         |
-
-</ChartsTable>
+`data` holds the values themselves (`data={[12, 14, 13]}`), or any data that `y` reads. `y` is an
+`Accessor`, as AreaChart's: a key of the datum (`y="sales"`) or a `(datum, index) => value`
+function, so one series can feed an AreaChart and a Sparkline. It is optional when the data are
+numbers (`SparklineValue`, exported: a number, `null` or `undefined`), and TypeScript requires it
+otherwise: `SparklineProps<T>` is a conditional type, which the table above lists as one optional
+`y`. A value that is not a finite number leaves a gap.
 
 There is no `trend` prop: the trend is the last defined value against the first.
+
+## Other exports
+
+<ChartOtherExports />
 
 ## Data attributes and slots
 
@@ -97,15 +72,10 @@ There is no `trend` prop: the trend is the last defined value against the first.
 
 ## CSS hooks
 
-<ChartsTable label="Sparkline CSS hooks">
+<ChartCssHooks />
 
-| Hook                    | Default                | What it sets                                                 |
-| ----------------------- | ---------------------- | ------------------------------------------------------------ |
-| `--nz-sparkline-width`  | `7rem`                 | The width (Figma 03: 112 px; Figma 04's KPI tile uses 88 px) |
-| `--nz-sparkline-height` | `2.25rem`              | The height (36 px; the KPI tile uses 28 px)                  |
-| `--nz-sparkline-halo`   | `var(--nz-bg-surface)` | The ring around the end dot, for tinted surfaces             |
-
-</ChartsTable>
+`--nz-sparkline-width` and `--nz-sparkline-height` are Figma 03's 112 × 36 px; Figma 04's KPI tile
+uses 88 × 28 px. `--nz-sparkline-halo` is the ring around the end dot, for tinted surfaces.
 
 ## Accessibility
 

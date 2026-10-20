@@ -3,24 +3,15 @@ title: ChartFrame
 description: The `<figure>` every chart renders in, around any renderer, Nizivo's or a third party's. It owns the caption, the legend slot, the HTML tick labels, the server-rendered data table and the loading, empty and error statuses.
 ---
 
-import { ChartExample, ChartImport } from '../../../components/chart-example';
-import { ChartsTable } from '../../../components/charts-table';
-import {
-  ChartFrameDetailsExample,
-  ChartFrameExample,
-  ChartFrameStatusExample,
-  ChartFrameThirdPartyExample,
-} from '../../../components/charts-live/chart-frame.example';
-
 <Callout type="warn" title="Not yet published (v0.2)">
   `@nizivo/charts` is not on npm yet; it publishes at 0.2.0. Until then its API can change. The
-  Import section below shows the entry that works in the repository today. See
+  Import section below shows the entry the package's exports map has in the repository today. See
   [Charts](/docs/charts/).
 </Callout>
 
 ## Import
 
-<ChartImport part="chart-frame" names="ChartFrame" />
+<ChartImport names="ChartFrame" />
 
 The contract every renderer may rely on is `chart-frame.contract.ts` in `packages/charts/src/chart-frame`
 (seam K9, §14.1).
@@ -37,73 +28,35 @@ choose](/docs/guides/static-or-interactive/).
 
 ### Basic
 
-<ChartExample
-  part="chart-frame"
-  name="ChartFrameExample"
-  title="Basic"
-  live={<ChartFrameExample />}
-/>
+<ChartExample name="ChartFrameExample" />
 
 ### Details
 
-<ChartExample
-  part="chart-frame"
-  name="ChartFrameDetailsExample"
-  title="Details"
-  live={<ChartFrameDetailsExample />}
-/>
+<ChartExample name="ChartFrameDetailsExample" />
 
 ### Status
 
-<ChartExample
-  part="chart-frame"
-  name="ChartFrameStatusExample"
-  title="Status"
-  live={<ChartFrameStatusExample />}
-/>
+<ChartExample name="ChartFrameStatusExample" />
 
 ### Third party
 
-<ChartExample
-  part="chart-frame"
-  name="ChartFrameThirdPartyExample"
-  title="Third party"
-  live={<ChartFrameThirdPartyExample />}
-/>
+<ChartExample name="ChartFrameThirdPartyExample" />
 
 The [Charts overview](/docs/charts/#a-third-party-renderer) has the same recipe with a client
 renderer such as Recharts.
 
 ## Props
 
-From `chart-frame.contract.ts` and `chart-frame.tsx` (`nz api` does not cover `@nizivo/charts` yet,
-so this table is written from the source). ChartFrame also takes every attribute of `<figure>`
-except `title` and `children`, which it spreads on the root.
+<ChartProps />
 
-<ChartsTable label="ChartFrame props">
+`ChartFrameProps` in `chart-frame.contract.ts` (`packages/charts/src/chart-frame`) is the renderer
+seam's contract; `ChartFrameElementProps` adds the `<figure>`'s attributes, and every chart's own
+props include them too (one API shape across the charts, M40). With point-aligned labels
+(`xAlign="point"`), an x position whose label is `''` renders an empty grid cell with no tick
+element, except the last cell, which holds both edge labels: a long daily series sends hundreds of
+empty positions. `xDirection` is explained under [Right to left](/docs/charts/#right-to-left).
 
-| Prop          | Type                                                                           | Default    | Description                                                                                                                                          |
-| ------------- | ------------------------------------------------------------------------------ | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `title`       | `ReactNode`                                                                    | required   | The caption and the figure's accessible name; the data table is labelled by it.                                                                      |
-| `summary`     | `ReactNode`                                                                    |            | One line under the title, for example "Daily sales, Oct 1–30, vs previous period".                                                                   |
-| `table`       | `{ columns: readonly string[]; rows: readonly (readonly string[])[] }`         | required   | The data, pre-formatted. `columns[0]` heads the row-header column; each row's first cell is its `<th scope="row">`.                                  |
-| `status`      | `'ready' \| 'loading' \| 'empty' \| 'error'`                                   | `'ready'`  | A ready chart whose `table` has no rows renders as `'empty'`.                                                                                        |
-| `pending`     | `boolean`                                                                      | `false`    | A refresh is in flight while the chart shows data: `aria-busy` and `data-pending`.                                                                   |
-| `tableView`   | `'hidden' \| 'details'`                                                        | `'hidden'` | `'hidden'`: visually hidden, read by assistive technology. `'details'`: a native disclosure under the plot.                                          |
-| `axes`        | `'frame' \| 'none'`                                                            | `'frame'`  | `'frame'`: the frame draws the HTML tick labels from `ticks`. `'none'`: the child draws its own.                                                     |
-| `ticks`       | `{ x?: readonly string[]; xAlign?: 'point' \| 'band'; y?: readonly string[] }` |            | `x`: one label per x position, `''` where no tick falls. `y`: from the top tick down to the baseline, evenly spaced. `xAlign` defaults to `'point'`. |
-| `interaction` | `'nizivo' \| 'none'`                                                           | `'nizivo'` | `'none'` for a third-party child: the frame makes no keyboard claim for the points.                                                                  |
-| `xDirection`  | `'ltr' \| 'rtl' \| 'auto'`                                                     | `'ltr'`    | See [Right to left](/docs/charts/#right-to-left).                                                                                                    |
-| `legend`      | `ReactNode`                                                                    |            | A [Legend](/docs/charts/legend/), or any node, between the caption and the plot, in every status.                                                    |
-| `empty`       | `ReactNode`                                                                    |            | Replaces the default empty message.                                                                                                                  |
-| `error`       | `ReactNode`                                                                    |            | Replaces the default error message, for example an `InlineError` with a retry action.                                                                |
-| `labels`      | `Partial<ChartFrameLabels>`                                                    |            | The frame's strings, below.                                                                                                                          |
-| `render`      | `RenderProp<ChartFrameState>`                                                  |            | Replace or wrap the root element. A function receives `{ status, pending, interaction }`, with `status` as rendered.                                 |
-| `children`    | `ReactNode`                                                                    |            | The renderer, which fills the plot. Rendered only while the status is `'ready'`.                                                                     |
-
-</ChartsTable>
-
-`labels` (`ChartFrameLabels`, English defaults in `chartFrameLabels`):
+The English defaults of `labels` (`ChartFrameLabels`), in `chartFrameLabels`:
 
 <ChartsTable label="ChartFrame labels">
 
@@ -118,10 +71,7 @@ except `title` and `children`, which it spreads on the root.
 
 ## Other exports
 
-`chartFrameLabels`, and the types `ChartFrameProps`, `ChartFrameAttributes`,
-`ChartFrameElementProps`, `ChartFrameState`, `ChartFrameLabels`, `ChartTable`, `ChartTicks`,
-`ChartTickAlign`, `ChartAxes`, `ChartInteractionMode`, `ChartTableView`, `ChartXDirection` and
-`DataStatus`.
+<ChartOtherExports />
 
 ## Data attributes and slots
 
@@ -146,16 +96,11 @@ Classes a renderer draws with: `nz-chart-svg` (the percent-space SVG that fills 
 
 ## CSS hooks
 
-<ChartsTable label="ChartFrame CSS hooks">
+<ChartCssHooks />
 
-| Hook                      | Default   | What it sets                                         |
-| ------------------------- | --------- | ---------------------------------------------------- |
-| `--nz-chart-frame-aspect` | `18 / 7`  | The body's aspect ratio (Figma 03's 720 × 280 plot)  |
-| `--nz-chart-frame-gutter` | `2.75rem` | The y labels' column; it stays fixed in every status |
-
-</ChartsTable>
-
-Long localised y labels can be wider than the 2.75rem gutter; widen it with the hook.
+`--nz-chart-frame-aspect` is the body's aspect ratio (18 / 7, Figma 03's 720 × 280 plot), and
+`--nz-chart-frame-gutter` the y labels' column, which stays fixed in every status. Long localised y
+labels can be wider than the 2.75rem gutter; widen it with the hook.
 
 ## Accessibility
 

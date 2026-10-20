@@ -1,9 +1,10 @@
 // A focusable, named horizontal scroller around a Markdown table on the charts pages, like the
 // generated pages' <Table> (components/table.tsx): a wide props table on a phone stays reachable by
 // keyboard (WCAG 1.4.10, 2.1.1; axe's scrollable-region-focusable). Fumadocs wraps every Markdown
-// table in its own scroller, which is not focusable; components/charts.css turns that inner one off
+// table in its own scroller, which is not focusable; charts-table.css turns that inner one off
 // inside this wrapper, so this one scrolls.
 import type { JSX, ReactNode } from 'react';
+import './charts-table.css';
 
 export function ChartsTable({
   label,

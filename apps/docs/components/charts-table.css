@@ -1,0 +1,8 @@
+/* Inside a ChartsTable (components/charts-table.tsx), Fumadocs' own table wrapper stops scrolling so
+   the focusable outer one does. Unlayered, to win over the wrapper's Tailwind utilities. Its own
+   sheet, not charts.css: the charts overview (an MDX page every route's graph shares) uses
+   ChartsTable, and must not pull @nizivo/charts/styles.css onto every page. */
+.nz-docs-charts-table > div {
+  overflow: visible;
+  margin-block: 0;
+}
