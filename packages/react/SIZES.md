@@ -104,7 +104,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 | Entry              | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | ------------------ | -------: | ---------: | ---------: | ----------: | -----------: |
-| `.`                |   90,598 |       88.5 |     76,431 |          93 |        4,634 |
+| `.`                |   91,326 |       89.2 |     77,156 |          93 |        3,906 |
 | /alert             |    1,282 |        1.3 |      1,181 |         1.4 |          151 |
 | /augment           |        0 |        0.0 |          0 |           0 |            — |
 | /avatar            |    1,381 |        1.3 |      1,283 |         1.5 |          155 |
@@ -133,6 +133,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /menu              |   56,711 |       55.4 |     48,954 |          57 |        1,657 |
 | /meter             |    1,143 |        1.1 |      1,058 |         1.3 |          188 |
 | /metric            |    2,142 |        2.1 |      1,956 |         2.4 |          315 |
+| /motion            |    1,573 |        1.5 |      1,436 |         1.7 |          167 |
 | /native-select     |    1,560 |        1.5 |      1,420 |         1.7 |          180 |
 | /number-value      |      788 |        0.8 |        716 |         0.9 |          133 |
 | /pagination        |    1,824 |        1.8 |      1,675 |           2 |          224 |
@@ -182,6 +183,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | own: icon-button/icon-button.client             |      353 |        0.3 |        302 |         0.4 |           56 |
 | own: input/input.client                         |      721 |        0.7 |        639 |         0.8 |           98 |
 | own: menu/menu.client                           |    1,035 |        1.0 |        932 |         1.2 |          193 |
+| own: motion/count-up.client                     |    1,032 |        1.0 |        945 |         1.2 |          196 |
 | own: radio-group/radio-group.client             |      614 |        0.6 |        541 |         0.7 |          102 |
 | own: segmented-control/segmented-control.client |    1,169 |        1.1 |      1,052 |         1.3 |          162 |
 | own: select/select.client                       |    1,146 |        1.1 |      1,055 |         1.3 |          185 |
@@ -227,6 +229,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/menu.css              |    1,050 |        1.0 |        867 |         1.2 |          178 |
 | /css/meter.css             |      657 |        0.6 |        537 |         0.8 |          162 |
 | /css/metric.css            |      732 |        0.7 |        629 |         0.8 |           87 |
+| /css/motion.css            |      192 |        0.2 |        154 |         0.3 |          115 |
 | /css/native-select.css     |      930 |        0.9 |        778 |           1 |           94 |
 | /css/number-value.css      |      154 |        0.2 |        116 |         0.2 |           50 |
 | /css/pagination.css        |      789 |        0.8 |        656 |         0.9 |          132 |
@@ -246,7 +249,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/textarea.css          |      751 |        0.7 |        624 |         0.8 |           68 |
 | /css/tooltip.css           |      581 |        0.6 |        503 |         0.6 |           33 |
 | /css/trend-card.css        |      403 |        0.4 |        346 |         0.5 |          109 |
-| /styles.css                |   17,161 |       16.8 |     14,514 |          19 |        2,295 |
+| /styles.css                |   17,184 |       16.8 |     14,556 |          19 |        2,272 |
 
 #### `@nizivo/tokens`: Public JS entries (bundled with what they import, React Aria included)
 

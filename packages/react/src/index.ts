@@ -182,6 +182,8 @@ export type {
   MetricSize,
   MetricState,
 } from './metric/index';
+export { CountUp, useCountUp } from './motion/index';
+export type { CountUpOptions, CountUpProps, CountUpState } from './motion/index';
 export { NativeSelect } from './native-select/index';
 export type { NativeSelectProps, NativeSelectState } from './native-select/index';
 export { NumberValue, formatNumber } from './number-value/index';

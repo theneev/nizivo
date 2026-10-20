@@ -2,7 +2,7 @@
   "$comment": "Size budgets (ARCHITECTURE.md §17), written by `node packages/tooling/size/measure.ts --write`. measured: bytes, gzip -9, as size-limit 14.2 reports them. limitKiB: measured + 10%, rounded up (method.ts limitKiB), never above the entry's §17.1 plan limit (method.ts PLAN_LIMITS_KIB). Limits only go up through a labelled PR (§17.3).",
   "entries": {
     "@nizivo/react": {
-      "measured": 90598,
+      "measured": 91326,
       "limitKiB": 93
     },
     "@nizivo/react/alert": {
@@ -116,6 +116,10 @@
     "@nizivo/react/metric": {
       "measured": 2142,
       "limitKiB": 2.4
+    },
+    "@nizivo/react/motion": {
+      "measured": 1573,
+      "limitKiB": 1.7
     },
     "@nizivo/react/native-select": {
       "measured": 1560,
@@ -273,6 +277,10 @@
       "measured": 1035,
       "limitKiB": 1.2
     },
+    "@nizivo/react own: motion/count-up.client": {
+      "measured": 1032,
+      "limitKiB": 1.2
+    },
     "@nizivo/react own: radio-group/radio-group.client": {
       "measured": 614,
       "limitKiB": 0.7
@@ -413,6 +421,10 @@
       "measured": 732,
       "limitKiB": 0.8
     },
+    "@nizivo/react/css/motion.css": {
+      "measured": 192,
+      "limitKiB": 0.3
+    },
     "@nizivo/react/css/native-select.css": {
       "measured": 930,
       "limitKiB": 1
@@ -490,7 +502,7 @@
       "limitKiB": 0.5
     },
     "@nizivo/react/styles.css": {
-      "measured": 17161,
+      "measured": 17184,
       "limitKiB": 19
     },
     "@nizivo/tokens": {

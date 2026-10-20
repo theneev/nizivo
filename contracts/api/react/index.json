@@ -345,6 +345,30 @@
       "name": "ContainerProps"
     },
     {
+      "definedIn": "./motion",
+      "import": "import { CountUp } from '@nizivo/react'",
+      "kind": "component",
+      "name": "CountUp"
+    },
+    {
+      "definedIn": "./motion",
+      "import": "import type { CountUpOptions } from '@nizivo/react'",
+      "kind": "type",
+      "name": "CountUpOptions"
+    },
+    {
+      "definedIn": "./motion",
+      "import": "import type { CountUpProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "CountUpProps"
+    },
+    {
+      "definedIn": "./motion",
+      "import": "import type { CountUpState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "CountUpState"
+    },
+    {
       "definedIn": "./delta",
       "import": "import { Delta } from '@nizivo/react'",
       "kind": "component",
@@ -1903,6 +1927,12 @@
       "import": "import { themeScript } from '@nizivo/react'",
       "kind": "constant",
       "name": "themeScript"
+    },
+    {
+      "definedIn": "./motion",
+      "import": "import { useCountUp } from '@nizivo/react'",
+      "kind": "hook",
+      "name": "useCountUp"
     },
     {
       "definedIn": "./field",

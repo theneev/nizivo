@@ -1,0 +1,15 @@
+{
+  "name": "motion",
+  "status": "stable",
+  "tier": "own",
+  "exports": ["CountUp", "useCountUp"],
+  "parts": [],
+  "cssDeps": ["base", "number-value"],
+  "variants": {},
+  "figma": {
+    "canonical": [],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": []
+  }
+}

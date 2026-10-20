@@ -47,6 +47,7 @@ import {
 } from '../../src/breadcrumb/breadcrumb.example';
 import { KpiTileExample, KpiTileStatesExample } from '../../src/kpi-tile/kpi-tile.example';
 import { MetricExample, MetricStatesExample } from '../../src/metric/metric.example';
+import { CountUpExample } from '../../src/motion/motion.example';
 import { NumberValueExample } from '../../src/number-value/number-value.example';
 import {
   PaginationExample,
@@ -112,6 +113,7 @@ const examples: Record<string, () => JSX.Element> = {
   BreadcrumbRouterExample,
   PaginationExample,
   PaginationRouterExample,
+  CountUpExample,
 };
 
 const allowed = new Set([

@@ -54,7 +54,11 @@ function slugOf(component: string, name: string): string {
   const pascal = component.replace(/(^|-)([a-z0-9])/g, (_m, _d: string, c: string) =>
     c.toUpperCase(),
   );
-  const middle = name.slice(pascal.length, -'Example'.length);
+  // an example named after its part rather than its folder (CountUpExample in motion/) keeps its
+  // whole name
+  const middle = name.startsWith(pascal)
+    ? name.slice(pascal.length, -'Example'.length)
+    : name.slice(0, -'Example'.length);
   if (middle === '') return 'basic';
   return middle.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
 }

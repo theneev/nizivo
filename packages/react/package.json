@@ -143,6 +143,10 @@
       "types": "./dist/metric/index.d.ts",
       "default": "./dist/metric/index.js"
     },
+    "./motion": {
+      "types": "./dist/motion/index.d.ts",
+      "default": "./dist/motion/index.js"
+    },
     "./native-select": {
       "types": "./dist/native-select/index.d.ts",
       "default": "./dist/native-select/index.js"
@@ -249,6 +253,7 @@
     "./css/menu.css": "./dist/css/menu.css",
     "./css/meter.css": "./dist/css/meter.css",
     "./css/metric.css": "./dist/css/metric.css",
+    "./css/motion.css": "./dist/css/motion.css",
     "./css/native-select.css": "./dist/css/native-select.css",
     "./css/number-value.css": "./dist/css/number-value.css",
     "./css/pagination.css": "./dist/css/pagination.css",

@@ -1,0 +1,20 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/motion.css: CountUp (ARCHITECTURE.md §13.3, Figma 04 §5). The root is
+   NumberValue's element and takes number-value.css; this sheet only keeps the counting digits from
+   moving anything. useCountUp gives the digits the final string's width while they count. */
+@layer nz.components {
+  .nz-count-up-value {
+    /* inline-block, so the width the hook sets applies; the box is the text's, as NumberValue's */
+    display: inline-block;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    /* fewer digits than the final string sit at the end, where the last digit stays put */
+    text-align: end;
+  }
+
+  /* the copy of the value assistive tech reads; a text selection takes the visible digits only */
+  .nz-count-up-label {
+    user-select: none;
+  }
+}

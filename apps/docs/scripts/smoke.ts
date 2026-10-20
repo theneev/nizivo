@@ -78,6 +78,8 @@ const NIZIVO_CLIENT_MARKERS = [
   'segmented-control-input',
   'tabs-tab',
   'menu-popup',
+  // CountUp (@nizivo/react/motion, M41): its digits' slot
+  'count-up-value',
   // @nizivo/charts' ChartInteraction island (AreaChart's point mode, BarChart's column mode). The
   // charts parts have their own generated routes (app/docs/(generated)/charts), so it may load on
   // those two pages only; on any other page it means a charts import joined the shared MDX graph.
@@ -111,6 +113,8 @@ const CLIENT_PAGES: Record<string, string[]> = {
   '/docs/components/tabs/': ['tabs-tab', 'nz-textarea', 'willValidate'],
   // MenuRowActionsExample's trigger is an IconButton, whose default tooltip leaf the page imports.
   '/docs/components/menu/': ['menu-popup', 'tooltip-popup'],
+  // CountUp is the one client part of the dashboard set (M41); its page is titled by its subpath.
+  '/docs/components/motion/': ['count-up-value'],
   // AreaChart and BarChart render the island by default (interaction="nizivo", M40); the other
   // charts pages import no client module.
   '/docs/charts/area-chart/': ['nz-chart-interaction'],
@@ -139,6 +143,7 @@ const REPORT = [
   '/docs/foundations/javascript/',
   '/docs/charts/area-chart/',
   '/docs/charts/bar-chart/',
+  '/docs/components/motion/',
 ];
 
 interface Js {
