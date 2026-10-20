@@ -1,7 +1,9 @@
-// Every /docs page except the component pages: the hand-written MDX pages and the generated pages of
-// the utility entries (config, contracts, augment). Components have one route each under
-// app/docs/(generated)/components (scripts/generate.ts), so that each page bundles only the client
-// modules its own examples use. All of them are Server Components, prerendered by the static export.
+// Every /docs page except the component pages and the charts part pages: the hand-written MDX pages
+// (the charts overview included) and the generated pages of the utility entries (config, contracts,
+// augment). Components have one route each under app/docs/(generated)/components, and each charts
+// part one under app/docs/(generated)/charts (scripts/generate.ts), so that each page bundles only
+// the client modules its own examples use. All of them are Server Components, prerendered by the
+// static export.
 import type { Metadata } from 'next';
 import type { JSX } from 'react';
 import { notFound } from 'next/navigation';
@@ -9,6 +11,7 @@ import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layo
 import { EntryPage } from '../../../components/entry-page';
 import { InlineMd } from '../../../components/inline-md';
 import { mdxComponents } from '../../../components/mdx';
+import { hasChartsRoute } from '../../../lib/charts-api';
 import { plainText } from '../../../lib/markdown';
 import { outline } from '../../../lib/outline';
 import { source, type DocsPage as SourcePage } from '../../../lib/source';
@@ -17,9 +20,12 @@ interface Props {
   params: Promise<{ slug?: string[] }>;
 }
 
-/** A component page, which its own generated route renders instead of this one. */
+/** A component or charts part page, which its own generated route renders instead of this one. */
 function hasOwnRoute(page: SourcePage): boolean {
-  return page.type === 'generated' && page.data.entry.kind === 'component';
+  return (
+    (page.type === 'generated' && page.data.entry.kind === 'component') ||
+    hasChartsRoute(page.slugs)
+  );
 }
 
 export default async function Page({ params }: Props): Promise<JSX.Element> {
