@@ -137,6 +137,8 @@ Three reviewers (accessibility behaviour; size, performance and visuals; API, do
 
 ## For the maintainer (reported, not decided)
 
+Items 8 and 9 are closed by M41 (2026-10-20; ARCHITECTURE.md §23.3): Escape with focus elsewhere is kept as built (item 1), and DonutChart's keyboard is built through the island with a labelled §17.2 raise to 5.3 KiB (item 2; `packages/react/W12-RESULTS.md`).
+
 Each was built the recommended way and can change cheaply before 0.2:
 
 1. **`xDirection="auto"` follows `dir`, not CSS `direction`** (built: mirrored before hydration, no flip on hydration, works with `interaction="none"`). The alternative, following the CSS `direction` property, can only mirror the plot from the island, so an rtl page would draw unmirrored until hydration.
