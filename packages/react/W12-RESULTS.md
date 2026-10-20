@@ -60,8 +60,8 @@ The integrator compared the new renders with read-only Figma screenshots of KPI 
 | `@nizivo/react/avatar`                   | —        | 1,381 B  | 1.5 (new)                          |
 | `@nizivo/react/breadcrumb`               | —        | 1,291 B  | 1.4 (new)                          |
 | `@nizivo/react/pagination`               | —        | 1,824 B  | 2.0 (new)                          |
-| `@nizivo/react/motion`                   | —        | 1,573 B  | 1.7 (new, provisional)             |
-| own: `motion/count-up.client`            | —        | 1,032 B  | 1.2 (provisional; target 0.55)     |
+| `@nizivo/react/motion`                   | —        | 1,573 B  | 1.7 (new; settled by M42)          |
+| own: `motion/count-up.client`            | —        | 1,032 B  | 1.2 (settled by M42; target 0.55)  |
 | `@nizivo/react/card`                     | 1,086 B  | 1,086 B  | 1.2 (unchanged)                    |
 | `@nizivo/react` (root barrel)            | 86,521 B | 91,326 B | 93 (unchanged)                     |
 | dashboard set                            | 77,362 B | 77,362 B | 76 (unchanged)                     |
@@ -76,7 +76,7 @@ The integrator compared the new renders with read-only Figma screenshots of KPI 
 | `css/motion.css`                         | —        | 192 B    | 0.3 (new)                          |
 | `css/card.css`                           | 592 B    | 614 B    | 0.7 (unchanged)                    |
 | `css/base.css`                           | 997 B    | 1,045 B  | 1.1 (unchanged)                    |
-| **`@nizivo/react/styles.css`**           | 15,159 B | 17,184 B | **16 → 19 (provisional, not M41)** |
+| **`@nizivo/react/styles.css`**           | 15,159 B | 17,184 B | **16 → 19 (raised by M42 item 1)** |
 | `@nizivo/charts/donut-chart`             | 3,162 B  | 4,856 B  | **3.2 → 5.3 (raised, M41)**        |
 | `@nizivo/charts` island with its imports | 1,457 B  | 1,580 B  | **1.6 → 1.7 (raised, M41)**        |
 | `@nizivo/charts` (barrel)                | 8,980 B  | 9,274 B  | 9.7 (unchanged)                    |
@@ -85,10 +85,10 @@ The integrator compared the new renders with read-only Figma screenshots of KPI 
 | `@nizivo/charts/styles.css`              | 3,405 B  | 3,473 B  | 3.7 (unchanged)                    |
 
 - **The island's derivation:** 1,457 B (week 11) + 10 the `items` prop and keys starting at the first slice + 20 the card at the server-placed centre + 71 pointer hit-testing by element + 11 the swatch taking the slice colour = 1,569 B; × 1.1 = 1,726 B → 1.7 KiB (M41 item 2). The week 12 review's Escape fix (A11Y-W12-1: the key stopped on the layer) adds 11 B: 1,580 B, × 1.1 = 1,738 B, still 1.7. **DonutChart:** 4,845 B × 1.1 = 5,330 B → 5.3 KiB (of the +1,683 B, 450 B is DonutChart's own wiring and the rest the island graph it now bundles); 4,856 B after the review. `CHART_TARGETS_KIB` in `packages/tooling/size/method.ts` and `size.test.ts` carry both figures.
-- **`styles.css`** is every stable component sheet concatenated (D-am), so the nine new sheets grow it by 2,025 B (after the review's CSS fixes), past its 16 KiB limit. The integrator set it to measured + 10 % (19 KiB, whole KiB above 10) by hand, on that entry only (`--rebase` would also have moved `base.css`). **It is provisional, not an M41 raise** (week 12 review R2-1, R3-2): only DonutChart's and the island's raises are M41's. It stays so `pnpm check` passes; the decision is the maintainer's (below).
-- **CountUp:** 1,032 B own code after the review's unscaled width lock (A11Y-W12-5, +9 B; 1,023 B before), so its provisional budget is 1.2 KiB (measured + 10 %), not an M41 figure. Of the code, the motion builder measured about 109 B for the in-view gating, 261 B for the component around the hook, 57 B for frame rounding, 47 B for the hydration guard and 31 B for the width lock. No combination of cuts reaches 0.55 KiB.
+- **`styles.css`** is every stable component sheet concatenated (D-am), so the nine new sheets grow it by 2,025 B (after the review's CSS fixes), past its 16 KiB limit. The integrator set it to measured + 10 % (19 KiB, whole KiB above 10) by hand, on that entry only (`--rebase` would also have moved `base.css`). **It is provisional, not an M41 raise** (week 12 review R2-1, R3-2; settled by M42 item 1, a labelled raise): only DonutChart's and the island's raises are M41's. It stays so `pnpm check` passes; the decision is the maintainer's (below).
+- **CountUp:** 1,032 B own code after the review's unscaled width lock (A11Y-W12-5, +9 B; 1,023 B before), so its provisional budget is 1.2 KiB (measured + 10 %), not an M41 figure (settled by M42 item 2). Of the code, the motion builder measured about 109 B for the in-view gating, 261 B for the component around the hook, 57 B for frame rounding, 47 B for the hydration guard and 31 B for the width lock. No combination of cuts reaches 0.55 KiB.
 - Under RSC every server part is 0 B of client JS: no `'use client'` in any of their graphs (the SSR tests assert it), and the Next fixture below measures it.
-- The new entries' limits were recorded with `measure.ts --write` on the final tree (measured + 10 %); three of them sit above a §17.2 target (CountUp's own code, seven server subpaths over the ≤ 1 KB SPA target) and are provisional, for the maintainer.
+- The new entries' limits were recorded with `measure.ts --write` on the final tree (measured + 10 %); three of them sit above a §17.2 target (CountUp's own code, seven server subpaths over the ≤ 1 KB SPA target) and are provisional, for the maintainer (settled by M42 items 1–3).
 - No §17.1 limit, no tokens or icons budget and no other react budget moved. Other react entries moved by a byte or less inside their limits (`{ Button } from the barrel` 1,277 → 1,278 B).
 
 ## Lanes
@@ -145,8 +145,8 @@ Three reviewers (accessibility behaviour; size, performance, visuals and Figma; 
 - **A11Y-W12-4, major, fixed (option a):** a RankedList label longer than its row wrapped, but the reserved placeholder rows are one line, so the ready box was taller. A label is now one line with an ellipsis (the whole label stays in the DOM and the accessibility tree); `ranked-list.spec.tsx` adds long labels at 280 px and at 200 % text.
 - **A11Y-W12-5, minor, fixed:** CountUp locked the digits' width from `getBoundingClientRect`, which a transformed ancestor scales. It now locks the unscaled used width from the computed style, plus 0.005 px: Chromium writes that value to six figures and floors a length to 1/64 px, which moved the next word by 1/64 px (found by the existing no-shift test). Two `transform: scale()` cases join the no-shift tests (+9 B; own code 1,032 B).
 - **A11Y-W12-6, nit, fixed (docs):** after a pointer session, Tab into the ring starts at the last slice shown, not the first. The code is kept (as AreaChart and BarChart keep their last point); the DonutChart page, the source comment and §14.1 now say "the first slice, or the last one a key or the pointer showed".
-- **R2-1 and R3-2, major, fixed (relabelled):** the `styles.css` limit the integrator moved 16 → 19 KiB, CountUp's own-code budget and the server parts above their ≤ 1 KB target were written up as M41's. They are now **provisional, set by the integrator, open for the maintainer** in §17, §21.2, the M41 row and below; only DonutChart's and the island's raises carry M41's label. The 19 KiB stays so `pnpm check` passes; reverting it is one number.
-- **R2-2, major, fixed (relabelled):** CountUp's own code (1,032 B after A11Y-W12-5, 1.2 KiB provisional) misses §17.2's 0.55 KiB; it is presented as open, not settled.
+- **R2-1 and R3-2, major, fixed (relabelled):** the `styles.css` limit the integrator moved 16 → 19 KiB, CountUp's own-code budget and the server parts above their ≤ 1 KB target were written up as M41's. They are now **provisional, set by the integrator, open for the maintainer** (settled by M42 items 1–3) in §17, §21.2, the M41 row and below; only DonutChart's and the island's raises carry M41's label. The 19 KiB stays so `pnpm check` passes; reverting it is one number.
+- **R2-2, major, fixed (relabelled):** CountUp's own code (1,032 B after A11Y-W12-5, 1.2 KiB provisional) misses §17.2's 0.55 KiB; it is presented as open, not settled (settled by M42 item 2).
 - **R2-3, minor, fixed (recorded):** seven of the eight server subpaths miss the ≤ 1 KB SPA target; §17.2 now says so as an open item for the maintainer.
 - **R2-4, minor, fixed in part, deferred in part:** the fixture's TrendCard now takes `legend={false}` on its AreaChart and a Legend in its own `legend` slot, below the plot as Figma's Revenue Card draws it. Hiding ChartFrame's caption while it stays the figure's accessible name needs a new prop on M40's one API shape (every chart's props), which is the maintainer's to decide (below).
 - **R2-5, minor, fixed:** the visual harness's focus crop now includes a charts island's card, so the 8 DonutChart focus shots show it whole (388 to 425 px wide); they were re-recorded. Every other charts shot compares identical.
@@ -166,24 +166,88 @@ Three reviewers (accessibility behaviour; size, performance, visuals and Figma; 
 - **R3-11, nit, fixed:** TrendCard's manifest lists the Revenue Card master `752:385` as canonical (on canvas since figma/14), as RankedList, Breadcrumb and Pagination list theirs.
 - **R3-12, nit, no change:** `_internal/data-status.ts` keeps oxfmt's wrap of the fixed content (recorded under "Integrator changes" above).
 
-## For the maintainer (reported, not decided)
+## For the maintainer (answered by M42, 2026-10-20)
+
+Each item below is answered by M42 (ARCHITECTURE.md §23.3, the M42 row, which quotes the maintainer's message verbatim); what changed is in "After M42" below.
 
 1. **`styles.css` limit set 16 → 19 KiB by the integrator (provisional, not an M41 raise)**, the one existing react budget that moved this week, against the rule that existing budgets move only by a labelled decision. Reason: the sheet is every stable component sheet (D-am), and without the raise `pnpm size`, and so `pnpm check`, fails. Alternative: keep 16 KiB and ship the week with `pnpm size` red on that entry, or leave the dashboard sheets out of `styles.css`. Recommendation: keep the raise (one number to revert if not).
+   **Answered by M42:** keep at 19: `styles.css` 19 KiB is a labelled raise by M42, no longer provisional.
 2. **CountUp's size:** own code 1,032 B (after the review's width-lock fix) against §17.2's 0.55 KiB; a provisional 1.2 KiB budget, not settled. Options: (a) accept 1.2 own / 1.7 `./motion`; (b) drop frame rounding (−57 B) or the hydration guard (−47 B; hydrated tiles would flash back to `from`). Neither reaches 0.55. Recommendation: (a).
+   **Answered by M42:** option (a): CountUp's 1.2 KiB own code and 1.7 KiB `./motion` are settled budgets.
 3. **The ≤ 1 KB SPA target for server parts:** seven of the eight new server subpaths measure 1.3 to 2.5 KiB because they compose Delta, InlineError, Skeleton and NumberValue. Under RSC they are 0 KB. Options: restate the target per leaf part, without what a composite bundles, or accept that composites miss it. Recommendation: the first; §17.2 records it as open.
+   **Answered by M42:** the first: the ≤ 1 KB SPA target is per leaf part, own code, without what a composite bundles (§17.2; measured below).
 4. **The Delta pill on `tone="brand"`** is invisible (the two tokens are equal). Option: a surface-coloured pill on tinted tiles. Recommendation: ask design (figma/04 gap 4); keep Figma's look until then.
+   **Answered by M42:** the option is built: a `bg/surface` Delta pill on `brand` and `accent` surfaces, a deviation from Figma 04 gap 4 the maintainer chose.
 5. **`brand` and `accent` look the same in dark** (both green-950): a token question for design (figma/04 issue 5).
+   **Answered by M42:** follow Figma for now: no change; recorded on the Deviations and Card pages.
 6. **The Sparkline halo on tinted tiles** stays `bg/surface` (a white ring). Consumers can set `--nz-sparkline-halo`; decide with the charts owner whether charts reads a shared surface variable.
+   **Answered by M42:** built: Card declares `--nz-surface`, and the charts' halos read it optionally.
 7. **CountUp on load:** a tile already in view at hydration keeps its number and does not count (04 §5 (a)). Figma 01's "numbers count up in 900ms" could be read as counting on load. A `trigger` prop is the alternative. Recommendation: keep it.
+   **Answered by M42:** keep it: D-bg confirmed.
 8. **DonutChart's builder defaults (D-bh):** the hole and the gaps keep the last card; legend hover dims but shows no card; keys start at the first (largest) slice, or the last one shown; hit-testing by element (Figma 03 §7 suggests an angle test over the full disc); only ArrowLeft/ArrowRight. The island figure is 1.7 KiB as bound (1,580 B after the review; it would no longer fit the old 1.6 with room for another change). Recommendation: confirm all.
+   **Answered by M42:** D-bh confirmed; the island figure 1.7 KiB is settled.
 9. **D-bf (Avatar, Breadcrumb, Pagination built now):** confirm the five Pagination defaults (40/32 squares, `siblingCount` 1, the current page as a link, disabled ends as `role="link"` spans, link mode only) and Breadcrumb's no-collapse rule.
+   **Answered by M42:** D-bf confirmed, as recommended.
 10. **Avatar's broken image in WebKit:** WebKit draws its own mark over the initials; there is no script-free fix. Recommendation: document it.
+    **Answered by M42:** documented in Avatar's JSDoc and docs page.
 11. **CountUp in tiles:** KpiTile and Metric take a number and never count. Options: keep it for 0.2, or add an element `value` or a `countUp` prop with the 08 rebuild. Recommendation: keep.
+    **Answered by M42:** kept for 0.2, as recommended.
 12. **CountUp's docs page is titled "Motion"** (`/docs/components/motion/`), because the catalog titles pages by subpath. Recommendation: keep; the subpath will hold `usePointerFx` too.
+    **Answered by M42:** kept, as recommended.
 13. **Still open from M41:** Heading/Text `tone="accent"` (M38) for 0.2.
+    **Answered by M42:** the builder's recommendation (none was given here): `tone="accent"` deprecated in prose, removal deferred to 1.0; no visual change.
 14. **0.2.0 and 0.1.1 (week 12 review R3-1).** `.changeset/dashboard-parts.md` is a `minor` for `@nizivo/react`, so the fixed group's next version step plans 0.2.0 (tokens and icons move with it), as the Dashboard page says. But `text-accent-brand.md` (M38) says `--nz-text-accent` is removed in 0.2.0. Options: (a) cut 0.1.1 first from 22d85ff (a maintenance branch with only M38's patch), then 0.2.0 from `main`; (b) remove `--nz-text-accent` before the 0.2.0 release; (c) reword M38's changeset. Recommendation: (a) if a 0.1.1 is wanted before 0.2, otherwise (b) when 0.2 is cut.
+    **Answered by M42:** option (b): `--nz-text-accent` removed on `main` for 0.2.0, no 0.1.1 branch; BREAKING changeset added.
 15. **A way to hide ChartFrame's caption (week 12 review R2-4, deferred in part).** Figma's Revenue Card draws no chart caption, but every chart's ChartFrame always shows its title and summary. A `titleVisibility="hidden"` option (the caption stays the figure's accessible name) would be a new prop on M40's one API shape. Recommendation: add it in 0.2, before charts publishes; the fixture already moves the legend below the plot.
+    **Answered by M42:** built: `titleVisibility` on ChartFrame and every framed chart; the Next fixture's 08 TrendCard uses it.
 16. **TrendCard fills its container** (`inline-size: 100%`) and its header is a size container (D-bj). In a shrink-to-fit parent (an inline-block, a float) it now takes the parent's width rather than its content's. Recommendation: keep; a consumer class can override it.
+    **Answered by M42:** kept: D-bj confirmed.
+
+## After M42
+
+M42 (2026-10-20; ARCHITECTURE.md §23.3) answered the sixteen items above. Two builders (react and tokens: items 4, 6, 10, 13, 14; charts: items 6 and 15) and an integrator worked in one tree; nothing is committed, pushed, tagged or published. Every number below comes from the integrated tree on this machine (darwin-arm64, Node 24.16.0, Playwright's Chromium 156, WebKit and Firefox).
+
+**What changed**
+
+- **The Delta pill on tinted surfaces (item 4).** Inside a Card, KpiTile or TrendCard with `tone="brand"` or `"accent"`, every Delta pill is `bg/surface` (from the nearest Card, so an untinted Card nested in a tinted one keeps Delta's own pill; a consumer's `--nz-delta-bg` still wins). Figma 04 draws the Up pill in `bg/success-subtle`, the same colour as the brand tint, so it shows no fill; its Down pill on the accent tile (`bg/critical-subtle`) does show and takes `bg/surface` too, so the pills in a tinted row match. Checked against Figma 04's Tone=Tinted variants (7275:13797, 7275:13805). Recorded on the Deviations page and the Card, KpiTile, TrendCard and Delta pages.
+- **The shared surface variable (item 6).** Card declares `--nz-surface` in every tone (KpiTile and TrendCard too). The Sparkline halo, AreaChart's end-dot halo and the island's dot ring read it as an optional middle fallback, so a tinted tile no longer shows a white ring; Figma 04 draws that ring in `bg/surface`, and figma/04 lists it as a defect, so this is recorded as a deviation too. The stylelint contract gains `SURFACE_VARIABLES` (declared in `card.css` only, read anywhere with a fallback; `nz api` lists the reads as runtime variables), with new cases in `test/css/stylelint.test.ts` and `packages/tooling/test/api-css.test.ts`.
+- **Avatar's broken image in WebKit (item 10):** documented in the `src` prop's and the component's JSDoc and on the Avatar page.
+- **Heading/Text `tone="accent"` (item 13):** deprecated in prose in `TextTone`, both `tone` props, the CSS and the docs, pointing to `tone="brand"`; TypeScript cannot deprecate one member of a union, so there is no `@deprecated` tag.
+- **`--nz-text-accent` removed (item 14):** both colour proposal files are `{}`, the a11y gate checks 80 pairs (82 before), the six token goldens lose exactly the text-accent lines, and the Deviations page says that no proposal is left. `.changeset/remove-text-accent.md` (`@nizivo/tokens` minor, "BREAKING:") and `.changeset/card-surface.md` (`@nizivo/react` minor) are added; `text-accent-brand.md` is unchanged.
+- **`titleVisibility` (item 15):** `ChartFrameProps.titleVisibility` (`'visible'` default, `'hidden'`) and the type `ChartTitleVisibility`; AreaChart, BarChart and DonutChart inherit it through `ChartFramePassthrough`. `'hidden'` puts `nz-chart-visually-hidden` on the `<figcaption>`, so the figure keeps its name and the table its label. The Next fixture's 08 TrendCard and the Dashboard docs snippet use it.
+
+**Contrast of the pill on tinted tiles.** The pill's text on `bg/surface` (CONTRAST.md): `text/success` 6.36:1, `text/critical` 5.68:1, `text/secondary` (neutral) 9.53:1 in light; 7.58, 5.96 and 11.07 in dark. `kpi-tile.spec.tsx` measures the rendered pill text against the rendered pill background for success, critical and neutral, in light and dark, and requires at least 4.5:1; it passes in Chromium, WebKit and Firefox.
+
+**Sizes** (gzip, size-limit, `node packages/tooling/size/measure.ts`, recorded with `--write`):
+
+| Entry                                          |          Before | After M42 | Limit                                 |
+| ---------------------------------------------- | --------------: | --------: | ------------------------------------- |
+| `@nizivo/react/styles.css`                     |        17,184 B |  17,232 B | 19 KiB (M42 item 1)                   |
+| `@nizivo/react/css/card.css`                   |           614 B |     665 B | 0.7 KiB                               |
+| `@nizivo/react/css/delta.css`                  |           453 B |     472 B | 0.5 KiB                               |
+| `@nizivo/react/motion` / CountUp own code      | 1,573 / 1,032 B | unchanged | 1.7 / 1.2 KiB (M42 item 2)            |
+| `@nizivo/charts` (barrel)                      |         9,274 B |   9,296 B | 9.7 KiB                               |
+| `@nizivo/charts/area-chart`                    |         6,692 B |   6,711 B | 7.1 KiB (figure; + 10 % would be 7.3) |
+| `@nizivo/charts { AreaChart } from the barrel` |         6,687 B |   6,709 B | 7.1 KiB (figure; + 10 % would be 7.3) |
+| `@nizivo/charts/bar-chart`                     |         5,380 B |   5,407 B | 5.7 KiB (figure; + 10 % would be 5.9) |
+| `@nizivo/charts/chart-frame`                   |         1,793 B |   1,820 B | 2 KiB                                 |
+| `@nizivo/charts/donut-chart`                   |         4,856 B |   4,885 B | 5.3 KiB                               |
+| `@nizivo/charts/styles.css`                    |         3,473 B |   3,506 B | 3.7 KiB                               |
+| `@nizivo/charts` island with its imports       |         1,580 B |   1,580 B | 1.7 KiB (M42 item 8)                  |
+| `@nizivo/tokens/tokens.css`                    |         3,957 B |   3,949 B | 4.2 KiB                               |
+
+Every other entry is unchanged; the tokens entries shrank by 6 to 108 B. Three charts entries would pass their §17.2 figure at measured + 10 %, so their limits stay at the figure (headroom: `./area-chart` 559 B, `{ AreaChart }` 562 B, `./bar-chart` 429 B). Own code of the server parts under item 3's per-leaf reading (esbuild, minify, gzip -9, React, the shared helpers and the composed parts external): NumberValue 275 B, Metric 954, KpiTile 467, TrendCard 623, Avatar 908, Breadcrumb 613, **RankedList 1,536, Pagination 1,160** (the last two miss ≤ 1 KB; reported, not raised).
+
+**Baselines.** Re-recorded: `kpi-tile/basic--rest--light` and `kpi-tile/basic--rest--dark` (the pill on the two tinted tiles), and nothing else; then two full react compares with 0 differences (1,840 shots). The react lane draws the tile's chart with a stand-in, so the halo has no react baseline: it was checked with both built stylesheets on one page in Chromium, WebKit and Firefox, light and dark (the Sparkline halo and the tooltip-dot ring equal the Card's background for `surface`, `brand`, `accent` and `inverse`, and are `bg/surface` outside a Card). No charts baseline moved: six charts compares (136 shots) showed no difference outside `area-chart/rtl`, and one of them none at all; the `rtl` dark and forced-colours shots flip between the two system Arabic fonts as before and were not re-recorded.
+
+**Lanes** (one after another): tokens 93 tests; react node 55 files, 844 tests; tooling 14 files, 196; react browser 17 files: Chromium 265 passed, Firefox 237 passed and 28 skipped, WebKit 230 passed, 28 skipped and the 7 known macOS Tab failures; overlay conformance passes in Chromium (128), WebKit (122) and Firefox (122; O-03 did not flake this time); charts node 25 files, 262 tests; charts browser 10 files, 96 tests, in Chromium, WebKit and Firefox at DPR 1 and 2; `pnpm check:a11y` 80 pairs; the charts-only fixture passes in all three engines with results identical to the record; the Next fixture passes all 32 pages in all four modes and is re-recorded: no page's JavaScript changed, and the packed `tokens.css` has 73 `light-dark()` declarations instead of 74 (the removed token); after the M42 review the Vite and Astro fixtures pass and are re-recorded (the same 74 → 73, timings otherwise). `TURBO_FORCE=true pnpm check` passes from a clean state (101 s; the docs smoke passes 77 pages); `pnpm cache:audit` passes 24 tasks; `nz gen --check` is up to date and `nz api` regenerated 14 files (the charts props and CSS hooks, `css/card.json`, and react's Avatar, Card, Heading and Text).
+
+### The M42 review (4 findings: 3 fixed, 1 deferred)
+
+- **F1, fixed.** The integrator had raised two charts limits that M42 did not decide and that the measured sizes did not need (the barrel 9.7 → 10 KiB, charts `styles.css` 3.7 → 3.8 KiB). Both are back at 9.7 and 3.7 KiB (9,296 B and 3,506 B pass under them); every charts limit is unchanged by M42.
+- **F2, fixed.** The tinted pill rule was a descendant selector, so a Delta in an untinted (or inverse) Card nested in a tinted one took `bg/surface`, which is that inner Card's own colour: no fill again. The pill now follows the nearest Card: brand and accent Cards set an inherited private `--_nz-card-pill` (`bg/surface`) that every other Card resets, `card.css` hands it to Delta's new fill slot `--_nz-delta-fill`, and `delta.css` puts that slot ahead of the tone's fill (a private is read only in the sheet that declares it, §8.2, so the slot lives in `delta.css`). A tinted Card nested in an untinted one inside a tinted one gets the `bg/surface` pill again. `kpi-tile.spec.tsx` checks the three nestings in Chromium, WebKit and Firefox, light and dark; dropping the reset fails it. `card.css` 665 B (0.7 KiB), `delta.css` 472 B (0.5 KiB), `styles.css` 17,232 B; no baseline moved.
+- **F3, fixed.** `fixtures/vite/results/build.json` and `fixtures/astro/results/static.json` re-recorded after M42 (`light-dark()` 74 → 73, timings).
+- **F4, deferred.** Card's generated CSS contract lists `nz-delta` among its classes. That is how `nz api` has always worked (it lists every `nz-*` class a sheet selects: 13 other sheets list a foreign class, KpiTile `nz-card` and Alert `nz-icon-button` among them), so changing it moves many contracts and the schema; and a field for a variable a sheet provides (`--nz-surface`) is a schema change too. The Card page documents `--nz-surface` in prose ("The surface variable"). Both are follow-ups before 1.0, not M42 work.
 
 ## Unverified
 
