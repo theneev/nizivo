@@ -1,0 +1,121 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/pagination.css (Figma Pagination 755:1007, figma/06 §6.10): the summary in Body/M
+   text/secondary, then the pages 4 px apart. Each page is a square with radius/sm (Figma: 8): the
+   current one bg/inverse with text/inverse (Figma's inverse black, not brand), the others text/secondary
+   on no fill, previous and next a 1 px border/default ring around a chevron. Figma's 36 px square and
+   18 px icon are off the scale: 40 px (`md`, control-md) or 32 px (`sm`) with the 16 px icon, both
+   above WCAG 2.5.8's 24 px. Public --nz-pagination-* hooks are read once, at the property. */
+@layer nz.components {
+  .nz-pagination {
+    --_nz-pagination-size: var(--nz-size-control-md);
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--nz-space-2) var(--nz-space-4);
+  }
+
+  .nz-pagination[data-size='sm'] {
+    --_nz-pagination-size: var(--nz-size-control-sm);
+  }
+
+  .nz-pagination-summary {
+    margin: 0;
+    color: var(--nz-pagination-summary-fg, var(--nz-text-secondary));
+    font: var(--nz-font-body-m);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .nz-pagination-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--nz-pagination-gap, var(--nz-space-1));
+    margin: 0;
+    /* end-aligned beside the summary, as in Figma's space-between row */
+    margin-inline-start: auto;
+    padding: 0;
+    list-style: none;
+  }
+
+  .nz-pagination-page,
+  .nz-pagination-step,
+  .nz-pagination-ellipsis {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    min-inline-size: var(--_nz-pagination-size);
+    block-size: var(--_nz-pagination-size);
+    padding-inline: var(--nz-space-1);
+    border: var(--nz-border-width-default) solid transparent;
+    border-radius: var(--nz-pagination-radius, var(--nz-radius-sm));
+    color: var(--nz-pagination-fg, var(--nz-text-secondary));
+    font: var(--nz-font-label-m);
+    letter-spacing: var(--nz-tracking-label-m);
+    font-variant-numeric: tabular-nums;
+    text-decoration: none;
+    transition:
+      background-color var(--nz-duration-fast) var(--nz-easing-standard),
+      color var(--nz-duration-fast) var(--nz-easing-standard);
+  }
+
+  .nz-pagination-step {
+    border-color: var(--nz-pagination-step-border, var(--nz-border-default));
+    color: var(--nz-pagination-step-fg, var(--nz-icon-secondary));
+  }
+
+  @media (hover: hover) {
+    .nz-pagination-page:not([aria-current='page']):hover,
+    .nz-pagination-step:not([data-disabled]):hover {
+      background: var(--nz-pagination-bg-hover, var(--nz-bg-hover));
+      color: var(--nz-text-primary);
+    }
+  }
+
+  .nz-pagination-page[aria-current='page'] {
+    background: var(--nz-pagination-bg-current, var(--nz-bg-inverse));
+    color: var(--nz-pagination-fg-current, var(--nz-text-inverse));
+  }
+
+  /* "disabled, not hidden, at the ends" (Figma) */
+  .nz-pagination-step[data-disabled] {
+    color: var(--nz-text-disabled);
+    cursor: not-allowed;
+  }
+
+  .nz-pagination-icon {
+    display: inline-flex;
+    flex: none;
+    inline-size: var(--nz-size-icon-sm);
+    block-size: var(--nz-size-icon-sm);
+    /* internal glyphs are 1em: size them to the slot */
+    font-size: var(--nz-size-icon-sm);
+
+    & > svg {
+      inline-size: 100%;
+      block-size: 100%;
+    }
+  }
+
+  /* the chevron points right; previous turns it (and the RTL mirror flips both back) */
+  .nz-pagination-previous > .nz-pagination-icon > .nz-glyph {
+    rotate: 180deg;
+  }
+
+  @media (forced-colors: active) {
+    /* nz.base's generated highlight loses to the background above (a later layer, §8.5), so repeat
+       it: without it the current page is painted as Canvas and only aria-current is left */
+    .nz-pagination-page[aria-current='page'] {
+      background: Highlight;
+      color: HighlightText;
+      forced-color-adjust: none;
+    }
+
+    .nz-pagination-step[data-disabled] {
+      color: GrayText;
+    }
+  }
+}

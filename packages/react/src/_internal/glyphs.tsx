@@ -1,8 +1,9 @@
 // NO directive: server-safe. The few glyphs core draws itself, so @nizivo/react imports no icon
 // package (ARCHITECTURE.md §6, §14.2). Paths are Lucide's (ISC; notice in THIRD_PARTY_NOTICES).
 // Stroke follows settled 7: 1.92 on the 24 viewBox, non-absolute, so it renders 1.28 px in the 16 px
-// slots (Button icon, Select chevron) that size the glyph through font-size. `circle-x` (the error mark
-// of Field, Fieldset and InlineError), `close` (Lucide's `x`, AlertDismiss's default), and `check` and
+// slots (Button icon, Select chevron) that size the glyph through font-size. `chevron` (Lucide's
+// `chevron-right`, the Breadcrumb separator and Pagination's marks), `circle-x` (the error mark of
+// Field, Fieldset and InlineError), `close` (Lucide's `x`, AlertDismiss's default), and `check` and
 // `minus` (Checkbox's checked mark and indeterminate dash) are on Lucide's list of Feather-derived
 // icons, so they also carry the Feather MIT notice in THIRD_PARTY_NOTICES.
 //
@@ -10,7 +11,14 @@
 // glyph in every entry that drew one: about 160 B gzip on the Dialog entry).
 import type { JSX, ReactNode } from 'react';
 
-export type GlyphName = 'spinner' | 'chevrons-up-down' | 'circle-x' | 'close' | 'check' | 'minus';
+export type GlyphName =
+  | 'spinner'
+  | 'chevron'
+  | 'chevrons-up-down'
+  | 'circle-x'
+  | 'close'
+  | 'check'
+  | 'minus';
 
 function svg(name: GlyphName, paths: ReactNode): JSX.Element {
   return (
@@ -34,6 +42,9 @@ function svg(name: GlyphName, paths: ReactNode): JSX.Element {
 
 export const SpinnerGlyph = (): JSX.Element =>
   svg('spinner', <path d="M21 12a9 9 0 1 1-6.219-8.56" />);
+
+/** Lucide's `chevron-right`: the Breadcrumb separator, and Pagination's next (turned for previous). */
+export const ChevronGlyph = (): JSX.Element => svg('chevron', <path d="m9 18 6-6-6-6" />);
 
 export const ChevronsUpDownGlyph = (): JSX.Element =>
   svg(

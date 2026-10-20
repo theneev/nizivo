@@ -1,0 +1,15 @@
+{
+  "name": "ranked-list",
+  "status": "stable",
+  "tier": "server",
+  "parts": ["Root", "Item", "Action"],
+  "interactive": ["ranked-list-action"],
+  "focusTarget": "self",
+  "cssDeps": ["base", "card", "number-value", "skeleton", "inline-error"],
+  "figma": {
+    "canonical": ["752:444"],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": ["7275:13824", "7275:13757"]
+  }
+}

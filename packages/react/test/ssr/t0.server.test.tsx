@@ -63,6 +63,10 @@ const COMPONENTS = [
   'metric',
   'kpi-tile',
   'trend-card',
+  'ranked-list',
+  'avatar',
+  'breadcrumb',
+  'pagination',
 ] as const;
 type Name = (typeof COMPONENTS)[number];
 
@@ -130,6 +134,10 @@ const entries = {
   metric: () => import('../../src/metric/index'),
   'kpi-tile': () => import('../../src/kpi-tile/index'),
   'trend-card': () => import('../../src/trend-card/index'),
+  'ranked-list': () => import('../../src/ranked-list/index'),
+  avatar: () => import('../../src/avatar/index'),
+  breadcrumb: () => import('../../src/breadcrumb/index'),
+  pagination: () => import('../../src/pagination/index'),
 } satisfies Record<Name, () => Promise<unknown>>;
 
 /** Each example module, imported again by the react-server test; every `*Example` export renders. */
@@ -164,6 +172,10 @@ const exampleModules = {
   metric: () => import('../../src/metric/metric.example'),
   'kpi-tile': () => import('../../src/kpi-tile/kpi-tile.example'),
   'trend-card': () => import('../../src/trend-card/trend-card.example'),
+  'ranked-list': () => import('../../src/ranked-list/ranked-list.example'),
+  avatar: () => import('../../src/avatar/avatar.example'),
+  breadcrumb: () => import('../../src/breadcrumb/breadcrumb.example'),
+  pagination: () => import('../../src/pagination/pagination.example'),
 } satisfies Record<Name, () => Promise<Record<string, unknown>>>;
 
 /**

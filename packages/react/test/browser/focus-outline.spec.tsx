@@ -10,7 +10,8 @@
 //
 // The T0 controls of v0.1 (§9.5): Button (a <button> and a link through `render`), IconButton
 // (and pressed), AlertDismiss, Input, Textarea, NativeSelect, Checkbox (and checked), Radio, Switch
-// (and on), a SegmentedControl item and a TabNav link: the states whose forced-colours paint
+// (and on), a SegmentedControl item, a TabNav link, and (week 12) a Breadcrumb link, the current
+// Pagination page and RankedList's action link: the states whose forced-colours paint
 // (stateIndicator) could take the ring's colour over. Field, Fieldset and the rest of the T0 set draw no focusable part of their own.
 //
 // Every engine: `NZ_BROWSER=webkit` (or `firefox`) runs it too. Chromium and Firefox must reach every
@@ -23,12 +24,15 @@ import { createRoot, type Root } from 'react-dom/client';
 import { afterEach, describe, expect, test } from 'vitest';
 import { cdp, server, userEvent } from 'vitest/browser';
 import { Alert, AlertDismiss } from '../../src/alert/index';
+import { Breadcrumb } from '../../src/breadcrumb/index';
 import { Button } from '../../src/button/index';
 import { Checkbox } from '../../src/checkbox/index';
 import { IconButton } from '../../src/icon-button/index';
 import { Input } from '../../src/input/index';
 import { NativeSelect } from '../../src/native-select/index';
+import { Pagination } from '../../src/pagination/index';
 import { Radio, RadioGroup } from '../../src/radio-group/index';
+import { RankedList } from '../../src/ranked-list/index';
 import { SegmentedControl } from '../../src/segmented-control/index';
 import { Switch } from '../../src/switch/index';
 import { TabNav } from '../../src/tab-nav/index';
@@ -40,13 +44,16 @@ const STYLES = import.meta.glob(
     '../../../tokens/dist/tokens.css',
     '../../styles/base.css',
     '../../src/alert/alert.css',
+    '../../src/breadcrumb/breadcrumb.css',
     '../../src/button/button.css',
     '../../src/checkbox/checkbox.css',
     '../../src/fieldset/fieldset.css',
     '../../src/icon-button/icon-button.css',
     '../../src/input/input.css',
     '../../src/native-select/native-select.css',
+    '../../src/pagination/pagination.css',
     '../../src/radio-group/radio-group.css',
+    '../../src/ranked-list/ranked-list.css',
     '../../src/segmented-control/segmented-control.css',
     '../../src/switch/switch.css',
     '../../src/tab-nav/tab-nav.css',
@@ -54,7 +61,7 @@ const STYLES = import.meta.glob(
   ],
   { query: '?raw', import: 'default', eager: true },
 );
-if (Object.keys(STYLES).length !== 14)
+if (Object.keys(STYLES).length !== 17)
   throw new Error('a stylesheet is missing; build @nizivo/tokens and run nz gen');
 const style = document.createElement('style');
 style.textContent = Object.values(STYLES).join('\n');
@@ -184,6 +191,35 @@ const CONTROLS: Record<string, Control> = {
         </TabNav.Link>
         <TabNav.Link href="#archived">Archived</TabNav.Link>
       </TabNav.Root>
+    ),
+  },
+  // week 12 (M41): the T0 links of the dashboard and navigation parts
+  'Breadcrumb link': {
+    focus: '.nz-breadcrumb-link',
+    visible: '.nz-breadcrumb-link',
+    element: (
+      <Breadcrumb.Root>
+        <Breadcrumb.Item href="#products">Products</Breadcrumb.Item>
+        <Breadcrumb.Item current>Stoneware mug</Breadcrumb.Item>
+      </Breadcrumb.Root>
+    ),
+  },
+  'Pagination page, current': {
+    focus: '.nz-pagination-page[aria-current="page"]',
+    visible: '.nz-pagination-page[aria-current="page"]',
+    element: <Pagination page={1} totalPages={5} getHref={(page) => `#page-${page}`} />,
+  },
+  'RankedList action': {
+    focus: '.nz-ranked-list-action',
+    visible: '.nz-ranked-list-action',
+    element: (
+      <RankedList.Root
+        title="Top channels"
+        action={<RankedList.Action href="#channels">View all</RankedList.Action>}
+      >
+        <RankedList.Item label="Online store" value={64120} />
+        <RankedList.Item label="Wholesale" value={18240} />
+      </RankedList.Root>
     ),
   },
 };

@@ -7,6 +7,7 @@
   /* a 2 px solid outline is the focus indicator; components may add the halo as decoration */
   :where(
     .nz-alert-dismiss,
+    .nz-breadcrumb-link,
     .nz-button,
     .nz-checkbox-input,
     .nz-dialog-close,
@@ -14,7 +15,11 @@
     .nz-icon-button,
     .nz-menu-trigger,
     .nz-native-select-trigger,
+    .nz-pagination-next,
+    .nz-pagination-page,
+    .nz-pagination-previous,
     .nz-radio-input,
+    .nz-ranked-list-action,
     .nz-select-trigger,
     .nz-switch-input,
     .nz-tab-nav-link,
@@ -60,6 +65,7 @@
   /* survives a blocked engine <style> under a strict CSP (gap report B §B1.3) */
   :where(
     .nz-alert-dismiss,
+    .nz-breadcrumb-link,
     .nz-button,
     .nz-checkbox-input,
     .nz-dialog-close,
@@ -70,7 +76,11 @@
     .nz-menu-radio-item,
     .nz-menu-trigger,
     .nz-native-select-trigger,
+    .nz-pagination-next,
+    .nz-pagination-page,
+    .nz-pagination-previous,
     .nz-radio-input,
+    .nz-ranked-list-action,
     .nz-segmented-control-item,
     .nz-select-item,
     .nz-select-trigger,
@@ -162,6 +172,12 @@
     }
     :where(.nz-checkbox-input):indeterminate {
       background: Highlight;
+      outline-color: CanvasText;
+      forced-color-adjust: none;
+    }
+    :where(.nz-pagination-page)[aria-current='page'] {
+      background: Highlight;
+      color: HighlightText;
       outline-color: CanvasText;
       forced-color-adjust: none;
     }

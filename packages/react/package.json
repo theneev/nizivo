@@ -39,9 +39,17 @@
       "types": "./dist/augment.d.ts",
       "default": "./dist/augment.js"
     },
+    "./avatar": {
+      "types": "./dist/avatar/index.d.ts",
+      "default": "./dist/avatar/index.js"
+    },
     "./badge": {
       "types": "./dist/badge/index.d.ts",
       "default": "./dist/badge/index.js"
+    },
+    "./breadcrumb": {
+      "types": "./dist/breadcrumb/index.d.ts",
+      "default": "./dist/breadcrumb/index.js"
     },
     "./button": {
       "types": "./dist/button/index.d.ts",
@@ -143,6 +151,10 @@
       "types": "./dist/number-value/index.d.ts",
       "default": "./dist/number-value/index.js"
     },
+    "./pagination": {
+      "types": "./dist/pagination/index.d.ts",
+      "default": "./dist/pagination/index.js"
+    },
     "./progress-bar": {
       "types": "./dist/progress-bar/index.d.ts",
       "default": "./dist/progress-bar/index.js"
@@ -154,6 +166,10 @@
     "./radio-group": {
       "types": "./dist/radio-group/index.d.ts",
       "default": "./dist/radio-group/index.js"
+    },
+    "./ranked-list": {
+      "types": "./dist/ranked-list/index.d.ts",
+      "default": "./dist/ranked-list/index.js"
     },
     "./segmented-control": {
       "types": "./dist/segmented-control/index.d.ts",
@@ -208,8 +224,10 @@
       "default": "./dist/trend-card/index.js"
     },
     "./css/alert.css": "./dist/css/alert.css",
+    "./css/avatar.css": "./dist/css/avatar.css",
     "./css/badge.css": "./dist/css/badge.css",
     "./css/base.css": "./dist/css/base.css",
+    "./css/breadcrumb.css": "./dist/css/breadcrumb.css",
     "./css/button.css": "./dist/css/button.css",
     "./css/card.css": "./dist/css/card.css",
     "./css/checkbox.css": "./dist/css/checkbox.css",
@@ -233,9 +251,11 @@
     "./css/metric.css": "./dist/css/metric.css",
     "./css/native-select.css": "./dist/css/native-select.css",
     "./css/number-value.css": "./dist/css/number-value.css",
+    "./css/pagination.css": "./dist/css/pagination.css",
     "./css/progress-bar.css": "./dist/css/progress-bar.css",
     "./css/progress-ring.css": "./dist/css/progress-ring.css",
     "./css/radio-group.css": "./dist/css/radio-group.css",
+    "./css/ranked-list.css": "./dist/css/ranked-list.css",
     "./css/segmented-control.css": "./dist/css/segmented-control.css",
     "./css/select.css": "./dist/css/select.css",
     "./css/separator.css": "./dist/css/separator.css",

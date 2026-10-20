@@ -1,0 +1,21 @@
+{
+  "name": "pagination",
+  "status": "stable",
+  "tier": "server",
+  "parts": [],
+  "interactive": ["pagination-page", "pagination-previous", "pagination-next"],
+  "focusTarget": "self",
+  "stateIndicator": [
+    { "slot": "pagination-page", "state": "[aria-current='page']", "paint": "highlight" }
+  ],
+  "cssDeps": ["base"],
+  "variants": {
+    "size": ["sm", "md"]
+  },
+  "figma": {
+    "canonical": ["755:1007"],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": ["7275:14815"]
+  }
+}

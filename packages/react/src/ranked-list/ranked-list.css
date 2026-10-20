@@ -1,0 +1,171 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/ranked-list.css (Figma Ranked List 752:444, figma/04 §4.6). The surface is Card's
+   (card.css: Surface, padding 24, radius xl, border/subtle, no shadow); Figma's 16 px between the
+   header and the rows, and between rows, replaces Card's 20. A row: Label/M label and Numeric/M value
+   on one 20 px line, 8 px above a 6 px track (chart/track) whose bar (chart/primary) is the value's
+   share of the leader. Public --nz-ranked-list-* hooks are read once, at the property. */
+@layer nz.components {
+  /* two classes: wins over .nz-card's gap whatever order the sheets load in */
+  .nz-card.nz-ranked-list {
+    gap: var(--nz-ranked-list-gap, var(--nz-space-4));
+    /* no minimum from the content, as KpiTile (kpi-tile.css): the column is the list's width in
+       every status (§16.5) */
+    min-inline-size: 0;
+  }
+
+  .nz-ranked-list-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--nz-space-1) var(--nz-space-3);
+  }
+
+  .nz-ranked-list-title {
+    margin: 0;
+    font: var(--nz-ranked-list-title-font, var(--nz-font-heading-h4));
+    letter-spacing: var(--nz-tracking-heading-h4);
+  }
+
+  /* "View all" (Figma: a 20 px Label/M text in text/brand): a link at least 24 px tall */
+  .nz-ranked-list-action {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--nz-space-6);
+    border-radius: var(--nz-radius-xs);
+    color: var(--nz-ranked-list-action-fg, var(--nz-text-brand));
+    font: var(--nz-font-label-m);
+    letter-spacing: var(--nz-tracking-label-m);
+    text-decoration: none;
+
+    @media (hover: hover) {
+      &:hover {
+        text-decoration: underline;
+        text-underline-offset: var(--nz-space-1);
+      }
+    }
+  }
+
+  .nz-ranked-list-list,
+  .nz-ranked-list-reserve {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-ranked-list-gap, var(--nz-space-4));
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .nz-ranked-list-item,
+  .nz-ranked-list-placeholder {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-2);
+    min-inline-size: 0;
+  }
+
+  /* one Label/M line (19.6 px; Figma rounds to 20) whatever the row holds, so a placeholder row is a
+     ready row's height. Top-aligned as in Figma: baseline alignment of the 14 px label and the 16 px
+     value grows the row by up to 0.6 px in WebKit and Firefox, 3 px over five rows. */
+  .nz-ranked-list-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--nz-space-3);
+    min-block-size: 1lh;
+    font: var(--nz-font-label-m);
+    letter-spacing: var(--nz-tracking-label-m);
+  }
+
+  /* one line, ending in an ellipsis when longer than the row (the whole label stays in the DOM and in
+     the accessibility tree): the placeholder rows of loading, empty and error are one line, so a
+     wrapped label would make the ready box taller (§16.5; week 12 review A11Y-W12-4) */
+  .nz-ranked-list-label {
+    min-inline-size: 0;
+    overflow: hidden;
+    color: var(--nz-ranked-list-label-fg, var(--nz-text-primary));
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .nz-ranked-list-value {
+    flex: none;
+    color: var(--nz-ranked-list-value-fg, var(--nz-text-primary));
+    font: var(--nz-font-numeric-m);
+    letter-spacing: var(--nz-tracking-numeric-m);
+  }
+
+  /* Figma's 6 px track with round ends (radius/full); 6 px is space/1-5 */
+  .nz-ranked-list-track {
+    display: block;
+    block-size: var(--nz-ranked-list-track-size, var(--nz-space-1-5));
+    overflow: hidden;
+    border-radius: var(--nz-radius-full);
+    background: var(--nz-ranked-list-track-bg, var(--nz-chart-track));
+  }
+
+  .nz-ranked-list-bar {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  .nz-ranked-list-fill {
+    fill: var(--nz-ranked-list-bar-fill, var(--nz-chart-primary));
+  }
+
+  /* two classes: wins over .nz-skeleton's own width */
+  .nz-ranked-list-row > .nz-ranked-list-skeleton-label {
+    align-self: center;
+    inline-size: 40%;
+  }
+
+  .nz-ranked-list-row > .nz-ranked-list-skeleton-value {
+    align-self: center;
+    inline-size: 15%;
+  }
+
+  /* loading, empty and error: the message lies over the reserved rows, in one grid cell */
+  .nz-ranked-list-status {
+    display: grid;
+  }
+
+  .nz-ranked-list-reserve,
+  .nz-ranked-list-message {
+    grid-area: 1 / 1;
+    min-inline-size: 0;
+  }
+
+  .nz-ranked-list[data-empty] .nz-ranked-list-reserve,
+  .nz-ranked-list[data-error] .nz-ranked-list-reserve {
+    visibility: hidden;
+  }
+
+  .nz-ranked-list-message {
+    align-self: center;
+  }
+
+  .nz-ranked-list-empty {
+    margin: 0;
+    color: var(--nz-ranked-list-empty-fg, var(--nz-text-secondary));
+    font: var(--nz-font-body-m);
+  }
+
+  /* The track's fill is replaced and SVG fills are not: draw the track as an outline and the bar
+     in the text colour, so every bar keeps its length against the track in the user's palette. */
+  @media (forced-colors: active) {
+    .nz-ranked-list-track {
+      outline: 1px solid CanvasText;
+      outline-offset: -1px;
+    }
+
+    .nz-ranked-list-bar {
+      forced-color-adjust: none;
+    }
+
+    .nz-ranked-list-fill {
+      fill: CanvasText;
+    }
+  }
+}

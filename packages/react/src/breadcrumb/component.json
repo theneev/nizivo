@@ -1,0 +1,15 @@
+{
+  "name": "breadcrumb",
+  "status": "stable",
+  "tier": "server",
+  "parts": ["Root", "Item"],
+  "interactive": ["breadcrumb-link"],
+  "focusTarget": "self",
+  "cssDeps": ["base"],
+  "figma": {
+    "canonical": ["755:998"],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": ["7275:14813"]
+  }
+}

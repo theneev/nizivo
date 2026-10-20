@@ -7,8 +7,24 @@ export type {
   AlertState,
   AlertTone,
 } from './alert/index';
+export { Avatar, AvatarGroup } from './avatar/index';
+export type {
+  AvatarGroupLabels,
+  AvatarGroupProps,
+  AvatarGroupState,
+  AvatarProps,
+  AvatarSize,
+  AvatarState,
+} from './avatar/index';
 export { Badge } from './badge/index';
 export type { BadgeProps, BadgeState, BadgeTone } from './badge/index';
+export { Breadcrumb, BreadcrumbRoot, BreadcrumbItem } from './breadcrumb/index';
+export type {
+  BreadcrumbItemProps,
+  BreadcrumbItemState,
+  BreadcrumbLabels,
+  BreadcrumbRootProps,
+} from './breadcrumb/index';
 export { Button } from './button/index';
 export type { ButtonLabels, ButtonProps, ButtonState } from './button/index';
 export {
@@ -170,6 +186,15 @@ export { NativeSelect } from './native-select/index';
 export type { NativeSelectProps, NativeSelectState } from './native-select/index';
 export { NumberValue, formatNumber } from './number-value/index';
 export type { NumberValueProps, NumberValueState } from './number-value/index';
+export { Pagination } from './pagination/index';
+export type {
+  PaginationLabels,
+  PaginationLinkState,
+  PaginationProps,
+  PaginationSize,
+  PaginationSlot,
+  PaginationState,
+} from './pagination/index';
 export { ProgressBar } from './progress-bar/index';
 export type { ProgressBarProps, ProgressBarState, ProgressBarTone } from './progress-bar/index';
 export { ProgressRing } from './progress-ring/index';
@@ -186,6 +211,16 @@ export type {
   RadioGroupChangeReason,
   RadioGroupProps,
 } from './radio-group/index';
+export { RankedList, RankedListRoot, RankedListItem, RankedListAction } from './ranked-list/index';
+export type {
+  RankedListActionProps,
+  RankedListItemProps,
+  RankedListItemState,
+  RankedListLabels,
+  RankedListRootProps,
+  RankedListRootState,
+  RankedListTitleLevel,
+} from './ranked-list/index';
 export {
   SegmentedControl,
   SegmentedControlRoot,

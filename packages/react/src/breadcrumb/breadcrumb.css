@@ -1,0 +1,80 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/breadcrumb.css (Figma Breadcrumb 755:998, figma/06 §6.9): Label/M levels in
+   text/secondary, the current one Label/M Strong in text/primary, 16 px chevrons in icon/secondary,
+   6 px apart. Figma's row is 20 px tall; each link is 24 px here (WCAG 2.5.8's minimum target, which
+   figma/06 asks for), so the row is 24. A long trail wraps; nothing collapses (breadcrumb.tsx). Public
+   --nz-breadcrumb-* hooks are read once, at the property. */
+@layer nz.components {
+  .nz-breadcrumb-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0 var(--nz-breadcrumb-gap, var(--nz-space-1-5));
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font: var(--nz-font-label-m);
+    letter-spacing: var(--nz-tracking-label-m);
+  }
+
+  .nz-breadcrumb-item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--nz-breadcrumb-gap, var(--nz-space-1-5));
+    min-inline-size: 0;
+  }
+
+  /* a text separator ("/") centres in the same 16 px box as the chevron */
+  .nz-breadcrumb-separator {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    inline-size: var(--nz-size-icon-sm);
+    block-size: var(--nz-size-icon-sm);
+    color: var(--nz-breadcrumb-separator-fg, var(--nz-icon-secondary));
+    /* internal glyphs are 1em: size them to the slot */
+    font-size: var(--nz-size-icon-sm);
+    line-height: 1;
+
+    & > svg {
+      inline-size: 100%;
+      block-size: 100%;
+    }
+  }
+
+  /* no mark before the root of the trail */
+  .nz-breadcrumb-item:first-child > .nz-breadcrumb-separator {
+    display: none;
+  }
+
+  .nz-breadcrumb-link,
+  .nz-breadcrumb-current {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--nz-space-6);
+    overflow-wrap: anywhere;
+  }
+
+  .nz-breadcrumb-link {
+    border-radius: var(--nz-radius-xs);
+    color: var(--nz-breadcrumb-link-fg, var(--nz-text-secondary));
+    text-decoration: none;
+    transition: color var(--nz-duration-fast) var(--nz-easing-standard);
+
+    @media (hover: hover) {
+      &:hover {
+        color: var(--nz-breadcrumb-link-fg-hover, var(--nz-text-primary));
+        text-decoration: underline;
+        text-underline-offset: var(--nz-space-1);
+      }
+    }
+  }
+
+  .nz-breadcrumb-current {
+    color: var(--nz-breadcrumb-current-fg, var(--nz-text-primary));
+    font-weight: var(--nz-font-label-m-strong-font-weight);
+    letter-spacing: var(--nz-tracking-label-m-strong);
+  }
+}

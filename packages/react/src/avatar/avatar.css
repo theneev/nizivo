@@ -1,0 +1,122 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/avatar.css (Figma Avatar 7370:21, Avatar Group 7370:26). Sizes set ONLY
+   --_nz-* privates; public --nz-avatar-* hooks are read once, at the property. The image lies over
+   the initials, which stay underneath; what each engine paints for a photo that fails to load is in
+   avatar.tsx. */
+@layer nz.components {
+  .nz-avatar {
+    /* defaults = Figma Size=Md: 32 px, Label/S */
+    --_nz-avatar-size: var(--nz-space-8);
+    --_nz-avatar-font: var(--nz-font-label-s);
+    --_nz-avatar-tracking: var(--nz-tracking-label-s);
+
+    position: relative;
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    inline-size: var(--nz-avatar-size, var(--_nz-avatar-size));
+    block-size: var(--nz-avatar-size, var(--_nz-avatar-size));
+    overflow: hidden;
+    border-radius: var(--nz-avatar-radius, var(--nz-radius-full));
+    background: var(--nz-avatar-bg, var(--nz-bg-brand-muted));
+    color: var(--nz-avatar-fg, var(--nz-text-brand));
+    font: var(--nz-avatar-font, var(--_nz-avatar-font));
+    letter-spacing: var(--_nz-avatar-tracking);
+    vertical-align: middle;
+  }
+
+  .nz-avatar[data-size='sm'] {
+    --_nz-avatar-size: var(--nz-space-6);
+  }
+
+  .nz-avatar[data-size='lg'] {
+    --_nz-avatar-size: var(--nz-space-10);
+    --_nz-avatar-font: var(--nz-font-label-m);
+    --_nz-avatar-tracking: var(--nz-tracking-label-m);
+  }
+
+  /* 56 px is off the space scale: 48 + 8 */
+  .nz-avatar[data-size='xl'] {
+    --_nz-avatar-size: calc(var(--nz-space-12) + var(--nz-space-2));
+    --_nz-avatar-font: var(--nz-font-label-l);
+    --_nz-avatar-tracking: var(--nz-tracking-label-l);
+  }
+
+  .nz-avatar-initials {
+    white-space: nowrap;
+  }
+
+  /* The photo covers the initials. A broken image's alt text is empty, and its colour is
+     transparent so no engine paints alt text in the initials' colour. */
+  .nz-avatar-image {
+    position: absolute;
+    inset: 0;
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    color: transparent;
+  }
+
+  /* Figma: overlapped by 8 px, each separated by a 2 px bg/surface ring (stroke OUTSIDE). */
+  .nz-avatar-group {
+    --_nz-avatar-group-size: var(--nz-space-8);
+    --_nz-avatar-group-font: var(--nz-font-label-s);
+
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+
+    & > .nz-avatar,
+    & > .nz-avatar-group-more {
+      box-shadow: 0 0 0 var(--nz-border-width-focus)
+        var(--nz-avatar-group-ring, var(--nz-bg-surface));
+    }
+
+    & > :not(:first-child) {
+      margin-inline-start: calc(-1 * var(--nz-space-2));
+    }
+  }
+
+  .nz-avatar-group[data-size='sm'] {
+    --_nz-avatar-group-size: var(--nz-space-6);
+  }
+
+  .nz-avatar-group[data-size='lg'] {
+    --_nz-avatar-group-size: var(--nz-space-10);
+    --_nz-avatar-group-font: var(--nz-font-label-m);
+  }
+
+  .nz-avatar-group[data-size='xl'] {
+    --_nz-avatar-group-size: calc(var(--nz-space-12) + var(--nz-space-2));
+    --_nz-avatar-group-font: var(--nz-font-label-l);
+  }
+
+  .nz-avatar-group-more {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    inline-size: var(--_nz-avatar-group-size);
+    block-size: var(--_nz-avatar-group-size);
+    border-radius: var(--nz-radius-full);
+    background: var(--nz-avatar-group-more-bg, var(--nz-bg-muted));
+    color: var(--nz-avatar-group-more-fg, var(--nz-text-secondary));
+    font: var(--_nz-avatar-group-font);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  /* Backgrounds are replaced: keep each circle's edge (an inset outline keeps the box). */
+  @media (forced-colors: active) {
+    .nz-avatar,
+    .nz-avatar-group-more {
+      outline: 1px solid CanvasText;
+      outline-offset: -1px;
+    }
+  }
+}

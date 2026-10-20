@@ -45,6 +45,54 @@
       "name": "AlertTone"
     },
     {
+      "definedIn": "./avatar",
+      "import": "import { Avatar } from '@nizivo/react'",
+      "kind": "component",
+      "name": "Avatar"
+    },
+    {
+      "definedIn": "./avatar",
+      "import": "import { AvatarGroup } from '@nizivo/react'",
+      "kind": "component",
+      "name": "AvatarGroup"
+    },
+    {
+      "definedIn": "./avatar",
+      "import": "import type { AvatarGroupLabels } from '@nizivo/react'",
+      "kind": "type",
+      "name": "AvatarGroupLabels"
+    },
+    {
+      "definedIn": "./avatar",
+      "import": "import type { AvatarGroupProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "AvatarGroupProps"
+    },
+    {
+      "definedIn": "./avatar",
+      "import": "import type { AvatarGroupState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "AvatarGroupState"
+    },
+    {
+      "definedIn": "./avatar",
+      "import": "import type { AvatarProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "AvatarProps"
+    },
+    {
+      "definedIn": "./avatar",
+      "import": "import type { AvatarSize } from '@nizivo/react'",
+      "kind": "type",
+      "name": "AvatarSize"
+    },
+    {
+      "definedIn": "./avatar",
+      "import": "import type { AvatarState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "AvatarState"
+    },
+    {
       "definedIn": "./badge",
       "import": "import { Badge } from '@nizivo/react'",
       "kind": "component",
@@ -67,6 +115,48 @@
       "import": "import type { BadgeTone } from '@nizivo/react'",
       "kind": "type",
       "name": "BadgeTone"
+    },
+    {
+      "definedIn": "./breadcrumb",
+      "import": "import { Breadcrumb } from '@nizivo/react'",
+      "kind": "namespace",
+      "name": "Breadcrumb"
+    },
+    {
+      "definedIn": "./breadcrumb",
+      "import": "import { BreadcrumbItem } from '@nizivo/react'",
+      "kind": "part",
+      "name": "BreadcrumbItem"
+    },
+    {
+      "definedIn": "./breadcrumb",
+      "import": "import type { BreadcrumbItemProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "BreadcrumbItemProps"
+    },
+    {
+      "definedIn": "./breadcrumb",
+      "import": "import type { BreadcrumbItemState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "BreadcrumbItemState"
+    },
+    {
+      "definedIn": "./breadcrumb",
+      "import": "import type { BreadcrumbLabels } from '@nizivo/react'",
+      "kind": "type",
+      "name": "BreadcrumbLabels"
+    },
+    {
+      "definedIn": "./breadcrumb",
+      "import": "import { BreadcrumbRoot } from '@nizivo/react'",
+      "kind": "part",
+      "name": "BreadcrumbRoot"
+    },
+    {
+      "definedIn": "./breadcrumb",
+      "import": "import type { BreadcrumbRootProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "BreadcrumbRootProps"
     },
     {
       "definedIn": "./button",
@@ -1059,6 +1149,48 @@
       "name": "OpenReason"
     },
     {
+      "definedIn": "./pagination",
+      "import": "import { Pagination } from '@nizivo/react'",
+      "kind": "component",
+      "name": "Pagination"
+    },
+    {
+      "definedIn": "./pagination",
+      "import": "import type { PaginationLabels } from '@nizivo/react'",
+      "kind": "type",
+      "name": "PaginationLabels"
+    },
+    {
+      "definedIn": "./pagination",
+      "import": "import type { PaginationLinkState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "PaginationLinkState"
+    },
+    {
+      "definedIn": "./pagination",
+      "import": "import type { PaginationProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "PaginationProps"
+    },
+    {
+      "definedIn": "./pagination",
+      "import": "import type { PaginationSize } from '@nizivo/react'",
+      "kind": "type",
+      "name": "PaginationSize"
+    },
+    {
+      "definedIn": "./pagination",
+      "import": "import type { PaginationSlot } from '@nizivo/react'",
+      "kind": "type",
+      "name": "PaginationSlot"
+    },
+    {
+      "definedIn": "./pagination",
+      "import": "import type { PaginationState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "PaginationState"
+    },
+    {
       "definedIn": "./progress-bar",
       "import": "import { ProgressBar } from '@nizivo/react'",
       "kind": "component",
@@ -1147,6 +1279,72 @@
       "import": "import type { RadioState } from '@nizivo/react'",
       "kind": "type",
       "name": "RadioState"
+    },
+    {
+      "definedIn": "./ranked-list",
+      "import": "import { RankedList } from '@nizivo/react'",
+      "kind": "namespace",
+      "name": "RankedList"
+    },
+    {
+      "definedIn": "./ranked-list",
+      "import": "import { RankedListAction } from '@nizivo/react'",
+      "kind": "part",
+      "name": "RankedListAction"
+    },
+    {
+      "definedIn": "./ranked-list",
+      "import": "import type { RankedListActionProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "RankedListActionProps"
+    },
+    {
+      "definedIn": "./ranked-list",
+      "import": "import { RankedListItem } from '@nizivo/react'",
+      "kind": "part",
+      "name": "RankedListItem"
+    },
+    {
+      "definedIn": "./ranked-list",
+      "import": "import type { RankedListItemProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "RankedListItemProps"
+    },
+    {
+      "definedIn": "./ranked-list",
+      "import": "import type { RankedListItemState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "RankedListItemState"
+    },
+    {
+      "definedIn": "./ranked-list",
+      "import": "import type { RankedListLabels } from '@nizivo/react'",
+      "kind": "type",
+      "name": "RankedListLabels"
+    },
+    {
+      "definedIn": "./ranked-list",
+      "import": "import { RankedListRoot } from '@nizivo/react'",
+      "kind": "part",
+      "name": "RankedListRoot"
+    },
+    {
+      "definedIn": "./ranked-list",
+      "import": "import type { RankedListRootProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "RankedListRootProps"
+    },
+    {
+      "definedIn": "./ranked-list",
+      "import": "import type { RankedListRootState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "RankedListRootState"
+    },
+    {
+      "definedIn": "./ranked-list",
+      "import": "import type { RankedListTitleLevel } from '@nizivo/react'",
+      "kind": "type",
+      "name": "RankedListTitleLevel"
     },
     {
       "definedIn": "./segmented-control",

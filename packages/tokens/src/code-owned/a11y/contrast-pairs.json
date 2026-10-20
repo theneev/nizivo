@@ -38,9 +38,9 @@
     },
     {
       "fg": "text-brand",
-      "on": ["surfaces", "bg-brand-subtle"],
+      "on": ["surfaces", "bg-brand-subtle", "bg-brand-muted"],
       "role": "text",
-      "use": "Menu checked item label (also highlighted, on bg-hover)"
+      "use": "Menu checked item label (also highlighted, on bg-hover); Avatar initials (M41)"
     },
     {
       "fg": "text-accent",

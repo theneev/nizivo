@@ -2,7 +2,7 @@
   "$comment": "Size budgets (ARCHITECTURE.md §17), written by `node packages/tooling/size/measure.ts --write`. measured: bytes, gzip -9, as size-limit 14.2 reports them. limitKiB: measured + 10%, rounded up (method.ts limitKiB), never above the entry's §17.1 plan limit (method.ts PLAN_LIMITS_KIB). Limits only go up through a labelled PR (§17.3).",
   "entries": {
     "@nizivo/react": {
-      "measured": 87828,
+      "measured": 90598,
       "limitKiB": 93
     },
     "@nizivo/react/alert": {
@@ -13,12 +13,20 @@
       "measured": 0,
       "limitKiB": 0
     },
+    "@nizivo/react/avatar": {
+      "measured": 1381,
+      "limitKiB": 1.5
+    },
     "@nizivo/react/badge": {
       "measured": 796,
       "limitKiB": 0.9
     },
+    "@nizivo/react/breadcrumb": {
+      "measured": 1291,
+      "limitKiB": 1.4
+    },
     "@nizivo/react/button": {
-      "measured": 1275,
+      "measured": 1276,
       "limitKiB": 1.4
     },
     "@nizivo/react/card": {
@@ -106,7 +114,7 @@
       "limitKiB": 1.3
     },
     "@nizivo/react/metric": {
-      "measured": 2143,
+      "measured": 2142,
       "limitKiB": 2.4
     },
     "@nizivo/react/native-select": {
@@ -116,6 +124,10 @@
     "@nizivo/react/number-value": {
       "measured": 788,
       "limitKiB": 0.9
+    },
+    "@nizivo/react/pagination": {
+      "measured": 1824,
+      "limitKiB": 2
     },
     "@nizivo/react/progress-bar": {
       "measured": 1137,
@@ -129,12 +141,16 @@
       "measured": 2200,
       "limitKiB": 2.4
     },
+    "@nizivo/react/ranked-list": {
+      "measured": 2475,
+      "limitKiB": 2.7
+    },
     "@nizivo/react/segmented-control": {
       "measured": 2368,
       "limitKiB": 2.6
     },
     "@nizivo/react/select": {
-      "measured": 63254,
+      "measured": 63253,
       "limitKiB": 66
     },
     "@nizivo/react/separator": {
@@ -186,7 +202,7 @@
       "limitKiB": 76
     },
     "@nizivo/react { Button } from the barrel": {
-      "measured": 1277,
+      "measured": 1278,
       "limitKiB": 1.4
     },
     "@nizivo/react { Select } from the barrel": {
@@ -297,13 +313,21 @@
       "measured": 636,
       "limitKiB": 0.8
     },
+    "@nizivo/react/css/avatar.css": {
+      "measured": 745,
+      "limitKiB": 0.9
+    },
     "@nizivo/react/css/badge.css": {
       "measured": 512,
       "limitKiB": 0.6
     },
     "@nizivo/react/css/base.css": {
-      "measured": 997,
+      "measured": 1045,
       "limitKiB": 1.1
+    },
+    "@nizivo/react/css/breadcrumb.css": {
+      "measured": 551,
+      "limitKiB": 0.6
     },
     "@nizivo/react/css/button.css": {
       "measured": 1153,
@@ -397,6 +421,10 @@
       "measured": 154,
       "limitKiB": 0.2
     },
+    "@nizivo/react/css/pagination.css": {
+      "measured": 789,
+      "limitKiB": 0.9
+    },
     "@nizivo/react/css/progress-bar.css": {
       "measured": 800,
       "limitKiB": 0.9
@@ -407,6 +435,10 @@
     },
     "@nizivo/react/css/radio-group.css": {
       "measured": 824,
+      "limitKiB": 0.9
+    },
+    "@nizivo/react/css/ranked-list.css": {
+      "measured": 825,
       "limitKiB": 0.9
     },
     "@nizivo/react/css/segmented-control.css": {
@@ -458,7 +490,7 @@
       "limitKiB": 0.5
     },
     "@nizivo/react/styles.css": {
-      "measured": 15900,
+      "measured": 17161,
       "limitKiB": 19
     },
     "@nizivo/tokens": {

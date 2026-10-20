@@ -131,6 +131,13 @@
         "padding": ["md"]
       }
     },
+    "752:444": {
+      "component": "ranked-list",
+      "role": "canonical",
+      "import": "@nizivo/react/ranked-list",
+      "export": "RankedList",
+      "parts": ["Root", "Item", "Action"]
+    },
     "755:961": {
       "component": "tabs",
       "role": "ghost",
@@ -146,6 +153,22 @@
       "parts": ["Root", "Item"],
       "props": {
         "size": ["sm", "md", "lg"]
+      }
+    },
+    "755:998": {
+      "component": "breadcrumb",
+      "role": "canonical",
+      "import": "@nizivo/react/breadcrumb",
+      "export": "Breadcrumb",
+      "parts": ["Root", "Item"]
+    },
+    "755:1007": {
+      "component": "pagination",
+      "role": "canonical",
+      "import": "@nizivo/react/pagination",
+      "export": "Pagination",
+      "props": {
+        "size": ["sm", "md"]
       }
     },
     "756:868": {
@@ -403,6 +426,24 @@
       "parts": ["Root", "Trigger", "Value", "Popup", "Item", "Group", "GroupLabel", "Separator"],
       "props": {
         "size": ["sm", "md", "lg"]
+      }
+    },
+    "7370:21": {
+      "component": "avatar",
+      "role": "canonical",
+      "import": "@nizivo/react/avatar",
+      "export": "Avatar",
+      "props": {
+        "size": ["sm", "md", "lg", "xl"]
+      }
+    },
+    "7370:26": {
+      "component": "avatar",
+      "role": "canonical",
+      "import": "@nizivo/react/avatar",
+      "export": "Avatar",
+      "props": {
+        "size": ["sm", "md", "lg", "xl"]
       }
     }
   }

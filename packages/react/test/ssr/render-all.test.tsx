@@ -40,9 +40,22 @@ import { TabNavExample, TabNavRouterExample } from '../../src/tab-nav/tab-nav.ex
 import { TabsExample, TabsManualExample, TabsStatesExample } from '../../src/tabs/tabs.example';
 import { TextExample } from '../../src/text/text.example';
 import { TooltipExample, TooltipOpenExample } from '../../src/tooltip/tooltip.example';
+import { AvatarExample, AvatarGroupExample } from '../../src/avatar/avatar.example';
+import {
+  BreadcrumbExample,
+  BreadcrumbRouterExample,
+} from '../../src/breadcrumb/breadcrumb.example';
 import { KpiTileExample, KpiTileStatesExample } from '../../src/kpi-tile/kpi-tile.example';
 import { MetricExample, MetricStatesExample } from '../../src/metric/metric.example';
 import { NumberValueExample } from '../../src/number-value/number-value.example';
+import {
+  PaginationExample,
+  PaginationRouterExample,
+} from '../../src/pagination/pagination.example';
+import {
+  RankedListExample,
+  RankedListStatesExample,
+} from '../../src/ranked-list/ranked-list.example';
 import { TrendCardExample, TrendCardLoadingExample } from '../../src/trend-card/trend-card.example';
 
 const examples: Record<string, () => JSX.Element> = {
@@ -91,6 +104,14 @@ const examples: Record<string, () => JSX.Element> = {
   KpiTileStatesExample,
   TrendCardExample,
   TrendCardLoadingExample,
+  RankedListExample,
+  RankedListStatesExample,
+  AvatarExample,
+  AvatarGroupExample,
+  BreadcrumbExample,
+  BreadcrumbRouterExample,
+  PaginationExample,
+  PaginationRouterExample,
 };
 
 const allowed = new Set([

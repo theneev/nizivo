@@ -1,0 +1,26 @@
+{
+  "name": "avatar",
+  "status": "stable",
+  "tier": "server",
+  "exports": ["Avatar", "AvatarGroup"],
+  "parts": [],
+  "cssDeps": ["base"],
+  "variants": {
+    "size": ["sm", "md", "lg", "xl"]
+  },
+  "figma": {
+    "canonical": ["7370:21", "7370:26"],
+    "ghosts": [],
+    "variantsSeen": [
+      "7370:9",
+      "7370:10",
+      "7370:11",
+      "7370:12",
+      "7370:13",
+      "7370:15",
+      "7370:17",
+      "7370:19"
+    ],
+    "related": []
+  }
+}
