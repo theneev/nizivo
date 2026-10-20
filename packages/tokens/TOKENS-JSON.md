@@ -129,8 +129,9 @@ Read per context from the markers in the token sources (§7.6, §15.4), stronges
 
 An override can apply to one theme only (an entry under `modes.theme.dark` with `override`, the
 light value staying `figma`). Today, after the 2026-10-18 sync in which Figma adopted all 14
-overrides and 18 of the 19 proposals: 226 tokens are `figma`, 19 `code-owned` and 1 `proposal`
-(`color.text.accent`) in the default context, and no token is an `override` in any context.
+overrides and 18 of the 19 proposals, and the removal of the last proposal, `color.text.accent`,
+before 0.2.0 (M42 item 14): 226 tokens are `figma` and 19 `code-owned` in the default context, and
+no token is an `override` or a `proposal` in any context.
 
 ### Value formats
 

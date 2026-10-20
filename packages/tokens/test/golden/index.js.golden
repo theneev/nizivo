@@ -64,7 +64,6 @@ export const color = {
   iconSecondary: "var(--nz-icon-secondary)",
   iconSuccess: "var(--nz-icon-success)",
   iconWarning: "var(--nz-icon-warning)",
-  textAccent: "var(--nz-text-accent)",
   textBrand: "var(--nz-text-brand)",
   textCode: "var(--nz-text-code)",
   textCodeMuted: "var(--nz-text-code-muted)",

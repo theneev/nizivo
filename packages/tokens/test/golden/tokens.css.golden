@@ -302,7 +302,6 @@
     --nz-space-24: 6rem;
     --nz-stagger-item: 40ms;
     --nz-surface-inner-highlight: inset 0 1px 0 0 rgb(255 255 255 / 0.7);
-    --nz-text-accent: light-dark(var(--nz-p-green-700), var(--nz-p-lime-300));
     --nz-text-brand: light-dark(var(--nz-p-green-700), var(--nz-p-green-300));
     --nz-text-code: var(--nz-p-neutral-50);
     --nz-text-code-muted: var(--nz-p-neutral-400);

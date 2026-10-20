@@ -506,11 +506,11 @@
       "limitKiB": 19
     },
     "@nizivo/tokens": {
-      "measured": 2377,
+      "measured": 2370,
       "limitKiB": 2.5
     },
     "@nizivo/tokens/contract.json": {
-      "measured": 3316,
+      "measured": 3304,
       "limitKiB": 3.5
     },
     "@nizivo/tokens/custom-media.css": {
@@ -518,15 +518,15 @@
       "limitKiB": 0.2
     },
     "@nizivo/tokens/tailwind.css": {
-      "measured": 817,
+      "measured": 811,
       "limitKiB": 0.9
     },
     "@nizivo/tokens/tokens.css": {
-      "measured": 3957,
+      "measured": 3949,
       "limitKiB": 4.2
     },
     "@nizivo/tokens/tokens.json": {
-      "measured": 10468,
+      "measured": 10360,
       "limitKiB": 12
     },
     "@nizivo/icons": {

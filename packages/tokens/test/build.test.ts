@@ -140,7 +140,6 @@ describe('tokens.css', () => {
       '--nz-text-on-critical: var(--nz-p-neutral-0);',
       '--nz-chart-warning: light-dark(var(--nz-p-amber-600), var(--nz-p-amber-500));',
       '--nz-chart-critical: var(--nz-p-red-500);',
-      '--nz-text-accent: light-dark(var(--nz-p-green-700), var(--nz-p-lime-300));',
       '--nz-p-neutral-450: #828a81;',
       '--nz-p-neutral-925: #151816;',
       '--nz-p-red-400: #e47962;',
@@ -151,6 +150,16 @@ describe('tokens.css', () => {
     ]) {
       expect(css).toContain(declaration);
     }
+  });
+
+  test('--nz-text-accent is gone from every output (M42 item 14, before 0.2.0)', () => {
+    // its replacements stay: --nz-text-brand on page surfaces, --nz-text-inverse-accent on bg/inverse
+    for (const name of FILES) {
+      const found = /--nz-text-accent(?![-\w])|color\.text\.accent\b|textAccent\b/.exec(file(name));
+      expect([name, found?.[0]]).toEqual([name, undefined]);
+    }
+    expect(file('tokens.css')).toContain('--nz-text-brand:');
+    expect(file('tokens.css')).toContain('--nz-text-inverse-accent:');
   });
 
   test('Figma owns the spinner duration and the focus rings follow the theme (2026-10-18 sync)', () => {

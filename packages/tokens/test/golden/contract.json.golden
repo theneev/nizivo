@@ -1586,11 +1586,6 @@
       "type": "shadow",
       "public": true
     },
-    "--nz-text-accent": {
-      "token": "color.text.accent",
-      "type": "color",
-      "public": true
-    },
     "--nz-text-brand": {
       "token": "color.text.brand",
       "type": "color",

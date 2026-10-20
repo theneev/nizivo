@@ -96,6 +96,16 @@ export function OverridesTable(): JSX.Element {
 
 export function ProposalsTable(): JSX.Element {
   const rows = proposals();
+  if (rows.length === 0) {
+    return (
+      <p>
+        None. Every token is a Figma variable or code-owned by nature: Figma adopted 18 of the 19
+        proposals on 2026-10-18, and the last one, <code>--nz-text-accent</code>, was removed before
+        0.2.0 (use <code>--nz-text-brand</code> on page surfaces and{' '}
+        <code>--nz-text-inverse-accent</code> on <code>bg/inverse</code>).
+      </p>
+    );
+  }
   return (
     <>
       <p>

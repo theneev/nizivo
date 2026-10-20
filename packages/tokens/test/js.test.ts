@@ -154,7 +154,7 @@ describe('tokens.json', () => {
       motion: { contexts: ['default', 'reduced'], default: 'default' },
       viewport: { contexts: ['mobile', 'tablet', 'desktop'], default: 'mobile' },
     });
-    expect(Object.keys(json.tokens)).toHaveLength(246);
+    expect(Object.keys(json.tokens)).toHaveLength(245);
     const unemitted = Object.entries(json.tokens).filter(([, t]) => t.cssVariable === null);
     expect(unemitted.map(([id]) => id)).toEqual([
       'breakpoint.lg',
@@ -199,8 +199,9 @@ describe('tokens.json', () => {
       }
     }
     expect(wrong).toEqual([]);
-    // 223 single values and 20 typography styles (shorthand and five parts), in 7 contexts.
-    expect(checked).toBe((223 + 20 * 6) * 7);
+    // 222 single values (text/accent removed, M42 item 14) and 20 typography styles (shorthand and
+    // five parts), in 7 contexts.
+    expect(checked).toBe((222 + 20 * 6) * 7);
   });
 
   test('values are literals: no var(), no light-dark()', () => {
@@ -230,11 +231,12 @@ describe('tokens.json', () => {
   test('provenance follows the source markers, per context (plan §7.6, §15.4)', () => {
     const t = json.tokens;
     expect(t['color.bg.surface']?.provenance).toBe('figma');
-    // Proposals Figma adopted on 2026-10-18 are Figma's now; text/accent is still proposed.
+    // Proposals Figma adopted on 2026-10-18 are Figma's now; the last one, text/accent, was removed
+    // before 0.2.0 (M42 item 14), so no token is a proposal.
     expect(t['color.bg.scrim']?.provenance).toBe('figma');
     expect(t['color.p.neutral.450']?.provenance).toBe('figma');
-    expect(t['color.text.accent']?.provenance).toBe('proposal');
-    expect(t['color.text.accent']?.modes?.['theme']?.['dark']?.provenance).toBe('proposal');
+    expect(t['color.text.accent']).toBeUndefined();
+    expect(Object.values(t).filter((token) => token?.provenance === 'proposal')).toEqual([]);
     expect(t['font.family.sans']?.provenance).toBe('code-owned');
     expect(t['duration.spring']?.provenance).toBe('code-owned');
     // The former dark-only override: Figma holds red/400 itself now.
@@ -260,11 +262,8 @@ describe('tokens.json', () => {
       }
     }
     expect(overrides).toEqual([]);
-    expect(Object.keys(counts).toSorted(compareStrings)).toEqual([
-      'code-owned',
-      'figma',
-      'proposal',
-    ]);
+    // and no proposal is left since text/accent was removed (M42 item 14)
+    expect(Object.keys(counts).toSorted(compareStrings)).toEqual(['code-owned', 'figma']);
   });
 
   test('breakpoints carry their custom media, equal to custom-media.css', () => {

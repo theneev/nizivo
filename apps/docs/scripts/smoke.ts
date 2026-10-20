@@ -946,7 +946,28 @@ async function deviationsChecks(browser: Browser): Promise<void> {
           1),
     `deviations: ${overrides} override rows (${expectedOverrides} in the override files)`,
   );
-  check(proposals > 0, `deviations: ${proposals} proposal rows`);
+  // The same for the proposals: none is left since text/accent was removed before 0.2.0 (M42).
+  const proposalDir = join(import.meta.dirname, '../../../packages/tokens/src/code-owned');
+  const proposalFiles = [
+    join(proposalDir, 'proposals.tokens.json'),
+    ...readdirSync(join(proposalDir, 'proposals'), { recursive: true, encoding: 'utf8' })
+      .filter((file) => file.endsWith('.tokens.json'))
+      .map((file) => join(proposalDir, 'proposals', file)),
+  ];
+  const proposalTokens = new Set(
+    proposalFiles.flatMap((file) =>
+      [...readFileSync(file, 'utf8').matchAll(/"figma(?:Variable|Style)": "([^"]+)"/g)].map(
+        (m) => m[1],
+      ),
+    ),
+  );
+  check(
+    proposals === proposalTokens.size &&
+      (proposalTokens.size > 0 ||
+        (await page.getByText('None. Every token is a Figma variable or code-owned').count()) ===
+          1),
+    `deviations: ${proposals} proposal rows (${proposalTokens.size} in the proposal files)`,
+  );
   const text = (await page.locator('article').textContent()) ?? '';
   // Every degradation (§18.2) and every builder default (§23.4) the plan holds is on the page.
   const plan = readFileSync(join(import.meta.dirname, '../../../docs/ARCHITECTURE.md'), 'utf8');

@@ -255,17 +255,17 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 | Entry | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | ----- | -------: | ---------: | ---------: | ----------: | -----------: |
-| `.`   |    2,377 |        2.3 |      2,051 |         2.5 |          183 |
+| `.`   |    2,370 |        2.3 |      2,047 |         2.5 |          190 |
 
 #### `@nizivo/tokens`: CSS and JSON entries (the published file, gzip)
 
 | Entry             | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | ----------------- | -------: | ---------: | ---------: | ----------: | -----------: |
-| /contract.json    |    3,316 |        3.2 |      2,712 |         3.5 |          268 |
+| /contract.json    |    3,304 |        3.2 |      2,692 |         3.5 |          280 |
 | /custom-media.css |      166 |        0.2 |        126 |         0.2 |           38 |
-| /tailwind.css     |      817 |        0.8 |        715 |         0.9 |          104 |
-| /tokens.css       |    3,957 |        3.9 |      3,307 |         4.2 |          343 |
-| /tokens.json      |   10,468 |       10.2 |      8,304 |          12 |        1,820 |
+| /tailwind.css     |      811 |        0.8 |        711 |         0.9 |          110 |
+| /tokens.css       |    3,949 |        3.9 |      3,254 |         4.2 |          351 |
+| /tokens.json      |   10,360 |       10.1 |      8,236 |          12 |        1,928 |
 
 #### `@nizivo/icons`: Public JS entries (bundled with what they import, React Aria included)
 

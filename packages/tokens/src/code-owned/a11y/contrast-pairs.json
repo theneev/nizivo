@@ -28,7 +28,7 @@
       "fg": "text-secondary",
       "on": ["surfaces", "status-subtle", "bg-brand-subtle", "bg-accent-subtle"],
       "role": "text",
-      "use": "Alert description, Select group label; the Metric label on Card and KpiTile tone=\"brand\" and \"accent\" (M41)"
+      "use": "Alert description, Select group label; the Metric label on Card and KpiTile tone=\"brand\" and \"accent\" (M41); a flat Delta on the bg/surface pill of a tinted Card (M42)"
     },
     {
       "fg": "text-tertiary",
@@ -41,12 +41,6 @@
       "on": ["surfaces", "bg-brand-subtle", "bg-brand-muted"],
       "role": "text",
       "use": "Menu checked item label (also highlighted, on bg-hover); Avatar initials (M41)"
-    },
-    {
-      "fg": "text-accent",
-      "on": ["panels"],
-      "role": "text",
-      "use": "No component since M38 (deprecated; removed in 0.2.0); guards the published value"
     },
     {
       "fg": "text-inverse-accent",
@@ -82,14 +76,14 @@
       "fg": "text-success",
       "on": ["surfaces", "bg-success-subtle", "bg-brand-subtle", "bg-accent-subtle"],
       "role": "text",
-      "use": "Delta text; on KpiTile tone=\"brand\" and \"accent\" (M41)"
+      "use": "Delta text; on KpiTile tone=\"brand\" and \"accent\" (M41); on the bg/surface pill of a tinted Card (M42)"
     },
     { "fg": "text-warning", "on": ["surfaces", "bg-warning-subtle"], "role": "text" },
     {
       "fg": "text-critical",
       "on": ["surfaces", "bg-critical-subtle", "bg-brand-subtle", "bg-accent-subtle"],
       "role": "text",
-      "use": "Menu critical item (also highlighted, on bg-hover); KpiTile's default error on tone=\"brand\" and \"accent\" (M41)"
+      "use": "Menu critical item (also highlighted, on bg-hover); KpiTile's default error on tone=\"brand\" and \"accent\" (M41); Delta text on the bg/surface pill of a tinted Card (M42)"
     },
     { "fg": "text-info", "on": ["surfaces", "bg-info-subtle"], "role": "text" },
     {

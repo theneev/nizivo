@@ -65,15 +65,46 @@ const OVERRIDE = {
 };
 const OVERRIDE_FILE = 'code-owned/a11y/light.overrides.tokens.json';
 
+/**
+ * The last proposal, text/accent, was removed before 0.2.0 (M42 item 14), so the proposal checks run
+ * on a copy of src/ that holds this one, in both themes as a per-mode proposal sits.
+ */
+const proposal = (value: string) => ({
+  color: {
+    text: {
+      proposed: {
+        $type: 'color',
+        $value: value,
+        $extensions: {
+          'app.nizivo.proposal': {
+            figmaVariable: 'text/proposed',
+            reason: 'Test fixture',
+            wcag: [],
+            approvedBy: ['maintainer'],
+            expires: '2027-01-31',
+          },
+        },
+      },
+    },
+  },
+});
+const PROPOSAL_FILES = {
+  'code-owned/proposals/color/light.tokens.json': proposal('{color.p.green.700}'),
+  'code-owned/proposals/color/dark.tokens.json': proposal('{color.p.lime.300}'),
+};
+
 /** WCAG ratio of two CSS colours, as the matrix shows it. */
 const ratio = (a: string, b: string): string => shown(contrast(parseColor(a), parseColor(b)));
 
-/** A copy of src/ with the fixture override in it. */
+/** A copy of src/ with the fixture override and the fixture proposal in it. */
 function srcWithOverride(): string {
   const src = mkdtempSync(join(tmpdir(), 'nz-tokens-src-'));
   copies.push(src);
   cpSync(join(PACKAGE, 'src'), src, { recursive: true });
   writeFileSync(join(src, OVERRIDE_FILE), JSON.stringify(OVERRIDE));
+  for (const [file, json] of Object.entries(PROPOSAL_FILES)) {
+    writeFileSync(join(src, file), JSON.stringify(json));
+  }
   return src;
 }
 
@@ -118,10 +149,11 @@ describe('the contrast matrix on the built tokens.css', () => {
     expect(report.errors).toEqual([]);
     expect(report.warnings).toEqual([]);
     const checked = report.results.filter((r) => r.threshold !== undefined);
-    expect(checked.length).toBe(82);
-    // Figma adopted the 14 overrides and 18 of the proposals on 2026-10-18; text/accent remains.
+    expect(checked.length).toBe(80);
+    // Figma adopted the 14 overrides and 18 of the proposals on 2026-10-18; the last one,
+    // text/accent, was removed before 0.2.0 (M42 item 14).
     expect(report.sources.overrides).toHaveLength(0);
-    expect(report.sources.proposals.map((p) => p.id)).toEqual(['color.text.accent']);
+    expect(report.sources.proposals).toEqual([]);
   });
 
   test('CONTRAST.md is the current matrix (pnpm tokens:contrast rewrites it)', () => {
@@ -201,10 +233,10 @@ describe('override and proposal checks (plan §15.4 CI rules 2–4)', () => {
 
   test('redundancy: Figma now defines a proposed variable', () => {
     const report = checkEdited('figma-owned/color/light.tokens.json', (json) => {
-      json.color.bg.surface.$extensions['dev.nizivo.figma'].name = 'text/accent';
+      json.color.bg.surface.$extensions['dev.nizivo.figma'].name = 'text/proposed';
     });
     expect(report.errors).toContain(
-      'proposal color.text.accent: Figma now defines text/accent; delete the proposal',
+      'proposal color.text.proposed: Figma now defines text/proposed; delete the proposal',
     );
   });
 
@@ -214,13 +246,13 @@ describe('override and proposal checks (plan §15.4 CI rules 2–4)', () => {
     expect(soon.warnings).toContain(
       'light override color.text.tertiary expires on 2027-01-31 (11 days)',
     );
-    expect(soon.warnings).toContain('proposal color.text.accent expires on 2027-01-31 (11 days)');
+    expect(soon.warnings).toContain('proposal color.text.proposed expires on 2027-01-31 (11 days)');
     const late = checkEdited(OVERRIDE_FILE, () => {}, new Date('2027-02-01T09:00:00Z'));
     expect(late.errors).toContain(
       'light override color.text.tertiary expired on 2027-01-31; renew it with both owners or remove it',
     );
     expect(late.errors).toContain(
-      'proposal color.text.accent expired on 2027-01-31; renew it with both owners or remove it',
+      'proposal color.text.proposed expired on 2027-01-31; renew it with both owners or remove it',
     );
   });
 

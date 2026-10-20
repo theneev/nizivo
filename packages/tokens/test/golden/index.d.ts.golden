@@ -185,11 +185,6 @@ export declare const color: {
   readonly iconSuccess: "var(--nz-icon-success)";
   /** `--nz-icon-warning` (color): `#b07b0e` · dark `#d99a1b` */
   readonly iconWarning: "var(--nz-icon-warning)";
-  /**
-   * `--nz-text-accent` (color): `#1a573a` · dark `#c6e06a`
-   * @deprecated Figma will not add text/accent (NIZ-125). Use text/brand on page surfaces and text/inverse-accent on bg/inverse. Removed in 0.2.0.
-   */
-  readonly textAccent: "var(--nz-text-accent)";
   /** `--nz-text-brand` (color): `#1a573a` · dark `#79b993` */
   readonly textBrand: "var(--nz-text-brand)";
   /**
@@ -849,7 +844,6 @@ export type CssVariable =
   | "--nz-space-8"
   | "--nz-stagger-item"
   | "--nz-surface-inner-highlight"
-  | "--nz-text-accent"
   | "--nz-text-brand"
   | "--nz-text-code"
   | "--nz-text-code-muted"
@@ -1020,7 +1014,6 @@ export type TokenId =
   | "color.p.viz.lime-600"
   | "color.p.viz.teal-400"
   | "color.p.viz.teal-500"
-  | "color.text.accent"
   | "color.text.brand"
   | "color.text.code"
   | "color.text.code-muted"

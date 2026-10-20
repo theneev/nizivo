@@ -128,8 +128,9 @@ describe('Terrazzo 2.8.0 token build', () => {
     expect(new Set(root).size).toBe(root.length);
     expect(css).not.toContain('[data-nz-theme="dark"] {\n    --nz-bg');
     const semantic = root.filter((name) => SEMANTIC.test(name));
-    // 75 Figma semantic colours and the text/accent proposal.
-    expect(semantic).toHaveLength(76);
+    // 75 Figma semantic colours (the text/accent proposal was removed before 0.2.0, M42 item 14).
+    expect(semantic).toHaveLength(75);
+    expect(root).not.toContain('--nz-text-accent');
     for (const name of declared(css, '[data-nz-theme="dark"]'))
       expect(name).toBe('--nz-scheme-inverse');
   });

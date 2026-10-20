@@ -59,7 +59,10 @@ and 18 of the 19 proposals with the same values (the four primitives, `Body/S`, 
 `bg/scrim`, `bg/accent-hover`, `bg/critical-hover`, `text/on-critical`, `icon/info`,
 `border/control(-hover)`, `chart/warning`, `chart/critical`, `duration/fade`, `duration/pulse`,
 `scale/enter`), so they were deleted; the override files and the motion proposal files are `{}`.
-`text.accent` stays a proposal: Figma added `text/inverse-accent` with the modes swapped instead.
+`text.accent` stayed a proposal (Figma added `text/inverse-accent` with the modes swapped instead)
+until M42 (2026-10-20, item 14) removed it before 0.2.0: `--nz-text-accent` is no longer emitted,
+its replacements are `--nz-text-brand` on page surfaces and `--nz-text-inverse-accent` on
+`bg/inverse`, and the colour proposal files are `{}` too, so no proposal is left.
 Figma now owns `duration/spin` (800 ms, 0 in Reduced: the spinner stops, decision M34), so the
 code-owned `duration.spin` (1000 ms, kept turning in Reduced) is gone, and Figma deleted
 `border-width/strong` (M33), so `--nz-border-width-strong` is no longer emitted.

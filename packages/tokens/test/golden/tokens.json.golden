@@ -1904,24 +1904,6 @@
         "variableId": "VariableID:747:237"
       }
     },
-    "color.text.accent": {
-      "type": "color",
-      "cssVariable": "--nz-text-accent",
-      "public": true,
-      "value": "#1a573a",
-      "provenance": "proposal",
-      "aliasOf": "color.p.green.700",
-      "modes": {
-        "theme": {
-          "dark": {
-            "value": "#c6e06a",
-            "provenance": "proposal",
-            "aliasOf": "color.p.lime.300"
-          }
-        }
-      },
-      "deprecated": "Figma will not add text/accent (NIZ-125). Use text/brand on page surfaces and text/inverse-accent on bg/inverse. Removed in 0.2.0."
-    },
     "color.text.brand": {
       "type": "color",
       "cssVariable": "--nz-text-brand",

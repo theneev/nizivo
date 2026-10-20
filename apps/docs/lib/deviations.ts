@@ -166,8 +166,8 @@ export function proposals(): ProposalRow[] {
   const order = ['', 'light', 'dark', 'default', 'reduced'];
   const rows = [...byToken.values()];
   for (const r of rows) r.values.sort((a, b) => order.indexOf(a.mode) - order.indexOf(b.mode));
-  if (rows.length === 0)
-    throw new Error('docs: no proposals found under packages/tokens/src/code-owned');
+  // Zero rows is a real state (the last proposal, text/accent, was removed before 0.2.0: M42 item
+  // 14); a missing proposal file is a broken path, and readRepoJson throws on it.
   return rows;
 }
 

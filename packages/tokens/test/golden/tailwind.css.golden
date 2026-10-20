@@ -58,7 +58,6 @@
   --color-nz-icon-secondary: var(--nz-icon-secondary);
   --color-nz-icon-success: var(--nz-icon-success);
   --color-nz-icon-warning: var(--nz-icon-warning);
-  --color-nz-text-accent: var(--nz-text-accent);
   --color-nz-text-brand: var(--nz-text-brand);
   --color-nz-text-code: var(--nz-text-code);
   --color-nz-text-code-muted: var(--nz-text-code-muted);
