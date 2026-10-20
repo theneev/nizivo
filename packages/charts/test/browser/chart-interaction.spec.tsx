@@ -5,13 +5,17 @@
 // crosshair and the dots sit on the marks the server drew, the card flips near the end, nothing
 // moves the layout, and a mirrored plot (xDirection="rtl") keys and points the way it looks. Styled
 // by the shipped stylesheets only (tokens.css and this package's dist/styles.css): build first.
+// Escape hides a pointer-shown card wherever focus is (WCAG 1.4.13), and xDirection="auto" mirrors
+// the plot under a right-to-left `dir`, from the server HTML on; a new xDirection remounts the
+// island, and Escape on the layer inside a modal dialog hides only the card. Column mode has its
+// own spec (chart-interaction-columns.spec.tsx).
 // Every engine: `NZ_BROWSER=webkit pnpm test:browser` (or firefox).
 import { act } from 'react';
 import { hydrateRoot, type Root } from 'react-dom/client';
 import { renderToString } from 'react-dom/server';
 import { afterEach, describe, expect, test } from 'vitest';
 import { userEvent } from 'vitest/browser';
-import { AreaChart, type AreaChartElementProps } from '../../src/area-chart/index';
+import { AreaChart, type AreaChartProps } from '../../src/area-chart/index';
 
 const STYLES = import.meta.glob(['../../../tokens/dist/tokens.css', '../../dist/styles.css'], {
   query: '?raw',
@@ -56,8 +60,15 @@ interface Mounted {
   problems: unknown[];
 }
 
-/** AreaChart's server HTML in the document, then hydration, as a Server Component page gets it. */
-async function hydrate(props: Partial<AreaChartElementProps<Day>> = {}): Promise<Mounted> {
+/**
+ * AreaChart's server HTML in the document, then hydration, as a Server Component page gets it.
+ * `dir` puts the chart in an ancestor with that direction; `before` runs on the server HTML,
+ * before hydration.
+ */
+async function hydrate(
+  props: Partial<AreaChartProps<Day>> = {},
+  { dir, before: beforeHydration }: { dir?: 'rtl'; before?: (container: HTMLElement) => void } = {},
+): Promise<Mounted> {
   const app = (
     <AreaChart
       title="Sales"
@@ -76,7 +87,14 @@ async function hydrate(props: Partial<AreaChartElementProps<Day>> = {}): Promise
   // in every engine, and focus never starts in the runner's own frame)
   const before = document.createElement('input');
   before.setAttribute('aria-label', 'Before');
-  document.body.append(before, container);
+  if (dir === undefined) document.body.append(before, container);
+  else {
+    const page = document.createElement('div');
+    page.dir = dir;
+    page.append(before, container);
+    document.body.append(page);
+  }
+  beforeHydration?.(container);
   const problems: unknown[] = [];
   await act(async () => {
     roots.push(
@@ -155,9 +173,12 @@ describe('ChartInteraction: hydration and the keyboard', () => {
     await userEvent.keyboard('{ArrowLeft}{Escape}');
     expect(card(m)).toBeNull();
     expect(document.activeElement).toBe(m.layer);
+    // hiding empties the region, so showing the same point again speaks it again
+    expect(m.live.textContent).toBe('');
     await userEvent.keyboard('{ArrowRight}');
     // the first arrow after Escape shows the point it left, without moving
     expect(title(m)).toBe('Thu, Oct 29');
+    expect(m.live.textContent).toMatch(/^Thu, Oct 29, This period, /);
   });
 
   test('leaving the layer hides the card', async () => {
@@ -332,5 +353,182 @@ describe('ChartInteraction: a mirrored plot (xDirection="rtl")', () => {
     await userEvent.keyboard('{End}');
     await settle();
     expect(rect(end).left + rect(end).width / 2).toBeCloseTo(column().left + 0.5, 0);
+  });
+});
+
+describe('ChartInteraction: a pointer-shown card (WCAG 1.4.13)', () => {
+  test('Escape dismisses it while focus is elsewhere, without moving the pointer', async () => {
+    const m = await hydrate();
+    const field = document.querySelector<HTMLInputElement>('input[aria-label="Before"]');
+    field?.focus();
+    const plot = rect(m.layer);
+    await userEvent.hover(m.layer, { position: { x: plot.width / 3, y: plot.height / 2 } });
+    expect(title(m)).toBe('Sun, Oct 11');
+    expect(document.activeElement).toBe(field);
+    await userEvent.keyboard('{Escape}');
+    expect(card(m)).toBeNull();
+    expect(m.live.textContent).toBe('');
+    // the next move shows the card again
+    await userEvent.hover(m.layer, { position: { x: plot.width / 3 + 2, y: plot.height / 2 } });
+    expect(title(m)).toBe('Sun, Oct 11');
+  });
+
+  test('persistent: with the pointer on the card a card stays, the point under it, and no timeout', async () => {
+    const m = await hydrate();
+    const plot = rect(m.layer);
+    await userEvent.hover(m.layer, { position: { x: plot.width / 4, y: plot.height / 2 } });
+    const tip = card(m);
+    if (tip === null) throw new Error('no card');
+    const first = title(m);
+    // onto the middle of the card: a card is still shown, but it is the card of the point under the
+    // pointer (the card takes no pointer events, so it follows the pointer and never hides while
+    // the pointer is over the plot; it cannot be held on one point, so not "hoverable" in 1.4.13's
+    // sense)
+    const box = rect(tip);
+    await userEvent.hover(m.layer, {
+      position: { x: box.left + box.width / 2 - plot.left, y: box.top + box.height / 2 - plot.top },
+    });
+    expect(card(m)).not.toBeNull();
+    expect(title(m)).not.toBe(first);
+    // no timeout hides it
+    await new Promise((done) => setTimeout(done, 600));
+    expect(card(m)).not.toBeNull();
+  });
+});
+
+/** The chart and the field before it, moved into a modal dialog after hydration. */
+function inDialog(m: Mounted): HTMLDialogElement {
+  const dialog = document.createElement('dialog');
+  const before = document.querySelector('input[aria-label="Before"]');
+  if (before === null) throw new Error('no field');
+  dialog.append(before, m.container);
+  document.body.append(dialog);
+  dialog.showModal();
+  return dialog;
+}
+
+describe('ChartInteraction: Escape inside a modal dialog', () => {
+  test('Escape on the focused layer hides only the card; the next Escape closes the dialog', async () => {
+    const m = await hydrate();
+    const dialog = inDialog(m);
+    await tabIn();
+    expect(document.activeElement).toBe(m.layer);
+    expect(card(m)).not.toBeNull();
+    await userEvent.keyboard('{Escape}');
+    expect(card(m)).toBeNull();
+    expect(dialog.open).toBe(true);
+    await userEvent.keyboard('{Escape}');
+    expect(dialog.open).toBe(false);
+  });
+
+  test('with focus elsewhere, Escape hides a pointer-shown card and still reaches the dialog', async () => {
+    const m = await hydrate();
+    const dialog = inDialog(m);
+    const field = document.querySelector<HTMLInputElement>('input[aria-label="Before"]');
+    field?.focus();
+    const plot = rect(m.layer);
+    await userEvent.hover(m.layer, { position: { x: plot.width / 3, y: plot.height / 2 } });
+    expect(card(m)).not.toBeNull();
+    await userEvent.keyboard('{Escape}');
+    expect(card(m)).toBeNull();
+    expect(dialog.open).toBe(false);
+  });
+});
+
+/** The boxes of the figure, the plot, the svg, the end dot and the first x label. */
+const boxes = (container: HTMLElement): number[][] =>
+  [
+    container.querySelector('figure'),
+    container.querySelector('.nz-chart-interaction'),
+    container.querySelector('.nz-chart-svg'),
+    container.querySelector('.nz-area-chart-dot'),
+    container.querySelector('[data-slot="chart-frame-x-ticks"] .nz-chart-frame-tick'),
+  ].map((el) => {
+    if (el === null) throw new Error('missing mark');
+    const r = rect(el);
+    return [r.x, r.y, r.width, r.height];
+  });
+
+describe('ChartInteraction: xDirection="auto"', () => {
+  test('on a left-to-right page it draws exactly as "ltr"', async () => {
+    const ltr = boxes((await hydrate({ xDirection: 'ltr' })).container);
+    for (const root of roots.splice(0)) act(() => root.unmount());
+    document.body.replaceChildren();
+    expect(boxes((await hydrate({ xDirection: 'auto' })).container)).toEqual(ltr);
+  });
+
+  test('under dir="rtl" the server HTML is mirrored before hydration, and hydration moves nothing', async () => {
+    let server: number[][] = [];
+    let endBefore = 0;
+    const m = await hydrate(
+      { xDirection: 'auto' },
+      {
+        dir: 'rtl',
+        before: (container) => {
+          const end = container.querySelector('.nz-area-chart-dot');
+          const plot = container.querySelector('.nz-chart-interaction');
+          if (end === null || plot === null) throw new Error('no end dot');
+          // the latest point is drawn at the plot's left edge: the plot is mirrored by CSS alone
+          endBefore = rect(end).left + rect(end).width / 2 - rect(plot).left;
+          server = boxes(container);
+        },
+      },
+    );
+    expect(endBefore).toBeCloseTo(0, 0);
+    await settle();
+    expect(m.problems).toEqual([]);
+    expect(boxes(m.container)).toEqual(server);
+    // the first x label ("Oct 1") is at the right end
+    const ticks = [
+      ...m.container.querySelectorAll('[data-slot="chart-frame-x-ticks"] .nz-chart-frame-tick'),
+    ].filter((tick) => tick.textContent !== '');
+    const first = ticks.find((tick) => tick.textContent === 'Oct 1');
+    const lastTick = ticks.find((tick) => tick.textContent === 'Oct 30');
+    if (first === undefined || lastTick === undefined) throw new Error('no x labels');
+    expect(rect(first).left).toBeGreaterThan(rect(lastTick).left);
+  });
+
+  test('a new xDirection on a live chart remounts the island, which follows the new mirror', async () => {
+    const m = await hydrate({ xDirection: 'ltr' });
+    const root = roots.at(-1);
+    if (root === undefined) throw new Error('no root');
+    await act(async () => {
+      root.render(
+        <AreaChart
+          title="Sales"
+          data={DAYS}
+          x="date"
+          y="current"
+          compare="previous"
+          format={{ style: 'currency', currency: 'USD', maximumFractionDigits: 0 }}
+          xDirection="rtl"
+        />,
+      );
+    });
+    await settle();
+    const layer = m.container.querySelector<HTMLElement>('.nz-chart-interaction');
+    if (layer === null) throw new Error('no layer');
+    const now = { ...m, layer };
+    // the plot's left edge is the latest point now
+    await userEvent.hover(layer, { position: { x: 1, y: 10 } });
+    expect(title(now)).toBe('Fri, Oct 30');
+  });
+
+  test('under dir="rtl" the island follows the mirrored plot: keys, pointer and crosshair', async () => {
+    const m = await hydrate({ xDirection: 'auto' }, { dir: 'rtl' });
+    await tabIn();
+    await settle();
+    const plot = rect(m.layer);
+    const column = (): DOMRect => {
+      const found = m.layer.querySelector('.nz-chart-interaction-point');
+      if (found === null) throw new Error('no crosshair');
+      return rect(found);
+    };
+    expect(title(m)).toBe('Fri, Oct 30');
+    expect(column().left + 0.5).toBeCloseTo(plot.left, 0);
+    await userEvent.keyboard('{ArrowRight}');
+    expect(title(m)).toBe('Thu, Oct 29');
+    await userEvent.hover(m.layer, { position: { x: plot.width - 1, y: 10 } });
+    expect(title(m)).toBe('Thu, Oct 1');
   });
 });

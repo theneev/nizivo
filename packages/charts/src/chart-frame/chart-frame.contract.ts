@@ -43,7 +43,12 @@ export type ChartTableView = 'hidden' | 'details';
  */
 export type ChartTickAlign = 'point' | 'band';
 
-/** The direction of the x axis. Time and value axes do not mirror by default (§14.1, §16.4). */
+/**
+ * The direction of the x axis. Time and value axes do not mirror by default (§14.1, §16.4).
+ * `'rtl'` mirrors the plot and its x labels; `'auto'` mirrors them when the page's `dir` is
+ * right-to-left (HTML directionality, CSS `:dir(rtl)`), in the server HTML already, and the
+ * ChartInteraction island reads the resolved direction after hydration.
+ */
 export type ChartXDirection = 'ltr' | 'rtl' | 'auto';
 
 /** HTML tick labels on CSS grid tracks: one track per position, so no label needs a position of its own. */

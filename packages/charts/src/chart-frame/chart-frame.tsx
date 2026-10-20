@@ -180,17 +180,19 @@ function XTicks({
 
 /**
  * Point-aligned labels without a position of their own: n labels sit on the n edges of n − 1 equal
- * tracks. Cell i holds label i at its start edge; the last cell also holds the last label at its
- * end edge. Each tick is a zero-size flex box whose text overflows evenly around the edge, and CSS
+ * tracks. Cell i holds label i at its start edge (nothing when it is `''`); the last cell also holds
+ * the last label at its end edge. Each tick is a zero-size flex box whose text overflows evenly around the edge, and CSS
  * clamps the first and last inward (Figma 03), in either direction.
  */
 function edgeCells(labels: readonly string[]): ReactElement[] {
   const cells: ReactElement[] = [];
   for (let i = 0; i < labels.length - 1; i += 1) {
     const last = i === labels.length - 2;
+    // a track with no label is an empty cell (a long daily series has hundreds), except the last,
+    // whose end-edge label needs the start one to sit opposite it
     cells.push(
       <span key={i} className="nz-chart-frame-cell">
-        <span className="nz-chart-frame-tick">{labels[i]}</span>
+        {(last || labels[i] !== '') && <span className="nz-chart-frame-tick">{labels[i]}</span>}
         {last && <span className="nz-chart-frame-tick">{labels[i + 1]}</span>}
       </span>,
     );

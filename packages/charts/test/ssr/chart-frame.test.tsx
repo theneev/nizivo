@@ -197,6 +197,19 @@ describe('ChartFrame: HTML ticks on grid tracks (no inline style, CSP Profile B)
     expect(out).not.toContain('style=');
   });
 
+  test('a point track with no label is an empty cell, except the last (M40 item 10: long series)', () => {
+    const out = html(
+      <ChartFrame title="S" table={table} ticks={{ x: ['Oct 1', '', '', '', 'Oct 5'] }}>
+        {svg}
+      </ChartFrame>,
+    );
+    expect(out).toContain(
+      '<span class="nz-chart-frame-cell"><span class="nz-chart-frame-tick">Oct 1</span></span>' +
+        '<span class="nz-chart-frame-cell"></span><span class="nz-chart-frame-cell"></span>' +
+        '<span class="nz-chart-frame-cell"><span class="nz-chart-frame-tick"></span><span class="nz-chart-frame-tick">Oct 5</span></span>',
+    );
+  });
+
   test('band ticks: one centred label per band', () => {
     const out = html(
       <ChartFrame title="S" table={table} ticks={{ x: ['1', '2', '3'], xAlign: 'band' }}>

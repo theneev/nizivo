@@ -91,12 +91,17 @@
     );
   }
 
+  /* xDirection="auto" follows the page's `dir` (HTML directionality, `:dir()`), so the server
+     HTML is already mirrored on a right-to-left page, before any script runs: the x labels and
+     the plot here, the marks below. The island reads the plot's resolved direction. */
   .nz-chart-frame[data-x-direction='rtl'] :is(.nz-chart-frame-plot, .nz-chart-frame-x-ticks) {
     direction: rtl;
   }
 
-  .nz-chart-frame[data-x-direction='auto'] :is(.nz-chart-frame-plot, .nz-chart-frame-x-ticks) {
-    direction: inherit;
+  /* its own rule: an engine without :dir() drops only this one, never the explicit 'rtl' above */
+  .nz-chart-frame[data-x-direction='auto']
+    :is(.nz-chart-frame-plot, .nz-chart-frame-x-ticks):dir(rtl) {
+    direction: rtl;
   }
 
   /* One track per position. A tick is a zero-size flex box on a track edge (or in a band's
@@ -197,6 +202,10 @@
   }
 
   .nz-chart-frame[data-x-direction='rtl'] .nz-chart-svg {
+    scale: -1 1;
+  }
+
+  .nz-chart-frame[data-x-direction='auto'] .nz-chart-svg:dir(rtl) {
     scale: -1 1;
   }
 

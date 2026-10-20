@@ -73,28 +73,28 @@ export const PLAN_LIMITS_KIB: Readonly<Record<string, number>> = {
  * starts when its `exports` entry (or its `*.client.tsx` module) does.
  */
 export const CHART_TARGETS_KIB: Readonly<Record<string, number>> = {
-  // §17.2: AreaChart 3.6, the ChartInteraction island 0.8, Donut 3.2, Sparkline ≤ 2, and all charts
-  // together ≤ 12, which is the barrel (every chart and the core helpers in one bundle).
-  '@nizivo/charts/area-chart': 3.6,
-  '@nizivo/charts own: _island/chart-interaction.client': 0.8,
+  // §17.2's figures (M40, 2026-10-20). AreaChart is the framed ./area-chart subpath (everything in,
+  // the island graph included) at its week 11 measurement + 10 %; the island's figure applies to its
+  // client graph (the island with ChartTooltip and cx: what a page downloads), 1.2 KiB for W10's
+  // 1,080 B, then + 10 % over 1,457 B with the approved Escape, column mode, island-side direction,
+  // compact payload and the week 11 review's fixes; Donut 3.2, Sparkline ≤ 2, all charts together
+  // ≤ 12 (the barrel).
+  '@nizivo/charts/area-chart': 7.1,
+  '@nizivo/charts island with its imports': 1.6,
   '@nizivo/charts/donut-chart': 3.2,
   '@nizivo/charts/sparkline': 2,
   '@nizivo/charts': 12,
-  // No §17.2 figure (scaffold defaults, 2026-10-19, for the maintainer to confirm): BarChart as
-  // AreaChart; Legend and ChartTooltip at §17.2's "≤ 1 KB each" for server-safe parts; ChartFrame at
-  // its scaffold measurement + 10% (1,799 B, the vendored render/merge-props helpers included); the
-  // one stylesheet at about 1 KB per part (1,555 B for ChartFrame and Legend).
-  '@nizivo/charts/bar-chart': 3.6,
+  // The scaffold defaults, confirmed as §17.2 figures by M40 item 3: BarChart 3.6 (then raised by
+  // item 2 for the island's column mode, measured + 10 % with the island graph inside), ChartFrame
+  // 2, Legend and ChartTooltip 1 each, the one stylesheet 5.
+  '@nizivo/charts/bar-chart': 5.7,
   '@nizivo/charts/chart-tooltip': 1,
   '@nizivo/charts/chart-frame': 2,
   '@nizivo/charts/legend': 1,
   '@nizivo/charts/styles.css': 5,
-  // Interim ceilings, not §17.2 figures (2026-10-19, for the maintainer): AreaChart ships through
-  // the barrel while D-bc holds its subpath back (6,209 B against §17.2's 3.6), and the island's
-  // client graph (the island with ChartTooltip and cx) is what a page downloads, where §17.2's 0.8
-  // gates the island's own code. Both at measured + 10 %, so growth fails until a figure is decided.
-  '@nizivo/charts { AreaChart } from the barrel': 6.7,
-  '@nizivo/charts island with its imports': 1.2,
+  // Barrel tree-shaking, as react's `{ Button } from the barrel`: AreaChart through the barrel never
+  // costs more than the ./area-chart figure.
+  '@nizivo/charts { AreaChart } from the barrel': 7.1,
 };
 
 /** A KiB figure as size-limit parses it (`KiB` is 1,024; `KB` would be 1,000). */

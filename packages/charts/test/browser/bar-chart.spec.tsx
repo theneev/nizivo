@@ -1,7 +1,8 @@
 // BarChart's geometry in a real layout engine (ARCHITECTURE.md §14.1; Figma 03 "Bar Chart"): bars
 // are at most 22 px wide however wide the plot is, narrow with their band when it is small, sit
-// centred under their band, are rounded only at the data end (a negative bar at its bottom), and
-// hover dims the other bars by opacity and shows the band's tooltip, in CSS alone. The bar is a
+// centred under their band, are rounded only at the data end (a negative bar at its bottom), and,
+// with interaction="none", hover dims the other bars by opacity and shows the band's tooltip in CSS
+// alone (the island's column mode is bar-chart-interaction.spec.tsx). The bar is a
 // <rect> with percentage attributes in an <svg> with no viewBox, clipped at the baseline by a nested
 // <svg>: this spec is what proves that technique in Chromium, Firefox and WebKit
 // (`NZ_BROWSER=webkit pnpm test:browser`, or firefox). Styled by the shipped stylesheets only
@@ -11,7 +12,7 @@ import { createRoot, type Root } from 'react-dom/client';
 import { afterEach, describe, expect, test } from 'vitest';
 import { page, userEvent } from 'vitest/browser';
 import { BarChart } from '../../src/bar-chart/index';
-import type { ChartXDirection } from '../../src/chart-frame/index';
+import type { ChartInteractionMode, ChartXDirection } from '../../src/chart-frame/index';
 
 const STYLES = import.meta.glob(['../../../tokens/dist/tokens.css', '../../dist/styles.css'], {
   query: '?raw',
@@ -55,6 +56,7 @@ afterEach(() => {
 async function mount(
   probe: 'probe-wide' | 'probe-narrow',
   xDirection: ChartXDirection = 'ltr',
+  interaction: ChartInteractionMode = 'nizivo',
 ): Promise<HTMLElement> {
   host = document.createElement('div');
   host.className = probe;
@@ -69,6 +71,7 @@ async function mount(
         x={(d) => d.day}
         y={(d) => d.value}
         xDirection={xDirection}
+        interaction={interaction}
       />,
     );
   });
@@ -233,19 +236,22 @@ describe('BarChart geometry', () => {
 });
 
 describe('BarChart in a narrow container', () => {
-  test('the hidden tooltips add no scrollable overflow', async () => {
-    await mount('probe-narrow');
-    // test scaffolding: make the probe its own scroll container, as a phone viewport is
-    if (host === undefined) throw new Error('no host');
-    host.style.overflow = 'auto';
-    expect(host.scrollWidth).toBe(host.clientWidth);
-    expect(host.scrollHeight).toBe(host.clientHeight);
-  });
+  test.each(['nizivo', 'none'] as const)(
+    'interaction="%s": the island layer or the hidden tooltips add no scrollable overflow',
+    async (interaction) => {
+      await mount('probe-narrow', 'ltr', interaction);
+      // test scaffolding: make the probe its own scroll container, as a phone viewport is
+      if (host === undefined) throw new Error('no host');
+      host.style.overflow = 'auto';
+      expect(host.scrollWidth).toBe(host.clientWidth);
+      expect(host.scrollHeight).toBe(host.clientHeight);
+    },
+  );
 });
 
-describe('BarChart hover (CSS only)', () => {
+describe('BarChart hover with interaction="none" (CSS only)', () => {
   test('hovering a band dims the other bars by opacity and shows its tooltip', async () => {
-    await mount('probe-wide');
+    await mount('probe-wide', 'ltr', 'none');
     const bands = all('.nz-bar-chart-band');
     const tooltip = (i: number): CSSStyleDeclaration =>
       getComputedStyle(bands[i]?.querySelector('.nz-bar-chart-tooltip') ?? document.body);

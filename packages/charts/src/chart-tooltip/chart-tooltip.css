@@ -128,6 +128,13 @@
     pointer-events: none;
   }
 
+  /* Column mode (BarChart): the column carries only the card, no crosshair; the chart's own CSS
+     dims the other columns from the data-highlighted the island sets (in forced colours too, so
+     the selector outranks the forced-colours crosshair below) */
+  .nz-chart-interaction-columns > .nz-chart-interaction-point {
+    background: none;
+  }
+
   /* Figma: 10 px dots with a 2 px bg/surface halo, centred on the column at the plot's top; the
      island translates each down to its value */
   .nz-chart-interaction-dot {
@@ -211,6 +218,12 @@
 
     .nz-chart-interaction-point {
       background: CanvasText;
+    }
+
+    /* the card inherits the column's `none`: give it back the system palette, as every other
+       ChartTooltip has (A11Y-W11-3) */
+    .nz-chart-interaction-tip {
+      forced-color-adjust: auto;
     }
 
     .nz-chart-interaction-dot {

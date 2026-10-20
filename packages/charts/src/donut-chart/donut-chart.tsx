@@ -16,16 +16,26 @@
 // Hover, in CSS alone (donut-chart.css): a hovered segment dims the others to 35 % and its legend
 // rows to 45 % (Figma), and the centre swaps to the segment's share and name. The legend, with
 // every value and share, and the data table carry the same information without a pointer, so the
-// frame makes no keyboard claim (`interaction="none"`).
+// frame makes no keyboard claim (`interaction="none"`). The table is visually hidden (screen readers
+// only); `tableView="details"` shows it to sighted keyboard users. A keyboard mode over the
+// segments is still open (M40 answered BarChart's, not DonutChart's).
 import type { ReactElement, ReactNode } from 'react';
+import {
+  accessor,
+  compactOf,
+  finite,
+  INTL_DEFAULT,
+  type Accessor,
+  type ChartFramePassthrough,
+} from '../_core/api';
 import { num } from '../_core/geometry';
 import { cx } from '../_shared/cx';
-import { ChartFrame, type ChartFrameElementProps } from '../chart-frame/chart-frame';
+import { ChartFrame, chartFrameLabels } from '../chart-frame/chart-frame';
 import type { ChartFrameLabels } from '../chart-frame/chart-frame.contract';
 import { Legend, type ChartSeries } from '../legend/legend';
 
-/** DonutChart's own strings (§16.4). Never concatenated: each is a whole label. */
-export interface DonutChartLabels {
+/** DonutChart's strings (§16.4), with ChartFrame's. Never concatenated: each is a whole label. */
+export interface DonutChartLabels extends ChartFrameLabels {
   /** The data table's first column header. */
   category: string;
   /** The data table's value column. */
@@ -40,6 +50,7 @@ export interface DonutChartLabels {
 
 /** English defaults (§16.4); pass `labels` to translate per instance. */
 export const donutChartLabels: DonutChartLabels = {
+  ...chartFrameLabels,
   category: 'Category',
   value: 'Value',
   share: 'Share',
@@ -94,7 +105,6 @@ const INNER = 74;
 /** The gap between segments, in viewBox units (3 px on a 200 px ring). */
 const GAP = 3;
 const TAU = Math.PI * 2;
-const WHOLE: Intl.NumberFormatOptions = { maximumFractionDigits: 0 };
 const PERCENT: Intl.NumberFormatOptions = { style: 'percent', maximumFractionDigits: 0 };
 
 const large = (span: number): number => (span > Math.PI ? 1 : 0);
@@ -121,20 +131,25 @@ export function donutPath(a0: number, a1: number): string {
   );
 }
 
-export interface DonutChartProps<T> extends Omit<
-  ChartFrameElementProps,
-  'table' | 'ticks' | 'axes' | 'interaction' | 'children' | 'labels' | 'legend' | 'xDirection'
+/**
+ * DonutChart's props: its data and formats in the charts' one shape (`_core/api.ts`) and ChartFrame's,
+ * the `<figure>`'s attributes included. It draws no axes, its legend is its own and it makes no
+ * keyboard claim (`tableView="details"` shows the values to everyone).
+ */
+export interface DonutChartProps<T> extends ChartFramePassthrough<
+  'axes' | 'interaction' | 'legend' | 'xDirection'
 > {
+  /** One datum per category, in any order (`sort` orders the slices). */
   data: readonly T[];
-  /** The category's name. */
-  category: (datum: T) => string;
-  /** Its value; not finite or not above zero leaves it out. */
-  value: (datum: T) => number;
+  /** The category's name: a key of the datum, or a `(datum, index)` function. */
+  category: Accessor<T, string>;
+  /** Its value; one that is not a finite number above zero is left out. */
+  value: Accessor<T, number | null | undefined>;
   /** BCP 47 locale every number is formatted in, once, on the server (§16.4). @default 'en-US' */
   locale?: string;
-  /** Values in the legend and the table. @default { maximumFractionDigits: 0 } */
+  /** Values in the legend and the table. @default Intl.NumberFormat's own ({}) */
   format?: Intl.NumberFormatOptions;
-  /** The total in the centre. @default `format` with `notation: 'compact'` and one fraction digit */
+  /** The total in the centre. @default `format` in compact notation with at most one fraction digit */
   totalFormat?: Intl.NumberFormatOptions;
   /** Shares. @default { style: 'percent', maximumFractionDigits: 0 } */
   shareFormat?: Intl.NumberFormatOptions;
@@ -144,7 +159,7 @@ export interface DonutChartProps<T> extends Omit<
   sort?: DonutChartSort;
   /** Replaces the centre (the total and its label); a hovered segment still shows its share. */
   center?: ReactNode;
-  labels?: Partial<ChartFrameLabels & DonutChartLabels>;
+  labels?: Partial<DonutChartLabels>;
 }
 
 export function DonutChart<T>({
@@ -152,7 +167,7 @@ export function DonutChart<T>({
   category,
   value,
   locale = 'en-US',
-  format = WHOLE,
+  format = INTL_DEFAULT,
   totalFormat,
   shareFormat = PERCENT,
   maxCategories = 3,
@@ -163,9 +178,15 @@ export function DonutChart<T>({
   className,
   ...frame
 }: DonutChartProps<T>): ReactElement {
-  const L: DonutChartLabels & Partial<ChartFrameLabels> = { ...donutChartLabels, ...labels };
+  const L: DonutChartLabels = { ...donutChartLabels, ...labels };
+  const labelOf = accessor(category);
+  const valueOf = accessor(value);
   const slices = foldCategories(
-    data.map((datum) => ({ label: category(datum), value: value(datum) })),
+    // not finite → NaN, which the fold leaves out
+    data.map((datum, i) => ({
+      label: labelOf(datum, i),
+      value: finite(valueOf(datum, i)) ?? Number.NaN,
+    })),
     maxCategories,
     L.other,
     sort,
@@ -232,15 +253,7 @@ export function DonutChart<T>({
         {center ?? (
           <>
             <span className="nz-donut-chart-value">
-              {new Intl.NumberFormat(
-                locale,
-                totalFormat ?? {
-                  ...format,
-                  notation: 'compact',
-                  minimumFractionDigits: 0,
-                  maximumFractionDigits: 1,
-                },
-              ).format(total)}
+              {new Intl.NumberFormat(locale, totalFormat ?? compactOf(format)).format(total)}
             </span>
             <span className="nz-donut-chart-label">{L.total}</span>
           </>

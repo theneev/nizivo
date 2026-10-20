@@ -5,7 +5,7 @@
 import { curveLinear } from 'd3-shape';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, test } from 'vitest';
-import { AreaChart, areaChartLabels, type AreaChartElementProps } from '../../src/area-chart/index';
+import { AreaChart, areaChartLabels, type AreaChartProps } from '../../src/area-chart/index';
 import { all, byClass, bySlot, parse, textOf, type Node } from '../conformance/markup';
 
 interface Day {
@@ -23,13 +23,13 @@ const DAYS: Day[] = Array.from({ length: 30 }, (_, i) => ({
 
 const USD = { style: 'currency', currency: 'USD', maximumFractionDigits: 0 } as const;
 
-function html(props: Partial<AreaChartElementProps<Day>> = {}): string {
+function html(props: Partial<AreaChartProps<Day>> = {}): string {
   return renderToStaticMarkup(
     <AreaChart title="Sales" data={DAYS} x="date" y="current" format={USD} {...props} />,
   );
 }
 
-function tree(props: Partial<AreaChartElementProps<Day>> = {}): Node {
+function tree(props: Partial<AreaChartProps<Day>> = {}): Node {
   const [figure] = parse(html(props)).children;
   if (figure === undefined) throw new Error('nothing rendered');
   return figure;
@@ -106,13 +106,13 @@ describe('AreaChart: the SVG', () => {
     const figure = tree({ data: gapped });
     const line = paths(figure, 'nz-chart-line')[0]?.attrs.get('d') ?? '';
     expect(line.match(/M/g)).toHaveLength(2);
-    expect(paths(figure, 'nz-area-chart-dot')[0]?.attrs.get('d')).toMatch(/^M96\.552,/);
+    expect(paths(figure, 'nz-area-chart-dot')[0]?.attrs.get('d')).toMatch(/^M96\.55,/);
   });
 
   test('curve takes any d3-shape curve factory', () => {
     const line = paths(tree({ curve: curveLinear }), 'nz-chart-line')[0]?.attrs.get('d') ?? '';
     expect(line).not.toContain('C');
-    expect(line).toMatch(/^M0,75L3\.448,73\.5L/);
+    expect(line).toMatch(/^M0,75L3\.45,73\.5L/);
   });
 
   test('negative values: the domain takes them in and the wash closes at zero', () => {
@@ -125,8 +125,8 @@ describe('AreaChart: the SVG', () => {
     // niced to -500…1,000: zero is a third of the way up
     expect(ticks(figure, 'chart-frame-y-ticks')).toEqual(['$1K', '$500', '$0', '-$500']);
     const baseline = all(figure, byClass('nz-chart-baseline'))[0];
-    expect(baseline?.attrs.get('y1')).toBe('66.667');
-    expect(paths(figure, 'nz-chart-area')[0]?.attrs.get('d')).toMatch(/L100,66\.667L0,66\.667Z$/);
+    expect(baseline?.attrs.get('y1')).toBe('66.67');
+    expect(paths(figure, 'nz-chart-area')[0]?.attrs.get('d')).toMatch(/L100,66\.67L0,66\.67Z$/);
   });
 });
 
@@ -145,11 +145,17 @@ describe('AreaChart: ticks and formatting (§16.4)', () => {
     ]);
   });
 
-  test('xTickEvery sets the step; labels that are not dates are used as they are', () => {
-    expect(ticks(tree({ xTickEvery: 10 }), 'chart-frame-x-ticks')).toEqual([
+  test('xTicks.every sets the step, xTicks.max caps the count; labels that are not dates are used as they are', () => {
+    expect(ticks(tree({ xTicks: { every: 10 } }), 'chart-frame-x-ticks')).toEqual([
       'Oct 1',
       'Oct 11',
       'Oct 21',
+      'Oct 30',
+    ]);
+    // at most four: every 10 points, a daily series rounded up to whole weeks (14)
+    expect(ticks(tree({ xTicks: { max: 4 } }), 'chart-frame-x-ticks')).toEqual([
+      'Oct 1',
+      'Oct 15',
       'Oct 30',
     ]);
     const weeks = ['W1', 'W2', 'W3', 'W4'].map((date, i) => ({ date, current: i, previous: 0 }));
@@ -171,9 +177,13 @@ describe('AreaChart: ticks and formatting (§16.4)', () => {
     expect(ticks(figure, 'chart-frame-x-ticks')[0]).toBe('1. Okt.');
   });
 
-  test('axisFormat and dateFormat replace the axis formats; presets name common ones', () => {
+  test('yTicks sets about how many y labels, and the domain is niced for that count', () => {
+    expect(ticks(tree({ yTicks: 2 }), 'chart-frame-y-ticks')).toEqual(['$10K', '$5K', '$0']);
+  });
+
+  test('format, axisFormat and dateFormat are Intl options (no presets)', () => {
     const figure = tree({
-      format: 'compact',
+      format: { notation: 'compact' },
       axisFormat: { maximumFractionDigits: 0 },
       dateFormat: { day: 'numeric' },
     });
@@ -185,7 +195,7 @@ describe('AreaChart: ticks and formatting (§16.4)', () => {
         { date: '2026-10-01', current: 0.25, previous: 0 },
         { date: '2026-10-02', current: 0.5, previous: 0 },
       ],
-      format: 'percent',
+      format: { style: 'percent' },
     });
     expect(ticks(percent, 'chart-frame-y-ticks')).toEqual([
       '50%',
@@ -225,7 +235,7 @@ describe('AreaChart: the data table, from the same points', () => {
     expect(areaChartLabels.missing).toBe('No value');
   });
 
-  test('a missing value reads labels.missing; accessor functions work as keys do', () => {
+  test('a missing value reads labels.missing; accessor functions (datum, index) work as keys do', () => {
     const figure = tree({
       data: [
         { date: '2026-10-01', current: 1, previous: null },
@@ -233,7 +243,7 @@ describe('AreaChart: the data table, from the same points', () => {
       ],
       y: (d) => (d.current ?? 0) * 10,
       compare: 'previous',
-      format: 'number',
+      format: {},
     });
     const rows = all(figure, (n) => n.tag === 'tr' && n.parent?.tag === 'tbody');
     expect(rows.map((r) => r.children.map((c) => textOf(c)))).toEqual([

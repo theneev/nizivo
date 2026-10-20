@@ -3,6 +3,12 @@
   "entry": "./donut-chart",
   "exports": [
     {
+      "definedIn": ".",
+      "import": "import type { Accessor } from '@nizivo/charts/donut-chart'",
+      "kind": "type",
+      "name": "Accessor"
+    },
+    {
       "client": false,
       "import": "import { DonutChart } from '@nizivo/charts/donut-chart'",
       "inherits": [
@@ -18,10 +24,10 @@
       "name": "DonutChart",
       "props": [
         {
-          "description": "The category's name.",
+          "description": "The category's name: a key of the datum, or a `(datum, index)` function.",
           "name": "category",
           "required": true,
-          "type": "(datum: T) => string"
+          "type": "Accessor<T, string>"
         },
         {
           "description": "Replaces the centre (the total and its label); a hovered segment still shows its share.",
@@ -30,6 +36,7 @@
           "type": "ReactNode"
         },
         {
+          "description": "One datum per category, in any order (`sort` orders the slices).",
           "name": "data",
           "required": true,
           "type": "readonly T[]"
@@ -49,7 +56,7 @@
           "type": "ReactNode"
         },
         {
-          "default": "{ maximumFractionDigits: 0 }",
+          "default": "Intl.NumberFormat's own ({})",
           "description": "Values in the legend and the table.",
           "name": "format",
           "required": false,
@@ -58,7 +65,7 @@
         {
           "name": "labels",
           "required": false,
-          "type": "Partial<ChartFrameLabels & DonutChartLabels>"
+          "type": "Partial<DonutChartLabels>"
         },
         {
           "default": "'en-US'",
@@ -132,17 +139,17 @@
           "type": "ReactNode"
         },
         {
-          "default": "`format` with `notation: 'compact'` and one fraction digit",
+          "default": "`format` in compact notation with at most one fraction digit",
           "description": "The total in the centre.",
           "name": "totalFormat",
           "required": false,
           "type": "Intl.NumberFormatOptions"
         },
         {
-          "description": "Its value; not finite or not above zero leaves it out.",
+          "description": "Its value; one that is not a finite number above zero is left out.",
           "name": "value",
           "required": true,
-          "type": "(datum: T) => number"
+          "type": "Accessor<T, number | null | undefined>"
         }
       ],
       "propsType": "DonutChartProps<T>",
@@ -174,7 +181,8 @@
     },
     {
       "declaration": "interface",
-      "description": "DonutChart's own strings (§16.4). Never concatenated: each is a whole label.",
+      "description": "DonutChart's strings (§16.4), with ChartFrame's. Never concatenated: each is a whole label.",
+      "extends": ["ChartFrameLabels"],
       "import": "import type { DonutChartLabels } from '@nizivo/charts/donut-chart'",
       "kind": "type",
       "members": [
@@ -215,8 +223,9 @@
     },
     {
       "declaration": "interface",
+      "description": "DonutChart's props: its data and formats in the charts' one shape (`_core/api.ts`) and ChartFrame's, the `<figure>`'s attributes included. It draws no axes, its legend is its own and it makes no keyboard claim (`tableView=\"details\"` shows the values to everyone).",
       "extends": [
-        "Omit<ChartFrameElementProps, \"table\" | \"ticks\" | \"axes\" | \"interaction\" | \"children\" | \"labels\" | \"legend\" | \"xDirection\">"
+        "ChartFramePassthrough<\"axes\" | \"interaction\" | \"legend\" | \"xDirection\">"
       ],
       "import": "import type { DonutChartProps } from '@nizivo/charts/donut-chart'",
       "kind": "type",

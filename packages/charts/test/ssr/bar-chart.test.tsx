@@ -1,6 +1,8 @@
 // BarChart's server markup (ARCHITECTURE.md §14.1, §16.4, §16.5; Figma 03 "Bar Chart"): a niced
 // domain, bars as percentage <rect>s clipped at the baseline, HTML tick labels, a pre-formatted data
-// table, status passthrough, locale formatting and no inline style.
+// table, status passthrough, locale formatting and no inline style; the ChartInteraction island's
+// layer by default (column mode, M40 item 2), the CSS-only tooltips with interaction="none"; and
+// the charts' one API shape (keys or `(datum, index)` functions, Intl-only formats, M40 item 9).
 import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, test } from 'vitest';
 import { BarChart, barChartLabels, type BarChartProps } from '../../src/bar-chart/index';
@@ -125,18 +127,19 @@ describe('BarChart', () => {
     ]);
   });
 
-  test('the data table and the tooltips carry long dates and formatted values', () => {
-    const out = html({ labels: { category: 'Day', value: 'Orders' } });
+  test('the data table and the CSS tooltips carry long dates and formatted values', () => {
+    const out = html({ labels: { category: 'Day', value: 'Orders' }, interaction: 'none' });
     expect(out).toContain('<th scope="col">Day</th><th scope="col">Orders</th>');
     expect(out).toContain('<tr><th scope="row">Sat, Oct 17</th><td>183</td></tr>');
     expect(out).toContain('<span class="nz-bar-chart-tooltip-title">Fri, Oct 30</span>');
     expect(out).toContain('Orders<span class="nz-bar-chart-tooltip-value">313</span>');
   });
 
-  test('the second half of the bands opens its tooltip toward the start', () => {
-    const out = html();
+  test('interaction="none": the second half of the bands opens its tooltip toward the start', () => {
+    const out = html({ interaction: 'none' });
     expect(out.match(/class="nz-bar-chart-band"/g)).toHaveLength(7);
     expect(out.match(/class="nz-bar-chart-band nz-bar-chart-band-end"/g)).toHaveLength(7);
+    expect(out.match(/class="nz-bar-chart-tooltip"/g)).toHaveLength(14);
   });
 
   test('negative values hang from the zero baseline, rounded at their data end', () => {
@@ -207,8 +210,124 @@ describe('BarChart', () => {
     expect(html({ pending: true })).toContain('aria-busy="true"');
   });
 
-  test('makes no keyboard claim and mirrors only on request', () => {
+  test('mirrors only on request', () => {
+    expect(html()).toContain('data-x-direction="ltr"');
     expect(html({ xDirection: 'rtl' })).toContain('data-x-direction="rtl"');
-    expect(html()).not.toContain('tabindex');
+    expect(html({ xDirection: 'auto' })).toContain('data-x-direction="auto"');
+  });
+});
+
+describe('BarChart and the ChartInteraction island (column mode)', () => {
+  test('by default: one named tab stop over the plot, described by the hint, and no CSS tooltip', () => {
+    const out = html();
+    expect(out.match(/tabindex="0"/g)).toHaveLength(1);
+    const layer =
+      /<div ([^>]*)class="nz-chart-interaction nz-chart-interaction-columns"[^>]*>/.exec(out)?.[0];
+    if (layer === undefined) throw new Error('no island layer');
+    expect(layer).toContain('role="application"');
+    expect(layer).toContain('aria-label="Orders"');
+    expect(layer).toContain(`aria-roledescription="${barChartLabels.interaction}"`);
+    const hint = /aria-describedby="([^"]+)"/.exec(layer)?.[1];
+    expect(out).toContain(
+      `<span id="${String(hint)}" class="nz-chart-visually-hidden">${barChartLabels.hint}</span>`,
+    );
+    // one polite region, empty in the server HTML (§16.5)
+    expect(out.match(/aria-live="polite"/g)).toHaveLength(1);
+    expect(out).toContain('aria-live="polite" aria-atomic="true"></span>');
+    // the island draws the card: no per-band tooltip, no band-end class, nothing highlighted yet
+    expect(out).not.toContain('nz-bar-chart-tooltip');
+    expect(out).not.toContain('nz-bar-chart-band-end');
+    expect(out).not.toContain('data-highlighted');
+    expect(out).not.toContain('style=');
+    // the layer follows the bands, so it paints over them
+    expect(out.indexOf('nz-chart-interaction')).toBeGreaterThan(out.lastIndexOf('bar-chart-band'));
+  });
+
+  test("the layer's name falls back to labels.points when the title is not a string", () => {
+    const out = html({ title: <span>Orders</span>, labels: { points: 'Bestellungen' } });
+    expect(out).toContain('aria-label="Bestellungen"');
+  });
+
+  test('interaction="none": no tab stop, no live region, no island', () => {
+    const out = html({ interaction: 'none' });
+    expect(out).not.toContain('tabindex');
+    expect(out).not.toContain('aria-live');
+    expect(out).not.toContain('nz-chart-interaction');
+  });
+
+  test.each(['loading', 'empty', 'error'] as const)('%s: no island', (status) => {
+    const out = html({ status, ...(status === 'empty' ? { data: [] } : {}) });
+    expect(out).not.toContain('nz-chart-interaction');
+    expect(out).not.toContain('tabindex');
+  });
+});
+
+describe("BarChart props: the charts' one API shape (M40 item 9)", () => {
+  interface Row {
+    day: string;
+    orders: number | null;
+  }
+  const NONE: Row[] = [];
+  const ROWS: Row[] = [
+    { day: 'Mon', orders: 12.5 },
+    { day: 'Tue', orders: null },
+    { day: 'Wed', orders: 30 },
+  ];
+
+  test('x and y take a key of the datum or a (datum, index) function, alike', () => {
+    const byKey = renderToStaticMarkup(<BarChart title="Orders" data={ROWS} x="day" y="orders" />);
+    const byFunction = renderToStaticMarkup(
+      <BarChart
+        title="Orders"
+        data={ROWS}
+        x={(d, i) => `${d.day}${i < 0 ? '?' : ''}`}
+        y={(d) => d.orders}
+      />,
+    );
+    expect(byKey).toBe(byFunction);
+    // the index is the datum's position
+    const indexed = renderToStaticMarkup(
+      <BarChart title="Orders" data={ROWS} x={(_, i) => `#${String(i + 1)}`} y="orders" />,
+    );
+    expect(indexed).toContain('<tr><th scope="row">#2</th><td>No value</td></tr>');
+  });
+
+  test("a null value is a band with no bar; format defaults to Intl's own (fractions show)", () => {
+    const out = renderToStaticMarkup(<BarChart title="Orders" data={ROWS} x="day" y="orders" />);
+    expect(barTops(out)).toHaveLength(2);
+    expect(out.match(/data-slot="bar-chart-band"/g)).toHaveLength(3);
+    expect(out).toContain('<tr><th scope="row">Mon</th><td>12.5</td></tr>');
+    expect(out).toContain('<tr><th scope="row">Tue</th><td>No value</td></tr>');
+  });
+
+  test('xTicks: { every, max } and yTicks', () => {
+    const many = Array.from({ length: 10 }, (_, i) => ({ d: `L${String(i)}`, v: i }));
+    const ticksOf = (props: Partial<BarChartProps<(typeof many)[number]>>): string[] => {
+      const out = renderToStaticMarkup(<BarChart title="T" data={many} x="d" y="v" {...props} />);
+      return texts(out.slice(out.indexOf('nz-chart-frame-x-ticks')), 'nz-chart-frame-tick');
+    };
+    expect(ticksOf({ xTicks: { every: 3 } }).filter(Boolean)).toEqual(['L0', 'L3', 'L6', 'L9']);
+    expect(ticksOf({ xTicks: { max: 2 } }).filter(Boolean)).toEqual(['L0', 'L9']);
+    const y = (count: number): string[] => {
+      const out = renderToStaticMarkup(
+        <BarChart title="T" data={many} x="d" y="v" yTicks={count} />,
+      );
+      return texts(out.slice(out.indexOf('nz-chart-frame-y-ticks')), 'nz-chart-frame-tick');
+    };
+    expect(y(2).length).toBeLessThan(y(8).length);
+  });
+
+  test("labels: ChartFrame's strings and BarChart's in one Partial<BarChartLabels>", () => {
+    const out = renderToStaticMarkup(
+      <BarChart
+        title="Orders"
+        data={NONE}
+        x="day"
+        y="orders"
+        labels={{ empty: 'Keine Daten', category: 'Tag' }}
+      />,
+    );
+    expect(out).toContain('Keine Daten');
+    expect(barChartLabels.empty).toBe('No data to show');
   });
 });

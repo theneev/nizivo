@@ -2,8 +2,10 @@
 
 /* BarChart (Figma 03 "Bar Chart", 7275:13387; ARCHITECTURE.md §14.1). The plot holds a grid svg
    (gridlines and the zero baseline, percentage attributes, no viewBox) under an n-column grid of
-   bands, one per datum; each band holds its bar's svg and its tooltip. Hover (or the island's
-   data-highlighted) dims the other bars by opacity and shows the band's tooltip: CSS only.
+   bands, one per datum; each band holds its bar's svg. By default the ChartInteraction island's
+   column mode lies over the bands and sets data-highlighted on the active one: that dims the other
+   bars by opacity, and the island draws the card (ChartTooltip). With interaction="none" there is
+   no island: each band also holds its own tooltip, and :hover does the same in CSS alone.
    Forced colours: the bars keep one system colour (CanvasText, the active bar Highlight) and the
    gaps between them separate the bars; a single series needs no pattern. */
 @layer nz.components {
@@ -70,8 +72,9 @@
     opacity: 0.35;
   }
 
-  /* Figma's Chart Tooltip (Series=1): beside the active band, never over its bar; bands in the
-     second half open it toward the start. Fades in with a 4 px travel over duration/fast. */
+  /* interaction="none" only (the island draws Figma's ChartTooltip card otherwise): Figma's Chart
+     Tooltip (Series=1) beside the hovered band, never over its bar; bands in the second half open
+     it toward the start. Fades in with a 4 px travel over duration/fast. */
   .nz-bar-chart-tooltip {
     position: absolute;
     inset-block-start: 0;

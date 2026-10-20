@@ -1,12 +1,25 @@
 // NO directive: AreaChart renders its whole SVG on the server (ARCHITECTURE.md §10.8, §14.1). It
 // computes the niced value domain, the ticks, the paths and every string once, here, with an
 // explicit locale (§16.4), then hands ChartFrame the caption, the ticks, the data table and the
-// legend, and the ChartInteraction island plain JSON. A server-only page that sets
-// interaction="none" ships no chart JavaScript at all.
+// legend, and the ChartInteraction island plain JSON. With interaction="none" it renders no island,
+// so webpack ships no chart JavaScript; Turbopack and next dev still ship the imported island
+// module (fixtures/next, /chart-area-static).
 import { useId, type ReactElement, type ReactNode } from 'react';
 import { curveMonotoneX, type CurveFactory } from 'd3-shape';
+import {
+  accessor,
+  compactOf,
+  finite,
+  INTL_DEFAULT,
+  listSeparators,
+  LONG_DATE,
+  NO_TICKS,
+  type Accessor,
+  type CartesianChartOptions,
+  type ChartFramePassthrough,
+} from '../_core/api';
 import { num, VIEWBOX } from '../_core/geometry';
-import { areaPath, dotPath, linePath, type PathPoint } from '../_core/path';
+import { areaPath, dotPath, linePath, PATH_DIGITS, type PathPoint } from '../_core/path';
 import { linear, valueDomain } from '../_core/scale';
 import {
   everyNth,
@@ -18,25 +31,9 @@ import {
 } from '../_core/time-ticks';
 import { cx } from '../_shared/cx';
 import { ChartInteraction, type ChartInteractionPoint } from '../_island/chart-interaction.client';
-import {
-  ChartFrame,
-  chartFrameLabels,
-  type ChartFrameAttributes,
-} from '../chart-frame/chart-frame';
-import type { ChartFrameLabels, ChartFrameProps } from '../chart-frame/chart-frame.contract';
-import type { ChartTooltipDelta } from '../chart-tooltip/chart-tooltip';
+import { ChartFrame, chartFrameLabels } from '../chart-frame/chart-frame';
+import type { ChartFrameLabels } from '../chart-frame/chart-frame.contract';
 import { Legend } from '../legend/legend';
-
-/** A datum's field by key (serialisable), or a function of the datum. */
-export type Accessor<T, V> =
-  | { [K in keyof T]-?: T[K] extends V ? K : never }[keyof T]
-  | ((datum: T, index: number) => V);
-
-/**
- * How values are formatted (§16.4): a preset or any `Intl.NumberFormat` options object, for example
- * `{ style: 'currency', currency: 'USD', maximumFractionDigits: 0 }`.
- */
-export type ChartNumberFormat = 'number' | 'compact' | 'percent' | Intl.NumberFormatOptions;
 
 /** AreaChart's strings (§16.4), with ChartFrame's. English defaults in `areaChartLabels`. */
 export interface AreaChartLabels extends ChartFrameLabels {
@@ -73,29 +70,14 @@ export const areaChartLabels: AreaChartLabels = {
   points: 'Chart points',
 };
 
-export interface AreaChartProps<T> extends Omit<
-  ChartFrameProps,
-  'table' | 'ticks' | 'legend' | 'labels' | 'children'
-> {
-  /** In x order: one datum per point. */
-  data: readonly T[];
-  /** The x value: an ISO plain date (`'2026-10-01'`, daily or weekly buckets) or any label. */
-  x: Accessor<T, string>;
-  y: Accessor<T, number | null | undefined>;
+/**
+ * AreaChart's props: the shared cartesian options (`_core/api.ts`), its own, and ChartFrame's,
+ * the `<figure>`'s attributes included.
+ */
+export interface AreaChartProps<T>
+  extends CartesianChartOptions<T>, Omit<ChartFramePassthrough, 'legend'> {
   /** The comparison series, drawn dashed in chart/neutral (decorative: the table carries it). */
   compare?: Accessor<T, number | null | undefined>;
-  /** @default 'en-US' */
-  locale?: string;
-  /** Values in the tooltip and the table. @default 'number' */
-  format?: ChartNumberFormat;
-  /** The y tick labels. @default `format` in compact notation ("$8K") */
-  axisFormat?: ChartNumberFormat;
-  /** Date tick labels. @default { month: 'short', day: 'numeric' } ("Oct 1") */
-  dateFormat?: Intl.DateTimeFormatOptions;
-  /** A point's date in the tooltip and the table. @default { weekday: 'short', month: 'short', day: 'numeric' } */
-  longDateFormat?: Intl.DateTimeFormatOptions;
-  /** Points between x ticks; the last point always has one. Daily dates tick weekly by default. */
-  xTickEvery?: number;
   /** Any d3-shape curve factory. @default curveMonotoneX (no overshoot below the baseline) */
   curve?: CurveFactory;
   /** `true` shows the series key; the default shows it when there is a comparison. */
@@ -103,29 +85,7 @@ export interface AreaChartProps<T> extends Omit<
   labels?: Partial<AreaChartLabels>;
 }
 
-export type AreaChartElementProps<T> = AreaChartProps<T> & ChartFrameAttributes;
-
-const PRESETS: Record<string, Intl.NumberFormatOptions> = {
-  compact: { notation: 'compact' },
-  percent: { style: 'percent' },
-};
-const optionsOf = (format: ChartNumberFormat): Intl.NumberFormatOptions =>
-  typeof format === 'string' ? (PRESETS[format] ?? {}) : format;
-
 const DAY = 86_400_000;
-const LONG_DATE: Intl.DateTimeFormatOptions = { weekday: 'short', month: 'short', day: 'numeric' };
-
-/** A finite number, or null: a gap in the series. */
-const valueOf = (value: number | null | undefined): number | null =>
-  typeof value === 'number' && Number.isFinite(value) ? value : null;
-
-function read<T, V>(accessor: Accessor<T, V>): (datum: T, index: number) => V {
-  return typeof accessor === 'function'
-    ? accessor
-    : // a key of T whose values are V (the Accessor type), read as such
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Accessor's key type guarantees V
-      (datum) => datum[accessor] as V;
-}
 
 export function AreaChart<T>({
   data,
@@ -133,11 +93,12 @@ export function AreaChart<T>({
   y,
   compare,
   locale = 'en-US',
-  format = 'number',
+  format = INTL_DEFAULT,
   axisFormat,
   dateFormat,
   longDateFormat = LONG_DATE,
-  xTickEvery,
+  xTicks = NO_TICKS,
+  yTicks: count = 4,
   curve = curveMonotoneX,
   legend,
   labels,
@@ -146,52 +107,37 @@ export function AreaChart<T>({
   xDirection = 'ltr',
   className,
   ...rest
-}: AreaChartElementProps<T>): ReactElement {
+}: AreaChartProps<T>): ReactElement {
   const L: AreaChartLabels = { ...areaChartLabels, ...labels };
   const hintId = useId();
   const n = data.length;
-  const xs = data.map(read(x));
-  const series = [data.map((d, i) => valueOf(read(y)(d, i)))];
-  if (compare !== undefined) series.push(data.map((d, i) => valueOf(read(compare)(d, i))));
+  const xs = data.map(accessor(x));
+  const series = [data.map((d, i) => finite(accessor(y)(d, i)))];
+  if (compare !== undefined) series.push(data.map((d, i) => finite(accessor(compare)(d, i))));
   const [current = [], previous] = series;
 
   // NICE FIRST (§14.1): the domain's ends are ticks, so no value rises above the top label
   const domain = valueDomain(
     series.flat().map((v) => v ?? Number.NaN),
-    { count: 4 },
+    { count },
   );
   const sy = linear(domain, [100, 0]);
-  const ticks = sy.ticks(4);
+  const ticks = sy.ticks(count);
   const baseline = sy(Math.min(Math.max(0, domain[0]), domain[1]));
-  const px = (i: number): number => Number(num(n === 1 ? 50 : (i / (n - 1)) * 100));
-  const py = (v: number | null | undefined): number | null =>
-    v === null || v === undefined ? null : Number(num(sy(v)));
+  // the curve gets exact coordinates and rounds only what it writes (path.ts): rounding its inputs
+  // would space the points unevenly and bend the slopes it computes (R2-1)
   const pointsOf = (values: ReadonlyArray<number | null>): PathPoint[] =>
-    values.map((v, i) => {
-      const at = py(v);
-      return at === null ? null : [px(i), at];
-    });
+    values.map((v, i) => (v === null ? null : [n === 1 ? 50 : (i / (n - 1)) * 100, sy(v)]));
 
   // format once, on the server (§16.4); the axis is compact, the tooltip and table are full
-  const valueFormat = new Intl.NumberFormat(locale, optionsOf(format));
-  const tickNumber = new Intl.NumberFormat(
-    locale,
-    axisFormat === undefined
-      ? {
-          ...optionsOf(format),
-          notation: 'compact',
-          minimumFractionDigits: 0,
-          maximumFractionDigits: 1,
-        }
-      : optionsOf(axisFormat),
-  );
+  const valueFormat = new Intl.NumberFormat(locale, format);
+  const tickNumber = new Intl.NumberFormat(locale, axisFormat ?? compactOf(format));
   const change = new Intl.NumberFormat(locale, {
     style: 'percent',
     signDisplay: 'exceptZero',
     minimumFractionDigits: 1,
     maximumFractionDigits: 1,
   });
-  const list = new Intl.ListFormat(locale, { type: 'unit', style: 'short' });
   const cell = (v: number | null | undefined): string =>
     v === null || v === undefined ? L.missing : valueFormat.format(v);
 
@@ -199,9 +145,9 @@ export function AreaChart<T>({
   const axisDate = dates ? plainDateFormat(locale, dateFormat) : undefined;
   const pointDate = dates ? plainDateFormat(locale, longDateFormat) : undefined;
   const titles = xs.map((v) => pointDate?.(v) ?? v);
-  let every = xTickEvery ?? tickEvery(n, 6);
+  let every = xTicks.every ?? tickEvery(n, xTicks.max ?? 6);
   // a daily series ticks on whole weeks (Figma 03: Oct 1, 8, 15, 22 and the forced 30)
-  if (xTickEvery === undefined && dates && every > 4) {
+  if (xTicks.every === undefined && dates && every > 4) {
     const [first = '', second = ''] = xs;
     if ((plainDateValue(second) ?? 0) - (plainDateValue(first) ?? 0) === DAY)
       every = Math.ceil(every / 7) * 7;
@@ -209,47 +155,29 @@ export function AreaChart<T>({
 
   const names = [L.current, L.previous];
   const kinds = ['current', 'previous'] as const;
-  const points: ChartInteractionPoint[] = xs.map((_, i) => {
+  // the island's payload (M40 item 10): each series' name once, and per point a short tuple
+  const points: ChartInteractionPoint[] = titles.map((heading, i) => {
     const values = series.map((s) => cell(s[i]));
+    const dots = series.map((s) => {
+      const v = s[i];
+      return v == null ? null : Number(num(sy(v), PATH_DIGITS));
+    });
     const now = current[i];
     const before = previous?.[i];
-    let delta: ChartTooltipDelta | undefined;
-    if (now != null && before != null && before !== 0) {
-      const ratio = (now - before) / Math.abs(before);
-      delta = {
-        value: change.format(ratio),
-        label: L.delta,
-        trend: ratio > 0 ? 'up' : ratio < 0 ? 'down' : 'flat',
-      };
-    }
-    const heading = titles[i] ?? '';
-    return {
-      x: px(i),
-      y: series.map((s) => py(s[i])),
-      card: {
-        title: heading,
-        rows: values.map((value, s) => ({
-          label: names[s] ?? '',
-          value,
-          series: kinds[s] ?? 'current',
-        })),
-        ...(delta === undefined ? {} : { delta }),
-      },
-      announce: list.format([
-        heading,
-        ...values.flatMap((value, s) => [names[s] ?? '', value]),
-        ...(delta === undefined ? [] : [delta.value, L.delta]),
-      ]),
-    };
+    if (now == null || before == null || before === 0) return [heading, values, dots];
+    const ratio = (now - before) / Math.abs(before);
+    // a flat change carries no trend: the island's default
+    return ratio === 0
+      ? [heading, values, dots, change.format(ratio)]
+      : [heading, values, dots, change.format(ratio), ratio > 0 ? 'up' : 'down'];
   });
+  const rows = series.map((_, s) => ({ label: names[s] ?? '', series: kinds[s] ?? 'current' }));
 
   const line = pointsOf(current);
   const end = line.findLast((p) => p !== null);
   const legendNode =
     legend === true || (legend === undefined && previous !== undefined) ? (
-      <Legend
-        items={series.map((_, s) => ({ label: names[s] ?? '', series: kinds[s] ?? 'current' }))}
-      />
+      <Legend items={rows} />
     ) : legend === false ? undefined : (
       legend
     );
@@ -285,12 +213,18 @@ export function AreaChart<T>({
                 className="nz-chart-grid"
                 x1="0"
                 x2="100"
-                y1={num(sy(t))}
-                y2={num(sy(t))}
+                y1={num(sy(t), PATH_DIGITS)}
+                y2={num(sy(t), PATH_DIGITS)}
               />
             ),
         )}
-        <line className="nz-chart-baseline" x1="0" x2="100" y1={num(baseline)} y2={num(baseline)} />
+        <line
+          className="nz-chart-baseline"
+          x1="0"
+          x2="100"
+          y1={num(baseline, PATH_DIGITS)}
+          y2={num(baseline, PATH_DIGITS)}
+        />
         <path className="nz-chart-area" data-series="current" d={areaPath(line, baseline, curve)} />
         {previous !== undefined && (
           <path
@@ -313,8 +247,12 @@ export function AreaChart<T>({
             {L.hint}
           </span>
           <ChartInteraction
+            // a new direction remounts the island, which reads the mirror once (A11Y-W11-1)
+            key={xDirection}
+            series={rows}
             points={points}
-            mirror={xDirection === 'rtl'}
+            delta={L.delta}
+            separators={listSeparators(locale)}
             aria-label={typeof title === 'string' ? title : L.points}
             aria-roledescription={L.interaction}
             aria-describedby={hintId}

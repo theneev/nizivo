@@ -119,3 +119,22 @@ describe('Sparkline: the marks', () => {
     expect(node.children[0]?.children.map((n) => n.attrs.get('class'))).toEqual(['nz-chart-line']);
   });
 });
+
+describe('Sparkline: the one API shape (M40 item 9)', () => {
+  const DAYS = UP.map((sales, i) => ({ date: `2026-10-${String(i + 1).padStart(2, '0')}`, sales }));
+
+  test('y reads data as AreaChart does: a key or a (datum, index) function', () => {
+    const plain = renderToStaticMarkup(<Sparkline data={UP} />);
+    expect(renderToStaticMarkup(<Sparkline data={DAYS} y="sales" />)).toBe(plain);
+    expect(renderToStaticMarkup(<Sparkline data={DAYS} y={(day) => day.sales} />)).toBe(plain);
+    const indexed = renderToStaticMarkup(
+      <Sparkline data={DAYS} y={(_, i) => (i === 3 ? null : i)} curve={curveLinear} />,
+    );
+    expect(indexed.match(/M/g)?.length).toBeGreaterThanOrEqual(3);
+  });
+
+  test('data that is not numbers needs y (a type error without it)', () => {
+    // @ts-expect-error -- objects carry no value of their own
+    expect(renderToStaticMarkup(<Sparkline data={DAYS} />)).toContain('nz-sparkline');
+  });
+});

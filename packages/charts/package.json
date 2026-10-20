@@ -32,6 +32,10 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
+    "./area-chart": {
+      "types": "./dist/area-chart/index.d.ts",
+      "default": "./dist/area-chart/index.js"
+    },
     "./bar-chart": {
       "types": "./dist/bar-chart/index.d.ts",
       "default": "./dist/bar-chart/index.js"

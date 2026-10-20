@@ -26,7 +26,7 @@ export interface ChartTooltipDelta {
   /** The pre-formatted change with its sign, for example "+28.0%": the sign is the non-colour cue. */
   value: string;
   /** For example "vs previous". */
-  label?: string;
+  label?: string | undefined;
   /** `up` reads text/success, `down` text/critical, `flat` text/secondary. */
   trend: ChartTrend;
 }
@@ -39,7 +39,7 @@ export interface ChartTooltipProps extends Omit<
   title: string;
   /** One row per series; Figma's `Series` variant is `rows.length`. */
   rows: readonly ChartTooltipRow[];
-  delta?: ChartTooltipDelta;
+  delta?: ChartTooltipDelta | undefined;
 }
 
 export function ChartTooltip({

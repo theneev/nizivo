@@ -79,8 +79,8 @@ const NIZIVO_CLIENT_MARKERS = [
   'tabs-tab',
   'menu-popup',
   // @nizivo/charts' ChartInteraction island. The charts parts have their own generated routes
-  // (app/docs/(generated)/charts), so it may load on the AreaChart page only; on any other page it
-  // means a charts import joined the shared MDX graph.
+  // (app/docs/(generated)/charts), so it may load on the AreaChart and BarChart pages only; on any
+  // other page it means a charts import joined the shared MDX graph.
   'nz-chart-interaction',
 ];
 
@@ -111,9 +111,11 @@ const CLIENT_PAGES: Record<string, string[]> = {
   '/docs/components/tabs/': ['tabs-tab', 'nz-textarea', 'willValidate'],
   // MenuRowActionsExample's trigger is an IconButton, whose default tooltip leaf the page imports.
   '/docs/components/menu/': ['menu-popup', 'tooltip-popup'],
-  // AreaChart's route imports its examples, so the island loads there (Turbopack ships an imported
-  // client module whether or not the page renders it); the other charts pages import none.
+  // AreaChart's and BarChart's routes import their examples, so the island loads there (Turbopack
+  // ships an imported client module whether or not the page renders it); the other charts pages
+  // import none.
   '/docs/charts/area-chart/': ['nz-chart-interaction'],
+  '/docs/charts/bar-chart/': ['nz-chart-interaction'],
 };
 
 /** Pages whose JavaScript the run prints. */
@@ -137,6 +139,7 @@ const REPORT = [
   '/docs/icons/',
   '/docs/foundations/javascript/',
   '/docs/charts/area-chart/',
+  '/docs/charts/bar-chart/',
 ];
 
 interface Js {

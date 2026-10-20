@@ -12,102 +12,106 @@
 // - Inside it a nested <svg> is the clip, from the baseline up (or down for a negative value), and
 //   the bar is a <rect> with percentage attributes that runs from the data end past the clip: its
 //   rounded corners (rx = radius/xs, 4 px) show only at the data end.
-// - The band is the hit area (the whole column, Figma's note), and hover dims the other bars by
-//   opacity and shows the band's tooltip, in CSS alone (bar-chart.css): no client JavaScript.
-//   The same rules follow `data-highlighted` on a band, the hook the ChartInteraction island's
-//   roving keyboard index will set; until then the data table is the keyboard and screen-reader
-//   path and the frame makes no keyboard claim (`interaction="none"`).
-import type { ReactElement } from 'react';
+// - The band is the hit area (the whole column, Figma's note). By default (`interaction="nizivo"`)
+//   the ChartInteraction island's column mode drives the bands (M40 item 2): one tab stop over the
+//   plot, ArrowLeft / ArrowRight / Home / End rove over the bars, the active band gets
+//   `data-highlighted` (bar-chart.css dims the other bars by opacity), the island shows Figma 03's
+//   ChartTooltip card beside it and the polite region speaks it; hover does the same without
+//   speaking; Escape dismisses the card wherever focus is (WCAG 1.4.13: dismissable, persistent;
+//   the card follows the band under the pointer). Every string the island shows or speaks is
+//   formatted here, on the server. Before hydration the chart is drawn and the data table is in
+//   the markup; nothing reacts until the island hydrates.
+// - `interaction="none"` renders no island (webpack then ships no chart JavaScript; Turbopack and
+//   next dev still ship the imported island module, as AreaChart's /chart-area-static measures in
+//   fixtures/next): hover dims the other bars and shows the band's own tooltip in CSS alone
+//   (hover-only: no Escape, so it does not meet WCAG 1.4.13), and the frame makes no keyboard
+//   claim; `tableView="details"` gives sighted keyboard users the values.
+import { useId, type ReactElement } from 'react';
+import {
+  accessor,
+  compactOf,
+  finite,
+  INTL_DEFAULT,
+  listSeparators,
+  LONG_DATE,
+  NO_TICKS,
+  type CartesianChartOptions,
+  type ChartFramePassthrough,
+} from '../_core/api';
 import { linear, valueDomain } from '../_core/scale';
 import { everyNth, isPlainDate, plainDateFormat, tickEvery } from '../_core/time-ticks';
 import { pct } from '../_core/geometry';
 import { cx } from '../_shared/cx';
-import { ChartFrame, type ChartFrameElementProps } from '../chart-frame/chart-frame';
+import { ChartInteraction, type ChartInteractionPoint } from '../_island/chart-interaction.client';
+import { ChartFrame, chartFrameLabels } from '../chart-frame/chart-frame';
 import type { ChartFrameLabels } from '../chart-frame/chart-frame.contract';
 
-/** BarChart's own strings (§16.4). Never concatenated: each is a whole label. */
-export interface BarChartLabels {
+/** BarChart's strings (§16.4), with ChartFrame's. Never concatenated: each is a whole label. */
+export interface BarChartLabels extends ChartFrameLabels {
   /** The data table's first column header (the x values). */
   category: string;
   /** The series' name: the data table's value column and the tooltip row. */
   value: string;
-  /** The data table cell of a datum with no finite value. */
+  /** The data table cell (and the tooltip value) of a datum with no finite value. */
   missing: string;
+  /** The interactive layer's role, as assistive technology names it. */
+  interaction: string;
+  /** The interactive layer's keyboard instructions. */
+  hint: string;
+  /** The interactive layer's name when `title` is not a string. */
+  points: string;
 }
 
 /** English defaults (§16.4); pass `labels` to translate per instance. */
 export const barChartLabels: BarChartLabels = {
+  ...chartFrameLabels,
   category: 'Category',
   value: 'Value',
   missing: 'No value',
+  interaction: 'interactive chart',
+  hint: 'Arrow keys move between bars; Home and End go to the first and last',
+  points: 'Chart bars',
 };
 
-export interface BarChartXTicks {
-  /** Bars between labels. Derived from `max` when absent. */
-  every?: number;
-  /** At most this many x labels, the first and last always included. @default 8 */
-  max?: number;
+/**
+ * BarChart's props: the shared cartesian options (`_core/api.ts`; `xTicks.max` defaults to 8 here)
+ * and ChartFrame's, the `<figure>`'s attributes included.
+ */
+export interface BarChartProps<T> extends CartesianChartOptions<T>, ChartFramePassthrough<'axes'> {
+  labels?: Partial<BarChartLabels>;
 }
-
-export interface BarChartProps<T> extends Omit<
-  ChartFrameElementProps,
-  'table' | 'ticks' | 'axes' | 'interaction' | 'children' | 'labels'
-> {
-  data: readonly T[];
-  /** The category of a datum: an ISO plain date (`'2026-10-14'`, formatted per `locale`) or a label. */
-  x: (datum: T) => string;
-  /** The value of a datum. A non-finite value draws no bar. */
-  y: (datum: T) => number;
-  /** BCP 47 locale every number and date is formatted in, once, on the server (§16.4). @default 'en-US' */
-  locale?: string;
-  /** Values in the table and the tooltip. @default { maximumFractionDigits: 0 } */
-  format?: Intl.NumberFormatOptions;
-  /** The y labels. @default `format` with `notation: 'compact'` and at most one fraction digit */
-  axisFormat?: Intl.NumberFormatOptions;
-  /** ISO plain dates on the x axis. @default { month: 'short', day: 'numeric' } */
-  dateFormat?: Intl.DateTimeFormatOptions;
-  /** ISO plain dates in the tooltip title and the table. @default { weekday: 'short', month: 'short', day: 'numeric' } */
-  longDateFormat?: Intl.DateTimeFormatOptions;
-  xTicks?: BarChartXTicks;
-  /** About how many y ticks; the domain is niced for this count. @default 4 */
-  yTicks?: number;
-  labels?: Partial<ChartFrameLabels & BarChartLabels>;
-}
-
-const LONG_DATE: Intl.DateTimeFormatOptions = { weekday: 'short', month: 'short', day: 'numeric' };
-const WHOLE: Intl.NumberFormatOptions = { maximumFractionDigits: 0 };
-const NO_TICKS: BarChartXTicks = {};
 
 export function BarChart<T>({
   data,
   x,
   y,
   locale = 'en-US',
-  format = WHOLE,
+  format = INTL_DEFAULT,
   axisFormat,
   dateFormat,
   longDateFormat = LONG_DATE,
   xTicks = NO_TICKS,
   yTicks = 4,
   labels,
+  title,
+  interaction = 'nizivo',
   className,
   ...frame
 }: BarChartProps<T>): ReactElement {
-  const L: BarChartLabels & Partial<ChartFrameLabels> = { ...barChartLabels, ...labels };
+  const L: BarChartLabels = { ...barChartLabels, ...labels };
+  const hintId = useId();
+  // without the island, each band carries its own CSS-only tooltip (zero client JavaScript)
+  const css = interaction === 'none';
   const number = new Intl.NumberFormat(locale, format);
-  const axis = new Intl.NumberFormat(
-    locale,
-    axisFormat ?? {
-      ...format,
-      notation: 'compact',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 1,
-    },
-  );
+  const axis = new Intl.NumberFormat(locale, axisFormat ?? compactOf(format));
   const shortDate = plainDateFormat(locale, dateFormat);
   const longDate = plainDateFormat(locale, longDateFormat);
 
-  const domain = valueDomain(data.map(y), { count: yTicks });
+  const xOf = accessor(x);
+  const yOf = accessor(y);
+  // not finite → NaN: no bar, the missing label, and left out of the domain
+  const values = data.map((datum, i) => finite(yOf(datum, i)) ?? Number.NaN);
+  const domain = valueDomain(values, { count: yTicks });
   const sy = linear(domain, [100, 0]);
   const ticks = sy.ticks(yTicks);
   const zero = sy(0);
@@ -116,32 +120,38 @@ export function BarChart<T>({
   const every = xTicks.every ?? tickEvery(n, xTicks.max ?? 8);
   const shown = new Set(everyNth(n, every));
 
-  // one pass: the table row, the x label and the band (its bar and its tooltip) of each datum
+  // one pass: the table row, the x label, the island's point and the band (its bar, and its
+  // tooltip without the island) of each datum; a datum with no bar is still a band and a point
   const rows: string[][] = [];
   const xs: string[] = [];
+  const points: ChartInteractionPoint[] = [];
   const bands: ReactElement[] = [];
   data.forEach((datum, i) => {
-    const key = x(datum);
+    const key = xOf(datum, i);
     const date = isPlainDate(key);
-    const value = y(datum);
-    const title = date ? longDate(key) : key;
-    const shownValue = Number.isFinite(value) ? number.format(value) : L.missing;
-    rows.push([title, shownValue]);
+    const value = values[i] ?? Number.NaN;
+    const heading = date ? longDate(key) : key;
+    const shownValue = Number.isNaN(value) ? L.missing : number.format(value);
+    rows.push([heading, shownValue]);
+    points.push([heading, [shownValue], []]);
     xs.push(shown.has(i) ? (date ? shortDate(key) : key) : '');
     bands.push(
       <div
         // oxlint-disable-next-line react/no-array-index-key -- a band's position is its identity (x may repeat)
         key={i}
-        className={cx('nz-bar-chart-band', i >= n / 2 && 'nz-bar-chart-band-end')}
+        className={cx('nz-bar-chart-band', css && i >= n / 2 && 'nz-bar-chart-band-end')}
         data-slot="bar-chart-band"
       >
-        {Number.isFinite(value) && value !== 0 && bar(sy(value), zero)}
-        <span className="nz-bar-chart-tooltip">
-          <span className="nz-bar-chart-tooltip-title">{title}</span>
-          <span className="nz-bar-chart-tooltip-mark" data-series="current" />
-          {L.value}
-          <span className="nz-bar-chart-tooltip-value">{shownValue}</span>
-        </span>
+        {/* NaN (no value) and 0 draw no bar */}
+        {value ? bar(sy(value), zero) : null}
+        {css && (
+          <span className="nz-bar-chart-tooltip">
+            <span className="nz-bar-chart-tooltip-title">{heading}</span>
+            <span className="nz-bar-chart-tooltip-mark" data-series="current" />
+            {L.value}
+            <span className="nz-bar-chart-tooltip-value">{shownValue}</span>
+          </span>
+        )}
       </div>,
     );
   });
@@ -150,8 +160,9 @@ export function BarChart<T>({
     <ChartFrame
       {...frame}
       className={cx('nz-bar-chart', className)}
+      title={title}
       labels={L}
-      interaction="none"
+      interaction={interaction}
       table={{ columns: [L.category, L.value], rows }}
       ticks={{ x: xs, xAlign: 'band', y: ticks.toReversed().map((tick) => axis.format(tick)) }}
     >
@@ -173,6 +184,26 @@ export function BarChart<T>({
       <div className="nz-bar-chart-bands" aria-hidden="true">
         {bands}
       </div>
+      {!css && (
+        // column mode: the island roves over the bands (data-slot="bar-chart-band") and shows the
+        // card; it paints over them, so CSS :hover on a band no longer fires under it
+        <>
+          <span id={hintId} className="nz-chart-visually-hidden">
+            {L.hint}
+          </span>
+          <ChartInteraction
+            // a new direction remounts the island, which reads the mirror once (A11Y-W11-1)
+            key={frame.xDirection}
+            series={[{ label: L.value, series: 'current' }]}
+            points={points}
+            separators={listSeparators(locale)}
+            columns="bar-chart-band"
+            aria-label={typeof title === 'string' ? title : L.points}
+            aria-roledescription={L.interaction}
+            aria-describedby={hintId}
+          />
+        </>
+      )}
     </ChartFrame>
   );
 }

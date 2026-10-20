@@ -4,401 +4,31 @@
   "exports": [
     {
       "declaration": "type",
-      "description": "A datum's field by key (serialisable), or a function of the datum.",
+      "description": "A datum's field by key (serialisable from a Server Component), or a function of the datum.",
       "import": "import type { Accessor } from '@nizivo/charts'",
       "kind": "type",
       "name": "Accessor",
-      "source": "packages/charts/src/area-chart/area-chart.tsx",
+      "source": "packages/charts/src/_core/api.ts",
       "text": "{ [K in keyof T]-?: T[K] extends V ? K : never; }[keyof T] | ((datum: T, index: number) => V)",
       "typeParameters": ["T", "V"]
     },
     {
-      "client": false,
+      "definedIn": "./area-chart",
       "import": "import { AreaChart } from '@nizivo/charts'",
-      "inherits": [
-        {
-          "base": "ComponentPropsWithRef<\"figure\">",
-          "element": "figure",
-          "omitted": ["children", "title"],
-          "overridden": [],
-          "text": "Omit<ComponentPropsWithRef<\"figure\">, \"title\" | \"children\">"
-        }
-      ],
       "kind": "component",
-      "name": "AreaChart",
-      "props": [
-        {
-          "default": "'frame'",
-          "inheritedFrom": "ChartFrameProps",
-          "name": "axes",
-          "required": false,
-          "type": "ChartAxes",
-          "values": ["frame", "none"]
-        },
-        {
-          "default": "`format` in compact notation (\"$8K\")",
-          "description": "The y tick labels.",
-          "inheritedFrom": "AreaChartProps",
-          "name": "axisFormat",
-          "required": false,
-          "type": "ChartNumberFormat"
-        },
-        {
-          "description": "The comparison series, drawn dashed in chart/neutral (decorative: the table carries it).",
-          "inheritedFrom": "AreaChartProps",
-          "name": "compare",
-          "required": false,
-          "type": "Accessor<T, number | null | undefined>"
-        },
-        {
-          "default": "curveMonotoneX (no overshoot below the baseline)",
-          "description": "Any d3-shape curve factory.",
-          "inheritedFrom": "AreaChartProps",
-          "name": "curve",
-          "required": false,
-          "type": "CurveFactory"
-        },
-        {
-          "description": "In x order: one datum per point.",
-          "inheritedFrom": "AreaChartProps",
-          "name": "data",
-          "required": true,
-          "type": "readonly T[]"
-        },
-        {
-          "default": "{ month: 'short', day: 'numeric' } (\"Oct 1\")",
-          "description": "Date tick labels.",
-          "inheritedFrom": "AreaChartProps",
-          "name": "dateFormat",
-          "required": false,
-          "type": "Intl.DateTimeFormatOptions"
-        },
-        {
-          "description": "Replaces the default empty message.",
-          "inheritedFrom": "ChartFrameProps",
-          "name": "empty",
-          "required": false,
-          "type": "ReactNode"
-        },
-        {
-          "description": "Replaces the default error message, for example an InlineError with a retry action.",
-          "inheritedFrom": "ChartFrameProps",
-          "name": "error",
-          "required": false,
-          "type": "ReactNode"
-        },
-        {
-          "default": "'number'",
-          "description": "Values in the tooltip and the table.",
-          "inheritedFrom": "AreaChartProps",
-          "name": "format",
-          "required": false,
-          "type": "ChartNumberFormat"
-        },
-        {
-          "default": "'nizivo'",
-          "inheritedFrom": "ChartFrameProps",
-          "name": "interaction",
-          "required": false,
-          "type": "ChartInteractionMode",
-          "values": ["nizivo", "none"]
-        },
-        {
-          "inheritedFrom": "AreaChartProps",
-          "name": "labels",
-          "required": false,
-          "type": "Partial<AreaChartLabels>"
-        },
-        {
-          "description": "`true` shows the series key; the default shows it when there is a comparison.",
-          "inheritedFrom": "AreaChartProps",
-          "name": "legend",
-          "required": false,
-          "type": "ReactNode"
-        },
-        {
-          "default": "'en-US'",
-          "inheritedFrom": "AreaChartProps",
-          "name": "locale",
-          "required": false,
-          "type": "string"
-        },
-        {
-          "default": "{ weekday: 'short', month: 'short', day: 'numeric' }",
-          "description": "A point's date in the tooltip and the table.",
-          "inheritedFrom": "AreaChartProps",
-          "name": "longDateFormat",
-          "required": false,
-          "type": "Intl.DateTimeFormatOptions"
-        },
-        {
-          "description": "A refresh is in flight while the chart shows data (§16.5): `aria-busy` and `data-pending`.",
-          "inheritedFrom": "ChartFrameProps",
-          "name": "pending",
-          "required": false,
-          "type": "boolean"
-        },
-        {
-          "inheritedFrom": "ChartFrameAttributes",
-          "name": "render",
-          "required": false,
-          "type": "RenderProp<ChartFrameState>"
-        },
-        {
-          "default": "'ready'; a ready chart with no table rows renders as `'empty'`.",
-          "inheritedFrom": "ChartFrameProps",
-          "name": "status",
-          "required": false,
-          "type": "DataStatus",
-          "values": ["ready", "loading", "empty", "error"]
-        },
-        {
-          "description": "One line under the title, for example \"Daily sales, Oct 1–30, vs previous period\".",
-          "inheritedFrom": "ChartFrameProps",
-          "name": "summary",
-          "required": false,
-          "type": "ReactNode"
-        },
-        {
-          "default": "'hidden'",
-          "inheritedFrom": "ChartFrameProps",
-          "name": "tableView",
-          "required": false,
-          "type": "ChartTableView",
-          "values": ["hidden", "details"]
-        },
-        {
-          "description": "The figure's caption and its accessible name.",
-          "inheritedFrom": "ChartFrameProps",
-          "name": "title",
-          "required": true,
-          "type": "ReactNode"
-        },
-        {
-          "description": "The x value: an ISO plain date (`'2026-10-01'`, daily or weekly buckets) or any label.",
-          "inheritedFrom": "AreaChartProps",
-          "name": "x",
-          "required": true,
-          "type": "Accessor<T, string>"
-        },
-        {
-          "default": "'ltr'",
-          "inheritedFrom": "ChartFrameProps",
-          "name": "xDirection",
-          "required": false,
-          "type": "ChartXDirection",
-          "values": ["ltr", "rtl", "auto"]
-        },
-        {
-          "description": "Points between x ticks; the last point always has one. Daily dates tick weekly by default.",
-          "inheritedFrom": "AreaChartProps",
-          "name": "xTickEvery",
-          "required": false,
-          "type": "number"
-        },
-        {
-          "inheritedFrom": "AreaChartProps",
-          "name": "y",
-          "required": true,
-          "type": "Accessor<T, number | null | undefined>"
-        }
-      ],
-      "propsType": "AreaChartElementProps<T>",
-      "render": {
-        "state": [
-          {
-            "description": "As passed: whether the child claims keyboard access to its points.",
-            "name": "interaction",
-            "required": true,
-            "type": "ChartInteractionMode",
-            "values": ["nizivo", "none"]
-          },
-          {
-            "name": "pending",
-            "required": true,
-            "type": "boolean"
-          },
-          {
-            "description": "The status as rendered: `'empty'` when a ready chart has no rows.",
-            "name": "status",
-            "required": true,
-            "type": "DataStatus",
-            "values": ["ready", "loading", "empty", "error"]
-          }
-        ],
-        "stateType": "ChartFrameState"
-      },
-      "source": "packages/charts/src/area-chart/area-chart.tsx"
+      "name": "AreaChart"
     },
     {
-      "declaration": "type",
-      "import": "import type { AreaChartElementProps } from '@nizivo/charts'",
-      "kind": "type",
-      "name": "AreaChartElementProps",
-      "propsOf": "AreaChart",
-      "source": "packages/charts/src/area-chart/area-chart.tsx",
-      "text": "AreaChartProps<T> & ChartFrameAttributes",
-      "typeParameters": ["T"]
-    },
-    {
-      "declaration": "interface",
-      "description": "AreaChart's strings (§16.4), with ChartFrame's. English defaults in `areaChartLabels`.",
-      "extends": ["ChartFrameLabels"],
+      "definedIn": "./area-chart",
       "import": "import type { AreaChartLabels } from '@nizivo/charts'",
       "kind": "type",
-      "members": [
-        {
-          "description": "The data table's first column header when x holds labels (BarChart's `category`).",
-          "name": "category",
-          "required": true,
-          "type": "string"
-        },
-        {
-          "description": "The series' name in the legend, the tooltip and the table.",
-          "name": "current",
-          "required": true,
-          "type": "string"
-        },
-        {
-          "description": "After the tooltip's change, for example \"+28.0% vs previous\".",
-          "name": "delta",
-          "required": true,
-          "type": "string"
-        },
-        {
-          "description": "The interactive layer's keyboard instructions.",
-          "name": "hint",
-          "required": true,
-          "type": "string"
-        },
-        {
-          "description": "The interactive layer's role, as assistive technology names it.",
-          "name": "interaction",
-          "required": true,
-          "type": "string"
-        },
-        {
-          "description": "A value the series does not have at that point (BarChart's `missing` too).",
-          "name": "missing",
-          "required": true,
-          "type": "string"
-        },
-        {
-          "description": "The interactive layer's name when `title` is not a string.",
-          "name": "points",
-          "required": true,
-          "type": "string"
-        },
-        {
-          "description": "The comparison's name.",
-          "name": "previous",
-          "required": true,
-          "type": "string"
-        },
-        {
-          "description": "The data table's first column header when every x is an ISO plain date.",
-          "name": "x",
-          "required": true,
-          "type": "string"
-        }
-      ],
-      "name": "AreaChartLabels",
-      "source": "packages/charts/src/area-chart/area-chart.tsx",
-      "typeParameters": []
+      "name": "AreaChartLabels"
     },
     {
-      "declaration": "interface",
-      "extends": [
-        "Omit<ChartFrameProps, \"table\" | \"ticks\" | \"legend\" | \"labels\" | \"children\">"
-      ],
+      "definedIn": "./area-chart",
       "import": "import type { AreaChartProps } from '@nizivo/charts'",
       "kind": "type",
-      "members": [
-        {
-          "default": "`format` in compact notation (\"$8K\")",
-          "description": "The y tick labels.",
-          "name": "axisFormat",
-          "required": false,
-          "type": "ChartNumberFormat"
-        },
-        {
-          "description": "The comparison series, drawn dashed in chart/neutral (decorative: the table carries it).",
-          "name": "compare",
-          "required": false,
-          "type": "Accessor<T, number | null | undefined>"
-        },
-        {
-          "default": "curveMonotoneX (no overshoot below the baseline)",
-          "description": "Any d3-shape curve factory.",
-          "name": "curve",
-          "required": false,
-          "type": "CurveFactory"
-        },
-        {
-          "description": "In x order: one datum per point.",
-          "name": "data",
-          "required": true,
-          "type": "readonly T[]"
-        },
-        {
-          "default": "{ month: 'short', day: 'numeric' } (\"Oct 1\")",
-          "description": "Date tick labels.",
-          "name": "dateFormat",
-          "required": false,
-          "type": "Intl.DateTimeFormatOptions"
-        },
-        {
-          "default": "'number'",
-          "description": "Values in the tooltip and the table.",
-          "name": "format",
-          "required": false,
-          "type": "ChartNumberFormat"
-        },
-        {
-          "name": "labels",
-          "required": false,
-          "type": "Partial<AreaChartLabels>"
-        },
-        {
-          "description": "`true` shows the series key; the default shows it when there is a comparison.",
-          "name": "legend",
-          "required": false,
-          "type": "ReactNode"
-        },
-        {
-          "default": "'en-US'",
-          "name": "locale",
-          "required": false,
-          "type": "string"
-        },
-        {
-          "default": "{ weekday: 'short', month: 'short', day: 'numeric' }",
-          "description": "A point's date in the tooltip and the table.",
-          "name": "longDateFormat",
-          "required": false,
-          "type": "Intl.DateTimeFormatOptions"
-        },
-        {
-          "description": "The x value: an ISO plain date (`'2026-10-01'`, daily or weekly buckets) or any label.",
-          "name": "x",
-          "required": true,
-          "type": "Accessor<T, string>"
-        },
-        {
-          "description": "Points between x ticks; the last point always has one. Daily dates tick weekly by default.",
-          "name": "xTickEvery",
-          "required": false,
-          "type": "number"
-        },
-        {
-          "name": "y",
-          "required": true,
-          "type": "Accessor<T, number | null | undefined>"
-        }
-      ],
-      "name": "AreaChartProps",
-      "source": "packages/charts/src/area-chart/area-chart.tsx",
-      "typeParameters": ["T"]
+      "name": "AreaChartProps"
     },
     {
       "declaration": "interface",
@@ -493,10 +123,80 @@
       "name": "BarChartProps"
     },
     {
-      "definedIn": "./bar-chart",
-      "import": "import type { BarChartXTicks } from '@nizivo/charts'",
+      "declaration": "interface",
+      "description": "What every cartesian chart (AreaChart, BarChart) takes for its data, its formats and its axes.",
+      "import": "import type { CartesianChartOptions } from '@nizivo/charts'",
       "kind": "type",
-      "name": "BarChartXTicks"
+      "members": [
+        {
+          "default": "`format` in compact notation with at most one fraction digit (\"$8K\")",
+          "description": "The y labels.",
+          "name": "axisFormat",
+          "required": false,
+          "type": "Intl.NumberFormatOptions"
+        },
+        {
+          "description": "In x order: one datum per point or bar.",
+          "name": "data",
+          "required": true,
+          "type": "readonly T[]"
+        },
+        {
+          "default": "{ month: 'short', day: 'numeric' } (\"Oct 1\")",
+          "description": "ISO plain dates on the x axis.",
+          "name": "dateFormat",
+          "required": false,
+          "type": "Intl.DateTimeFormatOptions"
+        },
+        {
+          "default": "Intl.NumberFormat's own ({})",
+          "description": "Values in the tooltip and the data table.",
+          "name": "format",
+          "required": false,
+          "type": "Intl.NumberFormatOptions"
+        },
+        {
+          "default": "'en-US'",
+          "description": "The BCP 47 locale every number and date is formatted in, once, on the server (§16.4).",
+          "name": "locale",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "default": "{ weekday: 'short', month: 'short', day: 'numeric' }",
+          "description": "ISO plain dates in the tooltip and the data table.",
+          "name": "longDateFormat",
+          "required": false,
+          "type": "Intl.DateTimeFormatOptions"
+        },
+        {
+          "description": "The x value: an ISO plain date (`'2026-10-14'`, formatted per `locale`) or any label.",
+          "name": "x",
+          "required": true,
+          "type": "Accessor<T, string>"
+        },
+        {
+          "name": "xTicks",
+          "required": false,
+          "type": "ChartXTicks"
+        },
+        {
+          "description": "The value. A value that is not a finite number is a gap (no point, no bar).",
+          "name": "y",
+          "required": true,
+          "type": "Accessor<T, number | null | undefined>"
+        },
+        {
+          "default": "4",
+          "description": "About how many y labels; the value domain is niced for this count.",
+          "name": "yTicks",
+          "required": false,
+          "type": "number"
+        }
+      ],
+      "name": "CartesianChartOptions",
+      "source": "packages/charts/src/_core/api.ts",
+      "typeParameters": ["T"]
     },
     {
       "definedIn": "./chart-frame",
@@ -545,16 +245,6 @@
       "import": "import type { ChartInteractionMode } from '@nizivo/charts'",
       "kind": "type",
       "name": "ChartInteractionMode"
-    },
-    {
-      "declaration": "type",
-      "description": "How values are formatted (§16.4): a preset or any `Intl.NumberFormat` options object, for example `{ style: 'currency', currency: 'USD', maximumFractionDigits: 0 }`.",
-      "import": "import type { ChartNumberFormat } from '@nizivo/charts'",
-      "kind": "type",
-      "name": "ChartNumberFormat",
-      "source": "packages/charts/src/area-chart/area-chart.tsx",
-      "text": "\"number\" | \"compact\" | \"percent\" | Intl.NumberFormatOptions",
-      "typeParameters": []
     },
     {
       "definedIn": "./legend",
@@ -621,6 +311,29 @@
       "import": "import type { ChartXDirection } from '@nizivo/charts'",
       "kind": "type",
       "name": "ChartXDirection"
+    },
+    {
+      "declaration": "interface",
+      "description": "The x labels of a cartesian chart.",
+      "import": "import type { ChartXTicks } from '@nizivo/charts'",
+      "kind": "type",
+      "members": [
+        {
+          "description": "Data points (or bars) between labels; the last one always has a label. Derived from `max`.",
+          "name": "every",
+          "required": false,
+          "type": "number"
+        },
+        {
+          "description": "At most this many labels, the first and last included. AreaChart: 6, BarChart: 8.",
+          "name": "max",
+          "required": false,
+          "type": "number"
+        }
+      ],
+      "name": "ChartXTicks",
+      "source": "packages/charts/src/_core/api.ts",
+      "typeParameters": []
     },
     {
       "definedIn": "d3-shape",
@@ -879,9 +592,21 @@
     },
     {
       "definedIn": "./sparkline",
+      "import": "import type { SparklineBaseProps } from '@nizivo/charts'",
+      "kind": "type",
+      "name": "SparklineBaseProps"
+    },
+    {
+      "definedIn": "./sparkline",
       "import": "import type { SparklineProps } from '@nizivo/charts'",
       "kind": "type",
       "name": "SparklineProps"
+    },
+    {
+      "definedIn": "./sparkline",
+      "import": "import type { SparklineValue } from '@nizivo/charts'",
+      "kind": "type",
+      "name": "SparklineValue"
     },
     {
       "declaration": "interface",
@@ -908,12 +633,10 @@
       "typeParameters": []
     },
     {
-      "client": false,
+      "definedIn": "./area-chart",
       "import": "import { areaChartLabels } from '@nizivo/charts'",
       "kind": "constant",
-      "name": "areaChartLabels",
-      "source": "packages/charts/src/area-chart/area-chart.tsx",
-      "type": "AreaChartLabels"
+      "name": "areaChartLabels"
     },
     {
       "client": false,

@@ -82,8 +82,9 @@ describe('budgets.json', () => {
       expect(BUDGETS[name]?.limitKiB ?? target).toBeLessThanOrEqual(target);
     }
     // §17.2's figures, as the plan writes them
-    expect(CHART_TARGETS_KIB['@nizivo/charts/area-chart']).toBe(3.6);
-    expect(CHART_TARGETS_KIB['@nizivo/charts own: _island/chart-interaction.client']).toBe(0.8);
+    expect(CHART_TARGETS_KIB['@nizivo/charts/area-chart']).toBe(7.1);
+    expect(CHART_TARGETS_KIB['@nizivo/charts island with its imports']).toBe(1.6);
+    expect(CHART_TARGETS_KIB['@nizivo/charts/bar-chart']).toBe(5.7);
     expect(CHART_TARGETS_KIB['@nizivo/charts/donut-chart']).toBe(3.2);
     expect(CHART_TARGETS_KIB['@nizivo/charts/sparkline']).toBe(2);
     expect(CHART_TARGETS_KIB['@nizivo/charts']).toBe(12);

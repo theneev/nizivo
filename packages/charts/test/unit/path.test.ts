@@ -1,8 +1,9 @@
 // The percent-space paths (src/_core/path.ts) are d3-shape's: only the curve is bundled, drawn
-// through a string context, so a line must be the very path d3's line generator writes.
+// through a string context, so a line must be the very path d3's line generator writes, at the
+// same precision: PATH_DIGITS (2 decimals since M40, 2026-10-20; d3's `.digits(PATH_DIGITS)`).
 import { area, curveLinear, curveMonotoneX, curveStep, line } from 'd3-shape';
 import { describe, expect, test } from 'vitest';
-import { areaPath, dotPath, linePath, type PathPoint } from '../../src/_core/path';
+import { areaPath, dotPath, linePath, PATH_DIGITS, type PathPoint } from '../../src/_core/path';
 
 const SERIES: PathPoint[] = [
   [0, 73.25],
@@ -20,22 +21,22 @@ const d3Line = (points: PathPoint[], curve = curveMonotoneX): string | null =>
     .x((p) => p?.[0] ?? 0)
     .y((p) => p?.[1] ?? 0)
     .curve(curve)
-    .digits(3)(points);
+    .digits(PATH_DIGITS)(points);
 
 const tokens = (d: string): string[] => d.match(/[A-Za-z]|-?[\d.]+(?:e-?\d+)?/g) ?? [];
 const isCommand = (token: string): boolean => /[A-Za-z]/.test(token);
 
 /**
- * Whether two paths are the same commands with numbers equal to the third decimal. num() rounds
- * through toFixed and d3-path through Math.round, so a value exactly on a half-thousandth (41.6665)
- * can differ in its last digit.
+ * Whether two paths are the same commands with numbers equal to the last decimal written. num()
+ * rounds through toFixed and d3-path through Math.round, so a value exactly on a half-hundredth
+ * (41.665) can differ in its last digit.
  */
 function samePath(actual: string, expected: string | null): boolean {
   const a = tokens(actual);
   const b = tokens(expected ?? '');
   return (
     a.length === b.length &&
-    a.every((t, i) => (isCommand(t) ? t === b[i] : Math.abs(Number(t) - Number(b[i])) < 0.0011))
+    a.every((t, i) => (isCommand(t) ? t === b[i] : Math.abs(Number(t) - Number(b[i])) < 0.011))
   );
 }
 
@@ -43,13 +44,14 @@ describe('linePath', () => {
   test.each([
     ['curveMonotoneX', curveMonotoneX],
     ['curveLinear', curveLinear],
-  ])('is exactly d3 line().curve(%s).digits(3)', (_name, curve) => {
+  ])('is exactly d3 line().curve(%s).digits(PATH_DIGITS)', (_name, curve) => {
     expect(linePath(SERIES, curve)).toBe(d3Line(SERIES, curve));
   });
 
-  test('any curve factory plugs in (curveStep), the same path as d3 to the third decimal', () => {
+  test('any curve factory plugs in (curveStep), the same path as d3 to the last decimal', () => {
+    expect(PATH_DIGITS).toBe(2);
     expect(samePath(linePath(SERIES, curveStep), d3Line(SERIES, curveStep))).toBe(true);
-    expect(samePath('M0,1L2,3', 'M0,1L2,3.5')).toBe(false);
+    expect(samePath('M0,1L2,3', 'M0,1L2,3.05')).toBe(false);
   });
 
   test('a gap splits the line into subpaths, as d3 line().defined() does', () => {
@@ -70,7 +72,7 @@ describe('linePath', () => {
     expect(linePath([null, null])).toBe('');
   });
 
-  test('coordinates are written through num(): at most 3 decimals, no -0', () => {
+  test('coordinates are written through num(): at most PATH_DIGITS decimals, no -0', () => {
     expect(
       linePath(
         [
@@ -79,7 +81,7 @@ describe('linePath', () => {
         ],
         curveLinear,
       ),
-    ).toBe('M0,0L33.333,50');
+    ).toBe('M0,0L33.33,50');
   });
 });
 
@@ -93,7 +95,7 @@ describe('areaPath', () => {
       .y0(100)
       .y1((p) => p?.[1] ?? 0)
       .curve(curveMonotoneX)
-      .digits(3)(SERIES);
+      .digits(PATH_DIGITS)(SERIES);
     expect(d3?.startsWith(top)).toBe(true);
   });
 
@@ -101,12 +103,12 @@ describe('areaPath', () => {
     const gapped: PathPoint[] = [...SERIES.slice(0, 3), null, ...SERIES.slice(4)];
     const d = areaPath(gapped, 80);
     expect(d.match(/Z/g)).toHaveLength(2);
-    expect(d).toContain('L33.333,80L0,80Z');
-    expect(d.endsWith('L100,80L66.667,80Z')).toBe(true);
+    expect(d).toContain('L33.33,80L0,80Z');
+    expect(d.endsWith('L100,80L66.67,80Z')).toBe(true);
   });
 });
 
 test('dotPath is a zero-length subpath at the point', () => {
   expect(dotPath(100, 21.5)).toBe('M100,21.5h0');
-  expect(dotPath(33.33333, 0)).toBe('M33.333,0h0');
+  expect(dotPath(33.33333, 0)).toBe('M33.33,0h0');
 });

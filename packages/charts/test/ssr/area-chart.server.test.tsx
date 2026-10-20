@@ -88,6 +88,16 @@ const DAYS = Array.from({ length: 7 }, (_, i) => ({
   previous: i === 3 ? null : 3800 + i * 100,
 }));
 
+/** The island's props for DAYS at one xDirection. */
+const islandProps = (xDirection: 'ltr' | 'rtl' | 'auto'): unknown =>
+  clients(
+    withUseId(() =>
+      serverRender(
+        <AreaChart title="Sales" data={DAYS} x="date" y="current" xDirection={xDirection} />,
+      ),
+    ),
+  )[0]?.props;
+
 describe('AreaChart under react-server', () => {
   test('renders to host elements and one client reference, the island, in the ready status', () => {
     const tree = withUseId(() =>
@@ -117,36 +127,70 @@ describe('AreaChart under react-server', () => {
     expect(isPlainJson(props)).toBe(true);
     expect(JSON.parse(JSON.stringify(props))).toEqual(props);
     expect(props['aria-label']).toBe('Sales');
-    expect(props['mirror']).toBe(false);
+    // M40 item 10: the series once, the change's label once, the list separators once
+    expect(props['series']).toEqual([
+      { label: 'This period', series: 'current' },
+      { label: 'Previous', series: 'previous' },
+    ]);
+    expect(props['delta']).toBe('vs previous');
+    expect(props['separators']).toEqual([', ', ', ']);
+    // nothing about direction: the island reads the plot's resolved direction after hydration
+    expect(props).not.toHaveProperty('mirror');
+    expect(props).not.toHaveProperty('columns');
     const points: unknown = props['points'];
     if (!Array.isArray(points)) throw new Error('no points');
     expect(points).toHaveLength(7);
-    expect(points[0]).toEqual({
-      x: 0,
-      y: [expect.any(Number), expect.any(Number)],
-      card: {
-        title: 'Wed, Oct 14',
-        rows: [
-          { label: 'This period', value: '$4,000', series: 'current' },
-          { label: 'Previous', value: '$3,800', series: 'previous' },
-        ],
-        delta: { value: '+5.3%', label: 'vs previous', trend: 'up' },
-      },
-      announce: 'Wed, Oct 14, This period, $4,000, Previous, $3,800, +5.3%, vs previous',
-    });
+    // [title, values, y per series, change, trend]: no x (points are evenly spaced), no announce
+    // (the island joins the card's strings), y at the paths' two decimals
+    expect(points[0]).toEqual([
+      'Wed, Oct 14',
+      ['$4,000', '$3,800'],
+      [expect.any(Number), expect.any(Number)],
+      '+5.3%',
+      'up',
+    ]);
+    const ys = points
+      .flatMap((p: [string, string[], Array<number | null>]) => p[2])
+      .filter((y) => y !== null);
+    expect(ys.map((y) => Number(y.toFixed(2)))).toEqual(ys);
     // no comparison value: no dot for it, no change, and the table's missing label
-    expect(points[3]).toMatchObject({
-      y: [expect.any(Number), null],
-      card: { rows: [{ value: '$4,900' }, { value: 'No value' }] },
-    });
-    expect(points[3]).not.toHaveProperty('card.delta');
-    expect(points.at(-1)).toHaveProperty('x', 100);
+    expect(points[3]).toEqual(['Sat, Oct 17', ['$4,900', 'No value'], [expect.any(Number), null]]);
   });
 
-  test("a year of daily points: the island's JSON grows linearly, about 335 B a point", () => {
-    // What crosses to the browser for a long series (R2-4, 2026-10-19): 122 KB of island JSON at
-    // 365 points (15 KB gzip), on top of the server HTML. Bucket long daily series weekly; a compact
-    // payload (series names once, `announce` joined on the client) waits on the island's budget.
+  test('a flat change carries no trend (the island reads it as flat)', () => {
+    const flat = [
+      { date: '2026-10-01', current: 10, previous: 10 },
+      { date: '2026-10-02', current: 12, previous: 6 },
+    ];
+    const [island] = clients(
+      withUseId(() =>
+        serverRender(
+          <AreaChart title="Sales" data={flat} x="date" y="current" compare="previous" />,
+        ),
+      ),
+    );
+    const points: unknown = island?.props['points'];
+    if (!Array.isArray(points)) throw new Error('no points');
+    expect(points[0]).toHaveLength(4);
+    expect(points[0][3]).toBe('0.0%');
+    expect(points[1].slice(3)).toEqual(['+100.0%', 'up']);
+  });
+
+  test('the separators are the locale\'s list separators ("und" before the last in German)', () => {
+    const [island] = clients(
+      withUseId(() =>
+        serverRender(<AreaChart title="Umsatz" locale="de-DE" data={DAYS} x="date" y="current" />),
+      ),
+    );
+    expect(island?.props['separators']).toEqual([', ', ' und ']);
+  });
+
+  test("a year of daily points: the island's JSON grows linearly, about 64 B a point", () => {
+    // What crosses to the browser for a long series (R2-4; M40 item 10, 2026-10-20): the compact
+    // payload sends each series' name once and a short tuple per point, so a year of daily points
+    // with a comparison is about 23 KB of island JSON (W10's per-point objects with an `announce`
+    // string were about 122 KB). Measured with the HTML and the RSC payload in W11's LONG-SERIES
+    // table; bucketing a daily series weekly above about 90 points still halves the HTML.
     const year = Array.from({ length: 365 }, (_, i) => ({
       date: new Date(Date.UTC(2026, 0, 1 + i)).toISOString().slice(0, 10),
       current: 2000 + ((i * 37) % 900),
@@ -167,18 +211,16 @@ describe('AreaChart under react-server', () => {
       ),
     );
     const bytes = JSON.stringify(island?.props ?? {}).length;
-    expect(bytes / 365).toBeGreaterThan(300);
-    expect(bytes / 365).toBeLessThan(350);
+    expect(bytes / 365).toBeGreaterThan(50);
+    expect(bytes / 365).toBeLessThan(80);
   });
 
-  test('xDirection="rtl" tells the island the plot is mirrored', () => {
-    const [island] = clients(
-      withUseId(() =>
-        serverRender(<AreaChart title="Sales" data={DAYS} x="date" y="current" xDirection="rtl" />),
-      ),
-    );
-    expect(island?.props['mirror']).toBe(true);
-  });
+  test.each(['ltr', 'rtl', 'auto'] as const)(
+    'xDirection="%s": the same island props (it reads the resolved direction itself)',
+    (xDirection) => {
+      expect(islandProps(xDirection)).toEqual(islandProps('ltr'));
+    },
+  );
 
   test.each(['loading', 'empty', 'error'] as const)('%s: no island', (status) => {
     const tree = withUseId(() =>

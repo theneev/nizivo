@@ -33,7 +33,13 @@ function runs(points: readonly PathPoint[]): Array<Array<readonly [number, numbe
   return out;
 }
 
-const at = (x: number, y: number): string => `${num(x)},${num(y)}`;
+/**
+ * Decimals of every path coordinate: 0.01 of the plot, under a tenth of a pixel on a 720 px plot
+ * (M40 item 10: two decimals took about 15 % off a long series' path bytes).
+ */
+export const PATH_DIGITS = 2;
+
+const at = (x: number, y: number): string => `${num(x, PATH_DIGITS)},${num(y, PATH_DIGITS)}`;
 
 function draw(
   points: readonly PathPoint[],
@@ -94,5 +100,5 @@ export function areaPath(
  * WebKit, test/browser/marks.spec.ts).
  */
 export function dotPath(x: number, y: number): string {
-  return `M${num(x)},${num(y)}h0`;
+  return `M${at(x, y)}h0`;
 }

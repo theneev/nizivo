@@ -432,7 +432,7 @@
     },
     {
       "declaration": "type",
-      "description": "The direction of the x axis. Time and value axes do not mirror by default (§14.1, §16.4).",
+      "description": "The direction of the x axis. Time and value axes do not mirror by default (§14.1, §16.4). `'rtl'` mirrors the plot and its x labels; `'auto'` mirrors them when the page's `dir` is right-to-left (HTML directionality, CSS `:dir(rtl)`), in the server HTML already, and the ChartInteraction island reads the resolved direction after hydration.",
       "import": "import type { ChartXDirection } from '@nizivo/charts/chart-frame'",
       "kind": "type",
       "name": "ChartXDirection",

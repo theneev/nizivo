@@ -6,14 +6,18 @@
 // chart/primary, down in chart/neutral (Figma's "down ≠ bad" convention, 03 §4.3).
 import type { ComponentPropsWithRef, ReactElement } from 'react';
 import { curveMonotoneX, type CurveFactory } from 'd3-shape';
+import { accessor, finite, type Accessor } from '../_core/api';
 import { VIEWBOX } from '../_core/geometry';
 import { areaPath, dotPath, linePath, type PathPoint } from '../_core/path';
 import { cx } from '../_shared/cx';
 import type { ChartTrend } from '../chart-tooltip/chart-tooltip';
 
-export interface SparklineProps extends Omit<ComponentPropsWithRef<'span'>, 'children'> {
-  /** The values in order; `null` leaves a gap. Evenly spaced along x. */
-  data: ReadonlyArray<number | null | undefined>;
+/** A value of the line: a number that is not finite leaves a gap. */
+export type SparklineValue = number | null | undefined;
+
+export interface SparklineBaseProps<T> extends Omit<ComponentPropsWithRef<'span'>, 'children'> {
+  /** The data in order, evenly spaced along x: the values themselves, or data that `y` reads. */
+  data: readonly T[];
   /**
    * An accessible name ("Sales, up 28% over 30 days"): the sparkline becomes one image. `aria-label`
    * or `aria-labelledby` do the same; without a name it is decorative (aria-hidden).
@@ -27,19 +31,33 @@ export interface SparklineProps extends Omit<ComponentPropsWithRef<'span'>, 'chi
   dot?: boolean;
 }
 
+/**
+ * Sparkline's props. `y` reads each datum's value as AreaChart's does (a key or a `(datum, index)`
+ * function, `_core/api.ts`), so one series feeds both; data that holds the values needs none.
+ */
+export type SparklineProps<T = SparklineValue> = SparklineBaseProps<T> &
+  // data of values (or of a type not inferred, as createElement leaves it) needs no `y`
+  ([T] extends [SparklineValue]
+    ? { /** The value of a datum. @default the datum itself */ y?: Accessor<T, SparklineValue> }
+    : unknown extends T
+      ? { /** The value of a datum. @default the datum itself */ y?: Accessor<T, SparklineValue> }
+      : { /** The value of a datum. */ y: Accessor<T, SparklineValue> });
+
 /** The line's lowest point, in percent of the plot, so the wash shows under it (Figma: 28 of 32 px). */
 const FLOOR = 85;
 
-export function Sparkline({
+export function Sparkline<T = SparklineValue>({
   data,
+  y,
   label,
   curve = curveMonotoneX,
   area = true,
   dot = true,
   className,
   ...rest
-}: SparklineProps): ReactElement {
-  const values = data.map((v) => (typeof v === 'number' && Number.isFinite(v) ? v : null));
+}: SparklineProps<T>): ReactElement {
+  const value = y === undefined ? (datum: T) => datum : accessor(y);
+  const values = data.map((d, i) => finite(value(d, i)));
   const defined = values.filter((v) => v !== null);
   const lo = Math.min(...defined);
   const hi = Math.max(...defined);

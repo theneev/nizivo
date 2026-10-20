@@ -268,32 +268,27 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 | Entry          | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | -------------- | -------: | ---------: | ---------: | ----------: | -----------: |
-| `.`            |    8,502 |        8.3 |      7,726 |         9.1 |          816 |
-| /bar-chart     |    3,660 |        3.6 |      3,325 |         3.6 |           26 |
-| /chart-frame   |    1,786 |        1.7 |      1,600 |           2 |          262 |
+| `.`            |    8,980 |        8.8 |      8,144 |         9.7 |          952 |
+| /area-chart    |    6,570 |        6.4 |      5,971 |         7.1 |          700 |
+| /bar-chart     |    5,258 |        5.1 |      4,757 |         5.7 |          578 |
+| /chart-frame   |    1,793 |        1.8 |      1,604 |           2 |          255 |
 | /chart-tooltip |      413 |        0.4 |        373 |         0.5 |           99 |
-| /donut-chart   |    3,093 |        3.0 |      2,805 |         3.2 |          183 |
+| /donut-chart   |    3,162 |        3.1 |      2,879 |         3.2 |          114 |
 | /legend        |      870 |        0.8 |        796 |           1 |          154 |
-| /sparkline     |    1,575 |        1.5 |      1,490 |         1.7 |          165 |
+| /sparkline     |    1,618 |        1.6 |      1,526 |         1.8 |          225 |
 
 #### `@nizivo/charts`: Composite bundles (one bundle; React Aria counted once)
 
 | Entry                         | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | ----------------------------- | -------: | ---------: | ---------: | ----------: | -----------: |
-| { AreaChart } from the barrel |    6,209 |        6.1 |      5,677 |         6.7 |          651 |
-| island with its imports       |    1,080 |        1.1 |        980 |         1.2 |          148 |
-
-#### `@nizivo/charts`: Own code (one module minified alone, imports not counted)
-
-| Entry                                 | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
-| ------------------------------------- | -------: | ---------: | ---------: | ----------: | -----------: |
-| own: _island/chart-interaction.client |      813 |        0.8 |        731 |         0.8 |            6 |
+| { AreaChart } from the barrel |    6,558 |        6.4 |      5,962 |         7.1 |          712 |
+| island with its imports       |    1,457 |        1.4 |      1,315 |         1.6 |          181 |
 
 #### `@nizivo/charts`: CSS and JSON entries (the published file, gzip)
 
 | Entry       | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | ----------- | -------: | ---------: | ---------: | ----------: | -----------: |
-| /styles.css |    3,382 |        3.3 |      2,988 |         3.6 |          304 |
+| /styles.css |    3,405 |        3.3 |      3,013 |         3.7 |          383 |
 
 <!-- size:tables:end -->
 

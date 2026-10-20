@@ -5,7 +5,12 @@
 import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, test } from 'vitest';
 import { donutPath } from '../../src/donut-chart/donut-chart';
-import { DonutChart, foldCategories, type DonutChartProps } from '../../src/donut-chart/index';
+import {
+  DonutChart,
+  donutChartLabels,
+  foldCategories,
+  type DonutChartProps,
+} from '../../src/donut-chart/index';
 
 interface Channel {
   name: string;
@@ -186,7 +191,75 @@ describe('DonutChart', () => {
     expect(html({ data: [{ name: 'a', sales: 0 }] })).toContain('data-empty=""');
   });
 
-  test('makes no keyboard claim', () => {
+  test('makes no keyboard claim; tableView="details" shows the values to everyone', () => {
     expect(html()).not.toContain('tabindex');
+    expect(html()).not.toContain('aria-live');
+    expect(html({ tableView: 'details' })).toContain('<details');
+  });
+});
+
+describe("DonutChart props: the charts' one API shape (M40 item 9)", () => {
+  interface Row {
+    name: string;
+    sales: number | null;
+  }
+  const NONE: Row[] = [];
+  const ROWS: Row[] = [
+    { name: 'Card', sales: 812.5 },
+    { name: 'Invoice', sales: null },
+    { name: 'Cash', sales: 198 },
+  ];
+
+  test('category and value take a key of the datum or a (datum, index) function, alike', () => {
+    const byKey = renderToStaticMarkup(
+      <DonutChart title="Payments" data={ROWS} category="name" value="sales" />,
+    );
+    const byFunction = renderToStaticMarkup(
+      <DonutChart
+        title="Payments"
+        data={ROWS}
+        category={(d, i) => (i < 0 ? '' : d.name)}
+        value={(d) => d.sales}
+      />,
+    );
+    expect(byKey).toBe(byFunction);
+  });
+
+  test("a null value is left out; format defaults to Intl's own (fractions show)", () => {
+    const out = renderToStaticMarkup(
+      <DonutChart title="Payments" data={ROWS} category="name" value="sales" />,
+    );
+    expect(out.match(/class="nz-donut-chart-segment"/g)).toHaveLength(2);
+    expect(out).not.toContain('Invoice');
+    expect(out).toContain('<span class="nz-legend-value">812.5</span>');
+    // the total in the centre: compactOf(format), at most one fraction digit
+    expect(out).toContain('<span class="nz-donut-chart-value">1K</span>');
+  });
+
+  test('totalFormat overrides the compact total', () => {
+    const out = renderToStaticMarkup(
+      <DonutChart
+        title="Payments"
+        data={ROWS}
+        category="name"
+        value="sales"
+        totalFormat={{ maximumFractionDigits: 1 }}
+      />,
+    );
+    expect(out).toContain('<span class="nz-donut-chart-value">1,010.5</span>');
+  });
+
+  test("labels: ChartFrame's strings and DonutChart's in one Partial<DonutChartLabels>", () => {
+    const out = renderToStaticMarkup(
+      <DonutChart
+        title="Payments"
+        data={NONE}
+        category="name"
+        value="sales"
+        labels={{ empty: 'Keine Daten', other: 'Andere' }}
+      />,
+    );
+    expect(out).toContain('Keine Daten');
+    expect(donutChartLabels.empty).toBe('No data to show');
   });
 });

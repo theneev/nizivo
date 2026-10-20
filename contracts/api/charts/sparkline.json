@@ -3,6 +3,12 @@
   "entry": "./sparkline",
   "exports": [
     {
+      "definedIn": ".",
+      "import": "import type { Accessor } from '@nizivo/charts/sparkline'",
+      "kind": "type",
+      "name": "Accessor"
+    },
+    {
       "client": false,
       "import": "import { Sparkline } from '@nizivo/charts/sparkline'",
       "inherits": [
@@ -20,6 +26,61 @@
         {
           "default": "true",
           "description": "The 10% wash under the line.",
+          "inheritedFrom": "SparklineBaseProps",
+          "name": "area",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "default": "curveMonotoneX",
+          "description": "Any d3-shape curve factory.",
+          "inheritedFrom": "SparklineBaseProps",
+          "name": "curve",
+          "required": false,
+          "type": "CurveFactory"
+        },
+        {
+          "description": "The data in order, evenly spaced along x: the values themselves, or data that `y` reads.",
+          "inheritedFrom": "SparklineBaseProps",
+          "name": "data",
+          "required": true,
+          "type": "readonly T[]"
+        },
+        {
+          "default": "true",
+          "description": "The last value's dot.",
+          "inheritedFrom": "SparklineBaseProps",
+          "name": "dot",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "description": "An accessible name (\"Sales, up 28% over 30 days\"): the sparkline becomes one image. `aria-label` or `aria-labelledby` do the same; without a name it is decorative (aria-hidden).",
+          "inheritedFrom": "SparklineBaseProps",
+          "name": "label",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "default": "the datum itself",
+          "description": "The value of a datum.",
+          "name": "y",
+          "required": false,
+          "type": "Accessor<T, SparklineValue>"
+        }
+      ],
+      "propsType": "SparklineProps<T>",
+      "source": "packages/charts/src/sparkline/sparkline.tsx"
+    },
+    {
+      "declaration": "interface",
+      "extends": ["Omit<ComponentPropsWithRef<\"span\">, \"children\">"],
+      "import": "import type { SparklineBaseProps } from '@nizivo/charts/sparkline'",
+      "kind": "type",
+      "members": [
+        {
+          "default": "true",
+          "description": "The 10% wash under the line.",
           "name": "area",
           "required": false,
           "type": "boolean"
@@ -32,10 +93,10 @@
           "type": "CurveFactory"
         },
         {
-          "description": "The values in order; `null` leaves a gap. Evenly spaced along x.",
+          "description": "The data in order, evenly spaced along x: the values themselves, or data that `y` reads.",
           "name": "data",
           "required": true,
-          "type": "ReadonlyArray<number | null | undefined>"
+          "type": "readonly T[]"
         },
         {
           "default": "true",
@@ -51,17 +112,29 @@
           "type": "string"
         }
       ],
-      "propsType": "SparklineProps",
-      "source": "packages/charts/src/sparkline/sparkline.tsx"
+      "name": "SparklineBaseProps",
+      "source": "packages/charts/src/sparkline/sparkline.tsx",
+      "typeParameters": ["T"]
     },
     {
-      "declaration": "interface",
-      "extends": ["Omit<ComponentPropsWithRef<\"span\">, \"children\">"],
+      "declaration": "type",
+      "description": "Sparkline's props. `y` reads each datum's value as AreaChart's does (a key or a `(datum, index)` function, `_core/api.ts`), so one series feeds both; data that holds the values needs none.",
       "import": "import type { SparklineProps } from '@nizivo/charts/sparkline'",
       "kind": "type",
       "name": "SparklineProps",
       "propsOf": "Sparkline",
       "source": "packages/charts/src/sparkline/sparkline.tsx",
+      "text": "SparklineBaseProps<T> & ([T] extends [SparklineValue] ? {\n  /** The value of a datum. @default the datum itself */ y?: Accessor<T, SparklineValue>;\n} : unknown extends T ? {\n  /** The value of a datum. @default the datum itself */ y?: Accessor<T, SparklineValue>;\n} : {\n  /** The value of a datum. */ y: Accessor<T, SparklineValue>;\n})",
+      "typeParameters": ["T = SparklineValue"]
+    },
+    {
+      "declaration": "type",
+      "description": "A value of the line: a number that is not finite leaves a gap.",
+      "import": "import type { SparklineValue } from '@nizivo/charts/sparkline'",
+      "kind": "type",
+      "name": "SparklineValue",
+      "source": "packages/charts/src/sparkline/sparkline.tsx",
+      "text": "number | null | undefined",
       "typeParameters": []
     }
   ],

@@ -166,15 +166,15 @@ export function sizeEntries(): SizeEntry[] {
           path: entry('charts-island.js'),
         },
       );
-      // The ChartInteraction island (§14.1, §17.2 ≤ 0.8 KB): own code, minified alone.
-      for (const module of clientModules('charts')) {
-        out.push({
-          name: `@nizivo/charts own: ${module}`,
-          pkg,
-          family: 'own',
-          path: join(dir, 'dist', `${module}.js`),
-        });
-      }
+      // §17.2's island figure gates the client graph above (M40, 2026-10-20), not the island's own
+      // code: own ≈ graph − ChartTooltip − cx, and ./chart-tooltip has its own entry, so an `own:`
+      // entry would add a budget and no information. The graph entry names one module, so a second
+      // client module in charts must come with its own entry first.
+      const islands = clientModules('charts');
+      if (islands.join(',') !== '_island/chart-interaction.client')
+        throw new Error(
+          `@nizivo/charts client modules ${islands.join(', ')}: only the ChartInteraction island has a size entry (entries/charts-island.js)`,
+        );
     }
     if (pkg === 'icons') {
       out.push(

@@ -1,7 +1,7 @@
 // @nizivo/charts: a pure re-export barrel, no directive (ARCHITECTURE.md §5.2, §14.1). Every part
-// is also its own subpath (`@nizivo/charts/chart-frame`) except AreaChart, which is barrel-only
-// until its size figure is decided (D-bc); the core maths is public here so a custom renderer
-// inside <ChartFrame> computes positions the way Nizivo's do.
+// is also its own subpath (`@nizivo/charts/chart-frame`, `@nizivo/charts/area-chart`); the core
+// maths is public here so a custom renderer inside <ChartFrame> computes positions the way
+// Nizivo's do.
 export * from './chart-frame/index';
 export * from './legend/index';
 export * from './area-chart/index';
@@ -9,6 +9,7 @@ export * from './bar-chart/index';
 export * from './chart-tooltip/index';
 export * from './donut-chart/index';
 export * from './sparkline/index';
+export type { Accessor, CartesianChartOptions, ChartXTicks } from './_core/api';
 export { band, linear, point, valueDomain } from './_core/scale';
 export type {
   BandOptions,

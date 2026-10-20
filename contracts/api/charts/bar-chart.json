@@ -3,6 +3,12 @@
   "entry": "./bar-chart",
   "exports": [
     {
+      "definedIn": ".",
+      "import": "import type { Accessor } from '@nizivo/charts/bar-chart'",
+      "kind": "type",
+      "name": "Accessor"
+    },
+    {
       "client": false,
       "import": "import { BarChart } from '@nizivo/charts/bar-chart'",
       "inherits": [
@@ -18,20 +24,24 @@
       "name": "BarChart",
       "props": [
         {
-          "default": "`format` with `notation: 'compact'` and at most one fraction digit",
+          "default": "`format` in compact notation with at most one fraction digit (\"$8K\")",
           "description": "The y labels.",
+          "inheritedFrom": "CartesianChartOptions",
           "name": "axisFormat",
           "required": false,
           "type": "Intl.NumberFormatOptions"
         },
         {
+          "description": "In x order: one datum per point or bar.",
+          "inheritedFrom": "CartesianChartOptions",
           "name": "data",
           "required": true,
           "type": "readonly T[]"
         },
         {
-          "default": "{ month: 'short', day: 'numeric' }",
+          "default": "{ month: 'short', day: 'numeric' } (\"Oct 1\")",
           "description": "ISO plain dates on the x axis.",
+          "inheritedFrom": "CartesianChartOptions",
           "name": "dateFormat",
           "required": false,
           "type": "Intl.DateTimeFormatOptions"
@@ -51,16 +61,25 @@
           "type": "ReactNode"
         },
         {
-          "default": "{ maximumFractionDigits: 0 }",
-          "description": "Values in the table and the tooltip.",
+          "default": "Intl.NumberFormat's own ({})",
+          "description": "Values in the tooltip and the data table.",
+          "inheritedFrom": "CartesianChartOptions",
           "name": "format",
           "required": false,
           "type": "Intl.NumberFormatOptions"
         },
         {
+          "default": "'nizivo'",
+          "inheritedFrom": "ChartFrameProps",
+          "name": "interaction",
+          "required": false,
+          "type": "ChartInteractionMode",
+          "values": ["nizivo", "none"]
+        },
+        {
           "name": "labels",
           "required": false,
-          "type": "Partial<ChartFrameLabels & BarChartLabels>"
+          "type": "Partial<BarChartLabels>"
         },
         {
           "description": "A `<Legend>`, or any node; rendered between the caption and the plot in every status.",
@@ -71,14 +90,16 @@
         },
         {
           "default": "'en-US'",
-          "description": "BCP 47 locale every number and date is formatted in, once, on the server (§16.4).",
+          "description": "The BCP 47 locale every number and date is formatted in, once, on the server (§16.4).",
+          "inheritedFrom": "CartesianChartOptions",
           "name": "locale",
           "required": false,
           "type": "string"
         },
         {
           "default": "{ weekday: 'short', month: 'short', day: 'numeric' }",
-          "description": "ISO plain dates in the tooltip title and the table.",
+          "description": "ISO plain dates in the tooltip and the data table.",
+          "inheritedFrom": "CartesianChartOptions",
           "name": "longDateFormat",
           "required": false,
           "type": "Intl.DateTimeFormatOptions"
@@ -127,10 +148,11 @@
           "type": "ReactNode"
         },
         {
-          "description": "The category of a datum: an ISO plain date (`'2026-10-14'`, formatted per `locale`) or a label.",
+          "description": "The x value: an ISO plain date (`'2026-10-14'`, formatted per `locale`) or any label.",
+          "inheritedFrom": "CartesianChartOptions",
           "name": "x",
           "required": true,
-          "type": "(datum: T) => string"
+          "type": "Accessor<T, string>"
         },
         {
           "default": "'ltr'",
@@ -141,19 +163,22 @@
           "values": ["ltr", "rtl", "auto"]
         },
         {
+          "inheritedFrom": "CartesianChartOptions",
           "name": "xTicks",
           "required": false,
-          "type": "BarChartXTicks"
+          "type": "ChartXTicks"
         },
         {
-          "description": "The value of a datum. A non-finite value draws no bar.",
+          "description": "The value. A value that is not a finite number is a gap (no point, no bar).",
+          "inheritedFrom": "CartesianChartOptions",
           "name": "y",
           "required": true,
-          "type": "(datum: T) => number"
+          "type": "Accessor<T, number | null | undefined>"
         },
         {
           "default": "4",
-          "description": "About how many y ticks; the domain is niced for this count.",
+          "description": "About how many y labels; the value domain is niced for this count.",
+          "inheritedFrom": "CartesianChartOptions",
           "name": "yTicks",
           "required": false,
           "type": "number"
@@ -188,7 +213,8 @@
     },
     {
       "declaration": "interface",
-      "description": "BarChart's own strings (§16.4). Never concatenated: each is a whole label.",
+      "description": "BarChart's strings (§16.4), with ChartFrame's. Never concatenated: each is a whole label.",
+      "extends": ["ChartFrameLabels"],
       "import": "import type { BarChartLabels } from '@nizivo/charts/bar-chart'",
       "kind": "type",
       "members": [
@@ -199,8 +225,26 @@
           "type": "string"
         },
         {
-          "description": "The data table cell of a datum with no finite value.",
+          "description": "The interactive layer's keyboard instructions.",
+          "name": "hint",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "description": "The interactive layer's role, as assistive technology names it.",
+          "name": "interaction",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "description": "The data table cell (and the tooltip value) of a datum with no finite value.",
           "name": "missing",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "description": "The interactive layer's name when `title` is not a string.",
+          "name": "points",
           "required": true,
           "type": "string"
         },
@@ -217,9 +261,8 @@
     },
     {
       "declaration": "interface",
-      "extends": [
-        "Omit<ChartFrameElementProps, \"table\" | \"ticks\" | \"axes\" | \"interaction\" | \"children\" | \"labels\">"
-      ],
+      "description": "BarChart's props: the shared cartesian options (`_core/api.ts`; `xTicks.max` defaults to 8 here) and ChartFrame's, the `<figure>`'s attributes included.",
+      "extends": ["CartesianChartOptions<T>", "ChartFramePassthrough<\"axes\">"],
       "import": "import type { BarChartProps } from '@nizivo/charts/bar-chart'",
       "kind": "type",
       "name": "BarChartProps",
@@ -228,27 +271,16 @@
       "typeParameters": ["T"]
     },
     {
-      "declaration": "interface",
-      "import": "import type { BarChartXTicks } from '@nizivo/charts/bar-chart'",
+      "definedIn": ".",
+      "import": "import type { CartesianChartOptions } from '@nizivo/charts/bar-chart'",
       "kind": "type",
-      "members": [
-        {
-          "description": "Bars between labels. Derived from `max` when absent.",
-          "name": "every",
-          "required": false,
-          "type": "number"
-        },
-        {
-          "default": "8",
-          "description": "At most this many x labels, the first and last always included.",
-          "name": "max",
-          "required": false,
-          "type": "number"
-        }
-      ],
-      "name": "BarChartXTicks",
-      "source": "packages/charts/src/bar-chart/bar-chart.tsx",
-      "typeParameters": []
+      "name": "CartesianChartOptions"
+    },
+    {
+      "definedIn": ".",
+      "import": "import type { ChartXTicks } from '@nizivo/charts/bar-chart'",
+      "kind": "type",
+      "name": "ChartXTicks"
     },
     {
       "client": false,

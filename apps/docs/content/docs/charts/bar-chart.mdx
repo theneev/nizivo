@@ -5,11 +5,6 @@ description: Counts per period, drawn on the server. Bars cap at 22 px, round on
 
 import { ChartExample, ChartImport } from '../../../components/chart-example';
 import { ChartsTable } from '../../../components/charts-table';
-import {
-  BarChartExample,
-  BarChartNegativeExample,
-  BarChartStatusExample,
-} from '../../../components/charts-live/bar-chart.example';
 
 <Callout type="warn" title="Not yet published (v0.2)">
   `@nizivo/charts` is not on npm yet; it publishes at 0.2.0. Until then its API can change. The
@@ -23,35 +18,26 @@ import {
 
 ## Static or interactive
 
-**Server.** BarChart has no `'use client'` and imports no client module. Hovering a column dims the
-other bars and shows that bar's tooltip in CSS alone. It passes `interaction="none"` to its
-[ChartFrame](/docs/charts/chart-frame/): the plot has no Tab stop. The data table is the
-screen-reader path; for sighted keyboard users, show it with `tableView="details"`.
+**Split.** By default (`interaction="nizivo"`) BarChart renders the ChartInteraction island in
+column mode: one Tab stop over the plot, the arrow keys move between the bars, and Escape hides the
+card. With `interaction="none"` it renders no island: hovering a column dims the other bars and
+shows that bar's tooltip in CSS alone, and `tableView="details"` gives sighted keyboard users the
+values.
 [How to choose](/docs/guides/static-or-interactive/).
 
 ## Examples
 
 ### Basic
 
-<ChartExample part="bar-chart" name="BarChartExample" title="Basic" live={<BarChartExample />} />
+<ChartExample part="bar-chart" name="BarChartExample" title="Basic" />
 
 ### Negative
 
-<ChartExample
-  part="bar-chart"
-  name="BarChartNegativeExample"
-  title="Negative"
-  live={<BarChartNegativeExample />}
-/>
+<ChartExample part="bar-chart" name="BarChartNegativeExample" title="Negative" />
 
 ### Status
 
-<ChartExample
-  part="bar-chart"
-  name="BarChartStatusExample"
-  title="Status"
-  live={<BarChartStatusExample />}
-/>
+<ChartExample part="bar-chart" name="BarChartStatusExample" title="Status" />
 
 ## Props
 
