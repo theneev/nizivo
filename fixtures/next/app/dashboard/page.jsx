@@ -40,9 +40,12 @@ export default function Page() {
             </NativeSelect>
           }
           chart={
+            // the TrendCard's header titles the chart, so its caption is visually hidden; it still
+            // names the figure and its table (titleVisibility, M42 item 15)
             <AreaChart
               title="Sales"
               summary="Daily sales, Oct 1–14, vs previous period"
+              titleVisibility="hidden"
               data={SALES}
               x="date"
               y="sales"

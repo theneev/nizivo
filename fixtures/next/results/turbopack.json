@@ -28,8 +28,8 @@
       "stored": {
         "frames": 90,
         "wrong": [],
-        "firstPaint": 20,
-        "firstContentfulPaint": 20,
+        "firstPaint": 24,
+        "firstContentfulPaint": 24,
         "firstTheme": "dark",
         "lastTheme": "dark",
         "pixel": "rgb(16, 19, 17)",
@@ -61,11 +61,11 @@
       "late": {
         "frames": 90,
         "wrong": [
-          "6:light dark/rgb(246, 247, 244)",
-          "23:light dark/rgb(246, 247, 244)",
+          "5:light dark/rgb(246, 247, 244)",
+          "22:light dark/rgb(246, 247, 244)",
           "39:light dark/rgb(246, 247, 244)",
-          "56:light dark/rgb(246, 247, 244)",
-          "73:light dark/rgb(246, 247, 244)"
+          "55:light dark/rgb(246, 247, 244)",
+          "72:light dark/rgb(246, 247, 244)"
         ],
         "firstPaint": 20,
         "firstContentfulPaint": 20,
@@ -77,8 +77,8 @@
       }
     },
     "lightDark": {
-      "packed": 74,
-      "loaded": 74,
+      "packed": 73,
+      "loaded": 73,
       "stylesheets": 1,
       "ok": true
     },
@@ -1186,7 +1186,7 @@
           "readyTiles": "4",
           "cls": "0.0000",
           "layoutShifts": "0",
-          "resolvedMs": "548",
+          "resolvedMs": "551",
           "ok": true
         }
       },
@@ -1225,7 +1225,7 @@
           "readyTiles": "4",
           "cls": "0.0000",
           "layoutShifts": "0",
-          "resolvedMs": "1352",
+          "resolvedMs": "1355",
           "ok": true
         },
         "chart": {

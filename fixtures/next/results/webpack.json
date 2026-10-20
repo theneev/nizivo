@@ -63,7 +63,7 @@
         "wrong": [
           "5:light dark/rgb(246, 247, 244)",
           "22:light dark/rgb(246, 247, 244)",
-          "39:light dark/rgb(246, 247, 244)",
+          "38:light dark/rgb(246, 247, 244)",
           "55:light dark/rgb(246, 247, 244)",
           "72:light dark/rgb(246, 247, 244)"
         ],
@@ -77,8 +77,8 @@
       }
     },
     "lightDark": {
-      "packed": 74,
-      "loaded": 74,
+      "packed": 73,
+      "loaded": 73,
       "stylesheets": 2,
       "ok": true
     },
@@ -1214,7 +1214,7 @@
           "readyTiles": "4",
           "cls": "0.0000",
           "layoutShifts": "0",
-          "resolvedMs": "546",
+          "resolvedMs": "547",
           "ok": true
         }
       },
@@ -1253,7 +1253,7 @@
           "readyTiles": "4",
           "cls": "0.0000",
           "layoutShifts": "0",
-          "resolvedMs": "1351",
+          "resolvedMs": "1348",
           "ok": true
         },
         "chart": {

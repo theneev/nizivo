@@ -28,8 +28,8 @@
       "stored": {
         "frames": 90,
         "wrong": [],
-        "firstPaint": 32,
-        "firstContentfulPaint": 32,
+        "firstPaint": 36,
+        "firstContentfulPaint": 36,
         "firstTheme": "dark",
         "lastTheme": "dark",
         "pixel": "rgb(16, 19, 17)",
@@ -39,8 +39,8 @@
       "static": {
         "frames": 90,
         "wrong": [],
-        "firstPaint": 40,
-        "firstContentfulPaint": 40,
+        "firstPaint": 36,
+        "firstContentfulPaint": 36,
         "firstTheme": "dark",
         "lastTheme": "dark",
         "pixel": "rgb(16, 19, 17)",
@@ -61,11 +61,11 @@
       "late": {
         "frames": 90,
         "wrong": [
-          "20:light dark/rgb(246, 247, 244)",
-          "37:light dark/rgb(246, 247, 244)",
-          "54:light dark/rgb(246, 247, 244)",
-          "70:light dark/rgb(246, 247, 244)",
-          "87:light dark/rgb(246, 247, 244)"
+          "19:light dark/rgb(246, 247, 244)",
+          "36:light dark/rgb(246, 247, 244)",
+          "53:light dark/rgb(246, 247, 244)",
+          "69:light dark/rgb(246, 247, 244)",
+          "86:light dark/rgb(246, 247, 244)"
         ],
         "firstPaint": 36,
         "firstContentfulPaint": 36,
@@ -77,8 +77,8 @@
       }
     },
     "lightDark": {
-      "packed": 74,
-      "loaded": 74,
+      "packed": 73,
+      "loaded": 73,
       "stylesheets": 1,
       "ok": true
     },
@@ -1186,7 +1186,7 @@
           "readyTiles": "4",
           "cls": "0.0000",
           "layoutShifts": "0",
-          "resolvedMs": "691",
+          "resolvedMs": "684",
           "ok": true
         }
       },
@@ -1225,7 +1225,7 @@
           "readyTiles": "4",
           "cls": "0.0000",
           "layoutShifts": "0",
-          "resolvedMs": "1458",
+          "resolvedMs": "1477",
           "ok": true
         },
         "chart": {
