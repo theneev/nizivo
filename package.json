@@ -14,7 +14,7 @@
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",
     "lint": "oxlint --deny-warnings && oxfmt --check && turbo run lint",
-    "gen:check": "nz gen --check && turbo run build --filter=@nizivo/react --output-logs=errors-only && nz api --check",
+    "gen:check": "nz gen --check && turbo run build --filter=@nizivo/react --filter=@nizivo/charts --output-logs=errors-only && nz api --check",
     "test:dist": "pnpm --filter @nizivo/react exec vitest run --config test/built/vitest.config.ts",
     "check:a11y": "node packages/tokens/scripts/a11y.ts --check",
     "check:release": "node packages/tooling/release/check.ts",

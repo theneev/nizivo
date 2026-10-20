@@ -1,5 +1,7 @@
 /**
- * `contracts/api/css/<name>.json` from one built stylesheet (ARCHITECTURE.md §8.4 rule 4, §18.2).
+ * `contracts/api/css/<name>.json` from one built stylesheet (ARCHITECTURE.md §8.4 rule 4, §18.2),
+ * and `contracts/api/charts/css/<part>.json` from one part's sheet inside `@nizivo/charts`'
+ * `dist/styles.css` (generate.ts splits it).
  *
  * It reads `dist/css/<name>.css`, what ships: custom media already substituted and the build's
  * guards already passed. Lightning CSS re-prints it with targets below native nesting and no
@@ -19,7 +21,14 @@ import {
   type ComponentManifest,
   type VariableKind,
 } from '../stylelint-config/contract.js';
-import type { CssApiFile, CssFallback, CssHookDoc, CssHookRead, PrivateValue } from './schema.ts';
+import type {
+  ApiPackage,
+  CssApiFile,
+  CssFallback,
+  CssHookDoc,
+  CssHookRead,
+  PrivateValue,
+} from './schema.ts';
 import { compareStrings, GENERATED_COMMENT, normalizeText } from './text.ts';
 
 export interface CssInput {
@@ -35,6 +44,8 @@ export interface CssInput {
   tokens: ReadonlySet<string>;
   /** The source stylesheet, for hook descriptions; undefined when there is none. */
   source?: string | undefined;
+  /** @default '@nizivo/react' */
+  package?: ApiPackage;
 }
 
 type Json = Record<string, unknown>;
@@ -298,7 +309,7 @@ export function extractCss(input: CssInput): { file?: CssApiFile; errors: string
       entry: input.entry,
       hooks,
       layers,
-      package: '@nizivo/react',
+      package: input.package ?? '@nizivo/react',
       runtime: [...runtime].toSorted(compareStrings),
       tokens: [...tokens].toSorted(compareStrings),
       version: 1,

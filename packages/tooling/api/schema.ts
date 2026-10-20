@@ -11,6 +11,10 @@
  * - `contracts/api/css/<name>.json` ({@link CssApiFile}), one per stylesheet entry:
  *   `./css/<name>.css` → `css/<name>.json` (and `./reset.css` → `css/reset.json` once it exists).
  *   `./styles.css` gets none: it concatenates the others.
+ * - `contracts/api/charts/<entry>.json` ({@link ChartsApiFile}), one per JavaScript entry of the
+ *   `@nizivo/charts` exports map (`.` → `charts/index.json`, `./bar-chart` → `charts/bar-chart.json`),
+ *   and `contracts/api/charts/css/<part>.json` ({@link CssApiFile}), one per part stylesheet that
+ *   `@nizivo/charts/styles.css` concatenates (`src/<part>/<part>.css`).
  *
  * Determinism (both files): keys sorted in code-point order at every depth (so `$comment` comes
  * first), arrays sorted as each field says, printed by `printJson` in `../gen/format.ts` (oxfmt's
@@ -30,6 +34,9 @@ export type Deprecation = string | true;
 
 /** A literal member of a union, as a JSON value (`"info"`, `2`, `true`, `null`). */
 export type LiteralValue = string | number | boolean | null;
+
+/** A package `nz api` documents. */
+export type ApiPackage = '@nizivo/react' | '@nizivo/charts';
 
 // ── contracts/api/react/<entry>.json ───────────────────────────────────────────────────────────
 
@@ -121,12 +128,18 @@ export interface ComponentDoc {
    * it from the built `.js`, because `.d.ts` files drop directives); `false` when it is server-safe.
    */
   client: boolean;
-  /** The exported props interface (`"AlertProps"`); its own type export then omits `members`. */
+  /**
+   * The exported props type as the component's parameter writes it (`"AlertProps"`; a generic
+   * chart's `"BarChartProps<T>"`); its own type export then omits `members` and has `propsOf`.
+   * Usually an interface; it may be a type alias of an intersection (`@nizivo/charts`'
+   * `ChartFrameElementProps = ChartFrameProps & ChartFrameAttributes`), whose interfaces are then
+   * read as if the alias extended them.
+   */
   propsType: string;
   /**
    * The props the interface declares itself, plus the members of any base interface declared in
-   * `@nizivo/react` (marked `inheritedFrom`). React's DOM props are summarised in `inherits`. Sorted
-   * by `name`.
+   * the package (marked `inheritedFrom`: the interface that declares the member). React's DOM props
+   * are summarised in `inherits`. Sorted by `name`.
    */
   props: MemberDoc[];
   /** One entry per base in the `extends` clause that is summarised rather than listed; clause order. */
@@ -229,6 +242,12 @@ export interface TypeExport extends ExportBase {
    * them here.
    */
   members?: MemberDoc[];
+  /**
+   * The call signatures of an interface that is also a function type (`ScaleLike<D>`'s
+   * `(value: D): number | undefined`), as written in the `.d.ts` without the final semicolon, in
+   * declaration order. Absent when there are none.
+   */
+  callSignatures?: string[];
   /** The props interface of this export or part (`"Alert"`, `"Card.Root"`): documented there. */
   propsOf?: string;
   /** The render state of this export or part (`"Alert"`): documented in its `render`. */
@@ -245,7 +264,11 @@ export interface ReexportedExport {
   kind: ApiExportKind;
   /** The import from THIS entry: `import { Alert } from '@nizivo/react'` in `index.json`. */
   import: string;
-  /** The entry whose file documents it: `"./alert"`. */
+  /**
+   * The entry whose file documents it (`"./alert"`, `"."`), or, for a type re-exported from a
+   * dependency, that dependency's package name (`"d3-shape"`, never `"@types/d3-shape"`): an entry
+   * key starts with `.`, a package name never does.
+   */
   definedIn: string;
 }
 
@@ -278,7 +301,11 @@ export interface MemberDoc {
   default?: string;
   description?: string;
   deprecated?: Deprecation;
-  /** For a member listed from a base interface declared in `@nizivo/react`: that base's name. */
+  /**
+   * For a member listed from a base interface declared in the package (`@nizivo/react`, or
+   * `@nizivo/charts`), directly or through a type alias of an intersection: the name of the
+   * interface that declares it.
+   */
   inheritedFrom?: string;
 }
 
@@ -370,15 +397,40 @@ export interface DataAttributeDoc {
   meaning: string;
 }
 
+// ── contracts/api/charts/<entry>.json ──────────────────────────────────────────────────────────
+
+/**
+ * One JavaScript entry of `@nizivo/charts` (§14.1), read from its built `.d.ts` exactly as
+ * {@link ReactApiFile} is read from `@nizivo/react`'s. Charts parts have no `component.json`, so
+ * there is no `component` and no `slots` (the charts docs pages describe their slots in prose).
+ * An export declared outside every subpath folder (`_core`'s scales and ticks, or a part that is in
+ * the barrel only) is documented in `charts/index.json`, which re-exports everything else.
+ */
+export interface ChartsApiFile {
+  $comment: GeneratedComment;
+  version: ApiFormatVersion;
+  package: '@nizivo/charts';
+  /** The exports-map key: `"."`, `"./bar-chart"`. */
+  entry: string;
+  /** Every runtime and type export of the entry, sorted by `name`. */
+  exports: ApiExport[];
+}
+
 // ── contracts/api/css/<name>.json ──────────────────────────────────────────────────────────────
 
 export interface CssApiFile {
   $comment: GeneratedComment;
   version: ApiFormatVersion;
-  package: '@nizivo/react';
-  /** The exports-map key: `"./css/alert.css"`. */
+  package: ApiPackage;
+  /**
+   * The exports-map key: `"./css/alert.css"`. For a `@nizivo/charts` part, `"./styles.css"`, the
+   * one stylesheet that ships it (its `component` says which part this file describes).
+   */
   entry: string;
-  /** The component it styles (manifest `name`); absent for a shared file such as `base.css`. */
+  /**
+   * The component it styles (manifest `name`; for a charts part, its folder: `"bar-chart"`); absent
+   * for a shared file such as `base.css`.
+   */
   component?: string;
   /**
    * The layers the file writes into, in file order: `["nz.components"]`; `base.css` writes

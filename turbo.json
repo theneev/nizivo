@@ -41,7 +41,12 @@
       "outputs": []
     },
     "@nizivo/tooling#test": {
-      "dependsOn": ["^build", "@nizivo/react#build", "@nizivo/tokens#build"],
+      "dependsOn": [
+        "^build",
+        "@nizivo/react#build",
+        "@nizivo/tokens#build",
+        "@nizivo/charts#build"
+      ],
       "inputs": [
         "$TURBO_DEFAULT$",
         "$TURBO_ROOT$/RELEASING.md",
@@ -51,8 +56,7 @@
         "$TURBO_ROOT$/packages/icons/package.json",
         "$TURBO_ROOT$/packages/charts/package.json",
         "$TURBO_ROOT$/packages/react/src/**/*.client.tsx",
-        "$TURBO_ROOT$/packages/charts/src/**/*.client.tsx",
-        "$TURBO_ROOT$/packages/charts/src/_shared/**",
+        "$TURBO_ROOT$/packages/charts/src/**",
         "$TURBO_ROOT$/packages/react/src/contracts/**",
         "$TURBO_ROOT$/packages/react/src/_internal/cx.ts",
         "$TURBO_ROOT$/fixtures/runner/pack.ts"

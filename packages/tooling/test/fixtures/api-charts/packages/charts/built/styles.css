@@ -1,0 +1,13 @@
+@layer nz.tokens, nz.components;
+@layer nz.components {
+  .nz-frame {
+    gap: var(--nz-frame-gap, var(--nz-space-2));
+    display: grid;
+  }
+}
+@layer nz.tokens, nz.components;
+@layer nz.components {
+  .nz-spark {
+    color: var(--nz-spark-color, var(--nz-text-primary));
+  }
+}

@@ -14,9 +14,11 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { afterEach, beforeAll, describe, expect, test } from 'vitest';
-import { generateApi } from '../api/generate.ts';
+import { generateApi, splitSheets } from '../api/generate.ts';
+import { dependencyOf } from '../api/react.ts';
 import type {
   ApiExport,
+  ChartsApiFile,
   ComponentExport,
   CssApiFile,
   NamespaceExport,
@@ -27,6 +29,10 @@ import type {
 
 const bin = fileURLToPath(new URL('../bin/nz.ts', import.meta.url));
 const fixture = fileURLToPath(new URL('fixtures/api', import.meta.url));
+/** A `@nizivo/charts` laid over the react fixture (its README). */
+const chartsFixture = fileURLToPath(new URL('fixtures/api-charts', import.meta.url));
+/** React's and d3-shape's types, for the checker reading the charts fixture's `.d.ts` files. */
+const chartsModules = fileURLToPath(new URL('../../charts/node_modules', import.meta.url));
 /** React's types, for the checker reading the fixture's `.d.ts` files. */
 const reactModules = fileURLToPath(new URL('../../react/node_modules', import.meta.url));
 const roots: string[] = [];
@@ -44,6 +50,15 @@ function copyFixture(): string {
     renameSync(join(root, 'packages', name, 'built'), join(root, 'packages', name, 'dist'));
   }
   symlinkSync(reactModules, join(root, 'packages', 'react', 'node_modules'), 'dir');
+  return root;
+}
+
+/** `copyFixture()` with the charts fixture laid over it. */
+function copyChartsFixture(): string {
+  const root = copyFixture();
+  cpSync(chartsFixture, root, { recursive: true });
+  renameSync(join(root, 'packages', 'charts', 'built'), join(root, 'packages', 'charts', 'dist'));
+  symlinkSync(chartsModules, join(root, 'packages', 'charts', 'node_modules'), 'dir');
   return root;
 }
 
@@ -360,6 +375,194 @@ describe('the fixture', () => {
   });
 });
 
+/** Every generated file's text by its path under `contracts/api`. */
+function generatedText(root: string): Map<string, string> {
+  const { files, errors } = generateApi(root);
+  expect(errors).toEqual([]);
+  const prefix = join(root, 'contracts', 'api', '/');
+  return new Map(
+    [...files].flatMap(([file, content]) =>
+      content === null ? [] : [[file.slice(prefix.length), content]],
+    ),
+  );
+}
+
+/** An export a charts file documents itself (not a re-export). */
+function own(file: ChartsApiFile, name: string): Exclude<ApiExport, ReexportedExport> {
+  const found = file.exports.find((item) => item.name === name);
+  if (found === undefined || found.definedIn !== undefined) {
+    throw new Error(`${file.entry} documents no ${name}`);
+  }
+  return found;
+}
+
+describe('@nizivo/charts', () => {
+  let paths: string[];
+  let contents: Map<string, string>;
+  let index: ChartsApiFile;
+  let frame: ChartsApiFile;
+  let sparkCss: CssApiFile;
+  beforeAll(() => {
+    contents = generatedText(copyChartsFixture());
+    paths = [...contents.keys()];
+    index = JSON.parse(contents.get('charts/index.json') ?? 'null');
+    frame = JSON.parse(contents.get('charts/frame.json') ?? 'null');
+    sparkCss = JSON.parse(contents.get('charts/css/spark.json') ?? 'null');
+  });
+
+  test('one file per JavaScript entry and per part sheet; react output is unchanged', () => {
+    expect(paths.filter((path) => path.startsWith('charts/')).toSorted()).toEqual([
+      'charts/css/frame.json',
+      'charts/css/spark.json',
+      'charts/frame.json',
+      'charts/index.json',
+    ]);
+    // the same react and css files, byte for byte, as without charts
+    const plain = copyFixture();
+    const without = generateApi(plain);
+    const prefix = join(plain, 'contracts', 'api', '/');
+    for (const [file, content] of without.files) {
+      expect(contents.get(file.slice(prefix.length))).toBe(content);
+    }
+    expect(frame).toMatchObject({ entry: './frame', package: '@nizivo/charts', version: 1 });
+    expect(frame).not.toHaveProperty('slots');
+    expect(frame).not.toHaveProperty('component');
+  });
+
+  test('props from a type alias of an intersection, each with the interface that declares it', () => {
+    const doc = own(frame, 'Frame');
+    if (doc.kind !== 'component') throw new Error(doc.kind);
+    expect(doc.propsType).toBe('FrameElementProps');
+    expect(doc.props.map((prop) => [prop.name, prop.inheritedFrom, prop.required])).toEqual([
+      ['children', 'FrameProps', false],
+      ['labels', 'FrameProps', false],
+      ['legend', 'FrameProps', false],
+      ['render', 'FrameAttributes', false],
+      ['title', 'FrameProps', true],
+    ]);
+    expect(doc.inherits).toEqual([
+      expect.objectContaining({
+        base: "ComponentPropsWithRef<'figure'>",
+        element: 'figure',
+        omitted: ['children', 'title'],
+        overridden: [],
+      }),
+    ]);
+    expect(doc.render).toEqual({
+      state: [{ name: 'pending', required: true, type: 'boolean' }],
+      stateType: 'FrameState',
+    });
+    expect(own(frame, 'FrameElementProps')).toMatchObject({
+      declaration: 'type',
+      propsOf: 'Frame',
+    });
+  });
+
+  test('a barrel-only part: generic Omit alias, conditional member, documented in index.json', () => {
+    const doc = own(index, 'Spark');
+    if (doc.kind !== 'component') throw new Error(doc.kind);
+    expect(doc.source).toBe('packages/charts/src/spark/spark.tsx');
+    expect(doc.propsType).toBe('SparkProps<T>');
+    // Passthrough<'legend'> removes children and legend; y is optional in one branch
+    expect(doc.props.map((prop) => prop.name)).toEqual(['data', 'labels', 'render', 'title', 'y']);
+    expect(doc.props.at(-1)).toEqual({
+      default: 'the datum itself',
+      description: 'The value of a datum.',
+      name: 'y',
+      required: false,
+      type: '(datum: T) => number',
+    });
+    // a DOM base written in the alias: summarised, with the prop it redeclares (FrameProps' title)
+    expect(doc.inherits.map((item) => [item.element, item.omitted, item.overridden])).toEqual([
+      ['figure', ['children', 'title'], []],
+      ['span', ['children', 'color'], ['title']],
+    ]);
+    expect(own(index, 'SparkProps')).toMatchObject({ propsOf: 'Spark' });
+    expect(own(index, 'SparkBaseProps')).toMatchObject({ extends: ["Passthrough<'legend'>"] });
+  });
+
+  test('index.json: re-exports, _core, call signatures and a dependency type', () => {
+    expect(index.exports.find((item) => item.name === 'Frame')).toEqual({
+      definedIn: './frame',
+      import: "import { Frame } from '@nizivo/charts'",
+      kind: 'component',
+      name: 'Frame',
+    });
+    expect(index.exports.find((item) => item.name === 'CurveFactory')).toEqual({
+      definedIn: 'd3-shape',
+      import: "import type { CurveFactory } from '@nizivo/charts'",
+      kind: 'type',
+      name: 'CurveFactory',
+    });
+    expect(own(index, 'ScaleLike')).toMatchObject({
+      callSignatures: ['(value: D): number | undefined'],
+      members: [{ name: 'domain', required: true, type: '() => D[]' }],
+      source: 'packages/charts/src/_core/scale.ts',
+      typeParameters: ['D'],
+    });
+    expect(own(index, 'linear')).toMatchObject({ client: false, kind: 'function' });
+  });
+
+  test('each part sheet of styles.css gets its own file', () => {
+    expect(sparkCss).toMatchObject({
+      classes: ['nz-spark'],
+      component: 'spark',
+      entry: './styles.css',
+      hooks: [
+        {
+          fallback: { kind: 'token', name: '--nz-text-primary' },
+          name: '--nz-spark-color',
+          reads: [{ conditions: [], property: 'color', selector: '.nz-spark', slot: 'spark' }],
+        },
+      ],
+      layers: ['nz.components'],
+      package: '@nizivo/charts',
+      tokens: ['--nz-text-primary'],
+    });
+    expect(JSON.parse(contents.get('charts/css/frame.json') ?? '')).toMatchObject({
+      hooks: [
+        {
+          description: 'The space between the caption and the plot.',
+          name: '--nz-frame-gap',
+        },
+      ],
+    });
+  });
+
+  test('a stale build: a sheet missing from styles.css, a barrel name missing from dist', () => {
+    const root = copyChartsFixture();
+    edit(join(root, 'packages/charts/dist/styles.css'), (text) =>
+      text.slice(0, text.lastIndexOf('@layer nz.tokens')),
+    );
+    expect(problems(root)).toEqual([
+      'packages/charts/dist/styles.css holds 1 part sheets, src has 2 (frame, spark); rebuild @nizivo/charts',
+    ]);
+    const stale = copyChartsFixture();
+    edit(join(stale, 'packages/charts/src/spark/index.ts'), (text) =>
+      text.replace('export { Spark }', 'export { Spark, Spark as Sparkle }'),
+    );
+    expect(problems(stale)).toEqual([
+      'packages/charts/dist/index.d.ts: its exports differ from packages/charts/src/index.ts; missing Sparkle (rebuild @nizivo/charts)',
+    ]);
+  });
+
+  test('dependencyOf and splitSheets', () => {
+    expect(
+      dependencyOf(
+        '/r/node_modules/.pnpm/@types+d3-shape@3/node_modules/@types/d3-shape/index.d.ts',
+      ),
+    ).toBe('d3-shape');
+    expect(dependencyOf('/r/node_modules/@types/scope__name/index.d.ts')).toBe('@scope/name');
+    expect(dependencyOf('/r/node_modules/@scope/lib/dist/index.d.ts')).toBe('@scope/lib');
+    expect(dependencyOf('/r/packages/charts/dist/index.d.ts')).toBeUndefined();
+    expect(splitSheets('@layer a;\nx{}@layer a;\ny{}', '@layer a;')).toEqual([
+      '@layer a;\nx{}',
+      '@layer a;\ny{}',
+    ]);
+    expect(splitSheets('x{}', '@layer a;')).toEqual([]);
+  });
+});
+
 describe('nz api', () => {
   test('--check lists new files, then passes after a write, then summarises a change', () => {
     const root = copyFixture();
@@ -538,11 +741,15 @@ describe('nz api', () => {
 });
 
 /** `nz api` reads the built packages; tooling cannot depend on them (tokens depends on tooling). */
-const built = ['react/dist/index.d.ts', 'tokens/dist/contract.json'].every((file) =>
-  existsSync(fileURLToPath(new URL(`../../${file}`, import.meta.url))),
-);
+const built = [
+  'react/dist/index.d.ts',
+  'charts/dist/index.d.ts',
+  'tokens/dist/contract.json',
+].every((file) => existsSync(fileURLToPath(new URL(`../../${file}`, import.meta.url))));
 if (!built) {
-  console.warn('skipping the contracts/api check: build @nizivo/tokens and @nizivo/react first');
+  console.warn(
+    'skipping the contracts/api check: build @nizivo/tokens, @nizivo/react and @nizivo/charts first',
+  );
 }
 
 test.skipIf(!built)('contracts/api is up to date with the built packages', () => {

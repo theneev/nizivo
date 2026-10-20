@@ -1,6 +1,8 @@
 /**
- * `contracts/api/react/<entry>.json` from the built `@nizivo/react` (ARCHITECTURE.md §6, §18.1,
- * §18.2; field reference in API-JSON.md).
+ * `contracts/api/react/<entry>.json` from the built `@nizivo/react`, and
+ * `contracts/api/charts/<entry>.json` from the built `@nizivo/charts` (ARCHITECTURE.md §6, §14.1,
+ * §18.1, §18.2; field reference in API-JSON.md). One reader for both packages: charts has no
+ * component manifests, so its files carry no `component` and no `slots`.
  *
  * - Exports, props, types and JSDoc: the public `.d.ts` files under `dist`, one entry per JavaScript
  *   key of the exports map, read with ts-morph 28 (its bundled TypeScript 6.0.2). Type text is what
@@ -12,7 +14,7 @@
  *   from `contracts/vocabulary.json` and the manifest's `variants` (§8.3 rule 5).
  */
 import { existsSync, readFileSync } from 'node:fs';
-import { join, relative, sep } from 'node:path';
+import { dirname, join, relative, sep } from 'node:path';
 import {
   type ExpressionWithTypeArguments,
   type FunctionDeclaration,
@@ -25,6 +27,8 @@ import {
   type SourceFile,
   SyntaxKind,
   ts,
+  type Type,
+  type TypeAliasDeclaration,
   type TypeElementTypes,
   type TypeNode,
   type TypeReferenceNode,
@@ -34,6 +38,8 @@ import type { Vocabulary } from '../stylelint-config/contract.js';
 import type {
   ApiExport,
   ApiExportKind,
+  ApiPackage,
+  ChartsApiFile,
   ComponentDoc,
   ComponentInfo,
   DataAttributeDoc,
@@ -55,20 +61,28 @@ import { compareStrings, type DocComment, GENERATED_COMMENT, parseDocComment } f
 export interface ReactInput {
   /** The repo root: output paths are relative to it. */
   root: string;
-  /** `packages/react`. */
+  /** The package folder: `packages/react` (or `packages/charts`). */
   reactDir: string;
-  /** The `exports` field of `packages/react/package.json`. */
+  /** The `exports` field of the package's `package.json`. */
   exportsMap: Readonly<Record<string, unknown>>;
-  /** Validated manifests by folder under `src` (`alert`, `unstable/date-picker`). */
+  /** Validated manifests by folder under `src` (`alert`, `unstable/date-picker`); none for charts. */
   manifests: ReadonlyMap<string, ComponentConfig>;
   vocabulary: Vocabulary;
   /** The vocabulary's `meaning` of each attribute. */
   meanings: ReadonlyMap<string, string>;
+  /** @default '@nizivo/react' */
+  packageName?: ApiPackage;
+  /**
+   * Whether the root barrel `.` documents what no subpath folder declares (`@nizivo/charts`' `_core`
+   * scales, a part that is in the barrel only). Off for `@nizivo/react`, where every export must
+   * have a subpath: there such a declaration is an error.
+   */
+  barrelOwnsRest?: boolean;
 }
 
 export interface ReactResult {
-  /** `react/alert.json` → its content, for every JavaScript entry. */
-  files: Map<string, ReactApiFile>;
+  /** `react/alert.json` (or `charts/bar-chart.json`) → its content, for every JavaScript entry. */
+  files: Map<string, ReactApiFile | ChartsApiFile>;
   errors: string[];
 }
 
@@ -98,15 +112,36 @@ const ELEMENT_PROPS =
   /^(?:React\.)?ComponentProps(?:WithRef|WithoutRef)?<(["'])([a-z][a-z0-9]*)\1>$/;
 const NO_STATE = 'Record<string, never>';
 const USE_CLIENT = /^\s*(["'])use client\1/;
+/** The package that owns a declaration file under some `node_modules`: the last one in the path. */
+const DEPENDENCY = /(?:^|\/)node_modules\/((?:@[^/]+\/)?[^/]+)\/(?:(?!node_modules\/).)*$/;
+
+/**
+ * The package a consumer installs for a declaration read from `node_modules`, or undefined for one
+ * of this package's own: `@types/d3-shape` → `d3-shape`, `@types/scope__name` → `@scope/name`.
+ */
+export function dependencyOf(file: string): string | undefined {
+  const name = DEPENDENCY.exec(file.split(sep).join('/'))?.[1];
+  if (name === undefined) return undefined;
+  if (!name.startsWith('@types/')) return name;
+  const bare = name.slice('@types/'.length);
+  return bare.includes('__') ? `@${bare.replace('__', '/')}` : bare;
+}
+
+/** The dependency a re-exported declaration comes from (`d3-shape`), when it is not ours. */
+function dependency(nodes: readonly Node[]): string | undefined {
+  const file = nodes[0]?.getSourceFile().getFilePath();
+  return file === undefined ? undefined : dependencyOf(file);
+}
 
 export function extractReact(input: ReactInput): ReactResult {
   const errors: string[] = [];
-  const files = new Map<string, ReactApiFile>();
+  const files = new Map<string, ReactApiFile | ChartsApiFile>();
+  const packageName = input.packageName ?? '@nizivo/react';
   const distDir = join(input.reactDir, 'dist');
   const srcDir = join(input.reactDir, 'src');
   const rel = (file: string) => relative(input.root, file).split(sep).join('/');
 
-  const entries = readEntries(input, distDir, srcDir, errors);
+  const entries = readEntries(input, packageName, distDir, srcDir, errors);
   if (errors.length > 0) return { files, errors };
 
   const project = new Project({
@@ -137,7 +172,7 @@ export function extractReact(input: ReactInput): ReactResult {
     const file = project.getSourceFileOrThrow(entry.types);
     const declarations = file.getExportedDeclarations();
     exported.set(entry.key, declarations);
-    const expected = sourceExportNames(sourceProject.addSourceFileAtPath(entry.source));
+    const expected = sourceExportNames(sourceProject, entry.source);
     const built = [...declarations.keys()];
     const missing = [...expected].filter((name) => !declarations.has(name));
     const extra = built.filter((name) => !expected.has(name));
@@ -146,12 +181,13 @@ export function extractReact(input: ReactInput): ReactResult {
         `${rel(entry.types)}: its exports differ from ${rel(entry.source)}` +
           (missing.length > 0 ? `; missing ${missing.toSorted().join(', ')}` : '') +
           (extra.length > 0 ? `; extra ${extra.toSorted().join(', ')}` : '') +
-          ' (rebuild @nizivo/react)',
+          ` (rebuild ${packageName})`,
       );
     }
   }
   if (errors.length > 0) return { files, errors };
 
+  const barrel = entries.find((entry) => entry.key === '.');
   const homeOf = (file: SourceFile): Entry | undefined => {
     const path = relative(distDir, file.getFilePath()).split(sep).join('/');
     let best: Entry | undefined;
@@ -166,6 +202,10 @@ export function extractReact(input: ReactInput): ReactResult {
         best = entry;
       }
     }
+    // Declared in dist but under no subpath folder (charts' `_core`): the barrel documents it.
+    if (best === undefined && input.barrelOwnsRest === true && !path.startsWith('..')) {
+      return barrel;
+    }
     return best;
   };
 
@@ -175,6 +215,7 @@ export function extractReact(input: ReactInput): ReactResult {
     const declarations = exported.get(entry.key) ?? new Map<string, Node[]>();
     const own = new Map<string, Node[]>();
     for (const [name, nodes] of declarations) {
+      if (dependency(nodes) !== undefined) continue;
       const home = nodes[0] === undefined ? undefined : homeOf(nodes[0].getSourceFile());
       if (home === undefined) {
         errors.push(`${rel(entry.types)}: ${name} is declared outside every public entry`);
@@ -200,6 +241,27 @@ export function extractReact(input: ReactInput): ReactResult {
         exports.push(doc);
         continue;
       }
+      const from = dependency(nodes);
+      if (from !== undefined) {
+        const kind = nodes.every(
+          (node) => Node.isInterfaceDeclaration(node) || Node.isTypeAliasDeclaration(node),
+        )
+          ? 'type'
+          : undefined;
+        if (kind === undefined) {
+          errors.push(
+            `${rel(entry.types)}: ${name} re-exports a value of ${from}, which contracts/api cannot describe`,
+          );
+          continue;
+        }
+        exports.push({
+          definedIn: from,
+          import: importLine(name, kind, entry.specifier),
+          kind,
+          name,
+        });
+        continue;
+      }
       const home = nodes[0] === undefined ? undefined : homeOf(nodes[0].getSourceFile());
       const homeDoc = home === undefined ? undefined : owned.get(home.key)?.get(name);
       if (home === undefined || homeDoc === undefined) {
@@ -213,11 +275,22 @@ export function extractReact(input: ReactInput): ReactResult {
         name,
       });
     }
+    const sorted = exports.toSorted((a, b) => compareStrings(a.name, b.name));
+    if (packageName === '@nizivo/charts') {
+      files.set(entry.output, {
+        $comment: GENERATED_COMMENT,
+        entry: entry.key,
+        exports: sorted,
+        package: packageName,
+        version: 1,
+      });
+      continue;
+    }
     files.set(entry.output, {
       $comment: GENERATED_COMMENT,
       ...(entry.manifest === undefined ? {} : { component: componentInfo(entry.manifest, input) }),
       entry: entry.key,
-      exports: exports.toSorted((a, b) => compareStrings(a.name, b.name)),
+      exports: sorted,
       package: '@nizivo/react',
       slots: context.slotsOf(entry.key),
       version: 1,
@@ -228,17 +301,19 @@ export function extractReact(input: ReactInput): ReactResult {
 
 function readEntries(
   input: ReactInput,
+  packageName: ApiPackage,
   distDir: string,
   srcDir: string,
   errors: string[],
 ): Entry[] {
   const entries: Entry[] = [];
+  const shortName = packageName.slice('@nizivo/'.length);
   for (const [key, target] of Object.entries(input.exportsMap)) {
     if (typeof target !== 'object' || target === null || !('types' in target)) continue;
     if (typeof target.types !== 'string') continue;
     const types = join(input.reactDir, target.types);
     if (!existsSync(types)) {
-      errors.push(`packages/react: ${target.types} is missing; build @nizivo/react first`);
+      errors.push(`packages/${shortName}: ${target.types} is missing; build ${packageName} first`);
       continue;
     }
     const distPath = relative(distDir, types).split(sep).join('/');
@@ -248,8 +323,8 @@ function readEntries(
     const name = key === '.' ? 'index' : key.slice('./'.length);
     entries.push({
       key,
-      output: `react/${name}.json`,
-      specifier: key === '.' ? '@nizivo/react' : `@nizivo/react/${name}`,
+      output: `${shortName}/${name}.json`,
+      specifier: key === '.' ? packageName : `${packageName}/${name}`,
       types,
       source:
         folder === undefined
@@ -262,12 +337,36 @@ function readEntries(
   return entries;
 }
 
-/** The names a source module exports, read from its syntax. */
-function sourceExportNames(file: SourceFile): Set<string> {
+/**
+ * The names a source module exports, read from its syntax. `export * from './x'` (the charts
+ * barrel) is followed into the relative module it names.
+ */
+function sourceExportNames(project: Project, path: string, seen = new Set<string>()): Set<string> {
   const names = new Set<string>();
+  if (seen.has(path)) return names;
+  seen.add(path);
+  const file = project.getSourceFile(path) ?? project.addSourceFileAtPath(path);
   for (const declaration of file.getExportDeclarations()) {
     const namespace = declaration.getNamespaceExport();
     if (namespace !== undefined) names.add(namespace.getName());
+    const specifier = declaration.getModuleSpecifierValue();
+    if (
+      namespace === undefined &&
+      !declaration.hasNamedExports() &&
+      specifier !== undefined &&
+      specifier.startsWith('.')
+    ) {
+      const base = join(dirname(path), specifier);
+      const target = [`${base}.ts`, `${base}.tsx`, join(base, 'index.ts')].find((candidate) =>
+        existsSync(candidate),
+      );
+      if (target === undefined)
+        throw new Error(`${path}: cannot follow export * from '${specifier}'`);
+      for (const name of sourceExportNames(project, target, seen)) {
+        // `export *` never re-exports a default
+        if (name !== 'default') names.add(name);
+      }
+    }
     for (const named of declaration.getNamedExports()) {
       names.add(named.getAliasNode()?.getText() ?? named.getName());
     }
@@ -467,6 +566,8 @@ class Context {
   readonly #rel: (file: string) => string;
   readonly #errors: string[];
   readonly #slots = new Map<string, SlotInfo[]>();
+  /** DOM summaries `#expandNode` made, with the base's type, until `#settle` fills `overridden`. */
+  readonly #pending = new Map<InheritedProps, Type>();
   #stateTable: Map<string, string> | undefined;
 
   constructor(
@@ -508,7 +609,7 @@ class Context {
       components.set(name, { label: part === undefined ? name : `${pascal}.${part}`, fn });
     }
     const componentDocs = new Map<string, ComponentDoc>();
-    const propsDecls = new Map<string, InterfaceDeclaration>();
+    const propsDecls = new Map<string, InterfaceDeclaration | TypeAliasDeclaration>();
     for (const [name, { fn }] of components) {
       const { doc, props } = this.#componentDoc(fn);
       componentDocs.set(name, doc);
@@ -522,7 +623,9 @@ class Context {
     const stateOf = new Map<string, string>();
     for (const [name, doc] of [...componentDocs].toSorted(([a], [b]) => compareStrings(a, b))) {
       const label = components.get(name)?.label ?? name;
-      if (!propsOf.has(doc.propsType)) propsOf.set(doc.propsType, label);
+      // `BarChartProps<T>` documents the export `BarChartProps`
+      const propsName = doc.propsType.replace(/<[\s\S]*$/, '');
+      if (!propsOf.has(propsName)) propsOf.set(propsName, label);
       const state = doc.render?.stateType;
       if (state !== undefined && !stateOf.has(state)) stateOf.set(state, label);
     }
@@ -656,8 +759,210 @@ class Context {
   #ownMembers(declaration: InterfaceDeclaration): MemberDoc[] {
     return declaration
       .getMembers()
+      .filter((member) => !Node.isCallSignatureDeclaration(member))
       .map((member) => this.#memberDoc(member))
       .toSorted((a, b) => compareStrings(a.name, b.name));
+  }
+
+  /**
+   * The props a type names, for the props types `#props` cannot read as an interface `extends`
+   * clause (charts): a type alias of an intersection (`ChartFrameProps & ChartFrameAttributes`),
+   * a generic alias around `Omit` (`ChartFramePassthrough<'axes'>`), a type literal, or a
+   * conditional type (both branches: a member in only one, or optional in either, is optional).
+   * Every member of a package interface is listed with `inheritedFrom`, the interface that declares
+   * it; a type literal's members get `owner` (the alias that writes them; undefined for the props
+   * type's own). React's DOM props are summarised in `inherits`. `Omit` keys are read as written;
+   * when they name a type parameter, the nearest reference to the generic alias asks the checker
+   * which props remain in the type it instantiates. A name two parts of an intersection declare is an error.
+   */
+  #expandNode(node: Node, owner: string | undefined): Expansion {
+    if (Node.isParenthesizedTypeNode(node)) return this.#expandNode(node.getTypeNode(), owner);
+    if (Node.isIntersectionTypeNode(node)) {
+      const result: Expansion = { props: [], inherits: [], unfiltered: false };
+      const seen = new Map<string, string>();
+      for (const part of node.getTypeNodes()) {
+        const expanded = this.#expandNode(part, owner);
+        for (const member of expanded.props) {
+          const by = member.inheritedFrom ?? owner ?? 'the props type';
+          const previous = seen.get(member.name);
+          if (previous !== undefined) {
+            throw new Error(`${member.name} is declared by both ${previous} and ${by}`);
+          }
+          seen.set(member.name, by);
+          result.props.push(member);
+        }
+        result.inherits.push(...expanded.inherits);
+        result.unfiltered ||= expanded.unfiltered;
+      }
+      return result;
+    }
+    if (Node.isTypeLiteral(node)) {
+      return {
+        props: node.getMembers().map((member) => this.#memberDoc(member, owner)),
+        inherits: [],
+        unfiltered: false,
+      };
+    }
+    if (Node.isConditionalTypeNode(node)) {
+      const branches = [node.getTrueType(), node.getFalseType()].map((branch) =>
+        this.#expandNode(branch, owner),
+      );
+      const byName = new Map<string, MemberDoc>();
+      for (const branch of branches) {
+        for (const member of branch.props) {
+          const first = byName.get(member.name);
+          byName.set(
+            member.name,
+            first === undefined
+              ? member
+              : { ...first, required: first.required && member.required },
+          );
+        }
+      }
+      const props: MemberDoc[] = [];
+      for (const member of byName.values()) {
+        const everywhere = branches.every((branch) =>
+          branch.props.some((other) => other.name === member.name),
+        );
+        props.push(everywhere ? member : { ...member, required: false });
+      }
+      const inherits: InheritedProps[] = [];
+      for (const item of branches.flatMap((branch) => branch.inherits)) {
+        if (!inherits.some((other) => other.text === item.text)) inherits.push(item);
+      }
+      return { props, inherits, unfiltered: branches.some((branch) => branch.unfiltered) };
+    }
+    if (!Node.isTypeReference(node) && !Node.isExpressionWithTypeArguments(node)) {
+      throw new Error(`"${node.getText()}" is not a props type nz api can read`);
+    }
+    const reference = Node.isTypeReference(node) ? node.getTypeName() : node.getExpression();
+    const name = reference.getText();
+    const args = node.getTypeArguments();
+    const declaration = declarationOf(reference);
+    if ((name === 'Omit' || name === 'Partial') && args[0] !== undefined) {
+      let keys: string[] | undefined = [];
+      if (name === 'Omit') {
+        const values = args[1] === undefined ? undefined : literalValues(args[1]);
+        keys =
+          values?.every((key) => typeof key === 'string') === true ? values.map(String) : undefined;
+      }
+      const base = unparen(args[0]);
+      const baseDeclaration = Node.isTypeReference(base)
+        ? declarationOf(base.getTypeName())
+        : undefined;
+      if (
+        Node.isTypeReference(base) &&
+        baseDeclaration !== undefined &&
+        !this.#inDist(baseDeclaration) &&
+        !['Omit', 'Partial'].includes(base.getTypeName().getText())
+      ) {
+        // `Omit<ComponentPropsWithRef<"span">, …>` written in an alias: one DOM summary, as an
+        // `extends` clause gives, with the keys the checker says are gone when they are not literal
+        const remaining = new Set(
+          node
+            .getType()
+            .getProperties()
+            .map((property) => property.getName()),
+        );
+        const gone =
+          keys ??
+          base
+            .getType()
+            .getProperties()
+            .map((property) => property.getName())
+            .filter((property) => !remaining.has(property));
+        const item = domSummary(node.getText(), base.getText(), gone, []);
+        this.#pending.set(item, node.getType());
+        return { props: [], inherits: [item], unfiltered: false };
+      }
+      const inner = this.#expandNode(args[0], owner);
+      if (keys === undefined) return { ...inner, unfiltered: true };
+      const omitted = keys;
+      const listed = new Set(inner.props.map((member) => member.name));
+      const removed = omitted.filter((key) => !listed.has(key));
+      const props: MemberDoc[] = [];
+      for (const member of inner.props) {
+        if (omitted.includes(member.name)) continue;
+        props.push(name === 'Partial' ? { ...member, required: false } : member);
+      }
+      return {
+        props,
+        inherits: inner.inherits.map((item) => this.#withOmitted(item, removed)),
+        unfiltered: inner.unfiltered,
+      };
+    }
+    if (declaration === undefined) throw new Error(`cannot resolve ${node.getText()}`);
+    if (!this.#inDist(declaration)) {
+      // React's DOM props (`ComponentPropsWithRef<"span">`), summarised; `overridden` is filled in
+      // by the caller, which knows the props listed beside it.
+      const item = domSummary(node.getText(), node.getText(), [], []);
+      this.#pending.set(item, node.getType());
+      return { props: [], inherits: [item], unfiltered: false };
+    }
+    if (Node.isInterfaceDeclaration(declaration)) {
+      const inherited = this.#props(declaration);
+      const props: MemberDoc[] = [];
+      for (const member of inherited.props) {
+        props.push({ ...member, inheritedFrom: member.inheritedFrom ?? declaration.getName() });
+      }
+      return { props, inherits: inherited.inherits, unfiltered: false };
+    }
+    if (!Node.isTypeAliasDeclaration(declaration)) {
+      throw new Error(`${name} is not an interface or a type alias`);
+    }
+    const expanded = this.#expandNode(declaration.getTypeNodeOrThrow(), declaration.getName());
+    if (!expanded.unfiltered) return expanded;
+    // `ChartFramePassthrough<'axes'>` = `Omit<ChartFrameElementProps, … | Omitted>`: the type the
+    // reference instantiates (its type arguments, or the defaults) knows which props remain.
+    const remaining = new Set(
+      node
+        .getType()
+        .getProperties()
+        .map((property) => property.getName()),
+    );
+    const domRemoved = [...this.#pending]
+      .filter(([item]) => expanded.inherits.includes(item))
+      .flatMap(([, type]) =>
+        type
+          .getProperties()
+          .map((property) => property.getName())
+          .filter((property) => !remaining.has(property)),
+      );
+    return {
+      props: expanded.props.filter((member) => remaining.has(member.name)),
+      inherits: expanded.inherits.map((item) =>
+        this.#pending.has(item)
+          ? this.#withOmitted(
+              item,
+              domRemoved.filter((key) => this.#pending.get(item)?.getProperty(key) !== undefined),
+            )
+          : item,
+      ),
+      unfiltered: false,
+    };
+  }
+
+  /** `withOmitted`, keeping a DOM summary's base type for `#settle` on the copy it returns. */
+  #withOmitted(item: InheritedProps, keys: readonly string[]): InheritedProps {
+    const next = withOmitted(item, keys);
+    const type = this.#pending.get(item);
+    if (type !== undefined) this.#pending.set(next, type);
+    return next;
+  }
+
+  /** Fills `overridden` of the DOM summaries `#expandNode` made, from the props listed beside them. */
+  #settle(inherits: InheritedProps[], listed: Iterable<string>): InheritedProps[] {
+    const names = [...listed];
+    return inherits.map((item) => {
+      const type = this.#pending.get(item);
+      if (type === undefined) return item;
+      return {
+        ...item,
+        overridden: names
+          .filter((member) => type.getProperty(member) !== undefined)
+          .toSorted(compareStrings),
+      };
+    });
   }
 
   /**
@@ -670,11 +975,33 @@ class Context {
     const props = [...own];
     const inherits: InheritedProps[] = [];
     for (const heritage of declaration.getExtends()) {
-      const { inner, omitted } = unwrapBase(heritage);
-      const name = Node.isExpressionWithTypeArguments(inner)
-        ? inner.getExpression()
-        : inner.getTypeName();
-      const base = declarationOf(name);
+      const plain = tryUnwrapBase(heritage);
+      const base =
+        plain === undefined
+          ? undefined
+          : declarationOf(
+              Node.isExpressionWithTypeArguments(plain.inner)
+                ? plain.inner.getExpression()
+                : plain.inner.getTypeName(),
+            );
+      if (
+        plain === undefined ||
+        (base !== undefined && this.#inDist(base) && !Node.isInterfaceDeclaration(base))
+      ) {
+        // What only `#expandNode` reads (charts): a type alias base, or `Omit` keys that name a
+        // type parameter. Its members keep the interface that declares them.
+        const expanded = this.#expandNode(heritage, undefined);
+        if (expanded.unfiltered) {
+          throw new Error(`cannot tell which props ${heritage.getText()} removes`);
+        }
+        for (const member of expanded.props) {
+          if (ownNames.has(member.name)) continue;
+          props.push(member);
+        }
+        inherits.push(...this.#settle(expanded.inherits, ownNames));
+        continue;
+      }
+      const { inner, omitted } = plain;
       if (base === undefined) throw new Error(`cannot resolve the base ${inner.getText()}`);
       if (this.#inDist(base)) {
         if (!Node.isInterfaceDeclaration(base)) {
@@ -716,7 +1043,10 @@ class Context {
     return !path.startsWith('..') && !path.includes('node_modules');
   }
 
-  #componentDoc(fn: FunctionDeclaration): { doc: ComponentDoc; props: InterfaceDeclaration } {
+  #componentDoc(fn: FunctionDeclaration): {
+    doc: ComponentDoc;
+    props: InterfaceDeclaration | TypeAliasDeclaration;
+  } {
     const name = fn.getName() ?? '';
     const parameter = fn.getParameters()[0];
     const typeNode = parameter?.getTypeNode();
@@ -724,10 +1054,34 @@ class Context {
       throw new Error(`${name}'s first parameter must be typed with its props interface`);
     }
     const declaration = declarationOf(typeNode.getTypeName());
-    if (declaration === undefined || !Node.isInterfaceDeclaration(declaration)) {
+    const alias =
+      declaration !== undefined &&
+      Node.isTypeAliasDeclaration(declaration) &&
+      this.#inDist(declaration);
+    if (
+      declaration === undefined ||
+      !(
+        Node.isInterfaceDeclaration(declaration) ||
+        (alias && Node.isTypeAliasDeclaration(declaration))
+      )
+    ) {
       throw new Error(`${name}'s props type ${typeNode.getText()} is not an interface`);
     }
-    const { props, inherits } = this.#props(declaration);
+    let props: MemberDoc[];
+    let inherits: InheritedProps[];
+    if (Node.isInterfaceDeclaration(declaration)) {
+      ({ props, inherits } = this.#props(declaration));
+    } else {
+      const expanded = this.#expandNode(declaration.getTypeNodeOrThrow(), undefined);
+      if (expanded.unfiltered) {
+        throw new Error(`cannot tell which props ${typeNode.getText()} removes`);
+      }
+      props = expanded.props.toSorted((a, b) => compareStrings(a.name, b.name));
+      inherits = this.#settle(
+        expanded.inherits,
+        props.map((member) => member.name),
+      );
+    }
     const render = this.#render(props, declaration, name);
     return {
       doc: {
@@ -745,7 +1099,7 @@ class Context {
   /** The `render` prop's state: `S` in `RenderProp<S>`. */
   #render(
     props: MemberDoc[],
-    declaration: InterfaceDeclaration,
+    declaration: InterfaceDeclaration | TypeAliasDeclaration,
     name: string,
   ): RenderDoc | undefined {
     if (!props.some((member) => member.name === 'render')) return undefined;
@@ -858,8 +1212,13 @@ class Context {
       const heritage = node.getExtends().map((clause) => clause.getText());
       const owner = propsOf.get(name);
       const state = stateOf.get(name);
+      const calls = node
+        .getMembers()
+        .filter((member) => Node.isCallSignatureDeclaration(member))
+        .map((member) => member.getText().replace(/;$/, ''));
       return {
         ...common,
+        ...(calls.length === 0 ? {} : { callSignatures: calls }),
         declaration: 'interface',
         ...(heritage.length === 0 ? {} : { extends: heritage }),
         ...(owner === undefined && state === undefined ? { members: this.#ownMembers(node) } : {}),
@@ -873,9 +1232,11 @@ class Context {
       const parameters = node.getTypeParameters().map((parameter) => parameter.getText());
       const values = parameters.length === 0 ? literalValues(typeNode) : undefined;
       const state = stateOf.get(name);
+      const owner = propsOf.get(name);
       return {
         ...common,
         declaration: 'type',
+        ...(owner === undefined ? {} : { propsOf: owner }),
         ...(state === undefined ? {} : { stateOf: state }),
         text: typeNode.getText(),
         typeParameters: parameters,
@@ -890,7 +1251,7 @@ class Context {
     manifest: ComponentConfig,
     components: ReadonlyMap<string, { label: string; fn: FunctionDeclaration }>,
     componentDocs: Map<string, ComponentDoc>,
-    propsDecls: ReadonlyMap<string, InterfaceDeclaration>,
+    propsDecls: ReadonlyMap<string, InterfaceDeclaration | TypeAliasDeclaration>,
   ): SlotInfo[] {
     const where = this.#rel(join(this.#srcDir, entry.folder ?? ''));
     this.#stateTable ??= readStateTable(
@@ -1004,7 +1365,7 @@ class Context {
   #attribute(
     name: string,
     manifest: ComponentConfig,
-    props: InterfaceDeclaration | undefined,
+    props: InterfaceDeclaration | TypeAliasDeclaration | undefined,
   ): DataAttributeDoc | string {
     const entry = this.#input.vocabulary.get(name);
     if (entry === undefined) return `${name} is not in contracts/vocabulary.json (§8.3)`;
@@ -1042,8 +1403,32 @@ class Context {
   }
 }
 
+interface Expansion {
+  props: MemberDoc[];
+  inherits: InheritedProps[];
+  /** An `Omit` inside named its keys through a type parameter, so they are not removed yet. */
+  unfiltered: boolean;
+}
+
+/** A summary with more `Omit` keys, sorted and unique. */
+function withOmitted(item: InheritedProps, keys: readonly string[]): InheritedProps {
+  if (keys.length === 0) return item;
+  return { ...item, omitted: [...new Set([...item.omitted, ...keys])].toSorted(compareStrings) };
+}
+
+/** `unwrapBase`, or undefined when the `Omit` keys are not literals (a type parameter). */
+function tryUnwrapBase(
+  heritage: ExpressionWithTypeArguments | TypeReferenceNode,
+): ReturnType<typeof unwrapBase> | undefined {
+  try {
+    return unwrapBase(heritage);
+  } catch {
+    return undefined;
+  }
+}
+
 /** `Omit<Partial<X>, "a">` → `X`, with the keys `Omit` removes. */
-function unwrapBase(heritage: ExpressionWithTypeArguments): {
+function unwrapBase(heritage: ExpressionWithTypeArguments | TypeReferenceNode): {
   inner: ExpressionWithTypeArguments | TypeReferenceNode;
   omitted: string[];
 } {
@@ -1089,23 +1474,63 @@ function resolveAlias(node: TypeNode): TypeNode {
   return current;
 }
 
-/** A property of an interface or of the `@nizivo/react` interfaces it extends. */
+/**
+ * A property of an interface or of the interfaces it extends, directly or through the type aliases,
+ * intersections, `Omit`s, type literals and conditional types charts' props are written with.
+ */
 function findMember(
-  declaration: InterfaceDeclaration,
+  node: Node,
   name: string,
+  seen = new Set<Node>(),
 ): PropertySignature | undefined {
-  const own = declaration.getProperty(name);
-  if (own !== undefined) return own;
-  for (const heritage of declaration.getExtends()) {
-    const { inner } = unwrapBase(heritage);
-    const reference = Node.isExpressionWithTypeArguments(inner)
-      ? inner.getExpression()
-      : inner.getTypeName();
-    const base = declarationOf(reference);
-    if (base !== undefined && Node.isInterfaceDeclaration(base)) {
-      const found = findMember(base, name);
-      if (found !== undefined) return found;
+  if (seen.has(node)) return undefined;
+  seen.add(node);
+  const next: Node[] = [];
+  if (Node.isInterfaceDeclaration(node)) {
+    const own = node.getProperty(name);
+    if (own !== undefined) return own;
+    next.push(...node.getExtends());
+  } else if (Node.isTypeAliasDeclaration(node)) {
+    next.push(node.getTypeNodeOrThrow());
+  } else if (Node.isTypeLiteral(node)) {
+    const own = node.getProperty(name);
+    if (own !== undefined) return own;
+  } else if (Node.isParenthesizedTypeNode(node)) {
+    next.push(node.getTypeNode());
+  } else if (Node.isIntersectionTypeNode(node)) {
+    next.push(...node.getTypeNodes());
+  } else if (Node.isConditionalTypeNode(node)) {
+    next.push(node.getTrueType(), node.getFalseType());
+  } else if (Node.isTypeReference(node) || Node.isExpressionWithTypeArguments(node)) {
+    const reference = Node.isTypeReference(node) ? node.getTypeName() : node.getExpression();
+    const text = reference.getText();
+    const first = node.getTypeArguments()[0];
+    if ((text === 'Omit' || text === 'Partial') && first !== undefined) next.push(first);
+    else {
+      const declaration = declarationOf(reference);
+      if (declaration !== undefined) next.push(declaration);
     }
   }
+  for (const item of next) {
+    const found = findMember(item, name, seen);
+    if (found !== undefined) return found;
+  }
   return undefined;
+}
+
+/** The `InheritedProps` of a base outside the package (React's DOM props). */
+function domSummary(
+  text: string,
+  baseText: string,
+  omitted: readonly string[],
+  overridden: readonly string[],
+): InheritedProps {
+  const element = ELEMENT_PROPS.exec(baseText)?.[2];
+  return {
+    base: baseText,
+    ...(element === undefined ? {} : { element }),
+    omitted: [...omitted].toSorted(compareStrings),
+    overridden: [...overridden].toSorted(compareStrings),
+    text,
+  };
 }

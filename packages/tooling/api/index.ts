@@ -1,6 +1,7 @@
 /**
  * `nz api [--check] [--root <dir>]`: regenerates `contracts/api/**` from the built `@nizivo/react`
- * (ARCHITECTURE.md §6, §18.1, §18.2; API-JSON.md). It reads `dist`, so build first.
+ * and `@nizivo/charts` (ARCHITECTURE.md §6, §14.1, §18.1, §18.2; API-JSON.md). It reads `dist`, so
+ * build both first.
  * `--check` writes nothing and exits 1 when any file would change, with a summary of each change.
  */
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';

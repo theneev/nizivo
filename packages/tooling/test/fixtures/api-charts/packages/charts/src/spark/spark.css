@@ -1,0 +1,3 @@
+.nz-spark {
+  color: var(--nz-spark-color, var(--nz-text-primary));
+}

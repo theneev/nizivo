@@ -1,0 +1,5 @@
+.nz-frame {
+  /** The space between the caption and the plot. */
+  gap: var(--nz-frame-gap, var(--nz-space-2));
+  display: grid;
+}

@@ -1,8 +1,8 @@
 # `contracts/api` reference
 
-`contracts/api/**` is the generated, semver'd record of `@nizivo/react`'s public surface
-(ARCHITECTURE.md §6, §18.1). `nz api` writes it from the **built** package and the component
-manifests. The docs site renders its props, parts, data attribute and hook tables from it, and
+`contracts/api/**` is the generated, semver'd record of `@nizivo/react`'s and `@nizivo/charts`'
+public surface (ARCHITECTURE.md §6, §14.1, §18.1). `nz api` writes it from the **built** packages
+and, for react, the component manifests. The docs site renders its props, parts, data attribute and hook tables from it, and
 nothing else (§18.2). A diff in these files is an API change, which the changeset must classify. The
 types are in `schema.ts` next to this file. It has no imports and no runtime code, so the generator
 and the docs app both use it with `import type`.
@@ -13,14 +13,16 @@ open, ask before guessing.
 
 ## Files
 
-| File                                    | One per                                                                                   | Type           |
-| --------------------------------------- | ----------------------------------------------------------------------------------------- | -------------- |
-| `contracts/api/react/<entry>.json`      | JavaScript entry of the exports map: `./alert` → `react/alert.json`                       | `ReactApiFile` |
-| `contracts/api/react/index.json`        | the root barrel `.`: every export, each pointing at the file that documents it            | `ReactApiFile` |
-| `contracts/api/react/unstable/<n>.json` | `./unstable/<n>`                                                                          | `ReactApiFile` |
-| `contracts/api/css/<name>.json`         | stylesheet entry `./css/<name>.css` (and `./reset.css` → `css/reset.json` once it exists) | `CssApiFile`   |
+| File                                    | One per                                                                                                  | Type            |
+| --------------------------------------- | -------------------------------------------------------------------------------------------------------- | --------------- |
+| `contracts/api/react/<entry>.json`      | JavaScript entry of the exports map: `./alert` → `react/alert.json`                                      | `ReactApiFile`  |
+| `contracts/api/react/index.json`        | the root barrel `.`: every export, each pointing at the file that documents it                           | `ReactApiFile`  |
+| `contracts/api/react/unstable/<n>.json` | `./unstable/<n>`                                                                                         | `ReactApiFile`  |
+| `contracts/api/css/<name>.json`         | stylesheet entry `./css/<name>.css` (and `./reset.css` → `css/reset.json` once it exists)                | `CssApiFile`    |
+| `contracts/api/charts/<entry>.json`     | JavaScript entry of `@nizivo/charts`: `.` → `charts/index.json`, `./bar-chart` → `charts/bar-chart.json` | `ChartsApiFile` |
+| `contracts/api/charts/css/<part>.json`  | part sheet of `@nizivo/charts/styles.css`: `src/bar-chart/bar-chart.css` → `charts/css/bar-chart.json`   | `CssApiFile`    |
 
-`./styles.css` gets no file: it concatenates the others. `./package.json` and `./css/manifest.json`
+`@nizivo/react`'s `./styles.css` gets no file: it concatenates the others. `./package.json` and `./css/manifest.json`
 get none either. `./augment` is types only and gets `react/augment.json` like any other entry.
 Entries without a `component.json` (`.`, `./config`, `./contracts`, `./augment`) have no `component`
 field.
@@ -88,6 +90,49 @@ Rules the generator must enforce (fail with the file and the name, as `nz gen` d
   (`icon-button`, `field`). A slot has one `renderedBy`; every
   `interactive` and `stateIndicator` slot of the manifest is rendered; every `"values": null`
   attribute has the manifest `variants` it reads.
+
+## `@nizivo/charts`
+
+The same reader documents `@nizivo/charts` (§14.1), skipped when the repo has no
+`packages/charts`. What differs:
+
+- **`ChartsApiFile`** has `$comment`, `version`, `package` (`"@nizivo/charts"`), `entry` and
+  `exports`, shaped as in `ReactApiFile`. There is **no `component`** and **no `slots`**: charts
+  parts have no `component.json`, so there is no manifest to check slots against; the charts docs
+  pages describe their elements in prose.
+- **The barrel documents what no subpath folder declares:** `_core`'s scales and ticks, and a part
+  that is in the barrel only (AreaChart while `./area-chart` is not in the exports map). Everything
+  else in `charts/index.json` is a re-export. When a part gains its subpath, its exports move to
+  their own file with no change here. (For `@nizivo/react` such a declaration stays an error: every
+  react export has a subpath.)
+- **The barrel's `export * from './part/index'`** is followed when its names are compared with
+  `dist`.
+- **Props types** may be a type alias of an intersection (`ChartFrameElementProps =
+  ChartFrameProps & ChartFrameAttributes`), a generic alias around `Omit`
+  (`ChartFramePassthrough<'axes' | 'interaction'>`), a type literal or a conditional type
+  (Sparkline's `y`, optional when the data are the values). They are read as if the alias extended
+  each interface it names: every member of a package interface is a prop with `inheritedFrom` (the
+  interface that declares it), a type literal's members are the props type's own, and React's DOM
+  props are summarised in `inherits` as usual. `Omit` keys are read as written; when they name a
+  type parameter (`'children' | Omitted`), the checker gives the props that remain in the type the
+  reference instantiates. A conditional type contributes both branches: a member that is optional in
+  either branch, or in only one, is optional, and keeps the first branch's text. A name declared by
+  two parts of one intersection is an error. `propsType` is the parameter's type as written
+  (`"BarChartProps<T>"`); the export it names (`BarChartProps`) has `propsOf`, an alias included.
+- **Call signatures** of an interface (`ScaleLike<D>`'s `(value: D): number | undefined`) are
+  listed in the type export's `callSignatures`, as written, in declaration order.
+- **A type re-exported from a dependency** (`CurveFactory`, from `d3-shape`) is a `ReexportedExport`
+  whose `definedIn` is the package a consumer installs (`"d3-shape"`, never `"@types/d3-shape"`); an
+  entry key always starts with `.`, so the two cannot be confused. A re-exported dependency value is
+  an error.
+- **CSS:** `./styles.css` is the only stylesheet entry. It is the exact concatenation of every
+  `src/<part>/<part>.css`, ChartFrame's first, then by path (packages/charts/scripts/build-css.ts),
+  each built sheet starting with the layer statement of `contracts/layers.css`. `nz api` splits it
+  there and writes one `CssApiFile` per part: `entry` is `"./styles.css"`, `component` the part's
+  folder (`"bar-chart"`), `package` `"@nizivo/charts"`; hooks, tokens, classes and descriptions as
+  for react. A sheet count that differs from the part count, or a sheet that selects no
+  `.nz-<part>` class, means a stale `dist`. Once parts ship their own sheets (R2-7), `entry` becomes
+  `./css/<part>.css` and the file name stays.
 
 ## `ReactApiFile`
 
@@ -993,7 +1038,9 @@ Re-exports: `Alert` in `react/index.json`, and `OpenReason` in `react/select.jso
 ## For the renderer
 
 - Read files with `import type { ReactApiFile, CssApiFile } from '@nizivo/tooling/api/schema'`
-  (or a relative path) and plain `JSON.parse`; there is no runtime validator.
+  (or a relative path) and plain `JSON.parse`; there is no runtime validator. A charts page reads
+  `charts/<entry>.json` (`ChartsApiFile`) and `charts/css/<part>.json`, and follows a `definedIn`
+  that starts with `.` to the file that documents the export.
 - Group a component page by `exports`: a `namespace` with its `parts`, then `component`s, then
   `hook`s and `function`s; list `type` exports with `members` in a types section, and skip those
   with `propsOf` or `stateOf`, which their component already shows.

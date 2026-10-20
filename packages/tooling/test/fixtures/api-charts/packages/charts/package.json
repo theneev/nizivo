@@ -1,0 +1,18 @@
+{
+  "name": "@nizivo/charts",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./frame": {
+      "types": "./dist/frame/index.d.ts",
+      "default": "./dist/frame/index.js"
+    },
+    "./styles.css": "./dist/styles.css",
+    "./package.json": "./package.json"
+  }
+}

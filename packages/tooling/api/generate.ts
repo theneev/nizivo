@@ -1,12 +1,18 @@
 /**
- * Computes every file under `contracts/api` (ARCHITECTURE.md §6, §18.1) from the built
- * `@nizivo/react` and `@nizivo/tokens`, the component manifests and `contracts/vocabulary.json`.
- * Pure apart from reading: it never writes. API-JSON.md is the field reference.
+ * Computes every file under `contracts/api` (ARCHITECTURE.md §6, §14.1, §18.1) from the built
+ * `@nizivo/react`, `@nizivo/charts` (when the repo has it) and `@nizivo/tokens`, the component
+ * manifests and `contracts/vocabulary.json`. Pure apart from reading: it never writes. API-JSON.md
+ * is the field reference.
  */
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { basename, join, relative, sep } from 'node:path';
 import { type ComponentConfig, isRecord, validateComponentConfig } from '../gen/schema.ts';
-import { loadComponents, loadVocabulary } from '../stylelint-config/contract.js';
+import {
+  type ComponentManifest,
+  layerStatement,
+  loadComponents,
+  loadVocabulary,
+} from '../stylelint-config/contract.js';
 import { extractCss } from './css.ts';
 import { extractReact } from './react.ts';
 import { printApiJson } from './text.ts';
@@ -23,6 +29,8 @@ export interface ApiOptions {
 }
 
 const CSS_ENTRY = /^\.\/css\/([^/]+)\.css$/;
+/** The part that styles every chart, first in `@nizivo/charts`' `styles.css` (its build-css.ts). */
+const CHARTS_FIRST = 'chart-frame';
 
 export function generateApi(root: string, options: ApiOptions = {}): ApiResult {
   const reactDir = join(root, 'packages', 'react');
@@ -78,8 +86,128 @@ export function generateApi(root: string, options: ApiOptions = {}): ApiResult {
   }
   if (errors.length > 0) return { files: new Map(), errors };
 
+  const chartsDir = join(root, 'packages', 'charts');
+  if (existsSync(join(chartsDir, 'package.json'))) {
+    const charts = generateCharts({ root, chartsDir, rel, tokens, vocabulary, components });
+    errors.push(...charts.errors);
+    for (const [path, content] of charts.files) files.set(join(outDir, path), content);
+    if (errors.length > 0) return { files: new Map(), errors };
+  }
+
   for (const file of jsonFiles(outDir)) if (!files.has(file)) files.set(file, null);
   return { files, errors };
+}
+
+interface ChartsInput {
+  root: string;
+  chartsDir: string;
+  rel: (file: string) => string;
+  tokens: ReadonlySet<string>;
+  vocabulary: ReturnType<typeof loadVocabulary>;
+  components: ReadonlyMap<string, ComponentManifest>;
+}
+
+/**
+ * `charts/<entry>.json` for each JavaScript entry of `@nizivo/charts`, and `charts/css/<part>.json`
+ * for each part sheet of its `./styles.css`. Charts parts have no `component.json`, so the files
+ * have no `component` and no `slots`; what no subpath folder declares (`_core`) is documented in
+ * `charts/index.json`.
+ */
+function generateCharts(input: ChartsInput): { files: Map<string, string>; errors: string[] } {
+  const { chartsDir, rel } = input;
+  const files = new Map<string, string>();
+  const errors: string[] = [];
+  const pkg = readJson(join(chartsDir, 'package.json'));
+  const exportsMap = isRecord(pkg.exports) ? pkg.exports : {};
+
+  const entries = extractReact({
+    root: input.root,
+    reactDir: chartsDir,
+    exportsMap,
+    manifests: new Map(),
+    vocabulary: input.vocabulary,
+    meanings: new Map(),
+    packageName: '@nizivo/charts',
+    barrelOwnsRest: true,
+  });
+  errors.push(...entries.errors);
+  for (const [path, content] of entries.files) files.set(path, printApiJson(content));
+
+  const target = exportsMap['./styles.css'];
+  if (typeof target !== 'string') {
+    errors.push('packages/charts/package.json: exports no ./styles.css');
+    return { files, errors };
+  }
+  const built = join(chartsDir, target);
+  if (!existsSync(built)) {
+    errors.push(`packages/charts: ${target} is missing; build @nizivo/charts first`);
+    return { files, errors };
+  }
+  const parts = chartsParts(join(chartsDir, 'src'));
+  const sheets = splitSheets(readFileSync(built, 'utf8'), layerStatement(input.root));
+  if (sheets.length !== parts.length) {
+    errors.push(
+      `${rel(built)} holds ${sheets.length} part sheets, src has ${parts.length} (${parts.join(', ')}); rebuild @nizivo/charts`,
+    );
+    return { files, errors };
+  }
+  for (const [index, part] of parts.entries()) {
+    const code = sheets[index] ?? '';
+    // Each part sheet selects its own classes (`.nz-<part>`, `.nz-<part>-*`): a sheet without one
+    // is out of place, so dist is stale.
+    if (!new RegExp(`\\.nz-${part}(?![a-z0-9_])`).test(code)) {
+      errors.push(
+        `${rel(built)}: part sheet ${index + 1} selects no .nz-${part} class; rebuild @nizivo/charts`,
+      );
+      continue;
+    }
+    const source = join(chartsDir, 'src', part, `${part}.css`);
+    const css = extractCss({
+      code,
+      filename: `${rel(built)} (${part})`,
+      entry: './styles.css',
+      component: input.components.get(part),
+      tokens: input.tokens,
+      source: readFileSync(source, 'utf8'),
+      package: '@nizivo/charts',
+    });
+    errors.push(...css.errors);
+    if (css.file !== undefined)
+      files.set(join('charts', 'css', `${part}.json`), printApiJson(css.file));
+  }
+  return { files, errors };
+}
+
+/**
+ * The parts `styles.css` concatenates, in its order: every `src/<name>/<name>.css`, ChartFrame's
+ * shared base first, then by path (packages/charts/scripts/build-css.ts, `sources()`).
+ */
+function chartsParts(srcDir: string): string[] {
+  if (!existsSync(srcDir)) return [];
+  const names = readdirSync(srcDir, { withFileTypes: true })
+    .filter(
+      (entry) => entry.isDirectory() && existsSync(join(srcDir, entry.name, `${entry.name}.css`)),
+    )
+    .map((entry) => entry.name);
+  return names.toSorted(
+    (a, b) =>
+      Number(a !== CHARTS_FIRST) - Number(b !== CHARTS_FIRST) ||
+      (sheetPath(a) < sheetPath(b) ? -1 : 1),
+  );
+}
+
+/** `bar-chart` → `bar-chart/bar-chart.css`, the path build-css.ts sorts by. */
+function sheetPath(name: string): string {
+  return `${name}/${name}.css`;
+}
+
+/** A concatenation of built sheets, each starting with the canonical layer statement, split back. */
+export function splitSheets(code: string, statement: string): string[] {
+  if (!code.startsWith(statement)) return [];
+  return code
+    .split(statement)
+    .slice(1)
+    .map((rest) => `${statement}${rest}`);
 }
 
 function readJson(file: string): Record<string, unknown> {
