@@ -7,7 +7,7 @@ import { AlertDismissibleExample, AlertExample } from '../../src/alert/alert.exa
 import { BadgeExample } from '../../src/badge/badge.example';
 import { Button } from '../../src/button/index';
 import { ButtonExample } from '../../src/button/button.example';
-import { CardExample } from '../../src/card/card.example';
+import { CardExample, CardTonesExample } from '../../src/card/card.example';
 import { ContainerExample } from '../../src/container/container.example';
 import { DeltaExample } from '../../src/delta/delta.example';
 import {
@@ -40,6 +40,10 @@ import { TabNavExample, TabNavRouterExample } from '../../src/tab-nav/tab-nav.ex
 import { TabsExample, TabsManualExample, TabsStatesExample } from '../../src/tabs/tabs.example';
 import { TextExample } from '../../src/text/text.example';
 import { TooltipExample, TooltipOpenExample } from '../../src/tooltip/tooltip.example';
+import { KpiTileExample, KpiTileStatesExample } from '../../src/kpi-tile/kpi-tile.example';
+import { MetricExample, MetricStatesExample } from '../../src/metric/metric.example';
+import { NumberValueExample } from '../../src/number-value/number-value.example';
+import { TrendCardExample, TrendCardLoadingExample } from '../../src/trend-card/trend-card.example';
 
 const examples: Record<string, () => JSX.Element> = {
   ButtonExample,
@@ -79,6 +83,14 @@ const examples: Record<string, () => JSX.Element> = {
   TabsManualExample,
   TabNavExample,
   TabNavRouterExample,
+  CardTonesExample,
+  NumberValueExample,
+  MetricExample,
+  MetricStatesExample,
+  KpiTileExample,
+  KpiTileStatesExample,
+  TrendCardExample,
+  TrendCardLoadingExample,
 };
 
 const allowed = new Set([

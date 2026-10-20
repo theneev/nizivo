@@ -1,0 +1,74 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/trend-card.css (Figma Revenue Card 7275:13818, figma/04 §4.5). The surface is
+   Card's (card.css) and the headline Metric's (metric.css, size display). Public --nz-trend-card-*
+   hooks are read once, at the property, and never assigned here. */
+@layer nz.components {
+  /* Figma's rows sit 24 apart (Card's are 20): two classes, so the order of the sheets does not matter */
+  .nz-card.nz-trend-card {
+    gap: var(--nz-trend-card-gap, var(--nz-space-6));
+    /* the container's width, never the content's: the header below is a size container, so a
+       shrink-to-fit parent (a flex row) would otherwise size the card by its chart alone; and no
+       minimum from the content, as KpiTile (kpi-tile.css), so the column is the card's width in
+       every status (§16.5) */
+    box-sizing: border-box;
+    inline-size: 100%;
+    min-inline-size: 0;
+  }
+
+  /* the headline and the action side by side: where they wrap depends on the header's width alone,
+     never on the headline's content, which would move the box between statuses (§16.5) */
+  .nz-trend-card-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    gap: var(--nz-space-4);
+    container-type: inline-size;
+  }
+
+  /* A narrow header (under 30rem, so enlarged text narrows it too): the action goes below the
+     headline and the change below the number, so the comparison and an error keep their room
+     rather than ending in an ellipsis of nothing (week 12 review A11Y-W12-3). The change row is
+     there in every status (TrendCard reserves it), so the box still does not move. */
+  @container (inline-size < 30rem) {
+    .nz-trend-card-header > .nz-metric,
+    .nz-trend-card-action {
+      grid-column: 1 / -1;
+    }
+
+    /* the number (or its skeleton, "—" or error) on a first row one Numeric/Display line tall (the
+       headline is always size display), the change on the second */
+    .nz-trend-card-header > .nz-metric > .nz-metric-value-row {
+      display: grid;
+      grid-template-rows: minmax(
+        calc(var(--nz-font-numeric-display-font-size) * var(--nz-font-numeric-display-line-height)),
+        auto
+      );
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  .nz-trend-card-action {
+    display: flex;
+    align-items: center;
+    gap: var(--nz-space-2);
+  }
+
+  .nz-trend-card-chart {
+    min-inline-size: 0;
+  }
+
+  .nz-trend-card-legend {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--nz-space-2) var(--nz-space-5);
+  }
+
+  .nz-trend-card-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--nz-space-3);
+  }
+}

@@ -176,7 +176,7 @@
       "name": "data-padding",
       "values": null,
       "on": "component roots",
-      "meaning": "The padding prop; values in each component manifest (Card: sm, md)"
+      "meaning": "The padding prop, or the fixed padding of a part drawn on Card's surface, which has no padding prop; values in each component manifest (Card: sm, md; KpiTile: sm; TrendCard: md)"
     },
     {
       "name": "data-elevation",

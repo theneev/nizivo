@@ -3,8 +3,12 @@ import type { ComponentPropsWithRef, ReactElement } from 'react';
 import { renderElement, type RenderProp } from '../contracts/render';
 import { cx } from '../_internal/cx';
 
-/** Figma "Style": Surface | Subtle | Inverse. */
-export type CardTone = 'surface' | 'subtle' | 'inverse';
+/**
+ * Figma "Style": Surface | Subtle | Inverse, plus the tinted surfaces of the dashboard widgets (KPI
+ * Tile "Tinted", Insight Card Brand and Accent; figma/04 §2/§3, M41): `brand` (bg/brand-subtle) and
+ * `accent` (bg/accent-subtle).
+ */
+export type CardTone = 'surface' | 'subtle' | 'inverse' | 'brand' | 'accent';
 export type CardTitleLevel = 2 | 3 | 4 | 5 | 6;
 /** 24 px (`md`, Figma) or 20 px (`sm`). */
 export type CardPadding = 'sm' | 'md';

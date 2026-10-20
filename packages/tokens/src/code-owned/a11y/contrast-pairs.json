@@ -20,21 +20,21 @@
   "pairs": [
     {
       "fg": "text-primary",
-      "on": ["surfaces", "status-subtle", "bg-pressed", "bg-brand-subtle"],
+      "on": ["surfaces", "status-subtle", "bg-pressed", "bg-brand-subtle", "bg-accent-subtle"],
       "role": "text",
-      "use": "Alert body, Button secondary pressed, Select selected row label"
+      "use": "Alert body, Button secondary pressed, Select selected row label; Card and KpiTile tone=\"accent\" (M41)"
     },
     {
       "fg": "text-secondary",
-      "on": ["surfaces", "status-subtle"],
+      "on": ["surfaces", "status-subtle", "bg-brand-subtle", "bg-accent-subtle"],
       "role": "text",
-      "use": "Alert description, Select group label"
+      "use": "Alert description, Select group label; the Metric label on Card and KpiTile tone=\"brand\" and \"accent\" (M41)"
     },
     {
       "fg": "text-tertiary",
-      "on": ["surfaces", "bg-brand-subtle"],
+      "on": ["surfaces", "bg-brand-subtle", "bg-accent-subtle"],
       "role": "text",
-      "use": "Menu shortcut, also on a checked item; Menu group label"
+      "use": "Menu shortcut, also on a checked item; Menu group label; KpiTile's comparison on tone=\"brand\" and \"accent\" (M41)"
     },
     {
       "fg": "text-brand",
@@ -78,13 +78,18 @@
       "role": "text",
       "use": "No component yet (surfaces dark in both modes); guards the 2026-10-18 value"
     },
-    { "fg": "text-success", "on": ["surfaces", "bg-success-subtle"], "role": "text" },
+    {
+      "fg": "text-success",
+      "on": ["surfaces", "bg-success-subtle", "bg-brand-subtle", "bg-accent-subtle"],
+      "role": "text",
+      "use": "Delta text; on KpiTile tone=\"brand\" and \"accent\" (M41)"
+    },
     { "fg": "text-warning", "on": ["surfaces", "bg-warning-subtle"], "role": "text" },
     {
       "fg": "text-critical",
-      "on": ["surfaces", "bg-critical-subtle"],
+      "on": ["surfaces", "bg-critical-subtle", "bg-brand-subtle", "bg-accent-subtle"],
       "role": "text",
-      "use": "Menu critical item (also highlighted, on bg-hover)"
+      "use": "Menu critical item (also highlighted, on bg-hover); KpiTile's default error on tone=\"brand\" and \"accent\" (M41)"
     },
     { "fg": "text-info", "on": ["surfaces", "bg-info-subtle"], "role": "text" },
     {

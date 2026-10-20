@@ -1,0 +1,17 @@
+{
+  "name": "trend-card",
+  "status": "stable",
+  "tier": "server",
+  "parts": [],
+  "cssDeps": ["base", "card", "metric", "number-value", "delta", "skeleton", "inline-error"],
+  "variants": {
+    "tone": ["surface", "subtle", "inverse", "brand", "accent"],
+    "padding": ["md"]
+  },
+  "figma": {
+    "canonical": ["752:385"],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": ["7275:13818", "7275:13757"]
+  }
+}

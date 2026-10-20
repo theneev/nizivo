@@ -59,6 +59,10 @@ const COMPONENTS = [
   'icon-button',
   'theme-script',
   'tab-nav',
+  'number-value',
+  'metric',
+  'kpi-tile',
+  'trend-card',
 ] as const;
 type Name = (typeof COMPONENTS)[number];
 
@@ -122,6 +126,10 @@ const entries = {
   'icon-button': () => import('../../src/icon-button/index'),
   'theme-script': () => import('../../src/theme-script/index'),
   'tab-nav': () => import('../../src/tab-nav/index'),
+  'number-value': () => import('../../src/number-value/index'),
+  metric: () => import('../../src/metric/index'),
+  'kpi-tile': () => import('../../src/kpi-tile/index'),
+  'trend-card': () => import('../../src/trend-card/index'),
 } satisfies Record<Name, () => Promise<unknown>>;
 
 /** Each example module, imported again by the react-server test; every `*Example` export renders. */
@@ -152,6 +160,10 @@ const exampleModules = {
   'icon-button': () => import('../../src/icon-button/icon-button.example'),
   'theme-script': () => import('../../src/theme-script/theme-script.example'),
   'tab-nav': () => import('../../src/tab-nav/tab-nav.example'),
+  'number-value': () => import('../../src/number-value/number-value.example'),
+  metric: () => import('../../src/metric/metric.example'),
+  'kpi-tile': () => import('../../src/kpi-tile/kpi-tile.example'),
+  'trend-card': () => import('../../src/trend-card/trend-card.example'),
 } satisfies Record<Name, () => Promise<Record<string, unknown>>>;
 
 /**

@@ -1,0 +1,147 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/metric.css (Figma KPI Tile 7275:13783 and the Revenue Card headline
+   I7275:13818;752:387). Sizes set ONLY --_nz-* privates; public --nz-metric-* hooks are read once, at
+   the property, and never assigned here. The box is the same in every status (§16.5): the value row
+   is at least one line of the numeric style, and the change row at least one Delta pill. */
+@layer nz.components {
+  .nz-metric {
+    /* defaults = the KPI Tile: Numeric/KPI, rows 16 apart, the change on its own row */
+    --_nz-metric-gap: var(--nz-space-4);
+    --_nz-metric-value-font: var(--nz-font-numeric-kpi);
+    --_nz-metric-value-tracking: var(--nz-tracking-numeric-kpi);
+    --_nz-metric-value-size: var(--nz-font-numeric-kpi-font-size);
+    --_nz-metric-value-line: calc(
+      var(--nz-font-numeric-kpi-font-size) * var(--nz-font-numeric-kpi-line-height)
+    );
+    /* one Delta pill: Label/M Strong plus 4 px above and below (delta.css) */
+    --_nz-metric-change-line: calc(
+      var(--nz-font-label-m-strong-font-size) * var(--nz-font-label-m-strong-line-height) + 2 *
+        var(--nz-space-1)
+    );
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-metric-gap, var(--_nz-metric-gap));
+    min-inline-size: 0;
+    color: var(--nz-text-primary);
+  }
+
+  /* the Revenue Card headline: Numeric/Display, label 8 above, the change 12 after the number */
+  .nz-metric[data-size='display'] {
+    --_nz-metric-gap: var(--nz-space-2);
+    --_nz-metric-value-font: var(--nz-font-numeric-display);
+    --_nz-metric-value-tracking: var(--nz-tracking-numeric-display);
+    --_nz-metric-value-size: var(--nz-font-numeric-display-font-size);
+    --_nz-metric-value-line: calc(
+      var(--nz-font-numeric-display-font-size) * var(--nz-font-numeric-display-line-height)
+    );
+  }
+
+  .nz-metric-label {
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-label-m);
+    letter-spacing: var(--nz-tracking-label-m);
+  }
+
+  /* KPI: the number and the chart on one row, bottoms aligned (Figma counter-align MAX) */
+  .nz-metric-value-row {
+    display: flex;
+    align-items: flex-end;
+    gap: var(--nz-space-3);
+    min-block-size: var(--_nz-metric-value-line);
+  }
+
+  .nz-metric[data-size='display'] .nz-metric-value-row {
+    align-items: center;
+  }
+
+  .nz-metric-value {
+    flex: none;
+    font: var(--_nz-metric-value-font);
+    letter-spacing: var(--_nz-metric-value-tracking);
+  }
+
+  /* one line of the numeric style, so the loading box is the ready box */
+  .nz-metric-value-row > .nz-metric-value-skeleton {
+    flex: none;
+    inline-size: min(100%, 4em);
+    block-size: var(--_nz-metric-value-line);
+    font-size: var(--_nz-metric-value-size);
+  }
+
+  .nz-metric-empty {
+    flex: none;
+    color: var(--nz-text-secondary);
+    font: var(--_nz-metric-value-font);
+    letter-spacing: var(--_nz-metric-value-tracking);
+  }
+
+  /* the default error keeps one line, ending in an ellipsis in a narrow tile (the whole message is
+     still in the DOM): a second line would make the error box taller than the ready one */
+  .nz-metric-value-row > .nz-inline-error {
+    align-self: center;
+    min-inline-size: 0;
+    white-space: nowrap;
+  }
+
+  .nz-metric-value-row > .nz-inline-error > .nz-inline-error-message {
+    min-inline-size: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* a small chart at the end of the row, never wider than the room the number leaves; KPI Tile draws
+     its Sparkline at 88 × 28 */
+  .nz-metric-chart {
+    display: flex;
+    flex: 0 1 auto;
+    justify-content: flex-end;
+    min-inline-size: 0;
+    margin-inline-start: auto;
+    overflow: hidden;
+    /* the hooks are read on the slot, so `nz api` can name it; the chart element takes the result */
+    --_nz-metric-chart-inline: var(--nz-metric-chart-max-inline-size, 5.5rem);
+    --_nz-metric-chart-block: var(--nz-metric-chart-max-block-size, 1.75rem);
+  }
+
+  .nz-metric-chart > * {
+    max-inline-size: min(100%, var(--_nz-metric-chart-inline));
+    max-block-size: var(--_nz-metric-chart-block);
+  }
+
+  /* the delta and the comparison: one line, 8 apart; the comparison ends in an ellipsis rather than
+     wrapping, so the row keeps its height at any width */
+  .nz-metric-change {
+    display: flex;
+    align-items: center;
+    gap: var(--nz-space-2);
+    min-inline-size: 0;
+    min-block-size: var(--_nz-metric-change-line);
+  }
+
+  .nz-metric-change > * {
+    flex: none;
+  }
+
+  .nz-metric[data-size='display'] .nz-metric-change {
+    flex: 0 1 auto;
+  }
+
+  .nz-metric-change > .nz-metric-comparison {
+    flex: 0 1 auto;
+    min-inline-size: 0;
+    overflow: hidden;
+    color: var(--nz-text-tertiary);
+    font: var(--nz-font-body-m);
+    letter-spacing: var(--nz-tracking-body-m);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .nz-metric-change > .nz-metric-change-skeleton {
+    inline-size: 4rem;
+    block-size: var(--_nz-metric-change-line);
+    border-radius: var(--nz-radius-full);
+  }
+}

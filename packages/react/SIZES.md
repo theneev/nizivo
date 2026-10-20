@@ -104,7 +104,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 | Entry              | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | ------------------ | -------: | ---------: | ---------: | ----------: | -----------: |
-| `.`                |   86,521 |       84.5 |     73,084 |          93 |        8,711 |
+| `.`                |   87,828 |       85.8 |     74,148 |          93 |        7,404 |
 | /alert             |    1,282 |        1.3 |      1,187 |         1.4 |          151 |
 | /augment           |        0 |        0.0 |          0 |           0 |            — |
 | /badge             |      796 |        0.8 |        727 |         0.9 |          125 |
@@ -127,9 +127,12 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /inline-error      |    1,046 |        1.0 |        953 |         1.2 |          182 |
 | /input             |    1,833 |        1.8 |      1,658 |           2 |          215 |
 | /kbd               |    1,192 |        1.2 |      1,087 |         1.3 |          139 |
+| /kpi-tile          |    2,323 |        2.3 |      2,116 |         2.5 |          237 |
 | /menu              |   56,711 |       55.4 |     48,954 |          57 |        1,657 |
 | /meter             |    1,143 |        1.1 |      1,058 |         1.3 |          188 |
+| /metric            |    2,143 |        2.1 |      1,947 |         2.4 |          314 |
 | /native-select     |    1,560 |        1.5 |      1,417 |         1.7 |          180 |
+| /number-value      |      788 |        0.8 |        716 |         0.9 |          133 |
 | /progress-bar      |    1,137 |        1.1 |      1,039 |         1.3 |          194 |
 | /progress-ring     |    1,194 |        1.2 |      1,097 |         1.3 |          137 |
 | /radio-group       |    2,200 |        2.1 |      2,025 |         2.4 |          257 |
@@ -145,6 +148,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /textarea          |    1,364 |        1.3 |      1,247 |         1.5 |          172 |
 | /theme-script      |      363 |        0.4 |        289 |         0.4 |           46 |
 | /tooltip           |   16,372 |       16.0 |     14,812 |          16 |           12 |
+| /trend-card        |    2,442 |        2.4 |      2,224 |         2.7 |          322 |
 
 #### `@nizivo/react`: Composite bundles (one bundle; React Aria counted once)
 
@@ -197,7 +201,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/badge.css             |      512 |        0.5 |        424 |         0.6 |          102 |
 | /css/base.css              |      997 |        1.0 |        833 |         1.1 |          129 |
 | /css/button.css            |    1,153 |        1.1 |        974 |         1.3 |          178 |
-| /css/card.css              |      592 |        0.6 |        487 |         0.7 |          124 |
+| /css/card.css              |      614 |        0.6 |        510 |         0.7 |          102 |
 | /css/checkbox.css          |      834 |        0.8 |        687 |         0.9 |           87 |
 | /css/container.css         |      185 |        0.2 |        155 |         0.2 |           19 |
 | /css/delta.css             |      453 |        0.4 |        370 |         0.5 |           59 |
@@ -213,9 +217,12 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/inline.css            |      274 |        0.3 |        219 |         0.3 |           33 |
 | /css/input.css             |      844 |        0.8 |        710 |         0.9 |           77 |
 | /css/kbd.css               |      377 |        0.4 |        303 |         0.5 |          135 |
+| /css/kpi-tile.css          |      162 |        0.2 |        134 |         0.2 |           42 |
 | /css/menu.css              |    1,050 |        1.0 |        867 |         1.2 |          178 |
 | /css/meter.css             |      657 |        0.6 |        537 |         0.8 |          162 |
+| /css/metric.css            |      732 |        0.7 |        629 |         0.8 |           87 |
 | /css/native-select.css     |      930 |        0.9 |        778 |           1 |           94 |
+| /css/number-value.css      |      154 |        0.2 |        116 |         0.2 |           50 |
 | /css/progress-bar.css      |      800 |        0.8 |        664 |         0.9 |          121 |
 | /css/progress-ring.css     |      509 |        0.5 |        432 |         0.6 |          105 |
 | /css/radio-group.css       |      824 |        0.8 |        678 |         0.9 |           97 |
@@ -230,7 +237,8 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/text.css              |      574 |        0.6 |        489 |         0.7 |          142 |
 | /css/textarea.css          |      751 |        0.7 |        624 |         0.8 |           68 |
 | /css/tooltip.css           |      581 |        0.6 |        503 |         0.6 |           33 |
-| /styles.css                |   15,159 |       14.8 |     12,901 |          16 |        1,225 |
+| /css/trend-card.css        |      403 |        0.4 |        346 |         0.5 |          109 |
+| /styles.css                |   15,900 |       15.5 |     13,453 |          19 |        3,556 |
 
 #### `@nizivo/tokens`: Public JS entries (bundled with what they import, React Aria included)
 

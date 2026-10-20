@@ -5,7 +5,7 @@
   "parts": ["Root", "Header", "Title", "Description", "Action", "Body", "Footer"],
   "cssDeps": ["base"],
   "variants": {
-    "tone": ["surface", "subtle", "inverse"],
+    "tone": ["surface", "subtle", "inverse", "brand", "accent"],
     "padding": ["sm", "md"],
     "elevation": ["1"]
   },

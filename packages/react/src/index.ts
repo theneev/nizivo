@@ -122,6 +122,8 @@ export { Input } from './input/index';
 export type { InputProps, InputState, InputType } from './input/index';
 export { Kbd } from './kbd/index';
 export type { KbdPlatform, KbdProps } from './kbd/index';
+export { KpiTile } from './kpi-tile/index';
+export type { KpiTileProps, KpiTileState, KpiTileTone } from './kpi-tile/index';
 export {
   Menu,
   MenuRoot,
@@ -156,8 +158,18 @@ export type {
 } from './menu/index';
 export { Meter } from './meter/index';
 export type { MeterProps, MeterState, MeterTone } from './meter/index';
+export { Metric, metricLabels } from './metric/index';
+export type {
+  MetricDataProps,
+  MetricLabels,
+  MetricProps,
+  MetricSize,
+  MetricState,
+} from './metric/index';
 export { NativeSelect } from './native-select/index';
 export type { NativeSelectProps, NativeSelectState } from './native-select/index';
+export { NumberValue, formatNumber } from './number-value/index';
+export type { NumberValueProps, NumberValueState } from './number-value/index';
 export { ProgressBar } from './progress-bar/index';
 export type { ProgressBarProps, ProgressBarState, ProgressBarTone } from './progress-bar/index';
 export { ProgressRing } from './progress-ring/index';
@@ -253,3 +265,5 @@ export type {
   TooltipTriggerProps,
   TooltipTriggerState,
 } from './tooltip/index';
+export { TrendCard } from './trend-card/index';
+export type { TrendCardProps, TrendCardState } from './trend-card/index';

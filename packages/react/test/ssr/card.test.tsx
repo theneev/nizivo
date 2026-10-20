@@ -2,7 +2,7 @@ import type { ComponentPropsWithRef, JSX } from 'react';
 import { renderToString } from 'react-dom/server';
 import { describe, expect, test } from 'vitest';
 import { graph, isClient, reactImports, REACT_SERVER, rekey } from '../helpers/graph';
-import { CardExample } from '../../src/card/card.example';
+import { CardExample, CardTonesExample } from '../../src/card/card.example';
 import { Card, CardRoot, CardTitle } from '../../src/card/index';
 
 const SRC = rekey(
@@ -79,6 +79,15 @@ describe('Card markup', () => {
     expect(renderToString(<Card.Root tone="subtle" />)).not.toContain('data-nz-scheme');
   });
 
+  test('brand and accent: tinted tones with no scheme change (M41)', () => {
+    expect(renderToString(<Card.Root tone="brand" />)).toBe(
+      '<div data-slot="card" data-tone="brand" data-padding="md" class="nz-card"></div>',
+    );
+    expect(renderToString(<Card.Root tone="accent" />)).toBe(
+      '<div data-slot="card" data-tone="accent" data-padding="md" class="nz-card"></div>',
+    );
+  });
+
   test('padding is always an attribute; elevation only when raised', () => {
     expect(renderToString(<Card.Root padding="sm" elevation={1} />)).toBe(
       '<div data-slot="card" data-tone="surface" data-padding="sm" data-elevation="1" class="nz-card"></div>',
@@ -105,5 +114,11 @@ describe('Card markup', () => {
     expect(html).toContain(
       '<section aria-label="Tip" data-slot="card" data-tone="inverse" data-padding="md" data-nz-scheme="inverse" class="nz-card">',
     );
+  });
+
+  test('the tones example renders', () => {
+    const html = renderToString(<CardTonesExample />);
+    expect(html).toContain('data-tone="brand"');
+    expect(html).toContain('data-tone="accent"');
   });
 });

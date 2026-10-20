@@ -25,6 +25,22 @@
           },
           {
             "conditions": [],
+            "selector": ".nz-card[data-tone=\"accent\"]",
+            "value": "var(--nz-bg-accent-subtle)",
+            "when": {
+              "data-tone": "accent"
+            }
+          },
+          {
+            "conditions": [],
+            "selector": ".nz-card[data-tone=\"brand\"]",
+            "value": "var(--nz-bg-brand-subtle)",
+            "when": {
+              "data-tone": "brand"
+            }
+          },
+          {
+            "conditions": [],
             "selector": ".nz-card[data-tone=\"subtle\"]",
             "value": "var(--nz-bg-subtle)",
             "when": {
@@ -53,6 +69,22 @@
             "selector": ".nz-card",
             "value": "var(--nz-border-subtle)",
             "when": {}
+          },
+          {
+            "conditions": [],
+            "selector": ".nz-card[data-tone=\"accent\"]",
+            "value": "transparent",
+            "when": {
+              "data-tone": "accent"
+            }
+          },
+          {
+            "conditions": [],
+            "selector": ".nz-card[data-tone=\"brand\"]",
+            "value": "transparent",
+            "when": {
+              "data-tone": "brand"
+            }
           },
           {
             "conditions": [],
@@ -194,6 +226,8 @@
   "package": "@nizivo/react",
   "runtime": [],
   "tokens": [
+    "--nz-bg-accent-subtle",
+    "--nz-bg-brand-subtle",
     "--nz-bg-subtle",
     "--nz-bg-surface",
     "--nz-border-subtle",

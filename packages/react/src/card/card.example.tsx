@@ -33,3 +33,19 @@ export function CardExample(): JSX.Element {
     </div>
   );
 }
+
+/** The tinted surfaces (M41): a row of related widgets shares one tint; it never encodes data. */
+export function CardTonesExample(): JSX.Element {
+  return (
+    <div>
+      <Card.Root tone="brand">
+        <Card.Title>Holiday drop is ready</Card.Title>
+        <Card.Body>Brand: bg/brand-subtle, no stroke.</Card.Body>
+      </Card.Root>
+      <Card.Root tone="accent">
+        <Card.Title>Restock soon</Card.Title>
+        <Card.Body>Accent: bg/accent-subtle, no stroke.</Card.Body>
+      </Card.Root>
+    </div>
+  );
+}

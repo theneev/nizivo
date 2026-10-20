@@ -9,7 +9,7 @@
     "variants": {
       "elevation": ["1"],
       "padding": ["sm", "md"],
-      "tone": ["surface", "subtle", "inverse"]
+      "tone": ["surface", "subtle", "inverse", "brand", "accent"]
     }
   },
   "entry": "./card",
@@ -59,7 +59,7 @@
               "name": "tone",
               "required": false,
               "type": "CardTone",
-              "values": ["surface", "subtle", "inverse"]
+              "values": ["surface", "subtle", "inverse", "brand", "accent"]
             }
           ],
           "propsType": "CardRootProps",
@@ -81,7 +81,7 @@
                 "name": "tone",
                 "required": true,
                 "type": "CardTone",
-                "values": ["surface", "subtle", "inverse"]
+                "values": ["surface", "subtle", "inverse", "brand", "accent"]
               }
             ],
             "stateType": "CardRootState"
@@ -418,14 +418,14 @@
     },
     {
       "declaration": "type",
-      "description": "Figma \"Style\": Surface | Subtle | Inverse.",
+      "description": "Figma \"Style\": Surface | Subtle | Inverse, plus the tinted surfaces of the dashboard widgets (KPI Tile \"Tinted\", Insight Card Brand and Accent; figma/04 §2/§3, M41): `brand` (bg/brand-subtle) and `accent` (bg/accent-subtle).",
       "import": "import type { CardTone } from '@nizivo/react/card'",
       "kind": "type",
       "name": "CardTone",
       "source": "packages/react/src/card/card.tsx",
-      "text": "\"surface\" | \"subtle\" | \"inverse\"",
+      "text": "\"surface\" | \"subtle\" | \"inverse\" | \"brand\" | \"accent\"",
       "typeParameters": [],
-      "values": ["surface", "subtle", "inverse"]
+      "values": ["surface", "subtle", "inverse", "brand", "accent"]
     }
   ],
   "package": "@nizivo/react",
@@ -447,7 +447,7 @@
         },
         {
           "group": "presentational",
-          "meaning": "The padding prop; values in each component manifest (Card: sm, md)",
+          "meaning": "The padding prop, or the fixed padding of a part drawn on Card's surface, which has no padding prop; values in each component manifest (Card: sm, md; KpiTile: sm; TrendCard: md)",
           "name": "data-padding",
           "prop": "padding",
           "values": ["sm", "md"]
@@ -457,7 +457,7 @@
           "meaning": "The tone prop; values in each component manifest",
           "name": "data-tone",
           "prop": "tone",
-          "values": ["surface", "subtle", "inverse"]
+          "values": ["surface", "subtle", "inverse", "brand", "accent"]
         }
       ],
       "interactive": false,

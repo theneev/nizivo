@@ -1,0 +1,12 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/number-value.css (no Figma component: the Numeric/* styles' rule, §16.4). The
+   font is the surrounding one (Metric sets Numeric/KPI or Numeric/Display); the figures are tabular,
+   so a changing value (CountUp) keeps its width, and the number never breaks across lines. */
+@layer nz.components {
+  .nz-number-value {
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    unicode-bidi: isolate;
+  }
+}

@@ -1,0 +1,22 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/kpi-tile.css (Figma KPI Tile 7275:13780). The surface is Card's (card.css: the
+   tone, padding sm, radius xl, no shadow at rest) and the block is Metric's (metric.css); this file
+   only lets the tile fill a stretched grid row with its change row at the bottom, as a KPI row of
+   equal heights draws it. */
+@layer nz.components {
+  /* no minimum from the content: in a dashboard row (repeat(N, 1fr)) the column is the tile's width in
+     every status, so a one-line error or an enlarged number cannot widen it in one status only
+     (§16.5; week 12 review A11Y-W12-2). Two classes, so the order of the sheets does not matter. */
+  .nz-card.nz-kpi-tile {
+    min-inline-size: 0;
+  }
+
+  .nz-kpi-tile > .nz-metric {
+    flex: 1 1 auto;
+  }
+
+  .nz-kpi-tile > .nz-metric > .nz-metric-change {
+    margin-block-start: auto;
+  }
+}

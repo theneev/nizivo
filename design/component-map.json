@@ -111,6 +111,26 @@
         "tone": ["success", "critical", "neutral"]
       }
     },
+    "752:380": {
+      "component": "kpi-tile",
+      "role": "ghost",
+      "import": "@nizivo/react/kpi-tile",
+      "export": "KpiTile",
+      "props": {
+        "tone": ["surface", "brand", "accent"],
+        "padding": ["sm"]
+      }
+    },
+    "752:385": {
+      "component": "trend-card",
+      "role": "canonical",
+      "import": "@nizivo/react/trend-card",
+      "export": "TrendCard",
+      "props": {
+        "tone": ["surface", "subtle", "inverse", "brand", "accent"],
+        "padding": ["md"]
+      }
+    },
     "755:961": {
       "component": "tabs",
       "role": "ghost",
@@ -278,9 +298,19 @@
       "export": "Card",
       "parts": ["Root", "Header", "Title", "Description", "Action", "Body", "Footer"],
       "props": {
-        "tone": ["surface", "subtle", "inverse"],
+        "tone": ["surface", "subtle", "inverse", "brand", "accent"],
         "padding": ["sm", "md"],
         "elevation": ["1"]
+      }
+    },
+    "7275:13780": {
+      "component": "kpi-tile",
+      "role": "canonical",
+      "import": "@nizivo/react/kpi-tile",
+      "export": "KpiTile",
+      "props": {
+        "tone": ["surface", "brand", "accent"],
+        "padding": ["sm"]
       }
     },
     "7275:14781": {

@@ -1,0 +1,15 @@
+{
+  "name": "number-value",
+  "status": "stable",
+  "tier": "server",
+  "exports": ["NumberValue", "formatNumber"],
+  "parts": [],
+  "cssDeps": ["base"],
+  "variants": {},
+  "figma": {
+    "canonical": [],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": ["7275:13783", "7275:13818"]
+  }
+}

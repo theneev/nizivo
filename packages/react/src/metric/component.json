@@ -1,0 +1,17 @@
+{
+  "name": "metric",
+  "status": "stable",
+  "tier": "server",
+  "exports": ["Metric", "metricLabels"],
+  "parts": [],
+  "cssDeps": ["base", "number-value", "delta", "skeleton", "inline-error"],
+  "variants": {
+    "size": ["default", "display"]
+  },
+  "figma": {
+    "canonical": [],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": ["7275:13783", "7275:13818"]
+  }
+}

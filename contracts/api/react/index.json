@@ -759,6 +759,30 @@
       "name": "KbdProps"
     },
     {
+      "definedIn": "./kpi-tile",
+      "import": "import { KpiTile } from '@nizivo/react'",
+      "kind": "component",
+      "name": "KpiTile"
+    },
+    {
+      "definedIn": "./kpi-tile",
+      "import": "import type { KpiTileProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "KpiTileProps"
+    },
+    {
+      "definedIn": "./kpi-tile",
+      "import": "import type { KpiTileState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "KpiTileState"
+    },
+    {
+      "definedIn": "./kpi-tile",
+      "import": "import type { KpiTileTone } from '@nizivo/react'",
+      "kind": "type",
+      "name": "KpiTileTone"
+    },
+    {
       "definedIn": "./stack",
       "import": "import type { LayoutGap } from '@nizivo/react'",
       "kind": "type",
@@ -957,6 +981,42 @@
       "name": "MeterTone"
     },
     {
+      "definedIn": "./metric",
+      "import": "import { Metric } from '@nizivo/react'",
+      "kind": "component",
+      "name": "Metric"
+    },
+    {
+      "definedIn": "./metric",
+      "import": "import type { MetricDataProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "MetricDataProps"
+    },
+    {
+      "definedIn": "./metric",
+      "import": "import type { MetricLabels } from '@nizivo/react'",
+      "kind": "type",
+      "name": "MetricLabels"
+    },
+    {
+      "definedIn": "./metric",
+      "import": "import type { MetricProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "MetricProps"
+    },
+    {
+      "definedIn": "./metric",
+      "import": "import type { MetricSize } from '@nizivo/react'",
+      "kind": "type",
+      "name": "MetricSize"
+    },
+    {
+      "definedIn": "./metric",
+      "import": "import type { MetricState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "MetricState"
+    },
+    {
       "definedIn": "./native-select",
       "import": "import { NativeSelect } from '@nizivo/react'",
       "kind": "component",
@@ -973,6 +1033,24 @@
       "import": "import type { NativeSelectState } from '@nizivo/react'",
       "kind": "type",
       "name": "NativeSelectState"
+    },
+    {
+      "definedIn": "./number-value",
+      "import": "import { NumberValue } from '@nizivo/react'",
+      "kind": "component",
+      "name": "NumberValue"
+    },
+    {
+      "definedIn": "./number-value",
+      "import": "import type { NumberValueProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "NumberValueProps"
+    },
+    {
+      "definedIn": "./number-value",
+      "import": "import type { NumberValueState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "NumberValueState"
     },
     {
       "definedIn": "./contracts",
@@ -1591,6 +1669,36 @@
       "import": "import type { TooltipTriggerState } from '@nizivo/react'",
       "kind": "type",
       "name": "TooltipTriggerState"
+    },
+    {
+      "definedIn": "./trend-card",
+      "import": "import { TrendCard } from '@nizivo/react'",
+      "kind": "component",
+      "name": "TrendCard"
+    },
+    {
+      "definedIn": "./trend-card",
+      "import": "import type { TrendCardProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "TrendCardProps"
+    },
+    {
+      "definedIn": "./trend-card",
+      "import": "import type { TrendCardState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "TrendCardState"
+    },
+    {
+      "definedIn": "./number-value",
+      "import": "import { formatNumber } from '@nizivo/react'",
+      "kind": "function",
+      "name": "formatNumber"
+    },
+    {
+      "definedIn": "./metric",
+      "import": "import { metricLabels } from '@nizivo/react'",
+      "kind": "constant",
+      "name": "metricLabels"
     },
     {
       "definedIn": "./theme-script",

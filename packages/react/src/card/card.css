@@ -27,6 +27,18 @@
     --_nz-card-border: transparent;
   }
 
+  /* the tinted surfaces (KPI Tile "Tinted", M41): no stroke, as Figma draws them; the transparent
+     1 px border keeps the box */
+  .nz-card[data-tone='brand'] {
+    --_nz-card-bg: var(--nz-bg-brand-subtle);
+    --_nz-card-border: transparent;
+  }
+
+  .nz-card[data-tone='accent'] {
+    --_nz-card-bg: var(--nz-bg-accent-subtle);
+    --_nz-card-border: transparent;
+  }
+
   .nz-card[data-padding='sm'] {
     --_nz-card-padding: var(--nz-space-5);
   }

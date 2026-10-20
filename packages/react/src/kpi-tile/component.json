@@ -1,0 +1,17 @@
+{
+  "name": "kpi-tile",
+  "status": "stable",
+  "tier": "server",
+  "parts": [],
+  "cssDeps": ["base", "card", "metric", "number-value", "delta", "skeleton", "inline-error"],
+  "variants": {
+    "tone": ["surface", "brand", "accent"],
+    "padding": ["sm"]
+  },
+  "figma": {
+    "canonical": ["7275:13780"],
+    "ghosts": ["752:380"],
+    "variantsSeen": ["7275:13781", "7275:13789", "7275:13797", "7275:13805"],
+    "related": ["7275:13757"]
+  }
+}

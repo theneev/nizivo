@@ -119,6 +119,10 @@
       "types": "./dist/kbd/index.d.ts",
       "default": "./dist/kbd/index.js"
     },
+    "./kpi-tile": {
+      "types": "./dist/kpi-tile/index.d.ts",
+      "default": "./dist/kpi-tile/index.js"
+    },
     "./menu": {
       "types": "./dist/menu/index.d.ts",
       "default": "./dist/menu/index.js"
@@ -127,9 +131,17 @@
       "types": "./dist/meter/index.d.ts",
       "default": "./dist/meter/index.js"
     },
+    "./metric": {
+      "types": "./dist/metric/index.d.ts",
+      "default": "./dist/metric/index.js"
+    },
     "./native-select": {
       "types": "./dist/native-select/index.d.ts",
       "default": "./dist/native-select/index.js"
+    },
+    "./number-value": {
+      "types": "./dist/number-value/index.d.ts",
+      "default": "./dist/number-value/index.js"
     },
     "./progress-bar": {
       "types": "./dist/progress-bar/index.d.ts",
@@ -191,6 +203,10 @@
       "types": "./dist/tooltip/index.d.ts",
       "default": "./dist/tooltip/index.js"
     },
+    "./trend-card": {
+      "types": "./dist/trend-card/index.d.ts",
+      "default": "./dist/trend-card/index.js"
+    },
     "./css/alert.css": "./dist/css/alert.css",
     "./css/badge.css": "./dist/css/badge.css",
     "./css/base.css": "./dist/css/base.css",
@@ -211,9 +227,12 @@
     "./css/inline.css": "./dist/css/inline.css",
     "./css/input.css": "./dist/css/input.css",
     "./css/kbd.css": "./dist/css/kbd.css",
+    "./css/kpi-tile.css": "./dist/css/kpi-tile.css",
     "./css/menu.css": "./dist/css/menu.css",
     "./css/meter.css": "./dist/css/meter.css",
+    "./css/metric.css": "./dist/css/metric.css",
     "./css/native-select.css": "./dist/css/native-select.css",
+    "./css/number-value.css": "./dist/css/number-value.css",
     "./css/progress-bar.css": "./dist/css/progress-bar.css",
     "./css/progress-ring.css": "./dist/css/progress-ring.css",
     "./css/radio-group.css": "./dist/css/radio-group.css",
@@ -228,6 +247,7 @@
     "./css/text.css": "./dist/css/text.css",
     "./css/textarea.css": "./dist/css/textarea.css",
     "./css/tooltip.css": "./dist/css/tooltip.css",
+    "./css/trend-card.css": "./dist/css/trend-card.css",
     "./styles.css": "./dist/styles.css",
     "./package.json": "./package.json"
   },
