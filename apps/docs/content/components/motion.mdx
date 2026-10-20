@@ -1,0 +1,43 @@
+---
+title: Motion
+description: "`CountUp`: a number that counts up to its value on the client, while the server renders the final value in NumberValue's element. Tabular digits that keep their width, 0 ms under reduced motion, and nothing announced while it counts. Also `useCountUp`, for an element of your own."
+---
+
+<Callout type="warn" title="Not yet published (v0.2)">
+  This part is in the repository and ships in `@nizivo/react` 0.2.0; the 0.1.0 on npm does not have
+  it. Until then its API can change. See [Dashboard](/docs/dashboard/).
+</Callout>
+
+## Static or interactive
+
+**Client.** `CountUp` is a client module (`count-up.client.tsx`), the one client part of the
+dashboard set, so it always ships its code. Its server HTML is the final formatted value in
+NumberValue's `<data>` element, so the number is right before hydration and without JavaScript; the
+client only animates it. For a number that does not count, use
+[NumberValue](/docs/components/number-value/), which ships nothing. [How to
+choose](/docs/guides/static-or-interactive/).
+
+## When it counts
+
+It counts with `requestAnimationFrame`, only while the element is in the viewport. An element
+mounted on the client counts from `from` (default 0). An element that was already on screen when
+the server HTML hydrated keeps its number: its reader has seen it. An element off screen counts when
+it first comes into view. A new `value` counts from the number on screen when the element is in
+view, and shows at once when it is not.
+
+The duration is `--nz-duration-count-up` (900 ms), read from the element; a `duration` prop in
+milliseconds replaces it. Under `prefers-reduced-motion: reduce` or `data-nz-motion="reduce"` the
+token is 0 ms and the value shows at once, whatever `duration` says
+([Motion](/docs/foundations/motion/)). The curve is `cubic-bezier(0, 0, 0, 1)`, the same curve as
+`--nz-easing-enter`, which Figma 04 proposed for count-up; it is written into the code and the token is
+not read, so overriding the token does not change it. Figma defines no easing for count-up.
+
+## Accessibility
+
+The counting digits are `aria-hidden`; a visually hidden copy beside them holds the final value,
+which is what assistive technology reads. There is no live region, so nothing is announced while it
+counts or when `value` changes. While counting, the digits keep the final string's width, so nothing
+around them moves.
+
+The Figma 04 notes proposed a separate `@nizivo/motion` package for this; the plan put it at the
+`@nizivo/react/motion` subpath instead (ARCHITECTURE.md §13.4).

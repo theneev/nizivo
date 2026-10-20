@@ -1,0 +1,26 @@
+---
+title: Avatar
+description: A person's or store's photo with an initials fallback that needs no script, and AvatarGroup, a stack of avatars and a count announced as one item ("Maya, Jonah, Priya, and 4 more").
+---
+
+<Callout type="warn" title="Not yet published (v0.2)">
+  This part is in the repository and ships in `@nizivo/react` 0.2.0; the 0.1.0 on npm does not have
+  it. Until then its API can change.
+</Callout>
+
+## Static or interactive
+
+**Server.** It ships no client JavaScript when a Server Component renders it, in every Next.js build
+mode; its code is bundled only when a client component (a `'use client'` file) imports it. The
+initials are always in the server HTML and the photo is laid over them with `alt=""`, so in Chromium
+and Firefox a photo that fails to load shows the initials with no `onError` handler and no hydration.
+WebKit (Safari) draws its own broken-image mark over the middle of the initials, and no script-free
+markup avoids it (D-bf); `test/browser/avatar.spec.tsx` samples the pixels in all three engines and
+pins that. [How to choose](/docs/guides/static-or-interactive/).
+
+## Names
+
+The avatar is `role="img"` named by `name`; the image inside it has `alt=""` and the initials are
+`aria-hidden`. When the name is printed next to the avatar, pass `decorative`: the avatar is then
+`aria-hidden`. Inside an AvatarGroup every avatar is decorative and the group is one `role="img"`
+named by the list of names, joined with `Intl.ListFormat` in the group's `locale`.

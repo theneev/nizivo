@@ -15,12 +15,14 @@ description: Share of a whole, drawn on the server. At most three categories plu
 
 ## Static or interactive
 
-**Server.** DonutChart has no `'use client'` and imports no client module. Hovering a segment or
-its legend row dims the others and swaps the centre to that segment's share, in CSS alone. It passes
-`interaction="none"` to its [ChartFrame](/docs/charts/chart-frame/): the plot has no Tab stop and
-the frame makes no keyboard claim for the segments. The legend, with every value and share, and the
-data table carry the same information without a pointer; `tableView="details"` shows the table to
-everyone. A keyboard mode for the segments is an open item. [How to
+**Split.** DonutChart has no `'use client'`; it renders the ChartInteraction island over the ring
+when its status is `'ready'` and `interaction` is `'nizivo'` (the default since M41), as AreaChart
+and BarChart do. That island is its keyboard route: one Tab stop over the ring, the arrow keys over
+the slices, the [ChartTooltip](/docs/charts/chart-tooltip/) card (see
+[Accessibility](#accessibility)). `interaction="none"` renders no island: the ring is static, hovering
+a segment or its legend row dims the others and swaps the centre in CSS alone, and the frame makes
+no keyboard claim. In both modes the legend, with every value and share, and the data table carry
+the same information without a pointer; `tableView="details"` shows the table to everyone. [How to
 choose](/docs/guides/static-or-interactive/).
 
 ## Examples
@@ -67,13 +69,17 @@ plain `Intl.NumberFormatOptions`, as `@nizivo/react`'s Delta and Meter take them
 
 <ChartsTable label="DonutChart label defaults">
 
-| Key        | Default    |
-| ---------- | ---------- |
-| `category` | `Category` |
-| `value`    | `Value`    |
-| `share`    | `Share`    |
-| `other`    | `Other`    |
-| `total`    | `Total`    |
+| Key           | Default                                                                 |
+| ------------- | ----------------------------------------------------------------------- |
+| `category`    | `Category`                                                              |
+| `value`       | `Value`                                                                 |
+| `share`       | `Share`                                                                 |
+| `other`       | `Other`                                                                 |
+| `total`       | `Total`                                                                 |
+| `ofTotal`     | `of total`                                                              |
+| `interaction` | `interactive chart`                                                     |
+| `hint`        | `Arrow keys move between slices; Home and End go to the first and last` |
+| `points`      | `Chart slices`                                                          |
 
 </ChartsTable>
 
@@ -84,16 +90,16 @@ plain `Intl.NumberFormatOptions`, as `@nizivo/react`'s Delta and Meter take them
 ## Data attributes and slots
 
 Inside the [ChartFrame](/docs/charts/chart-frame/#data-attributes-and-slots) root, which carries
-`nz-donut-chart` (with `axes="none"`, `interaction="none"` and a vertical
+`nz-donut-chart` (with `axes="none"`, DonutChart's `interaction` and a vertical
 [Legend](/docs/charts/legend/) in every status, its values and shares only when ready):
 
 <ChartsTable label="DonutChart data attributes and slots">
 
-| Element                       | Attributes                                                                                                 |
-| ----------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| `svg.nz-donut-chart-svg`      | `viewBox="-100 -100 200 200"`, `aria-hidden`                                                               |
-| `path.nz-donut-chart-segment` | `data-series="cat-1"`…`"cat-3"` or `"other"`                                                               |
-| `div.nz-donut-chart-center`   | The total, read by screen readers; one more per slice with `data-series` and `aria-hidden`, shown on hover |
+| Element                       | Attributes                                                                                                                                                                                                     |
+| ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `svg.nz-donut-chart-svg`      | `viewBox="-100 -100 200 200"`, `aria-hidden`                                                                                                                                                                   |
+| `path.nz-donut-chart-segment` | `data-slot="donut-chart-segment"`, `data-series="cat-1"`…`"cat-3"` or `"other"`; `data-highlighted` on the island's active slice. One per slice, in data order: a slice thinner than the gap gets an empty `d` |
+| `div.nz-donut-chart-center`   | The total, read by screen readers; one more per slice with `data-series` and `aria-hidden`, shown on hover and for the island's active slice                                                                   |
 
 </ChartsTable>
 
@@ -110,16 +116,53 @@ Inside the [ChartFrame](/docs/charts/chart-frame/#data-attributes-and-slots) roo
 - The centre's total is readable; the per-slice centres shown on hover are `aria-hidden`.
 - The legend renders in every status so the box does not move, but shows values and shares only when
   the chart is ready: an error never shows numbers beside "could not be loaded".
-- Hover is CSS only: a segment or its legend row dims the other segments to opacity 0.35 and the
-  other rows to 0.45 (Figma). The frame makes no keyboard claim (`interaction="none"`): the
-  segments have no keyboard mode yet (an open item). The legend shows every value and share as
-  text, and `tableView="details"` gives sighted keyboard users the data table.
-- The hover state swaps the centre's text in CSS and has no Escape; it adds no information the
-  legend does not show.
+- With `interaction="nizivo"` (default), the island's item mode is the keyboard route (M41). The
+  ring is one Tab stop (`role="application"`, named by `title` when it is a string, else
+  `labels.points`; role description `labels.interaction`; described by `labels.hint`, visually
+  hidden). Keyboard focus shows the card for the active slice: the first slice, or the last one a key or the pointer showed. ArrowRight and ArrowLeft move to the next and
+  previous slice in data order, which is clockwise; the ring is never mirrored, so `dir="rtl"` does
+  not flip the keys. Home and End go to the first and last slice. The active segment gets
+  `data-highlighted`, which dims the other segments to opacity 0.35 and the other legend rows to
+  0.45 and swaps the centre to its share and name, as hover does.
+- The [ChartTooltip](/docs/charts/chart-tooltip/) card sits at the slice's centre, half-way through
+  the band, and opens toward the legend: the slice's name as its title, one row (`labels.value`, a
+  swatch in the slice's colour, the formatted value) and its share with `labels.ofTotal`
+  ("52% of total"). Each keyboard move speaks the same through the polite region, joined with the
+  list separators of the chart's `locale`; with `labels={{ value: 'Sales' }}`, "Online store, Sales,
+  $64,120, 52%, of total" (`donut-chart-interaction.spec.tsx` in `packages/charts/test/browser`). A pointer
+  shows the card for the segment under it and never speaks; over a gap or the hole the card stays
+  as it is.
+- Escape hides the card wherever focus is, as in the other island modes. On the focused ring it is
+  consumed and stopped, so an enclosing dialog stays open, a native `<dialog>` or
+  [Dialog](/docs/components/dialog/); with focus elsewhere it hides a card the pointer
+  opened and still reaches an enclosing dialog (M41).
+- With `interaction="none"`, hover is CSS only, with the same dimming, and the frame makes no
+  keyboard claim. The hover state has no Escape; it adds no information the legend does not show.
+  Pass `tableView="details"` where sighted keyboard users need the data table.
 - Forced colours: the four slices take `Highlight`, `Canvas` (hollow), `CanvasText` and `GrayText`,
-  each outlined in `CanvasText`, and the legend marks inside the donut match them. Only Chromium's
+  each outlined in `CanvasText` (the active slice 3 px), and the legend marks inside the donut match
+  them. Only Chromium's
   forced-colours emulation has been looked at.
 - The ring fades in over `--nz-duration-chart-draw`, 0 ms under Reduced motion.
+
+### Keyboard
+
+With `interaction="nizivo"` (default):
+
+<ChartsTable label="DonutChart keyboard">
+
+| Keys                   | Action                                                                                                           |
+| ---------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| Tab                    | Focuses the ring. A keyboard focus shows and speaks the active slice, the first one at first.                    |
+| ArrowRight / ArrowLeft | The next or previous slice in data order (clockwise), whatever the page's direction: the ring is never mirrored. |
+| Home / End             | The first or last slice.                                                                                         |
+| Escape                 | Hides the card and clears the highlight, wherever focus is.                                                      |
+
+</ChartsTable>
+
+Source: `chart-interaction.client.tsx` in `packages/charts/src/_island` (item mode).
+`donut-chart-interaction.spec.tsx` in `packages/charts/test/browser` checks it. With
+`interaction="none"` the ring has no Tab stop and no keys.
 
 ## Figma
 

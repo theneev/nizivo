@@ -18,7 +18,7 @@ description: An inline trend line, 112 × 36, drawn on the server. Decorative by
 **Server.** Sparkline has no `'use client'` and imports no client module
 (`island-graph.test.ts` in `packages/charts/test/unit`); it has no interaction. The previews on this
 page import it from `@nizivo/charts/sparkline`, and the docs smoke check fails any page outside the
-AreaChart and BarChart pages that loads the charts island. Prefer the subpath to the barrel: under
+AreaChart, BarChart and DonutChart pages that loads the charts island. Prefer the subpath to the barrel: under
 webpack without `optimizePackageImports` the barrel has not been measured.
 [How to choose](/docs/guides/static-or-interactive/).
 

@@ -1,0 +1,226 @@
+---
+title: Dashboard
+description: 'The dashboard parts of `@nizivo/react`: NumberValue, Metric, KpiTile, TrendCard, RankedList and CountUp. Server Components with one small client part, one loading, empty and error contract, and charts through element slots. In the repository for v0.2; not yet published.'
+---
+
+<Callout type="warn" title="Not yet published (v0.2)">
+  These parts are in the repository and ship in `@nizivo/react` 0.2.0. The 0.1.0 on npm does not
+  have them, and until 0.2.0 their API can change.
+</Callout>
+
+## The parts
+
+| Part                                          | Import                       | Kind   | Ships client JS under React Server Components |
+| --------------------------------------------- | ---------------------------- | ------ | --------------------------------------------- |
+| [NumberValue](/docs/components/number-value/) | `@nizivo/react/number-value` | server | Never                                         |
+| [Metric](/docs/components/metric/)            | `@nizivo/react/metric`       | server | Never                                         |
+| [KpiTile](/docs/components/kpi-tile/)         | `@nizivo/react/kpi-tile`     | server | Never                                         |
+| [TrendCard](/docs/components/trend-card/)     | `@nizivo/react/trend-card`   | server | Never                                         |
+| [RankedList](/docs/components/ranked-list/)   | `@nizivo/react/ranked-list`  | server | Never                                         |
+| [CountUp](/docs/components/motion/)           | `@nizivo/react/motion`       | client | Always                                        |
+
+The kinds are the ones the [static or interactive guide](/docs/guides/static-or-interactive/) uses:
+the five server parts have no `'use client'` and import no client module, and CountUp's module,
+`count-up.client.tsx`, is the one client module the `./motion` subpath reaches
+(`test/ssr/count-up.test.tsx` in `packages/react`). A chart or control you pass into a slot ships
+what its own module ships: a [Sparkline](/docs/charts/sparkline/) ships nothing, an
+[AreaChart](/docs/charts/area-chart/) its island, a [Select](/docs/components/select/) its engine.
+
+Every part lives in `@nizivo/react`, each on its own subpath. The Figma 04 notes
+(`docs/figma/04-dashboard-widgets.md`) proposed separate `@nizivo/dashboard` and `@nizivo/motion`
+packages. The plan superseded both (ARCHITECTURE.md §5.1, §13.4 and decision D3): neither package
+exists, the dashboard parts are core subpaths, and CountUp is the `./motion` subpath.
+`@nizivo/react` never imports `@nizivo/charts`, so a chart goes in through an element slot
+([Charts through slots](#charts-through-slots)).
+
+Avatar, Breadcrumb and Pagination are new in 0.2 as well, and are server parts too:
+[Avatar](/docs/components/avatar/), [Breadcrumb](/docs/components/breadcrumb/),
+[Pagination](/docs/components/pagination/).
+
+## Numbers
+
+NumberValue is the number the other parts render. It formats `value` with
+`Intl.NumberFormat(locale, format)` where it renders (on the server, under React Server
+Components) and writes a `<data>` element whose `value` attribute is the raw number:
+
+```tsx
+import { NumberValue } from '@nizivo/react/number-value';
+
+<NumberValue value={123307.4} format={{ style: 'currency', currency: 'USD' }} />;
+// <data data-slot="number-value" value="123307.4" class="nz-number-value">$123,307.40</data>
+```
+
+`format` is plain `Intl.NumberFormatOptions` (default `{}`), as Delta and every chart take it;
+there are no presets. `locale` defaults to `'en-US'`; nothing reads `navigator.language`. The
+figures are tabular, the number never wraps and it is isolated from the surrounding text direction
+(`unicode-bidi: isolate`); its font is the surrounding one, and Metric sets Figma's numeric styles.
+The same formatting is exported as `formatNumber(value, format, locale)` from
+`@nizivo/react/number-value`: CountUp writes its server text and every frame with it, so the two
+agree.
+
+## The headline block
+
+Metric is the label, number and change that Figma draws in both the KPI tile and the Revenue card.
+KpiTile and TrendCard render a Metric and pass it the same props:
+
+- `label`; `value`, a number (`null`, `undefined` or `NaN` is the empty state); `format`; `locale`.
+- `delta`: a number renders `<Delta value={delta} locale={locale} />`, read as a fraction (`0.124`
+  is "+12.4%"); pass your own `<Delta … />` element for another format or tone.
+- `comparison`: visible text after the delta, such as "vs last week".
+- The status props below, and `labels` for the status strings.
+
+`size="default"` (KpiTile's) puts the change on its own row under the number, in Numeric/KPI;
+`size="display"` (TrendCard's) puts it beside the number, in Numeric/Display.
+
+KpiTile and TrendCard are Card's surface: their root has Card's `nz-card` class with `data-tone`
+and `data-padding` (`sm`, 20 px, for KpiTile; `md`, 24 px, for TrendCard) and no shadow at rest.
+Each is a `role="group"` named by its label. KpiTile's `tone` is `'surface'` (default), `'brand'` or
+`'accent'`, the two tints Card gained for it ([Card](/docs/components/card/)). The tint groups a row
+of related KPIs and does not follow the trend: Figma's `Tone=Tinted` drew brand for a rising KPI and
+accent for a falling one, and both are now a choice (M41). TrendCard takes any Card tone.
+
+RankedList is Card's surface too, with a heading (`title`; `titleLevel`, default 3), an `action`
+such as `<RankedList.Action href="/channels">View all</RankedList.Action>`, and an `<ol>` of
+`RankedList.Item`s. Each item prints its value with NumberValue and draws an `aria-hidden` bar
+relative to the leader: the largest value among the items, or `max`.
+
+## Loading, empty and error
+
+Metric, KpiTile, TrendCard and RankedList take the same lifecycle props (ARCHITECTURE.md §16.5), as
+the charts do:
+
+- `status`: `'ready'` (default), `'loading'`, `'empty'` or `'error'`. `status` is reserved for
+  this lifecycle; it never means a domain state. A ready part with no value (RankedList: with no
+  items) renders as `'empty'`.
+- `pending`: a refresh is in flight while the data shows. It applies while ready only.
+- `empty` and `error`: elements that replace the default empty and error content, for example an
+  [InlineError](/docs/components/inline-error/) with a retry `action`.
+- `labels`: the status strings, `{label}` standing for the part's label (RankedList: its title).
+  The English defaults are `loading: 'Loading {label}'`, `empty: 'No data'` and
+  `error: 'Could not load {label}'`.
+
+The root carries `data-loading`, `data-empty` or `data-error` for the status, `data-pending` while
+pending, and `aria-busy` while loading or pending. Loading renders a skeleton and the loading
+sentence, static and visually hidden. Empty renders "—" with the empty sentence visually hidden
+(Metric, KpiTile, TrendCard), or the empty sentence (RankedList). Error renders an InlineError.
+There is no live region, so nothing is announced when the content arrives. The library never
+fetches and never suspends.
+
+The box does not change with the status. KpiTile and TrendCard always keep the change row, and
+RankedList reserves `rows` rows (default 5) of the ready geometry while it is not ready: pass the
+number of rows you show. A RankedList label stays on one line and ends in an ellipsis when it is
+longer than the row (the whole label stays in the DOM), because the reserved rows are one line.
+KpiTile, TrendCard and RankedList set no minimum width from their content, so in a dashboard row
+(`repeat(4, 1fr)`) the column is the same in every status; an enlarged number that does not fit
+overflows the tile rather than widening its column. For text that users enlarge, give the row a
+minimum in `rem`, for example `repeat(auto-fit, minmax(15rem, 1fr))`, so the row wraps instead.
+Under a 30rem header TrendCard puts its action below the headline and the change below the number,
+so the comparison keeps its room.
+
+The browser tests in `packages/react` render each status alone in a cell of a four-column row and
+check that the root box stays within 1 px in all four statuses, at 100 % and 200 % text: KpiTile
+(with a bare fallback, and with an error that has a Retry) and Metric at 200, 240, 320 and 480 px,
+and TrendCard at 320, 560 and 800 px (`test/browser/kpi-tile.spec.tsx`); RankedList at 280, 380
+and 560 px, and with labels longer than the row at 280 px and at 200 % text
+(`test/browser/ranked-list.spec.tsx`).
+
+### The Suspense fallback is the same part
+
+Render the part with `status="loading"` as the fallback of the Suspense boundary around the
+component that loads its data. The frame stays where it is and only its content swaps, so the
+stream does not move the page:
+
+```tsx title="app/overview/page.tsx"
+import { Suspense } from 'react';
+import { Sparkline } from '@nizivo/charts/sparkline';
+import { KpiTile } from '@nizivo/react/kpi-tile';
+import { getRevenue } from './data';
+
+async function RevenueKpi() {
+  const revenue = await getRevenue(); // { total: 123307.4, change: 0.124, series: [...] }
+  return (
+    <KpiTile
+      label="Revenue"
+      value={revenue.total}
+      format={{ style: 'currency', currency: 'USD', notation: 'compact' }}
+      delta={revenue.change}
+      comparison="vs last week"
+      chart={<Sparkline data={revenue.series} label="Revenue, last 7 days" />}
+    />
+  );
+}
+
+export default function Page() {
+  return (
+    <Suspense fallback={<KpiTile label="Revenue" status="loading" />}>
+      <RevenueKpi />
+    </Suspense>
+  );
+}
+```
+
+## Charts through slots
+
+`@nizivo/react` imports nothing from `@nizivo/charts`, and charts import nothing from it, so either
+package works without the other. A chart reaches a dashboard part as an element:
+
+```tsx
+import { AreaChart } from '@nizivo/charts/area-chart';
+import { Legend } from '@nizivo/charts/legend';
+import { Sparkline } from '@nizivo/charts/sparkline';
+import { KpiTile } from '@nizivo/react/kpi-tile';
+import { TrendCard } from '@nizivo/react/trend-card';
+
+<KpiTile label="Orders" value={1284} delta={0.031} chart={<Sparkline data={orders} />} />;
+
+<TrendCard
+  label="Total sales"
+  value={123307.4}
+  format={{ style: 'currency', currency: 'USD' }}
+  delta={0.182}
+  action={<PeriodPicker />}
+  chart={<AreaChart data={days} x="date" y="sales" title="Total sales" />}
+  legend={<Legend items={series} />}
+/>;
+```
+
+- KpiTile and Metric show `chart` only while ready, at the end of the value row, never wider than the
+  room the number leaves and by default at most 88 × 28 px, Figma's tile (`5.5rem` and `1.75rem`,
+  through `--nz-metric-chart-max-inline-size` and `--nz-metric-chart-max-block-size`).
+- TrendCard renders `action`, `chart`, `legend` and `footer` as given, in every status, so its box
+  stays put. Give the chart the card's `status`: a ChartFrame keeps its own box in all four.
+- The part draws nothing for the chart; the chart keeps its own caption, data table and statuses.
+
+## CountUp
+
+`CountUp`, from `@nizivo/react/motion`, is the one client part of the set. It takes NumberValue's
+`value`, `format` and `locale`, plus `from` (default 0) and `duration` in milliseconds. The subpath
+also exports `useCountUp(ref, value, options)` for an element of your own.
+
+```tsx
+import { CountUp } from '@nizivo/react/motion';
+
+<CountUp value={48290} format={{ style: 'currency', currency: 'USD', maximumFractionDigits: 0 }} />;
+```
+
+- **The server renders the final value.** The root is NumberValue's `<data>` element with the final
+  `formatNumber` text, so a page without JavaScript shows the right number, and swapping a
+  NumberValue for a CountUp moves no box.
+- **When it counts.** On the client it counts with `requestAnimationFrame`, only while the element is
+  in the viewport. An element mounted on the client counts from `from`. An element that was already
+  on screen when the server HTML hydrated keeps its number: its reader has seen it. An element off
+  screen counts when it first comes into view. A new `value` counts from the number on screen when
+  the element is in view, and shows at once when it is not.
+- **No layout shift.** The digits are tabular, and while they count they keep the width of the final
+  string.
+- **Reduced motion.** The duration is `--nz-duration-count-up` (900 ms), read from the element.
+  Under `prefers-reduced-motion: reduce` or `data-nz-motion="reduce"` that token is 0 ms and the
+  value shows at once, even when `duration` is passed ([Motion](/docs/foundations/motion/)).
+- **Nothing is announced while it counts.** The counting digits are `aria-hidden`, a visually
+  hidden copy holds the final value, and there is no live region.
+- The curve is `cubic-bezier(0, 0, 0, 1)`, the same curve as `--nz-easing-enter`, which Figma 04
+  proposed; it is written into the code and the token is not read. Figma defines no easing for
+  count-up.
+
+Metric, KpiTile and TrendCard take `value` as a number and render a NumberValue: they do not count
+up.

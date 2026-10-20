@@ -1,0 +1,35 @@
+---
+title: Pagination
+description: Page links for a list whose page is in the URL, with an optional summary ("Showing 1–20 of 248"). A navigation landmark with previous and next links, the page numbers with `aria-current="page"` on the current one, and gaps that keep the number of slots constant while you page.
+keyboard:
+  - keys: Tab, Shift+Tab
+    action: Moves between the links, as on any link. A previous or next link at the ends is disabled and not a Tab stop.
+  - keys: Enter
+    action: Follows the focused link.
+keyboardSource: native `<a>` elements in a `<nav>` (`pagination.tsx`, no client code). The browser lane (`test/browser/pagination.spec.tsx`) checks that on page 1 Tab skips the disabled previous link, visits every page link, then next, and the focus outline.
+---
+
+<Callout type="warn" title="Not yet published (v0.2)">
+  This part is in the repository and ships in `@nizivo/react` 0.2.0; the 0.1.0 on npm does not have
+  it. Until then its API can change.
+</Callout>
+
+## Static or interactive
+
+**Server.** It ships no client JavaScript when a Server Component renders it, in every Next.js build
+mode; its code is bundled only when a client component (a `'use client'` file) imports it. It has
+link mode only: the page is the state, `getHref(page)` gives each page's URL, and there is no
+callback mode (figma/06's `onPageChange` would make it a client part). `getHref`, and a function
+`renderLink`, run where Pagination renders, so a Server Component passes them directly. A router
+link passed through `renderLink` is the router's own code. [How to choose](/docs/guides/static-or-interactive/).
+
+## Which pages show
+
+The first and last `boundaryCount` pages always show, and so do `siblingCount` pages on each side of
+the current one. A gap becomes "…" unless it would hide a single page, which shows instead. With the
+defaults (1 and 1) that is 7 page slots once there are more than 7 pages, wherever the current page
+is:
+`1 2 3 4 5 … 13`, `1 … 6 7 8 … 13`, `1 … 9 10 11 12 13`. Figma's drawing (`1 2 3 … 13`) is
+`siblingCount={0}`. The rule is internal (the tests cover it); it is not exported. With previous and next, the defaults take 9 slots: 392 px at `size="md"` (40 px squares)
+and 320 px at `sm` (32 px). In a narrower container the slots wrap, so use `sm` and
+`siblingCount={0}` there (7 slots, 248 px).

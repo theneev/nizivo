@@ -21,7 +21,7 @@ import { ChartsTable } from '../../../components/charts-table';
 | [ChartFrame](/docs/charts/chart-frame/)     | `@nizivo/charts/chart-frame`   | server | Never                                                                                                            |
 | [AreaChart](/docs/charts/area-chart/)       | `@nizivo/charts/area-chart`    | split  | The ChartInteraction island, when `status` is `'ready'` and `interaction` is `'nizivo'` (default)                |
 | [BarChart](/docs/charts/bar-chart/)         | `@nizivo/charts/bar-chart`     | split  | The ChartInteraction island in column mode, when `status` is `'ready'` and `interaction` is `'nizivo'` (default) |
-| [DonutChart](/docs/charts/donut-chart/)     | `@nizivo/charts/donut-chart`   | server | Never (hover is CSS only)                                                                                        |
+| [DonutChart](/docs/charts/donut-chart/)     | `@nizivo/charts/donut-chart`   | split  | The ChartInteraction island in item mode, when `status` is `'ready'` and `interaction` is `'nizivo'` (default)   |
 | [Sparkline](/docs/charts/sparkline/)        | `@nizivo/charts/sparkline`     | server | Never                                                                                                            |
 | [Legend](/docs/charts/legend/)              | `@nizivo/charts/legend`        | server | Never                                                                                                            |
 | [ChartTooltip](/docs/charts/chart-tooltip/) | `@nizivo/charts/chart-tooltip` | server | Never                                                                                                            |
@@ -29,10 +29,10 @@ import { ChartsTable } from '../../../components/charts-table';
 </ChartsTable>
 
 The kinds are the ones the [static or interactive guide](/docs/guides/static-or-interactive/) uses
-for `@nizivo/react`. AreaChart and BarChart are the parts whose modules import a client module, the
-island; the others import none. `island-graph.test.ts` in `packages/charts/test/unit` checks that
-AreaChart and BarChart reach exactly the island and that DonutChart, Sparkline and ChartTooltip
-reach no client module.
+for `@nizivo/react`. AreaChart, BarChart and DonutChart are the parts whose modules import a client
+module, the island; the others import none. `island-graph.test.ts` in `packages/charts/test/unit`
+checks that AreaChart, BarChart and DonutChart reach exactly the island and that Sparkline and
+ChartTooltip reach no client module.
 
 ## Install
 
@@ -98,8 +98,8 @@ Every chart takes its data, formats and strings the same way (M40), from one mod
 ## The one island
 
 The only client module in the package is the ChartInteraction island
-(`chart-interaction.client.tsx` in `src/_island`). AreaChart and BarChart render it over the plot
-when their status is `'ready'` and `interaction` is `'nizivo'`. It receives plain JSON: every label
+(`chart-interaction.client.tsx` in `src/_island`). AreaChart, BarChart and DonutChart render it
+over the plot when their status is `'ready'` and `interaction` is `'nizivo'`. It receives plain JSON: every label
 and value already formatted, each series' name once and one short entry per point, so it formats
 nothing and reads no locale. It adds:
 
@@ -108,27 +108,35 @@ nothing and reads no locale. It adds:
   [ChartTooltip](/docs/charts/chart-tooltip/) card at the active point;
 - in column mode (BarChart), `data-highlighted` on the active bar column, whose CSS dims the
   others, and the same card beside it;
+- in item mode (DonutChart, M41), the same over marks that are not bands: the arrow keys move over
+  the slices in data order (clockwise; the ring is never mirrored) starting at the first,
+  `data-highlighted` goes on the active slice, the card sits at the slice's centre with its share
+  "of total", and a pointer picks the segment under it;
 - one polite live region, empty in the server HTML, that speaks a point when the keyboard reaches it
   (never on hover), joined with the list separators `Intl.ListFormat` gives the chart's `locale`.
 
-Against WCAG 1.4.13 (Content on Hover or Focus), in both modes, the card is dismissable (Escape
-hides it wherever focus is; Escape on the focused plot hides only the card, so an enclosing dialog
-stays open) and persistent (no timeout), and it never hides while the pointer is over the plot or
-the card. It follows the point or band under the pointer, though, so it cannot be held on one
-point: it is not "hoverable" in 1.4.13's sense. If the island fails to load, the server-rendered
+Against WCAG 1.4.13 (Content on Hover or Focus), in every mode, the card is dismissable (Escape
+hides it wherever focus is) and persistent (no timeout), and it never hides while the pointer is
+over the plot or the card. Escape on the focused plot hides only the card and is consumed and stopped
+there, so an enclosing dialog stays open, a native `<dialog>` or one that listens in React as
+[Dialog](/docs/components/dialog/) does (fixed in the week 12 review); with focus elsewhere, Escape hides a card the pointer opened and is not
+consumed, so it also reaches an enclosing dialog (kept as built by M41). The card follows the point,
+band or slice under the pointer, though, so it cannot be held on one point: it is not "hoverable" in
+1.4.13's sense. If the island fails to load, the server-rendered
 chart and its data table stay.
 
-What a page downloads for it, the island with ChartTooltip and `cx`, measured 1,457 B gzip on
-2026-10-20 (M40, size-limit's method, React external). Week 10's was 1,080 B; M40 added Escape for a
+What a page downloads for it, the island with ChartTooltip and `cx`, measured 1,580 B gzip on
+2026-10-20 (size-limit's method, React external). Week 10's was 1,080 B; M40 added Escape for a
 card the pointer opened (+56 B), column mode (+114 B), the resolved `xDirection="auto"` (+41 B), the
-compact payload for long series (+148 B) and the week's review fixes (+18 B: Escape on the plot
-keeps an enclosing dialog open, and hiding the card empties the live region). §17.2's island figure applies to this client graph:
-1.6 KiB, the measurement + 10 % (M40).
+compact payload for long series (+148 B) and the week 11 review's fixes (+18 B: Escape on the plot
+keeps an enclosing dialog open, and hiding the card empties the live region), 1,457 B; M41's item
+mode for DonutChart added 112 B, and the week 12 review's Escape fix (the key stopped on the plot, so
+a dialog that listens in React stays open) 11 B more. §17.2's island figure applies to this client
+graph: 1.7 KiB, the measurement + 10 % (1,580 B × 1.1 = 1,738 B; M41).
 
-DonutChart has no island: its hover states are CSS and its frame passes `interaction="none"`. Its
-legend shows every value and share as text; a keyboard mode for the segments is an open item, so
-pass `tableView="details"` (a native disclosure, one Tab stop, no JavaScript) wherever keyboard
-users need the data table. The same goes for AreaChart and BarChart with `interaction="none"`.
+With `interaction="none"`, AreaChart, BarChart and DonutChart render no island and make no
+keyboard claim: their hover states are CSS only. Pass `tableView="details"` (a native disclosure,
+one Tab stop, no JavaScript) wherever keyboard users then need the data table.
 
 ## The data table
 
@@ -260,35 +268,36 @@ all over `--nz-duration-chart-draw`: 700 ms, and 0 ms under `prefers-reduced-mot
 an oxlint rule; react's `test/unit/module-graph.test.ts` checks the other direction). The few
 helpers both need (`cx`, `mergeProps`, the `render` prop) are copies that `nz gen` writes from
 `@nizivo/react`'s source into `_shared` in `packages/charts/src`, and `nz gen --check` fails when a copy
-is stale. `@nizivo/react` will reach charts only through element slots (a planned KpiTile takes
-`chart={<Sparkline … />}`).
+is stale. `@nizivo/react` reaches charts only through element slots: KpiTile takes
+`chart={<Sparkline … />}` and TrendCard `chart={<AreaChart … />}`
+([Dashboard](/docs/dashboard/#charts-through-slots)).
 
 ## Sizes
 
-Gzip, React and ReactDOM external, d3 included, measured with `node packages/tooling/size/measure.ts`
-on 2026-10-20 and enforced by `pnpm size`: the limit is the measurement + 10%, never above the
+Gzip, React and ReactDOM external, d3 included, measured with size-limit over the checks of
+`packages/tooling/size/checks.ts` (the ones `node packages/tooling/size/measure.ts` runs) on 2026-10-20 and enforced by `pnpm size`: the limit is the measurement + 10%, never above the
 entry's §17.2 figure (`CHART_TARGETS_KIB` in `packages/tooling/size/method.ts`;
 `packages/react/SIZES.md` records the limits). The figures §17.2 had no number for until week 11
 were confirmed by the maintainer in M40.
 
 <ChartsTable label="Charts sizes">
 
-| Entry                                      | Measured | §17.2 figure | Source of the figure                            |
-| ------------------------------------------ | -------: | -----------: | ----------------------------------------------- |
-| The island with ChartTooltip and `cx`      |  1,457 B |      1.6 KiB | M40: the client graph, measured + 10 %          |
-| `@nizivo/charts/area-chart`                |  6,570 B |      7.1 KiB | M40: the framed subpath, measured + 10 %        |
-| `@nizivo/charts/bar-chart`                 |  5,258 B |      5.7 KiB | M40: 3.6 confirmed, then raised for column mode |
-| `@nizivo/charts/donut-chart`               |  3,162 B |      3.2 KiB | §17.2                                           |
-| `@nizivo/charts/sparkline`                 |  1,618 B |        2 KiB | §17.2 (≤ 2)                                     |
-| `@nizivo/charts/chart-frame`               |  1,793 B |        2 KiB | M40: confirmed                                  |
-| `@nizivo/charts/legend`                    |    870 B |        1 KiB | M40: confirmed                                  |
-| `@nizivo/charts/chart-tooltip`             |    413 B |        1 KiB | M40: confirmed                                  |
-| `@nizivo/charts/styles.css`                |  3,405 B |        5 KiB | M40: confirmed                                  |
-| `@nizivo/charts` (the barrel, every chart) |  8,980 B |       12 KiB | §17.2, "all charts"                             |
+| Entry                                      | Measured | §17.2 figure | Source of the figure                                |
+| ------------------------------------------ | -------: | -----------: | --------------------------------------------------- |
+| The island with ChartTooltip and `cx`      |  1,580 B |      1.7 KiB | M41: the client graph, measured + 10 %              |
+| `@nizivo/charts/area-chart`                |  6,692 B |      7.1 KiB | M40: the framed subpath, measured + 10 %            |
+| `@nizivo/charts/bar-chart`                 |  5,380 B |      5.7 KiB | M40: 3.6 confirmed, then raised for column mode     |
+| `@nizivo/charts/donut-chart`               |  4,856 B |      5.3 KiB | M41: raised from 3.2 for item mode, measured + 10 % |
+| `@nizivo/charts/sparkline`                 |  1,618 B |        2 KiB | §17.2 (≤ 2)                                         |
+| `@nizivo/charts/chart-frame`               |  1,793 B |        2 KiB | M40: confirmed                                      |
+| `@nizivo/charts/legend`                    |    870 B |        1 KiB | M40: confirmed                                      |
+| `@nizivo/charts/chart-tooltip`             |    413 B |        1 KiB | M40: confirmed                                      |
+| `@nizivo/charts/styles.css`                |  3,473 B |        5 KiB | M40: confirmed                                      |
+| `@nizivo/charts` (the barrel, every chart) |  9,274 B |       12 KiB | §17.2, "all charts"                                 |
 
 </ChartsTable>
 
-The AreaChart and BarChart subpaths include the island's client graph. Under React Server
+The AreaChart, BarChart and DonutChart subpaths include the island's client graph. Under React Server
 Components a page pays that graph only: the renderers stay on the server. The Next.js fixture
-records `/chart-area` at +1,588 B gzip under Turbopack against `/button-only` (+1,230 B in week 10,
-before M40 grew the island; `fixtures/next/RESULTS.md`, "Week 11").
+records `/chart-area` at +1,703 B gzip under Turbopack against `/button-only` (+1,588 B in week 11
+and +1,230 B in week 10, before M40 and M41 grew the island; `fixtures/next/RESULTS.md`, "Week 12").

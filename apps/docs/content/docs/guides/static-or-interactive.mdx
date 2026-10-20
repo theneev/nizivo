@@ -1,6 +1,6 @@
 ---
 title: 'Static or interactive: choosing a component'
-description: Which Nizivo components ship client JavaScript, what makes them ship it, and when to use a static variant (IconButtonStatic, FieldStatic) instead of the normal component. A checklist, a table of all 37 components, the measured costs and worked examples.
+description: Which Nizivo components ship client JavaScript, what makes them ship it, and when to use a static variant (IconButtonStatic, FieldStatic) instead of the normal component. A checklist, a table of all 46 components, the measured costs and worked examples.
 ---
 
 Every Nizivo component renders its HTML on the server (an overlay's popup only while it is open). What differs is whether the browser also
@@ -14,16 +14,17 @@ Charts (`@nizivo/charts`, not yet published, v0.2) use the same kinds: see [Char
 
 - **Server.** The component's module has no `'use client'` and imports no client module. Rendered by
   a Server Component and imported from its own subpath (`@nizivo/react/<name>`), it ships **no**
-  client JavaScript in any Next.js build mode (Turbopack, webpack, `next dev`). 23 components.
+  client JavaScript in any Next.js build mode (Turbopack, webpack, `next dev`). 31 components.
 - **Split.** A server shell plus a small client leaf that only certain props render. Without those
   props no client code runs. 3 components: Alert, Field and IconButton. Alert's shell does not import
   its leaf, so an Alert without `dismiss` ships nothing in every mode. **Field's and IconButton's
   shells import their leaf**, and Turbopack and `next dev` ship every client module a page's server
   code imports, rendered or not: those two ship their leaf even when the interactive path is off.
   Their static variants exist to fix exactly that.
-- **Client.** The component is a client module (a thin leaf around a native control, or a React Aria
-  engine part). It always ships JavaScript, and its server HTML still works before hydration where the
-  native element allows it (a checkbox toggles, a form submits). 11 components.
+- **Client.** The component is a client module (a thin leaf around a native control, a React Aria
+  engine part, or CountUp's animation). It always ships JavaScript, and its server HTML still works
+  before hydration where the native element allows it (a checkbox toggles, a form submits; CountUp
+  shows its final value). 12 components.
 
 A **static variant** is a second export, from the same import path, that imports no client module:
 
@@ -80,8 +81,10 @@ assumes subpath imports.
    page; use the normal component there for one behaviour throughout. `Dialog.Close` and
    `AlertDismiss` do not count: they write the IconButton markup themselves and import no tooltip.
 
-A Server Component cannot pass a function to any component (`onClick`, `onChange`, a function
-`render`). Use links, a `<form action={serverAction}>`, a Server Action passed to a client part that
+A Server Component cannot pass a function to a client component (`onClick`, `onChange`, a function
+`render`): a function cannot cross into a client module. A server part takes one from a Server
+Component directly, because nothing crosses: Pagination's `getHref` and a function `renderLink`
+run on the server. For a client part, use links, a `<form action={serverAction}>`, a Server Action passed to a client part that
 takes one (`AlertDismiss onDismiss`), or move the interactive part into a client component.
 
 ## Every component
@@ -93,11 +96,14 @@ module.
 | Component                                               | Kind   | Ships client JS                                                                                                                         | Static alternative                                |
 | ------------------------------------------------------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
 | [Alert](/docs/components/alert/)                        | split  | Only with `dismiss` (the AlertDismiss leaf), in every build mode                                                                        | Leave out `dismiss`                               |
+| [Avatar](/docs/components/avatar/)                      | server | Never (a photo that fails to load shows the initials with no script; WebKit draws its mark over them)                                   | None needed                                       |
 | [Badge](/docs/components/badge/)                        | server | Never                                                                                                                                   | None needed                                       |
+| [Breadcrumb](/docs/components/breadcrumb/)              | server | Never (links; a router's link component is the router's own code)                                                                       | None needed                                       |
 | [Button](/docs/components/button/)                      | server | Never                                                                                                                                   | None needed                                       |
 | [Card](/docs/components/card/)                          | server | Never                                                                                                                                   | None needed                                       |
 | [Checkbox](/docs/components/checkbox/)                  | client | Always (Field wiring, `indeterminate`)                                                                                                  | None                                              |
 | [Container](/docs/components/container/)                | server | Never                                                                                                                                   | None needed                                       |
+| [CountUp](/docs/components/motion/)                     | client | Always (`@nizivo/react/motion`; the server renders the final value)                                                                     | NumberValue, which does not count                 |
 | [Delta](/docs/components/delta/)                        | server | Never                                                                                                                                   | None needed                                       |
 | [Dialog](/docs/components/dialog/)                      | client | Always (React Aria)                                                                                                                     | None                                              |
 | [EmptyState](/docs/components/empty-state/)             | server | Never                                                                                                                                   | None needed                                       |
@@ -111,12 +117,17 @@ module.
 | [InlineError](/docs/components/inline-error/)           | server | Never                                                                                                                                   | None needed                                       |
 | [Input](/docs/components/input/)                        | client | Always (Field wiring)                                                                                                                   | None                                              |
 | [Kbd](/docs/components/kbd/)                            | server | Never (CSS picks the platform's keys)                                                                                                   | None needed                                       |
+| [KpiTile](/docs/components/kpi-tile/)                   | server | Never (a chart in `chart` ships what its own module ships)                                                                              | None needed                                       |
 | [Menu](/docs/components/menu/)                          | client | Always (React Aria)                                                                                                                     | None                                              |
 | [Meter](/docs/components/meter/)                        | server | Never                                                                                                                                   | None needed                                       |
+| [Metric](/docs/components/metric/)                      | server | Never                                                                                                                                   | None needed                                       |
 | [NativeSelect](/docs/components/native-select/)         | server | Never; in a `Field` see Field                                                                                                           | It is the static alternative to Select            |
+| [NumberValue](/docs/components/number-value/)           | server | Never                                                                                                                                   | None needed                                       |
+| [Pagination](/docs/components/pagination/)              | server | Never (links; a router's link component is the router's own code)                                                                       | None needed                                       |
 | [ProgressBar](/docs/components/progress-bar/)           | server | Never                                                                                                                                   | None needed                                       |
 | [ProgressRing](/docs/components/progress-ring/)         | server | Never                                                                                                                                   | None needed                                       |
 | [RadioGroup](/docs/components/radio-group/)             | client | Always: the Fieldset shell is server HTML, the radios' leaf ships                                                                       | None                                              |
+| [RankedList](/docs/components/ranked-list/)             | server | Never                                                                                                                                   | None needed                                       |
 | [SegmentedControl](/docs/components/segmented-control/) | client | Always (Field wiring)                                                                                                                   | TabNav, when each value is its own URL            |
 | [Select](/docs/components/select/)                      | client | Always (React Aria; FieldScope too)                                                                                                     | NativeSelect                                      |
 | [Separator](/docs/components/separator/)                | server | Never                                                                                                                                   | None needed                                       |
@@ -129,6 +140,7 @@ module.
 | [Textarea](/docs/components/textarea/)                  | client | Always (Field wiring)                                                                                                                   | None                                              |
 | [ThemeScript](/docs/components/theme-script/)           | server | No client module; it renders one inline `<script>` of 379 bytes that runs in `<head>`                                                   | None needed                                       |
 | [Tooltip](/docs/components/tooltip/)                    | client | Always (React Aria)                                                                                                                     | Visible text (a Button with words, a description) |
+| [TrendCard](/docs/components/trend-card/)               | server | Never (its slots ship what their own modules ship: a Select, a chart's island)                                                          | None needed                                       |
 
 The kinds come from each component's `component.json` (`tier`) and its source, and are tested:
 `test/ssr/t0.server.test.tsx` loads every server and split entry under React's `react-server` build

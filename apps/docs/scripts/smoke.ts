@@ -147,6 +147,8 @@ const REPORT = [
   '/docs/charts/bar-chart/',
   '/docs/charts/donut-chart/',
   '/docs/components/motion/',
+  '/docs/components/kpi-tile/',
+  '/docs/dashboard/',
 ];
 
 interface Js {

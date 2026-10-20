@@ -1,0 +1,28 @@
+---
+title: Breadcrumb
+description: Where the page sits in the site, as a navigation landmark of links around an ordered list. The last level is the current page, as text with `aria-current="page"`; a router's link goes in through each item's `render`.
+keyboard:
+  - keys: Tab, Shift+Tab
+    action: Moves between the links, as on any link. The current page is text, not a Tab stop.
+  - keys: Enter
+    action: Follows the focused link.
+keyboardSource: native `<a>` elements in a `<nav>` (`breadcrumb.tsx`, no client code). The browser lane (`test/browser/breadcrumb.spec.tsx`) checks Tab through the links in order, the current page not being a stop, and the focus outline.
+---
+
+<Callout type="warn" title="Not yet published (v0.2)">
+  This part is in the repository and ships in `@nizivo/react` 0.2.0; the 0.1.0 on npm does not have
+  it. Until then its API can change.
+</Callout>
+
+## Static or interactive
+
+**Server.** It ships no client JavaScript when a Server Component renders it, in every Next.js build
+mode; its code is bundled only when a client component (a `'use client'` file) imports it. Its links
+are plain `<a>` elements; a router link passed through `render` is the router's own code. [How to
+choose](/docs/guides/static-or-interactive/).
+
+## Long trails
+
+Nothing collapses in 0.2: every level stays a link, in the DOM and in the Tab order, and a trail
+longer than its container wraps onto a second line. Hiding middle levels behind an ellipsis needs a
+menu to reach them, which is client code, so it is not built and no level is ever unreachable.

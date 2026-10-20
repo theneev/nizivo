@@ -1,6 +1,6 @@
 ---
 title: Card
-description: A surface with optional header, title, description, action, body and footer parts. The inverse tone flips every token inside it.
+description: A surface with optional header, title, description, action, body and footer parts. The inverse tone flips every token inside it; `brand` and `accent` are the tinted surfaces of the dashboard widgets (KpiTile's `tone`), with no stroke.
 ---
 
 ## Static or interactive
@@ -9,3 +9,10 @@ description: A surface with optional header, title, description, action, body an
 mode; its code is bundled only when a client component (a `'use client'` file) imports it. Every
 part is server-safe; a child you put in `Card.Action` ships whatever its own component ships. [How
 to choose](/docs/guides/static-or-interactive/).
+
+## Tones
+
+`tone="brand"` and `tone="accent"` (week 12) are in the repository and ship in 0.2.0; the 0.1.0 on
+npm has `surface`, `subtle` and `inverse` only. In dark mode `bg/brand-subtle` and `bg/accent-subtle`
+are both green-950, so the two tints look the same there: a token question for design (Figma 04
+issue 5), recorded as a known deviation.

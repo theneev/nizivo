@@ -1,0 +1,21 @@
+---
+title: RankedList
+description: Top products, channels or regions as an ordered list, each row a label, its value and a bar relative to the leader. The bars are decorative; the values are printed.
+keyboard:
+  - keys: Tab, Shift+Tab
+    action: Moves to and from the RankedList.Action link ("View all"), as on any link. The rows are not Tab stops.
+  - keys: Enter
+    action: Follows the focused link.
+keyboardSource: a native `<a>` (`RankedListAction` in `ranked-list.tsx`, no client code), at least 24 px tall (WCAG 2.5.8).
+---
+
+<Callout type="warn" title="Not yet published (v0.2)">
+  This part is in the repository and ships in `@nizivo/react` 0.2.0; the 0.1.0 on npm does not have
+  it. Until then its API can change. See [Dashboard](/docs/dashboard/).
+</Callout>
+
+## Static or interactive
+
+**Server.** It ships no client JavaScript when a Server Component renders it, in every Next.js build
+mode; its code is bundled only when a client component (a `'use client'` file) imports it. The bars are SVG with percentage widths, so the server HTML has no `style` attribute.
+[How to choose](/docs/guides/static-or-interactive/).

@@ -1,0 +1,27 @@
+---
+title: KpiTile
+description: One number, its change and its shape, on Card's surface. Tint a row of related KPIs with `tone`, which no longer follows the trend. The Suspense fallback is the same tile with `status="loading"`.
+---
+
+<Callout type="warn" title="Not yet published (v0.2)">
+  This part is in the repository and ships in `@nizivo/react` 0.2.0; the 0.1.0 on npm does not have
+  it. Until then its API can change. See [Dashboard](/docs/dashboard/).
+</Callout>
+
+## Static or interactive
+
+**Server.** It ships no client JavaScript when a Server Component renders it, in every Next.js build
+mode; its code is bundled only when a client component (a `'use client'` file) imports it. The chart arrives as an element (`chart={<Sparkline … />}` from `@nizivo/charts`, which ships
+no client code either); `@nizivo/react` never imports `@nizivo/charts`. [How to
+choose](/docs/guides/static-or-interactive/).
+
+See [Dashboard](/docs/dashboard/) for the status contract, a Suspense example and charts through
+slots.
+
+## Tones
+
+`tone` is `surface` (the default), `brand` or `accent`: Card's surfaces, chosen for the row, not
+from the sign of the change. Two known deviations, both as Figma draws them and open for design:
+on `brand` the Delta pill's `bg/success-subtle` is the same green-50 as the tint, so the pill shows
+no fill (its sign and `text/success`, 5.60:1 on the tint, still carry the change); and in dark mode
+`brand` and `accent` are both green-950, so they look the same (Figma 04 issue 5).
