@@ -68,4 +68,13 @@ describe('Table markup', () => {
       /^<button data-slot="table-sort-button" type="button" class="nz-table-sort-button nz-hit-target">Total<span/,
     );
   });
+
+  test('a container with a label is a named, focusable scroll region; without one, a plain box', () => {
+    expect(renderToString(<Table.Container label="Orders" />)).toBe(
+      '<div data-slot="table-container" role="region" aria-label="Orders" tabindex="0" class="nz-table-container"></div>',
+    );
+    expect(renderToString(<Table.Container />)).toBe(
+      '<div data-slot="table-container" class="nz-table-container"></div>',
+    );
+  });
 });

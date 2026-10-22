@@ -14,6 +14,13 @@
     background: var(--nz-table-bg, var(--nz-bg-surface));
   }
 
+  /* a labelled container is a focusable scroll region: base.css's focus ring, drawn here because the
+     container is not one of the component's controls */
+  .nz-table-container:focus-visible {
+    outline: var(--nz-border-width-focus) solid var(--nz-border-focus);
+    outline-offset: 2px;
+  }
+
   .nz-table {
     inline-size: 100%;
     border-collapse: collapse;

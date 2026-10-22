@@ -31,6 +31,12 @@
           "name": "Container",
           "props": [
             {
+              "description": "Names the container as a scrollable region and puts it in the Tab order, so a keyboard can scroll a table wider than the screen (Safari and Firefox do not focus a scroller on their own). Give it when the table can scroll sideways and its rows hold no link or control.",
+              "name": "label",
+              "required": false,
+              "type": "string"
+            },
+            {
               "name": "render",
               "required": false,
               "type": "RenderProp<Empty>"

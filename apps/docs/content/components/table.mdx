@@ -53,6 +53,8 @@ and the browser print the same text.
 
 Figma: a 12 px radius with a `border/subtle` stroke; the header on `bg/subtle` in Label/M; cells
 12 / 20 px, a `border/subtle` line under each row. A table wider than its container scrolls inside
-it. `selected` on a row paints `bg/brand-subtle`. Hooks: `--nz-table-bg`, `--nz-table-border`,
+it; when its rows hold no link or control, give `Table.Container` a `label`, which names it as a
+scrollable region and puts it in the Tab order, so a keyboard user can reach it and scroll it with the
+arrow keys (Safari and Firefox do not focus a scroller on their own). `selected` on a row paints `bg/brand-subtle`. Hooks: `--nz-table-bg`, `--nz-table-border`,
 `--nz-table-radius`, `--nz-table-header-bg`, `--nz-table-cell-padding-block`,
 `--nz-table-cell-padding-inline`, `--nz-table-row-bg-hover`, `--nz-table-row-bg-selected`.

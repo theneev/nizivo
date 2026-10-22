@@ -14,6 +14,12 @@ type Empty = Record<string, never>;
 export type TableSort = 'ascending' | 'descending';
 
 export interface TableContainerProps extends ComponentPropsWithRef<'div'> {
+  /**
+   * Names the container as a scrollable region and puts it in the Tab order, so a keyboard can
+   * scroll a table wider than the screen (Safari and Firefox do not focus a scroller on their own).
+   * Give it when the table can scroll sideways and its rows hold no link or control.
+   */
+  label?: string;
   render?: RenderProp<Empty>;
 }
 
@@ -92,12 +98,22 @@ export interface TableRowLinkProps extends ComponentPropsWithRef<'a'> {
 }
 
 /** The table's box: the border, the radius and the horizontal scroll of a wide table. */
-export function TableContainer({ render, className, ...rest }: TableContainerProps): ReactElement {
+export function TableContainer({
+  label,
+  render,
+  className,
+  ...rest
+}: TableContainerProps): ReactElement {
   return renderElement(
     'div',
     render,
     {},
-    { 'data-slot': 'table-container', ...rest, className: cx('nz-table-container', className) },
+    {
+      'data-slot': 'table-container',
+      ...(label === undefined ? {} : { role: 'region', 'aria-label': label, tabIndex: 0 }),
+      ...rest,
+      className: cx('nz-table-container', className),
+    },
   );
 }
 

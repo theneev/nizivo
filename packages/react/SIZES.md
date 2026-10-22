@@ -104,7 +104,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 | Entry              | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | ------------------ | -------: | ---------: | ---------: | ----------: | -----------: |
-| `.`                |  100,904 |       98.5 |     84,162 |         107 |        8,664 |
+| `.`                |  100,924 |       98.6 |     84,320 |         107 |        8,644 |
 | /alert             |    1,283 |        1.3 |      1,182 |         1.4 |          150 |
 | /augment           |        0 |        0.0 |          0 |           0 |            — |
 | /avatar            |    1,381 |        1.3 |      1,283 |         1.5 |          155 |
@@ -152,7 +152,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /stack             |      703 |        0.7 |        640 |         0.8 |          116 |
 | /switch            |    1,730 |        1.7 |      1,575 |         1.9 |          215 |
 | /tab-nav           |    1,031 |        1.0 |        949 |         1.2 |          197 |
-| /table             |    1,618 |        1.6 |      1,472 |         1.8 |          225 |
+| /table             |    1,661 |        1.6 |      1,505 |         1.8 |          182 |
 | /tabs              |   33,683 |       32.9 |     29,840 |          35 |        2,157 |
 | /text              |      716 |        0.7 |        653 |         0.8 |          103 |
 | /textarea          |    1,364 |        1.3 |      1,247 |         1.5 |          172 |
@@ -264,14 +264,14 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/stack.css             |      270 |        0.3 |        209 |         0.3 |           37 |
 | /css/switch.css            |      883 |        0.9 |        738 |           1 |          141 |
 | /css/tab-nav.css           |      842 |        0.8 |        690 |           1 |          182 |
-| /css/table.css             |    1,011 |        1.0 |        820 |         1.1 |          115 |
+| /css/table.css             |    1,042 |        1.0 |        842 |         1.1 |           84 |
 | /css/tabs.css              |      972 |        0.9 |        792 |         1.1 |          154 |
 | /css/text.css              |      574 |        0.6 |        489 |         0.7 |          142 |
 | /css/textarea.css          |      751 |        0.7 |        624 |         0.8 |           68 |
 | /css/toast.css             |      891 |        0.9 |        740 |           1 |          133 |
 | /css/tooltip.css           |      581 |        0.6 |        503 |         0.6 |           33 |
 | /css/trend-card.css        |      403 |        0.4 |        346 |         0.5 |          109 |
-| /styles.css                |   19,347 |       18.9 |     16,191 |          19 |          109 |
+| /styles.css                |   19,355 |       18.9 |     16,211 |          19 |          101 |
 
 #### `@nizivo/tokens`: Public JS entries (bundled with what they import, React Aria included)
 

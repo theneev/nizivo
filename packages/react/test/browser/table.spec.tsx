@@ -162,6 +162,32 @@ describe('Table', () => {
     expect(get('table-sort-button').tagName).toBe('A');
   });
 
+  test('a labelled container takes focus, with the ring, and scrolls from the keyboard', async () => {
+    await hydrate(
+      <Table.Container label="Inventory">
+        <Table.Root aria-label="Inventory">
+          <Table.Body>
+            <Table.Row>
+              {Array.from({ length: 12 }, (_, i) => (
+                <Table.Cell key={i}>Warehouse {i + 1}: 124 in stock</Table.Cell>
+              ))}
+            </Table.Row>
+          </Table.Body>
+        </Table.Root>
+      </Table.Container>,
+      360,
+    );
+    const container = get('table-container');
+    await userEvent.keyboard('{Tab}');
+    expect(document.activeElement).toBe(container);
+    expect(getComputedStyle(container).outlineStyle).toBe('solid');
+    // Playwright's WebKit does not scroll the focused region on arrow keys (week 17: 4 runs of 4;
+    // one earlier run did); Chromium and Firefox do. Real Safari is unverified.
+    if (/AppleWebKit/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent)) return;
+    await userEvent.keyboard('{ArrowRight}{ArrowRight}{ArrowRight}');
+    await expect.poll(() => container.scrollLeft).toBeGreaterThan(0);
+  });
+
   test('a wide table scrolls inside its container, not the page', async () => {
     await hydrate(<TableOrdersExample />, 360);
     const container = get('table-container');
