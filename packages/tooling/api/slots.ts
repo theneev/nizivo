@@ -460,22 +460,43 @@ function findAdapterPart(leaf: SourceFile, part: string): AdapterPart | undefine
       .find((named) => (named.getAliasNode()?.getText() ?? named.getName()) === part);
     const module = declaration.getModuleSpecifierValue();
     if (specifier === undefined || module === undefined) continue;
-    const adapterFile = resolveSource(dirname(engineFile), module);
-    const adapter = project.getSourceFile(adapterFile) ?? project.addSourceFileAtPath(adapterFile);
-    const fn = topLevelFunctions(adapter).get(specifier.getName());
-    if (fn === undefined) return undefined;
-    if (
-      adapter
-        .getDescendantsOfKind(SyntaxKind.JsxAttribute)
-        .some((attribute) => attribute.getNameNode().getText() === 'data-slot')
-    ) {
-      throw new Error(
-        `${basename(adapterFile)} names an element: adapters write no data-slot (§9.2)`,
-      );
-    }
-    return adapterPart(fn);
+    return adapterExport(project, resolveSource(dirname(engineFile), module), specifier.getName());
   }
   return undefined;
+}
+
+/**
+ * The adapter function `name` in `adapterFile`, following its own `export { … } from` re-exports
+ * (the Drawer adapter is the Dialog adapter, re-exported).
+ */
+function adapterExport(
+  project: Project,
+  adapterFile: string,
+  name: string,
+): AdapterPart | undefined {
+  const adapter = project.getSourceFile(adapterFile) ?? project.addSourceFileAtPath(adapterFile);
+  const fn = topLevelFunctions(adapter).get(name);
+  if (fn === undefined) {
+    for (const declaration of adapter.getExportDeclarations()) {
+      const named = declaration
+        .getNamedExports()
+        .find((entry) => (entry.getAliasNode()?.getText() ?? entry.getName()) === name);
+      const module = declaration.getModuleSpecifierValue();
+      if (named === undefined || module === undefined) continue;
+      return adapterExport(project, resolveSource(dirname(adapterFile), module), named.getName());
+    }
+    return undefined;
+  }
+  if (
+    adapter
+      .getDescendantsOfKind(SyntaxKind.JsxAttribute)
+      .some((attribute) => attribute.getNameNode().getText() === 'data-slot')
+  ) {
+    throw new Error(
+      `${basename(adapterFile)} names an element: adapters write no data-slot (§9.2)`,
+    );
+  }
+  return adapterPart(fn);
 }
 
 function adapterPart(fn: FunctionLike): AdapterPart {
