@@ -150,6 +150,8 @@ WebKit's browser lane, run by hand: the 7 known macOS Tab-order failures, nothin
 
 ## For the maintainer
 
+**Items 1 to 3 are answered by M45** (2026-10-23, ARCHITECTURE.md §23.3): (1) the design asks go to Dayitava as figma-handoff §1.6, and the code stays as built until then; (2) the flake stays listed, and the lane does not tolerate it; (3) the React 19.2 / 19.3 matrix and O-15 come next, before the shell.
+
 1. **Design asks for Dayitava:** the Toast at 56 px with real buttons (Figma 44); Info and Warning
    toast tones; the Banner's narrow layout and its tone name (Q25: `brand` for "Promo"); a Toast
    enter and exit spec (the code fades and rises in, and leaves at once).
