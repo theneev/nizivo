@@ -60,6 +60,22 @@ export const RELEASE_LANES: readonly Lane[] = [
     script: 'test:overlay',
     env: { NZ_BROWSER: browser },
   })),
+  // The React matrix's 19.2 side (§9.6, M45): the node suite, the browser lane and overlay
+  // conformance on React 19.2.9 in Chromium (packages/react/test/react-matrix.ts). Every other lane
+  // runs the workspace's React 19.3.
+  ...(
+    [
+      ['test', 'the node suite (SSR, contracts) on React 19.2', 'test:react-19.2'],
+      ['browser', 'the browser lane on React 19.2, Chromium', 'test:browser'],
+      ['overlay', 'overlay conformance on React 19.2, Chromium', 'test:overlay'],
+    ] as const
+  ).map(([id, what, script]) => ({
+    id: `${id}-react-19.2`,
+    why: `${what} (§9.6)`,
+    dir: 'packages/react',
+    script,
+    env: { NZ_REACT: '19.2' },
+  })),
   // @nizivo/charts (v0.2): its browser specs (the stroke check, the island, the marks, bars and
   // donut) in all three engines, then the charts-only fixture (tokens.css + charts' styles.css, no
   // @nizivo/react CSS; §14.1) on the packed tarballs. Both read the built dist/.

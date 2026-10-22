@@ -1,9 +1,12 @@
 import { configDefaults, defineConfig } from 'vitest/config';
+import { reactMatrix } from './test/react-matrix.ts';
 
 // Node environment for week 1: SSR, contracts and module-graph checks. Browser projects
 // (Playwright, conformance) join when the testkit suites land. test/built runs after a build,
-// through `check:dist` and test/built/vitest.config.ts.
+// through `check:dist` and test/built/vitest.config.ts. `NZ_REACT=19.2` runs it on React 19.2
+// (test/react-matrix.ts; the `test:react-19.2` script).
 export default defineConfig({
+  ...reactMatrix(),
   test: {
     environment: 'node',
     include: ['test/**/*.test.{ts,tsx}'],
@@ -13,5 +16,6 @@ export default defineConfig({
     // minute. Tests that build or spawn set their own, longer limit.
     testTimeout: 30_000,
     exclude: [...configDefaults.exclude, 'test/built/**'],
+    setupFiles: ['test/react-matrix.setup.ts'],
   },
 });

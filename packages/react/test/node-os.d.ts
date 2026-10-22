@@ -6,3 +6,22 @@ declare module 'node:fs' {
 declare module 'node:os' {
   export function tmpdir(): string;
 }
+// The node lane's React-matrix resolve hook (test/react-matrix.setup.ts).
+declare module 'node:module' {
+  interface ResolveContext {
+    parentURL?: string | undefined;
+    conditions: string[];
+  }
+  interface ResolveResult {
+    url: string;
+    format?: string | null | undefined;
+    shortCircuit?: boolean | undefined;
+  }
+  export function registerHooks(hooks: {
+    resolve?: (
+      specifier: string,
+      context: ResolveContext,
+      next: (specifier: string, context?: Partial<ResolveContext>) => ResolveResult,
+    ) => ResolveResult;
+  }): { deregister(): void };
+}

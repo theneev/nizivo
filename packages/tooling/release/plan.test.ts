@@ -403,7 +403,12 @@ function world(w: World = {}) {
           ...(name === '@nizivo/react'
             ? {
                 dependencies: { '@nizivo/tokens': 'workspace:*' },
-                scripts: scripts(['test:browser', 'test:overlay', 'test:visual']),
+                scripts: scripts([
+                  'test:browser',
+                  'test:overlay',
+                  'test:react-19.2',
+                  'test:visual',
+                ]),
               }
             : {}),
         }),
@@ -589,8 +594,8 @@ describe('release', () => {
     expect(
       calls
         .filter((c) => c.args.includes('test:overlay'))
-        .map((c) => c.options.env?.['NZ_BROWSER']),
-    ).toEqual(['chromium', 'webkit', 'firefox']);
+        .map((c) => c.options.env?.['NZ_BROWSER'] ?? `react ${c.options.env?.['NZ_REACT'] ?? ''}`),
+    ).toEqual(['chromium', 'webkit', 'firefox', 'react 19.2']);
     expect(
       calls
         .filter((c) => c.options.cwd === join(REPO_ROOT, 'packages/charts'))
@@ -926,13 +931,16 @@ describe('release', () => {
     }
   });
 
-  test('the lanes cover the browser, overlay, charts, fixture and visual lanes', () => {
+  test('the lanes cover the browser, overlay, React 19.2, charts, fixture and visual lanes', () => {
     expect(RELEASE_LANES.map((l) => l.id)).toEqual([
       'browser',
       'browser-firefox',
       'overlay-chromium',
       'overlay-webkit',
       'overlay-firefox',
+      'test-react-19.2',
+      'browser-react-19.2',
+      'overlay-react-19.2',
       'charts-chromium',
       'charts-webkit',
       'charts-firefox',

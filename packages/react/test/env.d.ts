@@ -6,3 +6,6 @@ interface ImportMeta {
     options: { query: '?raw'; import: 'default'; eager: true },
   ): Record<string, string>;
 }
+
+/** The React line the lane runs, `'19.2'` or `'19.3'` (test/react-matrix.ts). */
+declare const NZ_REACT_LINE: '19.2' | '19.3';

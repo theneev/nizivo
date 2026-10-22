@@ -1,5 +1,6 @@
 import { defineConfig, type ViteUserConfig } from 'vitest/config';
 import { engine, provider } from '../browser-engine.ts';
+import { reactMatrix } from '../react-matrix.ts';
 
 // Browser lane (Chromium through Playwright): hydration and native validation, which need a real
 // DOM. Run from packages/react: `vitest run --config test/browser/vitest.config.ts`. Kept out of the
@@ -22,7 +23,8 @@ const config: ViteUserConfig = defineConfig({
       'react-aria/useToast',
     ],
   },
-  resolve: { dedupe: ['react', 'react-dom'] },
+  // `NZ_REACT=19.2`: React 19.2 instead of the workspace's 19.3 (test/react-matrix.ts).
+  ...reactMatrix(),
   test: {
     include: ['test/browser/**/*.spec.tsx'],
     // Each case renders, waits a few frames and drives real input: well under a second alone, but

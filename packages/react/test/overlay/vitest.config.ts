@@ -1,5 +1,6 @@
 import { defineConfig, type ViteUserConfig } from 'vitest/config';
 import { engine, provider } from '../browser-engine.ts';
+import { reactMatrix } from '../react-matrix.ts';
 
 // The overlay conformance lane (ARCHITECTURE.md §9.6 case 8, §12.5): every overlay adapter of the
 // react-aria family runs the same cases in a real browser. Run from packages/react:
@@ -24,7 +25,8 @@ const config: ViteUserConfig = defineConfig({
       'react-aria/useToast',
     ],
   },
-  resolve: { dedupe: ['react', 'react-dom'] },
+  // `NZ_REACT=19.2`: React 19.2 instead of the workspace's 19.3 (test/react-matrix.ts).
+  ...reactMatrix(),
   test: {
     include: ['test/overlay/**/*.spec.tsx'],
     // Spring transitions run up to 493 ms; a case waits for an exit to finish.

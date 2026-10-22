@@ -25,6 +25,10 @@ catalog:
   # React for development and tests (published packages declare their own peer ranges)
   react: 19.3.0
   react-dom: 19.3.0
+  # The React matrix's 19.2 side (§9.6): the browser, overlay and node lanes alias react and react-dom
+  # to these when NZ_REACT=19.2 (packages/react/test/react-matrix.ts).
+  react-19.2: npm:react@19.2.9
+  react-dom-19.2: npm:react-dom@19.2.9
   '@types/react': 19.3.0
   '@types/react-dom': 19.3.0
   '@types/node': 24.19.2
