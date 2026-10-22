@@ -1,17 +1,10 @@
 'use client';
 // PUBLIC Dialog parts (ARCHITECTURE.md §10.4): the leaf names every element; the adapter names none.
-import {
-  createContext,
-  use,
-  useLayoutEffect,
-  useMemo,
-  useState,
-  type JSX,
-  type ReactElement,
-} from 'react';
+import { createContext, use, type JSX, type ReactElement } from 'react';
 import { renderElement, toRenderFn } from '../contracts/render';
 import { cx } from '../_internal/cx';
 import { CloseGlyph } from '../_internal/glyphs';
+import { initialFocus, ModalNestingScope, useModalNesting } from '../_internal/modal.client';
 import type { ReturnFocusTarget } from '../_internal/overlay';
 import type {
   DialogBodyProps,
@@ -26,54 +19,17 @@ import type {
 } from './dialog.contract';
 import * as Engine from './engine';
 
-/** The enclosing open Dialog popup, if any: nested modals skip the backdrop and mark the parent. */
-interface Nesting {
-  childOpened(delta: 1 | -1): void;
-}
-const NestingContext = createContext<Nesting | null>(null);
-
 /** `Dialog.Root`'s `returnFocus`, for its Popup. */
 const ReturnFocusContext = createContext<ReturnFocusTarget>(true);
 
 const renderDiv = toRenderFn<unknown>(undefined, 'div');
 const renderP = toRenderFn<unknown>(undefined, 'p');
 
-const TABBABLE =
-  'a[href], button, input, select, textarea, summary, [tabindex], [contenteditable]:not([contenteditable="false"])';
-
-/**
- * Focus on open (§12.2): an element the consumer marked `autoFocus` keeps it (the engine sees focus
- * inside and leaves it); an alertdialog focuses its least destructive action, the first
- * `Dialog.Close`; a dialog focuses the first tabbable element in its `Dialog.Body`; otherwise the
- * engine focuses the popup itself, so a long text starts at its top.
- */
-function initialFocus(
-  role: 'dialog' | 'alertdialog',
-): (content: HTMLElement) => HTMLElement | null {
-  return (content) => {
-    if (role === 'alertdialog') {
-      // A footer action (Cancel) before a close icon in the corner.
-      return (
-        content.querySelector<HTMLElement>(
-          '[data-slot="dialog-footer"] [data-slot="dialog-close"]:not(:disabled)',
-        ) ?? content.querySelector<HTMLElement>('[data-slot="dialog-close"]:not(:disabled)')
-      );
-    }
-    const body = content.querySelector('[data-slot="dialog-body"]');
-    if (body === null) return null;
-    for (const element of body.querySelectorAll<HTMLElement>(TABBABLE)) {
-      if (
-        element.tabIndex >= 0 &&
-        !element.matches(':disabled') &&
-        element.getClientRects().length > 0
-      ) {
-        return element;
-      }
-    }
-    return null;
-  };
-}
-const INITIAL_FOCUS = { dialog: initialFocus('dialog'), alertdialog: initialFocus('alertdialog') };
+/** Focus on open (§12.2), from the Dialog's own slots. */
+const INITIAL_FOCUS = {
+  dialog: initialFocus('dialog', 'dialog'),
+  alertdialog: initialFocus('dialog', 'alertdialog'),
+};
 
 export function DialogRoot({ returnFocus = true, ...props }: DialogRootProps): JSX.Element {
   return (
@@ -108,13 +64,8 @@ export function DialogPopup({
   children,
   ...rest
 }: DialogPopupProps): JSX.Element {
-  const parent = use(NestingContext);
+  const { parent, nesting, childOpen } = useModalNesting();
   const returnFocus = use(ReturnFocusContext);
-  const [openChildren, setOpenChildren] = useState(0);
-  const nesting = useMemo<Nesting>(
-    () => ({ childOpened: (delta) => setOpenChildren((n) => n + delta) }),
-    [],
-  );
   return (
     <Engine.Popup
       {...rest}
@@ -130,24 +81,14 @@ export function DialogPopup({
       className={cx('nz-dialog-popup', className)}
       data-slot="dialog-popup"
       data-size={size}
-      data-nested-open={openChildren > 0 ? '' : undefined}
+      data-nested-open={childOpen ? '' : undefined}
       render={renderDiv}
     >
-      <NestingContext value={nesting}>
-        {parent !== null && <OpenSignal parent={parent} />}
+      <ModalNestingScope parent={parent} nesting={nesting}>
         {children}
-      </NestingContext>
+      </ModalNestingScope>
     </Engine.Popup>
   );
-}
-
-/** Mounted only while this popup's content is mounted, i.e. while it is open. */
-function OpenSignal({ parent }: { parent: Nesting }): null {
-  useLayoutEffect(() => {
-    parent.childOpened(1);
-    return () => parent.childOpened(-1);
-  }, [parent]);
-  return null;
 }
 
 const HEADINGS: Record<DialogTitleLevel, (p: Record<string, unknown>, s: unknown) => ReactElement> =

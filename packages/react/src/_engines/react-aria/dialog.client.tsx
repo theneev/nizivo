@@ -1,7 +1,7 @@
 'use client';
 // The ONLY Dialog module that imports the engine (ARCHITECTURE.md §9.2, §10.4). Behaviour only: no class names.
 // ModalOverlay → positioner (+ the backdrop element first), Modal → popup, Dialog → content (role).
-import { createElement, use, useEffect, useRef, type RefObject } from 'react';
+import { createElement, use, useRef } from 'react';
 import {
   Button,
   Dialog,
@@ -24,7 +24,7 @@ import type {
 import { defined, engineDom } from './dom';
 import { EngineLocale } from './locale.client';
 import { OverlayScope, TOP_LAYER } from './overlay.client';
-import { ReturnFocus, useTriggerRef } from './popup.client';
+import { InitialFocus, ReturnFocus, useTriggerRef } from './popup.client';
 import { OutsidePress } from './outside-press.client';
 
 /** A box-less wrapper: popups portaled into it position against the positioner. */
@@ -61,26 +61,6 @@ export const Trigger: DialogEngine['Trigger'] = ({ render, children, ...dom }) =
     </Button>
   );
 };
-
-/**
- * Moves focus to the leaf's initial-focus element. A child of the content element, so its effect runs
- * before React Aria's own focus-the-dialog effect (a parent's), which then sees focus inside and
- * leaves it; and after FocusScope recorded the trigger to return focus to.
- */
-function InitialFocus({
-  content,
-  resolve,
-}: {
-  content: RefObject<HTMLElement | null>;
-  resolve: (content: HTMLElement) => HTMLElement | null;
-}): null {
-  useEffect(() => {
-    const element = content.current;
-    if (element === null || element.contains(element.ownerDocument.activeElement)) return;
-    resolve(element)?.focus();
-  }, [content, resolve]);
-  return null;
-}
 
 export const Popup: DialogEngine['Popup'] = ({
   role,
