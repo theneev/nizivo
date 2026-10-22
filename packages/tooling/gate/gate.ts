@@ -18,11 +18,11 @@ const PNPM = ['corepack', 'pnpm@12.11.2'];
 /** The log lines a failing step prints: what turbo, tsc, vitest, size-limit and cache:audit say. */
 const ERROR_LINE = /ERR|error|Error|failed|FAIL|exceeded|turbo does not hash/;
 
-const { values, positionals: commits } = parseArgs({
+const { values, positionals: names } = parseArgs({
   allowPositionals: true,
   options: { worktree: { type: 'string' } },
 });
-if (commits.length === 0) {
+if (names.length === 0) {
   console.error('usage: node packages/tooling/gate/gate.ts [--worktree <dir>] <commit>…');
   process.exit(2);
 }
@@ -34,6 +34,9 @@ const git = (...args: string[]): string => {
 };
 
 const root = git('rev-parse', '--show-toplevel');
+// Resolved here, in the repository the command runs in: `HEAD` or `main~1` read inside a reused
+// worktree would name that worktree's commits.
+const commits = names.map((name) => git('rev-parse', '--verify', `${name}^{commit}`));
 const worktree = resolve(values.worktree ?? join(dirname(root), 'gate-wt'));
 const log = `${worktree}.log`;
 const created = !existsSync(worktree);
