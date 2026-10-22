@@ -46,8 +46,11 @@ Report them; never re-record baselines to make them pass.
 
 - `fixture-vite`: Node's `setTypeOfService EINVAL` socket error; a rerun passes.
 - Charts visual: the `area-chart/rtl` dark baselines flip between two system Arabic fonts.
-- Firefox overlay conformance O-03 (Tooltip in Dialog, Escape), NIZ-126.
+- Firefox overlay conformance O-03 (Tooltip in Dialog, Escape), NIZ-126: fixed on 2026-10-22 (the pointer is parked before each nesting case); report it if it returns.
 - WebKit on macOS: 7 known Tab-order failures (IconButton 2, SegmentedControl 3, Tabs 1, TabNav 1).
+- React visual: `toast/stack--focus-8-toast-action` and `stack--focus-9-toast-close`, about one run in
+  four, 30 px on the upper toasts' rounded corners in one mode (week 14).
+- React visual: `drawer/sheet--focus-4-drawer-body--light`, now and then 4 px on the focus halo.
 
 ## Cloud sessions
 
