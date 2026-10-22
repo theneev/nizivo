@@ -1215,6 +1215,120 @@
       "name": "PaginationState"
     },
     {
+      "definedIn": "./popover",
+      "import": "import { Popover } from '@nizivo/react'",
+      "kind": "namespace",
+      "name": "Popover"
+    },
+    {
+      "definedIn": "./popover",
+      "import": "import { PopoverClose } from '@nizivo/react'",
+      "kind": "part",
+      "name": "PopoverClose"
+    },
+    {
+      "definedIn": "./popover",
+      "import": "import type { PopoverCloseProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "PopoverCloseProps"
+    },
+    {
+      "definedIn": "./popover",
+      "import": "import type { PopoverCloseState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "PopoverCloseState"
+    },
+    {
+      "definedIn": "./popover",
+      "import": "import { PopoverDescription } from '@nizivo/react'",
+      "kind": "part",
+      "name": "PopoverDescription"
+    },
+    {
+      "definedIn": "./popover",
+      "import": "import type { PopoverDescriptionProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "PopoverDescriptionProps"
+    },
+    {
+      "definedIn": "./popover",
+      "import": "import type { PopoverLabels } from '@nizivo/react'",
+      "kind": "type",
+      "name": "PopoverLabels"
+    },
+    {
+      "definedIn": "./popover",
+      "import": "import { PopoverPopup } from '@nizivo/react'",
+      "kind": "part",
+      "name": "PopoverPopup"
+    },
+    {
+      "definedIn": "./popover",
+      "import": "import type { PopoverPopupProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "PopoverPopupProps"
+    },
+    {
+      "definedIn": "./popover",
+      "import": "import type { PopoverPopupState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "PopoverPopupState"
+    },
+    {
+      "definedIn": "./popover",
+      "import": "import { PopoverRoot } from '@nizivo/react'",
+      "kind": "part",
+      "name": "PopoverRoot"
+    },
+    {
+      "definedIn": "./popover",
+      "import": "import type { PopoverRootProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "PopoverRootProps"
+    },
+    {
+      "definedIn": "./popover",
+      "import": "import type { PopoverSide } from '@nizivo/react'",
+      "kind": "type",
+      "name": "PopoverSide"
+    },
+    {
+      "definedIn": "./popover",
+      "import": "import { PopoverTitle } from '@nizivo/react'",
+      "kind": "part",
+      "name": "PopoverTitle"
+    },
+    {
+      "definedIn": "./popover",
+      "import": "import type { PopoverTitleLevel } from '@nizivo/react'",
+      "kind": "type",
+      "name": "PopoverTitleLevel"
+    },
+    {
+      "definedIn": "./popover",
+      "import": "import type { PopoverTitleProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "PopoverTitleProps"
+    },
+    {
+      "definedIn": "./popover",
+      "import": "import { PopoverTrigger } from '@nizivo/react'",
+      "kind": "part",
+      "name": "PopoverTrigger"
+    },
+    {
+      "definedIn": "./popover",
+      "import": "import type { PopoverTriggerProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "PopoverTriggerProps"
+    },
+    {
+      "definedIn": "./popover",
+      "import": "import type { PopoverTriggerState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "PopoverTriggerState"
+    },
+    {
       "definedIn": "./progress-bar",
       "import": "import { ProgressBar } from '@nizivo/react'",
       "kind": "component",

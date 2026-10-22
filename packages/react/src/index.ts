@@ -197,6 +197,29 @@ export type {
   PaginationSlot,
   PaginationState,
 } from './pagination/index';
+export {
+  Popover,
+  PopoverRoot,
+  PopoverTrigger,
+  PopoverPopup,
+  PopoverTitle,
+  PopoverDescription,
+  PopoverClose,
+} from './popover/index';
+export type {
+  PopoverCloseProps,
+  PopoverCloseState,
+  PopoverDescriptionProps,
+  PopoverLabels,
+  PopoverPopupProps,
+  PopoverPopupState,
+  PopoverRootProps,
+  PopoverSide,
+  PopoverTitleLevel,
+  PopoverTitleProps,
+  PopoverTriggerProps,
+  PopoverTriggerState,
+} from './popover/index';
 export { ProgressBar } from './progress-bar/index';
 export type { ProgressBarProps, ProgressBarState, ProgressBarTone } from './progress-bar/index';
 export { ProgressRing } from './progress-ring/index';

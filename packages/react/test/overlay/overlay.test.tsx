@@ -23,6 +23,7 @@ import {
   MenuOpenExample,
   MenuRowActionsExample,
 } from '../../src/menu/menu.example';
+import { Popover } from '../../src/popover/index';
 import { Select } from '../../src/select/index';
 import { Tooltip } from '../../src/tooltip/index';
 import { graph, rekey } from '../helpers/graph';
@@ -37,7 +38,7 @@ const SRC = rekey(
 );
 const ENGINE =
   /^(react-aria|react-aria-components|react-stately|@react-aria\/|@react-stately\/|@internationalized\/)/;
-const OVERLAYS = ['select', 'dialog', 'tooltip', 'menu'] as const;
+const OVERLAYS = ['select', 'dialog', 'tooltip', 'menu', 'popover'] as const;
 
 describe('the react-aria OverlayEngine (§12.2)', () => {
   test('is one object whose members are the functions the adapters import by name', () => {
@@ -208,6 +209,19 @@ describe('SSR (§12.2: closed overlays render nothing; O-17)', () => {
       trigger: 'menu-trigger',
       popup: 'menu-popup',
     },
+    Popover: {
+      app: (open) => (
+        <Popover.Root defaultOpen={open}>
+          <Popover.Trigger>Store status</Popover.Trigger>
+          <Popover.Popup>
+            <Popover.Title>Store is live</Popover.Title>
+            <Popover.Close />
+          </Popover.Popup>
+        </Popover.Root>
+      ),
+      trigger: 'popover-trigger',
+      popup: 'popover-popup',
+    },
   };
 
   for (const [name, { app, trigger, popup }] of Object.entries(cases)) {
@@ -235,7 +249,7 @@ describe('SSR (§12.2: closed overlays render nothing; O-17)', () => {
     expect(open).not.toContain('data-pressed');
   });
 
-  test("Dialog and Tooltip: only a bare trigger, the part's own <button>, carries nz-hit-target (M27)", () => {
+  test("Dialog, Tooltip and Popover: only a bare trigger, the part's own <button>, carries nz-hit-target (M27)", () => {
     const bare = renderToString(
       <>
         <Dialog.Root>
@@ -244,10 +258,14 @@ describe('SSR (§12.2: closed overlays render nothing; O-17)', () => {
         <Tooltip.Root>
           <Tooltip.Trigger className="mine">Export</Tooltip.Trigger>
         </Tooltip.Root>
+        <Popover.Root>
+          <Popover.Trigger className="mine">Status</Popover.Trigger>
+        </Popover.Root>
       </>,
     );
     expect(bare).toMatch(/<button[^>]*class="nz-dialog-trigger nz-hit-target mine"/);
     expect(bare).toMatch(/<button[^>]*class="nz-tooltip-trigger nz-hit-target mine"/);
+    expect(bare).toMatch(/<button[^>]*class="nz-popover-trigger nz-hit-target mine"/);
     const own = renderToString(
       <>
         <Dialog.Root>

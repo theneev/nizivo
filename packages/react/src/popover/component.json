@@ -1,0 +1,19 @@
+{
+  "name": "popover",
+  "status": "stable",
+  "tier": "engine",
+  "engine": "react-aria",
+  "overlay": true,
+  "parts": ["Root", "Trigger", "Popup", "Title", "Description", "Close"],
+  "interactive": ["popover-trigger", "popover-close"],
+  "focusTarget": "self",
+  "stateIndicator": [{ "slot": "popover-popup", "paint": "border" }],
+  "cssDeps": ["base", "icon-button"],
+  "variants": {},
+  "figma": {
+    "canonical": [],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": ["746:204", "746:267"]
+  }
+}

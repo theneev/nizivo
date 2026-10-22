@@ -159,6 +159,10 @@
       "types": "./dist/pagination/index.d.ts",
       "default": "./dist/pagination/index.js"
     },
+    "./popover": {
+      "types": "./dist/popover/index.d.ts",
+      "default": "./dist/popover/index.js"
+    },
     "./progress-bar": {
       "types": "./dist/progress-bar/index.d.ts",
       "default": "./dist/progress-bar/index.js"
@@ -257,6 +261,7 @@
     "./css/native-select.css": "./dist/css/native-select.css",
     "./css/number-value.css": "./dist/css/number-value.css",
     "./css/pagination.css": "./dist/css/pagination.css",
+    "./css/popover.css": "./dist/css/popover.css",
     "./css/progress-bar.css": "./dist/css/progress-bar.css",
     "./css/progress-ring.css": "./dist/css/progress-ring.css",
     "./css/radio-group.css": "./dist/css/radio-group.css",
