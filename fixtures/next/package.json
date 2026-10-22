@@ -10,7 +10,7 @@
     "@nizivo/icons": "file:.packed/icons",
     "@nizivo/react": "file:.packed/react",
     "@nizivo/tokens": "file:.packed/tokens",
-    "next": "16.4.0",
+    "next": "16.4.2",
     "react": "19.3.0",
     "react-dom": "19.3.0"
   },

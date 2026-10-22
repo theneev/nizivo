@@ -6,7 +6,7 @@ The Fumadocs skeleton of ARCHITECTURE.md §18.2, built as a static export in `ap
 
 | Package                       | Version                                       |
 | ----------------------------- | --------------------------------------------- |
-| next                          | 16.4.0 (Turbopack)                            |
+| next                          | 16.4.2 (Turbopack)                            |
 | fumadocs-core and fumadocs-ui | 16.17.2                                       |
 | fumadocs-mdx                  | 15.4.7                                        |
 | react and react-dom           | 19.3.0                                        |

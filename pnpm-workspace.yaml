@@ -59,7 +59,7 @@ catalog:
 
   # Docs site (apps/docs, §18.2): Fumadocs on Next, a static export. fumadocs-ui peers on
   # fumadocs-core at its own exact version; fumadocs-mdx 15.4.7 peers on fumadocs-core ^16.17.0.
-  next: 16.4.0
+  next: 16.4.2
   fumadocs-core: 16.17.2
   fumadocs-ui: 16.17.2
   fumadocs-mdx: 15.4.7

@@ -132,7 +132,7 @@ Gzip -9 of every chunk the page loads, minus `/button-only` (174,639 B Turbopack
 
 |                   |                                                                                                                                                                                        |
 | ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Next.js           | 16.4.0, App Router, pages are Server Components (`.jsx`, no `'use client'`)                                                                                                            |
+| Next.js           | 16.4.2, App Router, pages are Server Components (`.jsx`, no `'use client'`)                                                                                                            |
 | React / React DOM | 19.3.0                                                                                                                                                                                 |
 | Engine            | react-aria-components 1.22.1, resolved from `@nizivo/react`'s caret range                                                                                                              |
 | Browser           | Playwright 1.64.0, Chromium 156.0.8078.4, headless                                                                                                                                     |
