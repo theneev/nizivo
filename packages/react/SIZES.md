@@ -104,7 +104,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 | Entry              | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | ------------------ | -------: | ---------: | ---------: | ----------: | -----------: |
-| `.`                |   91,615 |       89.5 |     77,235 |          93 |        3,617 |
+| `.`                |   91,760 |       89.6 |     77,387 |          93 |        3,472 |
 | /alert             |    1,282 |        1.3 |      1,181 |         1.4 |          151 |
 | /augment           |        0 |        0.0 |          0 |           0 |            — |
 | /avatar            |    1,381 |        1.3 |      1,283 |         1.5 |          155 |
@@ -117,7 +117,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /container         |      694 |        0.7 |        633 |         0.8 |          125 |
 | /contracts         |    1,021 |        1.0 |        915 |         1.1 |          105 |
 | /delta             |    1,012 |        1.0 |        932 |         1.1 |          114 |
-| /dialog            |   32,352 |       31.6 |     28,712 |          32 |          416 |
+| /dialog            |   32,430 |       31.7 |     28,796 |          32 |          338 |
 | /empty-state       |      840 |        0.8 |        768 |           1 |          184 |
 | /field             |    3,604 |        3.5 |      3,279 |         3.9 |          389 |
 | /fieldset          |    1,715 |        1.7 |      1,561 |         1.9 |          230 |
@@ -130,7 +130,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /input             |    1,833 |        1.8 |      1,658 |           2 |          215 |
 | /kbd               |    1,192 |        1.2 |      1,087 |         1.3 |          139 |
 | /kpi-tile          |    2,323 |        2.3 |      2,116 |         2.5 |          237 |
-| /menu              |   56,977 |       55.6 |     49,255 |          57 |        1,391 |
+| /menu              |   56,976 |       55.6 |     49,221 |          57 |        1,392 |
 | /meter             |    1,143 |        1.1 |      1,058 |         1.3 |          188 |
 | /metric            |    2,142 |        2.1 |      1,956 |         2.4 |          315 |
 | /motion            |    1,573 |        1.5 |      1,436 |         1.7 |          167 |
@@ -159,7 +159,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 | Entry                      | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | -------------------------- | -------: | ---------: | ---------: | ----------: | -----------: |
-| dashboard set              |   77,625 |       75.8 |     65,641 |          76 |          199 |
+| dashboard set              |   77,740 |       75.9 |     65,763 |          76 |           84 |
 | { Button } from the barrel |    1,278 |        1.2 |      1,167 |         1.4 |          155 |
 | { Select } from the barrel |   63,416 |       61.9 |     54,436 |          68 |        6,216 |
 
@@ -167,19 +167,20 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 | Entry                                           | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | ----------------------------------------------- | -------: | ---------: | ---------: | ----------: | -----------: |
-| own: _engines/react-aria/dialog.client          |    1,165 |        1.1 |      1,030 |         1.3 |          166 |
+| own: _engines/react-aria/dialog.client          |    1,084 |        1.1 |        968 |         1.3 |          247 |
 | own: _engines/react-aria/locale.client          |      162 |        0.2 |        142 |         0.2 |           42 |
 | own: _engines/react-aria/menu.client            |    1,801 |        1.8 |      1,593 |           2 |          247 |
 | own: _engines/react-aria/outside-press.client   |      474 |        0.5 |        399 |         0.6 |          140 |
 | own: _engines/react-aria/overlay.client         |      511 |        0.5 |        444 |         0.6 |          103 |
-| own: _engines/react-aria/popup.client           |    1,126 |        1.1 |        994 |         1.3 |          205 |
+| own: _engines/react-aria/popup.client           |    1,185 |        1.2 |      1,027 |         1.3 |          146 |
 | own: _engines/react-aria/select.client          |    1,458 |        1.4 |      1,274 |         1.6 |          180 |
 | own: _engines/react-aria/tabs.client            |      769 |        0.8 |        702 |         0.9 |          152 |
 | own: _engines/react-aria/tooltip.client         |      719 |        0.7 |        680 |         0.8 |          100 |
+| own: _internal/modal.client                     |      562 |        0.5 |        503 |         0.7 |          154 |
 | own: alert/alert-dismiss.client                 |      394 |        0.4 |        346 |         0.4 |           15 |
 | own: checkbox/checkbox.client                   |      750 |        0.7 |        692 |         0.9 |          171 |
 | own: config/config.client                       |      197 |        0.2 |        179 |         0.3 |          110 |
-| own: dialog/dialog.client                       |    1,309 |        1.3 |      1,182 |         1.4 |          124 |
+| own: dialog/dialog.client                       |      997 |        1.0 |        911 |         1.4 |          436 |
 | own: field/field-scope.client                   |    1,496 |        1.5 |      1,315 |         1.6 |          142 |
 | own: icon-button/icon-button.client             |      353 |        0.3 |        302 |         0.4 |           56 |
 | own: input/input.client                         |      721 |        0.7 |        639 |         0.8 |           98 |

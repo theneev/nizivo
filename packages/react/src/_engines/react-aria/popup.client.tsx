@@ -1,7 +1,7 @@
 'use client';
-// Helpers for the react-aria family's modal popups (Menu, Select, Dialog): Tab out of a menu or
-// listbox, and the focus-return chain (ARCHITECTURE.md §12.2, O-11). Kept out
-// of overlay.client.tsx, which Tooltip imports, because these read React Aria's contexts: a value
+// Helpers for the react-aria family's modal popups: Tab out of a menu or listbox, the focus-return
+// chain (ARCHITECTURE.md §12.2, O-11) and a modal leaf's initial focus. Kept out of
+// overlay.client.tsx, which Tooltip imports, because these read React Aria's contexts: a value
 // import from the components barrel there would put its Popover and Dialog modules on every Tooltip
 // page.
 import {
@@ -202,5 +202,26 @@ export function ReturnFocus({
       });
     };
   }, [trigger, popup, origin]);
+  return null;
+}
+
+/**
+ * Moves focus to the leaf's initial-focus element (§12.2 Focus on open; Dialog, Drawer, Popover). A
+ * child of the content element, so its effect runs before React Aria's own focus-the-dialog effect (a
+ * parent's), which then sees focus inside and leaves it; and after FocusScope recorded the trigger to
+ * return focus to.
+ */
+export function InitialFocus({
+  content,
+  resolve,
+}: {
+  content: RefObject<HTMLElement | null>;
+  resolve: (content: HTMLElement) => HTMLElement | null;
+}): null {
+  useEffect(() => {
+    const element = content.current;
+    if (element === null || element.contains(element.ownerDocument.activeElement)) return;
+    resolve(element)?.focus();
+  }, [content, resolve]);
   return null;
 }

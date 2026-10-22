@@ -93,8 +93,8 @@ export const overlayEngine: OverlayEngine = {
   resolveSide,
   popupStyle,
   delegated: ['inert', 'scroll-lock', 'dismiss-stack', 'focus-return'],
-  // tab-out and return-focus: popup.client.tsx (useTabOut, ReturnFocus); initial-focus: the
-  // dialog adapter's initialFocus; outside-press: outside-press.client.tsx; nested-top-layer: the
-  // family's nested-portal containers carry TOP_LAYER (or markTopLayer)
+  // tab-out, return-focus and initial-focus: popup.client.tsx (useTabOut, ReturnFocus,
+  // InitialFocus); outside-press: outside-press.client.tsx; nested-top-layer: the family's
+  // nested-portal containers carry TOP_LAYER (or markTopLayer)
   completes: ['tab-out', 'return-focus', 'initial-focus', 'nested-top-layer', 'outside-press'],
 };
