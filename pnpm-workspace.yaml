@@ -7,6 +7,7 @@ packages:
   - '!fixtures/next'
   - '!fixtures/vite'
   - '!fixtures/vite-ssr'
+  - '!fixtures/react-router'
   - '!fixtures/astro'
 
 # One version of each shared dependency across the repo (ARCHITECTURE.md §19.1).

@@ -1,0 +1,385 @@
+{
+  "fixture": "react-router",
+  "command": "react-router build; node server.js",
+  "versions": {
+    "react-router": "8.5.0",
+    "@react-router/dev": "8.5.0",
+    "vite": "8.3.4",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "react-aria-components": "1.22.1",
+    "browser": "Chromium 156.0.8078.4"
+  },
+  "buildSeconds": 0.7,
+  "buildWarnings": [],
+  "serverExternal": [
+    "@nizivo/react",
+    "@nizivo/react/alert",
+    "@nizivo/react/button",
+    "@nizivo/react/checkbox",
+    "@nizivo/react/dialog",
+    "@nizivo/react/field",
+    "@nizivo/react/fieldset",
+    "@nizivo/react/heading",
+    "@nizivo/react/input",
+    "@nizivo/react/menu",
+    "@nizivo/react/native-select",
+    "@nizivo/react/radio-group",
+    "@nizivo/react/segmented-control",
+    "@nizivo/react/select",
+    "@nizivo/react/stack",
+    "@nizivo/react/switch",
+    "@nizivo/react/tabs",
+    "@nizivo/react/textarea",
+    "@nizivo/react/theme-script",
+    "@nizivo/react/tooltip"
+  ],
+  "pass": true,
+  "failures": [],
+  "pages": {
+    "/": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        }
+      },
+      "chunks": 5,
+      "markers": [],
+      "missing": [],
+      "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
+      "js": {
+        "files": 5,
+        "bytes": 360354,
+        "gzip": 115191
+      },
+      "failures": []
+    },
+    "/button-only": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "button button-label",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        }
+      },
+      "chunks": 8,
+      "markers": [],
+      "missing": [],
+      "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
+      "js": {
+        "files": 8,
+        "bytes": 363915,
+        "gzip": 116829
+      },
+      "failures": []
+    },
+    "/t0-barrel": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "alert alert-content alert-description alert-icon alert-title badge badge-dot button button-label card card-action card-body card-description card-header card-title container delta delta-value empty-state empty-state-actions empty-state-title grid grid-item heading image inline inline-error inline-error-icon inline-error-message kbd kbd-glyphs meter meter-header meter-label meter-track meter-value progress-bar progress-bar-header progress-bar-label progress-bar-track progress-bar-value progress-ring progress-ring-fill progress-ring-label progress-ring-track separator skeleton stack text",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "skeletonCircle": {
+          "sizes": "[[16,16]]",
+          "ok": true
+        }
+      },
+      "chunks": 13,
+      "markers": [],
+      "missing": [],
+      "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
+      "js": {
+        "files": 13,
+        "bytes": 378831,
+        "gzip": 122252
+      },
+      "failures": []
+    },
+    "/alert-dismiss": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "alert alert-content alert-description alert-dismiss alert-title heading icon-button-icon",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "alertDismiss": {
+          "slot": "alert-dismiss",
+          "type": "button",
+          "clicked": true,
+          "ok": true
+        }
+      },
+      "chunks": 9,
+      "markers": ["nzfm[alert/alert-dismiss.client]"],
+      "missing": [],
+      "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
+      "js": {
+        "files": 9,
+        "bytes": 364698,
+        "gzip": 117341
+      },
+      "failures": []
+    },
+    "/overlays": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "dialog-trigger select select-chevron select-trigger select-value stack tooltip-trigger",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "select": {
+          "before": "Last 30 days",
+          "after": "Last 7 days",
+          "formValue": "7d",
+          "triggerSlot": "select-trigger",
+          "triggerSize": "md",
+          "triggerClass": "nz-select-trigger nz-hit-target",
+          "partsScanned": "dialog-trigger select select-chevron select-item select-list select-popup select-trigger select-value stack tooltip-trigger",
+          "partsOutsideVocabulary": "",
+          "axeOpen": "",
+          "ok": true
+        },
+        "dialog": {
+          "triggerSlot": "dialog-trigger",
+          "title": "Edit product",
+          "closedByClosePart": true,
+          "focusReturned": true,
+          "closedByEscape": true,
+          "partsScanned": "dialog-backdrop dialog-body dialog-close dialog-content dialog-description dialog-footer dialog-popup dialog-positioner dialog-title dialog-trigger select select-chevron select-trigger select-value stack tooltip-trigger",
+          "partsOutsideVocabulary": "",
+          "axeOpen": "",
+          "ok": true
+        },
+        "tooltip": {
+          "triggerSlot": "tooltip-trigger",
+          "text": "Download the report as CSV",
+          "describedByTooltip": true,
+          "shownOnHover": true,
+          "shownOnFocus": true,
+          "partsScanned": "dialog-trigger select select-chevron select-trigger select-value stack tooltip-popup tooltip-trigger",
+          "partsOutsideVocabulary": "",
+          "axeOpen": "",
+          "ok": true
+        }
+      },
+      "chunks": 15,
+      "markers": [
+        "nzfm[_engines/react-aria/dialog.client]",
+        "nzfm[_engines/react-aria/locale.client]",
+        "nzfm[_engines/react-aria/open-state.client]",
+        "nzfm[_engines/react-aria/outside-press.client]",
+        "nzfm[_engines/react-aria/overlay.client]",
+        "nzfm[_engines/react-aria/popup.client]",
+        "nzfm[_engines/react-aria/select.client]",
+        "nzfm[_engines/react-aria/tooltip.client]",
+        "nzfm[_internal/modal.client]",
+        "nzfm[config/config.client]",
+        "nzfm[dialog/dialog.client]",
+        "nzfm[field/field-scope.client]",
+        "nzfm[select/select.client]",
+        "nzfm[tooltip/tooltip.client]"
+      ],
+      "missing": [],
+      "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
+      "js": {
+        "files": 15,
+        "bytes": 593104,
+        "gzip": 191492
+      },
+      "failures": []
+    },
+    "/forms": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "button button-label checkbox checkbox-indicator checkbox-input checkbox-label field field-description field-label field-required fieldset fieldset-content fieldset-legend fieldset-required heading input input-control native-select native-select-chevron native-select-trigger radio radio-group radio-input radio-label segmented-control segmented-control-input segmented-control-item segmented-control-label stack switch switch-input switch-label switch-thumb textarea",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "forms": {
+          "fields": "5",
+          "problems": "",
+          "danglingServerIdrefs": "",
+          "platform": "apple",
+          "inlineMessage": "Please fill out this field.",
+          "focused": "name",
+          "ariaInvalid": "true",
+          "stayed": true,
+          "ok": true
+        },
+        "nativeSubmit": {
+          "name": "Linen shirt",
+          "unit": "lb",
+          "terms": "on",
+          "range": "30d",
+          "billing": "invoices",
+          "shipping": "express",
+          "ok": true
+        }
+      },
+      "chunks": 13,
+      "markers": [
+        "nzfm[checkbox/checkbox.client]",
+        "nzfm[field/field-scope.client]",
+        "nzfm[input/input.client]",
+        "nzfm[radio-group/radio-group.client]",
+        "nzfm[segmented-control/segmented-control.client]",
+        "nzfm[switch/switch.client]",
+        "nzfm[textarea/textarea.client]"
+      ],
+      "missing": [],
+      "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
+      "js": {
+        "files": 13,
+        "bytes": 385031,
+        "gzip": 123975
+      },
+      "failures": []
+    },
+    "/menu": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "button-label kbd kbd-glyphs menu-checkbox-item menu-group menu-group-label menu-item menu-list menu-popup menu-separator menu-trigger",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "menuDefaultOpen": {
+          "ssrExpanded": "true",
+          "ssrPopup": false,
+          "ssrDangling": "menu-trigger aria-controls=react-aria-_R_j5H1_",
+          "triggerTag": "button",
+          "expanded": "true",
+          "focusInside": true,
+          "firstFocused": true,
+          "items": "5",
+          "checked": "true",
+          "linkTag": "a",
+          "linkHref": "#preview",
+          "dangling": "",
+          "focusReturned": true,
+          "reopenedByEnter": true,
+          "partsScanned": "button-label kbd kbd-glyphs menu-checkbox-item menu-group menu-group-label menu-item menu-list menu-popup menu-separator menu-trigger",
+          "partsOutsideVocabulary": "",
+          "axeClosed": "",
+          "ok": true
+        }
+      },
+      "chunks": 13,
+      "markers": [
+        "nzfm[_engines/react-aria/locale.client]",
+        "nzfm[_engines/react-aria/menu.client]",
+        "nzfm[_engines/react-aria/open-state.client]",
+        "nzfm[_engines/react-aria/outside-press.client]",
+        "nzfm[_engines/react-aria/overlay.client]",
+        "nzfm[_engines/react-aria/popup.client]",
+        "nzfm[config/config.client]",
+        "nzfm[menu/menu.client]"
+      ],
+      "missing": [],
+      "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
+      "js": {
+        "files": 13,
+        "bytes": 539545,
+        "gzip": 173737
+      },
+      "failures": []
+    },
+    "/tabs": {
+      "console": [],
+      "interactions": {
+        "parts": {
+          "partsScanned": "tabs tabs-count tabs-label tabs-list tabs-panel tabs-tab",
+          "partsOutsideVocabulary": "",
+          "danglingIdrefs": "",
+          "missingSlots": "",
+          "ok": true
+        },
+        "tabs": {
+          "ssrTabs": "3",
+          "ssrSelected": "Unfulfilled",
+          "ssrPanels": "1",
+          "ssrPanelText": "Paid orders that still need to ship.",
+          "ssrWired": true,
+          "ssrDangling": "",
+          "selectedAfterArrowRight": true,
+          "focusedArchived": true,
+          "panelText": "Orders you closed.",
+          "dangling": "",
+          "partsScanned": "tabs tabs-count tabs-label tabs-list tabs-panel tabs-tab",
+          "partsOutsideVocabulary": "",
+          "ok": true
+        }
+      },
+      "chunks": 10,
+      "markers": [
+        "nzfm[_engines/react-aria/locale.client]",
+        "nzfm[_engines/react-aria/tabs.client]",
+        "nzfm[config/config.client]",
+        "nzfm[tabs/tabs.client]"
+      ],
+      "missing": [],
+      "unexpected": [],
+      "axe": [],
+      "axeDark": [],
+      "axeForcedColors": [],
+      "axeReducedMotion": [],
+      "js": {
+        "files": 10,
+        "bytes": 475747,
+        "gzip": 150940
+      },
+      "failures": []
+    }
+  }
+}

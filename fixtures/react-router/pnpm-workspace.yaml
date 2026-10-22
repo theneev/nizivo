@@ -1,0 +1,24 @@
+# This fixture is its own pnpm workspace root, excluded from the monorepo (../../pnpm-workspace.yaml),
+# for the same reasons as fixtures/next (see its pnpm-workspace.yaml and RESULTS.md): it installs
+# @nizivo/* from the folders fixtures/runner/pack.ts unpacks into the gitignored .packed/ folder
+# (`node fixtures/runner/pack.ts --fixture react-router`), and the committed pnpm-lock.yaml stays valid
+# across library builds.
+
+# @nizivo/react depends on @nizivo/tokens at its exact version, which is not on the registry.
+overrides:
+  '@nizivo/tokens': 'file:.packed/tokens'
+
+# Same supply-chain policy as the monorepo root (ARCHITECTURE.md §19.3). React Router builds on Vite 8, which bundles with rolldown
+# and lists esbuild only as an optional peer, so no dependency here has an install script.
+minimumReleaseAge: 4320
+allowBuilds: {}
+trustPolicy: no-downgrade
+blockExoticSubdeps: true
+
+# semver 6.3.1 (2023-07-10; @react-router/dev > @babel/core > semver ^6.3.1) has no provenance
+# attestation although semver 7.5.x, published weeks before it, did, so no-downgrade rejects it. It is
+# the 6.x backport of the ReDoS fix (CVE-2022-25883), published by an npm CLI maintainer
+# (lukekarrys) from the same project: a provenance downgrade on a maintenance line, not a takeover,
+# like undici-types in the monorepo root. One exact version, so a new 6.x is gated again.
+trustPolicyExclude:
+  - semver@6.3.1

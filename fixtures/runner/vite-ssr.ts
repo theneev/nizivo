@@ -48,9 +48,13 @@ const SSR_PAGES: Record<string, PageSpec> = {
 
 /** Warning and error lines of a build's output, not its asset listing. */
 const warnings = (output: string): string[] =>
-  output
-    .split('\n')
-    .filter((line) => /warn|error|MODULE_LEVEL/i.test(line) && !/│ gzip:/.test(line));
+  output.split('\n').filter(
+    (line) =>
+      /warn|error|MODULE_LEVEL/i.test(line) &&
+      !/│ gzip:/.test(line) &&
+      // an asset listing line (`build/client/assets/inline-error-….css  0.4 kB`), not a message
+      !/^\s*(?:build|dist)\//.test(line),
+  );
 
 async function main(): Promise<number> {
   const { values } = parseArgs({

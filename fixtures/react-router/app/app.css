@@ -1,0 +1,11 @@
+/* The app's own page colours, from Nizivo's tokens (the theme-flash probe reads body's background). */
+body {
+  margin: 0;
+  background: var(--nz-bg-canvas);
+  color: var(--nz-text-primary);
+}
+
+/* The home page's link list: spaced so each link meets WCAG 2.2 target size (2.5.8). */
+li {
+  margin-block: 0.5rem;
+}
