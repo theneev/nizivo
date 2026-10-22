@@ -91,6 +91,35 @@ export type {
   DialogTriggerState,
   OpenReason,
 } from './dialog/index';
+export {
+  Drawer,
+  DrawerRoot,
+  DrawerTrigger,
+  DrawerPopup,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerDescription,
+  DrawerBody,
+  DrawerFooter,
+  DrawerClose,
+} from './drawer/index';
+export type {
+  DrawerBodyProps,
+  DrawerCloseProps,
+  DrawerCloseState,
+  DrawerDescriptionProps,
+  DrawerFooterProps,
+  DrawerHeaderProps,
+  DrawerLabels,
+  DrawerPopupProps,
+  DrawerPopupState,
+  DrawerRootProps,
+  DrawerSide,
+  DrawerTitleLevel,
+  DrawerTitleProps,
+  DrawerTriggerProps,
+  DrawerTriggerState,
+} from './drawer/index';
 export { EmptyState } from './empty-state/index';
 export type { EmptyStateProps, EmptyStateTitleLevel } from './empty-state/index';
 export { Field, FieldStatic, useFieldControl } from './field/index';

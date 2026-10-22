@@ -1,0 +1,29 @@
+{
+  "name": "drawer",
+  "status": "stable",
+  "tier": "engine",
+  "engine": "react-aria",
+  "overlay": true,
+  "parts": [
+    "Root",
+    "Trigger",
+    "Popup",
+    "Header",
+    "Title",
+    "Description",
+    "Body",
+    "Footer",
+    "Close"
+  ],
+  "interactive": ["drawer-trigger", "drawer-close"],
+  "focusTarget": "self",
+  "stateIndicator": [{ "slot": "drawer-popup", "paint": "border" }],
+  "cssDeps": ["base", "icon-button"],
+  "variants": { "side": ["start", "end", "bottom"] },
+  "figma": {
+    "canonical": [],
+    "ghosts": ["756:1001"],
+    "variantsSeen": [],
+    "related": ["7275:15163", "7275:16096", "7275:16092"]
+  }
+}

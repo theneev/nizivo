@@ -23,6 +23,7 @@ import {
   MenuOpenExample,
   MenuRowActionsExample,
 } from '../../src/menu/menu.example';
+import { Drawer } from '../../src/drawer/index';
 import { Popover } from '../../src/popover/index';
 import { Select } from '../../src/select/index';
 import { Tooltip } from '../../src/tooltip/index';
@@ -38,7 +39,7 @@ const SRC = rekey(
 );
 const ENGINE =
   /^(react-aria|react-aria-components|react-stately|@react-aria\/|@react-stately\/|@internationalized\/)/;
-const OVERLAYS = ['select', 'dialog', 'tooltip', 'menu', 'popover'] as const;
+const OVERLAYS = ['select', 'dialog', 'tooltip', 'menu', 'popover', 'drawer'] as const;
 
 describe('the react-aria OverlayEngine (§12.2)', () => {
   test('is one object whose members are the functions the adapters import by name', () => {
@@ -80,7 +81,19 @@ describe('the react-aria OverlayEngine (§12.2)', () => {
     expect(tooltip).not.toContain("from './popup.client'");
   });
 
-  for (const name of OVERLAYS) {
+  test('the drawer adapter is the dialog adapter, re-exported, plus the direction: one modal core (§12.3)', () => {
+    const source = SRC.get('src/_engines/react-aria/drawer.client.tsx') ?? '';
+    expect(source).toContain(
+      "export { Close, Description, Popup, Root, Title, Trigger } from './dialog.client';",
+    );
+    // Nothing of the engine beyond the locale: the modal core is the Dialog's.
+    expect([...source.matchAll(/^import [^;]+;$/gm)].map(([line]) => line)).toEqual([
+      "import { useLocale } from 'react-aria-components';",
+      "import type { DrawerEngine } from '../../drawer/drawer.contract';",
+    ]);
+  });
+
+  for (const name of OVERLAYS.filter((overlay) => overlay !== 'drawer')) {
     test(`the ${name} adapter takes the shared mechanics from the family module only`, () => {
       const source = SRC.get(`src/_engines/react-aria/${name}.client.tsx`) ?? '';
       expect(source).toContain("from './overlay.client'");
@@ -222,6 +235,22 @@ describe('SSR (§12.2: closed overlays render nothing; O-17)', () => {
       trigger: 'popover-trigger',
       popup: 'popover-popup',
     },
+    Drawer: {
+      app: (open) => (
+        <Drawer.Root defaultOpen={open}>
+          <Drawer.Trigger>View order</Drawer.Trigger>
+          <Drawer.Popup side="bottom">
+            <Drawer.Header>
+              <Drawer.Title>Order #1042</Drawer.Title>
+            </Drawer.Header>
+            <Drawer.Close />
+            <Drawer.Body>Body</Drawer.Body>
+          </Drawer.Popup>
+        </Drawer.Root>
+      ),
+      trigger: 'drawer-trigger',
+      popup: 'drawer-popup',
+    },
   };
 
   for (const [name, { app, trigger, popup }] of Object.entries(cases)) {
@@ -249,7 +278,7 @@ describe('SSR (§12.2: closed overlays render nothing; O-17)', () => {
     expect(open).not.toContain('data-pressed');
   });
 
-  test("Dialog, Tooltip and Popover: only a bare trigger, the part's own <button>, carries nz-hit-target (M27)", () => {
+  test("Dialog, Tooltip, Popover and Drawer: only a bare trigger, the part's own <button>, carries nz-hit-target (M27)", () => {
     const bare = renderToString(
       <>
         <Dialog.Root>
@@ -261,11 +290,15 @@ describe('SSR (§12.2: closed overlays render nothing; O-17)', () => {
         <Popover.Root>
           <Popover.Trigger className="mine">Status</Popover.Trigger>
         </Popover.Root>
+        <Drawer.Root>
+          <Drawer.Trigger className="mine">Order</Drawer.Trigger>
+        </Drawer.Root>
       </>,
     );
     expect(bare).toMatch(/<button[^>]*class="nz-dialog-trigger nz-hit-target mine"/);
     expect(bare).toMatch(/<button[^>]*class="nz-tooltip-trigger nz-hit-target mine"/);
     expect(bare).toMatch(/<button[^>]*class="nz-popover-trigger nz-hit-target mine"/);
+    expect(bare).toMatch(/<button[^>]*class="nz-drawer-trigger nz-hit-target mine"/);
     const own = renderToString(
       <>
         <Dialog.Root>

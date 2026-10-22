@@ -1,0 +1,70 @@
+---
+title: Drawer
+description: A modal panel that slides in from an edge of the viewport, for details or a task beside the page, with a header, a body that scrolls and a footer. side="bottom" is a bottom sheet.
+apg: https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/
+keyboard:
+  - keys: Enter, Space
+    action: On the trigger (a button), opens the drawer and moves focus to the first focusable element in its body, or to the drawer itself when the body has none. A control with autoFocus wins.
+  - keys: Tab, Shift+Tab
+    action: Moves focus between the focusable elements inside the drawer; focus stays inside while it is open.
+  - keys: Escape
+    action: Closes the drawer and returns focus to the trigger, or along the returnFocus chain below.
+keyboardSource: react-aria-components 1.22.1 `ModalOverlay` and `Modal` (react-aria 3.53.1 `useModalOverlay`, which contains focus), the Dialog's engine adapter (`_engines/react-aria/drawer.client.tsx` re-exports `dialog.client.tsx`). The first-focusable rule and focus return are Nizivo's (ARCHITECTURE.md §12.2), checked by the overlay lane (`test/overlay/drawer.spec.tsx`, `nesting-popover-drawer.spec.tsx`) in Chromium, Firefox and WebKit; apps/docs/scripts/smoke.ts checks opening with Enter, Tab staying inside, and Escape closing with focus back on the trigger.
+---
+
+<Callout type="warn" title="Not yet published (v0.2)">
+  This part is in the repository and ships in `@nizivo/react` 0.2.0; the 0.1.0 on npm does not have
+  it. Until then its API can change.
+</Callout>
+
+## Static or interactive
+
+**Client.** It is the Dialog's engine at an edge: `@nizivo/react/drawer` measures 31.7 KiB gzip with
+React Aria inside, almost all of it shared with Dialog (size-limit, all locales;
+`packages/react/SIZES.md`). [How to choose](/docs/guides/static-or-interactive/).
+
+## Sides
+
+`Drawer.Popup` takes `side`:
+
+- `end` (the default): the right edge in a left-to-right page, the left edge in a right-to-left one.
+  This is Figma's Drawer: 440 px wide, the full height, rounded on its two inner corners.
+- `start`: the opposite edge.
+- `bottom`: a bottom sheet, the full width and as tall as its content, rounded on its top corners.
+  It is the "More" sheet AppShell will open below 640 px.
+
+`data-side` on the popup (and its positioner) is the physical edge it sits at: `right`, `left` or
+`bottom`. A narrow viewport keeps a 3rem strip of the scrim beside (or above) the drawer, so there is
+always somewhere to press to close it. Set `--nz-drawer-width` for another width, and
+`--nz-drawer-radius` and `--nz-drawer-bg` to restyle the panel.
+
+## Motion
+
+The drawer slides its whole width (or height) in from its edge on `duration/slow` with
+`easing/enter`, and out on `duration/base` with `easing/exit`; the scrim only fades. Under reduced
+motion (`prefers-reduced-motion: reduce` or `[data-nz-motion="reduce"]`) it does not slide: it only
+fades, in 120 ms.
+
+## Parts
+
+`Drawer.Header` holds the title and, under it, a description or badges, above a rule.
+`Drawer.Body` is the only scroller, and fills the height between the header and the footer.
+`Drawer.Footer` holds the actions, which share its width, above a rule.
+
+`<Drawer.Close />` with no `render` and no `children` is an IconButton (tertiary, `md`) showing the
+close glyph, named "Close". Placed as a direct child of `Drawer.Popup`, it sits in the header's end
+corner, where Figma draws the close glyph, and the header leaves room for it. With `children` it is a
+plain button; with `render`, your element, for example `render={<Button>Cancel</Button>}`.
+
+## Focus return
+
+As the Dialog's: `returnFocus` on `Drawer.Root` (an element ref or a function that returns one, while
+it is on the page), else the trigger, else the trigger of the overlay the drawer was opened from,
+else `<body>` with a development warning. `returnFocus={false}` leaves focus alone.
+
+## Inside other overlays
+
+A Drawer opened from a Dialog, or a Dialog opened from a Drawer, adds no second scrim; the one
+underneath is marked `data-nested-open`. A Popover, Select, Menu or Tooltip opened inside a Drawer
+portals into it and paints above it. Escape and a press outside close only the topmost overlay, and
+the page stays scroll-locked until the last one closes.

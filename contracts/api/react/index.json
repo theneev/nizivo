@@ -543,6 +543,156 @@
       "name": "DialogTriggerState"
     },
     {
+      "definedIn": "./drawer",
+      "import": "import { Drawer } from '@nizivo/react'",
+      "kind": "namespace",
+      "name": "Drawer"
+    },
+    {
+      "definedIn": "./drawer",
+      "import": "import { DrawerBody } from '@nizivo/react'",
+      "kind": "part",
+      "name": "DrawerBody"
+    },
+    {
+      "definedIn": "./drawer",
+      "import": "import type { DrawerBodyProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "DrawerBodyProps"
+    },
+    {
+      "definedIn": "./drawer",
+      "import": "import { DrawerClose } from '@nizivo/react'",
+      "kind": "part",
+      "name": "DrawerClose"
+    },
+    {
+      "definedIn": "./drawer",
+      "import": "import type { DrawerCloseProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "DrawerCloseProps"
+    },
+    {
+      "definedIn": "./drawer",
+      "import": "import type { DrawerCloseState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "DrawerCloseState"
+    },
+    {
+      "definedIn": "./drawer",
+      "import": "import { DrawerDescription } from '@nizivo/react'",
+      "kind": "part",
+      "name": "DrawerDescription"
+    },
+    {
+      "definedIn": "./drawer",
+      "import": "import type { DrawerDescriptionProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "DrawerDescriptionProps"
+    },
+    {
+      "definedIn": "./drawer",
+      "import": "import { DrawerFooter } from '@nizivo/react'",
+      "kind": "part",
+      "name": "DrawerFooter"
+    },
+    {
+      "definedIn": "./drawer",
+      "import": "import type { DrawerFooterProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "DrawerFooterProps"
+    },
+    {
+      "definedIn": "./drawer",
+      "import": "import { DrawerHeader } from '@nizivo/react'",
+      "kind": "part",
+      "name": "DrawerHeader"
+    },
+    {
+      "definedIn": "./drawer",
+      "import": "import type { DrawerHeaderProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "DrawerHeaderProps"
+    },
+    {
+      "definedIn": "./drawer",
+      "import": "import type { DrawerLabels } from '@nizivo/react'",
+      "kind": "type",
+      "name": "DrawerLabels"
+    },
+    {
+      "definedIn": "./drawer",
+      "import": "import { DrawerPopup } from '@nizivo/react'",
+      "kind": "part",
+      "name": "DrawerPopup"
+    },
+    {
+      "definedIn": "./drawer",
+      "import": "import type { DrawerPopupProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "DrawerPopupProps"
+    },
+    {
+      "definedIn": "./drawer",
+      "import": "import type { DrawerPopupState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "DrawerPopupState"
+    },
+    {
+      "definedIn": "./drawer",
+      "import": "import { DrawerRoot } from '@nizivo/react'",
+      "kind": "part",
+      "name": "DrawerRoot"
+    },
+    {
+      "definedIn": "./drawer",
+      "import": "import type { DrawerRootProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "DrawerRootProps"
+    },
+    {
+      "definedIn": "./drawer",
+      "import": "import type { DrawerSide } from '@nizivo/react'",
+      "kind": "type",
+      "name": "DrawerSide"
+    },
+    {
+      "definedIn": "./drawer",
+      "import": "import { DrawerTitle } from '@nizivo/react'",
+      "kind": "part",
+      "name": "DrawerTitle"
+    },
+    {
+      "definedIn": "./drawer",
+      "import": "import type { DrawerTitleLevel } from '@nizivo/react'",
+      "kind": "type",
+      "name": "DrawerTitleLevel"
+    },
+    {
+      "definedIn": "./drawer",
+      "import": "import type { DrawerTitleProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "DrawerTitleProps"
+    },
+    {
+      "definedIn": "./drawer",
+      "import": "import { DrawerTrigger } from '@nizivo/react'",
+      "kind": "part",
+      "name": "DrawerTrigger"
+    },
+    {
+      "definedIn": "./drawer",
+      "import": "import type { DrawerTriggerProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "DrawerTriggerProps"
+    },
+    {
+      "definedIn": "./drawer",
+      "import": "import type { DrawerTriggerState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "DrawerTriggerState"
+    },
+    {
       "definedIn": "./empty-state",
       "import": "import { EmptyState } from '@nizivo/react'",
       "kind": "component",

@@ -2,7 +2,7 @@
   "$comment": "Size budgets (ARCHITECTURE.md §17), written by `node packages/tooling/size/measure.ts --write`. measured: bytes, gzip -9, as size-limit 14.2 reports them. limitKiB: measured + 10%, rounded up (method.ts limitKiB), never above the entry's §17.1 plan limit (method.ts PLAN_LIMITS_KIB). Limits only go up through a labelled PR (§17.3).",
   "entries": {
     "@nizivo/react": {
-      "measured": 92606,
+      "measured": 93203,
       "limitKiB": 93
     },
     "@nizivo/react/alert": {
@@ -56,6 +56,10 @@
     "@nizivo/react/dialog": {
       "measured": 32430,
       "limitKiB": 32
+    },
+    "@nizivo/react/drawer": {
+      "measured": 32498,
+      "limitKiB": 35
     },
     "@nizivo/react/empty-state": {
       "measured": 840,
@@ -210,7 +214,7 @@
       "limitKiB": 76
     },
     "@nizivo/react { Button } from the barrel": {
-      "measured": 1278,
+      "measured": 1276,
       "limitKiB": 1.4
     },
     "@nizivo/react { Select } from the barrel": {
@@ -220,6 +224,10 @@
     "@nizivo/react own: _engines/react-aria/dialog.client": {
       "measured": 1084,
       "limitKiB": 1.3
+    },
+    "@nizivo/react own: _engines/react-aria/drawer.client": {
+      "measured": 100,
+      "limitKiB": 0.2
     },
     "@nizivo/react own: _engines/react-aria/locale.client": {
       "measured": 162,
@@ -276,6 +284,10 @@
     "@nizivo/react own: dialog/dialog.client": {
       "measured": 997,
       "limitKiB": 1.4
+    },
+    "@nizivo/react own: drawer/drawer.client": {
+      "measured": 1064,
+      "limitKiB": 1.2
     },
     "@nizivo/react own: field/field-scope.client": {
       "measured": 1496,
@@ -350,7 +362,7 @@
       "limitKiB": 0.6
     },
     "@nizivo/react/css/base.css": {
-      "measured": 1061,
+      "measured": 1073,
       "limitKiB": 1.1
     },
     "@nizivo/react/css/breadcrumb.css": {
@@ -380,6 +392,10 @@
     "@nizivo/react/css/dialog.css": {
       "measured": 944,
       "limitKiB": 1
+    },
+    "@nizivo/react/css/drawer.css": {
+      "measured": 1103,
+      "limitKiB": 1.2
     },
     "@nizivo/react/css/empty-state.css": {
       "measured": 476,
@@ -526,7 +542,7 @@
       "limitKiB": 0.5
     },
     "@nizivo/react/styles.css": {
-      "measured": 17449,
+      "measured": 17893,
       "limitKiB": 19
     },
     "@nizivo/tokens": {

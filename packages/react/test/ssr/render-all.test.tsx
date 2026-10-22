@@ -59,6 +59,7 @@ import {
 } from '../../src/ranked-list/ranked-list.example';
 import { TrendCardExample, TrendCardLoadingExample } from '../../src/trend-card/trend-card.example';
 import { PopoverExample, PopoverOpenExample } from '../../src/popover/popover.example';
+import { DrawerExample, DrawerSheetExample } from '../../src/drawer/drawer.example';
 
 const examples: Record<string, () => JSX.Element> = {
   ButtonExample,
@@ -117,6 +118,8 @@ const examples: Record<string, () => JSX.Element> = {
   CountUpExample,
   PopoverExample,
   PopoverOpenExample,
+  DrawerExample,
+  DrawerSheetExample,
 };
 
 const allowed = new Set([
@@ -225,15 +228,21 @@ describe('renderToString (Node, default condition)', () => {
     expect(open).not.toContain('nz-dialog-popup');
   });
 
-  test('Popover: a server Button is the trigger; closed and server-open popovers render no popup', () => {
-    for (const [Example, name] of [[PopoverExample, 'popover']] as const) {
+  test('Popover and Drawer: a server Button is the trigger; closed and server-open popups render no popup', () => {
+    for (const [Example, name] of [
+      [PopoverExample, 'popover'],
+      [DrawerExample, 'drawer'],
+    ] as const) {
       const html = renderToString(<Example />);
       expect(html).toMatch(
         new RegExp(`<button[^>]*class="nz-button nz-hit-target nz-${name}-trigger"`),
       );
       expect(html).toContain('aria-expanded="false"');
     }
-    for (const [Example, name] of [[PopoverOpenExample, 'popover']] as const) {
+    for (const [Example, name] of [
+      [PopoverOpenExample, 'popover'],
+      [DrawerSheetExample, 'drawer'],
+    ] as const) {
       const open = renderToString(<Example />);
       expect(open).toMatch(new RegExp(`data-slot="${name}-trigger"[^>]*data-open=""`));
       expect(open).not.toContain('data-pressed');
