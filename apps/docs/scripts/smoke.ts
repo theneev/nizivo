@@ -78,6 +78,7 @@ const NIZIVO_CLIENT_MARKERS = [
   'segmented-control-input',
   'tabs-tab',
   'menu-popup',
+  'popover-popup',
   // CountUp (@nizivo/react/motion, M41): its digits' slot
   'count-up-value',
   // @nizivo/charts' ChartInteraction island (AreaChart's point mode, BarChart's column mode,
@@ -114,6 +115,7 @@ const CLIENT_PAGES: Record<string, string[]> = {
   '/docs/components/tabs/': ['tabs-tab', 'nz-textarea', 'willValidate'],
   // MenuRowActionsExample's trigger is an IconButton, whose default tooltip leaf the page imports.
   '/docs/components/menu/': ['menu-popup', 'tooltip-popup'],
+  '/docs/components/popover/': ['popover-popup'],
   // CountUp is the one client part of the dashboard set (M41); its page is titled by its subpath.
   '/docs/components/motion/': ['count-up-value'],
   // AreaChart, BarChart (M40) and DonutChart (M41) render the island by default
@@ -132,6 +134,7 @@ const REPORT = [
   '/docs/components/tooltip/',
   '/docs/components/select/',
   '/docs/components/dialog/',
+  '/docs/components/popover/',
   '/docs/components/field/',
   '/docs/components/native-select/',
   '/docs/components/input/',
@@ -760,6 +763,33 @@ async function dialogChecks(browser: Browser): Promise<void> {
   await ctx.close();
 }
 
+async function popoverChecks(browser: Browser): Promise<void> {
+  const ctx = await context(browser, 'light');
+  const { page } = await visit(ctx, '/docs/components/popover/');
+  const trigger = page.locator(
+    '[data-example="popover/PopoverExample"] [data-slot="popover-trigger"]',
+  );
+  await trigger.focus();
+  await page.keyboard.press('Enter');
+  const popover = page.locator('[data-slot="popover-popup"]');
+  const opened = await popover.waitFor({ timeout: 5_000 }).then(
+    () => true,
+    () => false,
+  );
+  check(opened, 'Popover keyboard: Enter on the trigger opens it');
+  check(
+    await page.evaluate(
+      () => document.activeElement?.closest('[data-slot="popover-popup"]') !== null,
+    ),
+    'Popover: focus moves into it on open',
+  );
+  await page.keyboard.press('Escape');
+  await popover.waitFor({ state: 'hidden', timeout: 5_000 }).catch(() => undefined);
+  check(!(await popover.isVisible().catch(() => false)), 'Popover keyboard: Escape closes it');
+  check(await focusLands(page, 'popover-trigger'), 'Popover: focus returns to the trigger');
+  await ctx.close();
+}
+
 async function searchChecks(browser: Browser): Promise<void> {
   const ctx = await context(browser, 'light');
   const { page, external } = await visit(ctx, '/docs/');
@@ -1182,6 +1212,7 @@ async function main(): Promise<void> {
     await selectChecks(browser);
     await tooltipChecks(browser);
     await dialogChecks(browser);
+    await popoverChecks(browser);
     await forcedColoursChecks(browser);
     await skipLinkChecks(browser);
     await drawerChecks(browser);

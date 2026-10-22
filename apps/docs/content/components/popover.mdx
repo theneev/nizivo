@@ -1,0 +1,74 @@
+---
+title: Popover
+description: A small dialog anchored to its trigger, for status, quick settings and filters. It has a title, a description, any controls, and a close button; Escape or a press outside closes it, and focus returns to the trigger.
+apg: https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/
+keyboard:
+  - keys: Enter, Space
+    action: On the trigger (a button), opens the popover and moves focus to its first control (the close button in the corner is passed over), or to the popover itself when it has none. An element with autoFocus wins.
+  - keys: Tab, Shift+Tab
+    action: Moves focus between the controls inside the popover; focus stays inside while it is open.
+  - keys: Escape
+    action: Closes the popover and returns focus to the trigger. With a Select, Menu or Tooltip open inside it, Escape closes that one first.
+keyboardSource: react-aria-components 1.22.1 `DialogTrigger`, `Popover` and `Dialog` (react-aria 3.53.1 `usePopover`, which contains focus while open) through `_engines/react-aria/popover.client.tsx`. The first-control rule and focus return are Nizivo's (ARCHITECTURE.md §12.2), checked by the overlay lane (`test/overlay/popover.spec.tsx`, `nesting-popover-drawer.spec.tsx`) in Chromium, Firefox and WebKit; apps/docs/scripts/smoke.ts checks opening with Enter, Escape closing and focus back on the trigger.
+---
+
+<Callout type="warn" title="Not yet published (v0.2)">
+  This part is in the repository and ships in `@nizivo/react` 0.2.0; the 0.1.0 on npm does not have
+  it. Until then its API can change.
+</Callout>
+
+## Static or interactive
+
+**Client.** It always ships React Aria's dialog, popover and positioning code: `@nizivo/react/popover`
+measures 35.0 KiB gzip with React Aria inside (size-limit, all locales; `packages/react/SIZES.md`).
+Most of it is shared with Menu and Select, so a page that already has one of them pays far less. [How
+to choose](/docs/guides/static-or-interactive/).
+
+## Popover, Menu, Tooltip or Dialog
+
+- A **Menu** lists actions or links; a **Select** chooses a value. Use them when the popup is a list.
+- A **Tooltip** names or explains its trigger in a few words and holds nothing to press.
+- A **Popover** holds content and controls next to the control that opened it: a store's status
+  with a "Pause" action, quick filters, a notifications list.
+- A **Dialog** asks for the whole page's attention. Use it for a task the user must finish or
+  dismiss before going on.
+
+## Placement
+
+`Popover.Popup` takes `side` (`top`, `bottom`, `start`, `end`; default `bottom`), `align` (`start`,
+`center`, `end`; default `center`) and `sideOffset` (default 8 px). `start` and `end` follow the
+writing direction. When there is no room, it flips to the other side; `data-side` on the popup is the
+side it ended on, as a physical `top`, `right`, `bottom` or `left`, and `data-align` the alignment.
+
+It is as wide as its content, up to 22.5rem (360 px) and the viewport less 32 px. Set
+`--nz-popover-width` for a fixed width. Its content scrolls when it is taller than the room below
+(or above) the trigger.
+
+There is no arrow: Figma's popups (the Dropdown Menu and the Date Range Picker) have none.
+
+## Naming it
+
+A `Popover.Title` names the popover. Without one, give `Popover.Popup` an `aria-label`:
+
+```tsx
+<Popover.Popup aria-label="Filters">…</Popover.Popup>
+```
+
+## The close button
+
+`<Popover.Close />` with no `render` and no `children` is a small IconButton (tertiary, `sm`)
+showing the close glyph, named "Close" (`labels={{ close: '…' }}` or `aria-label` renames it). As a
+direct child of `Popover.Popup` it sits in the top end corner, and the title leaves room for it. With
+`children` it is a plain button; with `render`, your element, for example
+`render={<Button size="sm">Done</Button>}`. Its markup is IconButton's, so a page that imports
+per-component stylesheets needs `css/icon-button.css` too.
+
+## Inside other overlays
+
+A Popover opened inside a Dialog or a Drawer portals into that overlay and paints above it, and a
+Select, Menu, Tooltip or Dialog opened inside a Popover paints above the Popover. Escape and a press
+outside close only the topmost one; the page stays scroll-locked until the last one closes, and focus
+walks back trigger by trigger.
+
+While it is open the rest of the page is inert and does not scroll (React Aria's popovers are modal),
+as with Menu and Select.
