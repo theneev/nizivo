@@ -235,6 +235,12 @@
       "meaning": "The whole surface is interactive"
     },
     {
+      "name": "data-numeric",
+      "presence": true,
+      "on": "table head and cell",
+      "meaning": "The column holds numbers: end-aligned, with tabular figures"
+    },
+    {
       "name": "data-presentation",
       "values": ["table", "list"],
       "on": "DataView",

@@ -1,0 +1,31 @@
+---
+title: PageHeader
+description: The top of a page, under the shell's top bar. The page's one <h1>, an optional status beside it and a line under it, and the page's controls at the row's end. Server-rendered, no client JS.
+keyboard:
+  - keys: Tab
+    action: Reaches the controls in the actions slot, in order. The header and its title take no focus.
+keyboardSource: Native elements only; no engine. Checked by the browser lane (test/browser/table.spec.tsx) in Chromium, Firefox and WebKit.
+---
+
+<Callout type="warn" title="Not yet published (v0.2)">
+  This part is in the repository and ships in `@nizivo/react` 0.2.0; the 0.1.0 on npm does not have
+  it. Until then its API can change.
+</Callout>
+
+## Static or interactive
+
+**Server.** `PageHeader` renders a `<header>` with no client JavaScript. What you put in `actions`
+keeps its own tier: a Button stays server-rendered, a SegmentedControl hydrates.
+[How to choose](/docs/guides/static-or-interactive/).
+
+## One heading per page
+
+`title` renders the page's `<h1>`. The shell's top bar shows the section name as text, not as a
+second heading. Inside a page whose `<h1>` is elsewhere, pass `level={2}`; the title keeps its look.
+
+## Layout
+
+Figma draws the title (Heading/H1) and the controls on one row, 16 px apart and centred, the
+controls at the row's end. `meta` sits beside the title, for example a status `<Badge>`;
+`description` is a Body/M line under it. Below the `sm` breakpoint (40rem) the title takes
+Heading/H2's size, as 08's mobile frame does, and the controls move to a row of their own. Hooks: `--nz-page-header-gap`, `--nz-page-header-title-font`.

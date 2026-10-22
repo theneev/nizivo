@@ -113,6 +113,8 @@ const CLIENT_PAGES: Record<string, string[]> = {
   '/docs/components/switch/': ['switch-thumb', 'willValidate'],
   '/docs/components/radio-group/': ['radio-input'],
   '/docs/components/segmented-control/': ['segmented-control-input', 'willValidate'],
+  // PageHeader is a server part; its Overview example puts a SegmentedControl in the actions (week 16).
+  '/docs/components/page-header/': ['segmented-control-input', 'willValidate'],
   '/docs/components/tabs/': ['tabs-tab', 'nz-textarea', 'willValidate'],
   // MenuRowActionsExample's trigger is an IconButton, whose default tooltip leaf the page imports.
   '/docs/components/menu/': ['menu-popup', 'tooltip-popup'],

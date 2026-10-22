@@ -1,0 +1,81 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/page-header.css (Figma: the "Page header" frames of 08, figma/08 §4). The
+   container query sets ONLY --_nz-* privates; public --nz-page-header-* hooks are read once, at the
+   property, and never assigned here. Figma: the title
+   (Heading/H1) and the controls on one row, 16 apart, centred; the controls keep to the row's end.
+   Mobile first: below --nz-sm (40rem) the title takes Heading/H2's size, as 08's mobile frame does,
+   and the controls start a row of their own. A viewport query, not a container query: a size
+   container has no intrinsic width, so the header would collapse in a shrink-to-fit parent. */
+@layer nz.components {
+  .nz-page-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--nz-page-header-gap, var(--nz-space-4));
+    color: var(--nz-text-primary);
+  }
+
+  .nz-page-header-content {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: var(--nz-space-1);
+    min-inline-size: 0;
+  }
+
+  .nz-page-header-heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--nz-space-3);
+    min-inline-size: 0;
+  }
+
+  .nz-page-header-title {
+    --_nz-page-header-title-font: var(--nz-font-heading-h2);
+    --_nz-page-header-title-tracking: var(--nz-tracking-heading-h2);
+
+    margin: 0;
+    font: var(--nz-page-header-title-font, var(--_nz-page-header-title-font));
+    letter-spacing: var(--_nz-page-header-title-tracking);
+    overflow-wrap: anywhere;
+  }
+
+  .nz-page-header-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--nz-space-2);
+  }
+
+  .nz-page-header-description {
+    margin: 0;
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-body-m);
+    letter-spacing: var(--nz-tracking-body-m);
+  }
+
+  .nz-page-header-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--nz-space-3);
+  }
+
+  /* from --nz-sm: Heading/H1, and the controls at the end of the title's row */
+  @media (--nz-sm) {
+    .nz-page-header-title {
+      --_nz-page-header-title-font: var(--nz-font-heading-h1);
+      --_nz-page-header-title-tracking: var(--nz-tracking-heading-h1);
+    }
+
+    .nz-page-header-content {
+      flex-basis: 0;
+    }
+
+    .nz-page-header-actions {
+      margin-inline-start: auto;
+    }
+  }
+}

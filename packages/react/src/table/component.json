@@ -1,0 +1,28 @@
+{
+  "name": "table",
+  "status": "stable",
+  "tier": "server",
+  "parts": [
+    "Container",
+    "Root",
+    "Caption",
+    "Header",
+    "Body",
+    "Footer",
+    "Row",
+    "Head",
+    "Cell",
+    "SortButton",
+    "RowLink"
+  ],
+  "interactive": ["table-sort-button", "table-row-link"],
+  "focusTarget": "self",
+  "cssDeps": ["base"],
+  "variants": {},
+  "figma": {
+    "canonical": ["7275:14091", "7275:14040"],
+    "ghosts": ["753:644", "753:476", "753:599", "753:410"],
+    "variantsSeen": [],
+    "related": []
+  }
+}

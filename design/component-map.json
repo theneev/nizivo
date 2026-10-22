@@ -138,6 +138,86 @@
       "export": "RankedList",
       "parts": ["Root", "Item", "Action"]
     },
+    "753:410": {
+      "component": "table",
+      "role": "ghost",
+      "import": "@nizivo/react/table",
+      "export": "Table",
+      "parts": [
+        "Container",
+        "Root",
+        "Caption",
+        "Header",
+        "Body",
+        "Footer",
+        "Row",
+        "Head",
+        "Cell",
+        "SortButton",
+        "RowLink"
+      ],
+      "props": {}
+    },
+    "753:476": {
+      "component": "table",
+      "role": "ghost",
+      "import": "@nizivo/react/table",
+      "export": "Table",
+      "parts": [
+        "Container",
+        "Root",
+        "Caption",
+        "Header",
+        "Body",
+        "Footer",
+        "Row",
+        "Head",
+        "Cell",
+        "SortButton",
+        "RowLink"
+      ],
+      "props": {}
+    },
+    "753:599": {
+      "component": "table",
+      "role": "ghost",
+      "import": "@nizivo/react/table",
+      "export": "Table",
+      "parts": [
+        "Container",
+        "Root",
+        "Caption",
+        "Header",
+        "Body",
+        "Footer",
+        "Row",
+        "Head",
+        "Cell",
+        "SortButton",
+        "RowLink"
+      ],
+      "props": {}
+    },
+    "753:644": {
+      "component": "table",
+      "role": "ghost",
+      "import": "@nizivo/react/table",
+      "export": "Table",
+      "parts": [
+        "Container",
+        "Root",
+        "Caption",
+        "Header",
+        "Body",
+        "Footer",
+        "Row",
+        "Head",
+        "Cell",
+        "SortButton",
+        "RowLink"
+      ],
+      "props": {}
+    },
     "755:961": {
       "component": "tabs",
       "role": "ghost",
@@ -364,6 +444,46 @@
         "tone": ["surface", "brand", "accent"],
         "padding": ["sm"]
       }
+    },
+    "7275:14040": {
+      "component": "table",
+      "role": "canonical",
+      "import": "@nizivo/react/table",
+      "export": "Table",
+      "parts": [
+        "Container",
+        "Root",
+        "Caption",
+        "Header",
+        "Body",
+        "Footer",
+        "Row",
+        "Head",
+        "Cell",
+        "SortButton",
+        "RowLink"
+      ],
+      "props": {}
+    },
+    "7275:14091": {
+      "component": "table",
+      "role": "canonical",
+      "import": "@nizivo/react/table",
+      "export": "Table",
+      "parts": [
+        "Container",
+        "Root",
+        "Caption",
+        "Header",
+        "Body",
+        "Footer",
+        "Row",
+        "Head",
+        "Cell",
+        "SortButton",
+        "RowLink"
+      ],
+      "props": {}
     },
     "7275:14781": {
       "component": "tabs",

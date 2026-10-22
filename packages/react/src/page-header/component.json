@@ -1,0 +1,14 @@
+{
+  "name": "page-header",
+  "status": "stable",
+  "tier": "server",
+  "parts": [],
+  "cssDeps": ["base"],
+  "variants": {},
+  "figma": {
+    "canonical": [],
+    "ghosts": [],
+    "variantsSeen": ["7275:15337", "7275:15757", "7275:15860"],
+    "related": []
+  }
+}

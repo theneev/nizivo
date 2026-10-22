@@ -1,0 +1,58 @@
+---
+title: Table
+description: A native table in server-rendered parts, for orders, products and customers. Rows can link to a detail page as a whole, columns sort through the URL, and number columns line up. No client JS.
+keyboard:
+  - keys: Tab
+    action: Reaches each row's link, then any control in a row, then the sort links in the header, in document order. The table and its cells take no focus.
+  - keys: Enter
+    action: On a row's link, opens the row; on a sort link, loads the page sorted by that column.
+keyboardSource: Native table elements and links; no engine, no grid role. Checked by the browser lane (test/browser/table.spec.tsx) in Chromium, Firefox and WebKit.
+---
+
+<Callout type="warn" title="Not yet published (v0.2)">
+  This part is in the repository and ships in `@nizivo/react` 0.2.0; the 0.1.0 on npm does not have
+  it. Until then its API can change.
+</Callout>
+
+## Static or interactive
+
+**Server.** Every part renders native table markup with no client JavaScript: `Table.Container` (a
+`<div>`, the border and the horizontal scroll), `Table.Root` (`<table>`), `Table.Caption`,
+`Table.Header`, `Table.Body`, `Table.Footer`, `Table.Row`, `Table.Head` (`<th>`), `Table.Cell`,
+`Table.SortButton` and `Table.RowLink`. It is a table, not a grid: arrow keys do not move between
+cells, and assistive technology reads it as a table. Row selection with checkboxes is not built
+yet. [How to choose](/docs/guides/static-or-interactive/).
+
+## Name every table
+
+Give the table a `Table.Caption`. When a card heading already says the same words, keep the caption
+and pass `visuallyHidden`, or drop it and point the table at the heading with `aria-labelledby`.
+
+## Rows that link
+
+`<Table.Row interactive>` with a `Table.RowLink` in it (usually the first cell, as Figma's Order Row
+draws the order number) makes the whole row the link's hit area and shows `bg/hover` on hover.
+Buttons and other links in the row stay above it. Pass the router's link with
+`render={<Link href="/orders/1042" />}`.
+
+## Sorting
+
+The URL holds the sort. Put a `Table.SortButton` in each sortable `Table.Head`, with `href` to the
+same page sorted by that column (`render={<Link href="…" />}` for the router's link), and pass
+`sort="ascending"` or `sort="descending"` to the column the page is sorted by: its `<th>` gets
+`aria-sort`, and the arrow follows. With neither `href` nor `render`, `Table.SortButton` is a
+`<button type="button">` for your own handler.
+
+## Numbers and dates
+
+`numeric` on a `Table.Head` and the `Table.Cell`s under it end-aligns them in tabular figures
+(Numeric/M in cells). Format dates and money with `Intl` and an explicit `timeZone`, so the server
+and the browser print the same text.
+
+## Layout
+
+Figma: a 12 px radius with a `border/subtle` stroke; the header on `bg/subtle` in Label/M; cells
+12 / 20 px, a `border/subtle` line under each row. A table wider than its container scrolls inside
+it. `selected` on a row paints `bg/brand-subtle`. Hooks: `--nz-table-bg`, `--nz-table-border`,
+`--nz-table-radius`, `--nz-table-header-bg`, `--nz-table-cell-padding-block`,
+`--nz-table-cell-padding-inline`, `--nz-table-row-bg-hover`, `--nz-table-row-bg-selected`.

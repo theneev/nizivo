@@ -225,6 +225,8 @@ export { NativeSelect } from './native-select/index';
 export type { NativeSelectProps, NativeSelectState } from './native-select/index';
 export { NumberValue, formatNumber } from './number-value/index';
 export type { NumberValueProps, NumberValueState } from './number-value/index';
+export { PageHeader } from './page-header/index';
+export type { PageHeaderProps, PageHeaderTitleLevel } from './page-header/index';
 export { Pagination } from './pagination/index';
 export type {
   PaginationLabels,
@@ -333,6 +335,35 @@ export { Switch } from './switch/index';
 export type { SwitchChangeReason, SwitchProps, SwitchState } from './switch/index';
 export { TabNav, TabNavRoot, TabNavLink } from './tab-nav/index';
 export type { TabNavLinkProps, TabNavLinkState, TabNavRootProps } from './tab-nav/index';
+export {
+  Table,
+  TableContainer,
+  TableRoot,
+  TableCaption,
+  TableHeader,
+  TableBody,
+  TableFooter,
+  TableRow,
+  TableHead,
+  TableCell,
+  TableSortButton,
+  TableRowLink,
+} from './table/index';
+export type {
+  TableCaptionProps,
+  TableCellProps,
+  TableCellState,
+  TableContainerProps,
+  TableHeadProps,
+  TableHeadState,
+  TableRootProps,
+  TableRowLinkProps,
+  TableRowProps,
+  TableRowState,
+  TableSectionProps,
+  TableSort,
+  TableSortButtonProps,
+} from './table/index';
 export { Tabs, TabsRoot, TabsList, TabsTab, TabsPanel } from './tabs/index';
 export type {
   TabsActivationMode,

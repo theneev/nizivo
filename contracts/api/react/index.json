@@ -1365,6 +1365,24 @@
       "name": "OpenReason"
     },
     {
+      "definedIn": "./page-header",
+      "import": "import { PageHeader } from '@nizivo/react'",
+      "kind": "component",
+      "name": "PageHeader"
+    },
+    {
+      "definedIn": "./page-header",
+      "import": "import type { PageHeaderProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "PageHeaderProps"
+    },
+    {
+      "definedIn": "./page-header",
+      "import": "import type { PageHeaderTitleLevel } from '@nizivo/react'",
+      "kind": "type",
+      "name": "PageHeaderTitleLevel"
+    },
+    {
       "definedIn": "./pagination",
       "import": "import { Pagination } from '@nizivo/react'",
       "kind": "component",
@@ -1993,6 +2011,156 @@
       "import": "import type { TabNavRootProps } from '@nizivo/react'",
       "kind": "type",
       "name": "TabNavRootProps"
+    },
+    {
+      "definedIn": "./table",
+      "import": "import { Table } from '@nizivo/react'",
+      "kind": "namespace",
+      "name": "Table"
+    },
+    {
+      "definedIn": "./table",
+      "import": "import { TableBody } from '@nizivo/react'",
+      "kind": "part",
+      "name": "TableBody"
+    },
+    {
+      "definedIn": "./table",
+      "import": "import { TableCaption } from '@nizivo/react'",
+      "kind": "part",
+      "name": "TableCaption"
+    },
+    {
+      "definedIn": "./table",
+      "import": "import type { TableCaptionProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "TableCaptionProps"
+    },
+    {
+      "definedIn": "./table",
+      "import": "import { TableCell } from '@nizivo/react'",
+      "kind": "part",
+      "name": "TableCell"
+    },
+    {
+      "definedIn": "./table",
+      "import": "import type { TableCellProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "TableCellProps"
+    },
+    {
+      "definedIn": "./table",
+      "import": "import type { TableCellState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "TableCellState"
+    },
+    {
+      "definedIn": "./table",
+      "import": "import { TableContainer } from '@nizivo/react'",
+      "kind": "part",
+      "name": "TableContainer"
+    },
+    {
+      "definedIn": "./table",
+      "import": "import type { TableContainerProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "TableContainerProps"
+    },
+    {
+      "definedIn": "./table",
+      "import": "import { TableFooter } from '@nizivo/react'",
+      "kind": "part",
+      "name": "TableFooter"
+    },
+    {
+      "definedIn": "./table",
+      "import": "import { TableHead } from '@nizivo/react'",
+      "kind": "part",
+      "name": "TableHead"
+    },
+    {
+      "definedIn": "./table",
+      "import": "import type { TableHeadProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "TableHeadProps"
+    },
+    {
+      "definedIn": "./table",
+      "import": "import type { TableHeadState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "TableHeadState"
+    },
+    {
+      "definedIn": "./table",
+      "import": "import { TableHeader } from '@nizivo/react'",
+      "kind": "part",
+      "name": "TableHeader"
+    },
+    {
+      "definedIn": "./table",
+      "import": "import { TableRoot } from '@nizivo/react'",
+      "kind": "part",
+      "name": "TableRoot"
+    },
+    {
+      "definedIn": "./table",
+      "import": "import type { TableRootProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "TableRootProps"
+    },
+    {
+      "definedIn": "./table",
+      "import": "import { TableRow } from '@nizivo/react'",
+      "kind": "part",
+      "name": "TableRow"
+    },
+    {
+      "definedIn": "./table",
+      "import": "import { TableRowLink } from '@nizivo/react'",
+      "kind": "part",
+      "name": "TableRowLink"
+    },
+    {
+      "definedIn": "./table",
+      "import": "import type { TableRowLinkProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "TableRowLinkProps"
+    },
+    {
+      "definedIn": "./table",
+      "import": "import type { TableRowProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "TableRowProps"
+    },
+    {
+      "definedIn": "./table",
+      "import": "import type { TableRowState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "TableRowState"
+    },
+    {
+      "definedIn": "./table",
+      "import": "import type { TableSectionProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "TableSectionProps"
+    },
+    {
+      "definedIn": "./table",
+      "import": "import type { TableSort } from '@nizivo/react'",
+      "kind": "type",
+      "name": "TableSort"
+    },
+    {
+      "definedIn": "./table",
+      "import": "import { TableSortButton } from '@nizivo/react'",
+      "kind": "part",
+      "name": "TableSortButton"
+    },
+    {
+      "definedIn": "./table",
+      "import": "import type { TableSortButtonProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "TableSortButtonProps"
     },
     {
       "definedIn": "./tabs",

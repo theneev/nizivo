@@ -163,6 +163,10 @@
       "types": "./dist/number-value/index.d.ts",
       "default": "./dist/number-value/index.js"
     },
+    "./page-header": {
+      "types": "./dist/page-header/index.d.ts",
+      "default": "./dist/page-header/index.js"
+    },
     "./pagination": {
       "types": "./dist/pagination/index.d.ts",
       "default": "./dist/pagination/index.js"
@@ -214,6 +218,10 @@
     "./tab-nav": {
       "types": "./dist/tab-nav/index.d.ts",
       "default": "./dist/tab-nav/index.js"
+    },
+    "./table": {
+      "types": "./dist/table/index.d.ts",
+      "default": "./dist/table/index.js"
     },
     "./tabs": {
       "types": "./dist/tabs/index.d.ts",
@@ -274,6 +282,7 @@
     "./css/motion.css": "./dist/css/motion.css",
     "./css/native-select.css": "./dist/css/native-select.css",
     "./css/number-value.css": "./dist/css/number-value.css",
+    "./css/page-header.css": "./dist/css/page-header.css",
     "./css/pagination.css": "./dist/css/pagination.css",
     "./css/popover.css": "./dist/css/popover.css",
     "./css/progress-bar.css": "./dist/css/progress-bar.css",
@@ -287,6 +296,7 @@
     "./css/stack.css": "./dist/css/stack.css",
     "./css/switch.css": "./dist/css/switch.css",
     "./css/tab-nav.css": "./dist/css/tab-nav.css",
+    "./css/table.css": "./dist/css/table.css",
     "./css/tabs.css": "./dist/css/tabs.css",
     "./css/text.css": "./dist/css/text.css",
     "./css/textarea.css": "./dist/css/textarea.css",

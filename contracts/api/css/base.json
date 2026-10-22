@@ -38,6 +38,8 @@
     "nz-switch-input",
     "nz-switch-thumb",
     "nz-tab-nav-link",
+    "nz-table-row-link",
+    "nz-table-sort-button",
     "nz-tabs-tab",
     "nz-textarea",
     "nz-toast",

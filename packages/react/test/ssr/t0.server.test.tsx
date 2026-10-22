@@ -68,6 +68,8 @@ const COMPONENTS = [
   'avatar',
   'breadcrumb',
   'pagination',
+  'page-header',
+  'table',
 ] as const;
 type Name = (typeof COMPONENTS)[number];
 
@@ -104,6 +106,11 @@ const CLIENT_EXPORTS: Record<string, string[]> = {
   // client controls the Field and Fieldset examples compose
   'src/input/input.client.tsx': ['Input'],
   'src/checkbox/checkbox.client.tsx': ['Checkbox'],
+  // and the one PageHeader's Overview example puts in its actions
+  'src/segmented-control/segmented-control.client.tsx': [
+    'SegmentedControlRoot',
+    'SegmentedControlItem',
+  ],
 };
 
 /** Each entry, imported again by the react-server test. */
@@ -143,6 +150,8 @@ const entries = {
   avatar: () => import('../../src/avatar/index'),
   breadcrumb: () => import('../../src/breadcrumb/index'),
   pagination: () => import('../../src/pagination/index'),
+  'page-header': () => import('../../src/page-header/index'),
+  table: () => import('../../src/table/index'),
 } satisfies Record<Name, () => Promise<unknown>>;
 
 /** Each example module, imported again by the react-server test; every `*Example` export renders. */
@@ -182,6 +191,8 @@ const exampleModules = {
   avatar: () => import('../../src/avatar/avatar.example'),
   breadcrumb: () => import('../../src/breadcrumb/breadcrumb.example'),
   pagination: () => import('../../src/pagination/pagination.example'),
+  'page-header': () => import('../../src/page-header/page-header.example'),
+  table: () => import('../../src/table/table.example'),
 } satisfies Record<Name, () => Promise<Record<string, unknown>>>;
 
 /**

@@ -1,0 +1,194 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/table.css (Figma Order Row 7275:14091 and Product Row 7275:14040, figma/05 §3.3,
+   §3.4; 08's Recent orders, figma/08 §4.1). Public --nz-table-* hooks are read once, at the property,
+   and never assigned here. Figma: the container radius 12 with a border/subtle stroke; the header on
+   bg/subtle; rows bg/surface with a border/subtle line under each, 12 / 20 padding (Order Row draws
+   14, off the scale; Product Row 12, D-bz); a row with a link shows bg/hover on hover; a selected
+   row bg/brand-subtle. Numbers are end-aligned in tabular figures. Cells keep to one line. */
+@layer nz.components {
+  .nz-table-container {
+    overflow-x: auto;
+    border: var(--nz-border-width-default) solid var(--nz-table-border, var(--nz-border-subtle));
+    border-radius: var(--nz-table-radius, var(--nz-radius-md));
+    background: var(--nz-table-bg, var(--nz-bg-surface));
+  }
+
+  .nz-table {
+    inline-size: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    color: var(--nz-text-primary);
+    font: var(--nz-font-body-m);
+    letter-spacing: var(--nz-tracking-body-m);
+  }
+
+  .nz-table-caption {
+    padding: var(--nz-space-3) var(--nz-space-5);
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-body-m);
+    text-align: start;
+  }
+
+  .nz-table-head,
+  .nz-table-cell {
+    padding-block: var(--nz-table-cell-padding-block, var(--nz-space-3));
+    padding-inline: var(--nz-table-cell-padding-inline, var(--nz-space-5));
+    border-block-end: var(--nz-border-width-default) solid
+      var(--nz-table-border, var(--nz-border-subtle));
+    text-align: start;
+    vertical-align: middle;
+    /* one line per row, as Figma draws them: a table wider than its container scrolls inside it */
+    white-space: nowrap;
+  }
+
+  /* an avatar and a name side by side (Figma Order Row's customer) stay on that line */
+  .nz-table-cell > .nz-inline {
+    flex-wrap: nowrap;
+  }
+
+  .nz-table-head {
+    background: var(--nz-table-header-bg, var(--nz-bg-subtle));
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-label-m);
+    letter-spacing: var(--nz-tracking-label-m);
+  }
+
+  /* the body's own row headers keep the row's look */
+  .nz-table-body .nz-table-head {
+    background: transparent;
+    color: var(--nz-text-primary);
+    font: var(--nz-font-label-m-strong);
+  }
+
+  .nz-table-head[data-numeric],
+  .nz-table-cell[data-numeric] {
+    font-variant-numeric: tabular-nums;
+    text-align: end;
+  }
+
+  /* Numeric/M, then the figures again: the font shorthand resets font-variant-numeric */
+  .nz-table-cell[data-numeric] {
+    font: var(--nz-font-numeric-m);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* no line under the last row: the container draws the edge */
+  :is(.nz-table-body, .nz-table-footer) > .nz-table-row:last-child > .nz-table-head,
+  :is(.nz-table-body, .nz-table-footer) > .nz-table-row:last-child > .nz-table-cell {
+    border-block-end: 0;
+  }
+
+  .nz-table-footer .nz-table-head,
+  .nz-table-footer .nz-table-cell {
+    border-block-start: var(--nz-border-width-default) solid
+      var(--nz-table-border, var(--nz-border-subtle));
+    font: var(--nz-font-label-m-strong);
+  }
+
+  .nz-table-row[data-selected] {
+    background: var(--nz-table-row-bg-selected, var(--nz-bg-brand-subtle));
+  }
+
+  /* A stretched link (§16.2): the row is the link's hit area; other controls sit above it. */
+  .nz-table-row[data-interactive] {
+    position: relative;
+  }
+
+  .nz-table-row-link {
+    color: inherit;
+    font: var(--nz-font-label-m-strong);
+    text-decoration: none;
+
+    .nz-table-row[data-interactive] &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+    }
+  }
+
+  .nz-table-row[data-interactive]
+    :is(a[href], button, input, select, textarea, [tabindex]):not(.nz-table-row-link) {
+    position: relative;
+    z-index: 1;
+  }
+
+  @media (hover: hover) {
+    .nz-table-row[data-interactive]:not([data-selected]):hover {
+      background: var(--nz-table-row-bg-hover, var(--nz-bg-hover));
+    }
+
+    .nz-table-row-link:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .nz-table-sort-button {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--nz-space-1);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    letter-spacing: inherit;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .nz-table-head[data-numeric] .nz-table-sort-button {
+    flex-direction: row-reverse;
+  }
+
+  @media (hover: hover) {
+    .nz-table-sort-button:hover {
+      color: var(--nz-text-primary);
+    }
+  }
+
+  .nz-table-sort-icon {
+    display: inline-flex;
+    color: var(--nz-icon-secondary);
+    font-size: var(--nz-size-icon-sm);
+
+    & > svg {
+      inline-size: 1em;
+      block-size: 1em;
+    }
+
+    /* unsorted: both ways; sorted: one chevron, up or down */
+    & > svg:last-child {
+      display: none;
+    }
+  }
+
+  .nz-table-head[data-sort] .nz-table-sort-icon {
+    color: var(--nz-icon-primary);
+
+    & > svg:first-child {
+      display: none;
+    }
+
+    & > svg:last-child {
+      display: block;
+    }
+  }
+
+  .nz-table-head[data-sort='ascending'] .nz-table-sort-icon > svg:last-child {
+    rotate: -90deg;
+  }
+
+  .nz-table-head[data-sort='descending'] .nz-table-sort-icon > svg:last-child {
+    rotate: 90deg;
+  }
+
+  /* fills are replaced: a selected row keeps an outline */
+  @media (forced-colors: active) {
+    .nz-table-row[data-selected] {
+      outline: 2px solid Highlight;
+      outline-offset: -2px;
+    }
+  }
+}
