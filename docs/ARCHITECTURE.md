@@ -2944,9 +2944,9 @@ The v0.1 exit requires at least one real sync merged end to end.
 
 **Week 17 status (2026-10-23).** v0.2 week 8, built overnight with week 16. The planned first item, Table's selection island, is built and tested but **not committed**: it takes `./table` from 1,618 to 2,513 B, over the 1.8 KiB limit week 16 set for it, and a limit moves only by the maintainer's decision. It waits in a git stash (W17-RESULTS.md has the two options with measured numbers). The week built what needs no limit. GitHub Actions stays off; nothing is published or tagged. Measured numbers: `packages/react/W17-RESULTS.md`.
 
-- **Built:** the Vite SSR fixture and the React Router 8 fixture, as release lanes ([D-cb](#234-builder-defaults-2026-10-14)); the docs' React Router page and Vite's server-rendering section.
+- **Built:** the Vite SSR fixture and the React Router 8 fixture, as release lanes ([D-cb](#234-builder-defaults-2026-10-14)); the docs' React Router page and Vite's server-rendering section. `Table.Container` takes a `label` (a named, focusable scroll region), the one part of the parked work that fits `./table`'s limit.
 - **Gates:** both fixtures pass: no build warning, no hydration message on any page, axe clean in four modes, the Next fixture's interactions after hydration, no `ssr.noExternal`. React Router routes ship only their own client modules; a route that imports Buttons from the barrel ships no Nizivo client module.
-- **Open:** the `./table` decision and the selection island; the second Tooltip adapter (it needs `nz gen`'s `adapter` key and a file layout, left for a session with the maintainer); the shell (Q3, Q4, Q35); the design asks; the dark sign-off.
+- **Open:** the `./table` decision and the selection island; the ESLint react-hooks lane (it needs a `semver@6.3.1` exception in the root and the `typescript6` alias reached by name, W17-RESULTS.md); the second Tooltip adapter (it needs `nz gen`'s `adapter` key and a file layout, left for a session with the maintainer); the shell (Q3, Q4, Q35); the design asks; the dark sign-off.
 
 ### 21.3 v0.3 — "Distribution and hard widgets" (≈ weeks 15–20)
 

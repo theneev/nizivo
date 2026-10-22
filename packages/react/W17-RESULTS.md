@@ -70,10 +70,18 @@ fixtures included, with no flake this run:
 3. **`react-router build` ran `npm install isbot` on its own** with the default server entry; the
    fixture now writes its own entries. Nothing was installed (the install failed and its edit to the
    fixture's `package.json` was reverted).
-4. **The second Tooltip adapter** (a v0.2 exit criterion) is next once you are around: it needs
+4. **The non-blocking ESLint react-hooks lane** (§19, D14-hooks) is not built: eslint-plugin-react-hooks
+   7 depends on `@babel/core`, which brings `semver@6.3.1`, so the monorepo root would need the same
+   `trustPolicyExclude` as the React Router fixture; and typescript-eslint's parser takes TypeScript
+   below 6.1, so it has to reach the `typescript6` alias by name. Both are your call.
+5. **The second Tooltip adapter** (a v0.2 exit criterion) is next once you are around: it needs
    `nz gen` to accept `adapter` and a decision on its file layout.
 
 ## Unverified
+
+- Keyboard scrolling of a labelled `Table.Container` in WebKit: it takes focus and shows its ring in
+  all three engines, and the arrow keys scroll it in Chromium and Firefox; Playwright's WebKit did not
+  scroll it (4 runs of 4 after one that did), and real Safari is not tested.
 
 - React Router's RSC mode, SPA mode, prerendering and its dev server; Vite SSR streaming.
 - Real Safari and Firefox for both fixtures (they run in Chromium, as fixtures/vite does).
