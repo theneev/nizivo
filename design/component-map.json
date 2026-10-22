@@ -180,6 +180,15 @@
         "tone": ["info", "success", "warning", "critical"]
       }
     },
+    "756:913": {
+      "component": "banner",
+      "role": "ghost",
+      "import": "@nizivo/react/banner",
+      "export": "Banner",
+      "props": {
+        "tone": ["brand", "warning"]
+      }
+    },
     "756:1001": {
       "component": "drawer",
       "role": "ghost",
@@ -389,6 +398,15 @@
       "export": "Alert",
       "props": {
         "tone": ["info", "success", "warning", "critical"]
+      }
+    },
+    "7275:15120": {
+      "component": "banner",
+      "role": "canonical",
+      "import": "@nizivo/react/banner",
+      "export": "Banner",
+      "props": {
+        "tone": ["brand", "warning"]
       }
     },
     "7275:15139": {

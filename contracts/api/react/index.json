@@ -117,6 +117,48 @@
       "name": "BadgeTone"
     },
     {
+      "definedIn": "./banner",
+      "import": "import { Banner } from '@nizivo/react'",
+      "kind": "component",
+      "name": "Banner"
+    },
+    {
+      "definedIn": "./banner",
+      "import": "import { BannerDismiss } from '@nizivo/react'",
+      "kind": "component",
+      "name": "BannerDismiss"
+    },
+    {
+      "definedIn": "./banner",
+      "import": "import type { BannerDismissLabels } from '@nizivo/react'",
+      "kind": "type",
+      "name": "BannerDismissLabels"
+    },
+    {
+      "definedIn": "./banner",
+      "import": "import type { BannerDismissProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "BannerDismissProps"
+    },
+    {
+      "definedIn": "./banner",
+      "import": "import type { BannerProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "BannerProps"
+    },
+    {
+      "definedIn": "./banner",
+      "import": "import type { BannerState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "BannerState"
+    },
+    {
+      "definedIn": "./banner",
+      "import": "import type { BannerTone } from '@nizivo/react'",
+      "kind": "type",
+      "name": "BannerTone"
+    },
+    {
       "definedIn": "./breadcrumb",
       "import": "import { Breadcrumb } from '@nizivo/react'",
       "kind": "namespace",

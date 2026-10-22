@@ -18,6 +18,14 @@ export type {
 } from './avatar/index';
 export { Badge } from './badge/index';
 export type { BadgeProps, BadgeState, BadgeTone } from './badge/index';
+export { Banner, BannerDismiss } from './banner/index';
+export type {
+  BannerDismissLabels,
+  BannerDismissProps,
+  BannerProps,
+  BannerState,
+  BannerTone,
+} from './banner/index';
 export { Breadcrumb, BreadcrumbRoot, BreadcrumbItem } from './breadcrumb/index';
 export type {
   BreadcrumbItemProps,

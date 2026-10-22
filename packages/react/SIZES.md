@@ -104,11 +104,12 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 | Entry              | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | ------------------ | -------: | ---------: | ---------: | ----------: | -----------: |
-| `.`                |   99,598 |       97.3 |     83,231 |         107 |        9,970 |
+| `.`                |   99,897 |       97.6 |     83,417 |         107 |        9,671 |
 | /alert             |    1,283 |        1.3 |      1,182 |         1.4 |          150 |
 | /augment           |        0 |        0.0 |          0 |           0 |            — |
 | /avatar            |    1,381 |        1.3 |      1,283 |         1.5 |          155 |
 | /badge             |      796 |        0.8 |        727 |         0.9 |          125 |
+| /banner            |    1,314 |        1.3 |      1,209 |         1.5 |          222 |
 | /breadcrumb        |    1,291 |        1.3 |      1,190 |         1.4 |          142 |
 | /button            |    1,276 |        1.2 |      1,176 |         1.4 |          157 |
 | /card              |    1,086 |        1.1 |        971 |         1.2 |          142 |
@@ -154,7 +155,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /text              |      716 |        0.7 |        653 |         0.8 |          103 |
 | /textarea          |    1,364 |        1.3 |      1,247 |         1.5 |          172 |
 | /theme-script      |      363 |        0.4 |        289 |         0.4 |           46 |
-| /toast             |   14,754 |       14.4 |     13,225 |          16 |        1,630 |
+| /toast             |   14,812 |       14.5 |     13,240 |          16 |        1,572 |
 | /tooltip           |   16,372 |       16.0 |     14,812 |          16 |           12 |
 | /trend-card        |    2,443 |        2.4 |      2,228 |         2.7 |          321 |
 
@@ -163,7 +164,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | Entry                      | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | -------------------------- | -------: | ---------: | ---------: | ----------: | -----------: |
 | dashboard set              |   78,623 |       76.8 |     66,438 |          85 |        8,417 |
-| { Button } from the barrel |    1,276 |        1.2 |      1,172 |         1.4 |          157 |
+| { Button } from the barrel |    1,278 |        1.2 |      1,174 |         1.4 |          155 |
 | { Select } from the barrel |   63,442 |       62.0 |     54,532 |          68 |        6,190 |
 
 #### `@nizivo/react`: Own code (one module minified alone, imports not counted)
@@ -184,6 +185,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | own: _engines/react-aria/tooltip.client         |      719 |        0.7 |        680 |         0.8 |          100 |
 | own: _internal/modal.client                     |      562 |        0.5 |        503 |         0.7 |          154 |
 | own: alert/alert-dismiss.client                 |      394 |        0.4 |        346 |         0.4 |           15 |
+| own: banner/banner-dismiss.client               |      395 |        0.4 |        347 |         0.5 |          117 |
 | own: checkbox/checkbox.client                   |      750 |        0.7 |        692 |         0.9 |          171 |
 | own: config/config.client                       |      197 |        0.2 |        179 |         0.3 |          110 |
 | own: dialog/dialog.client                       |      997 |        1.0 |        911 |         1.4 |          436 |
@@ -200,7 +202,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | own: switch/switch.client                       |      552 |        0.5 |        475 |         0.6 |           62 |
 | own: tabs/tabs.client                           |      486 |        0.5 |        439 |         0.6 |          128 |
 | own: textarea/textarea.client                   |      350 |        0.3 |        305 |         0.4 |           59 |
-| own: toast/toaster.client                       |    2,007 |        2.0 |      1,805 |         2.2 |          245 |
+| own: toast/toaster.client                       |    2,062 |        2.0 |      1,848 |         2.2 |          190 |
 | own: tooltip/tooltip.client                     |      519 |        0.5 |        460 |         0.6 |           95 |
 
 #### `@nizivo/react`: Seam helpers (seam ledger K6 and K7; React Aria external)
@@ -217,7 +219,8 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/alert.css             |      636 |        0.6 |        522 |         0.8 |          183 |
 | /css/avatar.css            |      745 |        0.7 |        606 |         0.9 |          176 |
 | /css/badge.css             |      512 |        0.5 |        424 |         0.6 |          102 |
-| /css/base.css              |    1,087 |        1.1 |        919 |         1.1 |           39 |
+| /css/banner.css            |      658 |        0.6 |        533 |         0.8 |          161 |
+| /css/base.css              |    1,093 |        1.1 |        920 |         1.1 |           33 |
 | /css/breadcrumb.css        |      551 |        0.5 |        431 |         0.6 |           63 |
 | /css/button.css            |    1,153 |        1.1 |        974 |         1.3 |          178 |
 | /css/card.css              |      665 |        0.6 |        560 |         0.7 |           51 |
@@ -263,7 +266,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/toast.css             |      891 |        0.9 |        740 |           1 |          133 |
 | /css/tooltip.css           |      581 |        0.6 |        503 |         0.6 |           33 |
 | /css/trend-card.css        |      403 |        0.4 |        346 |         0.5 |          109 |
-| /styles.css                |   18,375 |       17.9 |     15,455 |          19 |        1,081 |
+| /styles.css                |   18,594 |       18.2 |     15,582 |          19 |          862 |
 
 #### `@nizivo/tokens`: Public JS entries (bundled with what they import, React Aria included)
 

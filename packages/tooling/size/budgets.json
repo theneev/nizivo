@@ -2,7 +2,7 @@
   "$comment": "Size budgets (ARCHITECTURE.md §17), written by `node packages/tooling/size/measure.ts --write`. measured: bytes, gzip -9, as size-limit 14.2 reports them. limitKiB: measured + 10%, rounded up (method.ts limitKiB), never above the entry's §17.1 plan limit (method.ts PLAN_LIMITS_KIB). Limits only go up through a labelled PR (§17.3).",
   "entries": {
     "@nizivo/react": {
-      "measured": 99598,
+      "measured": 99897,
       "limitKiB": 107
     },
     "@nizivo/react/alert": {
@@ -20,6 +20,10 @@
     "@nizivo/react/badge": {
       "measured": 796,
       "limitKiB": 0.9
+    },
+    "@nizivo/react/banner": {
+      "measured": 1314,
+      "limitKiB": 1.5
     },
     "@nizivo/react/breadcrumb": {
       "measured": 1291,
@@ -202,7 +206,7 @@
       "limitKiB": 0.4
     },
     "@nizivo/react/toast": {
-      "measured": 14754,
+      "measured": 14812,
       "limitKiB": 16
     },
     "@nizivo/react/tooltip": {
@@ -218,7 +222,7 @@
       "limitKiB": 85
     },
     "@nizivo/react { Button } from the barrel": {
-      "measured": 1276,
+      "measured": 1278,
       "limitKiB": 1.4
     },
     "@nizivo/react { Select } from the barrel": {
@@ -280,6 +284,10 @@
     "@nizivo/react own: alert/alert-dismiss.client": {
       "measured": 394,
       "limitKiB": 0.4
+    },
+    "@nizivo/react own: banner/banner-dismiss.client": {
+      "measured": 395,
+      "limitKiB": 0.5
     },
     "@nizivo/react own: checkbox/checkbox.client": {
       "measured": 750,
@@ -346,7 +354,7 @@
       "limitKiB": 0.4
     },
     "@nizivo/react own: toast/toaster.client": {
-      "measured": 2007,
+      "measured": 2062,
       "limitKiB": 2.2
     },
     "@nizivo/react own: tooltip/tooltip.client": {
@@ -373,8 +381,12 @@
       "measured": 512,
       "limitKiB": 0.6
     },
+    "@nizivo/react/css/banner.css": {
+      "measured": 658,
+      "limitKiB": 0.8
+    },
     "@nizivo/react/css/base.css": {
-      "measured": 1087,
+      "measured": 1093,
       "limitKiB": 1.1
     },
     "@nizivo/react/css/breadcrumb.css": {
@@ -558,7 +570,7 @@
       "limitKiB": 0.5
     },
     "@nizivo/react/styles.css": {
-      "measured": 18375,
+      "measured": 18594,
       "limitKiB": 19
     },
     "@nizivo/tokens": {

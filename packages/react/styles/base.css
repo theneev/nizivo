@@ -7,6 +7,7 @@
   /* a 2 px solid outline is the focus indicator; components may add the halo as decoration */
   :where(
     .nz-alert-dismiss,
+    .nz-banner-dismiss,
     .nz-breadcrumb-link,
     .nz-button,
     .nz-checkbox-input,
@@ -73,6 +74,7 @@
   /* survives a blocked engine <style> under a strict CSP (gap report B §B1.3) */
   :where(
     .nz-alert-dismiss,
+    .nz-banner-dismiss,
     .nz-breadcrumb-link,
     .nz-button,
     .nz-checkbox-input,

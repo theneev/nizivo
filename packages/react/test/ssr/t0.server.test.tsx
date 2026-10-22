@@ -52,6 +52,7 @@ const COMPONENTS = [
   'empty-state',
   'inline-error',
   'alert',
+  'banner',
   'button',
   'field',
   'fieldset',
@@ -83,6 +84,7 @@ const TOOLTIP_LEAVES = [
 /** The client leaves a split component's subpath may reach (§9.5 "split"); none for the others. */
 const CLIENT_LEAVES: Partial<Record<Name, string[]>> = {
   alert: ['src/alert/alert-dismiss.client.tsx'],
+  banner: ['src/banner/banner-dismiss.client.tsx'],
   field: [FIELD_SCOPE],
   'icon-button': TOOLTIP_LEAVES,
 };
@@ -95,6 +97,7 @@ const EXTERNALS: Partial<Record<Name, RegExp>> = {
 /** Each client module's exports, replaced by client references under react-server. */
 const CLIENT_EXPORTS: Record<string, string[]> = {
   'src/alert/alert-dismiss.client.tsx': ['AlertDismiss'],
+  'src/banner/banner-dismiss.client.tsx': ['BannerDismiss'],
   [FIELD_SCOPE]: ['FieldScope', 'useFieldControl'],
   'src/icon-button/icon-button.client.tsx': ['IconButtonTooltip'],
   // client controls the Field and Fieldset examples compose
@@ -123,6 +126,7 @@ const entries = {
   'empty-state': () => import('../../src/empty-state/index'),
   'inline-error': () => import('../../src/inline-error/index'),
   alert: () => import('../../src/alert/index'),
+  banner: () => import('../../src/banner/index'),
   button: () => import('../../src/button/index'),
   field: () => import('../../src/field/index'),
   fieldset: () => import('../../src/fieldset/index'),
@@ -161,6 +165,7 @@ const exampleModules = {
   'empty-state': () => import('../../src/empty-state/empty-state.example'),
   'inline-error': () => import('../../src/inline-error/inline-error.example'),
   alert: () => import('../../src/alert/alert.example'),
+  banner: () => import('../../src/banner/banner.example'),
   button: () => import('../../src/button/button.example'),
   field: () => import('../../src/field/field.example'),
   fieldset: () => import('../../src/fieldset/fieldset.example'),

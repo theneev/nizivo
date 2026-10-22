@@ -1,0 +1,55 @@
+---
+title: Banner
+description: A page-wide message under the header, one at a time, with a title, a line of text, one action and an optional dismiss. Server-rendered; only the dismiss button hydrates.
+keyboard:
+  - keys: Tab
+    action: Reaches the action, then the dismiss button. The banner itself takes no focus.
+  - keys: Enter, Space
+    action: On the dismiss button, calls onDismiss; the banner leaves when your code stops rendering it.
+keyboardSource: Native `<button>` elements; no engine. Checked by the browser lane (`test/browser/banner.spec.tsx`) in Chromium, Firefox and WebKit.
+---
+
+<Callout type="warn" title="Not yet published (v0.2)">
+  This part is in the repository and ships in `@nizivo/react` 0.2.0; the 0.1.0 on npm does not have
+  it. Until then its API can change.
+</Callout>
+
+## Static or interactive
+
+**Server, with one client leaf.** `Banner` renders on the server and ships no JavaScript.
+`BannerDismiss`, passed in `dismiss`, is the only part that hydrates; leave it out for a banner that
+blocks work and must stay. The Banner does not hide itself: `onDismiss` updates your state, or is a
+Server Action, and the page stops rendering it. [How to choose](/docs/guides/static-or-interactive/).
+
+## Banner or Alert
+
+A **Banner** speaks to the whole page, under the header: a promotion, a plan about to renew. Show one
+at a time. An **Alert** sits next to the content it is about, inside a form or a card.
+
+## Tones
+
+`brand` (the default) is Figma's Promo, on `bg/brand-subtle`, usually with `media`: a 72 px picture
+before the text, such as a product render (`<img alt="" width={72} height={72} />`; it is
+decorative). `warning` is on `bg/warning-subtle`, usually with an `icon` at 24 px. Figma names the
+first tone "Promo"; code calls it `brand`, as Badge and Card do (a question for design, handoff Q25).
+
+## Layout
+
+Figma's row: 16 / 24 px padding, 20 px between parts, the title (Heading/H4) and its line (Body/M)
+in a column, the action and the dismiss after it, all centred. With less room the action wraps under
+the text, and the dismiss stays at the row's end. Hooks: `--nz-banner-bg`, `--nz-banner-gap`,
+`--nz-banner-padding-block`, `--nz-banner-padding-inline`, `--nz-banner-radius`,
+`--nz-banner-title-font`, `--nz-banner-description-font`, `--nz-banner-dismiss-fg`.
+
+## The dismiss button
+
+`<BannerDismiss />` is a tertiary IconButton, 40 px (the action's height) with a 20 px close glyph
+(Figma draws 18, which has no icon token), named "Dismiss" (`labels={{ dismiss: '…' }}` or
+`aria-label`). With `render`, your element. A page that imports per-component stylesheets needs
+`css/icon-button.css` too.
+
+## Screen readers
+
+A banner has no live role by default: one that is on the page when it loads must not interrupt. For
+one added after a user action, pass `role="status"`, or say it with `announce()` from
+`@nizivo/react/toast`.

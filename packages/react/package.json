@@ -47,6 +47,10 @@
       "types": "./dist/badge/index.d.ts",
       "default": "./dist/badge/index.js"
     },
+    "./banner": {
+      "types": "./dist/banner/index.d.ts",
+      "default": "./dist/banner/index.js"
+    },
     "./breadcrumb": {
       "types": "./dist/breadcrumb/index.d.ts",
       "default": "./dist/breadcrumb/index.js"
@@ -242,6 +246,7 @@
     "./css/alert.css": "./dist/css/alert.css",
     "./css/avatar.css": "./dist/css/avatar.css",
     "./css/badge.css": "./dist/css/badge.css",
+    "./css/banner.css": "./dist/css/banner.css",
     "./css/base.css": "./dist/css/base.css",
     "./css/breadcrumb.css": "./dist/css/breadcrumb.css",
     "./css/button.css": "./dist/css/button.css",

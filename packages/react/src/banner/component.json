@@ -1,0 +1,20 @@
+{
+  "name": "banner",
+  "status": "stable",
+  "tier": "server",
+  "parts": [],
+  "exports": ["Banner", "BannerDismiss"],
+  "interactive": ["banner-dismiss"],
+  "focusTarget": "self",
+  "stateIndicator": [],
+  "cssDeps": ["base", "icon-button"],
+  "variants": {
+    "tone": ["brand", "warning"]
+  },
+  "figma": {
+    "canonical": ["7275:15120"],
+    "ghosts": ["756:913"],
+    "variantsSeen": [],
+    "related": []
+  }
+}
