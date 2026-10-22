@@ -55,10 +55,11 @@ export function limitKiB(measuredBytes: number): number {
  * above its plan limit: measured + 10% applies only below it (§17: "limits only go up through a
  * labelled PR", and the plan's limits are where that happens). Every limit is KiB; M17 (2026-10-16)
  * raised Dialog from 31 to 32 and the dashboard set from 75 to 76; M43 (2026-10-22) set Popover to
- * 39 and the Sheet (`./drawer`) to 35, and the dashboard set, now with Popover, to 85.
+ * 39 and the Sheet (`./drawer`) to 35, and the dashboard set, now with Popover, to 85; M46 (2026-10-23)
+ * raised Tooltip from 16 to 18 (O-15's open-state hook).
  */
 export const PLAN_LIMITS_KIB: Readonly<Record<string, number>> = {
-  '@nizivo/react/tooltip': 16,
+  '@nizivo/react/tooltip': 18,
   '@nizivo/react/dialog': 32,
   '@nizivo/react/popover': 39,
   '@nizivo/react/drawer': 35,

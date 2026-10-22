@@ -78,6 +78,7 @@ const TOOLTIP_LEAVES = [
   'src/_engines/react-aria/tooltip.client.tsx',
   'src/_engines/react-aria/overlay.client.tsx',
   'src/_engines/react-aria/locale.client.tsx',
+  'src/_engines/react-aria/open-state.client.tsx',
   'src/config/config.client.tsx',
 ].toSorted();
 

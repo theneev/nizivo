@@ -35,6 +35,7 @@ import type {
 } from '../../menu/menu.contract';
 import { defined, engineDom } from './dom';
 import { EngineLocale } from './locale.client';
+import { useOpenState } from './open-state.client';
 import { popupStyle, resolveSide, toPlacement } from './overlay.client';
 import { ReturnFocus, useTabOut, useTriggerRef } from './popup.client';
 import { OutsidePress } from './outside-press.client';
@@ -81,14 +82,11 @@ function itemValues(children: ReactNode, out: string[] = []): string[] {
 
 export const Root: MenuEngine['Root'] = ({ open, defaultOpen, onOpenChange, children }) => {
   const [store] = useState(() => new Map<string, unknown>());
+  const [isOpen, setOpen, key] = useOpenState(open, defaultOpen, onOpenChange);
   return (
     <EngineLocale>
       <Kept value={store}>
-        <MenuTrigger
-          {...defined({ isOpen: open, defaultOpen })}
-          // React Aria reports no cause.
-          onOpenChange={(isOpen) => onOpenChange?.(isOpen, details('unknown'))}
-        >
+        <MenuTrigger key={key} isOpen={isOpen} onOpenChange={setOpen}>
           {children}
         </MenuTrigger>
       </Kept>

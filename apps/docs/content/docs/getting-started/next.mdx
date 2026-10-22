@@ -201,6 +201,23 @@ import { GeistSans } from 'geist/font/sans';
 
 The fonts load from your own build; nothing is fetched from a font service.
 
+## Routes kept by `cacheComponents`
+
+With `cacheComponents`, Next keeps recent routes under React's `<Activity>`, hidden, instead of
+unmounting them. A Menu, Select, Popover, Tooltip, Dialog or Drawer that is open when its route is
+hidden closes: the page you go to is not scroll-locked or inert, and the overlay is closed when you
+come back. An uncontrolled Dialog closes itself; a controlled one gets
+`onOpenChange(false, { reason: 'hidden' })`, and your state decides. React 19.2 leaves a portal on
+screen under a hidden `<Activity>` (19.3 hides it), so on 19.2 an overlay your state keeps open stays
+visible until its route is back: close it when the reason is `'hidden'`.
+
+Render `<Toaster />` in the root layout, outside the routes, so toasts outlive navigation. A Toaster
+inside a hidden route hides its stack until the route is shown again.
+
+The overlay lanes check this with `<Activity>` on React 19.2 and 19.3 (conformance case O-15); the
+Next fixture itself does not turn `cacheComponents` on yet.
+
 ## Not covered by the fixture yet
 
-Pages Router, `cacheComponents` with `<Activity>`, CSP nonces and `next@canary` are not checked yet.
+Pages Router, `cacheComponents` in the fixture itself, CSP nonces and `next@canary` are not checked
+yet.

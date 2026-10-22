@@ -13,7 +13,6 @@ import {
   Text,
   useLocale,
 } from 'react-aria-components';
-import { details } from '../../contracts/details';
 import { mergeProps } from '../../contracts/merge-props';
 import { stateAttrs } from '../../contracts/state';
 import type {
@@ -25,20 +24,20 @@ import type {
 import { defined, engineDom } from './dom';
 import { EngineLocale } from './locale.client';
 import { markTopLayer, OverlayScope, popupStyle, resolveSide, toPlacement } from './overlay.client';
+import { useOpenState } from './open-state.client';
 import { InitialFocus, ReturnFocus, useTriggerRef } from './popup.client';
 import { OutsidePress } from './outside-press.client';
 
-export const Root: PopoverEngine['Root'] = ({ open, defaultOpen, onOpenChange, children }) => (
-  <EngineLocale>
-    <DialogTrigger
-      {...defined({ isOpen: open, defaultOpen })}
-      // React Aria reports no cause.
-      onOpenChange={(isOpen) => onOpenChange?.(isOpen, details('unknown'))}
-    >
-      {children}
-    </DialogTrigger>
-  </EngineLocale>
-);
+export const Root: PopoverEngine['Root'] = ({ open, defaultOpen, onOpenChange, children }) => {
+  const [isOpen, setOpen, key] = useOpenState(open, defaultOpen, onOpenChange);
+  return (
+    <EngineLocale>
+      <DialogTrigger key={key} isOpen={isOpen} onOpenChange={setOpen}>
+        {children}
+      </DialogTrigger>
+    </EngineLocale>
+  );
+};
 
 export const Trigger: PopoverEngine['Trigger'] = ({ render, children, ...dom }) => {
   const open = use(OverlayTriggerStateContext)?.isOpen ?? false;

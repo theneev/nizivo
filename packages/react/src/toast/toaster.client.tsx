@@ -254,7 +254,10 @@ function Stack({
   const latest = toasts.at(-1)?.id;
   useLayoutEffect(() => {
     const element = region.current;
-    if (element === null || !popoverApi(element)) return;
+    if (element === null) return;
+    // As the `hidden` prop renders it; the cleanup below sets it on a hidden route.
+    element.hidden = latest === undefined;
+    if (!popoverApi(element)) return;
     const open = element.matches(':popover-open');
     if (latest === undefined) {
       if (open) element.hidePopover();
@@ -263,6 +266,17 @@ function Stack({
     if (open && !element.contains(document.activeElement)) element.hidePopover();
     if (!element.matches(':popover-open')) element.showPopover();
   }, [latest]);
+  // A hidden <Activity> (a route kept by the router) hides the stack and takes it out of the top
+  // layer: React 19.2 does not hide a portal there (O-15). The effect above shows it again when the
+  // route is back.
+  useLayoutEffect(() => {
+    const element = region.current;
+    return () => {
+      if (element === null) return;
+      element.hidden = true;
+      if (popoverApi(element) && element.matches(':popover-open')) element.hidePopover();
+    };
+  }, []);
 
   // The stack's height above the viewport's bottom edge, for scroll-padding in nz.base: a control
   // brought into view by focus is not left under the stack (WCAG 2.4.11, O-13).

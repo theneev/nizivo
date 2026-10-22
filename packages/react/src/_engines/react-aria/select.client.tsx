@@ -26,6 +26,7 @@ import type {
 } from '../../select/select.contract';
 import { defined, engineDom } from './dom';
 import { EngineLocale } from './locale.client';
+import { PopupKey, useOpenState } from './open-state.client';
 import { popupStyle, resolveSide, toPlacement } from './overlay.client';
 import { ReturnFocus, useTabOut, useTriggerRef } from './popup.client';
 import { OutsidePress } from './outside-press.client';
@@ -76,14 +77,13 @@ export const Root: SelectEngine['Root'] = ({
   ...dom
 }) => {
   const root = useRef<HTMLElement | null>(null);
+  const [isOpen, setOpen, popupKey] = useOpenState(open, defaultOpen, onOpenChange);
   return (
     <EngineLocale>
       <Select
         {...defined({
           value,
           defaultValue,
-          isOpen: open,
-          defaultOpen,
           name,
           isRequired: required,
           isDisabled: disabled,
@@ -92,9 +92,10 @@ export const Root: SelectEngine['Root'] = ({
           'aria-label': label,
           'aria-labelledby': labelledBy,
         })}
-        // React Aria reports no cause for either change.
+        isOpen={isOpen}
+        onOpenChange={setOpen}
+        // React Aria reports no cause.
         onChange={(key) => onValueChange?.(key == null ? null : String(key), details('unknown'))}
-        onOpenChange={(isOpen) => onOpenChange?.(isOpen, details('unknown'))}
         // A hidden native <select> carries name and required into forms.
         validationBehavior="native"
         render={(p, rp) => {
@@ -103,7 +104,8 @@ export const Root: SelectEngine['Root'] = ({
           return render(mergeProps(engineDom(p), dom, attrs, { ref: root }), s);
         }}
       >
-        {children}
+        {/* The value lives in the engine's root, so only the popup remounts (open-state.client). */}
+        <PopupKey value={popupKey}>{children}</PopupKey>
         <FormReset root={root} />
       </Select>
     </EngineLocale>
@@ -164,8 +166,10 @@ export const Popup: SelectEngine['Popup'] = ({
   const popup = useRef<HTMLElement | null>(null);
   const tabOut = useTabOut(popup);
   const trigger = useTriggerRef();
+  const key = use(PopupKey);
   return (
     <Popover
+      key={key}
       placement={toPlacement(side, align)}
       offset={sideOffset}
       {...defined({ UNSTABLE_portalContainer: container ?? undefined })}

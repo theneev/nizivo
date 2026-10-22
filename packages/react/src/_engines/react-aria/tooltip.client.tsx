@@ -9,12 +9,12 @@ import {
 } from 'react-aria-components';
 import { useFocusable } from 'react-aria/useFocusable';
 import { useObjectRef } from 'react-aria/useObjectRef';
-import { details } from '../../contracts/details';
 import { mergeProps } from '../../contracts/merge-props';
 import { stateAttrs } from '../../contracts/state';
 import type { TooltipEngine, TooltipPopupState } from '../../tooltip/tooltip.contract';
 import { defined, engineDom } from './dom';
 import { EngineLocale } from './locale.client';
+import { useOpenState } from './open-state.client';
 import { popupStyle, resolveSide, toPlacement } from './overlay.client';
 
 export const Root: TooltipEngine['Root'] = ({
@@ -24,18 +24,22 @@ export const Root: TooltipEngine['Root'] = ({
   delay,
   disabled,
   children,
-}) => (
-  <EngineLocale>
-    <TooltipTrigger
-      delay={delay}
-      {...defined({ isOpen: open, defaultOpen, isDisabled: disabled })}
-      // React Aria reports no cause.
-      onOpenChange={(isOpen) => onOpenChange?.(isOpen, details('unknown'))}
-    >
-      {children}
-    </TooltipTrigger>
-  </EngineLocale>
-);
+}) => {
+  const [isOpen, setOpen, key] = useOpenState(open, defaultOpen, onOpenChange);
+  return (
+    <EngineLocale>
+      <TooltipTrigger
+        key={key}
+        delay={delay}
+        isOpen={isOpen}
+        onOpenChange={setOpen}
+        {...defined({ isDisabled: disabled })}
+      >
+        {children}
+      </TooltipTrigger>
+    </EngineLocale>
+  );
+};
 
 /**
  * The trigger is the consumer's own element (often a server `<Button>`), so it takes the engine's

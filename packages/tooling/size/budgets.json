@@ -2,7 +2,7 @@
   "$comment": "Size budgets (ARCHITECTURE.md §17), written by `node packages/tooling/size/measure.ts --write`. measured: bytes, gzip -9, as size-limit 14.2 reports them. limitKiB: measured + 10%, rounded up (method.ts limitKiB), never above the entry's §17.1 plan limit (method.ts PLAN_LIMITS_KIB). Limits only go up through a labelled PR (§17.3).",
   "entries": {
     "@nizivo/react": {
-      "measured": 99897,
+      "measured": 100198,
       "limitKiB": 107
     },
     "@nizivo/react/alert": {
@@ -58,11 +58,11 @@
       "limitKiB": 1.1
     },
     "@nizivo/react/dialog": {
-      "measured": 32460,
+      "measured": 32622,
       "limitKiB": 32
     },
     "@nizivo/react/drawer": {
-      "measured": 32538,
+      "measured": 32703,
       "limitKiB": 35
     },
     "@nizivo/react/empty-state": {
@@ -86,7 +86,7 @@
       "limitKiB": 0.9
     },
     "@nizivo/react/icon-button": {
-      "measured": 17369,
+      "measured": 17528,
       "limitKiB": 19
     },
     "@nizivo/react/image": {
@@ -114,7 +114,7 @@
       "limitKiB": 2.5
     },
     "@nizivo/react/menu": {
-      "measured": 56999,
+      "measured": 57165,
       "limitKiB": 57
     },
     "@nizivo/react/meter": {
@@ -142,7 +142,7 @@
       "limitKiB": 2
     },
     "@nizivo/react/popover": {
-      "measured": 35865,
+      "measured": 36008,
       "limitKiB": 39
     },
     "@nizivo/react/progress-bar": {
@@ -166,7 +166,7 @@
       "limitKiB": 2.6
     },
     "@nizivo/react/select": {
-      "measured": 63537,
+      "measured": 63728,
       "limitKiB": 66
     },
     "@nizivo/react/separator": {
@@ -206,19 +206,19 @@
       "limitKiB": 0.4
     },
     "@nizivo/react/toast": {
-      "measured": 14812,
+      "measured": 14846,
       "limitKiB": 16
     },
     "@nizivo/react/tooltip": {
-      "measured": 16372,
-      "limitKiB": 16
+      "measured": 16529,
+      "limitKiB": 18
     },
     "@nizivo/react/trend-card": {
       "measured": 2443,
       "limitKiB": 2.7
     },
     "@nizivo/react dashboard set": {
-      "measured": 78623,
+      "measured": 78886,
       "limitKiB": 85
     },
     "@nizivo/react { Button } from the barrel": {
@@ -226,11 +226,11 @@
       "limitKiB": 1.4
     },
     "@nizivo/react { Select } from the barrel": {
-      "measured": 63442,
+      "measured": 63665,
       "limitKiB": 68
     },
     "@nizivo/react own: _engines/react-aria/dialog.client": {
-      "measured": 1084,
+      "measured": 1082,
       "limitKiB": 1.3
     },
     "@nizivo/react own: _engines/react-aria/drawer.client": {
@@ -242,8 +242,12 @@
       "limitKiB": 0.2
     },
     "@nizivo/react own: _engines/react-aria/menu.client": {
-      "measured": 1801,
+      "measured": 1824,
       "limitKiB": 2
+    },
+    "@nizivo/react own: _engines/react-aria/open-state.client": {
+      "measured": 341,
+      "limitKiB": 0.4
     },
     "@nizivo/react own: _engines/react-aria/outside-press.client": {
       "measured": 503,
@@ -262,7 +266,7 @@
       "limitKiB": 1.3
     },
     "@nizivo/react own: _engines/react-aria/select.client": {
-      "measured": 1458,
+      "measured": 1505,
       "limitKiB": 1.6
     },
     "@nizivo/react own: _engines/react-aria/tabs.client": {
@@ -274,7 +278,7 @@
       "limitKiB": 0.4
     },
     "@nizivo/react own: _engines/react-aria/tooltip.client": {
-      "measured": 719,
+      "measured": 723,
       "limitKiB": 0.8
     },
     "@nizivo/react own: _internal/modal.client": {
@@ -354,7 +358,7 @@
       "limitKiB": 0.4
     },
     "@nizivo/react own: toast/toaster.client": {
-      "measured": 2062,
+      "measured": 2092,
       "limitKiB": 2.2
     },
     "@nizivo/react own: tooltip/tooltip.client": {
