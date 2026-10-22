@@ -1,0 +1,87 @@
+---
+title: React Router
+description: Set up Nizivo in a React Router 8 app in framework mode, server-rendered on Vite.
+---
+
+Everything on this page is checked by the React Router fixture (`fixtures/react-router`, React Router
+8.5.0 in framework mode on Vite 8.3.4, `react-router build` served with `@react-router/node`) on the
+packed packages, except where a note says otherwise.
+
+## Install
+
+<Callout type="warn">
+  Not on npm yet: these commands work once 0.1.0 is published to the `next` dist-tag.
+</Callout>
+
+```sh
+pnpm add @nizivo/react@next @nizivo/tokens@next
+```
+
+React Router 8 needs React 19.2.7 or later, which `@nizivo/react`'s `^19.2.0` range allows.
+
+## Link the CSS from the root route
+
+Nizivo's JavaScript never imports CSS, so the server build needs no `ssr.noExternal`. Link the
+tokens, the accessibility floor (`base.css`) and one stylesheet per component you use from the root
+route's `links` export, with `?url` imports:
+
+```tsx title="app/root.tsx"
+import tokens from '@nizivo/tokens/tokens.css?url';
+import base from '@nizivo/react/css/base.css?url';
+import button from '@nizivo/react/css/button.css?url';
+import select from '@nizivo/react/css/select.css?url';
+
+export const links = () =>
+  [tokens, base, button, select].map((href) => ({ rel: 'stylesheet', href }));
+```
+
+Or link one file, `@nizivo/react/styles.css?url`. Set Vite's CSS target as on the
+[Vite page](/docs/getting-started/vite/#set-the-css-target): React Router builds with Vite, and the
+same `light-dark()` rewrite applies.
+
+## Theme
+
+Put `data-nz-theme="system"` on `<html>` in the root `Layout`, and Nizivo's `themeScript` in its
+`<head>`, so a stored choice applies before first paint. The script changes `<html>`'s attributes
+before hydration, so `<html>` takes `suppressHydrationWarning`:
+
+```tsx title="app/root.tsx"
+import { themeScript } from '@nizivo/react/theme-script';
+import { Links, Meta, Scripts, ScrollRestoration } from 'react-router';
+
+export function Layout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en" data-nz-theme="system" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <Meta />
+        <Links />
+      </head>
+      <body>
+        {children}
+        <ScrollRestoration />
+        <Scripts />
+      </body>
+    </html>
+  );
+}
+```
+
+## What the fixture checks
+
+Seven routes (Buttons, every server-safe component through the barrel, a dismissible Alert, Select
+with Dialog and Tooltip, a Field around every control, a Menu open on first render, Tabs) are
+server-rendered and hydrated:
+
+- the build prints no warning: React Router 8 does not use React Server Components by default, and
+  the `'use client'` directives in `@nizivo/react` are plain strings to it;
+- every route hydrates with no console message, and the interactions work after hydration;
+- axe finds nothing in light, dark, forced colours or with reduced motion;
+- routes are code-split, and each ships only the client modules of what it renders: a route that
+  imports Buttons from the `@nizivo/react` barrel ships no Nizivo client module.
+
+## Not covered by the fixture yet
+
+React Router's RSC mode (unstable in 8.x), SPA mode (`ssr: false`), prerendering and the dev server.
+The fixture uses its own `entry.server` and `entry.client`; with the defaults, `react-router build`
+installs `isbot` for the server entry.

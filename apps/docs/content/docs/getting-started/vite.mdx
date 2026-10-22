@@ -132,10 +132,18 @@ imported icons ship three icon modules and the shared base.
 Vite 8.3.4 prints no warning for the `'use client'` directives in `@nizivo/react`; a single-page app
 treats them as plain strings.
 
-Vite with SSR needs no `ssr.noExternal` entry: Nizivo's JavaScript never imports CSS, so Node can load
-every module as is (a v0.2 fixture will check it).
+## Server rendering
 
-## Not covered by the fixture yet
+Vite's own SSR (`vite build --ssr`) needs no `ssr.noExternal` entry: Nizivo's JavaScript never imports
+CSS, so the server build keeps `@nizivo/*` external and Node loads every module as published. Link
+the stylesheets from the client build, as above, and hydrate with `hydrateRoot`. The Vite SSR fixture
+(`fixtures/vite-ssr`: `renderToString` behind a plain `node:http` server) checks this: both builds
+print no warning, every page hydrates with no console message, and Select, Dialog, Tooltip, Menu,
+Tabs and the form controls work after hydration. For React Router, see
+[React Router](/docs/getting-started/react-router/).
 
-Vite SSR is not checked yet. The fixture runs in Chromium; it checks the dev server's theme frames
-(above), and runs axe in light, dark, forced colours and with reduced motion.
+## Not covered by the fixtures yet
+
+The fixtures run in Chromium; they check the dev server's theme frames (above), and run axe in light,
+dark, forced colours and with reduced motion. Streaming SSR (`renderToPipeableStream` with Suspense)
+is checked in the React Router and Next.js fixtures, not in the Vite SSR one.
