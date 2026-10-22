@@ -91,6 +91,19 @@ export function useTriggerRef(): RefObject<HTMLElement | null> | undefined {
   return isElementRef(ref) ? ref : undefined;
 }
 
+/**
+ * Popups the family closed itself on an outside press (outside-press.client.tsx). The press lands on
+ * the popup's underlay, so no control took focus, but a modal parent's FocusScope moves focus to its
+ * first control as the popup's content leaves (React Aria's containment fallback), before any
+ * restore: the chain runs for these even though focus is no longer on <body> (O-12).
+ */
+const CLOSED_OUTSIDE = new WeakSet<RefObject<HTMLElement | null>>();
+
+/** Marks `popup` as closed by the family's outside press, for ReturnFocus. */
+export function returnAfterClose(popup: RefObject<HTMLElement | null>): void {
+  CLOSED_OUTSIDE.add(popup);
+}
+
 /** The family's open popups and their triggers: the parent-overlay step below. */
 const OPEN = new Map<RefObject<HTMLElement | null>, RefObject<HTMLElement | null> | undefined>();
 
@@ -172,23 +185,27 @@ export function ReturnFocus({
       let handled = false;
       const onRestore = (event: Event): void => {
         const own = latest.current;
-        const to = named(own);
-        if (event.defaultPrevented || mounted(popup) || (own !== false && !usable(to))) return;
+        // The chain's first two steps: `returnFocus`, then the trigger. React Aria's choice is the
+        // element that had focus as the popup opened, which a Menu or Select opened on press start
+        // records before the press focuses its trigger: another control of the same Dialog (O-12).
+        const to = own === false ? undefined : [named(own), element].find(usable);
+        if (event.defaultPrevented || mounted(popup) || (own !== false && to === undefined)) return;
         event.preventDefault();
         handled = true;
-        if (usable(to)) to.focus();
+        to?.focus();
       };
       doc.addEventListener(ENGINE_RESTORE, onRestore, true);
       // After the engine's own restore, which it schedules earlier for the same frame.
       requestAnimationFrame(() => {
         doc.removeEventListener(ENGINE_RESTORE, onRestore, true);
         const own = latest.current;
+        const outside = CLOSED_OUTSIDE.delete(popup);
         if (
           handled ||
           !shown.current ||
           own === false ||
           mounted(popup) ||
-          (doc.activeElement ?? doc.body) !== doc.body
+          ((doc.activeElement ?? doc.body) !== doc.body && !outside)
         ) {
           return;
         }

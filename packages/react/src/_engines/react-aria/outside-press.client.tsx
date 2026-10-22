@@ -4,6 +4,7 @@
 // modal popup of the family renders it (Dialog, Drawer, Menu, Select, Popover).
 import { use, useEffect, useLayoutEffect, useRef, type RefObject } from 'react';
 import { OverlayTriggerStateContext } from 'react-aria-components';
+import { returnAfterClose } from './popup.client';
 
 /**
  * The family's open popups, in open order. Its own list, not popup.client's registry: a Select's
@@ -67,7 +68,10 @@ export function OutsidePress({
       started = ours(event);
     };
     const up = (event: PointerEvent): void => {
-      if (started && ours(event)) state.current?.close();
+      if (started && ours(event)) {
+        returnAfterClose(popup);
+        state.current?.close();
+      }
       started = false;
     };
     document.addEventListener('pointerdown', down, true);
