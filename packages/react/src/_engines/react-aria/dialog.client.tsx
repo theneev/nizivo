@@ -25,6 +25,7 @@ import { defined, engineDom } from './dom';
 import { EngineLocale } from './locale.client';
 import { OverlayScope, TOP_LAYER } from './overlay.client';
 import { ReturnFocus, useTriggerRef } from './popup.client';
+import { OutsidePress } from './outside-press.client';
 
 /** A box-less wrapper: popups portaled into it position against the positioner. */
 const NESTED_STYLE = { display: 'contents' } as const;
@@ -147,6 +148,7 @@ export const Popup: DialogEngine['Popup'] = ({
           >
             <InitialFocus content={contentRef} resolve={initialFocus} />
             <ReturnFocus trigger={trigger} popup={contentRef} target={returnFocus} />
+            <OutsidePress popup={contentRef} dismissable={role !== 'alertdialog'} />
             {children}
           </Dialog>
         </Modal>

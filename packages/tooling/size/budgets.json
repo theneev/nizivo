@@ -2,7 +2,7 @@
   "$comment": "Size budgets (ARCHITECTURE.md §17), written by `node packages/tooling/size/measure.ts --write`. measured: bytes, gzip -9, as size-limit 14.2 reports them. limitKiB: measured + 10%, rounded up (method.ts limitKiB), never above the entry's §17.1 plan limit (method.ts PLAN_LIMITS_KIB). Limits only go up through a labelled PR (§17.3).",
   "entries": {
     "@nizivo/react": {
-      "measured": 91326,
+      "measured": 91615,
       "limitKiB": 93
     },
     "@nizivo/react/alert": {
@@ -54,7 +54,7 @@
       "limitKiB": 1.1
     },
     "@nizivo/react/dialog": {
-      "measured": 32127,
+      "measured": 32352,
       "limitKiB": 32
     },
     "@nizivo/react/empty-state": {
@@ -106,7 +106,7 @@
       "limitKiB": 2.5
     },
     "@nizivo/react/menu": {
-      "measured": 56711,
+      "measured": 56977,
       "limitKiB": 57
     },
     "@nizivo/react/meter": {
@@ -154,7 +154,7 @@
       "limitKiB": 2.6
     },
     "@nizivo/react/select": {
-      "measured": 63253,
+      "measured": 63513,
       "limitKiB": 66
     },
     "@nizivo/react/separator": {
@@ -202,7 +202,7 @@
       "limitKiB": 2.7
     },
     "@nizivo/react dashboard set": {
-      "measured": 77362,
+      "measured": 77625,
       "limitKiB": 76
     },
     "@nizivo/react { Button } from the barrel": {
@@ -210,11 +210,11 @@
       "limitKiB": 1.4
     },
     "@nizivo/react { Select } from the barrel": {
-      "measured": 63170,
+      "measured": 63416,
       "limitKiB": 68
     },
     "@nizivo/react own: _engines/react-aria/dialog.client": {
-      "measured": 1138,
+      "measured": 1165,
       "limitKiB": 1.3
     },
     "@nizivo/react own: _engines/react-aria/locale.client": {
@@ -222,8 +222,12 @@
       "limitKiB": 0.2
     },
     "@nizivo/react own: _engines/react-aria/menu.client": {
-      "measured": 1777,
+      "measured": 1801,
       "limitKiB": 2
+    },
+    "@nizivo/react own: _engines/react-aria/outside-press.client": {
+      "measured": 474,
+      "limitKiB": 0.6
     },
     "@nizivo/react own: _engines/react-aria/overlay.client": {
       "measured": 511,
@@ -234,7 +238,7 @@
       "limitKiB": 1.3
     },
     "@nizivo/react own: _engines/react-aria/select.client": {
-      "measured": 1431,
+      "measured": 1458,
       "limitKiB": 1.6
     },
     "@nizivo/react own: _engines/react-aria/tabs.client": {

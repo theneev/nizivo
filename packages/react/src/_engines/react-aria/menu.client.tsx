@@ -37,6 +37,7 @@ import { defined, engineDom } from './dom';
 import { EngineLocale } from './locale.client';
 import { popupStyle, resolveSide, toPlacement } from './overlay.client';
 import { ReturnFocus, useTabOut, useTriggerRef } from './popup.client';
+import { OutsidePress } from './outside-press.client';
 
 /**
  * Uncontrolled checkbox and radio state, kept by the Root: the popup and everything in it unmount on
@@ -156,6 +157,7 @@ export const Popup: MenuEngine['Popup'] = ({
       }}
     >
       <ReturnFocus trigger={trigger} popup={popup} />
+      <OutsidePress popup={popup} />
       <Menu
         render={(p) =>
           createElement('div', mergeProps(listDom(p, list), list, { onKeyDown: tabOut }))

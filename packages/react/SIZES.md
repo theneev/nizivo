@@ -104,7 +104,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 | Entry              | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | ------------------ | -------: | ---------: | ---------: | ----------: | -----------: |
-| `.`                |   91,326 |       89.2 |     77,156 |          93 |        3,906 |
+| `.`                |   91,615 |       89.5 |     77,235 |          93 |        3,617 |
 | /alert             |    1,282 |        1.3 |      1,181 |         1.4 |          151 |
 | /augment           |        0 |        0.0 |          0 |           0 |            — |
 | /avatar            |    1,381 |        1.3 |      1,283 |         1.5 |          155 |
@@ -117,7 +117,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /container         |      694 |        0.7 |        633 |         0.8 |          125 |
 | /contracts         |    1,021 |        1.0 |        915 |         1.1 |          105 |
 | /delta             |    1,012 |        1.0 |        932 |         1.1 |          114 |
-| /dialog            |   32,127 |       31.4 |     28,561 |          32 |          641 |
+| /dialog            |   32,352 |       31.6 |     28,712 |          32 |          416 |
 | /empty-state       |      840 |        0.8 |        768 |           1 |          184 |
 | /field             |    3,604 |        3.5 |      3,279 |         3.9 |          389 |
 | /fieldset          |    1,715 |        1.7 |      1,561 |         1.9 |          230 |
@@ -130,7 +130,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /input             |    1,833 |        1.8 |      1,658 |           2 |          215 |
 | /kbd               |    1,192 |        1.2 |      1,087 |         1.3 |          139 |
 | /kpi-tile          |    2,323 |        2.3 |      2,116 |         2.5 |          237 |
-| /menu              |   56,711 |       55.4 |     48,954 |          57 |        1,657 |
+| /menu              |   56,977 |       55.6 |     49,255 |          57 |        1,391 |
 | /meter             |    1,143 |        1.1 |      1,058 |         1.3 |          188 |
 | /metric            |    2,142 |        2.1 |      1,956 |         2.4 |          315 |
 | /motion            |    1,573 |        1.5 |      1,436 |         1.7 |          167 |
@@ -142,7 +142,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /radio-group       |    2,200 |        2.1 |      2,024 |         2.4 |          257 |
 | /ranked-list       |    2,475 |        2.4 |      2,286 |         2.7 |          289 |
 | /segmented-control |    2,368 |        2.3 |      2,160 |         2.6 |          294 |
-| /select            |   63,253 |       61.8 |     54,283 |          66 |        4,331 |
+| /select            |   63,513 |       62.0 |     54,505 |          66 |        4,071 |
 | /separator         |      772 |        0.8 |        699 |         0.9 |          149 |
 | /skeleton          |      716 |        0.7 |        652 |         0.8 |          103 |
 | /stack             |      703 |        0.7 |        640 |         0.8 |          116 |
@@ -159,20 +159,21 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 | Entry                      | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | -------------------------- | -------: | ---------: | ---------: | ----------: | -----------: |
-| dashboard set              |   77,362 |       75.5 |     65,479 |          76 |          462 |
+| dashboard set              |   77,625 |       75.8 |     65,641 |          76 |          199 |
 | { Button } from the barrel |    1,278 |        1.2 |      1,167 |         1.4 |          155 |
-| { Select } from the barrel |   63,170 |       61.7 |     54,247 |          68 |        6,462 |
+| { Select } from the barrel |   63,416 |       61.9 |     54,436 |          68 |        6,216 |
 
 #### `@nizivo/react`: Own code (one module minified alone, imports not counted)
 
 | Entry                                           | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | ----------------------------------------------- | -------: | ---------: | ---------: | ----------: | -----------: |
-| own: _engines/react-aria/dialog.client          |    1,138 |        1.1 |      1,002 |         1.3 |          193 |
+| own: _engines/react-aria/dialog.client          |    1,165 |        1.1 |      1,030 |         1.3 |          166 |
 | own: _engines/react-aria/locale.client          |      162 |        0.2 |        142 |         0.2 |           42 |
-| own: _engines/react-aria/menu.client            |    1,777 |        1.7 |      1,575 |           2 |          271 |
+| own: _engines/react-aria/menu.client            |    1,801 |        1.8 |      1,593 |           2 |          247 |
+| own: _engines/react-aria/outside-press.client   |      474 |        0.5 |        399 |         0.6 |          140 |
 | own: _engines/react-aria/overlay.client         |      511 |        0.5 |        444 |         0.6 |          103 |
 | own: _engines/react-aria/popup.client           |    1,126 |        1.1 |        994 |         1.3 |          205 |
-| own: _engines/react-aria/select.client          |    1,431 |        1.4 |      1,255 |         1.6 |          207 |
+| own: _engines/react-aria/select.client          |    1,458 |        1.4 |      1,274 |         1.6 |          180 |
 | own: _engines/react-aria/tabs.client            |      769 |        0.8 |        702 |         0.9 |          152 |
 | own: _engines/react-aria/tooltip.client         |      719 |        0.7 |        680 |         0.8 |          100 |
 | own: alert/alert-dismiss.client                 |      394 |        0.4 |        346 |         0.4 |           15 |
