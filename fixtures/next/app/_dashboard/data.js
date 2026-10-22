@@ -56,3 +56,51 @@ export const SALES = [
 
 /** What a slow data source costs, so the Suspense fallbacks stream first. */
 export const DELAY_MS = 600;
+
+/** "Recent orders" (Figma Order Row 7275:14091): UTC instants, formatted with an explicit time zone. */
+export const ORDERS = [
+  [
+    '1042',
+    '2026-10-14T09:12:00Z',
+    'Maya Rao',
+    ['Paid', 'success'],
+    ['Unfulfilled', 'warning'],
+    112,
+  ],
+  [
+    '1041',
+    '2026-10-14T08:47:00Z',
+    'Jonah Okafor',
+    ['Paid', 'success'],
+    ['Fulfilled', 'success'],
+    64.5,
+  ],
+  [
+    '1040',
+    '2026-10-13T17:05:00Z',
+    'Priya Shah',
+    ['Pending', 'warning'],
+    ['On hold', 'neutral'],
+    238,
+  ],
+  [
+    '1039',
+    '2026-10-13T11:30:00Z',
+    'Leo Martin',
+    ['Refunded', 'neutral'],
+    ['Fulfilled', 'success'],
+    28,
+  ],
+];
+
+/** The overview's range picker (Figma: Today, 7D, 30D, 90D, 12M). */
+export const RANGES = [
+  ['today', 'Today'],
+  ['7d', '7D'],
+  ['30d', '30D'],
+  ['90d', '90D'],
+  ['12m', '12M'],
+];
+
+/** The "Goals" card: this month's sales against the goal (Figma: "Monthly goal 68%"). */
+export const GOAL = { sales: 48290, target: 71000 };

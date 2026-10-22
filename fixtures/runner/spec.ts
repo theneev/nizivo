@@ -30,6 +30,7 @@ export type Component =
   | 'dialog'
   | 'tooltip'
   | 'alert'
+  | 'banner'
   | 'field'
   | 'input'
   | 'textarea'
@@ -49,6 +50,8 @@ const LEAF: Record<Component, string> = {
   tooltip: 'tooltip/tooltip.client',
   // Alert is a T0 shell; only its dismiss button is a client leaf (§9.5 split).
   alert: 'alert/alert-dismiss.client',
+  // Banner too (week 16, the overview's Banner): its dismiss button is its one client leaf.
+  banner: 'banner/banner-dismiss.client',
   // Field is a server shell around FieldScope; the controls are thin client leaves that read it.
   field: 'field/field-scope.client',
   input: 'input/input.client',
@@ -247,8 +250,9 @@ export const PAGES: Record<string, PageSpec> = {
   '/icons-client': { renders: [], icons: ['bell', 'calendar', 'search'] },
   // v0.2 exit (week 12, M41): the overview dashboard. /dashboard-kpi is the server KPI row and Top
   // channels alone: no @nizivo client module at all. /dashboard streams both behind Suspense beside
-  // a TrendCard whose AreaChart is the page's one interactive chart, so the island is its only
-  // Nizivo client module.
+  // a TrendCard whose AreaChart is the page's one interactive chart (the island). Week 16 adds the
+  // rest of 08: PageHeader, the Banner, Goals and Recent orders (Table); its Nizivo client modules
+  // are the island, the range SegmentedControl and BannerDismiss.
   // CountUp alone ships its own module and nothing else; the server navigation parts ship none
   // (week 12 review R2-6).
   '/count-up': { renders: ['count-up'], slots: ['count-up', 'count-up-value'] },
@@ -272,8 +276,22 @@ export const PAGES: Record<string, PageSpec> = {
     dashboard: { tiles: 4, streamed: false },
   },
   '/dashboard': {
-    renders: [],
-    slots: ['kpi-tile', 'trend-card', 'ranked-list', 'sparkline', 'chart-frame', 'native-select'],
+    renders: ['segmented-control', 'banner'],
+    slots: [
+      'page-header',
+      'segmented-control',
+      'banner',
+      'banner-dismiss',
+      'kpi-tile',
+      'trend-card',
+      'ranked-list',
+      'sparkline',
+      'chart-frame',
+      'native-select',
+      'progress-bar',
+      'table',
+      'table-row-link',
+    ],
     charts: { modules: ['_island/chart-interaction.client'], plot: 'nizivo' },
     dashboard: { tiles: 4, streamed: true },
   },

@@ -2,7 +2,7 @@
   "variant": "webpack-opi",
   "command": "next build --webpack && next start",
   "versions": {
-    "next": "16.4.0",
+    "next": "16.4.2",
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "react-aria-components": "1.22.1",
@@ -17,8 +17,8 @@
       "osDark": {
         "frames": 90,
         "wrong": [],
-        "firstPaint": 20,
-        "firstContentfulPaint": 20,
+        "firstPaint": 24,
+        "firstContentfulPaint": 24,
         "firstTheme": "system",
         "lastTheme": "system",
         "pixel": "rgb(16, 19, 17)",
@@ -26,17 +26,6 @@
         "ok": true
       },
       "stored": {
-        "frames": 90,
-        "wrong": [],
-        "firstPaint": 20,
-        "firstContentfulPaint": 20,
-        "firstTheme": "dark",
-        "lastTheme": "dark",
-        "pixel": "rgb(16, 19, 17)",
-        "pixelDark": true,
-        "ok": true
-      },
-      "static": {
         "frames": 90,
         "wrong": [],
         "firstPaint": 24,
@@ -47,11 +36,22 @@
         "pixelDark": true,
         "ok": true
       },
+      "static": {
+        "frames": 90,
+        "wrong": [],
+        "firstPaint": 28,
+        "firstContentfulPaint": 28,
+        "firstTheme": "dark",
+        "lastTheme": "dark",
+        "pixel": "rgb(16, 19, 17)",
+        "pixelDark": true,
+        "ok": true
+      },
       "light": {
         "frames": 90,
         "wrong": [],
-        "firstPaint": 20,
-        "firstContentfulPaint": 20,
+        "firstPaint": 24,
+        "firstContentfulPaint": 24,
         "firstTheme": "system",
         "lastTheme": "system",
         "pixel": "rgb(246, 247, 244)",
@@ -61,14 +61,14 @@
       "late": {
         "frames": 90,
         "wrong": [
-          "5:light dark/rgb(246, 247, 244)",
-          "22:light dark/rgb(246, 247, 244)",
-          "39:light dark/rgb(246, 247, 244)",
-          "55:light dark/rgb(246, 247, 244)",
-          "72:light dark/rgb(246, 247, 244)"
+          "8:light dark/rgb(246, 247, 244)",
+          "25:light dark/rgb(246, 247, 244)",
+          "42:light dark/rgb(246, 247, 244)",
+          "58:light dark/rgb(246, 247, 244)",
+          "75:light dark/rgb(246, 247, 244)"
         ],
-        "firstPaint": 20,
-        "firstContentfulPaint": 20,
+        "firstPaint": 24,
+        "firstContentfulPaint": 24,
         "firstTheme": "system",
         "lastTheme": "dark",
         "pixel": "rgb(16, 19, 17)",
@@ -113,8 +113,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 5,
-        "bytes": 562507,
-        "gzip": 171899
+        "bytes": 562714,
+        "gzip": 172510
       },
       "failures": []
     },
@@ -139,8 +139,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 5,
-        "bytes": 562507,
-        "gzip": 171899
+        "bytes": 562714,
+        "gzip": 172510
       },
       "failures": []
     },
@@ -193,10 +193,13 @@
       "markers": [
         "nzfm[_engines/react-aria/dialog.client]",
         "nzfm[_engines/react-aria/locale.client]",
+        "nzfm[_engines/react-aria/open-state.client]",
+        "nzfm[_engines/react-aria/outside-press.client]",
         "nzfm[_engines/react-aria/overlay.client]",
         "nzfm[_engines/react-aria/popup.client]",
         "nzfm[_engines/react-aria/select.client]",
         "nzfm[_engines/react-aria/tooltip.client]",
+        "nzfm[_internal/modal.client]",
         "nzfm[config/config.client]",
         "nzfm[dialog/dialog.client]",
         "nzfm[field/field-scope.client]",
@@ -211,8 +214,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 13,
-        "bytes": 800582,
-        "gzip": 252316
+        "bytes": 803034,
+        "gzip": 253892
       },
       "failures": []
     },
@@ -265,10 +268,13 @@
       "markers": [
         "nzfm[_engines/react-aria/dialog.client]",
         "nzfm[_engines/react-aria/locale.client]",
+        "nzfm[_engines/react-aria/open-state.client]",
+        "nzfm[_engines/react-aria/outside-press.client]",
         "nzfm[_engines/react-aria/overlay.client]",
         "nzfm[_engines/react-aria/popup.client]",
         "nzfm[_engines/react-aria/select.client]",
         "nzfm[_engines/react-aria/tooltip.client]",
+        "nzfm[_internal/modal.client]",
         "nzfm[config/config.client]",
         "nzfm[dialog/dialog.client]",
         "nzfm[field/field-scope.client]",
@@ -283,8 +289,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 13,
-        "bytes": 800582,
-        "gzip": 252316
+        "bytes": 803034,
+        "gzip": 253892
       },
       "failures": []
     },
@@ -325,9 +331,12 @@
       "markers": [
         "nzfm[_engines/react-aria/dialog.client]",
         "nzfm[_engines/react-aria/locale.client]",
+        "nzfm[_engines/react-aria/open-state.client]",
+        "nzfm[_engines/react-aria/outside-press.client]",
         "nzfm[_engines/react-aria/overlay.client]",
         "nzfm[_engines/react-aria/popup.client]",
         "nzfm[_engines/react-aria/tooltip.client]",
+        "nzfm[_internal/modal.client]",
         "nzfm[config/config.client]",
         "nzfm[dialog/dialog.client]",
         "nzfm[tooltip/tooltip.client]"
@@ -340,8 +349,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 12,
-        "bytes": 756249,
-        "gzip": 237454
+        "bytes": 758610,
+        "gzip": 239128
       },
       "failures": []
     },
@@ -371,6 +380,8 @@
       "chunks": 11,
       "markers": [
         "nzfm[_engines/react-aria/locale.client]",
+        "nzfm[_engines/react-aria/open-state.client]",
+        "nzfm[_engines/react-aria/outside-press.client]",
         "nzfm[_engines/react-aria/overlay.client]",
         "nzfm[_engines/react-aria/popup.client]",
         "nzfm[_engines/react-aria/select.client]",
@@ -386,8 +397,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 11,
-        "bytes": 780959,
-        "gzip": 244773
+        "bytes": 783264,
+        "gzip": 246325
       },
       "failures": []
     },
@@ -431,8 +442,11 @@
       "markers": [
         "nzfm[_engines/react-aria/dialog.client]",
         "nzfm[_engines/react-aria/locale.client]",
+        "nzfm[_engines/react-aria/open-state.client]",
+        "nzfm[_engines/react-aria/outside-press.client]",
         "nzfm[_engines/react-aria/overlay.client]",
         "nzfm[_engines/react-aria/popup.client]",
+        "nzfm[_internal/modal.client]",
         "nzfm[config/config.client]",
         "nzfm[dialog/dialog.client]"
       ],
@@ -444,8 +458,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 11,
-        "bytes": 747192,
-        "gzip": 233664
+        "bytes": 749567,
+        "gzip": 235356
       },
       "failures": []
     },
@@ -486,6 +500,7 @@
       "chunks": 9,
       "markers": [
         "nzfm[_engines/react-aria/locale.client]",
+        "nzfm[_engines/react-aria/open-state.client]",
         "nzfm[_engines/react-aria/overlay.client]",
         "nzfm[_engines/react-aria/tooltip.client]",
         "nzfm[config/config.client]",
@@ -499,8 +514,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 9,
-        "bytes": 616765,
-        "gzip": 192233
+        "bytes": 617711,
+        "gzip": 193075
       },
       "failures": []
     },
@@ -530,6 +545,8 @@
       "chunks": 11,
       "markers": [
         "nzfm[_engines/react-aria/locale.client]",
+        "nzfm[_engines/react-aria/open-state.client]",
+        "nzfm[_engines/react-aria/outside-press.client]",
         "nzfm[_engines/react-aria/overlay.client]",
         "nzfm[_engines/react-aria/popup.client]",
         "nzfm[_engines/react-aria/select.client]",
@@ -545,8 +562,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 11,
-        "bytes": 780964,
-        "gzip": 244776
+        "bytes": 783271,
+        "gzip": 246331
       },
       "failures": []
     },
@@ -576,6 +593,8 @@
       "chunks": 11,
       "markers": [
         "nzfm[_engines/react-aria/locale.client]",
+        "nzfm[_engines/react-aria/open-state.client]",
+        "nzfm[_engines/react-aria/outside-press.client]",
         "nzfm[_engines/react-aria/overlay.client]",
         "nzfm[_engines/react-aria/popup.client]",
         "nzfm[_engines/react-aria/select.client]",
@@ -591,8 +610,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 11,
-        "bytes": 780964,
-        "gzip": 244776
+        "bytes": 783271,
+        "gzip": 246331
       },
       "failures": []
     },
@@ -621,8 +640,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 5,
-        "bytes": 562507,
-        "gzip": 171899
+        "bytes": 562714,
+        "gzip": 172510
       },
       "failures": []
     },
@@ -651,8 +670,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 5,
-        "bytes": 562507,
-        "gzip": 171899
+        "bytes": 562714,
+        "gzip": 172510
       },
       "failures": []
     },
@@ -683,8 +702,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 6,
-        "bytes": 565955,
-        "gzip": 173475
+        "bytes": 566157,
+        "gzip": 174086
       },
       "failures": []
     },
@@ -719,7 +738,7 @@
           "ok": true
         }
       },
-      "chunks": 6,
+      "chunks": 7,
       "markers": [
         "nzfm[checkbox/checkbox.client]",
         "nzfm[field/field-scope.client]",
@@ -736,9 +755,9 @@
       "axeForcedColors": [],
       "axeReducedMotion": [],
       "js": {
-        "files": 6,
-        "bytes": 581076,
-        "gzip": 177700
+        "files": 7,
+        "bytes": 581247,
+        "gzip": 178863
       },
       "failures": []
     },
@@ -763,8 +782,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 5,
-        "bytes": 562507,
-        "gzip": 171899
+        "bytes": 562714,
+        "gzip": 172510
       },
       "failures": []
     },
@@ -789,8 +808,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 5,
-        "bytes": 562507,
-        "gzip": 171899
+        "bytes": 562714,
+        "gzip": 172510
       },
       "failures": []
     },
@@ -815,8 +834,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 5,
-        "bytes": 562507,
-        "gzip": 171899
+        "bytes": 562714,
+        "gzip": 172510
       },
       "failures": []
     },
@@ -841,8 +860,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 5,
-        "bytes": 562507,
-        "gzip": 171899
+        "bytes": 562714,
+        "gzip": 172510
       },
       "failures": []
     },
@@ -867,8 +886,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 5,
-        "bytes": 562507,
-        "gzip": 171899
+        "bytes": 562714,
+        "gzip": 172510
       },
       "failures": []
     },
@@ -892,6 +911,7 @@
       "chunks": 9,
       "markers": [
         "nzfm[_engines/react-aria/locale.client]",
+        "nzfm[_engines/react-aria/open-state.client]",
         "nzfm[_engines/react-aria/overlay.client]",
         "nzfm[_engines/react-aria/tooltip.client]",
         "nzfm[config/config.client]",
@@ -906,8 +926,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 9,
-        "bytes": 619257,
-        "gzip": 193343
+        "bytes": 620200,
+        "gzip": 194184
       },
       "failures": []
     },
@@ -946,6 +966,8 @@
       "markers": [
         "nzfm[_engines/react-aria/locale.client]",
         "nzfm[_engines/react-aria/menu.client]",
+        "nzfm[_engines/react-aria/open-state.client]",
+        "nzfm[_engines/react-aria/outside-press.client]",
         "nzfm[_engines/react-aria/overlay.client]",
         "nzfm[_engines/react-aria/popup.client]",
         "nzfm[config/config.client]",
@@ -959,8 +981,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 10,
-        "bytes": 745921,
-        "gzip": 233098
+        "bytes": 748150,
+        "gzip": 234755
       },
       "failures": []
     },
@@ -1005,8 +1027,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 9,
-        "bytes": 683352,
-        "gzip": 210197
+        "bytes": 683581,
+        "gzip": 211284
       },
       "failures": []
     },
@@ -1040,8 +1062,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 7,
-        "bytes": 570351,
-        "gzip": 175328
+        "bytes": 570551,
+        "gzip": 175918
       },
       "failures": []
     },
@@ -1071,8 +1093,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 5,
-        "bytes": 562507,
-        "gzip": 171899
+        "bytes": 562714,
+        "gzip": 172510
       },
       "failures": []
     },
@@ -1102,8 +1124,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 6,
-        "bytes": 564362,
-        "gzip": 172800
+        "bytes": 564570,
+        "gzip": 173413
       },
       "failures": []
     },
@@ -1128,8 +1150,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 6,
-        "bytes": 566212,
-        "gzip": 173721
+        "bytes": 566416,
+        "gzip": 174330
       },
       "failures": []
     },
@@ -1154,8 +1176,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 5,
-        "bytes": 562507,
-        "gzip": 171899
+        "bytes": 562714,
+        "gzip": 172510
       },
       "failures": []
     },
@@ -1179,7 +1201,7 @@
           "readyTiles": "4",
           "cls": "0.0000",
           "layoutShifts": "0",
-          "resolvedMs": "546",
+          "resolvedMs": "545",
           "ok": true
         }
       },
@@ -1193,8 +1215,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 5,
-        "bytes": 562507,
-        "gzip": 171899
+        "bytes": 562714,
+        "gzip": 172510
       },
       "failures": []
     },
@@ -1202,7 +1224,7 @@
       "console": [],
       "interactions": {
         "parts": {
-          "partsScanned": "chart-frame chart-frame-body chart-frame-caption chart-frame-plot chart-frame-table chart-frame-x-ticks chart-frame-y-ticks delta delta-value heading kpi-tile legend legend-item metric metric-change metric-chart metric-comparison metric-label metric-value-row native-select native-select-chevron native-select-trigger number-value ranked-list ranked-list-action ranked-list-bar ranked-list-header ranked-list-item ranked-list-label ranked-list-list ranked-list-title ranked-list-track sparkline trend-card trend-card-action trend-card-chart trend-card-header trend-card-legend",
+          "partsScanned": "avatar avatar-initials badge badge-dot banner banner-action banner-content banner-description banner-dismiss banner-title button button-label card card-action card-header card-title chart-frame chart-frame-body chart-frame-caption chart-frame-plot chart-frame-table chart-frame-x-ticks chart-frame-y-ticks delta delta-value icon-button-icon inline kpi-tile legend legend-item metric metric-change metric-chart metric-comparison metric-label metric-value-row native-select native-select-chevron native-select-trigger number-value page-header page-header-actions page-header-content page-header-heading page-header-title progress-bar progress-bar-header progress-bar-label progress-bar-track progress-bar-value ranked-list ranked-list-action ranked-list-bar ranked-list-header ranked-list-item ranked-list-label ranked-list-list ranked-list-title ranked-list-track segmented-control segmented-control-input segmented-control-item segmented-control-label sparkline table table-body table-cell table-container table-head table-header table-row table-row-link trend-card trend-card-action trend-card-chart trend-card-header trend-card-legend",
           "partsOutsideVocabulary": "",
           "danglingIdrefs": "",
           "missingSlots": "",
@@ -1218,7 +1240,7 @@
           "readyTiles": "4",
           "cls": "0.0000",
           "layoutShifts": "0",
-          "resolvedMs": "1355",
+          "resolvedMs": "1359",
           "ok": true
         },
         "chart": {
@@ -1236,17 +1258,21 @@
           "ok": true
         }
       },
-      "chunks": 6,
-      "markers": [],
+      "chunks": 7,
+      "markers": [
+        "nzfm[banner/banner-dismiss.client]",
+        "nzfm[field/field-scope.client]",
+        "nzfm[segmented-control/segmented-control.client]"
+      ],
       "missing": [],
       "unexpected": [],
       "charts": {
         "modules": ["_island/chart-interaction.client"],
         "chunks": [
           {
-            "url": "/_next/static/chunks/app/dashboard/page-0cf6d110210a0269.js",
-            "bytes": 3748,
-            "gzip": 1677
+            "url": "/_next/static/chunks/app/dashboard/page-6bfb4de02addf72e.js",
+            "bytes": 4601,
+            "gzip": 2005
           }
         ]
       },
@@ -1255,9 +1281,9 @@
       "axeForcedColors": [],
       "axeReducedMotion": [],
       "js": {
-        "files": 6,
-        "bytes": 566438,
-        "gzip": 173681
+        "files": 7,
+        "bytes": 579182,
+        "gzip": 178867
       },
       "failures": []
     },
@@ -1294,9 +1320,9 @@
         "modules": ["_island/chart-interaction.client"],
         "chunks": [
           {
-            "url": "/_next/static/chunks/app/chart-area/page-0cf6d110210a0269.js",
-            "bytes": 3748,
-            "gzip": 1677
+            "url": "/_next/static/chunks/app/chart-area/page-4489c278d49daf77.js",
+            "bytes": 3743,
+            "gzip": 1673
           }
         ]
       },
@@ -1306,8 +1332,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 6,
-        "bytes": 566438,
-        "gzip": 173681
+        "bytes": 566639,
+        "gzip": 174287
       },
       "failures": []
     },
@@ -1344,8 +1370,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 5,
-        "bytes": 562507,
-        "gzip": 171899
+        "bytes": 562714,
+        "gzip": 172510
       },
       "failures": []
     },
@@ -1382,8 +1408,8 @@
       "axeReducedMotion": [],
       "js": {
         "files": 6,
-        "bytes": 563422,
-        "gzip": 172483
+        "bytes": 563628,
+        "gzip": 173093
       },
       "failures": []
     }

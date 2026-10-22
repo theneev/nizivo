@@ -43,6 +43,21 @@ main > ul > li {
   }
 }
 
+.dashboard-side {
+  display: grid;
+  gap: var(--nz-space-6);
+  align-content: start;
+}
+
 .dashboard-aside {
   max-inline-size: 22.5rem;
+}
+
+/* 08's "View all": a plain text link (Label/M, text/brand), with room for WCAG 2.5.8 */
+.dashboard-link {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 1.5rem;
+  color: var(--nz-text-brand);
+  font: var(--nz-font-label-m);
 }
