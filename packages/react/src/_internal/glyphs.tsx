@@ -4,8 +4,9 @@
 // slots (Button icon, Select chevron) that size the glyph through font-size. `chevron` (Lucide's
 // `chevron-right`, the Breadcrumb separator and Pagination's marks), `circle-x` (the error mark of
 // Field, Fieldset and InlineError), `close` (Lucide's `x`, AlertDismiss's default), and `check` and
-// `minus` (Checkbox's checked mark and indeterminate dash) are on Lucide's list of Feather-derived
-// icons, so they also carry the Feather MIT notice in THIRD_PARTY_NOTICES.
+// `minus` (Checkbox's checked mark and indeterminate dash), and `info` (the neutral Toast's mark) are
+// on Lucide's list of Feather-derived icons, so they also carry the Feather MIT notice in
+// THIRD_PARTY_NOTICES; `circle-check` (the success Toast's) is Lucide's own.
 //
 // One export per glyph, so an entry carries only the paths it draws (a name → paths table kept every
 // glyph in every entry that drew one: about 160 B gzip on the Dialog entry).
@@ -16,6 +17,8 @@ export type GlyphName =
   | 'chevron'
   | 'chevrons-up-down'
   | 'circle-x'
+  | 'circle-check'
+  | 'info'
   | 'close'
   | 'check'
   | 'minus';
@@ -62,6 +65,25 @@ export const CircleXGlyph = (): JSX.Element =>
       <circle cx="12" cy="12" r="10" />
       <path d="m15 9-6 6" />
       <path d="m9 9 6 6" />
+    </>,
+  );
+
+export const CircleCheckGlyph = (): JSX.Element =>
+  svg(
+    'circle-check',
+    <>
+      <circle cx="12" cy="12" r="10" />
+      <path d="m9 12 2 2 4-4" />
+    </>,
+  );
+
+export const InfoGlyph = (): JSX.Element =>
+  svg(
+    'info',
+    <>
+      <circle cx="12" cy="12" r="10" />
+      <path d="M12 16v-4" />
+      <path d="M12 8h.01" />
     </>,
   );
 

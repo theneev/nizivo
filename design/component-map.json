@@ -373,6 +373,15 @@
         "size": ["sm", "md", "lg"]
       }
     },
+    "7275:15071": {
+      "component": "toast",
+      "role": "canonical",
+      "import": "@nizivo/react/toast",
+      "export": "Toaster",
+      "props": {
+        "tone": ["neutral", "success", "critical"]
+      }
+    },
     "7275:15091": {
       "component": "alert",
       "role": "canonical",

@@ -1,0 +1,20 @@
+{
+  "name": "toast",
+  "status": "stable",
+  "tier": "own",
+  "engine": "react-aria",
+  "exports": ["Toaster", "toast", "announce"],
+  "interactive": ["toast-region", "toast", "toast-action", "toast-close"],
+  "focusTarget": "self",
+  "stateIndicator": [],
+  "cssDeps": ["base", "button", "icon-button"],
+  "variants": {
+    "tone": ["neutral", "success", "critical"]
+  },
+  "figma": {
+    "canonical": ["7275:15071"],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": []
+  }
+}

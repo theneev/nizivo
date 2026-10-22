@@ -227,6 +227,10 @@
       "types": "./dist/theme-script/index.d.ts",
       "default": "./dist/theme-script/index.js"
     },
+    "./toast": {
+      "types": "./dist/toast/index.d.ts",
+      "default": "./dist/toast/index.js"
+    },
     "./tooltip": {
       "types": "./dist/tooltip/index.d.ts",
       "default": "./dist/tooltip/index.js"
@@ -281,6 +285,7 @@
     "./css/tabs.css": "./dist/css/tabs.css",
     "./css/text.css": "./dist/css/text.css",
     "./css/textarea.css": "./dist/css/textarea.css",
+    "./css/toast.css": "./dist/css/toast.css",
     "./css/tooltip.css": "./dist/css/tooltip.css",
     "./css/trend-card.css": "./dist/css/trend-card.css",
     "./styles.css": "./dist/styles.css",

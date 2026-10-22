@@ -146,7 +146,9 @@ async function main(): Promise<void> {
     for (const name of names) {
       files.set(
         join(docsRoot, 'app', 'docs', '(generated)', 'components', name, 'page.tsx'),
-        route(name, manifest[name] !== undefined),
+        // a page whose examples are all source only imports none of them: Toast's use hooks, which
+        // a Server Component route cannot import
+        route(name, manifest[name]?.examples.some((example) => example.live) === true),
       );
     }
     const charts = generateChartsExamples();

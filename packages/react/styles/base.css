@@ -29,6 +29,10 @@
     .nz-tab-nav-link,
     .nz-tabs-tab,
     .nz-textarea,
+    .nz-toast,
+    .nz-toast-action,
+    .nz-toast-close,
+    .nz-toast-region,
     .nz-tooltip-trigger
   ):is(:focus-visible, [data-focus-visible]) {
     outline: var(--nz-border-width-focus) solid var(--nz-border-focus);
@@ -96,6 +100,10 @@
     .nz-tab-nav-link,
     .nz-tabs-tab,
     .nz-textarea,
+    .nz-toast,
+    .nz-toast-action,
+    .nz-toast-close,
+    .nz-toast-region,
     .nz-tooltip-trigger
   ) {
     touch-action: pan-x pan-y pinch-zoom;

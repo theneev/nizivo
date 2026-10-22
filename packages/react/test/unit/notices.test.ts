@@ -25,13 +25,15 @@ const LUCIDE: Record<string, string> = {
   chevron: 'chevron-right',
   'chevrons-up-down': 'chevrons-up-down',
   'circle-x': 'circle-x',
+  'circle-check': 'circle-check',
+  info: 'info',
   close: 'x',
   check: 'check',
   minus: 'minus',
 };
 
 /** On Lucide's list of Feather-derived icons (lucide-static 1.56.0 LICENSE; `x-circle` is `circle-x`). */
-const FEATHER = new Set(['chevron-right', 'circle-x', 'x', 'check', 'minus']);
+const FEATHER = new Set(['chevron-right', 'circle-x', 'info', 'x', 'check', 'minus']);
 
 // _internal/glyphs.tsx reuses Lucide path data; ISC requires its notice in every copy (§14.2, §19.3).
 test('the tarball carries the Lucide ISC notice for the internal glyphs', () => {

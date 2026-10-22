@@ -1,0 +1,111 @@
+---
+title: Toast
+description: A short message after an action, bottom-centre, with one optional action. `toast()` shows it from anywhere in your client code; one `<Toaster />` in the root layout renders the stack and speaks each message to screen readers.
+apg: https://www.w3.org/WAI/ARIA/apg/patterns/alertdialog/
+keyboard:
+  - keys: F8
+    action: From anywhere on the page, even inside a Dialog, moves focus to the stack of toasts. Pressed again in the stack, returns focus to where it was.
+  - keys: Tab, Shift+Tab
+    action: Moves through the toasts and their action and close buttons.
+  - keys: Escape
+    action: On a toast, dismisses it; focus moves to the next toast, or back to where it was before the stack when none is left. A Dialog under the stack stays open. On the stack itself, returns focus to where it was.
+  - keys: F6
+    action: The stack is a landmark region named "Notifications (F8)", so F6 (landmark navigation in React Aria apps) and a screen reader's region list reach it too.
+keyboardSource: Nizivo's own queue and announcer (`src/toast/store.ts`, `toaster.client.tsx`), with react-aria 3.53.1 `useToastRegion` and `useToast` through `_engines/react-aria/toast.client.tsx` for the landmark, pausing and where focus goes as toasts leave. F8 and Escape are Nizivo's. Checked by the overlay lane (`test/overlay/toast.spec.tsx`, O-06, O-07, O-13, O-14) in Chromium, Firefox and WebKit.
+---
+
+<Callout type="warn" title="Not yet published (v0.2)">
+  This part is in the repository and ships in `@nizivo/react` 0.2.0; the 0.1.0 on npm does not have
+  it. Until then its API can change.
+</Callout>
+
+## Static or interactive
+
+**Client.** `<Toaster />` is a client component, and `toast()` runs in client code: an event handler,
+an effect, the result of a Server Action read on the client. The server renders nothing for it; the
+stack and the announcer appear once the page hydrates. Render one `<Toaster />`, in the root layout,
+so toasts survive navigation:
+
+```tsx
+// app/layout.tsx
+import { Toaster } from '@nizivo/react/toast';
+
+<body>
+  {children}
+  <Toaster />
+</body>;
+```
+
+A page that imports per-component stylesheets needs `css/toast.css`, `css/button.css` and
+`css/icon-button.css`.
+
+## Showing one
+
+```tsx
+import { toast } from '@nizivo/react/toast';
+
+toast('Product saved', { tone: 'success' });
+toast('Order #1042 archived', { action: { label: 'Undo', onAction: restore } });
+toast('Couldn’t publish 2 products', {
+  tone: 'critical',
+  description: 'Check the prices and try again.',
+});
+```
+
+`toast()` returns the toast's id. `toast.dismiss(id)` removes one, `toast.dismiss()` all of them.
+Passing an `id` that is still shown updates that toast in place, for a "Saving…" that becomes "Saved".
+
+`tone` is `neutral` (the default), `success` or `critical`, Figma's three. The message is one line of
+plain text; `description` adds a second.
+
+## How long it stays
+
+A toast with no action that is not critical leaves after 5 seconds (`timeout` changes it). A toast
+with an **action**, and a **critical** one, stays until it is dismissed: someone who needs more time
+to read it, or to reach the action, must not lose it (WCAG 2.2.1). The time stops while the pointer
+is over the stack, while focus is in it and while the page is hidden.
+
+Three toasts show at once, newest last (`<Toaster limit={…} />`). An older one waits, its time
+stopped, and comes back when one above it leaves.
+
+## Screen readers
+
+Each toast is spoken once, when it appears, through the Toaster's announcer: polite, or assertive
+when critical. The toasts themselves are not live regions, so nothing is read twice. The announcer
+stays reachable while a Dialog is open, and so does the stack.
+
+`announce()` speaks through the same announcer, for a status a sighted user sees some other way:
+
+```tsx
+import { announce } from '@nizivo/react/toast';
+
+announce('3 results');
+announce('Connection lost', 'assertive');
+```
+
+## Over a Dialog
+
+The stack is the one element of the overlay family in the browser's top layer (a manual popover), so
+it paints above every Dialog, Drawer and popup, and a modal's inert backdrop never covers it. Inside a
+Dialog, Tab stays in the Dialog; F8 is the way to the stack. Escape on a toast dismisses the toast,
+not the Dialog.
+
+## Focus is never hidden under it
+
+While toasts show, the Toaster writes their height to `--nz-toast-inset` on `<html>`, and `base.css`
+adds it to `scroll-padding-block-end`: a control that focus scrolls into view stops above the stack
+(WCAG 2.4.11). Mobile layouts with a bottom bar set `--nz-layout-bottom-inset`, which the stack sits
+above, with the safe area.
+
+## Strings
+
+`labels={{ region: 'Benachrichtigungen (F8)', dismiss: 'Schließen' }}`. The region's name says its
+shortcut; with `hotkey="F9"` say F9 in it.
+
+## Look
+
+Figma draws the toast dark on a light page (`bg/inverse`) with a lime action (`text/inverse-accent`),
+and light on a dark page. The action is a real tertiary `sm` Button and the close an IconButton, so
+both have a 32 px target, a hover and a focus ring; that makes the toast 56 px tall where Figma draws
+44 px, which design is asked to confirm. The tone icon is 20 px (Figma: 18, which has no icon
+token). Hooks: `--nz-toast-bg`, `--nz-toast-radius`, `--nz-toast-shadow`.

@@ -39,6 +39,10 @@
     "nz-tab-nav-link",
     "nz-tabs-tab",
     "nz-textarea",
+    "nz-toast",
+    "nz-toast-action",
+    "nz-toast-close",
+    "nz-toast-region",
     "nz-tooltip-popup",
     "nz-tooltip-trigger",
     "nz-visually-hidden"

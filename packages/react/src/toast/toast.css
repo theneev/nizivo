@@ -1,0 +1,147 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/toast.css (ARCHITECTURE.md §12.6, §12.1 L3; Figma Toast 7275:15071). Figma
+   draws the toast on bg/inverse with text/inverse and a text/inverse-accent action: tokens meant for
+   the PAGE's scheme. Each toast also carries data-nz-scheme="inverse", so the Button and IconButton
+   inside it, their hover fills and focus rings, and the tone icons resolve in the opposite scheme, as
+   in Tooltip. The three page-scheme colours are registered <color> properties set on the region: a
+   registered colour computes where it is set, so light-dark() resolves in the page's scheme there and
+   each toast inherits the colour, not the expression. Public hooks: --nz-toast-bg, --nz-toast-radius,
+   --nz-toast-shadow. */
+@layer nz.components {
+  @property --_nz-toast-bg {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: transparent;
+  }
+
+  @property --_nz-toast-fg {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: transparent;
+  }
+
+  @property --_nz-toast-accent {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: transparent;
+  }
+
+  /* The region: a manual popover in the top layer, or a fixed element without the Popover API.
+     The UA's popover box (inset 0, auto margins, border, padding, Canvas colours) is reset. */
+  .nz-toast-region {
+    --_nz-toast-bg: var(--nz-bg-inverse);
+    --_nz-toast-fg: var(--nz-text-inverse);
+    --_nz-toast-accent: var(--nz-text-inverse-accent);
+
+    position: fixed;
+    z-index: var(--nz-z-toast);
+    inset: auto 0
+      calc(
+        var(--nz-space-6) + var(--nz-layout-bottom-inset, 0px) + env(safe-area-inset-bottom, 0px)
+      );
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--nz-space-2);
+    box-sizing: border-box;
+    inline-size: fit-content;
+    max-inline-size: calc(100% - 2 * var(--nz-space-4));
+    block-size: fit-content;
+    margin: 0 auto;
+    padding: 0;
+    overflow: visible;
+    border: 0;
+    border-radius: var(--nz-radius-lg);
+    background: none;
+    color: inherit;
+
+    &[hidden] {
+      display: none;
+    }
+  }
+
+  .nz-toast {
+    display: flex;
+    align-items: center;
+    gap: var(--nz-space-3);
+    box-sizing: border-box;
+    max-inline-size: 30rem;
+    /* the sm action and close (32 px) in 12 px of padding: 56 px, Figma 44 (a design ask) */
+    min-block-size: calc(var(--nz-size-control-sm) + 2 * var(--nz-space-3));
+    padding-block: var(--nz-space-3);
+    padding-inline: var(--nz-space-4) var(--nz-space-3);
+    border-radius: var(--nz-toast-radius, var(--nz-radius-lg));
+    background: var(--nz-toast-bg, var(--_nz-toast-bg));
+    box-shadow: var(--nz-toast-shadow, var(--nz-elevation-3));
+    color: var(--_nz-toast-fg);
+    font: var(--nz-font-label-m);
+    letter-spacing: var(--nz-tracking-label-m);
+    /* Figma's enter: a fade and a rise; --nz-distance-lift is 0 under Reduced motion, so only the
+       fade remains (§13.3). A toast leaves at once. */
+    transition:
+      opacity var(--nz-duration-fade) var(--nz-easing-enter),
+      translate var(--nz-duration-base) var(--nz-easing-enter);
+
+    @starting-style {
+      opacity: 0;
+      translate: 0 var(--nz-distance-lift);
+    }
+  }
+
+  .nz-toast-icon {
+    display: inline-flex;
+    flex: none;
+    color: var(--nz-icon-primary);
+    font-size: var(--nz-size-icon-md);
+  }
+
+  .nz-toast[data-tone='success'] .nz-toast-icon {
+    color: var(--nz-icon-success);
+  }
+
+  .nz-toast[data-tone='critical'] .nz-toast-icon {
+    color: var(--nz-icon-critical);
+  }
+
+  .nz-toast-content {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: var(--nz-space-0-5);
+    min-inline-size: 0;
+  }
+
+  .nz-toast-message {
+    overflow-wrap: anywhere;
+  }
+
+  .nz-toast-description {
+    font: var(--nz-font-body-m);
+    letter-spacing: var(--nz-tracking-body-m);
+    opacity: 0.8;
+  }
+
+  /* Figma's action: Label/M Strong in text/inverse-accent; a tertiary sm Button for its target,
+     hover and focus. */
+  /* (0,3,0): above Button's tertiary and sm rules, whatever order the sheets load in */
+  .nz-toast .nz-toast-action.nz-button {
+    --_nz-button-fg: var(--_nz-toast-accent);
+    --_nz-button-font: var(--nz-font-label-m-strong);
+
+    flex: none;
+    letter-spacing: var(--nz-tracking-label-m-strong);
+  }
+
+  .nz-toast .nz-toast-close.nz-icon-button {
+    --_nz-icon-button-fg: var(--_nz-toast-fg);
+
+    flex: none;
+  }
+
+  @media (forced-colors: active) {
+    .nz-toast {
+      border: 1px solid CanvasText;
+    }
+  }
+}

@@ -19,6 +19,7 @@ const config: ViteUserConfig = defineConfig({
       'react-aria/PortalProvider',
       'react-aria/useFocusable',
       'react-aria/useObjectRef',
+      'react-aria/useToast',
     ],
   },
   resolve: { dedupe: ['react', 'react-dom'] },

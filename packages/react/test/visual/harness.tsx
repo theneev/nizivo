@@ -27,7 +27,8 @@ export interface HarnessInput {
 
 /** Room around a crop for the focus halo (`border-width-focus` + 4 px) and shadows. */
 const PAD = 12;
-const POPUP = '[data-slot$="-popup"]';
+/** Open popups, and the toast stack, which the Toaster portals to <body> like a popup. */
+const POPUP = '[data-slot$="-popup"], [data-slot="toast-region"]';
 const DISABLED = ':disabled, [data-disabled], [aria-disabled="true"]';
 /**
  * Elements that may open a Tooltip on hover and focus. React Aria marks nothing until it opens, so

@@ -344,6 +344,15 @@ export { Textarea } from './textarea/index';
 export type { TextareaProps } from './textarea/index';
 export { ThemeScript, themeScript } from './theme-script/index';
 export type { ThemeScriptProps } from './theme-script/index';
+export { Toaster, toast, announce } from './toast/index';
+export type {
+  Politeness,
+  ToastAction,
+  ToastOptions,
+  ToastTone,
+  ToasterLabels,
+  ToasterProps,
+} from './toast/index';
 export { Tooltip, TooltipRoot, TooltipTrigger, TooltipPopup } from './tooltip/index';
 export type {
   TooltipLabels,

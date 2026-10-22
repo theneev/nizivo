@@ -1365,6 +1365,12 @@
       "name": "PaginationState"
     },
     {
+      "definedIn": "./toast",
+      "import": "import type { Politeness } from '@nizivo/react'",
+      "kind": "type",
+      "name": "Politeness"
+    },
+    {
       "definedIn": "./popover",
       "import": "import { Popover } from '@nizivo/react'",
       "kind": "namespace",
@@ -2091,6 +2097,42 @@
       "name": "ThemeScriptProps"
     },
     {
+      "definedIn": "./toast",
+      "import": "import type { ToastAction } from '@nizivo/react'",
+      "kind": "type",
+      "name": "ToastAction"
+    },
+    {
+      "definedIn": "./toast",
+      "import": "import type { ToastOptions } from '@nizivo/react'",
+      "kind": "type",
+      "name": "ToastOptions"
+    },
+    {
+      "definedIn": "./toast",
+      "import": "import type { ToastTone } from '@nizivo/react'",
+      "kind": "type",
+      "name": "ToastTone"
+    },
+    {
+      "definedIn": "./toast",
+      "import": "import { Toaster } from '@nizivo/react'",
+      "kind": "component",
+      "name": "Toaster"
+    },
+    {
+      "definedIn": "./toast",
+      "import": "import type { ToasterLabels } from '@nizivo/react'",
+      "kind": "type",
+      "name": "ToasterLabels"
+    },
+    {
+      "definedIn": "./toast",
+      "import": "import type { ToasterProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "ToasterProps"
+    },
+    {
       "definedIn": "./tooltip",
       "import": "import { Tooltip } from '@nizivo/react'",
       "kind": "namespace",
@@ -2175,6 +2217,12 @@
       "name": "TrendCardState"
     },
     {
+      "definedIn": "./toast",
+      "import": "import { announce } from '@nizivo/react'",
+      "kind": "function",
+      "name": "announce"
+    },
+    {
       "definedIn": "./number-value",
       "import": "import { formatNumber } from '@nizivo/react'",
       "kind": "function",
@@ -2191,6 +2239,12 @@
       "import": "import { themeScript } from '@nizivo/react'",
       "kind": "constant",
       "name": "themeScript"
+    },
+    {
+      "definedIn": "./toast",
+      "import": "import { toast } from '@nizivo/react'",
+      "kind": "constant",
+      "name": "toast"
     },
     {
       "definedIn": "./motion",

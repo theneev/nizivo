@@ -323,6 +323,13 @@ function liveness(code: string): { live: boolean; reason?: string } {
         'It opens on page load (`defaultOpen`), which would move focus on this page, so it is shown as source only.',
     };
   }
+  if (/\btoast\(/.test(code)) {
+    return {
+      live: false,
+      reason:
+        'It shows toasts from an event handler or an effect, code that runs in a client component of your app, so it is shown as source only.',
+    };
+  }
   const asset = /\bsrc=(?:"|\{\s*['"`])(\/[^"'`]*)/.exec(code);
   if (asset) {
     return {
