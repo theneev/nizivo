@@ -386,7 +386,13 @@ function world(w: World = {}) {
     files.set(
       join(REPO_ROOT, 'fixtures/runner/package.json'),
       JSON.stringify({
-        scripts: scripts(['fixture:charts', 'fixture:next', 'fixture:vite', 'fixture:astro']),
+        scripts: scripts([
+          'fixture:charts',
+          'fixture:next',
+          'fixture:vite',
+          'fixture:vite-ssr',
+          'fixture:astro',
+        ]),
       }),
     );
     // @nizivo/charts is private until 0.2 (not in PUBLISHED), but its lanes run in every release
@@ -947,6 +953,7 @@ describe('release', () => {
       'fixture-charts',
       'fixture-next',
       'fixture-vite',
+      'fixture-vite-ssr',
       'fixture-astro',
       'visual',
       'visual-charts',

@@ -1,0 +1,16 @@
+# This fixture is its own pnpm workspace root, excluded from the monorepo (../../pnpm-workspace.yaml),
+# for the same reasons as fixtures/next (see its pnpm-workspace.yaml and RESULTS.md): it installs
+# @nizivo/* from the folders fixtures/runner/pack.ts unpacks into the gitignored .packed/ folder
+# (`node fixtures/runner/pack.ts --fixture vite-ssr`), and the committed pnpm-lock.yaml stays valid
+# across library builds.
+
+# @nizivo/react depends on @nizivo/tokens at its exact version, which is not on the registry.
+overrides:
+  '@nizivo/tokens': 'file:.packed/tokens'
+
+# Same supply-chain policy as the monorepo root (ARCHITECTURE.md §19.3). Vite 8 bundles with rolldown
+# and lists esbuild only as an optional peer, so no dependency here has an install script.
+minimumReleaseAge: 4320
+allowBuilds: {}
+trustPolicy: no-downgrade
+blockExoticSubdeps: true

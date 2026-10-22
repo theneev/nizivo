@@ -1,0 +1,15 @@
+<!doctype html>
+<!-- The SSR template: server.js puts the server-rendered page in place of the app-html comment.
+     data-nz-theme="system" follows the OS with no script; vite.config.js injects @nizivo/react's
+     themeScript into <head>. -->
+<html lang="en" data-nz-theme="system">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Nizivo Vite SSR fixture</title>
+  </head>
+  <body>
+    <div id="root"><!--app-html--></div>
+    <script type="module" src="/src/entry-client.jsx"></script>
+  </body>
+</html>

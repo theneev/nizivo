@@ -29,6 +29,7 @@
     "test:visual": "pnpm --filter @nizivo/react test:visual",
     "fixture:next": "pnpm --filter @nizivo/fixture-runner fixture:next",
     "fixture:vite": "pnpm --filter @nizivo/fixture-runner fixture:vite",
+    "fixture:vite-ssr": "pnpm --filter @nizivo/fixture-runner fixture:vite-ssr",
     "fixture:astro": "pnpm --filter @nizivo/fixture-runner fixture:astro",
     "fixture:charts": "pnpm --filter @nizivo/fixture-runner fixture:charts",
     "floor": "node fixtures/floor-lane/run.ts",

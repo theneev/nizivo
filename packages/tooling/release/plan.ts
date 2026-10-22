@@ -92,7 +92,7 @@ export const RELEASE_LANES: readonly Lane[] = [
     dir: 'fixtures/runner',
     script: 'fixture:charts',
   },
-  ...(['next', 'vite', 'astro'] as const).map((fixture) => ({
+  ...(['next', 'vite', 'vite-ssr', 'astro'] as const).map((fixture) => ({
     id: `fixture-${fixture}`,
     why: `the ${fixture} fixture on the packed packages (§18.1, exit criterion 2)`,
     dir: 'fixtures/runner',
