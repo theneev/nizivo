@@ -5,15 +5,14 @@ import { Button } from '../../src/button/index';
 import { IconButton } from '../../src/icon-button/index';
 import { Tooltip } from '../../src/tooltip/index';
 import { describeOverlay } from './conformance';
-import { get, mount, settle, until } from './harness';
+import { get, mount, parkPointer, settle, until } from './harness';
 
 // React Aria keeps tooltips "warm" for 500 ms after one closes, and a warm tooltip opens without its
 // entry animation (as native tooltips do); one left open keeps the page warm. Each case closes its
 // tooltip and lets the page cool down, so the next one starts cold.
 //
-// It also parks the real pointer in the bottom-right corner, away from where every case mounts its
-// triggers. A hover case leaves the pointer over its trigger, and the next case mounts a trigger in
-// the same place: WebKit then updates the hover state on its own, about 150 ms into the case, with
+// It also parks the real pointer (parkPointer in harness.tsx). A hover case leaves the pointer over
+// its trigger, and the next case mounts a trigger in the same place: WebKit then updates the hover state on its own, about 150 ms into the case, with
 // a trusted pointerover and pointerenter and no pointermove. React Aria 1.22.1 takes that for a hover
 // start, and a trigger that still has focus after Escape reopens its tooltip (Escape closes it from a
 // capturing document listener that stops the event, so the trigger's own keydown, which clears its
@@ -21,15 +20,7 @@ import { get, mount, settle, until } from './harness';
 // popup came back open (the WebKit flake of W7-RESULTS.md, "Process").
 afterEach(async () => {
   await userEvent.keyboard('{Escape}');
-  const parking = document.createElement('div');
-  // A test id keeps Playwright's locator on this element while a closing popup leaves the DOM (a
-  // positional one, `div >> nth=3`, moves to another element).
-  parking.dataset['testid'] = 'pointer-parking';
-  parking.style.cssText =
-    'position: fixed; inset-block-end: 0; inset-inline-end: 0; inline-size: 8px; block-size: 8px;';
-  document.body.append(parking);
-  await userEvent.hover(parking);
-  parking.remove();
+  await parkPointer();
   await settle(600);
 });
 

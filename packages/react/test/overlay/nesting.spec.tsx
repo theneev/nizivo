@@ -1,7 +1,7 @@
 // Overlays inside overlays on the react-aria family's OverlayEngine (ARCHITECTURE.md §12.1 L2, §12.2,
 // §12.5 stage v0.1): O-01, O-03, O-04, O-10, O-11 and O-22 from gap report C §1.10.
 import { useState, type JSX } from 'react';
-import { describe, expect, test } from 'vitest';
+import { beforeEach, describe, expect, test } from 'vitest';
 import { userEvent } from 'vitest/browser';
 import { Dialog } from '../../src/dialog/index';
 import { Menu } from '../../src/menu/index';
@@ -14,6 +14,7 @@ import {
   locked,
   mount,
   pageStyles,
+  parkPointer,
   paintsOnTop,
   settle,
   until,
@@ -65,6 +66,13 @@ function RemovableTrigger(): JSX.Element {
 }
 
 describe('nested overlays (§12.5 v0.1)', () => {
+  // O-01 leaves the real pointer where it pressed the Select trigger, and O-03's tooltip trigger
+  // passes under that spot while its dialog enters: Firefox then hovers it, with no pointermove,
+  // during the entry and again after the first Escape. A hover start on a trigger that keeps its
+  // focus flag can reopen the tooltip, and the second Escape then closes it instead of the dialog
+  // (NIZ-126). Every case starts with the pointer parked.
+  beforeEach(parkPointer);
+
   test('O-01 Select inside Dialog: the listbox portals into the dialog, paints on top, and Esc closes only the listbox', async () => {
     await mount(
       <Dialog.Root>

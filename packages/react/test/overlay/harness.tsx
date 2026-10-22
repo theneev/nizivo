@@ -5,6 +5,7 @@ import { StrictMode, type ReactNode } from 'react';
 import { createRoot, hydrateRoot, type Root } from 'react-dom/client';
 import { renderToString } from 'react-dom/server';
 import { afterEach, expect, vi } from 'vitest';
+import { userEvent } from 'vitest/browser';
 import vocabulary from '../../../../contracts/vocabulary.json' with { type: 'json' };
 import allowlist from '../../src/_engines/react-aria/dom-allowlist.json' with { type: 'json' };
 
@@ -151,6 +152,24 @@ export async function movePointer(hover: (element: Element) => Promise<void>): P
   document.body.append(spot);
   await hover(spot);
   spot.remove();
+}
+
+/**
+ * Parks the real pointer in an 8 px spot in the bottom-right corner, away from where every case
+ * mounts its triggers. A pointer left where an earlier case pressed or hovered can end up over a
+ * trigger the next case mounts, and WebKit and Firefox then hover it with a trusted pointerover and
+ * pointerenter and no pointermove, which React Aria 1.22.1 takes for a hover start.
+ */
+export async function parkPointer(): Promise<void> {
+  const parking = document.createElement('div');
+  // A test id keeps Playwright's locator on this element while a closing popup leaves the DOM (a
+  // positional one, `div >> nth=3`, moves to another element).
+  parking.dataset['testid'] = 'pointer-parking';
+  parking.style.cssText =
+    'position: fixed; inset-block-end: 0; inset-inline-end: 0; inline-size: 8px; block-size: 8px;';
+  document.body.append(parking);
+  await userEvent.hover(parking);
+  parking.remove();
 }
 
 /** Whether the page is scroll-locked: React Aria hides overflow on <html>. */
