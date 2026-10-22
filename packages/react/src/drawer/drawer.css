@@ -1,0 +1,224 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/drawer.css (ARCHITECTURE.md §12.1, §12.3 Drawer / Sheet row; figma/07 §4.5 and
+   figma/08 §8.3: the Drawer 756:1001, instances 7275:15163 and 7275:16096, scrim 7275:16092). Figma
+   draws one Drawer, at the right edge: 440 px wide, bg/surface, Elevation/4, radius/xl on its inner
+   corners, a Header (20/20/20/24 padding, a 1 px border/subtle rule below), a Body (24 px padding,
+   the scroller) and a Footer (16/24 padding, a rule above, equal-width actions 12 px apart). The
+   scrim is the Dialog's --nz-bg-scrim (Figma's bg/inverse at 0.32 turns white in dark: figma/08
+   issue 7). `side` is logical; `data-side` on the positioner and the popup is the resolved physical
+   edge (§8.3). Builder choices (D-bl, on the Deviations page): the sheet at the bottom, the 3rem
+   strip of scrim a narrow viewport keeps, and the slide on duration/slow with easing/enter. */
+@layer nz.components {
+  /* The bare trigger, its own <button>: at least 24 x 24 px (WCAG 2.2 2.5.8, M27), as the Dialog's. */
+  .nz-drawer-trigger.nz-hit-target {
+    min-inline-size: 1.5rem;
+    min-block-size: 1.5rem;
+  }
+
+  /* never transformed and never clipping: it is the nested-portal container (§12.1 L2). One grid
+     cell, the whole viewport: the popup is its only item (the backdrop is fixed, the nested container
+     box-less), placed at its edge by the keyword values left, right and end below. `data-side` is
+     the resolved physical edge (§8.3), so it is placed physically: a logical inset would put
+     side="end" at the wrong edge in a right-to-left page. */
+  .nz-drawer-positioner {
+    position: fixed;
+    inset: 0;
+    z-index: var(--nz-z-overlay);
+    display: grid;
+    grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+  }
+
+  /* "the backdrop only fades", as the Dialog's */
+  .nz-drawer-backdrop {
+    position: fixed;
+    inset: 0;
+    background: var(--nz-bg-scrim);
+    transition: opacity var(--nz-duration-base) var(--nz-easing-enter);
+
+    &[data-entering] {
+      opacity: 0;
+    }
+
+    &[data-exiting] {
+      opacity: 0;
+      transition: opacity var(--nz-duration-fade) var(--nz-easing-exit);
+    }
+  }
+
+  /* Figma: "Slides from the right". The slide is the whole width (or height) and runs on
+     duration/slow with easing/enter, figma/07 §6.5's proposal: the spring overshoots 3 %, which
+     would open a gap at the edge. The opacity runs with it, so the reduced fade below survives. */
+  .nz-drawer-popup {
+    --_nz-drawer-width: 27.5rem; /* Figma Drawer 756:1001: 440 px */
+    --_nz-drawer-radius: var(--nz-drawer-radius, var(--nz-radius-xl));
+
+    position: relative; /* above the backdrop sibling */
+    /* the width includes the forced-colours border, with or without a page reset (§8.1) */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    /* the grid cell, not the content, sets its height: the Body scrolls */
+    min-block-size: 0;
+    background: var(--nz-drawer-bg, var(--nz-bg-surface));
+    box-shadow: var(--nz-elevation-4);
+    transition:
+      translate var(--nz-duration-slow) var(--nz-easing-enter),
+      opacity var(--nz-duration-slow) var(--nz-easing-enter);
+
+    &[data-exiting] {
+      transition:
+        translate var(--nz-duration-base) var(--nz-easing-exit),
+        opacity var(--nz-duration-base) var(--nz-easing-exit);
+    }
+
+    &:is([data-entering], [data-exiting]) {
+      opacity: 0;
+    }
+
+    /* a narrow viewport keeps a 3rem strip of scrim beside (or above) the drawer, to press; the
+       radius is on the two corners away from the edge (the shorthand's physical order) */
+    &:is([data-side='left'], [data-side='right']) {
+      inline-size: min(var(--nz-drawer-width, var(--_nz-drawer-width)), 100% - var(--nz-space-12));
+    }
+
+    &[data-side='right'] {
+      justify-self: right;
+      border-radius: var(--_nz-drawer-radius) 0 0 var(--_nz-drawer-radius);
+    }
+
+    &[data-side='left'] {
+      justify-self: left;
+      border-radius: 0 var(--_nz-drawer-radius) var(--_nz-drawer-radius) 0;
+    }
+
+    /* the sheet: the full width, as tall as its content up to the strip */
+    &[data-side='bottom'] {
+      align-self: end;
+      max-block-size: calc(100% - var(--nz-space-12));
+      border-radius: var(--_nz-drawer-radius) var(--_nz-drawer-radius) 0 0;
+    }
+
+    &[data-side='right']:is([data-entering], [data-exiting]) {
+      translate: 100% 0;
+    }
+
+    &[data-side='left']:is([data-entering], [data-exiting]) {
+      translate: -100% 0;
+    }
+
+    &[data-side='bottom']:is([data-entering], [data-exiting]) {
+      translate: 0 100%;
+    }
+  }
+
+  /* Reduced motion drops the travel and keeps the fade (figma/08 §8.3: "use opacity only"), under the
+     same two switches that swap the Reduced motion tokens (§13.2 rule 3); the markup is the same. No
+     token carries a whole width, so this is the component's own rule, as Button's pending label is. */
+  @media (prefers-reduced-motion: reduce) {
+    .nz-drawer-popup[data-side]:is([data-entering], [data-exiting]) {
+      translate: none;
+    }
+  }
+
+  [data-nz-motion='reduce'] .nz-drawer-popup:is([data-entering], [data-exiting]) {
+    translate: none;
+  }
+
+  /* the corners clip here, not on the positioner */
+  .nz-drawer-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-block-size: 0;
+    overflow: clip;
+    border-radius: inherit;
+
+    /* Focus lands on this element when nothing in the Body takes it: it is the container, so it
+       shows no ring of its own, as the Dialog's content does not. */
+    &:focus-visible {
+      outline: none;
+    }
+  }
+
+  /* a control placed straight in the drawer draws its ring inside itself, where the clip cannot cut
+     it (§8.5 data-focus-inset); the corner Close keeps its outside ring */
+  .nz-drawer-content
+    > :not(.nz-drawer-close.nz-icon-button):is(:focus-visible, [data-focus-visible]) {
+    outline-offset: calc(-1 * var(--nz-border-width-focus));
+  }
+
+  /* The default Drawer.Close, a 40 px tertiary IconButton, as a direct child of the popup: Figma's
+     20 px icon/secondary glyph at the header's 20 px padding, on the same spot (as the Dialog's). */
+  .nz-drawer-content > .nz-drawer-close.nz-icon-button {
+    --_nz-icon-button-fg: var(--nz-icon-secondary);
+
+    position: absolute;
+    inset-block-start: calc(
+      var(--nz-space-5) - (var(--nz-size-control-md) - var(--nz-size-icon-md)) / 2
+    );
+    inset-inline-end: calc(
+      var(--nz-space-5) - (var(--nz-size-control-md) - var(--nz-size-icon-md)) / 2
+    );
+  }
+
+  /* Figma's Header: 20 px above, below and at the end, 24 px at the start, 4 px between the title
+     and what follows it, the 1 px rule below; the end leaves room for the corner Close */
+  .nz-drawer-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-1);
+    padding: var(--nz-space-5) var(--nz-space-5) var(--nz-space-5) var(--nz-space-6);
+    border-block-end: var(--nz-border-width-default) solid var(--nz-border-subtle);
+  }
+
+  .nz-drawer-content:has(> .nz-drawer-close.nz-icon-button) > .nz-drawer-header {
+    padding-inline-end: calc(var(--nz-space-5) + var(--nz-size-icon-md) + var(--nz-space-3));
+  }
+
+  .nz-drawer-title {
+    margin: 0;
+    color: var(--nz-text-primary);
+    font: var(--nz-font-heading-h3);
+    letter-spacing: var(--nz-tracking-heading-h3);
+  }
+
+  .nz-drawer-description {
+    margin: 0;
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-body-m);
+    letter-spacing: var(--nz-tracking-body-m);
+  }
+
+  /* the only scroller: Figma's 24 px padding and 16 px between blocks */
+  .nz-drawer-body {
+    display: grid;
+    flex: 1;
+    align-content: start;
+    gap: var(--nz-space-4);
+    min-block-size: 0;
+    overflow: auto;
+    padding: var(--nz-space-6);
+    color: var(--nz-text-primary);
+    font: var(--nz-font-body-m);
+    letter-spacing: var(--nz-tracking-body-m);
+  }
+
+  /* Figma's Footer: 16/24 padding, the 1 px rule above, equal-width actions 12 px apart */
+  .nz-drawer-footer {
+    display: flex;
+    gap: var(--nz-space-3);
+    padding: var(--nz-space-4) var(--nz-space-6);
+    border-block-start: var(--nz-border-width-default) solid var(--nz-border-subtle);
+
+    & > * {
+      flex: 1;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .nz-drawer-popup {
+      border: 1px solid CanvasText;
+    }
+  }
+}

@@ -21,10 +21,11 @@ const STYLES = import.meta.glob(
     '../../src/tooltip/tooltip.css',
     '../../src/menu/menu.css',
     '../../src/popover/popover.css',
+    '../../src/drawer/drawer.css',
   ],
   { query: '?raw', import: 'default', eager: true },
 );
-if (Object.keys(STYLES).length !== 10) {
+if (Object.keys(STYLES).length !== 11) {
   throw new Error('a stylesheet is missing; build @nizivo/tokens and run nz gen');
 }
 const style = document.createElement('style');

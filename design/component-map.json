@@ -180,6 +180,26 @@
         "tone": ["info", "success", "warning", "critical"]
       }
     },
+    "756:1001": {
+      "component": "drawer",
+      "role": "ghost",
+      "import": "@nizivo/react/drawer",
+      "export": "Drawer",
+      "parts": [
+        "Root",
+        "Trigger",
+        "Popup",
+        "Header",
+        "Title",
+        "Description",
+        "Body",
+        "Footer",
+        "Close"
+      ],
+      "props": {
+        "side": ["start", "end", "bottom"]
+      }
+    },
     "756:1149": {
       "component": "empty-state",
       "role": "ghost",

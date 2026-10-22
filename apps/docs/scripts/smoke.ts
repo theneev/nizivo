@@ -79,6 +79,7 @@ const NIZIVO_CLIENT_MARKERS = [
   'tabs-tab',
   'menu-popup',
   'popover-popup',
+  'drawer-popup',
   // CountUp (@nizivo/react/motion, M41): its digits' slot
   'count-up-value',
   // @nizivo/charts' ChartInteraction island (AreaChart's point mode, BarChart's column mode,
@@ -116,6 +117,7 @@ const CLIENT_PAGES: Record<string, string[]> = {
   // MenuRowActionsExample's trigger is an IconButton, whose default tooltip leaf the page imports.
   '/docs/components/menu/': ['menu-popup', 'tooltip-popup'],
   '/docs/components/popover/': ['popover-popup'],
+  '/docs/components/drawer/': ['drawer-popup'],
   // CountUp is the one client part of the dashboard set (M41); its page is titled by its subpath.
   '/docs/components/motion/': ['count-up-value'],
   // AreaChart, BarChart (M40) and DonutChart (M41) render the island by default
@@ -135,6 +137,7 @@ const REPORT = [
   '/docs/components/select/',
   '/docs/components/dialog/',
   '/docs/components/popover/',
+  '/docs/components/drawer/',
   '/docs/components/field/',
   '/docs/components/native-select/',
   '/docs/components/input/',
@@ -790,6 +793,37 @@ async function popoverChecks(browser: Browser): Promise<void> {
   await ctx.close();
 }
 
+/** The Nizivo Drawer on its own page (drawerChecks is the docs site's navigation drawer). */
+async function nizivoDrawerChecks(browser: Browser): Promise<void> {
+  const ctx = await context(browser, 'light');
+  const { page } = await visit(ctx, '/docs/components/drawer/');
+  const trigger = page.locator(
+    '[data-example="drawer/DrawerExample"] [data-slot="drawer-trigger"]',
+  );
+  await trigger.focus();
+  await page.keyboard.press('Enter');
+  const drawer = page.getByRole('dialog', { name: 'Order #1042' });
+  const opened = await drawer.waitFor({ timeout: 5_000 }).then(
+    () => true,
+    () => false,
+  );
+  check(opened, 'Drawer keyboard: Enter on the trigger opens it');
+  const inside = async (): Promise<boolean> =>
+    page.evaluate(() => document.activeElement?.closest('[data-slot="drawer-popup"]') !== null);
+  check(await inside(), 'Drawer: focus moves into it on open');
+  let contained = true;
+  for (let i = 0; i < 4; i++) {
+    await page.keyboard.press('Tab');
+    contained &&= await inside();
+  }
+  check(contained, 'Drawer keyboard: Tab stays inside');
+  await page.keyboard.press('Escape');
+  await drawer.waitFor({ state: 'hidden', timeout: 5_000 }).catch(() => undefined);
+  check(!(await drawer.isVisible().catch(() => false)), 'Drawer keyboard: Escape closes it');
+  check(await focusLands(page, 'drawer-trigger'), 'Drawer: focus returns to the trigger');
+  await ctx.close();
+}
+
 async function searchChecks(browser: Browser): Promise<void> {
   const ctx = await context(browser, 'light');
   const { page, external } = await visit(ctx, '/docs/');
@@ -1213,6 +1247,7 @@ async function main(): Promise<void> {
     await tooltipChecks(browser);
     await dialogChecks(browser);
     await popoverChecks(browser);
+    await nizivoDrawerChecks(browser);
     await forcedColoursChecks(browser);
     await skipLinkChecks(browser);
     await drawerChecks(browser);
