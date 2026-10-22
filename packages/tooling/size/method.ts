@@ -54,15 +54,18 @@ export function limitKiB(measuredBytes: number): number {
  * The hard limits of ARCHITECTURE.md §17.1 (KiB) for the entries that have one. A budget never sits
  * above its plan limit: measured + 10% applies only below it (§17: "limits only go up through a
  * labelled PR", and the plan's limits are where that happens). Every limit is KiB; M17 (2026-10-16)
- * raised Dialog from 31 to 32 and the dashboard set from 75 to 76.
+ * raised Dialog from 31 to 32 and the dashboard set from 75 to 76; M43 (2026-10-22) set Popover to
+ * 39 and the Sheet (`./drawer`) to 35, and the dashboard set, now with Popover, to 85.
  */
 export const PLAN_LIMITS_KIB: Readonly<Record<string, number>> = {
   '@nizivo/react/tooltip': 16,
   '@nizivo/react/dialog': 32,
+  '@nizivo/react/popover': 39,
+  '@nizivo/react/drawer': 35,
   '@nizivo/react/tabs': 35,
   '@nizivo/react/menu': 57,
   '@nizivo/react/select': 66,
-  '@nizivo/react dashboard set': 76,
+  '@nizivo/react dashboard set': 85,
 };
 
 /**

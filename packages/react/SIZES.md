@@ -161,7 +161,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 | Entry                      | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | -------------------------- | -------: | ---------: | ---------: | ----------: | -----------: |
-| dashboard set              |   77,740 |       75.9 |     65,754 |          76 |           84 |
+| dashboard set              |   78,598 |       76.8 |     66,361 |          85 |        8,442 |
 | { Button } from the barrel |    1,276 |        1.2 |      1,172 |         1.4 |          157 |
 | { Select } from the barrel |   63,416 |       61.9 |     54,436 |          68 |        6,216 |
 

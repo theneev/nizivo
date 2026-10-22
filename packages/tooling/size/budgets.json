@@ -210,8 +210,8 @@
       "limitKiB": 2.7
     },
     "@nizivo/react dashboard set": {
-      "measured": 77740,
-      "limitKiB": 76
+      "measured": 78598,
+      "limitKiB": 85
     },
     "@nizivo/react { Button } from the barrel": {
       "measured": 1276,
