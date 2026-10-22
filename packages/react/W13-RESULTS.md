@@ -100,6 +100,8 @@ The visual lane picks every `*.example.tsx` up by itself; these four are new, ea
 
 No existing baseline should move: Dialog's markup and CSS are unchanged; the shared code changes behaviour only on an outside press inside a Dialog.
 
+**Recorded on the Mac, 2026-10-22:** 68 baselines (1,908 shots in all); no existing baseline moved. `open` and `sheet` at rest first showed the focus ring or not depending on the example before them (a press step leaves React Aria and Chromium in pointer modality, a Tab loop in keyboard modality). `scripts/visual/run.ts` now mounts an example that is open at rest a second time after a key press, so it starts in keyboard modality, as on a fresh page, and both show the ring on their first control every run.
+
 ## Unverified
 
 - The react and charts visual lanes, the Safari/iOS 17.5 floor lane and `pnpm release`: Mac-only, not run.

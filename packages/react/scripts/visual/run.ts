@@ -435,7 +435,17 @@ async function captureExample(p: Page, ex: ExampleRef): Promise<Map<string, Imag
   const closed = (): Promise<boolean> => call(p, 'popups').then((n) => n === 0);
 
   await away();
-  const mounted = await call(p, 'mount', ex.component, ex.name);
+  let mounted = await call(p, 'mount', ex.component, ex.name);
+  if (mounted.open) {
+    // Mounted again after a key press with nothing on the page, so a `defaultOpen` popup that
+    // focuses a control (Popover, Drawer) starts in keyboard modality, as on a fresh page, and
+    // shows its ring at rest whichever example ran before it (a press step leaves pointer modality
+    // behind, a Tab loop does not). Closed examples keep the modality their hover steps were
+    // recorded in.
+    await call(p, 'unmount');
+    await p.keyboard.press('Escape');
+    mounted = await call(p, 'mount', ex.component, ex.name);
+  }
   await take('rest');
 
   if (!mounted.open) {
