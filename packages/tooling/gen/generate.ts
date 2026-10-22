@@ -193,7 +193,7 @@ function resolveComponent(
 
   const contract = join(dir, `${config.name}.contract.ts`);
   let engineSeam: Component['engine'];
-  const engine = config.tier === 'engine' ? config.engine : undefined;
+  const engine = config.engine;
   if (engine !== undefined) {
     // engine.ts re-exports the members of the typed <Pascal>Engine interface (§9.2), not the public
     // parts: leaf-only parts (Dialog's Body and Footer) have no engine counterpart.

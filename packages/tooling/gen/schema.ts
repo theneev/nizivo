@@ -320,8 +320,12 @@ export function validateComponentConfig(
       fail('engine', 'a kebab-case engine name when "tier" is "engine"');
     if (!isStringArray(parts) || parts.length === 0)
       fail('parts', 'a non-empty array when "tier" is "engine"');
+  } else if (tier === 'own') {
+    // T2 own code may still sit behind an engine contract (§9.5: Toast's region on React Aria hooks).
+    if (engine !== undefined && (typeof engine !== 'string' || !KEBAB.test(engine)))
+      fail('engine', 'a kebab-case engine name');
   } else if (engine !== undefined) {
-    errors.push('"engine" is only allowed when "tier" is "engine"');
+    errors.push('"engine" is only allowed when "tier" is "engine" or "own"');
   }
   if (overlay !== undefined && typeof overlay !== 'boolean') fail('overlay', 'a boolean');
   if (overlay === true && tier !== 'engine') errors.push('"overlay": true needs "tier": "engine"');

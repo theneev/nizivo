@@ -173,7 +173,18 @@ describe('validation', () => {
     );
     expect(errorsOf(root)).toEqual([
       'packages/react/src/button/component.json: "status" is "unstable" but the component is not under src/unstable/',
-      'packages/react/src/button/component.json: "engine" is only allowed when "tier" is "engine"',
+      'packages/react/src/button/component.json: "engine" is only allowed when "tier" is "engine" or "own"',
+    ]);
+  });
+
+  test('checks an "own" component\'s engine seam as an engine-tier one, without parts', () => {
+    const root = copyFixture();
+    edit(react(root, 'src/button/component.json'), (text) =>
+      text.replace('"tier": "server"', '"tier": "own", "engine": "react-aria"'),
+    );
+    expect(errorsOf(root)).toEqual([
+      'packages/react/src/button/component.json: engine-tier components declare their seam as an exported "interface ButtonEngine" with at least one member in packages/react/src/button/button.contract.ts',
+      'packages/react/src/button/component.json: engine adapter not found: packages/react/src/_engines/react-aria/button.client.tsx',
     ]);
   });
 

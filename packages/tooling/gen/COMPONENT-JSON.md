@@ -10,22 +10,22 @@ file fixes what those fields hold and what each one produces.
 
 ## Fields
 
-| Field            | Required           | Shape                                                            |
-| ---------------- | ------------------ | ---------------------------------------------------------------- |
-| `name`           | yes                | kebab-case; equals the folder name                               |
-| `status`         | no (`stable`)      | `stable` \| `unstable` (`unstable` lives in `src/unstable/`)     |
-| `tier`           | yes                | `server` \| `client` \| `engine` \| `own` (below)                |
-| `engine`         | with tier `engine` | kebab-case engine family, such as `react-aria`                   |
-| `overlay`        | no                 | `true` for the overlay family; needs tier `engine`               |
-| `parts`          | with tier `engine` | PascalCase part names; exported as `<Pascal><Part>`              |
-| `exports`        | no                 | values of a multi-export subpath, such as `["Grid", "GridItem"]` |
-| `interactive`    | no                 | `data-slot` values (below)                                       |
-| `focusTarget`    | no (`self`)        | a mode, or `{ "<slot>": mode }` (below)                          |
-| `stateIndicator` | no                 | `{ "slot", "state"?, "paint" }` objects (below)                  |
-| `cssDeps`        | no                 | CSS files this component needs, such as `["base"]`               |
-| `variants`       | no                 | `{ "<prop>": ["<value>", …] }`, copied to the component map      |
-| `figma`          | no                 | `canonical`, `ghosts`, `variantsSeen`, `related`: node ids       |
-| `budget`         | no                 | `measuredKB`, `limitKB`, `source`                                |
+| Field            | Required                                | Shape                                                            |
+| ---------------- | --------------------------------------- | ---------------------------------------------------------------- |
+| `name`           | yes                                     | kebab-case; equals the folder name                               |
+| `status`         | no (`stable`)                           | `stable` \| `unstable` (`unstable` lives in `src/unstable/`)     |
+| `tier`           | yes                                     | `server` \| `client` \| `engine` \| `own` (below)                |
+| `engine`         | with tier `engine`; optional with `own` | kebab-case engine family, such as `react-aria`                   |
+| `overlay`        | no                                      | `true` for the overlay family; needs tier `engine`               |
+| `parts`          | with tier `engine`                      | PascalCase part names; exported as `<Pascal><Part>`              |
+| `exports`        | no                                      | values of a multi-export subpath, such as `["Grid", "GridItem"]` |
+| `interactive`    | no                                      | `data-slot` values (below)                                       |
+| `focusTarget`    | no (`self`)                             | a mode, or `{ "<slot>": mode }` (below)                          |
+| `stateIndicator` | no                                      | `{ "slot", "state"?, "paint" }` objects (below)                  |
+| `cssDeps`        | no                                      | CSS files this component needs, such as `["base"]`               |
+| `variants`       | no                                      | `{ "<prop>": ["<value>", …] }`, copied to the component map      |
+| `figma`          | no                                      | `canonical`, `ghosts`, `variantsSeen`, `related`: node ids       |
+| `budget`         | no                                      | `measuredKB`, `limitKB`, `source`                                |
 
 `adapter` is rejected until v0.2 defines the second adapter's file layout. Unknown keys are errors. `budget` is accepted but read by nothing: since week 5 the size budgets are derived from the package exports and live in `packages/tooling/size/budgets.json` (D-ah), and no manifest carries one.
 
@@ -41,8 +41,10 @@ The behaviour source from §9.5, not a file's directive: a `server` component ma
 | `engine` | T1                                      | Select, Dialog, Tooltip, Menu, Tabs, Popover                                   | `engine` and `parts` required; `<Pascal>Engine` exported from `<name>.contract.ts`; adapter at `_engines/<engine>/<name>.client.tsx`; `overlay` engine equals `engines.json` |
 | `own`    | T2, our code on platform APIs           | Toast, FileUpload, TableSelection, CountUp                                     | none                                                                                                                                                                         |
 
-`engine` is allowed only with tier `engine` today. §9.5 puts Toast and FileUpload (`own`) behind an
-engine contract; allowing `engine` on `own` is a v0.2 schema change.
+Tier `own` may name an `engine` too (week 14): §9.5 puts Toast and FileUpload, our own code, behind
+an engine contract. The checks are tier `engine`'s, without `parts`: `<Pascal>Engine` exported from
+`<name>.contract.ts`, the adapter at `_engines/<engine>/<name>.client.tsx` exporting every member, and
+`engine.ts` generated from them.
 
 ## Slots
 
