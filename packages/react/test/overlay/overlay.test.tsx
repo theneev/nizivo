@@ -48,7 +48,7 @@ describe('the react-aria OverlayEngine (§12.2)', () => {
       resolveSide,
       popupStyle,
       delegated: ['inert', 'scroll-lock', 'dismiss-stack', 'focus-return'],
-      completes: ['tab-out', 'return-focus', 'initial-focus', 'nested-top-layer'],
+      completes: ['tab-out', 'return-focus', 'initial-focus', 'nested-top-layer', 'outside-press'],
     });
   });
 

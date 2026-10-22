@@ -344,4 +344,66 @@ describe('nested overlays (§12.5 v0.1)', () => {
     await escape();
     await until(() => expect(all('dialog-popup')).toHaveLength(0));
   });
+
+  test('O-12 an outside press closes only the topmost: a Select, a Menu and a Dialog opened inside a Dialog', async () => {
+    await mount(
+      <Dialog.Root>
+        <Dialog.Trigger>Filters</Dialog.Trigger>
+        <Dialog.Popup>
+          <Dialog.Title>Filters</Dialog.Title>
+          <Dialog.Body>
+            <PeriodSelect />
+            <Menu.Root>
+              <Menu.Trigger>Actions</Menu.Trigger>
+              <Menu.Popup>
+                <Menu.Item>Duplicate</Menu.Item>
+              </Menu.Popup>
+            </Menu.Root>
+            <Dialog.Root>
+              <Dialog.Trigger>Rename</Dialog.Trigger>
+              <Dialog.Popup size="sm">
+                <Dialog.Title>Rename</Dialog.Title>
+              </Dialog.Popup>
+            </Dialog.Root>
+          </Dialog.Body>
+        </Dialog.Popup>
+      </Dialog.Root>,
+    );
+    await userEvent.click(get('dialog-trigger'));
+    await until(() => expect(all('dialog-popup')).toHaveLength(1));
+    const outer = get('dialog-title');
+    for (const [trigger, popup] of [
+      [get('select-trigger'), 'select-popup'],
+      [get('menu-trigger'), 'menu-popup'],
+    ] as const) {
+      // Sequential on purpose: each opens and closes before the next.
+      // oxlint-disable-next-line no-await-in-loop
+      await userEvent.click(trigger);
+      // oxlint-disable-next-line no-await-in-loop
+      await until(() => expect(find(popup)?.hasAttribute('data-entering')).toBe(false));
+      // A press on the dialog's title, outside the popup: the popup's underlay takes it, inside the
+      // dialog's top-layer nested container, where React Aria does not look (§12.2, D-bn).
+      // oxlint-disable-next-line no-await-in-loop
+      await userEvent.click(outer, { force: true });
+      // oxlint-disable-next-line no-await-in-loop
+      await until(() => expect(find(popup)).toBeNull());
+      expect(all('dialog-popup')).toHaveLength(1);
+      // oxlint-disable-next-line no-await-in-loop
+      await until(() => expect(document.activeElement).toBe(trigger));
+    }
+    const rename = all('dialog-trigger')[1];
+    if (rename === undefined) throw new Error('no inner trigger');
+    await userEvent.click(rename);
+    await until(() => expect(all('dialog-popup')).toHaveLength(2));
+    await until(() => expect(all('dialog-popup')[1]?.hasAttribute('data-entering')).toBe(false));
+    // The inner dialog's positioner covers the outer one: a press in its corner is outside it.
+    await userEvent.click(all('dialog-positioner')[1] ?? outer, {
+      force: true,
+      position: { x: 4, y: 4 },
+    });
+    await until(() => expect(all('dialog-popup')).toHaveLength(1));
+    await until(() => expect(document.activeElement).toBe(rename));
+    await escape();
+    await until(() => expect(all('dialog-popup')).toHaveLength(0));
+  });
 });

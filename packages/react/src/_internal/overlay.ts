@@ -20,8 +20,9 @@
 //   focus-return chain of §12.2 (`return-focus`: `returnFocus`, the trigger even after a popup
 //   that was open on the server, the parent overlay's trigger, then <body> with a development
 //   warning), a dialog focuses its first field (`initial-focus`), and a nested overlay's portal
-//   container stays interactive under a modal parent (`nested-top-layer`). The conformance suite
-//   tests all four.
+//   container stays interactive under a modal parent (`nested-top-layer`), and a press outside a
+//   popup opened inside another overlay closes it (`outside-press`: the engine ignores presses inside
+//   the top-layer-exempt nested container, week 13). The conformance suite tests all five.
 import type { CSSProperties, ReactElement, ReactNode, RefObject } from 'react';
 import type { Align, Side } from '../contracts/state';
 
@@ -42,7 +43,12 @@ export type LogicalSide = 'top' | 'bottom' | 'start' | 'end';
 export type DelegatedMechanic = 'inert' | 'scroll-lock' | 'dismiss-stack' | 'focus-return';
 
 /** Behaviour the family adds where its engine stops short of §12.2 (D-af). */
-export type FamilyCompletion = 'tab-out' | 'return-focus' | 'initial-focus' | 'nested-top-layer';
+export type FamilyCompletion =
+  | 'tab-out'
+  | 'return-focus'
+  | 'initial-focus'
+  | 'nested-top-layer'
+  | 'outside-press';
 
 export interface OverlayEngine {
   /** Nested overlays rendered inside `children` portal into `container` (§12.1 L2). */

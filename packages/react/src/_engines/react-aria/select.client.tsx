@@ -28,6 +28,7 @@ import { defined, engineDom } from './dom';
 import { EngineLocale } from './locale.client';
 import { popupStyle, resolveSide, toPlacement } from './overlay.client';
 import { ReturnFocus, useTabOut, useTriggerRef } from './popup.client';
+import { OutsidePress } from './outside-press.client';
 
 /**
  * React Aria 1.22.1 resets the state on the form's `reset`, then the browser resets the hidden native
@@ -180,6 +181,7 @@ export const Popup: SelectEngine['Popup'] = ({
       }}
     >
       <ReturnFocus trigger={trigger} popup={popup} />
+      <OutsidePress popup={popup} />
       <ListBox
         render={(p) => createElement('div', mergeProps(engineDom(p), list, { onKeyDown: tabOut }))}
       >
