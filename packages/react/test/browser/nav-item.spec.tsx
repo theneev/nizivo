@@ -84,6 +84,15 @@ async function tabTo(from: HTMLElement, expected: HTMLElement): Promise<void> {
   }
 }
 
+/** The collapsed example, once its Sidebar is laid out as the 72 px rail (a loaded lane can lag). */
+async function mountRail(): Promise<HTMLElement> {
+  const container = await mount(<NavItemCollapsedExample />);
+  const sidebar = one(container, '[data-slot="sidebar"]');
+  // oxlint-disable-next-line no-await-in-loop -- polls one condition
+  for (let i = 0; i < 100 && sidebar.getBoundingClientRect().width !== 72; i++) await frames(10);
+  return container;
+}
+
 describe('NavItem', () => {
   test('Tab visits every enabled link in order; a disabled item is not a stop', async () => {
     const container = await mount(<NavItemRouterExample />);
@@ -148,7 +157,7 @@ describe('NavItem', () => {
   });
 
   test('in a collapsed Sidebar: 40 px squares; the label and count stay as text, out of sight', async () => {
-    const container = await mount(<NavItemCollapsedExample />);
+    const container = await mountRail();
     for (const item of items(container)) {
       const box = item.getBoundingClientRect();
       expect([box.width, box.height]).toEqual([40, 40]);
@@ -169,7 +178,7 @@ describe('NavItem', () => {
   });
 
   test('in the rail, keyboard focus shows the label beside the item, past the sidebar', async () => {
-    const container = await mount(<NavItemCollapsedExample />);
+    const container = await mountRail();
     const [home] = items(container);
     if (home === undefined) throw new Error('no item');
     const sidebar = one(container, '[data-slot="sidebar"]');

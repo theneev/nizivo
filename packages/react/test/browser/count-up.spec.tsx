@@ -87,6 +87,9 @@ async function mount(
   roots.push(root);
   root.render(app);
   await settle(30);
+  // under a full lane's load the first commit can land after 30 ms (Firefox, week 20): wait for it
+  // oxlint-disable-next-line no-await-in-loop -- polls one condition
+  for (let i = 0; i < 100 && container.firstChild === null; i++) await settle(10);
   return { container, root };
 }
 
