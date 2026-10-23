@@ -48,6 +48,9 @@
  * through its built dist/ and dist/styles.css, with tokens.css and no @nizivo/react CSS: the
  * charts-only route of §5.2), with baselines in packages/charts/test/visual. Charts parts have no
  * component.json, so their shots are rest and focus (Tab stops) only; the harness is this lane's.
+ * Each part's basic example (`<Part>Example`) is also shot at rest in a 20rem stage, `narrow`: a
+ * phone's card, where the charts' container queries lay them out differently (a CSP-clean example
+ * cannot narrow itself: no inline style, test/ssr/examples.test.tsx).
  *
  * Run from packages/react after `pnpm build` (it reads dist/ and @nizivo/tokens' dist/). Baselines
  * hold one machine's rasterisation: manifest.json records the platform, Chromium and the font
@@ -309,6 +312,7 @@ html { background: var(--nz-bg-surface); color: var(--nz-text-primary); }
 body { margin: 0; font: var(--nz-font-body-m); }
 #nz-visual-start { position: fixed; inset: 0 auto auto 0; inline-size: 1px; block-size: 1px; padding: 0; border: 0; opacity: 0; }
 #nz-visual-stage { box-sizing: border-box; inline-size: 720px; padding: 40px; }
+#nz-visual-stage[data-narrow] { inline-size: calc(20rem + 80px); }
 /* the docs preview (apps/docs/app/global.css .nz-docs-preview) */
 .nz-visual-host { display: flex; flex-wrap: wrap; align-items: center; gap: var(--nz-space-4); }
 .nz-visual-host > div:not([data-slot]) { display: flex; flex-wrap: wrap; align-items: center; gap: var(--nz-space-4); inline-size: 100%; }
@@ -518,6 +522,23 @@ async function captureExample(p: Page, ex: ExampleRef): Promise<Map<string, Imag
     }
   }
   await call(p, 'unmount');
+
+  // Last and on a fresh mount, so no state above sees the resize: a charts part's basic example in
+  // the 20rem stage
+  if (TARGET === 'charts' && ex.slug === 'basic') {
+    // a string, as this file compiles without the DOM library
+    const narrow = (on: boolean): Promise<unknown> =>
+      p.evaluate(
+        `document.querySelector('#nz-visual-stage').toggleAttribute('data-narrow', ${on})`,
+      );
+    await call(p, 'resetFocus');
+    await away();
+    await narrow(true);
+    await call(p, 'mount', ex.component, ex.name);
+    await take('narrow');
+    await call(p, 'unmount');
+    await narrow(false);
+  }
   return shots;
 }
 
