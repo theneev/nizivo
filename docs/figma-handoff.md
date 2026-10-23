@@ -814,8 +814,8 @@ Questions 2–10, 12, 34 and 35 are for the decision meeting (ask #2). Most need
 
 1. ~~`spring()` order: is `spring(1, 260, 24, 0)` mass, stiffness, damping, initial velocity?~~ **Answered 2026-10-14: yes.** The maintainer: "string numbers look fine" (§1.4 #5).
 2. Spring timing: is it OK that overlays entering on `easing/spring` take about 493 ms to settle fully (702 ms for spring-soft), instead of `duration/base` (220 ms)?
-3. Rail-to-expanded sidebar breakpoint: is 1280 px right? If not, what value?
-4. Sidebar widths: are the frames (248 expanded, 76 rail) or the tokens (264, 72) correct?
+3. Rail-to-expanded sidebar breakpoint: is 1280 px right? If not, what value? **Answered 2026-10-23 by the maintainer (M49): 1280 px.**
+4. Sidebar widths: are the frames (248 expanded, 76 rail) or the tokens (264, 72) correct? **Answered 2026-10-23 by the maintainer (M49): the tokens, 264 / 72.**
 5. Resting cards: flat with a 1 px `border/subtle` (as on page 08), or Elevation/1?
 6. Hover timing: retime the 160 ms hovers to `duration/fast` (140 ms, as the Button description says), or add a 160 ms token?
 7. Toasts: OK that toasts with an action, and Critical toasts, stay until dismissed, while plain toasts leave after 5 s?
@@ -835,7 +835,7 @@ Questions 2–10, 12, 34 and 35 are for the decision meeting (ask #2). Most need
 21. Status fills: do you want solid Success, Warning and Info fills (a solid Badge, count dots), or only subtle tints?
 22. Chart dimming: one opacity for dimmed series. 0.35 or 0.45?
 23. Selected look: one style for Pagination, filter chips and Segment. Brand tint, white with shadow, or inverse black?
-24. Top-bar search: a real input, or a button that opens the Command Menu?
+24. Top-bar search: a real input, or a button that opens the Command Menu? **Answered 2026-10-23 by the maintainer (M49): a real input.**
 25. Banner "Promo": rename the tone to "Brand" (as on Badge and Card), or keep "Promo"?
 26. Leftover collections: does another Neev file use Clario, Pipkin or the others (archive them), or can they be deleted?
 27. Subscribed libraries: is Material 3, Simple Design System or any Apple kit used anywhere in this file?
@@ -846,7 +846,7 @@ Questions 2–10, 12, 34 and 35 are for the decision meeting (ask #2). Most need
 32. Drawer: on wide screens, should a non-modal drawer push the content aside instead of overlapping it?
 33. Right-to-left: OK that charts do not mirror in RTL languages (time still runs left to right)?
 34. Reduced-motion fades: Reduced mode sets `duration/fast` to 0, but your principle says "Reduced mode keeps fades … ≤160ms". May we add `duration/fade` (140 ms Default, 120 ms Reduced) to the Motion collection for exits and opacity-only fades? Code ships it as `--nz-duration-fade` until then.
-35. Mobile navigation: below 640 px the tab bar holds 5 destinations. Do the remaining sidebar items live in the "More" sheet? And do you want an off-canvas sidebar on tablet portrait (640–1279 px) instead of the rail? (Page 08 notes "Sidebar off-canvas mode for tablet portrait" as an open need; code ships the rail until you answer.)
+35. Mobile navigation: below 640 px the tab bar holds 5 destinations. Do the remaining sidebar items live in the "More" sheet? And do you want an off-canvas sidebar on tablet portrait (640–1279 px) instead of the rail? (Page 08 notes "Sidebar off-canvas mode for tablet portrait" as an open need; code ships the rail until you answer.) **Answered 2026-10-23 by the maintainer (M49): the rest go in the "More" sheet; tablet portrait keeps the rail.**
 36. ~~Inverse inside inverse: when an inverse surface sits inside another inverse surface, should the inner one stay inverse (what code does today) or flip back to the page's scheme?~~ **Set aside, 2026-10-14:** the maintainer said "if current design does not use it let's not worry about it right now", and the design has no nested inverse surface. Code keeps the inner one inverse; the question reopens if a design nests one (§1.4 #6, §4.6).
 
 ---
