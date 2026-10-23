@@ -9,3 +9,5 @@ description: A keyboard shortcut drawn for both platforms, such as ⌘K and Ctrl
 mode; its code is bundled only when a client component (a `'use client'` file) imports it. It
 renders both platforms' keys and CSS shows one, from the `data-nz-platform` attribute that
 ThemeScript sets; without ThemeScript the Ctrl spelling shows. [How to choose](/docs/guides/static-or-interactive/).
+
+In a client app (a Vite or React Router single-page app, or a `'use client'` file) it is an ordinary React component: event handlers, refs and state work as usual. [In a client app](/docs/guides/static-or-interactive/#in-a-client-app).

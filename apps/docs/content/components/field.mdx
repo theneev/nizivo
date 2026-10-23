@@ -10,6 +10,8 @@ NativeSelect placed directly in it. On those zero-JS paths no client code runs, 
 `next dev` still ship FieldScope, because the shell imports it; `FieldStatic`, from the same import
 path, imports no client module. [How to choose](/docs/guides/static-or-interactive/).
 
+In a client app (a Vite or React Router single-page app, or a `'use client'` file) it is an ordinary React component: event handlers, refs and state work as usual. [In a client app](/docs/guides/static-or-interactive/#in-a-client-app).
+
 ```tsx
 import { FieldStatic } from '@nizivo/react/field';
 import { NativeSelect } from '@nizivo/react/native-select';

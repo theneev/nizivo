@@ -12,10 +12,14 @@ keyboardSource: a native `<button>` (`button.tsx`); with `render={<a />}` it is 
 ## Static or interactive
 
 **Server.** It ships no client JavaScript when a Server Component renders it, in every Next.js build
-mode; its code is bundled only when a client component (a `'use client'` file) imports it. A Server
-Component cannot pass it `onClick`: use `type="submit"` in a `<form action={serverAction}>`,
-`render={<a href="…" />}`, or a client component that owns the handler. [How to
-choose](/docs/guides/static-or-interactive/).
+mode; its code is bundled only when a client component (a `'use client'` file) imports it.
+
+`onClick` works as on any `<button>`. In a client app (a Vite or React Router single-page app, or a
+`'use client'` file) pass it, refs and state as usual
+([In a client app](/docs/guides/static-or-interactive/#in-a-client-app)). Only a Server Component
+cannot pass it, which is React's rule for every component: there, use `type="submit"` in a
+`<form action={serverAction}>`, `render={<a href="…" />}`, or a client component that owns the
+handler. [How to choose](/docs/guides/static-or-interactive/).
 
 ## Pending
 

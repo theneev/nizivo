@@ -16,6 +16,8 @@ keyboardSource: The Alert shell (`alert.tsx`) renders the action before the dism
 does not import the leaf, so an Alert without `dismiss` ships nothing in every build mode. [How to
 choose](/docs/guides/static-or-interactive/).
 
+In a client app (a Vite or React Router single-page app, or a `'use client'` file) it is an ordinary React component: event handlers, refs and state work as usual. [In a client app](/docs/guides/static-or-interactive/#in-a-client-app).
+
 ## The dismiss button
 
 Pass an `AlertDismiss` in `dismiss`. With no `render` it is an IconButton (tertiary, `sm`) showing

@@ -10,6 +10,8 @@ mode; its code is bundled only when a client component (a `'use client'` file) i
 part is server-safe; a child you put in `Card.Action` ships whatever its own component ships. [How
 to choose](/docs/guides/static-or-interactive/).
 
+In a client app (a Vite or React Router single-page app, or a `'use client'` file) it is an ordinary React component: event handlers, refs and state work as usual. [In a client app](/docs/guides/static-or-interactive/#in-a-client-app).
+
 ## Tones
 
 `tone="brand"` and `tone="accent"` (week 12) are in the repository and ship in 0.2.0; the 0.1.0 on

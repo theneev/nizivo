@@ -25,6 +25,8 @@ their own, [TableSelection](/docs/components/table-selection/), so a page that i
 `@nizivo/react/table` loads no client module in any bundler.
 [How to choose](/docs/guides/static-or-interactive/).
 
+In a client app (a Vite or React Router single-page app, or a `'use client'` file) it is an ordinary React component: event handlers, refs and state work as usual. [In a client app](/docs/guides/static-or-interactive/#in-a-client-app).
+
 ## Name every table
 
 Give the table a `Table.Caption`. When a card heading already says the same words, keep the caption
@@ -39,11 +41,23 @@ Buttons and other links in the row stay above it. Pass the router's link with
 
 ## Sorting
 
-The URL holds the sort. Put a `Table.SortButton` in each sortable `Table.Head`, with `href` to the
-same page sorted by that column (`render={<Link href="…" />}` for the router's link), and pass
-`sort="ascending"` or `sort="descending"` to the column the page is sorted by: its `<th>` gets
-`aria-sort`, and the arrow follows. With neither `href` nor `render`, `Table.SortButton` is a
-`<button type="button">` for your own handler.
+**In the URL** (a Server Component, or any page whose sort should survive a reload or a shared link):
+put a `Table.SortButton` in each sortable `Table.Head`, with `href` to the same page sorted by that
+column (`render={<Link href="…" />}` for the router's link), and pass `sort="ascending"` or
+`sort="descending"` to the column the page is sorted by: its `<th>` gets `aria-sort`, and the arrow
+follows.
+
+**In state** (a client component): with neither `href` nor `render`, `Table.SortButton` is a
+`<button type="button">` for your own handler. Keep the column and direction in `useState`, sort
+the rows, and pass `sort` to the sorted column's `Table.Head`:
+
+```tsx
+<Table.Head sort={column === 'name' ? direction : undefined}>
+  <Table.SortButton onClick={() => sortBy('name')}>Product</Table.SortButton>
+</Table.Head>
+```
+
+[In a client app](/docs/guides/static-or-interactive/#in-a-client-app) has the whole example, live.
 
 ## Numbers and dates
 

@@ -26,6 +26,8 @@ table. Import them from `@nizivo/react/table-selection`, next to `Table` from
 `@nizivo/react/table`: a page that does not use selection loads none of it, under Turbopack and
 webpack alike. [How to choose](/docs/guides/static-or-interactive/).
 
+In a client app (a Vite or React Router single-page app, or a `'use client'` file) it is an ordinary React component: event handlers, refs and state work as usual. [In a client app](/docs/guides/static-or-interactive/#in-a-client-app).
+
 ## Bulk actions
 
 Put a `TableSelectRow` in each row and a `TableSelectAll` in the header, and wrap the table in

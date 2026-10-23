@@ -21,6 +21,8 @@ keyboardSource: Native `<button>` elements; no engine. Checked by the browser la
 blocks work and must stay. The Banner does not hide itself: `onDismiss` updates your state, or is a
 Server Action, and the page stops rendering it. [How to choose](/docs/guides/static-or-interactive/).
 
+In a client app (a Vite or React Router single-page app, or a `'use client'` file) it is an ordinary React component: event handlers, refs and state work as usual. [In a client app](/docs/guides/static-or-interactive/#in-a-client-app).
+
 ## Banner or Alert
 
 A **Banner** speaks to the whole page, under the header: a promotion, a plan about to renew. Show one

@@ -28,6 +28,7 @@ import {
   TypeScale,
   ZIndexScale,
 } from './foundations';
+import { ClientPagingDemo, ClientSortDemo } from './client-demos';
 import { ComponentIndex } from './component-index';
 import { BrandGrid, IconCount, IconGrid } from './icons';
 import { JsRefGroups, TokensJsonCount, TokensJsonEntry, TokensJsonSummary } from './js-tokens';
@@ -37,6 +38,8 @@ import { ThemeScopesDemo } from './theme-demo';
 export const mdxComponents: MDXComponents = {
   ...defaultMdxComponents,
   Callout,
+  ClientPagingDemo,
+  ClientSortDemo,
   Steps,
   Step,
   Tabs,

@@ -18,6 +18,8 @@ Turbopack, once per page). `tooltip={false}` runs no client code, but Turbopack 
 ship that code, because the shell imports the leaf; `IconButtonStatic`, from the same import path,
 imports no client module. [How to choose](/docs/guides/static-or-interactive/).
 
+In a client app (a Vite or React Router single-page app, or a `'use client'` file) it is an ordinary React component: event handlers, refs and state work as usual. [In a client app](/docs/guides/static-or-interactive/#in-a-client-app).
+
 ```tsx
 import { IconButton, IconButtonStatic } from '@nizivo/react/icon-button';
 

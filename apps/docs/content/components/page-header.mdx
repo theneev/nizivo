@@ -18,6 +18,8 @@ keyboardSource: Native elements only; no engine. Checked by the browser lane (te
 keeps its own tier: a Button stays server-rendered, a SegmentedControl hydrates.
 [How to choose](/docs/guides/static-or-interactive/).
 
+In a client app (a Vite or React Router single-page app, or a `'use client'` file) it is an ordinary React component: event handlers, refs and state work as usual. [In a client app](/docs/guides/static-or-interactive/#in-a-client-app).
+
 ## One heading per page
 
 `title` renders the page's `<h1>`. The shell's top bar shows the section name as text, not as a

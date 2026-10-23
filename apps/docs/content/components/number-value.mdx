@@ -14,3 +14,5 @@ description: A number formatted once with `Intl.NumberFormat`, in a `<data>` ele
 mode; its code is bundled only when a client component (a `'use client'` file) imports it. The text is formatted on the server with `Intl.NumberFormat(locale, format)`; `formatNumber`, exported
 from the same subpath, returns the same text, so CountUp's client frames end on exactly the server's
 string. [How to choose](/docs/guides/static-or-interactive/).
+
+In a client app (a Vite or React Router single-page app, or a `'use client'` file) it is an ordinary React component: event handlers, refs and state work as usual. [In a client app](/docs/guides/static-or-interactive/#in-a-client-app).

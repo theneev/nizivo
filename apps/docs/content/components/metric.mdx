@@ -14,5 +14,7 @@ description: A label, a number and its change, the block Figma draws in both the
 mode; its code is bundled only when a client component (a `'use client'` file) imports it. A chart in its `chart` slot ships what its own module ships. [How to
 choose](/docs/guides/static-or-interactive/).
 
+In a client app (a Vite or React Router single-page app, or a `'use client'` file) it is an ordinary React component: event handlers, refs and state work as usual. [In a client app](/docs/guides/static-or-interactive/#in-a-client-app).
+
 See [Dashboard](/docs/dashboard/#loading-empty-and-error) for the status contract it shares with
 KpiTile, TrendCard and RankedList.
