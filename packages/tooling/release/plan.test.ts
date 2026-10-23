@@ -343,6 +343,8 @@ interface World {
   tamper?: string;
   /** a lane that rewrites a committed file */
   laneDirties?: boolean;
+  /** lane scripts that exit 1 */
+  failScripts?: string[];
   /** the npm login file is missing (and its folder, unless in `existing`) */
   noUserconfig?: boolean;
   env?: Record<string, string>;
@@ -401,6 +403,10 @@ function world(w: World = {}) {
       join(REPO_ROOT, 'packages/charts/package.json'),
       JSON.stringify({ name: '@nizivo/charts', scripts: scripts(['test:browser', 'test:visual']) }),
     );
+    files.set(
+      join(REPO_ROOT, 'packages/tooling/react-hooks-lint/package.json'),
+      JSON.stringify({ name: '@nizivo/react-hooks-lint', scripts: scripts(['lint:hooks']) }),
+    );
     for (const { name, dir } of PUBLISHED) {
       files.set(
         join(REPO_ROOT, dir, 'package.json'),
@@ -454,6 +460,8 @@ function world(w: World = {}) {
       const pnpmArgs = args.slice(1);
       if (pnpmArgs[0] === '--version') return OK('12.11.2\n');
       if (pnpmArgs[0] === 'run' && String(pnpmArgs[1]).startsWith('fixture:')) laneRan = true;
+      if (pnpmArgs[0] === 'run' && w.failScripts?.includes(String(pnpmArgs[1])) === true)
+        return { status: 1, stdout: '', stderr: '' };
       if (pnpmArgs[0] === 'changeset' && pnpmArgs[1] === 'status') {
         const releases =
           w.pending === true && !versioned
@@ -812,6 +820,18 @@ describe('release', () => {
     expectSafe(lines(), false);
   });
 
+  test('a failed non-blocking lane is reported and blocks nothing; a blocking one stops the run', async () => {
+    const hooks = world({ ...READY, failScripts: ['lint:hooks'], answers: ['publish'] });
+    expect(await release(REAL, hooks.io)).toBe(0);
+    expect(hooks.publishes()).toHaveLength(PUBLISHED.length);
+    expect(hooks.logs.join('\n')).toContain(
+      'lane react-hooks: failed (exit 1); non-blocking, reported only',
+    );
+    const visual = world({ ...READY, failScripts: ['test:visual'], answers: ['publish'] });
+    expect(await release(REAL, visual.io)).toBe(1);
+    expect(visual.publishes()).toEqual([]);
+  });
+
   test('a lane that leaves the tree dirty blocks the release', async () => {
     const { io, publishes, logs } = world({ ...READY, laneDirties: true, answers: ['publish'] });
     expect(await release(REAL, io)).toBe(1);
@@ -957,6 +977,7 @@ describe('release', () => {
       'fixture-vite-ssr',
       'fixture-react-router',
       'fixture-astro',
+      'react-hooks',
       'visual',
       'visual-charts',
     ]);

@@ -63,6 +63,13 @@ catalog:
   # Injected into Playwright pages as source; no @axe-core/playwright, which pins axe-core ~4.13 (§18.1)
   axe-core: 4.14.0
 
+  # The non-blocking React Compiler lane (§19 "Compiler rules", D14-hooks, M47):
+  # packages/tooling/react-hooks-lint runs only eslint-plugin-react-hooks, parsed by typescript-eslint
+  # (which takes TypeScript below 6.1, so that package's `typescript` is the typescript6 catalog's).
+  eslint: 10.13.0
+  eslint-plugin-react-hooks: 7.1.1
+  '@typescript-eslint/parser': 8.72.0
+
   # Docs site (apps/docs, §18.2): Fumadocs on Next, a static export. fumadocs-ui peers on
   # fumadocs-core at its own exact version; fumadocs-mdx 15.4.7 peers on fumadocs-core ^16.17.0.
   next: 16.4.2
@@ -105,6 +112,12 @@ catalog:
   lucide-static: 1.56.0
   simple-icons: 16.35.0
   svgo: 4.1.0
+
+# TypeScript 6 under the name `typescript`, for the one tool that loads it by that name (typescript-eslint's
+# parser in packages/tooling/react-hooks-lint, §19). Every other package's `typescript` is TS 7.
+catalogs:
+  typescript6:
+    typescript: npm:@typescript/typescript6@6.0.2
 
 # Supply chain (§19.3). All four keys were accepted by pnpm 12.11.2 on 2026-10-14 (it rejects unknown keys).
 minimumReleaseAge: 4320 # 3 days; keep identical to Renovate's minimumReleaseAge
@@ -153,8 +166,16 @@ minimumReleaseAgeExclude:
 # has no provenance attestation although 6.19.2 did, so no-downgrade rejects it. It is a real
 # provenance downgrade, but not a takeover: the same maintainer account (matteo.collina) published
 # 6.19.2 with provenance and 6.19.8 to 7.0.0 without it, and attestations resumed at 7.1.0.
+#
+# semver 6.3.1 (2023-07-10; eslint-plugin-react-hooks > @babel/core > semver ^6.3.1) has no provenance
+# attestation although semver 7.5.x, published weeks before it, did, so no-downgrade rejects it. It is
+# the 6.x backport of the ReDoS fix (CVE-2022-25883), published by an npm CLI maintainer
+# (lukekarrys) from the same project: a provenance downgrade on a maintenance line, not a takeover.
+# The React Router fixture has the same entry (D-cb); the maintainer accepted both (M47). One exact
+# version, so a new 6.x is gated again.
 trustPolicyExclude:
   - undici-types@6.21.0
+  - semver@6.3.1
 
 # tokens-bruecke 3.18.0 (and 3.20.0) pins figma-api 2.0.1-beta, which pins axios 0.27.2: 24 npm
 # advisories (10 high), all fixed by 0.34.0 on axios's maintained 0.x line (2026-09-16), so the

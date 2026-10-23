@@ -113,7 +113,7 @@ export function TableSelection({
     render,
     {},
     // The ref object goes to the element; nothing reads it in render (the effect above does).
-    // oxlint-disable-next-line react/refs
+    // eslint-disable-next-line react-hooks/refs -- one comment for oxlint and the react-hooks lane
     {
       'data-slot': 'table-selection',
       ref: root,

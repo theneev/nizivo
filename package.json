@@ -33,6 +33,7 @@
     "fixture:react-router": "pnpm --filter @nizivo/fixture-runner fixture:react-router",
     "fixture:astro": "pnpm --filter @nizivo/fixture-runner fixture:astro",
     "fixture:charts": "pnpm --filter @nizivo/fixture-runner fixture:charts",
+    "lint:hooks": "pnpm --filter @nizivo/react-hooks-lint lint:hooks",
     "floor": "node fixtures/floor-lane/run.ts",
     "floor:gen": "node fixtures/floor-lane/gen-w5.ts",
     "cache:audit": "node packages/tooling/cache-audit/audit.ts",

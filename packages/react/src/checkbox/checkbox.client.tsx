@@ -129,7 +129,7 @@ export function Checkbox({
         {/* consumer handlers run first; a prevented event skips ours and the Field's */}
         <input
           // mergeProps only composes the refs into one callback ref; nothing reads them in render.
-          // oxlint-disable-next-line react/refs
+          // eslint-disable-next-line react-hooks/refs -- one comment for oxlint and the react-hooks lane
           {...mergeProps(own, rest)}
           type="checkbox"
           className="nz-checkbox-input"

@@ -35,6 +35,11 @@ export interface Lane {
   dir: string;
   script: string;
   env?: Record<string, string>;
+  /**
+   * `false`: the lane runs and reports, but its failure stops neither a release nor
+   * `pnpm check:full` (the react-hooks lane, D-cd). Deleting the line makes it blocking.
+   */
+  blocking?: false;
 }
 
 export const RELEASE_LANES: readonly Lane[] = [
@@ -98,6 +103,15 @@ export const RELEASE_LANES: readonly Lane[] = [
     dir: 'fixtures/runner',
     script: `fixture:${fixture}`,
   })),
+  // eslint-plugin-react-hooks 7 on the client leaves and adapters (§19 "Compiler rules", D14-hooks,
+  // M47): non-blocking until React Compiler phase 2 is scheduled.
+  {
+    id: 'react-hooks',
+    why: 'the React Compiler rules on client leaves and adapters, non-blocking (§19, D14-hooks)',
+    dir: 'packages/tooling/react-hooks-lint',
+    script: 'lint:hooks',
+    blocking: false,
+  },
   {
     id: 'visual',
     why: 'in-repo visual regression; baselines hold on darwin-arm64 only (§18.1)',

@@ -360,6 +360,10 @@ export async function release(options: Options, io: Io): Promise<number> {
       inherit: true,
       env: { TURBO_TELEMETRY_DISABLED: '1', ...lane.env },
     });
+    if (result.status !== 0 && lane.blocking === false) {
+      note(`lane ${lane.id}: failed (exit ${result.status}); non-blocking, reported only`);
+      continue;
+    }
     if (result.status !== 0) return stop(`lane ${lane.id} failed (exit ${result.status})`);
     ok(`lane ${lane.id}`);
   }

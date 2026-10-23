@@ -44,7 +44,7 @@ if (values.list === true) {
   process.exit(0);
 }
 
-const results: { id: string; status: number; seconds: number }[] = [];
+const results: { id: string; status: number; seconds: number; blocking: boolean }[] = [];
 for (const lane of lanes) {
   console.log(
     `\n=== lane ${lane.id}: ${lane.dir} "${lane.script}"${lane.env ? ` ${JSON.stringify(lane.env)}` : ''}`,
@@ -64,20 +64,28 @@ for (const lane of lanes) {
     id: lane.id,
     status: run.status ?? 1,
     seconds: Math.round((performance.now() - start) / 100) / 10,
+    blocking: lane.blocking !== false,
   });
 }
 
 console.log('\nlane             result  seconds');
 for (const r of results) {
   console.log(
-    `${r.id.padEnd(16)} ${(r.status === 0 ? 'ok' : `FAIL ${r.status}`).padEnd(7)} ${r.seconds}`,
+    `${r.id.padEnd(16)} ${(r.status === 0 ? 'ok' : `FAIL ${r.status}`).padEnd(7)} ${r.seconds}${r.blocking ? '' : '  (non-blocking)'}`,
   );
 }
-const failed = results.filter((r) => r.status !== 0);
+const reported = results.filter((r) => r.status !== 0 && !r.blocking);
+if (reported.length > 0) {
+  console.warn(`\nlanes: non-blocking lane(s) failed: ${reported.map((r) => r.id).join(', ')}`);
+}
+const failed = results.filter((r) => r.status !== 0 && r.blocking);
 if (failed.length > 0) {
   console.error(
     `\nlanes: ${failed.length} of ${results.length} failed: ${failed.map((r) => r.id).join(', ')}`,
   );
   process.exit(1);
 }
-console.log(`\nlanes: all ${results.length} passed`);
+console.log(
+  `\nlanes: all ${results.length} ran; every blocking lane passed` +
+    (reported.length > 0 ? `, ${reported.length} non-blocking failed` : ''),
+);
