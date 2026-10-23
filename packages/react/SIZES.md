@@ -289,7 +289,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/skeleton.css          |      365 |        0.4 |        325 |         0.4 |           44 |
 | /css/split.css             |      249 |        0.2 |        226 |         0.3 |           58 |
 | /css/stack.css             |      270 |        0.3 |        209 |         0.3 |           37 |
-| /css/sticky-bar.css        |      458 |        0.4 |        379 |         0.5 |           54 |
+| /css/sticky-bar.css        |      453 |        0.4 |        371 |         0.5 |           59 |
 | /css/switch.css            |      883 |        0.9 |        738 |           1 |          141 |
 | /css/tab-nav.css           |      842 |        0.8 |        690 |           1 |          182 |
 | /css/table-selection.css   |      122 |        0.1 |         88 |         0.2 |           82 |
@@ -300,7 +300,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/toast.css             |      891 |        0.9 |        740 |           1 |          133 |
 | /css/tooltip.css           |      581 |        0.6 |        503 |         0.6 |           33 |
 | /css/trend-card.css        |      403 |        0.4 |        346 |         0.5 |          109 |
-| /styles.css                |   22,523 |       22.0 |     18,485 |          25 |        3,077 |
+| /styles.css                |   22,522 |       22.0 |     18,490 |          25 |        3,078 |
 
 #### `@nizivo/tokens`: Public JS entries (bundled with what they import, React Aria included)
 

@@ -662,7 +662,7 @@
       "limitKiB": 0.3
     },
     "@nizivo/react/css/sticky-bar.css": {
-      "measured": 458,
+      "measured": 453,
       "limitKiB": 0.5
     },
     "@nizivo/react/css/switch.css": {
@@ -706,7 +706,7 @@
       "limitKiB": 0.5
     },
     "@nizivo/react/styles.css": {
-      "measured": 22523,
+      "measured": 22522,
       "limitKiB": 25
     },
     "@nizivo/tokens": {

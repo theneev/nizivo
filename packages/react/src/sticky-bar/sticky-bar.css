@@ -39,9 +39,10 @@
     gap: var(--nz-sticky-bar-gap, var(--nz-space-3));
     justify-content: flex-end;
 
-    /* without a summary the actions share the row, as on the product screen */
+    /* without a summary the actions share the row, as on the product screen: each from its own
+       width, so a label never wraps */
     & > * {
-      flex: 1 1 0;
+      flex: 1 1 auto;
     }
   }
 

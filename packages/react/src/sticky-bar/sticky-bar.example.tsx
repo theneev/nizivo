@@ -14,7 +14,9 @@ export function StickyBarExample(): JSX.Element {
         </>
       }
     >
-      <Button size="lg">Add both to bag</Button>
+      <Button size="lg" variant="primary">
+        Add both to bag
+      </Button>
     </StickyBar>
   );
 }
@@ -26,7 +28,9 @@ export function StickyBarActionsExample(): JSX.Element {
       <Button size="lg" variant="secondary">
         Buy now
       </Button>
-      <Button size="lg">Add to bag</Button>
+      <Button size="lg" variant="primary">
+        Add to bag
+      </Button>
     </StickyBar>
   );
 }
