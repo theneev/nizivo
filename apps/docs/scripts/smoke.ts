@@ -310,11 +310,21 @@ function pageJs(path: string, fail = failures): Js {
   };
 }
 
+/**
+ * Chromium's hint that a stylesheet Next.js preloaded for a prefetched route was not applied within a
+ * few seconds of the load event. It depends only on timing: under cache:audit's parallel tasks the
+ * icons page (1,880 icons) loads late and the hint fires for the charts chunk its nav links prefetch
+ * (week 20); alone it does not. Only this hint, for the export's own CSS chunks, is ignored.
+ */
+const PRELOAD_HINT =
+  /^The resource http:\/\/127\.0\.0\.1:\d+\/_next\/static\/chunks\/[\w-]+\.css was preloaded using link preload but not used within a few seconds from the window's load event\./;
+
 /** Tracks console output, page errors and requests that leave the local server. */
 function instrument(page: Page): { messages: string[]; external: string[] } {
   const messages: string[] = [];
   const external: string[] = [];
   page.on('console', (m) => {
+    if (m.type() === 'warning' && PRELOAD_HINT.test(m.text())) return;
     if (m.type() === 'error' || m.type() === 'warning') messages.push(`${m.type()}: ${m.text()}`);
   });
   page.on('pageerror', (e) => messages.push(`pageerror: ${e.message}`));
