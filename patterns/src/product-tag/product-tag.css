@@ -1,0 +1,88 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+@layer nz.patterns {
+  /* The photo and its hotspots: the media fills the box, each spot is placed in % of it. */
+  .nzp-product-tag {
+    position: relative;
+    margin: 0;
+    max-inline-size: 23.75rem;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border-radius: var(--nz-radius-lg);
+  }
+
+  .nzp-product-tag-media {
+    position: absolute;
+    inset: 0;
+    background: var(--nz-bg-muted);
+  }
+
+  /* A zero-size anchor at the product's point; the dot is centred on it. */
+  .nzp-product-tag-spot {
+    position: absolute;
+    inline-size: 0;
+    block-size: 0;
+  }
+
+  /* The Popover's own trigger: 24 px, and 44 px of hit area on a coarse pointer (its nz-hit-target).
+     On-media pair, as the hint: bg/code and text/on-dark stay dark and white in both themes. */
+  .nzp-product-tag-dot {
+    position: absolute;
+    display: grid;
+    box-sizing: border-box;
+    place-items: center;
+    inline-size: 1.5rem;
+    block-size: 1.5rem;
+    margin-block-start: -0.75rem;
+    margin-inline-start: -0.75rem;
+    padding: 0;
+    border: 0;
+    border-radius: var(--nz-radius-full);
+    background: var(--nz-bg-code);
+    box-shadow: var(--nz-elevation-2);
+    color: var(--nz-text-on-dark);
+    cursor: pointer;
+
+    &:focus-visible {
+      outline: var(--nz-border-width-focus) solid var(--nz-border-focus);
+      outline-offset: 2px;
+    }
+  }
+
+  .nzp-product-tag-mark {
+    inline-size: 0.625rem;
+    block-size: 0.625rem;
+    border-radius: var(--nz-radius-full);
+    background: currentcolor;
+  }
+
+  .nzp-product-tag-popup {
+    min-inline-size: 12rem;
+  }
+
+  .nzp-product-tag-hint {
+    position: absolute;
+    inset-block-end: var(--nz-space-3);
+    inset-inline-start: var(--nz-space-3);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--nz-space-1-5);
+    margin: 0;
+    padding-block: var(--nz-space-1);
+    padding-inline: var(--nz-space-2) var(--nz-space-3);
+    border-radius: var(--nz-radius-full);
+    background: var(--nz-bg-code);
+    color: var(--nz-text-on-dark);
+    font: var(--nz-font-label-m);
+  }
+
+  @media (forced-colors: active) {
+    .nzp-product-tag-dot {
+      border: var(--nz-border-width-default) solid ButtonText;
+    }
+
+    .nzp-product-tag-mark {
+      background: ButtonText;
+    }
+  }
+}
