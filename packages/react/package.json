@@ -131,6 +131,10 @@
       "types": "./dist/heading/index.d.ts",
       "default": "./dist/heading/index.js"
     },
+    "./i18n": {
+      "types": "./dist/i18n/index.d.ts",
+      "default": "./dist/i18n/index.js"
+    },
     "./icon-button": {
       "types": "./dist/icon-button/index.d.ts",
       "default": "./dist/icon-button/index.js"

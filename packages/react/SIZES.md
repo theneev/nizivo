@@ -130,6 +130,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /form              |    2,750 |        2.7 |      2,486 |           3 |          322 |
 | /grid              |      793 |        0.8 |        737 |         0.9 |          128 |
 | /heading           |      767 |        0.7 |        697 |         0.9 |          154 |
+| /i18n              |      208 |        0.2 |        182 |         0.3 |           99 |
 | /icon-button       |   17,527 |       17.1 |     15,818 |          19 |        1,929 |
 | /image             |      794 |        0.8 |        723 |         0.9 |          127 |
 | /inline            |      703 |        0.7 |        639 |         0.8 |          116 |

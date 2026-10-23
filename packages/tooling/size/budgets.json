@@ -105,6 +105,10 @@
       "measured": 767,
       "limitKiB": 0.9
     },
+    "@nizivo/react/i18n": {
+      "measured": 208,
+      "limitKiB": 0.3
+    },
     "@nizivo/react/icon-button": {
       "measured": 17527,
       "limitKiB": 19
