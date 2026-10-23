@@ -195,7 +195,7 @@
     },
     {
       "declaration": "interface",
-      "description": "AvatarGroup's own strings (§16.4): serialisable, English defaults; `{count}` is replaced.",
+      "description": "AvatarGroup's own strings (§16.4): serialisable, English defaults. `{count}` is replaced by the formatted count, and a `PluralLabel` (`{ one, few, many, other }`, the locale's CLDR categories) picks its template by that count through `formatLabel`.",
       "import": "import type { AvatarGroupLabels } from '@nizivo/react/avatar'",
       "kind": "type",
       "members": [
@@ -204,14 +204,14 @@
           "description": "The count's words in the group's accessible name (\"Maya, Jonah, Priya and 4 more\").",
           "name": "more",
           "required": true,
-          "type": "string"
+          "type": "string | PluralLabel"
         },
         {
           "default": "'+{count}'",
           "description": "The visible count after the shown avatars.",
           "name": "overflow",
           "required": true,
-          "type": "string"
+          "type": "string | PluralLabel"
         }
       ],
       "name": "AvatarGroupLabels",

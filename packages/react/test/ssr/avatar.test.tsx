@@ -173,4 +173,23 @@ describe('AvatarGroup', () => {
     expect(de).toContain('aria-label="Maya und 1.200 weitere"');
     expect(de).toContain('aria-hidden="true">+1.200</span>');
   });
+
+  test('count labels take a CLDR plural object, chosen by the count in the group locale', () => {
+    const more = {
+      one: '{count} inna osoba',
+      few: '{count} inne osoby',
+      many: '{count} innych osób',
+      other: '{count} innej osoby',
+    };
+    const group = (total: number) =>
+      renderToString(
+        <AvatarGroup max={1} total={total} locale="pl" labels={{ more }}>
+          <Avatar name="Maya" />
+        </AvatarGroup>,
+      );
+    expect(group(2)).toContain('aria-label="Maya i 1 inna osoba"');
+    expect(group(4)).toContain('aria-label="Maya i 3 inne osoby"');
+    expect(group(6)).toContain('aria-label="Maya i 5 innych osób"');
+    expect(group(6)).toContain('aria-hidden="true">+5</span>');
+  });
 });

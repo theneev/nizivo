@@ -19,6 +19,7 @@ import {
   type ReactNode,
 } from 'react';
 import { renderElement, type RenderProp } from '../contracts/render';
+import { formatLabel, type PluralLabel } from '../i18n/format-label';
 import { cx } from '../_internal/cx';
 
 /** Figma "Size": Sm 24, Md 32, Lg 40, XL 56 px. */
@@ -142,12 +143,16 @@ export function Avatar({
   );
 }
 
-/** AvatarGroup's own strings (§16.4): serialisable, English defaults; `{count}` is replaced. */
+/**
+ * AvatarGroup's own strings (§16.4): serialisable, English defaults. `{count}` is replaced by the
+ * formatted count, and a `PluralLabel` (`{ one, few, many, other }`, the locale's CLDR categories)
+ * picks its template by that count through `formatLabel`.
+ */
 export interface AvatarGroupLabels {
   /** The visible count after the shown avatars. @default '+{count}' */
-  overflow: string;
+  overflow: string | PluralLabel;
   /** The count's words in the group's accessible name ("Maya, Jonah, Priya and 4 more"). @default '{count} more' */
-  more: string;
+  more: string | PluralLabel;
 }
 
 export interface AvatarGroupState {
@@ -174,8 +179,6 @@ export interface AvatarGroupProps extends ComponentPropsWithRef<'span'> {
   children?: ReactNode;
 }
 
-const fill = (template: string, count: string): string => template.replaceAll('{count}', count);
-
 /**
  * A stack of avatars and a count, announced as one item (Figma: "Maya, Jonah, Priya and 4 more"):
  * the root is `role="img"` named by the list of names, and every avatar inside is decorative.
@@ -196,9 +199,9 @@ export function AvatarGroup({
   );
   const shown = avatars.slice(0, Math.max(0, max));
   const hidden = Math.max(0, (total ?? avatars.length) - shown.length);
-  const count = new Intl.NumberFormat(locale).format(hidden);
   const names = shown.map((avatar) => avatar.props.name);
-  if (hidden > 0) names.push(fill(labels?.more ?? '{count} more', count));
+  if (hidden > 0)
+    names.push(formatLabel(labels?.more ?? '{count} more', { count: hidden }, locale));
   const label = new Intl.ListFormat(locale, { style: 'long', type: 'conjunction' }).format(names);
   return renderElement(
     'span',
@@ -216,7 +219,7 @@ export function AvatarGroup({
           {shown.map((avatar) => cloneElement(avatar, { size, decorative: true }))}
           {hidden > 0 && (
             <span className="nz-avatar-group-more" data-slot="avatar-group-more" aria-hidden="true">
-              {fill(labels?.overflow ?? '+{count}', count)}
+              {formatLabel(labels?.overflow ?? '+{count}', { count: hidden }, locale)}
             </span>
           )}
         </>
