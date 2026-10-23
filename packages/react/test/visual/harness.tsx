@@ -155,6 +155,11 @@ export function start(input: HarnessInput): void {
       for (const slot of input.interactive[component] ?? []) {
         const found = [...stage.querySelectorAll(`[data-slot="${slot}"]`)];
         found.forEach((el, index) => {
+          // a control that shows only on focus (AppShell's skip link, off-screen until then) has
+          // nothing to hover or press; its focus shots still record it
+          const box = el.getBoundingClientRect();
+          if (box.bottom <= 0 || box.right <= 0 || box.top >= innerHeight || box.left >= innerWidth)
+            return;
           controls.push({
             id: mark(el),
             slot,
