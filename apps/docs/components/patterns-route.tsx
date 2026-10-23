@@ -18,6 +18,9 @@ import { source } from '../lib/source';
 import type { ExampleModule } from './example';
 import { BlockMd, InlineMd } from './inline-md';
 import { mdxComponents } from './mdx';
+// @nizivo/charts' stylesheet, for the patterns that compose charts (a pattern imports no CSS of its
+// own); it loads on the pattern pages only, as charts-route.tsx loads it on the charts pages.
+import './charts.css';
 import './patterns.css';
 
 function mdxPage(name: string) {

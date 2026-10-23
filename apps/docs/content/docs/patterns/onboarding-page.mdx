@@ -1,0 +1,44 @@
+---
+title: Onboarding page
+description: A new store's home inside the app shell, with a setup checklist and its progress, an empty state for orders and next-step cards. It ships no JavaScript.
+---
+
+From Figma 08 Overview Dashboard, Pattern 8 · Onboarding (`7275:16478`). Uses
+[PageHeader](/docs/components/page-header/), [Split](/docs/components/split/),
+[Card](/docs/components/card/), [ProgressBar](/docs/components/progress-bar/),
+[Text](/docs/components/text/), [Button](/docs/components/button/),
+[EmptyState](/docs/components/empty-state/) and [NumberValue](/docs/components/number-value/).
+
+The example is the page's content only: in the app it goes inside
+[AppShell](/docs/components/app-shell/), which owns the sidebar, the top bars and `<main>`.
+
+```tsx
+// app/(store)/layout.tsx: the shell wraps every store page; the page renders its content
+import { AppShell } from '@nizivo/react/app-shell';
+
+<AppShell sidebar={sidebar} topBar={topBar} mobileTopBar={mobileTopBar} tabBar={tabBar}>
+  <OnboardingPageExample />
+</AppShell>;
+```
+
+## Example
+
+### Onboarding
+
+<PatternExample name="OnboardingPageExample" />
+
+## Stylesheet
+
+<PatternStylesheet />
+
+## Notes
+
+- **Heading levels.** This site's page already has its `<h1>`, so the example passes `level={2}` to
+  PageHeader. In your app, drop `level` (the title becomes the page's `<h1>`).
+- **The checklist** is an `<ol>`: the steps have an order. Each says "Done" or "To do" in words, and
+  its mark (a check or an empty circle) is decorative. Each action's name includes its step ("Set
+  up: Set up payments"), since several sit in one list.
+- **Progress.** The ProgressBar's `valueText` reads "2 of 5 steps done" rather than a percentage.
+- **Not built.** Figma's Checklist / Setup guide, Insight Card and Plan Card have no component: the
+  guide is composed here, and the next steps are Cards (`tone="brand"` and `tone="inverse"`). The
+  neutral blocks stand in for Figma's 3D renders; put an [Image](/docs/components/image/) there.

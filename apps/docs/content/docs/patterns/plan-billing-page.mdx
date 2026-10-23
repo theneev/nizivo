@@ -1,0 +1,48 @@
+---
+title: Plan and billing page
+description: A settings page inside the app shell, with a section nav beside the current plan, its usage on Meters, the payment method, the invoices table and billing emails.
+---
+
+From Figma 08 Overview Dashboard, Pattern 7 · Settings · Plan & billing (`7275:16412`). Uses
+[PageHeader](/docs/components/page-header/), [Split](/docs/components/split/),
+[NavItem](/docs/components/nav-item/), [Card](/docs/components/card/),
+[Badge](/docs/components/badge/), [Text](/docs/components/text/),
+[NumberValue](/docs/components/number-value/), [Button](/docs/components/button/),
+[Meter](/docs/components/meter/), [Table](/docs/components/table/),
+[Fieldset](/docs/components/fieldset/) and [Switch](/docs/components/switch/).
+
+The example is the page's content only: in the app it goes inside
+[AppShell](/docs/components/app-shell/), which owns the sidebar, the top bars and `<main>`.
+
+```tsx
+// app/(store)/layout.tsx: the shell wraps every store page; the page renders its content
+import { AppShell } from '@nizivo/react/app-shell';
+
+<AppShell sidebar={sidebar} topBar={topBar} mobileTopBar={mobileTopBar} tabBar={tabBar}>
+  <PlanBillingPageExample />
+</AppShell>;
+```
+
+## Example
+
+### Plan and billing
+
+<PatternExample name="PlanBillingPageExample" />
+
+## Stylesheet
+
+<PatternStylesheet />
+
+## Notes
+
+- **Heading levels.** This site's page already has its `<h1>`, so the example passes `level={2}` to
+  PageHeader. In your app, drop `level` (the title becomes the page's `<h1>`).
+- **Section nav.** A `<nav>` of NavItems in Split's narrow column, the current section
+  `aria-current="page"`. Split stacks the columns when the row is too narrow for both, as it is in
+  this site's preview; Figma has no small-screen design for it.
+- **Usage is a Meter**, with `high` at 80 % of each limit and `optimum` at zero, so a limit that is
+  nearly used shows the warning colour, and `valueText` reads "248 of 500".
+- **Not built.** Figma shows the three plan tiers as Plan Cards and the payment methods as
+  selectable Payment Method cards; neither has a component, so the example shows the current plan
+  and one method. Figma's "Billing emails" title is H3 while the other card titles are H4; here they
+  all are Card titles.

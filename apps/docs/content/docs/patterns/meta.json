@@ -21,6 +21,9 @@
     "product-detail-page",
     "orders-page",
     "customers-page",
-    "discounts-page"
+    "discounts-page",
+    "analytics-page",
+    "plan-billing-page",
+    "onboarding-page"
   ]
 }

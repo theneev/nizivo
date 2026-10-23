@@ -204,6 +204,14 @@ const CLIENT_PAGES: Record<string, string[]> = {
     'chip-input',
   ],
   '/docs/patterns/orders-page/': ['search-field-clear', 'willValidate', 'drawer-popup'],
+  // The analytics page's area, bar and donut charts render the ChartInteraction island, as on their
+  // charts pages; its route is the pattern's own, so the island stays off the shared MDX graph.
+  '/docs/patterns/analytics-page/': [
+    'segmented-control-input',
+    'willValidate',
+    'nz-chart-interaction',
+  ],
+  '/docs/patterns/plan-billing-page/': ['switch-thumb', 'willValidate'],
 };
 
 /** Pages whose JavaScript the run prints. */

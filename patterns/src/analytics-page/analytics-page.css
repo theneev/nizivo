@@ -1,0 +1,66 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* Figma 08 Pattern 6 (7275:16296): the header, the KPI row (16 apart), then the report's cards, 16
+   apart as Figma's rows are. Figma's row widths (798 / 314, 524 / 588, 690 / 422) match no column
+   span, so the report is two equal columns once the page is 36rem wide, the three charts across both
+   (the donut's legend and the bars need the width); one column below that. The grids follow the page's own width. */
+@layer nz.patterns {
+  .nzp-analytics-page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-6);
+    min-inline-size: 0;
+    container-type: inline-size;
+  }
+
+  .nzp-analytics-page-kpis {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--nz-space-4);
+  }
+
+  .nzp-analytics-page-report {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--nz-space-4);
+  }
+
+  @container (width >= 30rem) {
+    .nzp-analytics-page-kpis {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @container (width >= 36rem) {
+    .nzp-analytics-page-report {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .nzp-analytics-page-wide {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @container (width >= 56rem) {
+    .nzp-analytics-page-kpis {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .nzp-analytics-page-goals {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--nz-space-5) var(--nz-space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .nzp-analytics-page-goal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--nz-space-2);
+    text-align: center;
+  }
+}

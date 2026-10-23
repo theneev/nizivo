@@ -1,0 +1,54 @@
+---
+title: Analytics page
+description: A report inside the app shell, with a range control, key figures with sparklines, a sales trend, goals, sales by channel, orders per day and the top products.
+---
+
+From Figma 08 Overview Dashboard, Pattern 6 · Analytics (`7275:16296`). Uses
+[PageHeader](/docs/components/page-header/), [SegmentedControl](/docs/components/segmented-control/),
+[Button](/docs/components/button/), [KpiTile](/docs/components/kpi-tile/),
+[TrendCard](/docs/components/trend-card/), [Card](/docs/components/card/),
+[ProgressRing](/docs/components/progress-ring/), [Text](/docs/components/text/) and
+[RankedList](/docs/components/ranked-list/) from `@nizivo/react`, and
+[Sparkline](/docs/charts/sparkline/), [AreaChart](/docs/charts/area-chart/),
+[Legend](/docs/charts/legend/), [DonutChart](/docs/charts/donut-chart/) and
+[BarChart](/docs/charts/bar-chart/) from `@nizivo/charts`.
+
+The example is the page's content only: in the app it goes inside
+[AppShell](/docs/components/app-shell/), which owns the sidebar, the top bars and `<main>`.
+
+```tsx
+// app/(store)/layout.tsx: the shell wraps every store page; the page renders its content
+import { AppShell } from '@nizivo/react/app-shell';
+
+<AppShell sidebar={sidebar} topBar={topBar} mobileTopBar={mobileTopBar} tabBar={tabBar}>
+  <AnalyticsPageExample />
+</AppShell>;
+```
+
+## Example
+
+### Analytics
+
+<PatternExample name="AnalyticsPageExample" />
+
+## Stylesheet
+
+<PatternStylesheet />
+
+Your app also loads `@nizivo/charts/styles.css` once, as the
+[charts setup](/docs/charts/) shows.
+
+## Notes
+
+- **Heading levels.** This site's page already has its `<h1>`, so the example passes `level={2}` to
+  PageHeader. In your app, drop `level` (the title becomes the page's `<h1>`).
+- **Charts in cards.** Each chart's Card title names it on screen; the chart takes the same
+  `title` with `titleVisibility="hidden"`, so its figure and its data table keep the name.
+  The area, bar and donut charts load their small interaction island; the sparklines ship nothing.
+- **The range.** The SegmentedControl submits `range` with a form, or drives the data from the
+  client; the example leaves that wiring to your app.
+- **Layout.** Figma's row widths (798 / 314, 524 / 588, 690 / 422) match no column span, so the
+  report is two equal columns from 36rem, the three charts across both.
+- **Not built.** Figma's Funnel chart ("Checkout funnel") and Heatmap ("Orders by hour") have no
+  component in `@nizivo/charts`, so the example leaves both out and shows the sales trend in
+  their place.

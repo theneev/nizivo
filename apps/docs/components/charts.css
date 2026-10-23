@@ -1,8 +1,9 @@
 /* @nizivo/charts on the docs site: its one stylesheet inside Tailwind's `components` layer, as the
  * Tailwind recipe puts @nizivo/react's (app/global.css, ARCHITECTURE.md §7.8), so its nz.* layers
- * merge with react's under `components`. Imported by components/charts-route.tsx, which only the
- * generated charts routes (app/docs/(generated)/charts/<part>) import, so the sheet loads on the
- * charts part pages, not site-wide. */
+ * merge with react's under `components`. Imported by components/charts-route.tsx and
+ * components/patterns-route.tsx, which only the generated charts and patterns routes
+ * (app/docs/(generated)/charts/<part>, …/patterns/<name>) import, so the sheet loads on those
+ * pages, not site-wide. */
 @import '@nizivo/charts/styles.css' layer(components);
 
 @layer components {
