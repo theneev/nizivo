@@ -2,7 +2,7 @@
   "$comment": "Size budgets (ARCHITECTURE.md §17), written by `node packages/tooling/size/measure.ts --write`. measured: bytes, gzip -9, as size-limit 14.2 reports them. limitKiB: measured + 10%, rounded up (method.ts limitKiB), never above the entry's §17.1 plan limit (method.ts PLAN_LIMITS_KIB). Limits only go up through a labelled PR (§17.3).",
   "entries": {
     "@nizivo/react": {
-      "measured": 101838,
+      "measured": 102002,
       "limitKiB": 107
     },
     "@nizivo/react/alert": {
@@ -181,9 +181,17 @@
       "measured": 716,
       "limitKiB": 0.8
     },
+    "@nizivo/react/split": {
+      "measured": 880,
+      "limitKiB": 1
+    },
     "@nizivo/react/stack": {
       "measured": 703,
       "limitKiB": 0.8
+    },
+    "@nizivo/react/sticky-bar": {
+      "measured": 799,
+      "limitKiB": 0.9
     },
     "@nizivo/react/switch": {
       "measured": 1730,
@@ -234,11 +242,11 @@
       "limitKiB": 85
     },
     "@nizivo/react { Button } from the barrel": {
-      "measured": 1278,
+      "measured": 1277,
       "limitKiB": 1.4
     },
     "@nizivo/react { Select } from the barrel": {
-      "measured": 63663,
+      "measured": 63664,
       "limitKiB": 68
     },
     "@nizivo/react own: _engines/react-aria/dialog.client": {
@@ -557,9 +565,17 @@
       "measured": 365,
       "limitKiB": 0.4
     },
+    "@nizivo/react/css/split.css": {
+      "measured": 251,
+      "limitKiB": 0.3
+    },
     "@nizivo/react/css/stack.css": {
       "measured": 270,
       "limitKiB": 0.3
+    },
+    "@nizivo/react/css/sticky-bar.css": {
+      "measured": 458,
+      "limitKiB": 0.5
     },
     "@nizivo/react/css/switch.css": {
       "measured": 883,
@@ -602,8 +618,8 @@
       "limitKiB": 0.5
     },
     "@nizivo/react/styles.css": {
-      "measured": 19434,
-      "limitKiB": 19
+      "measured": 19656,
+      "limitKiB": 22
     },
     "@nizivo/tokens": {
       "measured": 2370,

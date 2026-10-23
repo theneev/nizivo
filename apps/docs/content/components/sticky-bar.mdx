@@ -1,0 +1,31 @@
+---
+title: StickyBar
+description: A bar of actions that sticks to the bottom of the viewport while its section scrolls, above the device's home indicator and the shell's bottom tab bar.
+---
+
+<Callout type="warn" title="Not yet published (v0.2)">
+  This part is in the repository and ships in `@nizivo/react` 0.2.0; the 0.1.0 on npm does not have
+  it. Until then its API can change.
+</Callout>
+
+## Static or interactive
+
+**Server.** It ships no client JavaScript when a Server Component renders it, in every Next.js build
+mode; its code is bundled only when a client component (a `'use client'` file) imports it. [How to
+choose](/docs/guides/static-or-interactive/).
+
+In a client app (a Vite or React Router single-page app, or a `'use client'` file) it is an ordinary React component: event handlers, refs and state work as usual. [In a client app](/docs/guides/static-or-interactive/#in-a-client-app).
+
+## Placement
+
+Put it last in the content it acts on: it sticks to the viewport's bottom edge while that content
+scrolls, and settles at its end. A `summary` (for example the item count and the total) sits at the
+start, Label/M in `text/secondary`; the actions sit at the end. Without a summary, the actions
+share the row, as the storefront's product screen draws them.
+
+The bar's bottom padding includes the device's safe area (`env(safe-area-inset-bottom)`, which
+needs `viewport-fit=cover` in the page's viewport meta), where Figma drew a fixed 28 px. It sits
+above the shell's bottom chrome through `--nz-layout-bottom-inset`, in the `--nz-z-sticky` band: below
+overlays and toasts.
+
+Hooks: `--nz-sticky-bar-bg`, `--nz-sticky-bar-border`, `--nz-sticky-bar-gap`.

@@ -1941,6 +1941,54 @@
       "name": "SkeletonState"
     },
     {
+      "definedIn": "./split",
+      "import": "import { Split } from '@nizivo/react'",
+      "kind": "namespace",
+      "name": "Split"
+    },
+    {
+      "definedIn": "./split",
+      "import": "import { SplitAside } from '@nizivo/react'",
+      "kind": "part",
+      "name": "SplitAside"
+    },
+    {
+      "definedIn": "./split",
+      "import": "import type { SplitAsideProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "SplitAsideProps"
+    },
+    {
+      "definedIn": "./split",
+      "import": "import type { SplitAsideWidth } from '@nizivo/react'",
+      "kind": "type",
+      "name": "SplitAsideWidth"
+    },
+    {
+      "definedIn": "./split",
+      "import": "import { SplitMain } from '@nizivo/react'",
+      "kind": "part",
+      "name": "SplitMain"
+    },
+    {
+      "definedIn": "./split",
+      "import": "import type { SplitMainProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "SplitMainProps"
+    },
+    {
+      "definedIn": "./split",
+      "import": "import { SplitRoot } from '@nizivo/react'",
+      "kind": "part",
+      "name": "SplitRoot"
+    },
+    {
+      "definedIn": "./split",
+      "import": "import type { SplitRootProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "SplitRootProps"
+    },
+    {
       "definedIn": "./stack",
       "import": "import { Stack } from '@nizivo/react'",
       "kind": "component",
@@ -1957,6 +2005,18 @@
       "import": "import type { StackState } from '@nizivo/react'",
       "kind": "type",
       "name": "StackState"
+    },
+    {
+      "definedIn": "./sticky-bar",
+      "import": "import { StickyBar } from '@nizivo/react'",
+      "kind": "component",
+      "name": "StickyBar"
+    },
+    {
+      "definedIn": "./sticky-bar",
+      "import": "import type { StickyBarProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "StickyBarProps"
     },
     {
       "definedIn": "./switch",

@@ -104,7 +104,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 | Entry              | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | ------------------ | -------: | ---------: | ---------: | ----------: | -----------: |
-| `.`                |  101,838 |       99.5 |     84,958 |         107 |        7,730 |
+| `.`                |  102,002 |       99.6 |     85,198 |         107 |        7,566 |
 | /alert             |    1,283 |        1.3 |      1,182 |         1.4 |          150 |
 | /augment           |        0 |        0.0 |          0 |           0 |            — |
 | /avatar            |    1,381 |        1.3 |      1,283 |         1.5 |          155 |
@@ -149,7 +149,9 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /select            |   63,728 |       62.2 |     54,791 |          66 |        3,856 |
 | /separator         |      772 |        0.8 |        699 |         0.9 |          149 |
 | /skeleton          |      716 |        0.7 |        652 |         0.8 |          103 |
+| /split             |      880 |        0.9 |        804 |           1 |          144 |
 | /stack             |      703 |        0.7 |        640 |         0.8 |          116 |
+| /sticky-bar        |      799 |        0.8 |        729 |         0.9 |          122 |
 | /switch            |    1,730 |        1.7 |      1,575 |         1.9 |          215 |
 | /tab-nav           |    1,031 |        1.0 |        949 |         1.2 |          197 |
 | /table             |    1,661 |        1.6 |      1,505 |         1.8 |          182 |
@@ -167,8 +169,8 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | Entry                      | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | -------------------------- | -------: | ---------: | ---------: | ----------: | -----------: |
 | dashboard set              |   78,886 |       77.0 |     66,602 |          85 |        8,154 |
-| { Button } from the barrel |    1,278 |        1.2 |      1,168 |         1.4 |          155 |
-| { Select } from the barrel |   63,663 |       62.2 |     54,684 |          68 |        5,969 |
+| { Button } from the barrel |    1,277 |        1.2 |      1,168 |         1.4 |          156 |
+| { Select } from the barrel |   63,664 |       62.2 |     54,630 |          68 |        5,968 |
 
 #### `@nizivo/react`: Own code (one module minified alone, imports not counted)
 
@@ -263,7 +265,9 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/select.css            |    1,237 |        1.2 |      1,040 |         1.4 |          196 |
 | /css/separator.css         |      261 |        0.3 |        203 |         0.3 |           46 |
 | /css/skeleton.css          |      365 |        0.4 |        325 |         0.4 |           44 |
+| /css/split.css             |      251 |        0.2 |        230 |         0.3 |           56 |
 | /css/stack.css             |      270 |        0.3 |        209 |         0.3 |           37 |
+| /css/sticky-bar.css        |      458 |        0.4 |        379 |         0.5 |           54 |
 | /css/switch.css            |      883 |        0.9 |        738 |           1 |          141 |
 | /css/tab-nav.css           |      842 |        0.8 |        690 |           1 |          182 |
 | /css/table-selection.css   |      122 |        0.1 |         88 |         0.2 |           82 |
@@ -274,7 +278,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/toast.css             |      891 |        0.9 |        740 |           1 |          133 |
 | /css/tooltip.css           |      581 |        0.6 |        503 |         0.6 |           33 |
 | /css/trend-card.css        |      403 |        0.4 |        346 |         0.5 |          109 |
-| /styles.css                |   19,434 |       19.0 |     16,221 |          19 |           22 |
+| /styles.css                |   19,656 |       19.2 |     16,482 |          22 |        2,872 |
 
 #### `@nizivo/tokens`: Public JS entries (bundled with what they import, React Aria included)
 

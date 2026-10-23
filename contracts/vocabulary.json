@@ -241,6 +241,12 @@
       "meaning": "The column holds numbers: end-aligned, with tabular figures"
     },
     {
+      "name": "data-aside",
+      "values": ["narrow", "wide"],
+      "on": "Split",
+      "meaning": "The aside's width while the columns sit side by side"
+    },
+    {
       "name": "data-presentation",
       "values": ["table", "list"],
       "on": "DataView",

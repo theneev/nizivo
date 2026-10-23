@@ -1,0 +1,29 @@
+---
+title: Split
+description: A main column and an aside, side by side while there is room and stacked below that, by the Split's own width, with no breakpoint and no script.
+---
+
+<Callout type="warn" title="Not yet published (v0.2)">
+  This part is in the repository and ships in `@nizivo/react` 0.2.0; the 0.1.0 on npm does not have
+  it. Until then its API can change.
+</Callout>
+
+## Static or interactive
+
+**Server.** It ships no client JavaScript when a Server Component renders it, in every Next.js build
+mode; its code is bundled only when a client component (a `'use client'` file) imports it. [How to
+choose](/docs/guides/static-or-interactive/).
+
+In a client app (a Vite or React Router single-page app, or a `'use client'` file) it is an ordinary React component: event handlers, refs and state work as usual. [In a client app](/docs/guides/static-or-interactive/#in-a-client-app).
+
+## Layout
+
+08's pages draw "Columns" frames: a main column and an aside, the grid's gutter apart (24 px on
+desktop). `Split.Aside` asks for its width, 360 px (`aside="wide"`, the Overview's 8 + 4 split) or
+232 px (`aside="narrow"`, Settings' section nav), and `Split.Main` takes the rest. When the main
+column would get less than 60 % of the row, the two stack, in source order: put the aside after the
+main column for a side panel, or first for a section nav. It follows the Split's own width, so it
+works the same in a dashboard, a dialog or a narrow card. Give the aside a landmark through
+`render`, for example `render={<aside aria-label="Goals" />}` or `render={<nav aria-label="…" />}`.
+
+Hooks: `--nz-split-gap`, `--nz-split-aside-width`, `--nz-split-main-min`.

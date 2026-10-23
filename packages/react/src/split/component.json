@@ -1,0 +1,14 @@
+{
+  "name": "split",
+  "status": "stable",
+  "tier": "server",
+  "parts": ["Root", "Main", "Aside"],
+  "cssDeps": ["base"],
+  "variants": { "aside": ["narrow", "wide"] },
+  "figma": {
+    "canonical": [],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": []
+  }
+}

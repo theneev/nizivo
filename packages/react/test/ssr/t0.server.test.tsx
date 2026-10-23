@@ -69,6 +69,8 @@ const COMPONENTS = [
   'breadcrumb',
   'pagination',
   'page-header',
+  'split',
+  'sticky-bar',
   'table',
   'table-selection',
 ] as const;
@@ -154,6 +156,8 @@ const entries = {
   breadcrumb: () => import('../../src/breadcrumb/index'),
   pagination: () => import('../../src/pagination/index'),
   'page-header': () => import('../../src/page-header/index'),
+  split: () => import('../../src/split/index'),
+  'sticky-bar': () => import('../../src/sticky-bar/index'),
   table: () => import('../../src/table/index'),
   'table-selection': () => import('../../src/table-selection/index'),
 } satisfies Record<Name, () => Promise<unknown>>;
@@ -196,6 +200,8 @@ const exampleModules = {
   breadcrumb: () => import('../../src/breadcrumb/breadcrumb.example'),
   pagination: () => import('../../src/pagination/pagination.example'),
   'page-header': () => import('../../src/page-header/page-header.example'),
+  split: () => import('../../src/split/split.example'),
+  'sticky-bar': () => import('../../src/sticky-bar/sticky-bar.example'),
   table: () => import('../../src/table/table.example'),
   'table-selection': () => import('../../src/table-selection/table-selection.example'),
 } satisfies Record<Name, () => Promise<Record<string, unknown>>>;

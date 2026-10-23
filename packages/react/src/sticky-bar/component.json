@@ -1,0 +1,14 @@
+{
+  "name": "sticky-bar",
+  "status": "stable",
+  "tier": "server",
+  "parts": [],
+  "cssDeps": ["base"],
+  "variants": {},
+  "figma": {
+    "canonical": [],
+    "ghosts": [],
+    "variantsSeen": ["7275:20898", "7275:21000", "7275:21089", "7275:21182"],
+    "related": []
+  }
+}

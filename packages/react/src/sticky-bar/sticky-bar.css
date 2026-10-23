@@ -1,0 +1,55 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/sticky-bar.css (figma/10 §4 "Sticky action bar"): 12 / 16 padding, 12 between
+   items (Figma has 12 and 10; 12 is the scale's), bg/surface with a border/subtle top edge. Figma's
+   28 px bottom padding was a phone's home indicator: here it is env(safe-area-inset-bottom), which
+   needs `viewport-fit=cover` in the page's viewport meta. It sticks above the shell's bottom chrome
+   (--nz-layout-bottom-inset, written by the shell) in the --nz-z-sticky band, below overlays and
+   toasts. Public --nz-sticky-bar-* hooks are read once, at the property. */
+@layer nz.components {
+  .nz-sticky-bar {
+    position: sticky;
+    inset-block-end: var(--nz-layout-bottom-inset, 0px);
+    z-index: var(--nz-z-sticky);
+    display: flex;
+    align-items: center;
+    gap: var(--nz-sticky-bar-gap, var(--nz-space-3));
+    box-sizing: border-box;
+    padding-block: var(--nz-space-3) calc(var(--nz-space-3) + env(safe-area-inset-bottom, 0px));
+    padding-inline: var(--nz-space-4);
+    border-block-start: var(--nz-border-width-default) solid
+      var(--nz-sticky-bar-border, var(--nz-border-subtle));
+    background: var(--nz-sticky-bar-bg, var(--nz-bg-surface));
+    color: var(--nz-text-primary);
+  }
+
+  .nz-sticky-bar-summary {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-inline-size: 0;
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-label-m);
+    letter-spacing: var(--nz-tracking-label-m);
+  }
+
+  .nz-sticky-bar-actions {
+    display: flex;
+    flex: 1 1 auto;
+    gap: var(--nz-sticky-bar-gap, var(--nz-space-3));
+    justify-content: flex-end;
+
+    /* without a summary the actions share the row, as on the product screen */
+    & > * {
+      flex: 1 1 0;
+    }
+  }
+
+  .nz-sticky-bar-summary + .nz-sticky-bar-actions {
+    flex: 0 1 auto;
+
+    & > * {
+      flex: 0 0 auto;
+    }
+  }
+}

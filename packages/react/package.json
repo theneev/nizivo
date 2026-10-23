@@ -207,9 +207,17 @@
       "types": "./dist/skeleton/index.d.ts",
       "default": "./dist/skeleton/index.js"
     },
+    "./split": {
+      "types": "./dist/split/index.d.ts",
+      "default": "./dist/split/index.js"
+    },
     "./stack": {
       "types": "./dist/stack/index.d.ts",
       "default": "./dist/stack/index.js"
+    },
+    "./sticky-bar": {
+      "types": "./dist/sticky-bar/index.d.ts",
+      "default": "./dist/sticky-bar/index.js"
     },
     "./switch": {
       "types": "./dist/switch/index.d.ts",
@@ -297,7 +305,9 @@
     "./css/select.css": "./dist/css/select.css",
     "./css/separator.css": "./dist/css/separator.css",
     "./css/skeleton.css": "./dist/css/skeleton.css",
+    "./css/split.css": "./dist/css/split.css",
     "./css/stack.css": "./dist/css/stack.css",
+    "./css/sticky-bar.css": "./dist/css/sticky-bar.css",
     "./css/switch.css": "./dist/css/switch.css",
     "./css/tab-nav.css": "./dist/css/tab-nav.css",
     "./css/table-selection.css": "./dist/css/table-selection.css",

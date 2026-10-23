@@ -1,0 +1,33 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/split.css (figma/08 "Columns" frames): a main column and an aside, the grid's
+   gutter apart (24 on desktop). A wrapping flex row: the aside asks for its width, the main column
+   takes the rest but never less than 60 % of the row, so below that the two wrap into one column.
+   It follows the Split's own width, with no media or container query (a size container has no
+   intrinsic width, so it would collapse in a shrink-to-fit parent). Public --nz-split-* hooks are
+   read once, at the property. */
+@layer nz.components {
+  .nz-split {
+    --_nz-split-aside: 22.5rem;
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--nz-split-gap, var(--nz-grid-gutter));
+  }
+
+  .nz-split[data-aside='narrow'] {
+    --_nz-split-aside: 14.5rem;
+  }
+
+  /* the main column takes all the free space: against its 100000, the aside's grow of 1 (which
+     fills the row once the two wrap) claims under a hundredth of a pixel */
+  .nz-split-main {
+    flex: 100000 1 0;
+    min-inline-size: var(--nz-split-main-min, 60%);
+  }
+
+  .nz-split-aside {
+    flex: 1 1 var(--nz-split-aside-width, var(--_nz-split-aside));
+    min-inline-size: 0;
+  }
+}
