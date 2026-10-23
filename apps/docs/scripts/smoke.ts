@@ -185,6 +185,8 @@ const CLIENT_PAGES: Record<string, string[]> = {
   '/docs/patterns/plan-card/': ['segmented-control-input', 'willValidate'],
   // Product tag (pattern, Figma 10): its dots are Popover triggers.
   '/docs/patterns/product-tag/': ['popover-popup'],
+  // Tagged product and Storefront bar (patterns, Figma 10): their IconButtons carry the Tooltip.
+  '/docs/patterns/tagged-product/': ['tooltip-popup'],
 };
 
 /** Pages whose JavaScript the run prints. */

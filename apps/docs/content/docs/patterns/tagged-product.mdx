@@ -1,0 +1,33 @@
+---
+title: Tagged product
+description: The products in a post, each a row with a thumbnail, its name as a link, variant, price and a named add-to-bag IconButton.
+---
+
+From Figma 10 Instagram Storefront, Tagged Product (`7275:19862`, with the orphan master `772:4414`
+the screens use), as the "In this post" list of the mobile post view (`7275:20903`). Uses
+[IconButton](/docs/components/icon-button/), [NumberValue](/docs/components/number-value/),
+[Text](/docs/components/text/) and the `Plus` and `Check` glyphs of
+[`@nizivo/icons`](/docs/icons/).
+
+## Examples
+
+### In this post
+
+<PatternExample name="TaggedProductExample" title="In this post" />
+
+## Stylesheet
+
+<PatternStylesheet />
+
+## Notes
+
+- **Named action, 44 px on touch.** The IconButton's name is "Add Moss mug to bag", and its
+  Tooltip shows the same words. It is 40 px, Figma's size, and its hit area grows to 44 px on a
+  coarse pointer (Figma's 40 px button is under `size/touch-min`, §3.4).
+- **Added, in words too.** The button is a toggle: `aria-pressed` says whether the product is in the
+  bag, the check replaces the plus, and the row says "In your bag" next to the variant. Figma shows
+  the added state only by the icon and the fill (§3.4). When the shopper presses it, announce the
+  change ("Added Moss mug to bag") with the app's live region or a Toast.
+- **Where it differs from Figma.** The variant line is `text/secondary`: Figma's `text/tertiary`
+  is 4.03 to 4.31:1, under AA for 14 px text (§3.4). The product's name is the link to its page; the
+  row is not one big link, so the button is not nested in it.

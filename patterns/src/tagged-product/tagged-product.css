@@ -1,0 +1,54 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+@layer nz.patterns {
+  .nzp-tagged-product {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-2);
+    max-inline-size: 23.75rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .nzp-tagged-product-row {
+    display: flex;
+    align-items: center;
+    gap: var(--nz-space-3);
+    padding: var(--nz-space-3);
+    border: var(--nz-border-width-default) solid var(--nz-border-subtle);
+    border-radius: var(--nz-radius-lg);
+    background: var(--nz-bg-surface);
+  }
+
+  .nzp-tagged-product-thumb {
+    flex: none;
+    inline-size: 4rem;
+    block-size: 4rem;
+    border-radius: var(--nz-radius-md);
+    background: var(--nz-bg-muted);
+  }
+
+  .nzp-tagged-product-info {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: var(--nz-space-0-5);
+    min-inline-size: 0;
+  }
+
+  .nzp-tagged-product-name {
+    align-self: flex-start;
+    border-radius: var(--nz-radius-xs);
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &:focus-visible {
+      outline: var(--nz-border-width-focus) solid var(--nz-border-focus);
+      outline-offset: 2px;
+    }
+  }
+}
