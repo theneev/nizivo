@@ -8,3 +8,19 @@ with `data-nz-motion="reduce"`. Reduced motion keeps short opacity fades and rem
 easings are `linear()` curves generated from spring parameters.
 
 <MotionTokens />
+
+## Chart draw
+
+Charts draw in once, when they first render, on `--nz-duration-chart-draw` (700 ms) with
+`--nz-easing-standard`. The draw is pure CSS, so a server-rendered chart with no JavaScript draws too:
+
+- **AreaChart and Sparkline** (any mark layer with ChartFrame's shared `nz-chart-svg` class): a
+  `clip-path` sweep reveals the plot from the start of the x axis to its end (the `nz-chart-reveal`
+  keyframes).
+- **BarChart:** each bar grows from the baseline, again by `clip-path` (`nz-bar-chart-grow`).
+- **DonutChart:** the ring fades in and settles from 92 % of its size (`nz-donut-chart-reveal`).
+
+Under Reduced motion the token is 0 ms, so the chart renders at once, already drawn: the same
+clip, size and opacity the 700 ms draw ends on. A browser test checks both in Chromium, Firefox and
+WebKit. See the draw on the [AreaChart](/docs/charts/area-chart/), [BarChart](/docs/charts/bar-chart/)
+and [DonutChart](/docs/charts/donut-chart/) pages: reload one to watch it again.
