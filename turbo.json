@@ -155,7 +155,9 @@
         "$TURBO_ROOT$/packages/charts/package.json",
         "$TURBO_ROOT$/packages/charts/src/index.ts",
         "$TURBO_ROOT$/packages/charts/src/**/*.example.tsx",
-        "$TURBO_ROOT$/packages/charts/src/**/*.tsx"
+        "$TURBO_ROOT$/packages/charts/src/**/*.tsx",
+        "$TURBO_ROOT$/patterns/package.json",
+        "$TURBO_ROOT$/patterns/src/**"
       ],
       "outputs": ["out/**"]
     },
@@ -169,7 +171,8 @@
         "$TURBO_ROOT$/packages/react/src/**/component.json",
         "$TURBO_ROOT$/packages/charts/package.json",
         "$TURBO_ROOT$/packages/charts/src/index.ts",
-        "$TURBO_ROOT$/packages/charts/src/**/*.example.tsx"
+        "$TURBO_ROOT$/packages/charts/src/**/*.example.tsx",
+        "$TURBO_ROOT$/patterns/src/**"
       ],
       "outputs": [
         ".source/**",

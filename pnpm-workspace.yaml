@@ -2,6 +2,8 @@ packages:
   - packages/*
   - packages/tooling/*
   - apps/*
+  # Domain compositions, MIT (patterns/LICENSE): the docs render them, the v0.3 registry copies them.
+  - patterns
   - fixtures/*
   # Each is its own workspace root: it installs packed tarballs from a gitignored folder (fixtures/next/RESULTS.md).
   - '!fixtures/next'

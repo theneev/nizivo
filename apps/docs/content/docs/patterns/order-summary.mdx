@@ -1,0 +1,26 @@
+---
+title: Order summary
+description: An order's lines and totals on a Card, the totals a description list with the amounts in tabular figures. A server composition; it ships no JavaScript.
+---
+
+From Figma 05 Commerce, Order Summary (`754:897`; an orphan master with no live component, seen in
+Stage `7275:14350`). Uses [Card](/docs/components/card/), [Text](/docs/components/text/),
+[NumberValue](/docs/components/number-value/) and [Separator](/docs/components/separator/).
+
+## Example
+
+<PatternExample name="OrderSummaryExample" />
+
+## Stylesheet
+
+<PatternStylesheet />
+
+## Notes
+
+- **Money.** `NumberValue` formats every amount with `Intl.NumberFormat` and the order's currency,
+  so a zero-decimal currency or another locale needs no other change. Never build an amount by
+  concatenating strings.
+- **Line totals.** Figma shows the line's total with no unit price (05 §3.10); say so in a column
+  header or a visually hidden word if your readers could take it for the unit price.
+- **Totals.** A `<dl>`: each label is a `<dt>`, each amount a `<dd>`, read as pairs by screen
+  readers. A discount row is a negative amount; give it words ("Discount") rather than colour alone.

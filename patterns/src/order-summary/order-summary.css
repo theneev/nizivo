@@ -1,0 +1,59 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+@layer nz.patterns {
+  .nzp-order-summary {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-4);
+    max-inline-size: 23.75rem;
+  }
+
+  .nzp-order-summary-lines {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .nzp-order-summary-line {
+    display: flex;
+    align-items: center;
+    gap: var(--nz-space-3);
+  }
+
+  .nzp-order-summary-thumb {
+    flex: none;
+    inline-size: 3rem;
+    block-size: 3rem;
+    border-radius: var(--nz-radius-md);
+    background: var(--nz-bg-muted);
+  }
+
+  .nzp-order-summary-item {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: var(--nz-space-0-5);
+    min-inline-size: 0;
+  }
+
+  .nzp-order-summary-totals {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-2);
+    margin: 0;
+  }
+
+  .nzp-order-summary-row {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--nz-space-4);
+  }
+
+  .nzp-order-summary-row > dd {
+    margin: 0;
+    text-align: end;
+  }
+}

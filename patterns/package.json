@@ -1,0 +1,31 @@
+{
+  "name": "@nizivo/patterns",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Nizivo patterns: domain compositions of the published packages, shown in the docs and copied into apps (MIT)",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit -p . && tsc --noEmit -p test",
+    "test": "vitest run --fsModuleCachePath node_modules/.vitest-cache",
+    "lint": "stylelint \"src/**/*.css\" --allow-empty-input"
+  },
+  "dependencies": {
+    "@nizivo/charts": "workspace:*",
+    "@nizivo/icons": "workspace:*",
+    "@nizivo/react": "workspace:*",
+    "@nizivo/tokens": "workspace:*",
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  },
+  "devDependencies": {
+    "@nizivo/stylelint-config": "workspace:*",
+    "@nizivo/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "stylelint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

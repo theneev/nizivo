@@ -5,6 +5,7 @@
  *    and every component stylesheet inside Tailwind's `components` layer, so all seven nz.* layers
  *    sit above preflight and below utilities. The list is generated from @nizivo/react's exports map
  *    (scripts/generate.ts), so a new component's stylesheet arrives with its page.
+ *    The patterns' stylesheets follow (nz.patterns, also generated: .generated/patterns.css).
  * 3. The Tailwind adapter, @nizivo/tokens/tailwind.css: `bg-nz-bg-surface` and friends.
  * 4. Fumadocs' colour variables mapped onto Nizivo's semantic tokens. The tokens are `light-dark()`
  *    values, so one mapping serves light and dark: the docs theme switch sets `data-nz-theme` on
@@ -14,6 +15,7 @@
 @import 'fumadocs-ui/css/lib/default-colors.css';
 @import 'fumadocs-ui/css/preset.css';
 @import '../.generated/nizivo.css';
+@import '../.generated/patterns.css';
 @import '@nizivo/tokens/tailwind.css';
 
 @theme {

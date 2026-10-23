@@ -1,0 +1,9 @@
+{
+  "extends": "@nizivo/tsconfig/base.json",
+  "compilerOptions": {
+    "isolatedDeclarations": false,
+    "declaration": false,
+    "types": ["node"]
+  },
+  "include": ["**/*.ts", "**/*.tsx", "../src", "../vitest.config.ts"]
+}

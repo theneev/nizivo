@@ -1,0 +1,34 @@
+---
+title: Patterns
+description: Domain compositions built only from the published packages, for you to copy into your app and change. The source is MIT, not Apache-2.0, so a copy you edit owes no change notice.
+---
+
+A pattern is app code: a commerce card, a storefront strip or a dashboard page, composed from
+`@nizivo/react`, `@nizivo/charts` and `@nizivo/icons` through their public entries, with at most one
+small stylesheet of its own. It is not a package and has no API to keep stable. Copy the files, then
+rename, restyle or rewire them; nothing in the packages depends on them.
+
+## Where they live
+
+Each pattern is a folder of `patterns/src/` in the repository: `<name>.example.tsx`, and
+`<name>.css` when it needs layout the components do not give. Both are under the
+[MIT licence](https://github.com/theneev/nizivo/blob/main/patterns/LICENSE). The examples on these
+pages render those files from the built packages, as your app would.
+
+- **Imports.** Only public entries: `@nizivo/react/<subpath>`, `@nizivo/charts` or
+  `@nizivo/charts/<part>`, `@nizivo/icons` (and its brand glyphs, `@nizivo/icons/brands/<name>`), and React. The docs build fails on anything else.
+- **Stylesheets.** Every rule is in `@layer nz.patterns`, the layer the packages leave empty for app
+  pattern CSS, so a pattern's rules beat the components' without specificity games and never tie with
+  them. Classes are `nzp-<pattern>[-<part>]`, never a package's `nz-*`. They read the tokens and keep
+  the packages' CSS rules (logical properties, no `!important`). There is no custom media: a
+  copied stylesheet must work without a build step that knows `--nz-sm`.
+- **Images.** The examples draw a neutral block where a product photo goes, so this site loads no
+  remote image. In your app, put an [`Image`](/docs/components/image/) there.
+
+From v0.3 the same files become copy-paste registry items with versioned URLs.
+
+## The patterns
+
+| Pattern                                        | From Figma                             | Ships client JS under React Server Components |
+| ---------------------------------------------- | -------------------------------------- | --------------------------------------------- |
+| [Order summary](/docs/patterns/order-summary/) | 05 Commerce, Order Summary (`754:897`) | Never                                         |

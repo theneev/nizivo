@@ -1,0 +1,7 @@
+/* A pattern's preview is a block: the pattern lays itself out (its own stylesheet, nz.patterns), so
+   the preview does not wrap it in the component pages' flex row. */
+@layer components {
+  .nz-docs-pattern-preview {
+    display: block;
+  }
+}
