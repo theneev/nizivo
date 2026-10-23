@@ -21,6 +21,13 @@ const config: ViteUserConfig = defineConfig({
       viewport: { width: 1400, height: 900 },
       provider: provider(),
       instances: [{ browser: engine }],
+      // Playwright's media emulation for the whole tab, in every engine (chart-draw.spec.tsx); CDP's
+      // Emulation.setEmulatedMedia is Chromium only.
+      commands: {
+        emulateReducedMotion: async (context, value: 'reduce' | 'no-preference') => {
+          await context.page.emulateMedia({ reducedMotion: value });
+        },
+      },
     },
   },
 });
