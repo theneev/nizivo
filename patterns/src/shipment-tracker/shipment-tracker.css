@@ -1,0 +1,107 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+@layer nz.patterns {
+  /* the steps lay out by the card's width, not the viewport's: a column, then a row from 34rem */
+  .nzp-shipment-tracker {
+    container-type: inline-size;
+  }
+
+  .nzp-shipment-tracker-steps {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .nzp-shipment-tracker-step {
+    position: relative;
+    display: flex;
+    align-items: start;
+    gap: var(--nz-space-3);
+  }
+
+  /* the line to the next step, down the node's centre; logical insets, so it follows the reading
+     direction */
+  .nzp-shipment-tracker-step:not(:last-child)::after {
+    position: absolute;
+    inset-block: calc(2.25rem + var(--nz-space-1)) calc(var(--nz-space-1) - var(--nz-space-4));
+    inset-inline-start: calc(1.125rem - var(--nz-border-width-focus) / 2);
+    inline-size: var(--nz-border-width-focus);
+    border-radius: var(--nz-radius-full);
+    background: var(--nz-border-default);
+    content: '';
+  }
+
+  /* a completed step's line leads to a step that has been reached */
+  .nzp-shipment-tracker-step-complete:not(:last-child)::after {
+    background: var(--nz-border-brand);
+  }
+
+  .nzp-shipment-tracker-node {
+    display: grid;
+    flex: none;
+    place-items: center;
+    inline-size: 2.25rem;
+    block-size: 2.25rem;
+    border: var(--nz-border-width-default) solid transparent;
+    border-radius: var(--nz-radius-full);
+    font-size: var(--nz-size-icon-md);
+  }
+
+  .nzp-shipment-tracker-step-complete .nzp-shipment-tracker-node {
+    background: var(--nz-bg-brand-subtle);
+    color: var(--nz-icon-brand);
+  }
+
+  .nzp-shipment-tracker-step-current .nzp-shipment-tracker-node {
+    background: var(--nz-bg-brand);
+    color: var(--nz-text-on-brand);
+  }
+
+  /* Figma's upcoming node, bg/subtle, is 1.04:1 on white: a dashed ring shows it */
+  .nzp-shipment-tracker-step-upcoming .nzp-shipment-tracker-node {
+    border-style: dashed;
+    border-color: var(--nz-border-strong);
+    color: var(--nz-icon-secondary);
+  }
+
+  .nzp-shipment-tracker-text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-0-5);
+    padding-block-start: var(--nz-space-2);
+  }
+
+  .nzp-shipment-tracker-step-upcoming .nzp-shipment-tracker-text {
+    color: var(--nz-text-secondary);
+  }
+
+  @container (width >= 34rem) {
+    .nzp-shipment-tracker-steps {
+      flex-direction: row;
+      gap: 0;
+    }
+
+    .nzp-shipment-tracker-step {
+      flex: 1;
+      flex-direction: column;
+      gap: var(--nz-space-2);
+      min-inline-size: 0;
+      padding-inline-end: var(--nz-space-2);
+    }
+
+    /* the line to the next step, along the node's centre */
+    .nzp-shipment-tracker-step:not(:last-child)::after {
+      inset-block: calc(1.125rem - var(--nz-border-width-focus) / 2) auto;
+      inset-inline: calc(2.25rem + var(--nz-space-2)) var(--nz-space-2);
+      inline-size: auto;
+      block-size: var(--nz-border-width-focus);
+    }
+
+    .nzp-shipment-tracker-text {
+      padding-block-start: 0;
+    }
+  }
+}
