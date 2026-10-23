@@ -45,7 +45,7 @@ export interface Lane {
 export const RELEASE_LANES: readonly Lane[] = [
   {
     id: 'browser',
-    why: 'browser lane, Chromium (§18.1 unit and interaction)',
+    why: 'browser lane, Chromium (§18.1 unit and interaction; §16.4 de-DE locale determinism)',
     dir: 'packages/react',
     script: 'test:browser',
   },
