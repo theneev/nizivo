@@ -175,6 +175,9 @@ const CLIENT_PAGES: Record<string, string[]> = {
   '/docs/charts/area-chart/': ['nz-chart-interaction'],
   '/docs/charts/bar-chart/': ['nz-chart-interaction'],
   '/docs/charts/donut-chart/': ['nz-chart-interaction'],
+  // The commerce patterns (week 21): each loads the client parts its examples render.
+  // ProductTable: one TableSelection island, and a Menu per row whose IconButton trigger has a Tooltip.
+  '/docs/patterns/product-table/': ['nz-table-selection', 'menu-popup', 'tooltip-popup'],
 };
 
 /** Pages whose JavaScript the run prints. */

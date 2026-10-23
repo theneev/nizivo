@@ -1,0 +1,46 @@
+---
+title: Product table
+description: A catalogue table with row selection for bulk actions, a status Badge, the inventory and the price on each row, and a Menu of row actions named for its product.
+# full width: the table's six columns fit at 1280 px without the table of contents
+full: true
+---
+
+From Figma 05 Commerce, Product Row (`7275:14040`; the example table `7275:14078`). Uses
+[Table](/docs/components/table/), [TableSelection](/docs/components/table-selection/),
+[Badge](/docs/components/badge/), [Menu](/docs/components/menu/),
+[IconButton](/docs/components/icon-button/), [Button](/docs/components/button/),
+[Text](/docs/components/text/) and [NumberValue](/docs/components/number-value/), with the
+`Ellipsis` icon from [`@nizivo/icons`](/docs/icons/).
+
+## Examples
+
+### Products with bulk actions
+
+<PatternExample name="ProductTableExample" />
+
+## Stylesheet
+
+<PatternStylesheet />
+
+## Notes
+
+- **Client JavaScript.** `TableSelection` is one island for the whole table, and each row's Menu
+  and its IconButton's Tooltip are client components. The row checkboxes are native inputs of the
+  form above the table, so the bulk buttons submit the checked ids before any of that runs.
+- **Names.** Every checkbox and every "…" button is named for its row ("Select Wool throw",
+  "Actions for Wool throw"), so a screen reader's list of controls makes sense out of the table.
+  The product cell is the row's header (`<th scope="row">`), so each cell is read with it.
+- **Status in words.** Figma's single status mixes publication (Active, Draft) with inventory (Sold
+  out), and its example rows add a fourth state, Low stock, that the component has no variant for.
+  The example derives one Badge from both facts and keeps the inventory in its own column in
+  words; the warning and critical colours only repeat them.
+- **Hit targets.** Figma draws an 18 px checkbox and a bare 20 px "…" icon. Here they are the
+  packages' row checkbox, whose hit area grows to the 44 px touch size on a coarse pointer, and a
+  32 px IconButton.
+- **Selection count.** Figma's notes ask for a polite "3 selected" announcement. That needs a
+  client owner of `onSelectionChange`, which a pattern does not add; an app that shows a count
+  should announce it in a live region.
+- **i18n.** Prices are `NumberValue` with the store's currency, and counts go through
+  `Intl.NumberFormat`. "In stock" and "Out of stock" are separate messages, so a translation can
+  plural them. A wide table scrolls inside its container, which is named and focusable, rather than
+  wrapping its cells.

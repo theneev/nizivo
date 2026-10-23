@@ -1,0 +1,42 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+@layer nz.patterns {
+  .nzp-product-table {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-3);
+  }
+
+  /* the containing block of the visually hidden "Actions", so it stays inside the table's scroll
+     container and cannot widen the page */
+  .nzp-product-table-actions-head {
+    position: relative;
+  }
+
+  .nzp-product-table-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--nz-space-2);
+  }
+
+  .nzp-product-table-product {
+    display: flex;
+    align-items: center;
+    gap: var(--nz-space-3);
+  }
+
+  .nzp-product-table-thumb {
+    flex: none;
+    inline-size: 2.5rem;
+    block-size: 2.5rem;
+    border-radius: var(--nz-radius-sm);
+    background: var(--nz-bg-muted);
+  }
+
+  .nzp-product-table-name {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-0-5);
+    text-align: start;
+  }
+}

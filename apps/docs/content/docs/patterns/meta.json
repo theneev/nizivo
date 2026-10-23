@@ -1,4 +1,4 @@
 {
   "title": "Patterns",
-  "pages": ["index", "order-summary"]
+  "pages": ["index", "order-summary", "product-table", "order-table"]
 }
