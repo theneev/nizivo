@@ -51,6 +51,8 @@ Report them; never re-record baselines to make them pass.
 - React visual: `toast/stack--focus-8-toast-action` and `stack--focus-9-toast-close`, about one run in
   four, 30 px on the upper toasts' rounded corners in one mode (week 14).
 - React visual: `drawer/sheet--focus-4-drawer-body--light`, now and then 4 px on the focus halo.
+- Firefox overlay: Tooltip's "enters through data-entering with a running transition" finds no running
+  opacity transition, on either Tooltip adapter, in full lane runs only (week 18; alone it passes).
 
 ## Cloud sessions
 

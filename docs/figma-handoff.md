@@ -122,6 +122,19 @@ Week 14 built Toast and Banner (`packages/react/W14-RESULTS.md`). Until you answ
 | 4 | **The Banner below about 36rem.** Figma draws only the desktop row ([`7275:15120`](https://www.figma.com/design/BIzJFf1wm8KP0YG2AVI1tP/Nizivo-UI-Library?node-id=7275-15120)). Code wraps the action under the text and keeps the dismiss at the row's end. Confirm or draw the narrow layout. | Phones and the 08 overview's narrow states. | Banner on mobile | S |
 | 5 | **Toast timing, the dark toast's action colour and the Banner tone name:** §6 Q7, Q17 and Q25, unchanged. Code: an action or Critical toast stays, others leave after 5 s (Q7); the dark-mode action is forest green on the white toast (Q17); the tone is `brand` for "Promo" (Q25). | Already asked. | — | — |
 
+
+### 1.7 Asks from weeks 16 to 18 (2026-10-23)
+
+Weeks 16 to 18 built PageHeader and Table (`packages/react/W16-RESULTS.md`, `W18-RESULTS.md`). The maintainer's answer (M47): code does not wait on these; it keeps what it built **from the existing components and tokens**, named in the third column, and the file can be redrawn to match. Say if any should differ.
+
+| # | Ask | What code built, and from what | Unblocks | Size |
+|---|---|---|---|---|
+| 1 | **One table row spec.** Order Row ([`7275:14091`](https://www.figma.com/design/BIzJFf1wm8KP0YG2AVI1tP/Nizivo-UI-Library?node-id=7275-14091)) draws 14 px padding and 57 px; Product Row ([`7275:14040`](https://www.figma.com/design/BIzJFf1wm8KP0YG2AVI1tP/Nizivo-UI-Library?node-id=7275-14040)) 12 px and 65 px. | Product Row's `space/3` block and `space/5` inline padding (12 / 20) for every cell, a `border/subtle` line under each row; a row with a 32 px Avatar is 57 px tall, Order Row's height. The Avatar-to-name gap is `space/2` (8; Figma 10, off the scale). | Order and Product tables from one Table | S |
+| 2 | **One Table Header component** in place of the two orphan headers (`753:599`, `753:410`), whose properties were never read. | `bg/subtle` with Label/M in `text/secondary`, the cell padding of #1, and a sort arrow that follows `aria-sort`: two chevrons at `size/icon-sm` while unsorted, one, up or down, when sorted. | Table header in the library | S |
+| 3 | **Order Row's Selected state** (§5.3 lists it for v0.3). | `bg/brand-subtle`, the fill of a checked Menu item. | Row selection | S |
+| 4 | **Row selection checkboxes.** No table frame draws them. | Checkbox's own box (`checkbox.css`, 20 px, with its check and mixed glyphs) in a first column; the header's box is mixed while some rows are checked. | Bulk actions | S |
+| 5 | **A PageHeader component with a mobile variant** (§5.4 lists it). The 08 frames draw it per pattern ([`7275:15337`](https://www.figma.com/design/BIzJFf1wm8KP0YG2AVI1tP/Nizivo-UI-Library?node-id=7275-15337), [`7275:15757`](https://www.figma.com/design/BIzJFf1wm8KP0YG2AVI1tP/Nizivo-UI-Library?node-id=7275-15757), [`7275:15860`](https://www.figma.com/design/BIzJFf1wm8KP0YG2AVI1tP/Nizivo-UI-Library?node-id=7275-15860)). | Heading/H1 with a Badge beside it as `meta`, Body/M `text/secondary` under it, actions 16 apart (`space/4`) at the row's end; below 40rem (`--nz-sm`) the title takes Heading/H2's size and the actions start a row of their own. | PageHeader in the library | M |
+
 ---
 
 ## 2. Rename and hygiene
