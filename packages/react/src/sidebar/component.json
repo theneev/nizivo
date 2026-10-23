@@ -3,7 +3,11 @@
   "status": "stable",
   "tier": "server",
   "parts": ["Root", "Header", "Content", "Footer"],
-  "cssDeps": ["base"],
+  "exports": ["SidebarItem"],
+  "interactive": ["sidebar-item"],
+  "focusTarget": "self",
+  "stateIndicator": [],
+  "cssDeps": ["base", "nav-item", "tooltip"],
   "variants": {},
   "figma": {
     "canonical": ["7275:14732"],

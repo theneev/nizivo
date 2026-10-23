@@ -402,8 +402,10 @@ export {
   SidebarHeader,
   SidebarContent,
   SidebarFooter,
+  SidebarItem,
 } from './sidebar/index';
 export type {
+  SidebarItemProps,
   SidebarContentProps,
   SidebarFooterProps,
   SidebarHeaderProps,

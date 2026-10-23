@@ -5,7 +5,8 @@
 //
 // Collapsed is not a prop. In a Sidebar folded to the icon rail, nav-item.css folds the item through
 // the Sidebar's size container: the label and the count leave the layout but stay in the DOM, so the
-// link keeps its accessible name, the count shows as a dot, and hover or focus shows the label.
+// link keeps its accessible name, and the count shows as a dot. SidebarItem (@nizivo/react/sidebar)
+// is this link with a Tooltip that shows the label there.
 import type { ComponentPropsWithRef, ReactElement, ReactNode } from 'react';
 import { renderElement, type RenderProp } from '../contracts/render';
 import { stateAttrs } from '../contracts/state';

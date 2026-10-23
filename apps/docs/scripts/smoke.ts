@@ -151,6 +151,9 @@ const CLIENT_PAGES: Record<string, string[]> = {
   // and IconButtons in their slots; MobileTabBar renders its inset island and More's Drawer sheet,
   // and AppShell's example holds all of them.
   '/docs/components/top-bar/': ['search-field-clear', 'willValidate', 'tooltip-popup'],
+  // SidebarItem's rail Tooltip (M52); NavItem's rail example is a Sidebar of SidebarItems
+  '/docs/components/sidebar/': ['tooltip-popup'],
+  '/docs/components/nav-item/': ['tooltip-popup'],
   '/docs/components/mobile-top-bar/': ['tooltip-popup'],
   '/docs/components/mobile-tab-bar/': [
     'nz-mobile-tab-bar-more-trigger',

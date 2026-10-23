@@ -64,22 +64,28 @@ describe('module graph', () => {
 });
 
 describe('react-server build', () => {
-  test('the entry loads and every example renders on the server with no client boundary', async () => {
-    const { loaded, react } = await underReactServer(() =>
-      Promise.all([
-        import('../../src/nav-item/index'),
-        import('../../src/nav-item/nav-item.example'),
-      ]),
+  test('the entry loads and renders with no client boundary; the rail example is SidebarItems', async () => {
+    const sidebarItem = new URL('../../src/sidebar/sidebar-item.client.tsx', import.meta.url);
+    const { loaded, react } = await underReactServer(
+      () =>
+        Promise.all([
+          import('../../src/nav-item/index'),
+          import('../../src/nav-item/nav-item.example'),
+        ]),
+      [{ path: sidebarItem.pathname, exports: ['SidebarItem'] }],
     );
     const [entry, examples] = loaded;
     expect(Object.keys(entry)).toEqual(['NavItem']);
-    const list = Object.values(examples);
+    const list = Object.entries(examples);
     expect(list).toHaveLength(3);
-    for (const Example of list) {
+    for (const [name, Example] of list) {
       const boundaries: ClientBoundary[] = [];
       const tree = withDispatcher(react, () => serverRender(Example(), boundaries));
-      expect(boundaries).toEqual([]);
-      expect(JSON.stringify(tree)).toContain('"aria-current":"page"');
+      // In a Sidebar, SidebarItem adds the rail's Tooltip (M52): a client part of ./sidebar
+      expect(boundaries.length).toBe(name === 'NavItemCollapsedExample' ? 3 : 0);
+      expect(JSON.stringify(tree)).toContain(
+        name === 'NavItemCollapsedExample' ? '"current":true' : '"aria-current":"page"',
+      );
     }
   });
 });

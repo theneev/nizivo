@@ -3,7 +3,8 @@
 // MobileTopBar and the MobileTabBar fixed to the bottom, whose island writes the bottom inset on
 // <html> and clears it again. The skip link is the first Tab stop and moves focus to <main>. More
 // opens its bottom sheet as a modal dialog: Escape closes it and focus returns to More, and
-// following a link in it closes it.
+// following a link in it closes it. In the rail, a SidebarItem's Tooltip shows its label on keyboard
+// focus and hover and Escape closes it; expanded, none opens.
 import { act, type ReactNode } from 'react';
 import { hydrateRoot, type Root } from 'react-dom/client';
 import { renderToString } from 'react-dom/server';
@@ -26,10 +27,11 @@ const STYLES = import.meta.glob(
     '../../src/mobile-top-bar/mobile-top-bar.css',
     '../../src/mobile-tab-bar/mobile-tab-bar.css',
     '../../src/app-shell/app-shell.css',
+    '../../src/tooltip/tooltip.css',
   ],
   { query: '?raw', import: 'default', eager: true },
 );
-if (Object.keys(STYLES).length !== 13)
+if (Object.keys(STYLES).length !== 14)
   throw new Error('a stylesheet is missing; build @nizivo/tokens and run nz gen');
 const style = document.createElement('style');
 // the build expands @custom-media (tokens' custom-media.css); the raw sources need it done here
@@ -204,5 +206,57 @@ describe('MobileTabBarMore', () => {
     } finally {
       document.removeEventListener('click', stay, true);
     }
+  });
+});
+
+const tooltip = (): Element | null => document.querySelector('[role="tooltip"]');
+
+/** Keyboard focus on the first SidebarItem: Tab from the skip link (script focus where WebKit skips links). */
+async function focusFirst(): Promise<HTMLElement> {
+  const skip = one('[data-slot="app-shell-skip"]');
+  const first = one('[data-slot="sidebar-item"]');
+  await tabTo(null, skip);
+  await tabTo(skip, first);
+  await settle(150);
+  return first;
+}
+
+describe('SidebarItem', () => {
+  test('in the rail, keyboard focus opens a Tooltip with the label; Escape closes it', async () => {
+    await hydrate(<AppShellExample />, 960);
+    const first = await focusFirst();
+    expect(document.activeElement).toBe(first);
+    expect(tooltip()?.textContent).toBe('Home');
+    // the Tooltip repeats the link's name, so the link is not described by it
+    expect(first.hasAttribute('aria-describedby')).toBe(false);
+    expect(first.getAttribute('aria-current')).toBe('page');
+    // at the rail's end side
+    const popup = tooltip()?.getBoundingClientRect();
+    expect(popup?.left ?? 0).toBeGreaterThanOrEqual(first.getBoundingClientRect().right);
+    await userEvent.keyboard('{Escape}');
+    await settle(300);
+    expect(tooltip()).toBeNull();
+    expect(document.activeElement).toBe(first);
+  });
+
+  test('in the rail, hovering an item opens its Tooltip after the delay', async () => {
+    await hydrate(<AppShellExample />, 960);
+    const items = [...document.querySelectorAll<HTMLElement>('[data-slot="sidebar-item"]')];
+    const orders = items[1];
+    if (orders === undefined) throw new Error('no second item');
+    // a press puts React Aria in pointer modality (an earlier case left it in keyboard modality,
+    // where hovering does not open a tooltip)
+    await userEvent.click(one('main'));
+    await userEvent.hover(orders);
+    // the hover delay, and React Aria's first-hover warm-up on a fresh page
+    await expect.poll(() => tooltip()?.textContent, { timeout: 2000 }).toBe('Orders');
+    await userEvent.unhover(orders);
+  });
+
+  test('expanded, the label is on screen and no Tooltip opens', async () => {
+    await hydrate(<AppShellExample />, 1280);
+    await focusFirst();
+    await settle(150);
+    expect(tooltip()).toBeNull();
   });
 });

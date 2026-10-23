@@ -104,7 +104,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 | Entry              | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | ------------------ | -------: | ---------: | ---------: | ----------: | -----------: |
-| `.`                |  110,527 |      107.9 |     92,078 |         119 |       11,329 |
+| `.`                |  110,822 |      108.2 |     92,324 |         120 |       12,058 |
 | /alert             |    1,282 |        1.3 |      1,185 |         1.4 |          151 |
 | /app-shell         |      462 |        0.5 |        433 |         0.5 |           50 |
 | /augment           |        0 |        0.0 |          0 |           0 |            — |
@@ -158,7 +158,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /segmented-control |    2,371 |        2.3 |      2,172 |         2.6 |          291 |
 | /select            |   63,742 |       62.2 |     54,773 |          66 |        3,842 |
 | /separator         |      772 |        0.8 |        699 |         0.9 |          149 |
-| /sidebar           |    1,132 |        1.1 |      1,017 |         1.3 |          199 |
+| /sidebar           |   17,315 |       16.9 |     15,644 |          19 |        2,141 |
 | /skeleton          |      716 |        0.7 |        652 |         0.8 |          103 |
 | /split             |      880 |        0.9 |        804 |           1 |          144 |
 | /stack             |      703 |        0.7 |        640 |         0.8 |          116 |
@@ -227,6 +227,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | own: search-field/search-field.client           |    1,273 |        1.2 |      1,144 |         1.4 |          160 |
 | own: segmented-control/segmented-control.client |    1,169 |        1.1 |      1,052 |         1.3 |          162 |
 | own: select/select.client                       |    1,146 |        1.1 |      1,055 |         1.3 |          185 |
+| own: sidebar/sidebar-item.client                |      565 |        0.6 |        509 |         0.7 |          151 |
 | own: switch/switch.client                       |      552 |        0.5 |        475 |         0.6 |           62 |
 | own: table-selection/table-selection.client     |      783 |        0.8 |        677 |         0.9 |          138 |
 | own: tabs/tabs.client                           |      486 |        0.5 |        439 |         0.6 |          128 |
@@ -250,7 +251,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/avatar.css            |      745 |        0.7 |        606 |         0.9 |          176 |
 | /css/badge.css             |      512 |        0.5 |        424 |         0.6 |          102 |
 | /css/banner.css            |      658 |        0.6 |        533 |         0.8 |          161 |
-| /css/base.css              |    1,242 |        1.2 |      1,043 |         1.4 |          191 |
+| /css/base.css              |    1,250 |        1.2 |      1,051 |         1.4 |          183 |
 | /css/breadcrumb.css        |      551 |        0.5 |        431 |         0.6 |           63 |
 | /css/button.css            |    1,153 |        1.1 |        974 |         1.3 |          178 |
 | /css/card.css              |      665 |        0.6 |        560 |         0.7 |           51 |
@@ -296,7 +297,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/segmented-control.css |      986 |        1.0 |        808 |         1.1 |          140 |
 | /css/select.css            |    1,237 |        1.2 |      1,040 |         1.4 |          196 |
 | /css/separator.css         |      261 |        0.3 |        203 |         0.3 |           46 |
-| /css/sidebar.css           |    1,107 |        1.1 |        909 |         1.2 |          121 |
+| /css/sidebar.css           |      928 |        0.9 |        753 |           1 |           96 |
 | /css/skeleton.css          |      365 |        0.4 |        325 |         0.4 |           44 |
 | /css/split.css             |      249 |        0.2 |        226 |         0.3 |           58 |
 | /css/stack.css             |      270 |        0.3 |        209 |         0.3 |           37 |
@@ -312,7 +313,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/tooltip.css           |      581 |        0.6 |        503 |         0.6 |           33 |
 | /css/top-bar.css           |      452 |        0.4 |        379 |         0.5 |           60 |
 | /css/trend-card.css        |      403 |        0.4 |        346 |         0.5 |          109 |
-| /styles.css                |   24,088 |       23.5 |     19,590 |          26 |        2,536 |
+| /styles.css                |   23,949 |       23.4 |     19,520 |          26 |        2,675 |
 
 #### `@nizivo/tokens`: Public JS entries (bundled with what they import, React Aria included)
 

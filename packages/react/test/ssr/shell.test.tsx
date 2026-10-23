@@ -42,11 +42,16 @@ function partAttributes(html: string): string[] {
 }
 
 describe('module graphs', () => {
-  test('Sidebar, TopBar, MobileTopBar and AppShell reach no client module', () => {
-    for (const name of ['sidebar', 'top-bar', 'mobile-top-bar', 'app-shell']) {
+  test('TopBar, MobileTopBar and AppShell reach no client module', () => {
+    for (const name of ['top-bar', 'mobile-top-bar', 'app-shell']) {
       const { modules } = graph(SRC, `src/${name}/index.ts`);
       expect([...modules].filter((file) => isClient(SRC.get(file) ?? ''))).toEqual([]);
     }
+  });
+
+  test("Sidebar's parts are server parts; SidebarItem is its one client export", () => {
+    const { modules } = graph(SRC, 'src/sidebar/sidebar.tsx');
+    expect([...modules].filter((file) => isClient(SRC.get(file) ?? ''))).toEqual([]);
   });
 
   test("MobileTabBar's server parts render the inset island; More is its own client export", () => {

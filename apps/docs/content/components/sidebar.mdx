@@ -1,12 +1,14 @@
 ---
 title: Sidebar
-description: The app's main navigation on screens 640 px and wider, with the store at the top, the destinations, and Settings at the foot. It is 264 px wide from 1280 px and folds to a 72 px icon rail below that, with no script.
+description: The app's main navigation on screens 640 px and wider, with the store at the top, the destinations, and Settings at the foot. It is 264 px wide from 1280 px and folds to a 72 px icon rail below that, where each destination's Tooltip names it.
 keyboard:
   - keys: Tab, Shift+Tab
-    action: Moves between the links, as on any link. In the rail, a focused link shows its label beside it.
+    action: Moves between the links, as on any link. In the rail, a focused link opens a Tooltip with its label at once.
+  - keys: Escape
+    action: In the rail, closes the open Tooltip; focus stays on the link.
   - keys: Enter
     action: Follows the focused link.
-keyboardSource: native `<a>` elements (`NavItem`, no client code). The browser lane (`test/browser/app-shell.spec.tsx`, `test/browser/nav-item.spec.tsx`) checks the widths at 1280 and 960 px, the rail's 40 px squares, and the label shown beside a focused item, in Chromium, Firefox and WebKit.
+keyboardSource: native `<a>` elements (`NavItem`); in the rail, each `SidebarItem` is the trigger of the Tooltip (react-aria-components 1.22.1 `TooltipTrigger`, through the Tooltip's engine adapter). The browser lane (`test/browser/app-shell.spec.tsx`, `test/browser/nav-item.spec.tsx`) checks the widths at 1280 and 960 px, the rail's 40 px squares, the Tooltip on keyboard focus and hover in the rail, Escape closing it, none expanded, and no `aria-describedby` on the link, in Chromium, Firefox and WebKit.
 ---
 
 <Callout type="warn" title="Not yet published (v0.2)">
@@ -16,9 +18,10 @@ keyboardSource: native `<a>` elements (`NavItem`, no client code). The browser l
 
 ## Static or interactive
 
-**Server.** It ships no client JavaScript when a Server Component renders it, in every Next.js build
-mode; its code is bundled only when a client component (a `'use client'` file) imports it. The width
-follows the viewport through CSS, so the server and the browser render the same markup. [How to
+**Split.** `Sidebar.Root`, `Header`, `Content` and `Footer` are server parts with no client
+JavaScript; the width follows the viewport through CSS, so the server and the browser render the
+same markup. `SidebarItem` is the client part: NavItem's link with the rail's Tooltip, which brings
+the Tooltip's code (about 16.5 KB gzip, shared with any IconButton's tooltip on the page). [How to
 choose](/docs/guides/static-or-interactive/).
 
 In a client app (a Vite or React Router single-page app, or a `'use client'` file) it is an ordinary React component: event handlers, refs and state work as usual. [In a client app](/docs/guides/static-or-interactive/#in-a-client-app).
@@ -29,8 +32,10 @@ In a client app (a Vite or React Router single-page app, or a `'use client'` fil
 - `Sidebar.Header`: the store, on a card. `mark` draws Figma's 32 px Store mark (an initial, or a logo
   image that fills it), `title` the store's name and `description` the line under it. Pass
   `render={<a href="/" />}` to make it a link home, or a store switcher's trigger.
-- `Sidebar.Content`: the destinations, `NavItem`s 4 px apart.
+- `Sidebar.Content`: the destinations, 4 px apart.
 - `Sidebar.Footer`: pushed to the bottom, for Settings.
+- `SidebarItem`: a destination. It takes NavItem's props (`href` or `render`, `current`, `icon`,
+  `count`, `disabled`) and renders the same link, as the trigger of a Tooltip with its label.
 
 ## Widths
 
@@ -43,17 +48,19 @@ cookie for example, so the first paint already has the right width.
 
 ## The rail
 
-In the rail each NavItem is a 40 px square around its icon, and the header keeps only its mark. The
+In the rail each item is a 40 px square around its icon, and the header keeps only its mark. The
 labels and the counts stay in the DOM as the links' names ("Orders 12"), and a count shows as a dot.
-Hovering or focusing an item shows its label beside it, past the rail's edge, with no tooltip script.
-Give every item an `icon`. The rail is a size container (`nz-sidebar`), so NavItem folds whenever its
-Sidebar is rail-narrow, whatever made it so.
+Each `SidebarItem` opens a Tooltip with its label at the rail's end side, at once on keyboard focus
+and after the delay on hover; Escape closes it, and the pointer can move onto it (M52: "keep tooltip,
+because accessibility is important"). The Tooltip repeats the link's name, so the link is not
+described by it. Expanded, the label is on screen and no Tooltip opens. Give every item an `icon`.
+The rail is a size container (`nz-sidebar`), so the items fold whenever the Sidebar is rail-narrow,
+whatever made it so. A plain `NavItem` folds the same way but has no Tooltip.
 
 ## Height and scrolling
 
-The Sidebar sticks to the top and is as tall as the viewport (`--nz-sidebar-block-size`). Expanded, a
-long list scrolls inside it. The rail does not clip, so the labels can show past its edge; its
-destinations fit a tablet's height.
+The Sidebar sticks to the top and is as tall as the viewport (`--nz-sidebar-block-size`); a long list
+scrolls inside it.
 
 Hooks: `--nz-sidebar-width`, `--nz-sidebar-block-size`, `--nz-sidebar-bg`, `--nz-sidebar-border`,
 `--nz-sidebar-mark-bg`.

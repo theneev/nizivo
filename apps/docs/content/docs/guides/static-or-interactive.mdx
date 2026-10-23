@@ -89,9 +89,9 @@ export function SortedProducts() {
 
 - **Server.** The component's module has no `'use client'` and imports no client module. Rendered by
   a Server Component and imported from its own subpath (`@nizivo/react/<name>`), it ships **no**
-  client JavaScript in any Next.js build mode (Turbopack, webpack, `next dev`). 40 components.
+  client JavaScript in any Next.js build mode (Turbopack, webpack, `next dev`). 39 components.
 - **Split.** A server shell plus a small client leaf that only certain props render. Without those
-  props no client code runs. 7 components: Alert, Banner, Field, Form, IconButton, MobileTabBar and TableSelection. Alert's shell does not import
+  props no client code runs. 8 components: Alert, Banner, Field, Form, IconButton, MobileTabBar, Sidebar and TableSelection. Alert's shell does not import
   its leaf, so an Alert without `dismiss` ships nothing in every mode. **Field's and IconButton's
   shells import their leaf**, and Turbopack and `next dev` ship every client module a page's server
   code imports, rendered or not: those two ship their leaf even when the interactive path is off.
@@ -220,7 +220,7 @@ module.
 | [SegmentedControl](/docs/components/segmented-control/) | client | Always (Field wiring)                                                                                                                                | TabNav, when each value is its own URL            |
 | [Select](/docs/components/select/)                      | client | Always (React Aria; FieldScope too)                                                                                                                  | NativeSelect                                      |
 | [Separator](/docs/components/separator/)                | server | Never                                                                                                                                                | None needed                                       |
-| [Sidebar](/docs/components/sidebar/)                    | server | Never (the rail is CSS: a size container and the `layout/sidebar` token)                                                                             | None needed                                       |
+| [Sidebar](/docs/components/sidebar/)                    | split  | `SidebarItem`, the rail's Tooltip (shared with IconButton's); the parts alone ship nothing                                                           | Plain `NavItem`s (no Tooltip in the rail)         |
 | [Skeleton](/docs/components/skeleton/)                  | server | Never                                                                                                                                                | None needed                                       |
 | [Split](/docs/components/split/)                        | server | Never                                                                                                                                                | None needed                                       |
 | [Stack](/docs/components/stack/)                        | server | Never                                                                                                                                                | None needed                                       |

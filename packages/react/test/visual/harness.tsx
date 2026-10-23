@@ -35,7 +35,8 @@ const DISABLED = ':disabled, [data-disabled], [aria-disabled="true"]';
  * this goes by Nizivo's classes: a Tooltip trigger, and an IconButton (its default tooltip), which
  * keeps its class when it renders another part such as a Menu trigger.
  */
-const TOOLTIP_TRIGGER = '.nz-tooltip-trigger, [data-slot="tooltip-trigger"], .nz-icon-button';
+const TOOLTIP_TRIGGER =
+  '.nz-tooltip-trigger, [data-slot="tooltip-trigger"], .nz-icon-button, .nz-sidebar-item';
 
 function element(id: string): HTMLElement {
   const found = document.getElementById(id);

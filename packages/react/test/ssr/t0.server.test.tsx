@@ -103,6 +103,11 @@ const CLIENT_LEAVES: Partial<Record<Name, string[]>> = {
   'icon-button': TOOLTIP_LEAVES,
   // Form reads FieldScope's module for the context the Fields read its errors from
   form: [FIELD_SCOPE, 'src/form/form.client.tsx', 'src/form/submit-button.client.tsx'].toSorted(),
+  // SidebarItem: NavItem's link as a Tooltip trigger (M52), and the Tooltip chain
+  sidebar: [
+    'src/sidebar/sidebar-item.client.tsx',
+    ...TOOLTIP_LEAVES.filter((leaf) => leaf !== 'src/icon-button/icon-button.client.tsx'),
+  ].toSorted(),
   // the bottom-inset island, and More's bottom sheet: the Drawer and its engine
   'mobile-tab-bar': [
     'src/mobile-tab-bar/mobile-tab-bar-inset.client.tsx',
@@ -126,6 +131,7 @@ const EXTERNALS: Partial<Record<Name, RegExp>> = {
   // SubmitButton's useFormStatus
   form: /^react-dom$/,
   'mobile-tab-bar': /^(react-aria(-components)?|react-dom)(\/|$)/,
+  sidebar: /^react-aria(-components)?(\/|$)/,
 };
 
 /** Each client module's exports, replaced by client references under react-server. */
@@ -137,6 +143,7 @@ const CLIENT_EXPORTS: Record<string, string[]> = {
   'src/form/submit-button.client.tsx': ['SubmitButton'],
   'src/mobile-tab-bar/mobile-tab-bar-inset.client.tsx': ['MobileTabBarInset'],
   'src/mobile-tab-bar/mobile-tab-bar-more.client.tsx': ['MobileTabBarMore'],
+  'src/sidebar/sidebar-item.client.tsx': ['SidebarItem'],
   // the SearchField the TopBar and AppShell examples put in their search slot
   'src/search-field/search-field.client.tsx': ['SearchField'],
   [FIELD_SCOPE]: ['FieldScope', 'useFieldControl'],

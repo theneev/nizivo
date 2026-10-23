@@ -2,8 +2,8 @@
 // shows the Sidebar (the rail from 640 px, 264 px from 1280 px) and the TopBar on wide screens, and
 // the MobileTopBar and the MobileTabBar with its More sheet below 640 px; the server renders both and
 // CSS shows one. In a layout, so the shell stays mounted while the pages under it change. Client
-// modules it adds: the SearchField, the IconButtons' tooltips, the MobileTabBar's inset island and
-// More's Drawer; the Sidebar, the bars and AppShell ship none.
+// modules it adds: the SidebarItems' rail Tooltip, the SearchField, the IconButtons' tooltips, the
+// MobileTabBar's inset island and More's Drawer; the bars and AppShell ship none.
 import '@nizivo/react/css/app-shell.css';
 import '@nizivo/react/css/drawer.css';
 import '@nizivo/react/css/mobile-tab-bar.css';
@@ -29,7 +29,7 @@ import { MobileTabBar, MobileTabBarMore } from '@nizivo/react/mobile-tab-bar';
 import { MobileTopBar } from '@nizivo/react/mobile-top-bar';
 import { NavItem } from '@nizivo/react/nav-item';
 import { SearchField } from '@nizivo/react/search-field';
-import { Sidebar } from '@nizivo/react/sidebar';
+import { Sidebar, SidebarItem } from '@nizivo/react/sidebar';
 import { TopBar } from '@nizivo/react/top-bar';
 
 /** Figma Sidebar's destinations (figma/06 §6.2); the first four have a tab below 640 px. */
@@ -53,7 +53,7 @@ export default function DashboardLayout({ children }) {
           <Sidebar.Header mark="M" title="Moss & Kiln" description="mossandkiln.com" />
           <Sidebar.Content>
             {[...TABS, ...MORE].map(([href, label, Icon, count]) => (
-              <NavItem
+              <SidebarItem
                 key={href}
                 href={href}
                 icon={<Icon />}
@@ -61,13 +61,13 @@ export default function DashboardLayout({ children }) {
                 current={href === '/dashboard'}
               >
                 {label}
-              </NavItem>
+              </SidebarItem>
             ))}
           </Sidebar.Content>
           <Sidebar.Footer>
-            <NavItem href="/settings" icon={<Settings />}>
+            <SidebarItem href="/settings" icon={<Settings />}>
               Settings
-            </NavItem>
+            </SidebarItem>
           </Sidebar.Footer>
         </Sidebar.Root>
       }

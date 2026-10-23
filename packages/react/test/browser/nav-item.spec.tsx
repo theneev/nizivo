@@ -2,7 +2,7 @@
 // page ships it. Tab order (every enabled link; a disabled item is not a stop), aria-current, the
 // focus outline from nz.base, the fixed 40 px row with and without a count, the current item's fill,
 // and the rail a collapsed Sidebar draws (labels out of the layout, still the links' text; a 40 px
-// square; a count as a dot; the label beside the item on keyboard focus).
+// square; a count as a dot). The rail's Tooltip is SidebarItem's: test/browser/app-shell.spec.tsx.
 import type { ReactElement } from 'react';
 import { renderToString } from 'react-dom/server';
 import { afterEach, beforeAll, describe, expect, test } from 'vitest';
@@ -64,7 +64,8 @@ async function mount(element: ReactElement): Promise<HTMLElement> {
 }
 
 function items(container: ParentNode): HTMLElement[] {
-  return [...container.querySelectorAll<HTMLElement>('[data-slot="nav-item"]')];
+  // a SidebarItem (the rail example) is the same link under its own slot
+  return [...container.querySelectorAll<HTMLElement>('.nz-nav-item')];
 }
 
 function one(container: ParentNode, selector: string): HTMLElement {
@@ -175,25 +176,5 @@ describe('NavItem', () => {
     const home = items(container)[0];
     if (home === undefined) throw new Error('no item');
     expect(getComputedStyle(one(home, '.nz-nav-item-icon'), '::after').content).toBe('none');
-  });
-
-  test('in the rail, keyboard focus shows the label beside the item, past the sidebar', async () => {
-    const container = await mountRail();
-    const [home] = items(container);
-    if (home === undefined) throw new Error('no item');
-    const sidebar = one(container, '[data-slot="sidebar"]');
-    sidebar.tabIndex = -1;
-    await tabTo(sidebar, home);
-    expect(document.activeElement).toBe(home);
-    expect(home.matches(':focus-visible')).toBe(true);
-    const flyout = one(home, '.nz-nav-item-label');
-    const label = flyout.getBoundingClientRect();
-    expect(label.width).toBeGreaterThan(40);
-    // its painted box (inside the transparent bridge) starts past the sidebar's edge
-    const bridge = Number.parseFloat(getComputedStyle(flyout).borderInlineStartWidth);
-    expect(label.left + bridge).toBeGreaterThanOrEqual(sidebar.getBoundingClientRect().right);
-    expect(
-      Math.abs(label.top + label.height / 2 - (home.getBoundingClientRect().top + 20)),
-    ).toBeLessThan(1);
   });
 });

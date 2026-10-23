@@ -1,6 +1,5 @@
 import type { JSX, ReactNode } from 'react';
-import { NavItem } from '../nav-item/index';
-import { Sidebar } from './index';
+import { Sidebar, SidebarItem } from './index';
 
 /** Stands in for an `@nizivo/icons` glyph (20 px Lucide strokes, sized by the slot). */
 function Glyph({ children }: { children: ReactNode }): JSX.Element {
@@ -63,33 +62,33 @@ function Destinations(): JSX.Element {
     <>
       <Sidebar.Header mark="M" title="Moss & Kiln" description="mossandkiln.com" />
       <Sidebar.Content>
-        <NavItem href="/" icon={ICONS.home}>
+        <SidebarItem href="/" icon={ICONS.home}>
           Home
-        </NavItem>
-        <NavItem href="/orders" icon={ICONS.orders} count={12} current>
+        </SidebarItem>
+        <SidebarItem href="/orders" icon={ICONS.orders} count={12} current>
           Orders
-        </NavItem>
-        <NavItem href="/products" icon={ICONS.products}>
+        </SidebarItem>
+        <SidebarItem href="/products" icon={ICONS.products}>
           Products
-        </NavItem>
-        <NavItem href="/customers" icon={ICONS.customers}>
+        </SidebarItem>
+        <SidebarItem href="/customers" icon={ICONS.customers}>
           Customers
-        </NavItem>
-        <NavItem href="/analytics" icon={ICONS.analytics}>
+        </SidebarItem>
+        <SidebarItem href="/analytics" icon={ICONS.analytics}>
           Analytics
-        </NavItem>
+        </SidebarItem>
       </Sidebar.Content>
       <Sidebar.Footer>
-        <NavItem href="/settings" icon={ICONS.settings}>
+        <SidebarItem href="/settings" icon={ICONS.settings}>
           Settings
-        </NavItem>
+        </SidebarItem>
       </Sidebar.Footer>
     </>
   );
 }
 
 /**
- * Figma's Sidebar, expanded: the store, the destinations and Settings at the foot. `collapsed={false}`
+ * Figma's Sidebar, expanded: the store, the destinations (`SidebarItem`s) and Settings at the foot. `collapsed={false}`
  * keeps it 264 px wide here; in an app it is 264 px from 1280 px and the icon rail from 640 px.
  * (The examples set `blockSize`; in a shell it is the viewport's height.)
  */
@@ -103,7 +102,8 @@ export function SidebarExample(): JSX.Element {
 
 /**
  * The icon rail (Expanded=False): only the store's mark and the icons. The labels stay the links'
- * names, a count shows as a dot, and hovering or focusing an item shows its label beside it.
+ * names, a count shows as a dot, and each `SidebarItem` shows its label in a Tooltip on hover and
+ * keyboard focus.
  */
 export function SidebarRailExample(): JSX.Element {
   return (

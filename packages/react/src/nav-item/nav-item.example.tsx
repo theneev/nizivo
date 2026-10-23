@@ -1,5 +1,5 @@
 import type { ComponentPropsWithRef, CSSProperties, JSX, ReactNode } from 'react';
-import { Sidebar } from '../sidebar/index';
+import { Sidebar, SidebarItem } from '../sidebar/index';
 import { NavItem } from './index';
 
 /** Stands in for a router link (Next `Link`, React Router `Link`). */
@@ -128,22 +128,22 @@ export function NavItemRouterExample(): JSX.Element {
 
 /**
  * The icon rail: a Sidebar keeps it with `collapsed` (and draws it from 640 px to 1280 px on its
- * own). The labels and counts stay in the DOM as the links' names; a count shows as a dot, and
- * hovering or focusing an item shows its label beside it.
+ * own). The labels and counts stay in the DOM as the links' names, and a count shows as a dot. In a
+ * Sidebar, use `SidebarItem`: the same link, with a Tooltip that shows its label in the rail.
  */
 export function NavItemCollapsedExample(): JSX.Element {
   return (
     <Sidebar.Root collapsed aria-label="Main, collapsed" style={{ blockSize: 'auto' }}>
       <Sidebar.Content>
-        <NavItem href="/" icon={ICONS.home}>
+        <SidebarItem href="/" icon={ICONS.home}>
           Home
-        </NavItem>
-        <NavItem href="/orders" icon={ICONS.orders} count={12} current>
+        </SidebarItem>
+        <SidebarItem href="/orders" icon={ICONS.orders} count={12} current>
           Orders
-        </NavItem>
-        <NavItem href="/customers" icon={ICONS.customers} count={3}>
+        </SidebarItem>
+        <SidebarItem href="/customers" icon={ICONS.customers} count={3}>
           Customers
-        </NavItem>
+        </SidebarItem>
       </Sidebar.Content>
     </Sidebar.Root>
   );

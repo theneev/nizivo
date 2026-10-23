@@ -44,7 +44,8 @@ export type Component =
   | 'count-up'
   | 'search-field'
   | 'mobile-tab-bar'
-  | 'mobile-tab-bar-more';
+  | 'mobile-tab-bar-more'
+  | 'sidebar-item';
 
 /** Each rendered component's client leaf, as its dist path without `dist/` and `.js`. */
 const LEAF: Record<Component, string> = {
@@ -75,6 +76,8 @@ const LEAF: Record<Component, string> = {
   // the second client part, with the Drawer for its sheet.
   'mobile-tab-bar': 'mobile-tab-bar/mobile-tab-bar-inset.client',
   'mobile-tab-bar-more': 'mobile-tab-bar/mobile-tab-bar-more.client',
+  // SidebarItem: NavItem's link with the rail's Tooltip (M52)
+  'sidebar-item': 'sidebar/sidebar-item.client',
 };
 
 export interface PageSpec {
@@ -283,8 +286,9 @@ export const PAGES: Record<string, PageSpec> = {
     slots: ['kpi-tile', 'metric', 'number-value', 'delta', 'sparkline', 'ranked-list'],
     dashboard: { tiles: 4, streamed: false },
   },
-  // Week 20: in the app shell (app/dashboard/layout.jsx), which adds the TopBar's SearchField and
-  // IconButtons and the MobileTabBar's two client parts.
+  // Week 20: in the app shell (app/dashboard/layout.jsx), which adds the Sidebar's SidebarItems, the
+  // TopBar's SearchField and IconButtons and the MobileTabBar's two client parts; NavItem stays in
+  // the More sheet.
   '/dashboard': {
     renders: [
       'segmented-control',
@@ -293,6 +297,7 @@ export const PAGES: Record<string, PageSpec> = {
       'icon-button',
       'mobile-tab-bar',
       'mobile-tab-bar-more',
+      'sidebar-item',
     ],
     slots: [
       'app-shell',
@@ -300,7 +305,7 @@ export const PAGES: Record<string, PageSpec> = {
       'app-shell-main',
       'sidebar',
       'sidebar-header',
-      'nav-item',
+      'sidebar-item',
       'top-bar',
       'mobile-top-bar',
       'mobile-tab-bar',

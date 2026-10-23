@@ -6,7 +6,7 @@ import { MobileTopBar } from '../mobile-top-bar/index';
 import { NavItem } from '../nav-item/index';
 import { PageHeader } from '../page-header/index';
 import { SearchField } from '../search-field/index';
-import { Sidebar } from '../sidebar/index';
+import { Sidebar, SidebarItem } from '../sidebar/index';
 import { TopBar } from '../top-bar/index';
 import { AppShell } from './index';
 
@@ -86,23 +86,23 @@ export function AppShellExample(): JSX.Element {
         <Sidebar.Root style={{ blockSize: 480 }}>
           <Sidebar.Header mark="M" title="Moss & Kiln" description="mossandkiln.com" />
           <Sidebar.Content>
-            <NavItem href="/" icon={ICONS.home} current>
+            <SidebarItem href="/" icon={ICONS.home} current>
               Home
-            </NavItem>
-            <NavItem href="/orders" icon={ICONS.orders} count={12}>
+            </SidebarItem>
+            <SidebarItem href="/orders" icon={ICONS.orders} count={12}>
               Orders
-            </NavItem>
-            <NavItem href="/products" icon={ICONS.products}>
+            </SidebarItem>
+            <SidebarItem href="/products" icon={ICONS.products}>
               Products
-            </NavItem>
-            <NavItem href="/customers" icon={ICONS.customers}>
+            </SidebarItem>
+            <SidebarItem href="/customers" icon={ICONS.customers}>
               Customers
-            </NavItem>
+            </SidebarItem>
           </Sidebar.Content>
           <Sidebar.Footer>
-            <NavItem href="/settings" icon={ICONS.settings}>
+            <SidebarItem href="/settings" icon={ICONS.settings}>
               Settings
-            </NavItem>
+            </SidebarItem>
           </Sidebar.Footer>
         </Sidebar.Root>
       }

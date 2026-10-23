@@ -4,11 +4,11 @@
    as layout/sidebar (M49: 264 px from 1280 px, the 72 px rail from 640 px; Figma's frames draw 248
    and 76), 16 px padding, 4 px between items, bg/canvas with a border/subtle edge; Figma's spacer
    frames become a gap and an auto margin. Below 640 px (--nz-sm) it is not shown: the MobileTabBar
-   is the navigation there. It sticks to the viewport's height; expanded, it scrolls inside.
+   is the navigation there. It sticks to the viewport's height and scrolls inside.
 
    The rail: the root is a size container named nz-sidebar, and below 10rem of content (the rail's
-   40 px) NavItem folds to its icon (nav-item.css), the header to its mark, and a hovered or focused
-   item shows its label beside it. `collapsed` sets the width itself, so the same rules draw it. Public --nz-sidebar-* hooks are read once, at the
+   40 px) NavItem folds to its icon (nav-item.css) and the header to its mark; a SidebarItem's
+   Tooltip names it there. `collapsed` sets the width itself, so the same rules draw it. Public --nz-sidebar-* hooks are read once, at the
    property. */
 @layer nz.components {
   .nz-sidebar {
@@ -25,10 +25,7 @@
     inline-size: var(--nz-sidebar-width, var(--_nz-sidebar-width));
     block-size: var(--nz-sidebar-block-size, 100dvh);
     padding: var(--nz-space-4);
-
-    /* the rail's labels show beside their items on hover and focus (nav-item.css), past the
-       sidebar's edge, so the rail does not clip; its destinations fit a tablet's height */
-    overflow: visible;
+    overflow-y: auto;
     border-inline-end: var(--nz-border-width-default) solid
       var(--nz-sidebar-border, var(--nz-border-subtle));
     background: var(--nz-sidebar-bg, var(--nz-bg-canvas));
@@ -41,20 +38,11 @@
 
     &[data-expanded] {
       --_nz-sidebar-width: 16.5rem;
-
-      overflow-y: auto;
     }
 
     /* shown from --nz-sm; below it the MobileTabBar is the navigation */
     @media (--nz-sm) {
       display: flex;
-    }
-
-    /* expanded from --nz-lg: a long list scrolls inside */
-    @media (--nz-lg) {
-      &:not([data-collapsed]) {
-        overflow-y: auto;
-      }
     }
   }
 
@@ -171,30 +159,6 @@
     .nz-sidebar-footer {
       align-items: center;
     }
-
-    /* a NavItem's label beside it while it is hovered or keyboard-focused (nav-item.css takes the
-       label out of the layout), so the icons are named for sighted users without a tooltip's
-       script. It is part of the link: the pointer can move onto it, and a transparent border
-       bridges the gap across the rail's 16 px padding to 8 px past its edge. */
-    .nz-nav-item:is(:hover, :focus-visible) > .nz-nav-item-label {
-      inset-block-start: 50%;
-      inset-inline-start: 100%;
-      z-index: var(--nz-z-overlay);
-      inline-size: auto;
-      block-size: auto;
-      margin: 0;
-      padding: var(--nz-space-1) var(--nz-space-2);
-      border-inline-start: calc(var(--nz-space-4) + var(--nz-space-2)) solid transparent;
-      border-radius: var(--nz-radius-sm);
-      background: var(--nz-bg-inverse);
-      background-clip: padding-box;
-      color: var(--nz-text-inverse);
-      font: var(--nz-font-label-m);
-      letter-spacing: var(--nz-tracking-label-m);
-      overflow: visible;
-      clip-path: none;
-      translate: 0 -50%;
-    }
   }
 
   @media (forced-colors: active) {
@@ -205,15 +169,6 @@
     /* the mark's fill is dropped: an edge keeps its square */
     .nz-sidebar-header-mark {
       border: 1px solid CanvasText;
-    }
-
-    @container nz-sidebar (inline-size < 10rem) {
-      .nz-nav-item:is(:hover, :focus-visible) > .nz-nav-item-label {
-        border-block: 1px solid CanvasText;
-        border-inline-end: 1px solid CanvasText;
-        background: Canvas;
-        color: CanvasText;
-      }
     }
   }
 }

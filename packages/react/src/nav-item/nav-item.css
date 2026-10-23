@@ -11,8 +11,8 @@
    The rail: in a Sidebar folded to the icon rail (its content under 10rem, a size container query,
    so the viewport and its `collapsed` prop draw the same thing) each item is a 40 px square around
    the icon; the label and the count leave the layout but stay in the DOM, so the link keeps its
-   accessible name ("Orders 12"), and a count shows as a dot on the icon. The Sidebar shows the
-   label beside a hovered or focused item (sidebar.css). */
+   accessible name ("Orders 12"), and a count shows as a dot on the icon. SidebarItem, the Sidebar's
+   NavItem, names it there with a Tooltip. */
 @layer nz.components {
   .nz-nav-item {
     display: flex;

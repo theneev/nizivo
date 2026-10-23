@@ -2,8 +2,8 @@
   "$comment": "Size budgets (ARCHITECTURE.md §17), written by `node packages/tooling/size/measure.ts --write`. measured: bytes, gzip -9, as size-limit 14.2 reports them. limitKiB: measured + 10%, rounded up (method.ts limitKiB), never above the entry's §17.1 plan limit (method.ts PLAN_LIMITS_KIB). Limits only go up through a labelled PR (§17.3).",
   "entries": {
     "@nizivo/react": {
-      "measured": 110527,
-      "limitKiB": 119
+      "measured": 110822,
+      "limitKiB": 120
     },
     "@nizivo/react/alert": {
       "measured": 1282,
@@ -218,8 +218,8 @@
       "limitKiB": 0.9
     },
     "@nizivo/react/sidebar": {
-      "measured": 1132,
-      "limitKiB": 1.3
+      "measured": 17315,
+      "limitKiB": 19
     },
     "@nizivo/react/skeleton": {
       "measured": 716,
@@ -453,6 +453,10 @@
       "measured": 1146,
       "limitKiB": 1.3
     },
+    "@nizivo/react own: sidebar/sidebar-item.client": {
+      "measured": 565,
+      "limitKiB": 0.7
+    },
     "@nizivo/react own: switch/switch.client": {
       "measured": 552,
       "limitKiB": 0.6
@@ -506,7 +510,7 @@
       "limitKiB": 0.8
     },
     "@nizivo/react/css/base.css": {
-      "measured": 1242,
+      "measured": 1250,
       "limitKiB": 1.4
     },
     "@nizivo/react/css/breadcrumb.css": {
@@ -690,8 +694,8 @@
       "limitKiB": 0.3
     },
     "@nizivo/react/css/sidebar.css": {
-      "measured": 1107,
-      "limitKiB": 1.2
+      "measured": 928,
+      "limitKiB": 1
     },
     "@nizivo/react/css/skeleton.css": {
       "measured": 365,
@@ -754,7 +758,7 @@
       "limitKiB": 0.5
     },
     "@nizivo/react/styles.css": {
-      "measured": 24088,
+      "measured": 23949,
       "limitKiB": 26
     },
     "@nizivo/tokens": {

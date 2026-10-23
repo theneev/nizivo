@@ -2320,6 +2320,18 @@
     },
     {
       "definedIn": "./sidebar",
+      "import": "import { SidebarItem } from '@nizivo/react'",
+      "kind": "component",
+      "name": "SidebarItem"
+    },
+    {
+      "definedIn": "./sidebar",
+      "import": "import type { SidebarItemProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "SidebarItemProps"
+    },
+    {
+      "definedIn": "./sidebar",
       "import": "import type { SidebarLabels } from '@nizivo/react'",
       "kind": "type",
       "name": "SidebarLabels"
