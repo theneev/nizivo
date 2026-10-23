@@ -3,9 +3,9 @@
 // over the slices in data order (clockwise, whatever the page's direction), the first slice first;
 // the active segment carries `data-highlighted`, which dims the other segments and legend rows and
 // swaps the centre; the island's ChartTooltip card sits at the slice's centre and opens toward the
-// legend (with the legend under the ring, under 24rem, toward the side with more room), never past
-// the chart; its swatch takes the slice's colour; the polite region speaks
-// "slice, value label, value, share, of total"; a pointer does the same without speaking, picking
+// legend, never past the chart (with the legend under the ring, under 24rem, the card is not
+// shown: the centre and the legend row show the slice); its swatch takes the slice's colour; the
+// polite region speaks "slice, value label, value, share, of total"; a pointer does the same without speaking, picking
 // the segment under it (the gaps and the hole keep the card); Escape on the ring hides only the
 // card, and with focus elsewhere hides a pointer-shown card and still reaches an enclosing dialog
 // (M41 item 1); nothing in the layout moves. Styled by the shipped stylesheets only (tokens.css and
@@ -340,32 +340,27 @@ describe('DonutChart item mode: the card', () => {
     },
   );
 
-  test('probe-narrow, the legend under the ring: the card takes the side with more room, never past the chart', async () => {
+  test('probe-narrow, the legend under the ring: no card; the centre and the legend row show the slice', async () => {
     const m = await hydrate({ probe: 'probe-narrow' });
     const scroll = document.documentElement.scrollWidth;
-    const figure = rect(m.figure);
     expect(rect(m.container.querySelector('.nz-legend') ?? m.layer).top).toBeGreaterThanOrEqual(
       rect(m.layer).bottom,
     );
     await tabIn();
+    const shares = ['52%', '28%', '14%', '6%'];
     for (const i of [0, 1, 2, 3]) {
       // oxlint-disable-next-line no-await-in-loop -- one slice after the other
       await userEvent.keyboard(i === 0 ? '{Home}' : '{ArrowRight}');
       // oxlint-disable-next-line no-await-in-loop -- one slice after the other
       await settled();
+      expect(highlighted(m)).toEqual([i]);
+      // the island still renders its card (and speaks the slice); the stacked layout does not show it
       const tip = card(m);
       if (tip === null) throw new Error('no card');
-      const box = rect(tip);
-      const layer = rect(m.layer);
-      const centre = at(m, middleOf(i));
-      // 14 px from the slice's centre, on the side with more room; centred on it vertically
-      const x = layer.left + centre.x;
-      const off = centre.x > layer.width / 2 ? box.right - x + 14 : box.left - x - 14;
-      expect(Math.abs(off)).toBeLessThanOrEqual(1);
-      expect(Math.abs(box.top + box.height / 2 - (layer.top + centre.y))).toBeLessThanOrEqual(1);
-      expect(box.width).toBeLessThanOrEqual(layer.width / 2 - 14 + 0.5);
-      expect(box.left).toBeGreaterThanOrEqual(figure.left);
-      expect(box.right).toBeLessThanOrEqual(figure.right + 0.5);
+      expect(getComputedStyle(tip).display).toBe('none');
+      expect(m.live.textContent).toContain(TITLES[i] ?? '');
+      expect(shownCentres(m)).toEqual([`${shares[i] ?? ''}${TITLES[i] ?? ''}`]);
+      expect(opacities(legendRows(m))).toEqual([0, 1, 2, 3].map((r) => (r === i ? 1 : 0.45)));
       expect(document.documentElement.scrollWidth).toBe(scroll);
     }
   });

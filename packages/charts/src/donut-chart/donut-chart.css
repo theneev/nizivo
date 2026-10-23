@@ -224,10 +224,10 @@
 
   /* A narrow chart (under 24rem, where the legend beside a 40 % ring would wrap its names to a word
      a line): the legend goes under the ring, full width, its names in one flexible column, and the
-     ring takes up to the chart's whole width, centred. With no legend beside the ring, the card
-     takes the island's own side, the one with more room, at most half the ring wide, as on
-     AreaChart, so it never passes the chart's edge (the attribute is doubled to outrank the
-     right-to-left rule above). */
+     ring takes up to the chart's whole width, centred. With no legend beside the ring there is no
+     room for the island's card that would not pass the chart's edge or cover the ring (half the
+     ring is under 100 px), so it is not shown: the centre swaps to the slice's share and name and
+     its legend row, the others dimmed, shows its value; the island still speaks the slice. */
   @container nz-chart (inline-size < 24rem) {
     .nz-donut-chart > .nz-chart-frame-body {
       grid-column: 1 / -1;
@@ -250,13 +250,8 @@
       grid-template-columns: auto minmax(0, 1fr) auto auto;
     }
 
-    .nz-donut-chart .nz-chart-interaction-tip[data-side][data-side] {
-      max-inline-size: calc(50cqi - 0.875rem);
-      translate: 0.875rem -50%;
-    }
-
-    .nz-donut-chart .nz-chart-interaction-tip[data-side='left'][data-side] {
-      translate: calc(-100% - 0.875rem) -50%;
+    .nz-donut-chart .nz-chart-interaction-tip {
+      display: none;
     }
   }
 
