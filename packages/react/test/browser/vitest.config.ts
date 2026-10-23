@@ -8,7 +8,9 @@ import { reactMatrix } from '../react-matrix.ts';
 // node suite (vitest.config.ts includes only *.test.ts[x]). Script: `pnpm test:browser`. Needs the
 // built @nizivo/tokens dist/tokens.css and the generated styles/base.css. `NZ_BROWSER=webkit` (or
 // `firefox`) runs the same specs in another engine (test/browser-engine.ts); the release lanes run
-// Chromium.
+// Chromium and Firefox. The locale-determinism spec (test/browser/locale; ARCHITECTURE.md §16.4,
+// M56) runs in a second instance of the same engine, `<engine>-de-DE`, whose page is German
+// (Playwright's context `locale: 'de-DE'`).
 const config: ViteUserConfig = defineConfig({
   // Pre-bundled up front: found mid-run on a cold cache, react-aria is re-bundled and a second React
   // copy loads ("reading 'useRef'" of null) until the cache is warm.
@@ -35,7 +37,8 @@ const config: ViteUserConfig = defineConfig({
   // `NZ_ADAPTER=hooks`: the hooks Tooltip adapter instead of the default (test/adapters.ts).
   plugins: adapterSwap(),
   test: {
-    include: ['test/browser/**/*.spec.tsx'],
+    // the folder's own specs; the de-DE instance below takes test/browser/locale
+    include: ['test/browser/*.spec.tsx'],
     // Each case renders, waits a few frames and drives real input: well under a second alone, but
     // vitest's 5 s default is too close under a loaded machine. A real hang still fails.
     testTimeout: 15_000,
@@ -45,7 +48,16 @@ const config: ViteUserConfig = defineConfig({
       // no failure screenshots written into the package
       screenshotFailures: false,
       provider: provider(),
-      instances: [{ browser: engine }],
+      instances: [
+        { browser: engine },
+        // navigator.language and Intl's default locale are de-DE in this page only
+        {
+          browser: engine,
+          name: `${engine}-de-DE`,
+          provider: provider({ locale: 'de-DE' }),
+          include: ['test/browser/locale/*.spec.tsx'],
+        },
+      ],
     },
   },
 });

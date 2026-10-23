@@ -23,11 +23,21 @@ export type Engine = (typeof BROWSERS)[number];
 export const engine: Engine =
   BROWSERS.find((name) => name === process.env['NZ_BROWSER']) ?? 'chromium';
 
-/** The provider, with Firefox's own home folder on macOS. */
-export function provider(): ReturnType<typeof playwright> {
-  if (engine !== 'firefox' || process.platform !== 'darwin') return playwright();
+/** Playwright's browser-context options (`locale`, …), as the provider takes them. */
+export type ContextOptions = NonNullable<Parameters<typeof playwright>[0]>['contextOptions'];
+
+/**
+ * The provider, with Firefox's own home folder on macOS. `contextOptions` set the page's context:
+ * the locale-determinism spec (test/browser/locale) runs with `{ locale: 'de-DE' }`.
+ */
+export function provider(contextOptions?: ContextOptions): ReturnType<typeof playwright> {
+  const context = contextOptions === undefined ? {} : { contextOptions };
+  if (engine !== 'firefox' || process.platform !== 'darwin') return playwright(context);
   const home = `${tmpdir().replace(/\/$/, '')}/nizivo-firefox-home`;
   mkdirSync(home, { recursive: true });
   // Playwright passes `env` to the browser as it is, so the rest of the environment is spread in.
-  return playwright({ launchOptions: { env: { ...process.env, CFFIXED_USER_HOME: home } } });
+  return playwright({
+    ...context,
+    launchOptions: { env: { ...process.env, CFFIXED_USER_HOME: home } },
+  });
 }
