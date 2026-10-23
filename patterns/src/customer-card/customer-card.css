@@ -1,0 +1,56 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+@layer nz.patterns {
+  .nzp-customer-card {
+    max-inline-size: 23.75rem;
+  }
+
+  .nzp-customer-card-identity {
+    display: flex;
+    align-items: center;
+    gap: var(--nz-space-3);
+  }
+
+  .nzp-customer-card-name {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-0-5);
+    min-inline-size: 0;
+  }
+
+  .nzp-customer-card-email {
+    overflow-wrap: anywhere;
+    color: var(--nz-text-brand);
+    font: var(--nz-font-body-m);
+  }
+
+  /* three figures in a row; they wrap on a narrow card */
+  .nzp-customer-card-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(6rem, 1fr));
+    gap: var(--nz-space-3);
+    margin: 0;
+  }
+
+  .nzp-customer-card-stat {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-0-5);
+    padding: var(--nz-space-2) var(--nz-space-3);
+    border-radius: var(--nz-radius-md);
+    background: var(--nz-bg-subtle);
+  }
+
+  .nzp-customer-card-stat > dd {
+    margin: 0;
+  }
+
+  .nzp-customer-card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--nz-space-1-5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+}

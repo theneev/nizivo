@@ -1,4 +1,13 @@
 {
   "title": "Patterns",
-  "pages": ["index", "order-summary", "product-table", "order-table"]
+  "pages": [
+    "index",
+    "order-summary",
+    "product-card",
+    "product-table",
+    "order-table",
+    "discount-card",
+    "plan-card",
+    "customer-card"
+  ]
 }

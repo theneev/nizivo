@@ -1,0 +1,34 @@
+---
+title: Customer card
+description: Who a customer is, what they are worth and how to reach them, an Avatar, their name and email, their orders and total spent, and their tags. A server composition; it ships no JavaScript.
+---
+
+From Figma 05 Commerce, Customer Card (`754:530`; an orphan master with no live component, seen
+in Stage `7275:14124`). Uses [Card](/docs/components/card/), [Avatar](/docs/components/avatar/),
+[Badge](/docs/components/badge/), [Text](/docs/components/text/) and
+[NumberValue](/docs/components/number-value/).
+
+## Examples
+
+### Customer
+
+<PatternExample name="CustomerCardExample" />
+
+## Stylesheet
+
+<PatternStylesheet />
+
+## Notes
+
+- **The Avatar** is decorative, because the name is printed beside it, and shows the initials when
+  there is no photo, which Figma's raw ellipse cannot. Pass `src` only for a photo that is known to
+  load.
+- **How to reach them.** Figma's doc text promises it and draws no action; here the email is a
+  `mailto:` link. Add a call or message action beside it if your app has one.
+- **The figures** are a description list: each label is a `<dt>`, each figure a `<dd>`, so they are
+  read as pairs. Money is `NumberValue` with the store's currency, and the counts go through
+  `Intl.NumberFormat`.
+- **Contrast.** Figma's stat labels are `text/tertiary` on `bg/subtle`, 4.16:1; here they are
+  `text/secondary`.
+- **Tags** are a list of Badges without a dot: the words are the tags, and no colour means more
+  than its word.

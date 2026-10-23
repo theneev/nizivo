@@ -1,0 +1,97 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+@layer nz.patterns {
+  .nzp-product-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 11rem), 1fr));
+    gap: var(--nz-space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* the card is the positioning box of its stretched link */
+  .nzp-product-card {
+    position: relative;
+    gap: var(--nz-space-3);
+    block-size: 100%;
+    padding: var(--nz-space-3);
+  }
+
+  .nzp-product-card:has(.nzp-product-card-link:hover) {
+    border-color: var(--nz-border-strong);
+  }
+
+  /* the focus ring goes round the whole card, the link's hit area */
+  .nzp-product-card:has(.nzp-product-card-link:focus-visible) {
+    outline: var(--nz-border-width-focus) solid var(--nz-border-focus);
+    outline-offset: var(--nz-space-0-5);
+  }
+
+  .nzp-product-card-media {
+    position: relative;
+  }
+
+  /* concentric with the card: its radius less its padding */
+  .nzp-product-card-image {
+    display: block;
+    aspect-ratio: 1;
+    border-radius: calc(var(--nz-radius-xl) - var(--nz-space-3));
+    background: var(--nz-bg-muted);
+  }
+
+  .nzp-product-card-badge {
+    position: absolute;
+    inset-block-start: var(--nz-space-2);
+    inset-inline-start: var(--nz-space-2);
+  }
+
+  .nzp-product-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-1);
+    padding-inline: var(--nz-space-1);
+  }
+
+  .nzp-product-card-row {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: var(--nz-space-3);
+  }
+
+  .nzp-product-card-title {
+    flex: 1;
+    min-inline-size: 0;
+    font: var(--nz-font-label-l);
+    letter-spacing: normal;
+  }
+
+  .nzp-product-card-link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .nzp-product-card-link:hover {
+    text-decoration: underline;
+  }
+
+  .nzp-product-card-link:focus-visible {
+    outline: none;
+  }
+
+  /* the stretched link: its box covers the card, so the whole card is one hit area */
+  .nzp-product-card-link::after {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    content: '';
+  }
+
+  .nzp-product-card-price {
+    display: flex;
+    flex: none;
+    flex-direction: column;
+    align-items: end;
+  }
+}

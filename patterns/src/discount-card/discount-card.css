@@ -1,0 +1,44 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+@layer nz.patterns {
+  .nzp-discount-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+    gap: var(--nz-space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .nzp-discount-card {
+    gap: var(--nz-space-4);
+    block-size: 100%;
+  }
+
+  .nzp-discount-card-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--nz-space-2);
+  }
+
+  /* the code: Figma's dashed chip, in Mono */
+  .nzp-discount-card-code {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--nz-space-2);
+    padding: var(--nz-space-1) var(--nz-space-2);
+    border: var(--nz-border-width-default) dashed var(--nz-border-brand);
+    border-radius: var(--nz-radius-sm);
+    background: var(--nz-bg-brand-subtle);
+    color: var(--nz-text-brand);
+  }
+
+  /* expired: the code turns neutral; the text keeps its contrast (no opacity) */
+  .nzp-discount-card-code-expired {
+    border-color: var(--nz-border-strong);
+    background: var(--nz-bg-subtle);
+    color: var(--nz-text-secondary);
+  }
+}

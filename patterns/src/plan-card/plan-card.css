@@ -1,0 +1,86 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+@layer nz.patterns {
+  .nzp-plan-card {
+    block-size: 100%;
+    border-radius: var(--nz-radius-2xl);
+    max-inline-size: 22rem;
+  }
+
+  .nzp-plan-card-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--nz-space-2);
+  }
+
+  /* "{price} / {interval}" on one baseline */
+  .nzp-plan-card-price {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--nz-space-1);
+    margin: 0;
+  }
+
+  .nzp-plan-card-features {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .nzp-plan-card-feature {
+    display: flex;
+    align-items: baseline;
+    gap: var(--nz-space-2);
+    font: var(--nz-font-body-m);
+
+    & > svg {
+      flex: none;
+      align-self: center;
+      color: var(--nz-icon-brand);
+    }
+  }
+
+  .nzp-plan-card-feature-excluded {
+    color: var(--nz-text-secondary);
+
+    & > svg {
+      color: var(--nz-icon-secondary);
+    }
+  }
+
+  /* the action sits at the card's foot, so a row of cards lines its buttons up */
+  .nzp-plan-card-action {
+    margin-block-start: auto;
+  }
+
+  /* the interval control keeps its own width; the row of cards takes the whole width */
+  .nzp-plan-card-plans {
+    align-items: start;
+  }
+
+  .nzp-plan-card-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    gap: var(--nz-space-4);
+    align-self: stretch;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    & .nzp-plan-card {
+      max-inline-size: none;
+    }
+  }
+
+  /* the checked interval's prices show; the other's are hidden from everyone */
+  .nzp-plan-card-plans:not(:has(input[value='year']:checked)) .nzp-plan-card-price-year,
+  .nzp-plan-card-plans:has(input[value='year']:checked) .nzp-plan-card-price-month {
+    display: none;
+  }
+}
