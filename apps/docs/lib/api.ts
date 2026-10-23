@@ -116,9 +116,17 @@ export function documentedComponents(file: ReactApiFile): (ComponentExport | Nam
 
 /** The import lines a page shows: runtime exports first, then one `import type` line. */
 export function importLines(file: ReactApiFile, specifier: string): string[] {
-  const runtime = ownExports(file)
+  const own = ownExports(file);
+  const components = own
     .filter((e) => e.kind === 'component' || e.kind === 'namespace')
     .map((e) => e.name);
+  // A utility entry with no component (contracts, i18n, locales/<tag>): its functions and constants.
+  const runtime =
+    components.length > 0
+      ? components
+      : own
+          .filter((e) => e.kind === 'function' || e.kind === 'hook' || e.kind === 'constant')
+          .map((e) => e.name);
   const lines: string[] = [];
   if (runtime.length > 0) lines.push(`import { ${runtime.join(', ')} } from '${specifier}';`);
   return lines;
