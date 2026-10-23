@@ -276,7 +276,13 @@ need `labelledBy` instead:
 ### Invalid, required, disabled and read-only: how they flow
 
 - **invalid** = a message is rendered. Sources, in priority order (§16.1, one error channel): the
-  Field's `error` prop, then (v0.2) `Form errors[name]`, then the native validation message.
+  Field's `error` prop, then `Form errors[name]` (v0.2, `@nizivo/react/form`), then the native
+  validation message. `Form` provides its presented errors (one message per name) through the
+  `FormScope` context, which lives in `field-scope.client.tsx` so the Field's graph gains no client
+  module; FieldScope looks up the **Field's** `name` (a `name` given only to the control is not
+  matched), so the zero-JS path and FieldStatic, which have no FieldScope, never see Form errors:
+  pass `error` there. Form hides a name's error once its control is edited (an `input` event on
+  the form whose target has that `name`) until a new `errors` object arrives.
   FieldScope computes the Field root's `data-invalid`, the control's `aria-invalid` and
   `aria-describedby`, and the error element from one value, so they always agree.
 - **Native validation stays on** (no `noValidate`). On submit the browser fires `invalid` at each
@@ -481,10 +487,8 @@ one to `_internal/` only when two controls need the same non-Field code.
   so an empty required Select blocks the submit and takes focus with no inline message.
 - RadioGroup and checkbox groups have no native-validation path through Fieldset; RadioGroup owns
   its group message.
-- `Form errors[name]` (v0.2) joins the error channel between the `error` prop and the native message.
-  Form's planned focus move to the first invalid control after a Server Action (gap report A §2.5)
-  must run after the errors commit, or the control is read without its error (see "Outside the
-  rule" above).
+- `Form` does not pass `validateOn` down to its Fields (gap report A §2.3 "Also settable on
+  <Form>"): Field renders `data-validate-on` on the server with its own default.
 - The announcer's speech in real screen readers (NVDA, JAWS, VoiceOver on macOS and iOS, TalkBack)
   is not verified: the browser tests check the DOM and Chromium's accessibility tree only (the
   accessibility owner's manual pass, NIZ-78).

@@ -84,6 +84,10 @@ const NIZIVO_CLIENT_MARKERS = [
   'count-up-value',
   // TableSelection, @nizivo/react/table-selection's one client part (week 18): its class
   'nz-table-selection',
+  // Form (@nizivo/react/form's client leaf): its error summary's class
+  'nz-form-summary',
+  // PasswordInput's client leaf: its toggle's class
+  'nz-password-input-toggle',
   // @nizivo/charts' ChartInteraction island (AreaChart's point mode, BarChart's column mode,
   // DonutChart's item mode). The charts parts have their own generated routes
   // (app/docs/(generated)/charts), so it may load on those three pages only; on any other page it
@@ -125,6 +129,10 @@ const CLIENT_PAGES: Record<string, string[]> = {
   '/docs/components/menu/': ['menu-popup', 'tooltip-popup'],
   '/docs/components/popover/': ['popover-popup'],
   '/docs/components/drawer/': ['drawer-popup'],
+  // Form and SubmitButton are client leaves (FormMessage is a server part); the examples put Inputs
+  // in Fields.
+  '/docs/components/form/': ['nz-form-summary', 'input-prefix', 'willValidate'],
+  '/docs/components/password-input/': ['nz-password-input-toggle', 'willValidate'],
   // CountUp is the one client part of the dashboard set (M41); its page is titled by its subpath.
   '/docs/components/motion/': ['count-up-value'],
   // AreaChart, BarChart (M40) and DonutChart (M41) render the island by default

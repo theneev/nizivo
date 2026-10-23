@@ -1,0 +1,20 @@
+{
+  "name": "form",
+  "status": "stable",
+  "tier": "server",
+  "parts": [],
+  "exports": ["Form", "SubmitButton", "FormMessage"],
+  "interactive": ["form-summary", "form-summary-link"],
+  "focusTarget": "self",
+  "stateIndicator": [],
+  "cssDeps": ["base", "alert", "button"],
+  "variants": {
+    "tone": ["info", "success", "warning", "critical"]
+  },
+  "figma": {
+    "canonical": [],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": []
+  }
+}

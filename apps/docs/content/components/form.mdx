@@ -1,0 +1,79 @@
+---
+title: Form
+description: An optional client `<form>` for forms whose errors come back from the server. Errors keyed by Field name appear in each Field, focus moves to the first invalid control, and an optional error summary links to each one. SubmitButton is pending while the form's action runs; FormMessage is the form-level message.
+keyboard:
+  - keys: Enter
+    action: In a text field, submits the form (the browser's implicit submission). Native validation runs first; a failed constraint shows its message in the Field and focuses the first invalid control.
+  - keys: Tab
+    action: Moves through the form's controls in document order. When an action returns errors, focus is already on the first invalid control, or on the error summary when summary is on.
+  - keys: Enter (on a summary link)
+    action: Focuses the control that error belongs to.
+keyboardSource: a native `<form>` (`form.client.tsx`) and SubmitButton's native `<button type="submit">`. The browser lane (`test/browser/form.spec.tsx`) checks native validation inside a Form, an action's errors by name with focus on the first invalid control, the summary's focus and links, and SubmitButton's pending state.
+---
+
+<Callout type="warn" title="Not yet published (v0.2)">
+  This part is in the repository and ships in `@nizivo/react` 0.2.0; the 0.1.0 on npm does not have
+  it. Until then its API can change.
+</Callout>
+
+## Static or interactive
+
+**Server**, with two client parts. `FormMessage` renders on the server and ships no client
+JavaScript; `Form` and `SubmitButton` are client leaves, imported from `@nizivo/react/form` beside
+it. Every Field already works without `Form`: native validation is inline and focuses the first
+invalid control, and an error passed to a Field's `error` shows with no client code of Form's. Use
+`Form` when errors come back from a server action and you want them matched to Fields by name.
+[How to choose](/docs/guides/static-or-interactive/).
+
+In a client app (a Vite or React Router single-page app, or a `'use client'` file) it is an ordinary React component: event handlers, refs and state work as usual. [In a client app](/docs/guides/static-or-interactive/#in-a-client-app).
+
+## Errors from a server action
+
+Pass the action's field errors to `errors`, keyed by each Field's `name`, as
+`z.flattenError(error).fieldErrors` returns them: a message, or a list of messages, of which the
+first shows. A nested name is one key, written as the Field's `name` is (`items.0.title`). Each
+error goes through the Field's one error channel: the Field's own `error` prop wins over it, and it
+wins over a native validation message.
+
+```tsx
+'use client';
+const [state, action] = useActionState(saveProduct, {});
+<Form action={action} errors={state.fieldErrors}>
+  <FormMessage>{state.formError}</FormMessage>
+  <Field name="title" label="Product title" required>
+    <Input defaultValue={state.values?.title} />
+  </Field>
+  <SubmitButton>Save</SubmitButton>
+</Form>;
+```
+
+- **Put `name` on the Field**, not only on the control: Form matches by the Field's name. A Field
+  with a function child (zero JS) or a `FieldStatic` reads no Form errors; pass its `error`.
+- **Focus.** Each new `errors` object (by identity) moves focus to the first invalid control in page
+  order, after the errors render, so the control is read with its message. The first render moves
+  no focus, so a page that arrives with errors does not take focus as it loads.
+- **Edits.** Once the user changes a control's value, its error from the server is stale, so it is
+  hidden until the next `errors` object.
+- **Echo the values back** as `defaultValue`: React resets uncontrolled fields after an action, even
+  one that returns errors.
+
+## Error summary
+
+`summary` adds GOV.UK's error summary at the start of the form: a critical Alert titled "There is a
+problem" (`labels.summaryTitle`) with one link per error, in page order. New errors focus the
+summary instead of the first invalid control, and a link focuses its control. Use it on long forms,
+where the first error may be off screen. Its links point at the controls once the form has hydrated.
+
+## SubmitButton
+
+A primary Button with `type="submit"` that is `pending` while its form's action runs, read with
+React's `useFormStatus`: the spinner shows, it stays focusable with `aria-disabled`, and it cannot
+submit again. Only an action passed as a function (`<Form action={fn}>`) reports a status, never a
+URL. `pending` forces the state, for example while a client handler awaits something else.
+
+## FormMessage
+
+The form-level message, for failures no Field owns (network, permission, a conflict) and for
+success. Render it always and change only its children: the live container is in the page from the
+first render, empty, so a message added later is announced. `critical` (the default) is
+`role="alert"`; `success`, `info` and `warning` are `role="status"`.

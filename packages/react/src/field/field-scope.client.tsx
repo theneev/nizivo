@@ -11,6 +11,7 @@ import {
   useMemo,
   useRef,
   useState,
+  type Context,
   type FocusEvent,
   type MouseEvent,
   type ReactElement,
@@ -92,6 +93,16 @@ interface Scope {
 
 const FieldContext = createContext<Scope | null>(null);
 
+/**
+ * Internal: what `Form` (form/form.client.tsx) provides, its presented errors by Field `name` (one
+ * message each). It lives here, not in the form folder, so the Field's module graph gains no client
+ * module; the form leaf imports it.
+ */
+export const FormScope: Context<ReadonlyMap<string, string> | null> = createContext<ReadonlyMap<
+  string,
+  string
+> | null>(null);
+
 /** Internal: rendered only by `Field`. Every prop is serialisable. */
 export function FieldScope({
   anatomy,
@@ -109,8 +120,10 @@ export function FieldScope({
   // The control onInvalid asks to focus: a new object each time, so the same message still re-renders.
   const [toFocus, setToFocus] = useState<{ element: FieldValidatable } | null>(null);
   const { ids, label, description, required, disabled, readOnly, validateOn } = anatomy;
-  // One error channel, in priority order: the `error` prop, then the native message (§16.1).
-  const error = presented(anatomy.error) ? anatomy.error : native;
+  // One error channel, in priority order: the `error` prop, then the Form's error for this Field's
+  // `name`, then the native message (§16.1).
+  const formError = name === undefined ? undefined : use(FormScope)?.get(name);
+  const error = presented(anatomy.error) ? anatomy.error : (formError ?? native);
   const invalid = presented(error);
 
   // The announcer (M29, §16.5's one exception; FIELD-CONTRACT.md "The announcer"). One polite region,

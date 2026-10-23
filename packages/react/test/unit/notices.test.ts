@@ -30,6 +30,8 @@ const LUCIDE: Record<string, string> = {
   close: 'x',
   check: 'check',
   minus: 'minus',
+  eye: 'eye',
+  'eye-off': 'eye-off',
 };
 
 /** On Lucide's list of Feather-derived icons (lucide-static 1.56.0 LICENSE; `x-circle` is `circle-x`). */

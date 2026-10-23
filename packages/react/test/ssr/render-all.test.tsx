@@ -60,6 +60,16 @@ import {
 import { TrendCardExample, TrendCardLoadingExample } from '../../src/trend-card/trend-card.example';
 import { PopoverExample, PopoverOpenExample } from '../../src/popover/popover.example';
 import { DrawerExample, DrawerSheetExample } from '../../src/drawer/drawer.example';
+import {
+  FormExample,
+  FormMessageExample,
+  FormServerErrorsExample,
+} from '../../src/form/form.example';
+import {
+  PasswordInputExample,
+  PasswordInputNewExample,
+  PasswordInputStatesExample,
+} from '../../src/password-input/password-input.example';
 
 const examples: Record<string, () => JSX.Element> = {
   ButtonExample,
@@ -120,6 +130,12 @@ const examples: Record<string, () => JSX.Element> = {
   PopoverOpenExample,
   DrawerExample,
   DrawerSheetExample,
+  FormExample,
+  FormServerErrorsExample,
+  FormMessageExample,
+  PasswordInputExample,
+  PasswordInputNewExample,
+  PasswordInputStatesExample,
 };
 
 const allowed = new Set([

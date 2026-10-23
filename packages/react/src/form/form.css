@@ -1,0 +1,35 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/form.css (ARCHITECTURE.md §16.1; no Figma source). The `<form>` itself keeps the
+   page's layout: Form adds no box of its own. FormMessage and the error summary are Alerts
+   (alert.css draws them); this file draws only the summary's list and links. The summary's and the
+   links' focus outline lives in nz.base (component.json "interactive"). Public --nz-form-* hooks are
+   read once, at the property. */
+@layer nz.components {
+  /* the summary takes focus by script when errors arrive (tabindex -1); its radius follows the Alert */
+  .nz-form-summary {
+    border-radius: var(--nz-radius-lg);
+  }
+
+  .nz-form-summary-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-1);
+    margin: 0;
+    padding-inline-start: var(--nz-space-4);
+  }
+
+  /* an error, not a decoration: critical text and an underline, so it never reads by colour alone */
+  .nz-form-summary-link {
+    border-radius: var(--nz-radius-xs);
+    color: var(--nz-form-summary-link-fg, var(--nz-text-critical));
+    text-decoration: underline;
+    text-underline-offset: var(--nz-space-1);
+
+    @media (hover: hover) {
+      &:hover {
+        text-decoration-thickness: 2px;
+      }
+    }
+  }
+}

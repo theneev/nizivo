@@ -73,6 +73,7 @@ const COMPONENTS = [
   'sticky-bar',
   'table',
   'table-selection',
+  'form',
 ] as const;
 type Name = (typeof COMPONENTS)[number];
 
@@ -94,11 +95,15 @@ const CLIENT_LEAVES: Partial<Record<Name, string[]>> = {
   'table-selection': ['src/table-selection/table-selection.client.tsx'],
   field: [FIELD_SCOPE],
   'icon-button': TOOLTIP_LEAVES,
+  // Form reads FieldScope's module for the context the Fields read its errors from
+  form: [FIELD_SCOPE, 'src/form/form.client.tsx', 'src/form/submit-button.client.tsx'].toSorted(),
 };
 
 /** Packages other than react a subpath may import: only through its client leaves (the engine). */
 const EXTERNALS: Partial<Record<Name, RegExp>> = {
   'icon-button': /^react-aria(-components)?(\/|$)/,
+  // SubmitButton's useFormStatus
+  form: /^react-dom$/,
 };
 
 /** Each client module's exports, replaced by client references under react-server. */
@@ -106,6 +111,8 @@ const CLIENT_EXPORTS: Record<string, string[]> = {
   'src/alert/alert-dismiss.client.tsx': ['AlertDismiss'],
   'src/banner/banner-dismiss.client.tsx': ['BannerDismiss'],
   'src/table-selection/table-selection.client.tsx': ['TableSelection'],
+  'src/form/form.client.tsx': ['Form'],
+  'src/form/submit-button.client.tsx': ['SubmitButton'],
   [FIELD_SCOPE]: ['FieldScope', 'useFieldControl'],
   'src/icon-button/icon-button.client.tsx': ['IconButtonTooltip'],
   // client controls the Field and Fieldset examples compose
@@ -160,6 +167,7 @@ const entries = {
   'sticky-bar': () => import('../../src/sticky-bar/index'),
   table: () => import('../../src/table/index'),
   'table-selection': () => import('../../src/table-selection/index'),
+  form: () => import('../../src/form/index'),
 } satisfies Record<Name, () => Promise<unknown>>;
 
 /** Each example module, imported again by the react-server test; every `*Example` export renders. */
@@ -204,6 +212,7 @@ const exampleModules = {
   'sticky-bar': () => import('../../src/sticky-bar/sticky-bar.example'),
   table: () => import('../../src/table/table.example'),
   'table-selection': () => import('../../src/table-selection/table-selection.example'),
+  form: () => import('../../src/form/form.example'),
 } satisfies Record<Name, () => Promise<Record<string, unknown>>>;
 
 /**
@@ -214,6 +223,8 @@ const RENDERS: Partial<Record<Name, string>> = {
   'theme-script': '"type":"script"',
   // TableSelection is a client reference here; the server renders its checkboxes
   'table-selection': '"data-slot":"table-select-all"',
+  // Form is a client reference here; FormMessage renders on the server
+  form: '"data-slot":"form-message"',
 };
 
 const SRC = rekey(

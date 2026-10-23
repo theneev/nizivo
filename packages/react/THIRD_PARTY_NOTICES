@@ -15,8 +15,10 @@ Lucide icons:
   x                  (the AlertDismiss close mark)
   check              (the Checkbox checked mark)
   minus              (the Checkbox indeterminate dash)
+  eye                (the PasswordInput toggle while the password is hidden)
+  eye-off            (the PasswordInput toggle while the password is shown)
 
-Lucide's licence covers all nine:
+Lucide's licence covers all eleven:
 
 ISC License
 

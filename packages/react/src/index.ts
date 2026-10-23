@@ -147,6 +147,17 @@ export type {
 } from './field/index';
 export { Fieldset } from './fieldset/index';
 export type { FieldsetProps, FieldsetState } from './fieldset/index';
+export { Form, SubmitButton, FormMessage } from './form/index';
+export type {
+  FormErrorValue,
+  FormErrors,
+  FormLabels,
+  FormProps,
+  FormMessageProps,
+  FormMessageState,
+  FormMessageTone,
+  SubmitButtonProps,
+} from './form/index';
 export { Grid, GridItem } from './grid/index';
 export type {
   GridItemProps,
@@ -237,6 +248,13 @@ export type {
   PaginationSlot,
   PaginationState,
 } from './pagination/index';
+export { PasswordInput } from './password-input/index';
+export type {
+  PasswordInputLabels,
+  PasswordInputProps,
+  PasswordInputState,
+  PasswordInputVisibleReason,
+} from './password-input/index';
 export {
   Popover,
   PopoverRoot,

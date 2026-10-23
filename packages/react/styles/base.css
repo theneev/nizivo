@@ -15,12 +15,15 @@
     .nz-dialog-trigger,
     .nz-drawer-close,
     .nz-drawer-trigger,
+    .nz-form-summary,
+    .nz-form-summary-link,
     .nz-icon-button,
     .nz-menu-trigger,
     .nz-native-select-trigger,
     .nz-pagination-next,
     .nz-pagination-page,
     .nz-pagination-previous,
+    .nz-password-input-toggle,
     .nz-popover-close,
     .nz-popover-trigger,
     .nz-radio-input,
@@ -62,7 +65,7 @@
     outline: var(--nz-border-width-focus) solid var(--nz-border-focus);
     outline-offset: 2px;
   }
-  :where(.nz-input):focus-within {
+  :where(.nz-input, .nz-password-input):focus-within {
     outline: var(--nz-border-width-focus) solid var(--nz-border-focus);
     outline-offset: 2px;
   }
@@ -84,6 +87,8 @@
     .nz-dialog-trigger,
     .nz-drawer-close,
     .nz-drawer-trigger,
+    .nz-form-summary,
+    .nz-form-summary-link,
     .nz-icon-button,
     .nz-menu-checkbox-item,
     .nz-menu-item,
@@ -93,6 +98,7 @@
     .nz-pagination-next,
     .nz-pagination-page,
     .nz-pagination-previous,
+    .nz-password-input-toggle,
     .nz-popover-close,
     .nz-popover-trigger,
     .nz-radio-input,
