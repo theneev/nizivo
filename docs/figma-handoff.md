@@ -135,6 +135,21 @@ Weeks 16 to 18 built PageHeader and Table (`packages/react/W16-RESULTS.md`, `W18
 | 4 | **Row selection checkboxes.** No table frame draws them. | Checkbox's own box (`checkbox.css`, 20 px, with its check and mixed glyphs) in a first column; the header's box is mixed while some rows are checked. | Bulk actions | S |
 | 5 | **A PageHeader component with a mobile variant** (§5.4 lists it). The 08 frames draw it per pattern ([`7275:15337`](https://www.figma.com/design/BIzJFf1wm8KP0YG2AVI1tP/Nizivo-UI-Library?node-id=7275-15337), [`7275:15757`](https://www.figma.com/design/BIzJFf1wm8KP0YG2AVI1tP/Nizivo-UI-Library?node-id=7275-15757), [`7275:15860`](https://www.figma.com/design/BIzJFf1wm8KP0YG2AVI1tP/Nizivo-UI-Library?node-id=7275-15860)). | Heading/H1 with a Badge beside it as `meta`, Body/M `text/secondary` under it, actions 16 apart (`space/4`) at the row's end; below 40rem (`--nz-sm`) the title takes Heading/H2's size and the actions start a row of their own. | PageHeader in the library | M |
 
+
+### 1.8 Asks from week 19 (2026-10-23)
+
+Week 19 built the forms set, NavItem, Split and StickyBar (`packages/react/W19-RESULTS.md`). Code keeps what it built (M47 (6)); each row says where it departs from the file.
+
+| # | Ask | What code built | Size |
+|---|---|---|---|
+| 1 | **NavItem hover:** `bg/hover` equals `bg/canvas` (1.00:1), so the drawn hover is invisible on the sidebar. | `bg/muted` on hover; the current item `bg/brand-subtle` as drawn. | S |
+| 2 | **SearchField's resting edge:** `border/subtle` is 1.07:1 against the page, under WCAG 1.4.11's 3:1 for a control boundary. Also 42 px tall (off the control scale). | `border/control` at rest; 32 / 40 / 48 px sizes. | S |
+| 3 | **Upload hint and border:** the hint's `text/tertiary` is 4.16:1 on `bg/subtle`; the dashed border uses a custom 6 / 5 dash. | `text/secondary`; a plain CSS dashed border. Please draw Invalid, Complete, Disabled and Focus, and the file list (cancel, retry, remove). | M |
+| 4 | **Payment Method height:** 73 / 74 px from an off-scale 14 px padding, and the size jumps on select. | 76 px with 16 px padding; the edge is an inset ring, so selecting never resizes. A real radio replaces the drawn one. | S |
+| 5 | **Variant Option swatch:** 26 px; the chip grows 90 × 40 → 92 × 42 when selected. | A 24 px swatch; an inset ring keeps the size. Out of stock keeps its colour with a strike. | S |
+| 6 | **Sticky action bar:** 28 px bottom padding (a home indicator) and gaps of 12 and 10. | The device's safe-area inset instead of 28; 12 everywhere. | S |
+| 7 | **Password field:** no Figma source. | Input's box with an eye toggle at its end. Please draw it. | S |
+
 ---
 
 ## 2. Rename and hygiene
