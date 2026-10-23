@@ -21,6 +21,12 @@ main > ul > li {
   padding: var(--nz-space-6);
 }
 
+/* in the app shell (week 20), whose <main> already pads the page and caps its width */
+.dashboard-in-shell {
+  max-inline-size: none;
+  padding: 0;
+}
+
 .dashboard-kpis {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

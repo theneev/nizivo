@@ -5,7 +5,8 @@
 // the one interactive chart (the ChartInteraction island). Week 16 adds the rest of 08: the
 // PageHeader (the greeting, the range as a SegmentedControl and Export), the Banner (dismissed by a
 // Server Action), Goals and Recent orders (a Table). Nizivo client modules: the island, the
-// SegmentedControl and BannerDismiss; PageHeader, Table, Card and ProgressBar ship none.
+// SegmentedControl and BannerDismiss; PageHeader, Table, Card and ProgressBar ship none. Week 20 puts
+// it in the app shell (layout.jsx), which renders the page's <main>.
 import { Suspense } from 'react';
 import '@nizivo/charts/styles.css';
 import { AreaChart } from '@nizivo/charts/area-chart';
@@ -30,7 +31,7 @@ const TOTAL = SALES.reduce((sum, day) => sum + day.sales, 0);
 export default async function Page() {
   const dismissed = (await cookies()).get('nz-fixture-banner')?.value === 'dismissed';
   return (
-    <main className="dashboard">
+    <div className="dashboard dashboard-in-shell">
       <PageHeader
         title="Good morning, Maya"
         actions={
@@ -106,6 +107,6 @@ export default async function Page() {
         </div>
       </div>
       <RecentOrders />
-    </main>
+    </div>
   );
 }

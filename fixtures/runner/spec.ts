@@ -41,7 +41,10 @@ export type Component =
   | 'icon-button'
   | 'menu'
   | 'tabs'
-  | 'count-up';
+  | 'count-up'
+  | 'search-field'
+  | 'mobile-tab-bar'
+  | 'mobile-tab-bar-more';
 
 /** Each rendered component's client leaf, as its dist path without `dist/` and `.js`. */
 const LEAF: Record<Component, string> = {
@@ -67,6 +70,11 @@ const LEAF: Record<Component, string> = {
   tabs: 'tabs/tabs.client',
   // CountUp (M41) is @nizivo/react/motion's one client module.
   'count-up': 'motion/count-up.client',
+  'search-field': 'search-field/search-field.client',
+  // The shell (week 20): MobileTabBar's root renders its bottom-inset island; MobileTabBarMore is
+  // the second client part, with the Drawer for its sheet.
+  'mobile-tab-bar': 'mobile-tab-bar/mobile-tab-bar-inset.client',
+  'mobile-tab-bar-more': 'mobile-tab-bar/mobile-tab-bar-more.client',
 };
 
 export interface PageSpec {
@@ -275,9 +283,29 @@ export const PAGES: Record<string, PageSpec> = {
     slots: ['kpi-tile', 'metric', 'number-value', 'delta', 'sparkline', 'ranked-list'],
     dashboard: { tiles: 4, streamed: false },
   },
+  // Week 20: in the app shell (app/dashboard/layout.jsx), which adds the TopBar's SearchField and
+  // IconButtons and the MobileTabBar's two client parts.
   '/dashboard': {
-    renders: ['segmented-control', 'banner'],
+    renders: [
+      'segmented-control',
+      'banner',
+      'search-field',
+      'icon-button',
+      'mobile-tab-bar',
+      'mobile-tab-bar-more',
+    ],
     slots: [
+      'app-shell',
+      'app-shell-skip',
+      'app-shell-main',
+      'sidebar',
+      'sidebar-header',
+      'nav-item',
+      'top-bar',
+      'mobile-top-bar',
+      'mobile-tab-bar',
+      'mobile-tab-bar-link',
+      'mobile-tab-bar-more-trigger',
       'page-header',
       'segmented-control',
       'banner',
@@ -1287,7 +1315,9 @@ async function checkChart(
     const region = layer.locator('[aria-live="polite"]');
     const regionEmpty = /aria-live="polite"[^>]*><\/span>/.test(figure);
     let focused = false;
-    for (let i = 0; i < 12 && !focused; i++) {
+    // /dashboard's app shell (week 20) puts its skip link, the Sidebar's links and the TopBar's
+    // controls before the page's
+    for (let i = 0; i < 40 && !focused; i++) {
       await page.keyboard.press('Tab');
       focused = await layer.evaluate((el) => el === document.activeElement);
     }
