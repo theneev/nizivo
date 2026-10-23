@@ -1,0 +1,28 @@
+{
+  "name": "chip-group",
+  "status": "stable",
+  "tier": "client",
+  "parts": [],
+  "exports": ["ChipGroup", "Chip"],
+  "interactive": ["chip"],
+  "focusTarget": "nested-input",
+  "stateIndicator": [
+    { "slot": "chip", "paint": "border" },
+    { "slot": "chip", "state": ":has(> input:checked)", "paint": "outline" }
+  ],
+  "cssDeps": ["base"],
+  "variants": {},
+  "figma": {
+    "canonical": ["7275:14018"],
+    "ghosts": ["753:405"],
+    "variantsSeen": [
+      "7275:14019",
+      "7275:14022",
+      "7275:14025",
+      "7275:14028",
+      "7275:14030",
+      "7275:14032"
+    ],
+    "related": ["7275:14014", "7275:19004"]
+  }
+}

@@ -1,0 +1,55 @@
+---
+title: ChipGroup
+description: Pill-shaped choices such as a product's colours or sizes, or filters. Native radios inside labels for one value, or checkboxes with `multiple`, so it submits, resets and works before hydration. Swatches go in each Chip's `leading` slot; an unavailable chip keeps its colour and is struck through. Inside a Field, give the Field `group`.
+apg: https://www.w3.org/WAI/ARIA/apg/patterns/radio/
+keyboard:
+  - keys: Tab
+    action: Moves focus into the group, to the checked chip (one value), or to each chip in turn (multiple values).
+  - keys: ArrowRight, ArrowDown
+    action: With one value, checks the next chip and focuses it, skipping disabled ones.
+  - keys: ArrowLeft, ArrowUp
+    action: With one value, checks the previous chip and focuses it, skipping disabled ones.
+  - keys: Space
+    action: Checks the focused chip; with multiple values, checks or clears it.
+keyboardSource: native `<input type="radio">` or `<input type="checkbox">` elements inside `<label>`s (`chip-group.client.tsx`); its only key handler marks the chip `data-focus-visible`, because WebKit matches no `:focus-visible` on a radio reached by an arrow key. The browser lane (`test/browser/chip-group.spec.tsx`) checks Tab entry, arrows, Space, skipping a disabled chip and reaching an unavailable one.
+---
+
+<Callout type="warn" title="Not yet published (v0.2)">
+  This part is in the repository and ships in `@nizivo/react` 0.2.0; the 0.1.0 on npm does not have
+  it. Until then its API can change.
+</Callout>
+
+## Static or interactive
+
+**Client.** It always ships its client leaf, which wires it to a Field. The server HTML is native
+radios or checkboxes, so arrows, Space and submission work before hydration. [How to
+choose](/docs/guides/static-or-interactive/).
+
+In a client app (a Vite or React Router single-page app, or a `'use client'` file) it is an ordinary React component: event handlers, refs and state work as usual. [In a client app](/docs/guides/static-or-interactive/#in-a-client-app).
+
+## One value or several
+
+By default the chips are radios under `role="radiogroup"`: `value` and `defaultValue` are strings and
+`onValueChange` receives the checked value. With `multiple` they are checkboxes under `role="group"`:
+`value` and `defaultValue` are arrays, `onValueChange` receives every checked value in document
+order, and the form submits one entry per checked chip (`formData.getAll(name)`). `required` applies
+to one value only: on checkboxes the browser would require every one.
+
+## Swatches
+
+A product colour is data, not a token. Pass an element with that background in `leading`, such as
+`<span style={{ background: '#2e5a3c' }} />`, or an image; it fills a 24 px circle with a thin inner
+ring, so white and cream stay visible. A chip with a swatch and no text needs an `aria-label`.
+
+## Unavailable or disabled
+
+`unavailable` (out of stock) keeps the swatch's colour, draws a diagonal strike and describes the
+chip as `labels.unavailable` ("Unavailable"; pass `labels={{ unavailable: 'Sold out' }}` on the
+group). It can still be chosen, so a shopper can pick a sold-out size and be offered "Notify me";
+add `disabled` to stop that. `disabled` greys the chip out and takes it out of the keyboard order, as
+a native disabled input.
+
+## No size jump
+
+The edge is an inset ring, not a border: selecting turns it into a 2 px brand ring in the same box,
+so a chip never grows on select (Figma's grew from 90 × 40 to 92 × 42).

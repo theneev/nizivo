@@ -67,6 +67,14 @@
       "types": "./dist/checkbox/index.d.ts",
       "default": "./dist/checkbox/index.js"
     },
+    "./chip-group": {
+      "types": "./dist/chip-group/index.d.ts",
+      "default": "./dist/chip-group/index.js"
+    },
+    "./choice-card": {
+      "types": "./dist/choice-card/index.d.ts",
+      "default": "./dist/choice-card/index.js"
+    },
     "./config": {
       "types": "./dist/config/index.d.ts",
       "default": "./dist/config/index.js"
@@ -167,6 +175,10 @@
       "types": "./dist/native-select/index.d.ts",
       "default": "./dist/native-select/index.js"
     },
+    "./nav-item": {
+      "types": "./dist/nav-item/index.d.ts",
+      "default": "./dist/nav-item/index.js"
+    },
     "./number-value": {
       "types": "./dist/number-value/index.d.ts",
       "default": "./dist/number-value/index.js"
@@ -202,6 +214,10 @@
     "./ranked-list": {
       "types": "./dist/ranked-list/index.d.ts",
       "default": "./dist/ranked-list/index.js"
+    },
+    "./search-field": {
+      "types": "./dist/search-field/index.d.ts",
+      "default": "./dist/search-field/index.js"
     },
     "./segmented-control": {
       "types": "./dist/segmented-control/index.d.ts",
@@ -284,6 +300,8 @@
     "./css/button.css": "./dist/css/button.css",
     "./css/card.css": "./dist/css/card.css",
     "./css/checkbox.css": "./dist/css/checkbox.css",
+    "./css/chip-group.css": "./dist/css/chip-group.css",
+    "./css/choice-card.css": "./dist/css/choice-card.css",
     "./css/container.css": "./dist/css/container.css",
     "./css/delta.css": "./dist/css/delta.css",
     "./css/dialog.css": "./dist/css/dialog.css",
@@ -307,6 +325,7 @@
     "./css/metric.css": "./dist/css/metric.css",
     "./css/motion.css": "./dist/css/motion.css",
     "./css/native-select.css": "./dist/css/native-select.css",
+    "./css/nav-item.css": "./dist/css/nav-item.css",
     "./css/number-value.css": "./dist/css/number-value.css",
     "./css/page-header.css": "./dist/css/page-header.css",
     "./css/pagination.css": "./dist/css/pagination.css",
@@ -316,6 +335,7 @@
     "./css/progress-ring.css": "./dist/css/progress-ring.css",
     "./css/radio-group.css": "./dist/css/radio-group.css",
     "./css/ranked-list.css": "./dist/css/ranked-list.css",
+    "./css/search-field.css": "./dist/css/search-field.css",
     "./css/segmented-control.css": "./dist/css/segmented-control.css",
     "./css/select.css": "./dist/css/select.css",
     "./css/separator.css": "./dist/css/separator.css",

@@ -74,6 +74,7 @@ const COMPONENTS = [
   'table',
   'table-selection',
   'form',
+  'nav-item',
 ] as const;
 type Name = (typeof COMPONENTS)[number];
 
@@ -168,6 +169,7 @@ const entries = {
   table: () => import('../../src/table/index'),
   'table-selection': () => import('../../src/table-selection/index'),
   form: () => import('../../src/form/index'),
+  'nav-item': () => import('../../src/nav-item/index'),
 } satisfies Record<Name, () => Promise<unknown>>;
 
 /** Each example module, imported again by the react-server test; every `*Example` export renders. */
@@ -213,6 +215,7 @@ const exampleModules = {
   table: () => import('../../src/table/table.example'),
   'table-selection': () => import('../../src/table-selection/table-selection.example'),
   form: () => import('../../src/form/form.example'),
+  'nav-item': () => import('../../src/nav-item/nav-item.example'),
 } satisfies Record<Name, () => Promise<Record<string, unknown>>>;
 
 /**

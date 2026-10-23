@@ -1,0 +1,48 @@
+---
+title: ChoiceCard
+description: A choice drawn as cards, such as a saved payment method or a delivery speed. Each ChoiceCard is a label around a real, visible native radio, with slots for a leading mark (a card brand), a second line and trailing content such as a "Default" Badge. ChoiceCardGroup is the radio group; inside a Field, give the Field `group`, and its error marks the chosen card invalid.
+apg: https://www.w3.org/WAI/ARIA/apg/patterns/radio/
+keyboard:
+  - keys: Tab
+    action: Moves focus into the group, to the checked card; the next Tab leaves it.
+  - keys: ArrowDown, ArrowRight
+    action: Checks the next card and focuses it, skipping disabled ones.
+  - keys: ArrowUp, ArrowLeft
+    action: Checks the previous card and focuses it, skipping disabled ones.
+keyboardSource: native `<input type="radio">` elements inside `<label>`s (`choice-card.client.tsx`); its only key handler marks the card `data-focus-visible`, because WebKit matches no `:focus-visible` on a radio reached by an arrow key. The browser lane (`test/browser/choice-card.spec.tsx`) checks Tab entry and exit, arrows and skipping a disabled card.
+---
+
+<Callout type="warn" title="Not yet published (v0.2)">
+  This part is in the repository and ships in `@nizivo/react` 0.2.0; the 0.1.0 on npm does not have
+  it. Until then its API can change.
+</Callout>
+
+## Static or interactive
+
+**Client.** It always ships its client leaf, which wires it to a Field. The server HTML is a native
+radio group, so arrows and submission work before hydration. [How to
+choose](/docs/guides/static-or-interactive/).
+
+In a client app (a Vite or React Router single-page app, or a `'use client'` file) it is an ordinary React component: event handlers, refs and state work as usual. [In a client app](/docs/guides/static-or-interactive/#in-a-client-app).
+
+## Anatomy and names
+
+The radio is a real one, visible at the card's start (Figma drew an ellipse with a thick stroke).
+`children` is the radio's name; `description` is a second line that describes it
+(`aria-describedby`) instead of joining the name; `trailing` sits at the card's end and its text
+joins the name after `children`. The "Default" Badge is composition: put it in `trailing`. `leading`
+is decorative, so a card brand's mark needs the brand's name in the text too, for example a visually
+hidden "Visa ending in" before the digits. Brand marks have their own rules, so they are the app's to
+supply.
+
+## Invalid: an expired or declined card
+
+Put the group in a Field with `group` and pass the Field an `error`, such as "This card has expired.
+Choose another card or add one." The Field's label names the group, its error describes it, and the
+chosen card's ring turns critical (with nothing chosen, every radio's edge does, as in RadioGroup).
+
+## No size jump
+
+The edge is an inset ring, not a border: selecting fills the card with `bg/brand-subtle` and turns
+the edge into a 2 px brand ring in the same box, so a card never grows on select (Figma's grew from
+73 to 74 px). With 16 px padding and two Body/M lines a card is 76 px high.

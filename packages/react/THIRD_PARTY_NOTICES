@@ -17,8 +17,9 @@ Lucide icons:
   minus              (the Checkbox indeterminate dash)
   eye                (the PasswordInput toggle while the password is hidden)
   eye-off            (the PasswordInput toggle while the password is shown)
+  search             (the SearchField magnifier)
 
-Lucide's licence covers all eleven:
+Lucide's licence covers all twelve:
 
 ISC License
 
@@ -39,9 +40,9 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 --------------------------------------------------------------------------------
 Feather (https://feathericons.com)
 
-chevron-right, circle-x (Feather's x-circle), info, x, check and minus are on Lucide's
-list of icons derived from the Feather project, so their path data is also under
-Feather's licence:
+chevron-right, circle-x (Feather's x-circle), info, x, check, minus and search are on
+Lucide's list of icons derived from the Feather project, so their path data is also
+under Feather's licence:
 
 The MIT License (MIT)
 

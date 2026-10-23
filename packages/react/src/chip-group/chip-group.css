@@ -1,0 +1,162 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/chip-group.css (Figma Variant Option 7275:14018; figma/05 §3.2). Pills 40 px high
+   (control-md) that wrap, 8 px apart. Only --_nz-* privates are set; public --nz-chip-group-* and
+   --nz-chip-* hooks are read once, at the property.
+
+   Against Figma: the edge is an inset ring, never a border, so selecting changes its colour and
+   width and never the chip's size (Figma grows 90×40 to 92×42 on select). The swatch is 24 px
+   (icon-lg) with 8 px before it, concentric with the pill, where Figma draws 26 px with 6 (off the
+   scale). An unavailable chip keeps its colour and gets a diagonal strike, where Figma's Disabled
+   greys the colour out; a disabled one is greyed. States read native :checked and :disabled (a
+   disabled fieldset disables the inputs natively). */
+@layer nz.components {
+  .nz-chip-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--nz-chip-group-gap, var(--nz-space-2));
+  }
+
+  .nz-chip {
+    --_nz-chip-edge: var(--nz-border-default);
+    --_nz-chip-edge-width: var(--nz-border-width-default);
+
+    position: relative;
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    gap: var(--nz-space-2);
+    box-sizing: border-box;
+    min-inline-size: var(--nz-size-control-lg);
+    block-size: var(--nz-chip-height, var(--nz-size-control-md));
+    padding-inline: var(--nz-space-4);
+    border-radius: var(--nz-chip-radius, var(--nz-radius-full));
+    background: var(--nz-chip-bg, var(--nz-bg-surface));
+    box-shadow: inset 0 0 0 var(--_nz-chip-edge-width) var(--_nz-chip-edge);
+    color: var(--nz-chip-fg, var(--nz-text-primary));
+    font: var(--nz-font-label-m);
+    letter-spacing: var(--nz-tracking-label-m);
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    transition:
+      background-color var(--nz-duration-fast) var(--nz-easing-standard),
+      box-shadow var(--nz-duration-fast) var(--nz-easing-standard),
+      color var(--nz-duration-fast) var(--nz-easing-standard);
+
+    @media (hover: hover) {
+      &:hover:not(:has(> input:disabled, > input:checked)) {
+        --_nz-chip-edge: var(--nz-border-strong);
+      }
+    }
+
+    /* the selection: a 2 px brand ring in place of the 1 px edge, same box */
+    &:has(> input:checked) {
+      --_nz-chip-edge: var(--nz-chip-edge-selected, var(--nz-border-brand));
+      --_nz-chip-edge-width: var(--nz-border-width-focus);
+    }
+
+    /* a disabled group, chip or fieldset */
+    &:has(> input:disabled) {
+      --_nz-chip-edge: var(--nz-border-subtle);
+
+      background: var(--nz-bg-disabled);
+      color: var(--nz-text-disabled);
+      cursor: not-allowed;
+    }
+
+    &:has(> input:checked:disabled) {
+      --_nz-chip-edge: var(--nz-border-strong);
+    }
+  }
+
+  /* with a swatch: 8 px before the 24 px circle, so it is concentric with the 40 px pill */
+  .nz-chip:has(> .nz-chip-leading) {
+    padding-inline: var(--nz-space-2) var(--nz-space-3);
+  }
+
+  /* invalid, as Input's invalid-at-rest edge: the critical ring on every chip not chosen */
+  .nz-chip-group[data-invalid] > .nz-chip:not(:has(> input:checked)) {
+    --_nz-chip-edge: var(--nz-border-critical);
+  }
+
+  /* The focus outline is nz.base's nested-input rule: :has(> input:focus-visible), or
+     [data-focus-visible], which the chip sets because WebKit matches no :focus-visible on a radio
+     reached by an arrow key. */
+
+  /* Hidden but in place: it takes focus (the outline lands on the chip, nz.base) and anchors the
+     browser's validation bubble. display: none would make it unfocusable. */
+  .nz-chip-input {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    opacity: 0;
+    appearance: none;
+    cursor: inherit;
+  }
+
+  /* The swatch: a consumer element (a coloured span, an image) fills the circle. The inner ring keeps
+     a white or cream swatch visible on the surface; an outline paints above the content. */
+  .nz-chip-leading {
+    position: relative;
+    display: inline-flex;
+    flex: none;
+    inline-size: var(--nz-chip-leading-size, var(--nz-size-icon-lg));
+    block-size: var(--nz-chip-leading-size, var(--nz-size-icon-lg));
+    overflow: hidden;
+    border-radius: var(--nz-radius-full);
+    outline: var(--nz-border-width-default) solid var(--nz-border-subtle);
+    outline-offset: calc(var(--nz-border-width-default) * -1);
+
+    & > :not(.nz-chip-strike) {
+      inline-size: 100%;
+      block-size: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .nz-chip-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Unavailable (out of stock): a diagonal line across the swatch, or across a chip with no swatch.
+     The text turns secondary; the swatch keeps its colour. */
+  .nz-chip-strike {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(
+      to top right,
+      transparent calc(50% - var(--nz-border-width-default)),
+      var(--nz-chip-strike, var(--nz-border-strong)) calc(50% - var(--nz-border-width-default)),
+      var(--nz-chip-strike, var(--nz-border-strong)) calc(50% + var(--nz-border-width-default)),
+      transparent calc(50% + var(--nz-border-width-default))
+    );
+    pointer-events: none;
+  }
+
+  .nz-chip:has(.nz-chip-strike):not(:has(> input:disabled)) {
+    color: var(--nz-text-secondary);
+  }
+
+  @media (forced-colors: active) {
+    /* the edge (a shadow) is dropped: nz.base draws a 1 px CanvasText border and outlines the
+       selected chip in Highlight */
+    .nz-chip:has(> input:disabled) {
+      color: GrayText;
+    }
+
+    .nz-chip-strike {
+      background: linear-gradient(
+        to top right,
+        transparent calc(50% - 1px),
+        CanvasText calc(50% - 1px),
+        CanvasText calc(50% + 1px),
+        transparent calc(50% + 1px)
+      );
+      forced-color-adjust: none;
+    }
+  }
+}

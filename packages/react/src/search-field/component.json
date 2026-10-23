@@ -1,0 +1,19 @@
+{
+  "name": "search-field",
+  "status": "stable",
+  "tier": "client",
+  "parts": [],
+  "interactive": ["search-field"],
+  "focusTarget": "within",
+  "stateIndicator": [],
+  "cssDeps": ["base", "kbd"],
+  "variants": {
+    "size": ["sm", "md", "lg"]
+  },
+  "figma": {
+    "canonical": ["7275:14764"],
+    "ghosts": ["755:888"],
+    "variantsSeen": ["755:874"],
+    "related": ["7275:14760"]
+  }
+}

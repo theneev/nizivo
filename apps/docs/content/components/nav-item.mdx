@@ -1,0 +1,46 @@
+---
+title: NavItem
+description: One sidebar destination, as a native link with an icon, a label and an optional count. The current one is `aria-current="page"`; a router's link goes in through `render`. Collapsed to the icon rail by an ancestor's `data-collapsed`, not by a prop.
+keyboard:
+  - keys: Tab, Shift+Tab
+    action: Moves between the links, as on any link. A disabled item is not a Tab stop.
+  - keys: Enter
+    action: Follows the focused link.
+keyboardSource: native `<a>` elements (`nav-item.tsx`, no client code). The browser lane (`test/browser/nav-item.spec.tsx`) checks Tab through the links in order, a disabled item not being a stop, the focus outline, the fixed 40 px row and the collapsed rail.
+---
+
+<Callout type="warn" title="Not yet published (v0.2)">
+  This part is in the repository and ships in `@nizivo/react` 0.2.0; the 0.1.0 on npm does not have
+  it. Until then its API can change.
+</Callout>
+
+## Static or interactive
+
+**Server.** It ships no client JavaScript when a Server Component renders it, in every Next.js build
+mode; its code is bundled only when a client component (a `'use client'` file) imports it. It is a
+plain `<a>`; a router link passed through `render` is the router's own code. The page says which
+item is `current`, because it knows its own route (a router's `usePathname` needs a client
+component). [How to choose](/docs/guides/static-or-interactive/).
+
+In a client app (a Vite or React Router single-page app, or a `'use client'` file) it is an ordinary React component: event handlers, refs and state work as usual. [In a client app](/docs/guides/static-or-interactive/#in-a-client-app).
+
+## A list of items
+
+NavItem is one link. Put the items in a `<nav>` with an `aria-label`, around a `<ul>` with one
+`<li>` per item, so assistive technology announces a navigation landmark and the number of
+destinations. A list of NavItems needs no component of its own.
+
+## The collapsed rail
+
+Collapsed is not a prop. The Sidebar (not built yet) will set `data-collapsed` on its root when it
+folds to the icon rail; any ancestor with that attribute collapses the NavItems inside it. Each item
+becomes a 40 px square around its icon. The label and the count leave the layout but stay in the
+DOM, so the link keeps its accessible name ("Orders 12"), and a count shows as a dot on the icon. Give
+every item an `icon` in a sidebar that collapses. A tooltip with the label, on hover and focus, comes
+with the Sidebar.
+
+## Height and hover
+
+The row is a fixed 40 px with or without a count (Figma's height followed its content: 40 with the
+count pill, 38 without). A long label ends in an ellipsis. The hover fill is `bg/muted`: Figma's
+`bg/hover` equals the sidebar's `bg/canvas` in light mode, so its hover could not be seen.

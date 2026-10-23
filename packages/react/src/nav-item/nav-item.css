@@ -1,0 +1,184 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/nav-item.css (Figma Nav Item 7275:14700, live 755:658; figma/06 §6.1). A fixed
+   40 px row (control-md): Figma's height follows its content (40 with the count pill, 38 without), so
+   rows jittered. Figma's 9/12 padding, 12 gap and 1/7 pill padding are unbound; the row keeps 12 and
+   12 and the pill takes 6 (space-1-5). Public --nz-nav-item-* hooks are read once, at the property.
+
+   Hover: Figma's bg/hover equals the sidebar's bg/canvas in light mode (1.00:1), so the hover fill is
+   bg/muted, which shows on canvas in both schemes.
+
+   Collapsed: the future Sidebar sets data-collapsed on its root when it folds to the icon rail (the
+   attribute is in contracts/vocabulary.json, "local"). Any ancestor with it collapses the items in
+   it: a 40 px square around the icon; the label and the count leave the layout but stay in the DOM,
+   so the link keeps its accessible name ("Orders 12"), and a count shows as a dot on the icon. */
+@layer nz.components {
+  .nz-nav-item {
+    display: flex;
+    align-items: center;
+    gap: var(--nz-nav-item-gap, var(--nz-space-3));
+    box-sizing: border-box;
+    min-inline-size: 0;
+    block-size: var(--nz-nav-item-height, var(--nz-size-control-md));
+    padding-inline: var(--nz-space-3);
+    border-radius: var(--nz-nav-item-radius, var(--nz-radius-md));
+    background: var(--nz-nav-item-bg, transparent);
+    color: var(--nz-nav-item-fg, var(--nz-text-secondary));
+    font: var(--nz-font-label-m);
+    letter-spacing: var(--nz-tracking-label-m);
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+      background-color var(--nz-duration-fast) var(--nz-easing-standard),
+      color var(--nz-duration-fast) var(--nz-easing-standard);
+
+    @media (hover: hover) {
+      &:hover:not([aria-current='page'], [data-disabled]) {
+        background: var(--nz-nav-item-bg-hover, var(--nz-bg-muted));
+        color: var(--nz-text-primary);
+      }
+    }
+
+    /* Pressed (missing in Figma) */
+    &:active:not([aria-current='page'], [data-disabled]) {
+      background: var(--nz-bg-pressed);
+    }
+
+    &[aria-current='page'] {
+      background: var(--nz-nav-item-bg-current, var(--nz-bg-brand-subtle));
+      color: var(--nz-nav-item-fg-current, var(--nz-text-brand));
+      font-weight: var(--nz-font-label-m-strong-font-weight);
+      letter-spacing: var(--nz-tracking-label-m-strong);
+    }
+
+    /* Disabled (missing in Figma): out of the Tab order, nothing to follow */
+    &[data-disabled] {
+      color: var(--nz-text-disabled);
+      cursor: not-allowed;
+    }
+  }
+
+  /* 20 px, as Figma draws it; internal glyphs are 1em, so the slot sizes them */
+  .nz-nav-item-icon {
+    position: relative;
+    display: inline-flex;
+    flex: none;
+    inline-size: var(--nz-size-icon-md);
+    block-size: var(--nz-size-icon-md);
+    color: var(--nz-nav-item-icon-fg, var(--nz-icon-secondary));
+    font-size: var(--nz-size-icon-md);
+
+    & > svg {
+      inline-size: 100%;
+      block-size: 100%;
+    }
+  }
+
+  .nz-nav-item[aria-current='page'] > .nz-nav-item-icon {
+    color: var(--nz-icon-brand);
+  }
+
+  .nz-nav-item[data-disabled] > .nz-nav-item-icon {
+    color: var(--nz-text-disabled);
+  }
+
+  /* fills the row; a long label ends in an ellipsis instead of growing the row */
+  .nz-nav-item-label {
+    flex: 1 1 auto;
+    min-inline-size: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .nz-nav-item-count {
+    flex: none;
+    padding-inline: var(--nz-space-1-5);
+    border-radius: var(--nz-radius-full);
+    background: var(--nz-nav-item-count-bg, var(--nz-bg-muted));
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-label-m-strong);
+    letter-spacing: var(--nz-tracking-label-m-strong);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .nz-nav-item[aria-current='page'] > .nz-nav-item-count {
+    background: var(--nz-nav-item-count-bg-current, var(--nz-bg-brand));
+    color: var(--nz-text-on-brand);
+  }
+
+  .nz-nav-item[data-disabled] > .nz-nav-item-count {
+    color: var(--nz-text-disabled);
+  }
+
+  /* The icon rail: an ancestor (the future Sidebar's root) carries data-collapsed. */
+  :where([data-collapsed]) .nz-nav-item {
+    position: relative;
+    justify-content: center;
+    inline-size: var(--nz-nav-item-height, var(--nz-size-control-md));
+    padding-inline: 0;
+  }
+
+  /* out of the layout, in the accessible name (the declarations of .nz-visually-hidden) */
+  :where([data-collapsed]) :is(.nz-nav-item-label, .nz-nav-item-count) {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  /* a count in the rail: an 8 px dot on the icon's top-end corner */
+  :where([data-collapsed]) .nz-nav-item:has(> .nz-nav-item-count) > .nz-nav-item-icon::after {
+    content: '';
+    position: absolute;
+    inset-block-start: calc(var(--nz-space-0-5) * -1);
+    inset-inline-end: calc(var(--nz-space-0-5) * -1);
+    inline-size: var(--nz-space-2);
+    block-size: var(--nz-space-2);
+    border-radius: var(--nz-radius-full);
+    background: var(--nz-nav-item-count-bg-current, var(--nz-bg-brand));
+  }
+
+  @media (forced-colors: active) {
+    /* nz.base's generated highlight loses to the fill above (a later layer, §8.5), so repeat it */
+    .nz-nav-item[aria-current='page'] {
+      background: Highlight;
+      color: HighlightText;
+      forced-color-adjust: none;
+    }
+
+    .nz-nav-item[aria-current='page'] > .nz-nav-item-icon {
+      color: HighlightText;
+    }
+
+    .nz-nav-item-count {
+      border: 1px solid CanvasText;
+    }
+
+    .nz-nav-item[aria-current='page'] > .nz-nav-item-count {
+      border-color: HighlightText;
+      background: Highlight;
+      color: HighlightText;
+    }
+
+    .nz-nav-item[data-disabled] {
+      color: GrayText;
+    }
+
+    :where([data-collapsed]) .nz-nav-item:has(> .nz-nav-item-count) > .nz-nav-item-icon::after {
+      background: CanvasText;
+      forced-color-adjust: none;
+    }
+
+    :where([data-collapsed])
+      .nz-nav-item[aria-current='page']:has(> .nz-nav-item-count)
+      > .nz-nav-item-icon::after {
+      background: HighlightText;
+    }
+  }
+}

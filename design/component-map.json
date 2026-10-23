@@ -138,6 +138,13 @@
       "export": "RankedList",
       "parts": ["Root", "Item", "Action"]
     },
+    "753:405": {
+      "component": "chip-group",
+      "role": "ghost",
+      "import": "@nizivo/react/chip-group",
+      "export": "ChipGroup",
+      "props": {}
+    },
     "753:410": {
       "component": "table",
       "role": "ghost",
@@ -217,6 +224,28 @@
         "RowLink"
       ],
       "props": {}
+    },
+    "754:644": {
+      "component": "choice-card",
+      "role": "ghost",
+      "import": "@nizivo/react/choice-card",
+      "export": "ChoiceCardGroup",
+      "props": {}
+    },
+    "755:658": {
+      "component": "nav-item",
+      "role": "ghost",
+      "import": "@nizivo/react/nav-item",
+      "export": "NavItem"
+    },
+    "755:888": {
+      "component": "search-field",
+      "role": "ghost",
+      "import": "@nizivo/react/search-field",
+      "export": "SearchField",
+      "props": {
+        "size": ["sm", "md", "lg"]
+      }
     },
     "755:961": {
       "component": "tabs",
@@ -452,6 +481,13 @@
         "padding": ["sm"]
       }
     },
+    "7275:14018": {
+      "component": "chip-group",
+      "role": "canonical",
+      "import": "@nizivo/react/chip-group",
+      "export": "ChipGroup",
+      "props": {}
+    },
     "7275:14040": {
       "component": "table",
       "role": "canonical",
@@ -491,6 +527,28 @@
         "RowLink"
       ],
       "props": {}
+    },
+    "7275:14174": {
+      "component": "choice-card",
+      "role": "canonical",
+      "import": "@nizivo/react/choice-card",
+      "export": "ChoiceCardGroup",
+      "props": {}
+    },
+    "7275:14700": {
+      "component": "nav-item",
+      "role": "canonical",
+      "import": "@nizivo/react/nav-item",
+      "export": "NavItem"
+    },
+    "7275:14764": {
+      "component": "search-field",
+      "role": "canonical",
+      "import": "@nizivo/react/search-field",
+      "export": "SearchField",
+      "props": {
+        "size": ["sm", "md", "lg"]
+      }
     },
     "7275:14781": {
       "component": "tabs",

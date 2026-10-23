@@ -20,6 +20,7 @@
     .nz-icon-button,
     .nz-menu-trigger,
     .nz-native-select-trigger,
+    .nz-nav-item,
     .nz-pagination-next,
     .nz-pagination-page,
     .nz-pagination-previous,
@@ -61,14 +62,14 @@
     outline: var(--nz-border-width-focus) solid var(--nz-border-focus);
     outline-offset: 2px;
   }
-  :where(.nz-file-upload-dropzone, .nz-segmented-control-item):is(
+  :where(.nz-chip, .nz-choice-card, .nz-file-upload-dropzone, .nz-segmented-control-item):is(
     :has(> input:focus-visible),
     [data-focus-visible]
   ) {
     outline: var(--nz-border-width-focus) solid var(--nz-border-focus);
     outline-offset: 2px;
   }
-  :where(.nz-input, .nz-password-input):focus-within {
+  :where(.nz-input, .nz-password-input, .nz-search-field):focus-within {
     outline: var(--nz-border-width-focus) solid var(--nz-border-focus);
     outline-offset: 2px;
   }
@@ -86,6 +87,8 @@
     .nz-breadcrumb-link,
     .nz-button,
     .nz-checkbox-input,
+    .nz-chip,
+    .nz-choice-card,
     .nz-dialog-close,
     .nz-dialog-trigger,
     .nz-drawer-close,
@@ -99,6 +102,7 @@
     .nz-menu-radio-item,
     .nz-menu-trigger,
     .nz-native-select-trigger,
+    .nz-nav-item,
     .nz-pagination-next,
     .nz-pagination-page,
     .nz-pagination-previous,
@@ -151,6 +155,9 @@
   @media (forced-colors: active) {
     :where(
       .nz-checkbox-input,
+      .nz-chip,
+      .nz-choice-card,
+      .nz-choice-card-input,
       .nz-dialog-popup,
       .nz-drawer-popup,
       .nz-menu-popup,
@@ -196,12 +203,12 @@
       outline-color: CanvasText;
       forced-color-adjust: none;
     }
-    :where(.nz-checkbox-input, .nz-radio-input, .nz-switch-input):checked {
+    :where(.nz-checkbox-input, .nz-choice-card-input, .nz-radio-input, .nz-switch-input):checked {
       background: Highlight;
       outline-color: CanvasText;
       forced-color-adjust: none;
     }
-    :where(.nz-segmented-control-item):has(> input:checked) {
+    :where(.nz-chip, .nz-choice-card, .nz-segmented-control-item):has(> input:checked) {
       outline: 2px solid Highlight;
     }
     :where(.nz-checkbox-input):indeterminate {
@@ -209,7 +216,7 @@
       outline-color: CanvasText;
       forced-color-adjust: none;
     }
-    :where(.nz-pagination-page)[aria-current='page'] {
+    :where(.nz-nav-item, .nz-pagination-page)[aria-current='page'] {
       background: Highlight;
       color: HighlightText;
       outline-color: CanvasText;

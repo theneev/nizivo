@@ -4,10 +4,10 @@
 // slots (Button icon, Select chevron) that size the glyph through font-size. `chevron` (Lucide's
 // `chevron-right`, the Breadcrumb separator and Pagination's marks), `circle-x` (the error mark of
 // Field, Fieldset and InlineError), `close` (Lucide's `x`, AlertDismiss's default), and `check` and
-// `minus` (Checkbox's checked mark and indeterminate dash), and `info` (the neutral Toast's mark) are
-// on Lucide's list of Feather-derived icons, so they also carry the Feather MIT notice in
-// THIRD_PARTY_NOTICES; `circle-check` (the success Toast's) and `eye` and `eye-off` (PasswordInput's
-// show and hide marks) are Lucide's own.
+// `minus` (Checkbox's checked mark and indeterminate dash), `info` (the neutral Toast's mark) and
+// `search` (SearchField's magnifier) are on Lucide's list of Feather-derived icons, so they also
+// carry the Feather MIT notice in THIRD_PARTY_NOTICES; `circle-check` (the success Toast's) and
+// `eye` and `eye-off` (PasswordInput's show and hide marks) are Lucide's own.
 //
 // One export per glyph, so an entry carries only the paths it draws (a name → paths table kept every
 // glyph in every entry that drew one: about 160 B gzip on the Dialog entry).
@@ -24,7 +24,8 @@ export type GlyphName =
   | 'check'
   | 'minus'
   | 'eye'
-  | 'eye-off';
+  | 'eye-off'
+  | 'search';
 
 function svg(name: GlyphName, paths: ReactNode): JSX.Element {
   return (
@@ -122,5 +123,15 @@ export const EyeOffGlyph = (): JSX.Element =>
       <path d="M14.084 14.158a3 3 0 0 1-4.242-4.242" />
       <path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143" />
       <path d="m2 2 20 20" />
+    </>,
+  );
+
+/** SearchField's magnifier. */
+export const SearchGlyph = (): JSX.Element =>
+  svg(
+    'search',
+    <>
+      <path d="m21 21-4.34-4.34" />
+      <circle cx="11" cy="11" r="8" />
     </>,
   );

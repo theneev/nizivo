@@ -76,6 +76,9 @@ const NIZIVO_CLIENT_MARKERS = [
   'switch-thumb',
   'radio-input',
   'segmented-control-input',
+  'search-field-clear',
+  'chip-input',
+  'choice-card-input',
   'tabs-tab',
   'menu-popup',
   'popover-popup',
@@ -121,6 +124,9 @@ const CLIENT_PAGES: Record<string, string[]> = {
   '/docs/components/switch/': ['switch-thumb', 'willValidate'],
   '/docs/components/radio-group/': ['radio-input'],
   '/docs/components/segmented-control/': ['segmented-control-input', 'willValidate'],
+  '/docs/components/search-field/': ['search-field-clear', 'willValidate'],
+  '/docs/components/chip-group/': ['chip-input', 'willValidate'],
+  '/docs/components/choice-card/': ['choice-card-input', 'willValidate'],
   // PageHeader is a server part; its Overview example puts a SegmentedControl in the actions (week 16).
   '/docs/components/page-header/': ['segmented-control-input', 'willValidate'],
   // TableSelectionExample wraps its table in TableSelection; its "Archive selected" is a server Button.

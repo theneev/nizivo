@@ -1,0 +1,54 @@
+---
+title: SearchField
+description: A search or filter input in a `<search>` landmark, with a magnifier, a clear button and an optional shortcut hint. Inside a `<form method="get">` it filters with no JavaScript; inside a Field it is labelled, described and validated by the Field. It is also the top bar's search, as a real input.
+keyboard:
+  - keys: Tab
+    action: Moves focus to the input. The whole box draws the focus outline; the clear button is not a Tab stop.
+  - keys: Enter
+    action: Submits the form the field belongs to (the browser's implicit submission), so a GET form puts the query in the URL.
+  - keys: Escape
+    action: Clears a filled field and goes no further, so an enclosing Dialog stays open; on an empty field it does nothing.
+keyboardSource: a native `<input type="search">` (`search-field.client.tsx`); its keydown handler clears on Escape in every engine (Firefox has no native clear), and the clear button empties the field through the native value setter and an `input` event, so `onChange` reports it. The browser lane (`test/browser/search-field.spec.tsx`) checks the clear button, Escape, GET submission, `form.reset()`, the focus outline and inline validation.
+---
+
+<Callout type="warn" title="Not yet published (v0.2)">
+  This part is in the repository and ships in `@nizivo/react` 0.2.0; the 0.1.0 on npm does not have
+  it. Until then its API can change.
+</Callout>
+
+## Static or interactive
+
+**Client.** It always ships its client leaf, which reads its Field through FieldScope and runs the
+clear button, so a page with a SearchField also loads FieldScope. The server HTML is a native
+`<search>` around an `<input type="search">` that works before hydration. [How to
+choose](/docs/guides/static-or-interactive/).
+
+In a client app (a Vite or React Router single-page app, or a `'use client'` file) it is an ordinary React component: event handlers, refs and state work as usual. [In a client app](/docs/guides/static-or-interactive/#in-a-client-app).
+
+## Filtering with no JavaScript
+
+Put it in a `<form method="get">` and give it a `name`. Enter submits the form, so the query lands in
+the URL (`?q=stoneware`); the server page reads it from its search params, filters, and passes it
+back as `defaultValue`. The `<search>` element is already the search landmark, so the form needs no
+`role`. In a client app, read `onChange` (or pass `value` and `onChange`) and filter as the user types.
+
+## Naming it
+
+Inside a Field, the Field's label names the input. Outside one, pass `aria-label` or
+`aria-labelledby`; with neither, the input is named "Search" (`labels.label`). The placeholder is not
+a label.
+
+## The shortcut
+
+`shortcut="mod+k"` draws the keys at the end of the field (⌘K on Apple platforms, Ctrl+K elsewhere,
+through Kbd and ThemeScript's `data-nz-platform`) and announces them with `aria-keyshortcuts`
+(`"Meta+K Control+K"`). The hint hides while the field has a value. As with IconButton's `shortcut`,
+the app binds the key: listen for it and call `focus()` on the field's `ref`. A shared hotkey registry
+comes in a later release.
+
+## Size and states
+
+40 px at `size="md"` (Figma's 42 is off the control scale), 32 at `sm`, 48 at `lg`. `pending` turns
+the magnifier into a spinner while results load; announce the outcome where the results are. Its edge
+is `border/control`, not Figma's `border/subtle`, whose 1.07:1 against the top bar left the field
+barely visible.

@@ -1,0 +1,188 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/choice-card.css (Figma Payment Method 7275:14174; figma/05 §3.6). Cards 12 px
+   apart, each a radio, an optional mark and one or two lines of text. Only --_nz-* privates are set;
+   public --nz-choice-card-* hooks are read once, at the property.
+
+   Against Figma: the edge is an inset ring, never a border, so selecting changes its colour and width
+   and never the card's size (Figma grows 73 to 74 px on select). 16 px padding on every side (Figma
+   14/16; 14 is off the scale) and two Body/M lines (21 px each) make a two-line card 76 px. The radio is a real one drawn as RadioGroup's 20 px circle (Figma's is an
+   18 px ellipse with a 5 px stroke for the dot, at 1.57:1). The second line is text/secondary, not
+   Figma's text/tertiary (4.31:1). States read native :checked and :disabled. */
+@layer nz.components {
+  .nz-choice-card-group {
+    display: grid;
+    gap: var(--nz-choice-card-group-gap, var(--nz-space-3));
+  }
+
+  .nz-choice-card {
+    --_nz-choice-card-edge: var(--nz-border-default);
+    --_nz-choice-card-edge-width: var(--nz-border-width-default);
+
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--nz-choice-card-gap, var(--nz-space-3));
+    box-sizing: border-box;
+    min-block-size: var(--nz-size-control-lg);
+    padding: var(--nz-choice-card-padding, var(--nz-space-4));
+    border-radius: var(--nz-choice-card-radius, var(--nz-radius-lg));
+    background: var(--nz-choice-card-bg, var(--nz-bg-surface));
+    box-shadow: inset 0 0 0 var(--_nz-choice-card-edge-width) var(--_nz-choice-card-edge);
+    color: var(--nz-choice-card-fg, var(--nz-text-primary));
+    font: var(--nz-font-body-m);
+    cursor: pointer;
+    transition:
+      background-color var(--nz-duration-fast) var(--nz-easing-standard),
+      box-shadow var(--nz-duration-fast) var(--nz-easing-standard);
+
+    @media (hover: hover) {
+      &:hover:not(:has(> input:disabled, > input:checked)) {
+        --_nz-choice-card-edge: var(--nz-border-strong);
+      }
+    }
+
+    /* the selection: the brand-subtle fill and a 2 px brand ring in place of the 1 px edge */
+    &:has(> input:checked) {
+      --_nz-choice-card-edge: var(--nz-choice-card-edge-selected, var(--nz-border-brand));
+      --_nz-choice-card-edge-width: var(--nz-border-width-focus);
+
+      background: var(--nz-choice-card-bg-selected, var(--nz-bg-brand-subtle));
+    }
+
+    /* a disabled group, card or fieldset */
+    &:has(> input:disabled) {
+      --_nz-choice-card-edge: var(--nz-border-subtle);
+
+      background: var(--nz-bg-disabled);
+      color: var(--nz-text-disabled);
+      cursor: not-allowed;
+    }
+  }
+
+  /* Invalid (the Field's error, such as an expired or declined card): the chosen card's ring turns
+     critical; with nothing chosen, every radio's edge does, as RadioGroup's. */
+  .nz-choice-card-group[data-invalid] > .nz-choice-card:has(> input:checked) {
+    --_nz-choice-card-edge: var(--nz-border-critical);
+  }
+
+  /* The focus outline is nz.base's nested-input rule on the card: :has(> input:focus-visible), or
+     [data-focus-visible], which the card sets because WebKit matches no :focus-visible on a radio
+     reached by an arrow key. */
+
+  /* RadioGroup's 20 px circle: the 8 px dot is the background inside an inset ring of the fill */
+  .nz-choice-card-input {
+    --_nz-choice-card-radio-bg: var(--nz-bg-surface);
+    --_nz-choice-card-radio-border: var(--nz-border-control);
+    --_nz-choice-card-radio-ring: transparent;
+
+    flex: none;
+    appearance: none;
+    box-sizing: border-box;
+    inline-size: 1.25rem;
+    block-size: 1.25rem;
+    margin: 0;
+    border: var(--nz-border-width-default) solid var(--_nz-choice-card-radio-border);
+    border-radius: var(--nz-radius-full);
+    background: var(--_nz-choice-card-radio-bg);
+    /* (20 - 2 × 1 border - 8) / 2 = 5 px */
+    box-shadow: inset 0 0 0 0.3125rem var(--_nz-choice-card-radio-ring);
+    font: inherit;
+    outline: none;
+    cursor: inherit;
+    transition:
+      background-color var(--nz-duration-fast) var(--nz-easing-standard),
+      border-color var(--nz-duration-fast) var(--nz-easing-standard),
+      box-shadow var(--nz-duration-fast) var(--nz-easing-standard);
+
+    &:checked {
+      --_nz-choice-card-radio-bg: var(--nz-text-on-brand);
+      --_nz-choice-card-radio-border: var(--nz-choice-card-accent, var(--nz-bg-brand));
+      --_nz-choice-card-radio-ring: var(--nz-choice-card-accent, var(--nz-bg-brand));
+    }
+
+    &:disabled {
+      --_nz-choice-card-radio-bg: var(--nz-bg-disabled);
+      --_nz-choice-card-radio-border: var(--nz-border-subtle);
+    }
+
+    &:disabled:checked {
+      --_nz-choice-card-radio-bg: var(--nz-text-disabled);
+      --_nz-choice-card-radio-border: var(--nz-bg-muted);
+      --_nz-choice-card-radio-ring: var(--nz-bg-muted);
+    }
+  }
+
+  @media (hover: hover) {
+    .nz-choice-card:hover > .nz-choice-card-input:not(:disabled, :checked) {
+      --_nz-choice-card-radio-border: var(--nz-border-control-hover);
+    }
+  }
+
+  .nz-choice-card-group[data-invalid] .nz-choice-card-input:not(:checked) {
+    --_nz-choice-card-radio-border: var(--nz-border-critical);
+  }
+
+  .nz-choice-card-leading {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+  }
+
+  .nz-choice-card-content {
+    display: grid;
+    flex: 1 1 auto;
+    gap: var(--nz-space-0-5);
+    min-inline-size: 0;
+  }
+
+  /* the name: at least one Body/M Strong line, whatever font its content sets (Mono for a number) */
+  .nz-choice-card-label {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--nz-space-1);
+    min-block-size: 1lh;
+    font: var(--nz-font-body-m-strong);
+  }
+
+  /* a "Default" Badge or other end content, centred on the card as Figma draws it */
+  .nz-choice-card-trailing {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: var(--nz-space-2);
+  }
+
+  .nz-choice-card-description {
+    min-block-size: 1lh;
+    color: var(--nz-choice-card-description-fg, var(--nz-text-secondary));
+  }
+
+  .nz-choice-card:has(> input:disabled) .nz-choice-card-description {
+    color: var(--nz-text-disabled);
+  }
+
+  /* The generated nz.base fill loses to the background above (a later layer, §8.5), so the checked
+     radio is repeated here in system colours, as RadioGroup's: a Highlight ring around a dot. */
+  @media (forced-colors: active) {
+    .nz-choice-card-input:checked {
+      --_nz-choice-card-radio-ring: Highlight;
+
+      border-color: Highlight;
+      background: HighlightText;
+      forced-color-adjust: none;
+    }
+
+    .nz-choice-card-input:disabled:checked {
+      --_nz-choice-card-radio-ring: GrayText;
+
+      border-color: GrayText;
+      background: Canvas;
+    }
+
+    .nz-choice-card:has(> input:disabled) {
+      color: GrayText;
+    }
+  }
+}

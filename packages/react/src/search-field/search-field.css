@@ -1,0 +1,198 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/search-field.css (Figma Search Field 7275:14764, live 755:888; figma/06 §6.3).
+   The root <search> is the bordered box; the native <input type="search"> inside it is transparent
+   and draws no outline (the 2 px focus outline is the root's, from nz.base, focusTarget "within"), as
+   Input's. Sizes set only privates; public --nz-search-field-* hooks are read once, at the property.
+
+   Against Figma: 40 px (control-md), not 42; radius/lg as Figma at md. The at-rest edge is
+   border/control, not Figma's border/subtle, whose 1.07:1 against the top bar's canvas left the field
+   barely visible; the fill stays Figma's bg/subtle and turns bg/surface on focus. Figma's 18 px icon
+   and 10 px gap are off the scale: 16 px (icon-sm, as Input) and 8 px. Body/M, or Body/L under a
+   coarse pointer (M25, as Input). The engines' own cancel button is hidden; the clear button replaces
+   it in every engine. */
+@layer nz.components {
+  .nz-search-field {
+    --_nz-search-field-height: var(--nz-size-control-md);
+    --_nz-search-field-radius: var(--nz-radius-lg);
+    --_nz-search-field-border: var(--nz-border-control);
+    --_nz-search-field-border-hover: var(--nz-border-control-hover);
+    --_nz-search-field-bg: var(--nz-bg-subtle);
+    --_nz-search-field-halo: var(--nz-focus-halo);
+    --_nz-search-field-font: var(--nz-font-body-m);
+
+    display: flex;
+    align-items: center;
+    gap: var(--nz-search-field-gap, var(--nz-space-2));
+    box-sizing: border-box;
+    min-inline-size: 0;
+    inline-size: var(--nz-search-field-inline-size, auto);
+    block-size: var(--nz-search-field-height, var(--_nz-search-field-height));
+    padding-inline: var(--nz-space-3) var(--nz-space-2);
+    border: var(--nz-border-width-default) solid
+      var(--nz-search-field-border, var(--_nz-search-field-border));
+    border-radius: var(--nz-search-field-radius, var(--_nz-search-field-radius));
+    background: var(--nz-search-field-bg, var(--_nz-search-field-bg));
+    color: var(--nz-search-field-fg, var(--nz-text-primary));
+    font: var(--nz-search-field-font, var(--_nz-search-field-font));
+    cursor: text;
+    transition:
+      background-color var(--nz-duration-fast) var(--nz-easing-standard),
+      border-color var(--nz-duration-fast) var(--nz-easing-standard),
+      box-shadow var(--nz-duration-fast) var(--nz-easing-standard);
+
+    @media (hover: hover) {
+      &:hover:not([data-disabled], :has(> .nz-search-field-control:disabled)) {
+        border-color: var(--nz-search-field-border-hover, var(--_nz-search-field-border-hover));
+      }
+    }
+
+    /* the outline lives in nz.base; this adds the surface fill and the decorative halo */
+    &:focus-within {
+      --_nz-search-field-bg: var(--nz-bg-surface);
+
+      box-shadow: 0 0 0 calc(var(--nz-border-width-focus) + 4px) var(--_nz-search-field-halo);
+    }
+
+    &[data-invalid] {
+      --_nz-search-field-border: var(--nz-border-critical);
+      --_nz-search-field-border-hover: var(--nz-border-critical);
+      --_nz-search-field-halo: var(--nz-focus-halo-critical);
+    }
+
+    &[data-readonly] {
+      cursor: default;
+    }
+
+    /* the field's own flag, or a disabled Fieldset, which disables the <input> natively */
+    &:is([data-disabled], :has(> .nz-search-field-control:disabled)) {
+      --_nz-search-field-border: var(--nz-border-subtle);
+
+      background: var(--nz-search-field-bg-disabled, var(--nz-bg-disabled));
+      color: var(--nz-search-field-fg-disabled, var(--nz-text-disabled));
+      cursor: not-allowed;
+    }
+
+    &[data-size='sm'] {
+      --_nz-search-field-height: var(--nz-size-control-sm);
+      --_nz-search-field-radius: var(--nz-radius-md);
+    }
+
+    &[data-size='lg'] {
+      --_nz-search-field-height: var(--nz-size-control-lg);
+    }
+
+    /* iOS Safari zooms into a focused field under 16 px; the height stays on the size scale */
+    @media (pointer: coarse) {
+      --_nz-search-field-font: var(--nz-font-body-l);
+    }
+  }
+
+  .nz-search-field-control {
+    flex: 1 1 auto;
+    box-sizing: border-box;
+    min-inline-size: 0;
+    block-size: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    outline: none;
+    cursor: inherit;
+    appearance: none;
+
+    &::placeholder {
+      color: var(--nz-search-field-placeholder-fg, var(--nz-text-tertiary));
+      opacity: 1;
+    }
+
+    &:disabled::placeholder {
+      color: var(--nz-text-disabled);
+    }
+
+    /* Chromium and WebKit draw their own cancel button and decoration; the clear button replaces them */
+    &::-webkit-search-cancel-button,
+    &::-webkit-search-decoration {
+      appearance: none;
+    }
+  }
+
+  /* decorative; the 16 px glyph slot sizes 1em internal glyphs */
+  .nz-search-field-icon {
+    display: inline-flex;
+    flex: none;
+    color: var(--nz-search-field-icon-fg, var(--nz-icon-secondary));
+    font-size: var(--nz-size-icon-sm);
+  }
+
+  /* one turn per --nz-duration-spin; reduced motion sets it to 0 ms, so the glyph rests (as Button) */
+  .nz-search-field[data-pending] .nz-glyph-spinner {
+    animation: nz-search-field-spin var(--nz-duration-spin) linear infinite;
+  }
+
+  /* 24 px, WCAG 2.5.8's minimum target; the 16 px glyph inside */
+  .nz-search-field-clear {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    inline-size: var(--nz-size-icon-lg);
+    block-size: var(--nz-size-icon-lg);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: var(--nz-radius-full);
+    background: transparent;
+    color: var(--nz-icon-secondary);
+    font-size: var(--nz-size-icon-sm);
+    cursor: pointer;
+    transition:
+      background-color var(--nz-duration-fast) var(--nz-easing-standard),
+      color var(--nz-duration-fast) var(--nz-easing-standard);
+
+    @media (hover: hover) {
+      &:hover {
+        background: var(--nz-bg-muted);
+        color: var(--nz-icon-primary);
+      }
+    }
+
+    &:active {
+      background: var(--nz-bg-pressed);
+    }
+
+    &[hidden] {
+      display: none;
+    }
+  }
+
+  .nz-search-field-shortcut {
+    display: inline-flex;
+    flex: none;
+
+    &[hidden] {
+      display: none;
+    }
+  }
+
+  .nz-search-field:is([data-disabled], :has(> .nz-search-field-control:disabled))
+    :is(.nz-search-field-icon, .nz-search-field-shortcut) {
+    color: var(--nz-text-disabled);
+  }
+
+  @keyframes nz-search-field-spin {
+    to {
+      rotate: 1turn;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .nz-search-field:is([data-disabled], :has(> .nz-search-field-control:disabled)) {
+      border-color: GrayText;
+      color: GrayText;
+    }
+  }
+}

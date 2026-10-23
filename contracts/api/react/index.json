@@ -375,6 +375,102 @@
       "name": "CheckboxState"
     },
     {
+      "definedIn": "./chip-group",
+      "import": "import { Chip } from '@nizivo/react'",
+      "kind": "component",
+      "name": "Chip"
+    },
+    {
+      "definedIn": "./chip-group",
+      "import": "import { ChipGroup } from '@nizivo/react'",
+      "kind": "component",
+      "name": "ChipGroup"
+    },
+    {
+      "definedIn": "./chip-group",
+      "import": "import type { ChipGroupChangeReason } from '@nizivo/react'",
+      "kind": "type",
+      "name": "ChipGroupChangeReason"
+    },
+    {
+      "definedIn": "./chip-group",
+      "import": "import type { ChipGroupLabels } from '@nizivo/react'",
+      "kind": "type",
+      "name": "ChipGroupLabels"
+    },
+    {
+      "definedIn": "./chip-group",
+      "import": "import type { ChipGroupProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "ChipGroupProps"
+    },
+    {
+      "definedIn": "./chip-group",
+      "import": "import type { ChipGroupState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "ChipGroupState"
+    },
+    {
+      "definedIn": "./chip-group",
+      "import": "import type { ChipGroupValue } from '@nizivo/react'",
+      "kind": "type",
+      "name": "ChipGroupValue"
+    },
+    {
+      "definedIn": "./chip-group",
+      "import": "import type { ChipProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "ChipProps"
+    },
+    {
+      "definedIn": "./chip-group",
+      "import": "import type { ChipState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "ChipState"
+    },
+    {
+      "definedIn": "./choice-card",
+      "import": "import { ChoiceCard } from '@nizivo/react'",
+      "kind": "component",
+      "name": "ChoiceCard"
+    },
+    {
+      "definedIn": "./choice-card",
+      "import": "import type { ChoiceCardChangeReason } from '@nizivo/react'",
+      "kind": "type",
+      "name": "ChoiceCardChangeReason"
+    },
+    {
+      "definedIn": "./choice-card",
+      "import": "import { ChoiceCardGroup } from '@nizivo/react'",
+      "kind": "component",
+      "name": "ChoiceCardGroup"
+    },
+    {
+      "definedIn": "./choice-card",
+      "import": "import type { ChoiceCardGroupProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "ChoiceCardGroupProps"
+    },
+    {
+      "definedIn": "./choice-card",
+      "import": "import type { ChoiceCardGroupState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "ChoiceCardGroupState"
+    },
+    {
+      "definedIn": "./choice-card",
+      "import": "import type { ChoiceCardProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "ChoiceCardProps"
+    },
+    {
+      "definedIn": "./choice-card",
+      "import": "import type { ChoiceCardState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "ChoiceCardState"
+    },
+    {
       "definedIn": "./container",
       "import": "import { Container } from '@nizivo/react'",
       "kind": "component",
@@ -1443,6 +1539,24 @@
       "name": "NativeSelectState"
     },
     {
+      "definedIn": "./nav-item",
+      "import": "import { NavItem } from '@nizivo/react'",
+      "kind": "component",
+      "name": "NavItem"
+    },
+    {
+      "definedIn": "./nav-item",
+      "import": "import type { NavItemProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "NavItemProps"
+    },
+    {
+      "definedIn": "./nav-item",
+      "import": "import type { NavItemState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "NavItemState"
+    },
+    {
       "definedIn": "./number-value",
       "import": "import { NumberValue } from '@nizivo/react'",
       "kind": "component",
@@ -1837,6 +1951,30 @@
       "import": "import type { RankedListTitleLevel } from '@nizivo/react'",
       "kind": "type",
       "name": "RankedListTitleLevel"
+    },
+    {
+      "definedIn": "./search-field",
+      "import": "import { SearchField } from '@nizivo/react'",
+      "kind": "component",
+      "name": "SearchField"
+    },
+    {
+      "definedIn": "./search-field",
+      "import": "import type { SearchFieldLabels } from '@nizivo/react'",
+      "kind": "type",
+      "name": "SearchFieldLabels"
+    },
+    {
+      "definedIn": "./search-field",
+      "import": "import type { SearchFieldProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "SearchFieldProps"
+    },
+    {
+      "definedIn": "./search-field",
+      "import": "import type { SearchFieldState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "SearchFieldState"
     },
     {
       "definedIn": "./segmented-control",

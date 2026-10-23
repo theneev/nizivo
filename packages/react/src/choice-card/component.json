@@ -1,0 +1,23 @@
+{
+  "name": "choice-card",
+  "status": "stable",
+  "tier": "client",
+  "parts": [],
+  "exports": ["ChoiceCardGroup", "ChoiceCard"],
+  "interactive": ["choice-card"],
+  "focusTarget": "nested-input",
+  "stateIndicator": [
+    { "slot": "choice-card", "paint": "border" },
+    { "slot": "choice-card", "state": ":has(> input:checked)", "paint": "outline" },
+    { "slot": "choice-card-input", "paint": "border" },
+    { "slot": "choice-card-input", "state": ":checked", "paint": "fill" }
+  ],
+  "cssDeps": ["base"],
+  "variants": {},
+  "figma": {
+    "canonical": ["7275:14174"],
+    "ghosts": ["754:644"],
+    "variantsSeen": ["7275:14175", "7275:14183"],
+    "related": ["7275:14170"]
+  }
+}

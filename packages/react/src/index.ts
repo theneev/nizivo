@@ -66,6 +66,24 @@ export type {
   CheckboxProps,
   CheckboxState,
 } from './checkbox/index';
+export { ChipGroup, Chip } from './chip-group/index';
+export type {
+  ChipGroupChangeReason,
+  ChipGroupLabels,
+  ChipGroupProps,
+  ChipGroupState,
+  ChipGroupValue,
+  ChipProps,
+  ChipState,
+} from './chip-group/index';
+export { ChoiceCardGroup, ChoiceCard } from './choice-card/index';
+export type {
+  ChoiceCardChangeReason,
+  ChoiceCardGroupProps,
+  ChoiceCardGroupState,
+  ChoiceCardProps,
+  ChoiceCardState,
+} from './choice-card/index';
 export { Container } from './container/index';
 export type { ContainerProps } from './container/index';
 export { Delta } from './delta/index';
@@ -244,6 +262,8 @@ export { CountUp, useCountUp } from './motion/index';
 export type { CountUpOptions, CountUpProps, CountUpState } from './motion/index';
 export { NativeSelect } from './native-select/index';
 export type { NativeSelectProps, NativeSelectState } from './native-select/index';
+export { NavItem } from './nav-item/index';
+export type { NavItemProps, NavItemState } from './nav-item/index';
 export { NumberValue, formatNumber } from './number-value/index';
 export type { NumberValueProps, NumberValueState } from './number-value/index';
 export { PageHeader } from './page-header/index';
@@ -314,6 +334,8 @@ export type {
   RankedListRootState,
   RankedListTitleLevel,
 } from './ranked-list/index';
+export { SearchField } from './search-field/index';
+export type { SearchFieldLabels, SearchFieldProps, SearchFieldState } from './search-field/index';
 export {
   SegmentedControl,
   SegmentedControlRoot,
