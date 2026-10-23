@@ -49,8 +49,21 @@ export interface Graph {
   externals: Set<string>;
 }
 
-/** The module graph reachable from `entry` through relative imports. */
-export function graph(files: Map<string, string>, entry: string): Graph {
+/** Whole `import type { … } from '…';` and `export type { … } from '…';` statements. */
+const TYPE_ONLY = /^(?:import|export) type \{[^}]*\} from '[^']+';$/gm;
+
+/**
+ * The module graph reachable from `entry` through relative imports. A source module's type-only
+ * statements are erased by every compiler, so they are not edges unless `types` is set (as
+ * `reactImports` skips them too); a declaration file (`.d.ts`) keeps all of its edges. Set `types`
+ * to ask what a module reaches as a type (a contract's declarations), not what loads at run time:
+ * a type derived from the `enUS` catalogue reaches every component's types (week 22).
+ */
+export function graph(
+  files: Map<string, string>,
+  entry: string,
+  { types = false }: { types?: boolean } = {},
+): Graph {
   const modules = new Set<string>();
   const externals = new Set<string>();
   const queue = [entry];
@@ -58,7 +71,9 @@ export function graph(files: Map<string, string>, entry: string): Graph {
     const file = queue.pop();
     if (file === undefined || modules.has(file)) continue;
     modules.add(file);
-    for (const specifier of specifiers(files.get(file) ?? '')) {
+    const text = files.get(file) ?? '';
+    const code = types || file.endsWith('.d.ts') ? text : text.replace(TYPE_ONLY, '');
+    for (const specifier of specifiers(code)) {
       if (!specifier.startsWith('.')) {
         externals.add(specifier);
         continue;

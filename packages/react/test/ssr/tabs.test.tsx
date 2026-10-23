@@ -98,7 +98,7 @@ describe('module graph', () => {
   });
 
   test('the contract imports no engine (the public .d.ts never reaches one)', () => {
-    const { externals } = graph(SRC, 'src/tabs/tabs.contract.ts');
+    const { externals } = graph(SRC, 'src/tabs/tabs.contract.ts', { types: true });
     expect([...externals]).toEqual(['react']);
   });
 });

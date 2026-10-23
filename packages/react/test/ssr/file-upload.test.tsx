@@ -67,7 +67,9 @@ describe('module graph', () => {
   });
 
   test('the public contract reaches no engine, even as a type', () => {
-    const { modules, externals } = graph(SRC, 'src/file-upload/file-upload.contract.ts');
+    const { modules, externals } = graph(SRC, 'src/file-upload/file-upload.contract.ts', {
+      types: true,
+    });
     expect([...externals]).toEqual(['react']);
     expect([...modules].filter((file) => file.startsWith('src/_engines/'))).toEqual([]);
   });

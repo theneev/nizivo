@@ -18,7 +18,7 @@ const SRC = rekey(
 
 describe('server-safe', () => {
   test("no 'use client' module, only react, only react-server React", () => {
-    const { modules, externals } = graph(SRC, 'src/theme-script/index.ts');
+    const { modules, externals } = graph(SRC, 'src/theme-script/index.ts', { types: true });
     expect([...modules].filter((file) => isClient(SRC.get(file) ?? ''))).toEqual([]);
     expect([...externals]).toEqual(['react']);
     expect(reactImports(SRC, modules).filter((name) => !REACT_SERVER.has(name))).toEqual([]);
