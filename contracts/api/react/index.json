@@ -855,6 +855,54 @@
       "name": "FieldsetState"
     },
     {
+      "definedIn": "./file-upload",
+      "import": "import { FileUpload } from '@nizivo/react'",
+      "kind": "component",
+      "name": "FileUpload"
+    },
+    {
+      "definedIn": "./file-upload",
+      "import": "import type { FileUploadFile } from '@nizivo/react'",
+      "kind": "type",
+      "name": "FileUploadFile"
+    },
+    {
+      "definedIn": "./file-upload",
+      "import": "import type { FileUploadItem } from '@nizivo/react'",
+      "kind": "type",
+      "name": "FileUploadItem"
+    },
+    {
+      "definedIn": "./file-upload",
+      "import": "import type { FileUploadLabels } from '@nizivo/react'",
+      "kind": "type",
+      "name": "FileUploadLabels"
+    },
+    {
+      "definedIn": "./file-upload",
+      "import": "import type { FileUploadProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "FileUploadProps"
+    },
+    {
+      "definedIn": "./file-upload",
+      "import": "import type { FileUploadRejection } from '@nizivo/react'",
+      "kind": "type",
+      "name": "FileUploadRejection"
+    },
+    {
+      "definedIn": "./file-upload",
+      "import": "import type { FileUploadRejectionReason } from '@nizivo/react'",
+      "kind": "type",
+      "name": "FileUploadRejectionReason"
+    },
+    {
+      "definedIn": "./file-upload",
+      "import": "import type { FileUploadStatus } from '@nizivo/react'",
+      "kind": "type",
+      "name": "FileUploadStatus"
+    },
+    {
       "definedIn": "./form",
       "import": "import { Form } from '@nizivo/react'",
       "kind": "component",

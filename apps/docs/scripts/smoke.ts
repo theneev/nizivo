@@ -88,6 +88,8 @@ const NIZIVO_CLIENT_MARKERS = [
   'nz-form-summary',
   // PasswordInput's client leaf: its toggle's class
   'nz-password-input-toggle',
+  // FileUpload (@nizivo/react/file-upload, v0.2): its dropzone's slot
+  'file-upload-dropzone',
   // @nizivo/charts' ChartInteraction island (AreaChart's point mode, BarChart's column mode,
   // DonutChart's item mode). The charts parts have their own generated routes
   // (app/docs/(generated)/charts), so it may load on those three pages only; on any other page it
@@ -124,6 +126,8 @@ const CLIENT_PAGES: Record<string, string[]> = {
   // TableSelectionExample wraps its table in TableSelection; its "Archive selected" is a server Button.
   // The Table page loads no client module: selection is its own subpath (D-cf).
   '/docs/components/table-selection/': ['nz-table-selection'],
+  // FileUpload reads its Field through useFieldControl, which lives in FieldScope's module.
+  '/docs/components/file-upload/': ['file-upload-dropzone', 'willValidate'],
   '/docs/components/tabs/': ['tabs-tab', 'nz-textarea', 'willValidate'],
   // MenuRowActionsExample's trigger is an IconButton, whose default tooltip leaf the page imports.
   '/docs/components/menu/': ['menu-popup', 'tooltip-popup'],

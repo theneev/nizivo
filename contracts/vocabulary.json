@@ -119,7 +119,7 @@
     {
       "name": "data-pending",
       "presence": true,
-      "on": "data-display roots, rows, Button, SubmitButton",
+      "on": "data-display roots, rows, Button, SubmitButton, FileUpload root and items",
       "meaning": "Data lifecycle: pending (§16.5); also an action in flight on Button and SubmitButton"
     },
     {
@@ -245,6 +245,12 @@
       "values": ["narrow", "wide"],
       "on": "Split",
       "meaning": "The aside's width while the columns sit side by side"
+    },
+    {
+      "name": "data-drag-over",
+      "presence": true,
+      "on": "FileUpload dropzone",
+      "meaning": "A drag carrying files is over the dropzone: dropping adds them"
     },
     {
       "name": "data-presentation",

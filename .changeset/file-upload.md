@@ -1,0 +1,5 @@
+---
+'@nizivo/react': minor
+---
+
+FileUpload (`./file-upload`): a dropzone over a native `<input type="file">`, with a list of the chosen files. Before hydration a click or a drop chooses files natively and a plain form submits them; hydrated, each pick or drop is checked against `accept` and `maxSize` (refused files get a message under the dropzone and reach `onReject`), `multiple` adds to the list, and the component writes the list back into the input so the form submits exactly what is listed. It never uploads: `onFilesChange` gives each held file with an id, and the app passes each upload's state back as `items` (`uploading` with a ProgressBar, `complete`, or `error` with Retry), with `onRemove`, `onRetry` and `onCancel`. Inside a Field it is labelled, described and validated natively, `required` included. Every string is in `labels`. The drop target is React Aria's `useDrop`, behind an engine contract; the dropzone carries the new `data-drag-over` attribute while files are dragged over it.

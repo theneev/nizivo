@@ -104,7 +104,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 | Entry              | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | ------------------ | -------: | ---------: | ---------: | ----------: | -----------: |
-| `.`                |  103,782 |      101.3 |     86,671 |         107 |        5,786 |
+| `.`                |  106,603 |      104.1 |     89,088 |         107 |        2,965 |
 | /alert             |    1,282 |        1.3 |      1,184 |         1.4 |          151 |
 | /augment           |        0 |        0.0 |          0 |           0 |            — |
 | /avatar            |    1,381 |        1.3 |      1,283 |         1.5 |          155 |
@@ -123,6 +123,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /empty-state       |      840 |        0.8 |        768 |           1 |          184 |
 | /field             |    3,630 |        3.5 |      3,303 |         3.9 |          363 |
 | /fieldset          |    1,714 |        1.7 |      1,559 |         1.9 |          231 |
+| /file-upload       |    5,608 |        5.5 |      5,146 |         6.1 |          638 |
 | /form              |    2,750 |        2.7 |      2,486 |           3 |          322 |
 | /grid              |      793 |        0.8 |        737 |         0.9 |          128 |
 | /heading           |      767 |        0.7 |        697 |         0.9 |          154 |
@@ -180,6 +181,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | ----------------------------------------------- | -------: | ---------: | ---------: | ----------: | -----------: |
 | own: _engines/react-aria/dialog.client          |    1,082 |        1.1 |        963 |         1.3 |          249 |
 | own: _engines/react-aria/drawer.client          |      100 |        0.1 |         90 |         0.2 |          104 |
+| own: _engines/react-aria/file-upload.client     |      369 |        0.4 |        332 |         0.4 |           40 |
 | own: _engines/react-aria/locale.client          |      162 |        0.2 |        142 |         0.2 |           42 |
 | own: _engines/react-aria/menu.client            |    1,824 |        1.8 |      1,613 |           2 |          224 |
 | own: _engines/react-aria/open-state.client      |      341 |        0.3 |        305 |         0.4 |           68 |
@@ -199,9 +201,10 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | own: dialog/dialog.client                       |      997 |        1.0 |        911 |         1.4 |          436 |
 | own: drawer/drawer.client                       |    1,064 |        1.0 |        973 |         1.2 |          164 |
 | own: field/field-scope.client                   |    1,523 |        1.5 |      1,348 |         1.6 |          115 |
+| own: file-upload/file-upload.client             |    3,105 |        3.0 |      2,835 |         3.4 |          376 |
 | own: form/form.client                           |    1,298 |        1.3 |      1,173 |         1.4 |          135 |
 | own: form/submit-button.client                  |      180 |        0.2 |        169 |         0.2 |           24 |
-| own: icon-button/icon-button.client             |      353 |        0.3 |        302 |         0.4 |           56 |
+| own: icon-button/icon-button.client             |      353 |        0.3 |        304 |         0.4 |           56 |
 | own: input/input.client                         |      721 |        0.7 |        639 |         0.8 |           98 |
 | own: menu/menu.client                           |    1,035 |        1.0 |        932 |         1.2 |          193 |
 | own: motion/count-up.client                     |    1,032 |        1.0 |        945 |         1.2 |          196 |
@@ -232,7 +235,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/avatar.css            |      745 |        0.7 |        606 |         0.9 |          176 |
 | /css/badge.css             |      512 |        0.5 |        424 |         0.6 |          102 |
 | /css/banner.css            |      658 |        0.6 |        533 |         0.8 |          161 |
-| /css/base.css              |    1,131 |        1.1 |        946 |         1.3 |          200 |
+| /css/base.css              |    1,165 |        1.1 |        984 |         1.3 |          166 |
 | /css/breadcrumb.css        |      551 |        0.5 |        431 |         0.6 |           63 |
 | /css/button.css            |    1,153 |        1.1 |        974 |         1.3 |          178 |
 | /css/card.css              |      665 |        0.6 |        560 |         0.7 |           51 |
@@ -244,6 +247,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/empty-state.css       |      476 |        0.5 |        373 |         0.6 |          138 |
 | /css/field.css             |      330 |        0.3 |        264 |         0.4 |           79 |
 | /css/fieldset.css          |      362 |        0.4 |        293 |         0.4 |           47 |
+| /css/file-upload.css       |    1,261 |        1.2 |      1,058 |         1.4 |          172 |
 | /css/form.css              |      280 |        0.3 |        225 |         0.4 |          129 |
 | /css/grid.css              |      531 |        0.5 |        423 |         0.6 |           83 |
 | /css/heading.css           |      390 |        0.4 |        318 |         0.5 |          122 |
@@ -285,7 +289,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/toast.css             |      891 |        0.9 |        740 |           1 |          133 |
 | /css/tooltip.css           |      581 |        0.6 |        503 |         0.6 |           33 |
 | /css/trend-card.css        |      403 |        0.4 |        346 |         0.5 |          109 |
-| /styles.css                |   19,876 |       19.4 |     16,652 |          22 |        2,652 |
+| /styles.css                |   20,523 |       20.0 |     17,184 |          22 |        2,005 |
 
 #### `@nizivo/tokens`: Public JS entries (bundled with what they import, React Aria included)
 

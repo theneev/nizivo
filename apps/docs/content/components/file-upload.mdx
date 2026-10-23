@@ -1,0 +1,83 @@
+---
+title: FileUpload
+description: A dropzone over a native file input, with a list of the chosen files. Before any JavaScript runs, a click or a drop chooses files and a plain form submits them; hydrated, it checks each file against `accept` and `maxSize` and shows the upload state your code reports for each one.
+keyboard:
+  - keys: Tab
+    action: Moves focus to the dropzone's file input; the dropzone draws the focus outline. Tab again moves through each listed file's buttons (Retry, Cancel, Remove) in order.
+  - keys: Enter, Space
+    action: On the dropzone, opens the platform's file picker (the native input's own behaviour). On a list button, presses it.
+  - keys: Enter, Space on Remove or Cancel
+    action: Takes the file out of the list and the input; focus moves to the file that took its place, else the one before, else the dropzone.
+keyboardSource: A native `<input type="file">` (`file-upload.client.tsx`); react-aria 3.53.1 `useDrop` through `_engines/react-aria/file-upload.client.tsx` for the drop target only. Dropping is pointer-only; the input is the keyboard and screen-reader path. Checked by the browser lane (`test/browser/file-upload.spec.tsx`) in Chromium.
+---
+
+<Callout type="warn" title="Not yet published (v0.2)">
+  This part is in the repository and ships in `@nizivo/react` 0.2.0; the 0.1.0 on npm does not have
+  it. Until then its API can change.
+</Callout>
+
+## Static or interactive
+
+**Client.** FileUpload is a client component that reads its Field through FieldScope, so a page
+with one also loads FieldScope and React Aria's drop hook. Its server HTML is complete and works
+before hydration: a native `<input type="file">` covers the dropzone, so a click opens the picker
+and a file dropped on it is chosen natively, and a form submits the chosen files under `name`.
+[How to choose](/docs/guides/static-or-interactive/).
+
+In a client app (a Vite or React Router single-page app, or a `'use client'` file) it is an
+ordinary React component: event handlers, refs and state work as usual.
+[In a client app](/docs/guides/static-or-interactive/#in-a-client-app).
+
+## The form submits the files
+
+FileUpload never uploads anything. The native input holds the chosen files, and the component
+writes the list back into it after every pick, drop and remove, so a form (a Server Action, or
+`method="post"` with `encType="multipart/form-data"`) submits exactly the files you see. With
+`multiple`, each pick or drop adds to the list; without it, a new file replaces the old one.
+
+A file that `accept` does not match, or that is larger than `maxSize` (in bytes; 1 MB is
+1,000,000), is not added: its message appears under the dropzone, is read by screen readers and
+describes the input. `onReject` receives the refused files. Check the files on the server too:
+before hydration, the browser submits whatever was chosen.
+
+Inside a `Field`, the Field's label names the input, its description and errors describe it, and
+`required` is native: a submit with no file shows the Field's `valueMissing` message, and choosing
+a file withdraws it. A click on the Field's label focuses the dropzone without opening the picker.
+
+## Uploading as files are chosen
+
+When your code sends each file as soon as it is chosen, `onFilesChange` gives every held file with
+an id the component assigned; key your requests by it, and pass each file's state back as `items`:
+
+```tsx
+'use client';
+const [items, setItems] = useState<FileUploadItem[]>([]);
+
+<FileUpload
+  multiple
+  items={items}
+  onFilesChange={(files) => {
+    for (const { id, file } of files) startUpload(id, file, setItems);
+  }}
+  onRetry={(id) => retryUpload(id)}
+  onCancel={(id) => abortUpload(id)}
+  onRemove={(id) => deleteUpload(id)}
+/>;
+```
+
+An item is `{ id, status, progress, error }`, with `status` `uploading` (a ProgressBar, determinate
+when you pass `progress`, 0 to 100), `complete` or `error` (with a Retry button). While any item is
+uploading, the dropzone's line shows how many are done. Cancel and Remove take a held file out of
+the list and the input before they call you. An item whose id matches no held file is listed too,
+after the held ones, so an edit form can show files uploaded earlier; give it a `name`.
+
+Leave `name` off the FileUpload when you upload this way, or the form submits the files a second
+time; submit your upload ids in your own hidden inputs.
+
+## Strings
+
+Every string is in `labels`, with English defaults: `prompt` (`{browse}` marks where the brand
+coloured word goes), `browse`, `release` (shown while files are dragged over), `summary`, the
+rejection messages `wrongType`, `tooLarge` (`{name}`, `{max}`) and `tooMany`, and the list's
+`remove`, `retry`, `cancel`, `uploading`, `complete` and `failed`. Sizes are formatted for
+`locale`. Pass `hint` for the line under the prompt and `icon` for the mark above it.

@@ -147,6 +147,16 @@ export type {
 } from './field/index';
 export { Fieldset } from './fieldset/index';
 export type { FieldsetProps, FieldsetState } from './fieldset/index';
+export { FileUpload } from './file-upload/index';
+export type {
+  FileUploadFile,
+  FileUploadItem,
+  FileUploadLabels,
+  FileUploadProps,
+  FileUploadRejection,
+  FileUploadRejectionReason,
+  FileUploadStatus,
+} from './file-upload/index';
 export { Form, SubmitButton, FormMessage } from './form/index';
 export type {
   FormErrorValue,

@@ -61,7 +61,10 @@
     outline: var(--nz-border-width-focus) solid var(--nz-border-focus);
     outline-offset: 2px;
   }
-  :where(.nz-segmented-control-item):is(:has(> input:focus-visible), [data-focus-visible]) {
+  :where(.nz-file-upload-dropzone, .nz-segmented-control-item):is(
+    :has(> input:focus-visible),
+    [data-focus-visible]
+  ) {
     outline: var(--nz-border-width-focus) solid var(--nz-border-focus);
     outline-offset: 2px;
   }
@@ -87,6 +90,7 @@
     .nz-dialog-trigger,
     .nz-drawer-close,
     .nz-drawer-trigger,
+    .nz-file-upload-dropzone,
     .nz-form-summary,
     .nz-form-summary-link,
     .nz-icon-button,
@@ -227,6 +231,9 @@
       color: HighlightText;
       outline-color: CanvasText;
       forced-color-adjust: none;
+    }
+    :where(.nz-file-upload-dropzone)[data-drag-over] {
+      outline: 2px solid Highlight;
     }
     :where(.nz-select-item)[data-selected] {
       background: Highlight;

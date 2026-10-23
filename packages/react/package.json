@@ -103,6 +103,10 @@
       "types": "./dist/fieldset/index.d.ts",
       "default": "./dist/fieldset/index.js"
     },
+    "./file-upload": {
+      "types": "./dist/file-upload/index.d.ts",
+      "default": "./dist/file-upload/index.js"
+    },
     "./form": {
       "types": "./dist/form/index.d.ts",
       "default": "./dist/form/index.js"
@@ -287,6 +291,7 @@
     "./css/empty-state.css": "./dist/css/empty-state.css",
     "./css/field.css": "./dist/css/field.css",
     "./css/fieldset.css": "./dist/css/fieldset.css",
+    "./css/file-upload.css": "./dist/css/file-upload.css",
     "./css/form.css": "./dist/css/form.css",
     "./css/grid.css": "./dist/css/grid.css",
     "./css/heading.css": "./dist/css/heading.css",

@@ -2,7 +2,7 @@
   "$comment": "Size budgets (ARCHITECTURE.md §17), written by `node packages/tooling/size/measure.ts --write`. measured: bytes, gzip -9, as size-limit 14.2 reports them. limitKiB: measured + 10%, rounded up (method.ts limitKiB), never above the entry's §17.1 plan limit (method.ts PLAN_LIMITS_KIB). Limits only go up through a labelled PR (§17.3).",
   "entries": {
     "@nizivo/react": {
-      "measured": 103782,
+      "measured": 106603,
       "limitKiB": 107
     },
     "@nizivo/react/alert": {
@@ -76,6 +76,10 @@
     "@nizivo/react/fieldset": {
       "measured": 1714,
       "limitKiB": 1.9
+    },
+    "@nizivo/react/file-upload": {
+      "measured": 5608,
+      "limitKiB": 6.1
     },
     "@nizivo/react/form": {
       "measured": 2750,
@@ -265,6 +269,10 @@
       "measured": 100,
       "limitKiB": 0.2
     },
+    "@nizivo/react own: _engines/react-aria/file-upload.client": {
+      "measured": 369,
+      "limitKiB": 0.4
+    },
     "@nizivo/react own: _engines/react-aria/locale.client": {
       "measured": 162,
       "limitKiB": 0.2
@@ -340,6 +348,10 @@
     "@nizivo/react own: field/field-scope.client": {
       "measured": 1523,
       "limitKiB": 1.6
+    },
+    "@nizivo/react own: file-upload/file-upload.client": {
+      "measured": 3105,
+      "limitKiB": 3.4
     },
     "@nizivo/react own: form/form.client": {
       "measured": 1298,
@@ -434,7 +446,7 @@
       "limitKiB": 0.8
     },
     "@nizivo/react/css/base.css": {
-      "measured": 1131,
+      "measured": 1165,
       "limitKiB": 1.3
     },
     "@nizivo/react/css/breadcrumb.css": {
@@ -480,6 +492,10 @@
     "@nizivo/react/css/fieldset.css": {
       "measured": 362,
       "limitKiB": 0.4
+    },
+    "@nizivo/react/css/file-upload.css": {
+      "measured": 1261,
+      "limitKiB": 1.4
     },
     "@nizivo/react/css/form.css": {
       "measured": 280,
@@ -646,7 +662,7 @@
       "limitKiB": 0.5
     },
     "@nizivo/react/styles.css": {
-      "measured": 19876,
+      "measured": 20523,
       "limitKiB": 22
     },
     "@nizivo/tokens": {

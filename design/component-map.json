@@ -395,6 +395,13 @@
         "tone": ["neutral", "critical"]
       }
     },
+    "7275:11548": {
+      "component": "file-upload",
+      "role": "canonical",
+      "import": "@nizivo/react/file-upload",
+      "export": "FileUpload",
+      "props": {}
+    },
     "7275:13526": {
       "component": "progress-bar",
       "role": "canonical",

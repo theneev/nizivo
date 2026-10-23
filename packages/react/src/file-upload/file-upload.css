@@ -1,0 +1,248 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/file-upload.css (ARCHITECTURE.md §9.5; Figma Upload 7275:11548, File Item
+   7396:153). The dropzone is the box; the native <input type="file"> covers it, transparent, so a
+   click or a drop anywhere on it reaches the input, before hydration too. The 2 px focus outline is
+   the dropzone's, from nz.base (focusTarget "nested-input"). States set only --_nz-* privates; public
+   --nz-file-upload-* hooks are read once, at the property. Nothing changes size between states: the
+   prompt is one line whatever it says, and an item's status line keeps its height whether it holds
+   the size, a progress bar, "Uploaded" or an error (Figma's Uploading variant grows 18 px). */
+@layer nz.components {
+  .nz-file-upload {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-file-upload-gap, var(--nz-space-3));
+    min-inline-size: 0;
+  }
+
+  .nz-file-upload-dropzone {
+    --_nz-file-upload-bg: var(--nz-bg-subtle);
+    --_nz-file-upload-border: var(--nz-border-strong);
+    --_nz-file-upload-icon-bg: var(--nz-bg-surface);
+    --_nz-file-upload-icon-fg: var(--nz-icon-primary);
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--nz-space-1);
+    box-sizing: border-box;
+    padding-block: var(--nz-file-upload-padding-block, var(--nz-space-6));
+    padding-inline: var(--nz-file-upload-padding-inline, var(--nz-space-6));
+    border: var(--nz-border-width-default) dashed
+      var(--nz-file-upload-border, var(--_nz-file-upload-border));
+    border-radius: var(--nz-file-upload-radius, var(--nz-radius-xl));
+    background: var(--nz-file-upload-bg, var(--_nz-file-upload-bg));
+    color: var(--nz-text-primary);
+    text-align: center;
+    /* Figma: "Drag-over state responds instantly" */
+    transition:
+      background-color var(--nz-duration-instant) var(--nz-easing-standard),
+      border-color var(--nz-duration-instant) var(--nz-easing-standard);
+
+    @media (hover: hover) {
+      &:hover:not([data-disabled], [data-drag-over]) {
+        --_nz-file-upload-border: var(--nz-border-control-hover);
+      }
+    }
+
+    &[data-drag-over] {
+      --_nz-file-upload-bg: var(--nz-bg-brand-subtle);
+      --_nz-file-upload-border: var(--nz-border-brand);
+      --_nz-file-upload-icon-bg: var(--nz-bg-brand);
+      --_nz-file-upload-icon-fg: var(--nz-text-on-brand);
+    }
+
+    &[data-invalid] {
+      --_nz-file-upload-border: var(--nz-border-critical);
+    }
+
+    &[data-disabled] {
+      --_nz-file-upload-bg: var(--nz-bg-disabled);
+      --_nz-file-upload-border: var(--nz-border-subtle);
+      --_nz-file-upload-icon-fg: var(--nz-text-disabled);
+
+      color: var(--nz-text-disabled);
+    }
+  }
+
+  /* covers the zone; draws nothing, so the dropzone's outline is the only focus mark */
+  .nz-file-upload-input {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    opacity: 0;
+    outline: none;
+    cursor: pointer;
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+
+  .nz-file-upload-icon {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    inline-size: var(--nz-size-control-md);
+    block-size: var(--nz-size-control-md);
+    margin-block-end: var(--nz-space-2);
+    border: var(--nz-border-width-default) solid var(--nz-border-subtle);
+    border-radius: var(--nz-radius-full);
+    background: var(--nz-file-upload-icon-bg, var(--_nz-file-upload-icon-bg));
+    color: var(--nz-file-upload-icon-fg, var(--_nz-file-upload-icon-fg));
+    font-size: var(--nz-size-icon-md);
+  }
+
+  /* one line in every state: the prompt, "Release to add files" and the upload summary swap in place */
+  .nz-file-upload-prompt {
+    display: block;
+    max-inline-size: 100%;
+    min-block-size: var(--nz-font-label-m-line-height);
+    overflow: hidden;
+    font: var(--nz-font-label-m);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .nz-file-upload-browse {
+    color: var(--nz-file-upload-browse-fg, var(--nz-text-brand));
+    font: var(--nz-font-label-m-strong);
+  }
+
+  .nz-file-upload-dropzone[data-disabled] .nz-file-upload-browse {
+    color: inherit;
+  }
+
+  /* text/secondary, not Figma's text/tertiary: tertiary on bg/subtle is 4.16:1 */
+  .nz-file-upload-hint {
+    color: var(--nz-file-upload-hint-fg, var(--nz-text-secondary));
+    font: var(--nz-font-body-m);
+  }
+
+  .nz-file-upload-dropzone[data-disabled] .nz-file-upload-hint {
+    color: inherit;
+  }
+
+  .nz-file-upload-messages {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-1);
+
+    &:empty {
+      display: none;
+    }
+  }
+
+  .nz-file-upload-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .nz-file-upload-item {
+    display: grid;
+    grid-template-areas:
+      'name actions'
+      'status actions';
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: var(--nz-space-3);
+    row-gap: var(--nz-space-0-5);
+    box-sizing: border-box;
+    padding-block: var(--nz-space-2);
+    padding-inline: var(--nz-space-3) var(--nz-space-2);
+    border: var(--nz-border-width-default) solid var(--nz-border-subtle);
+    border-radius: var(--nz-file-upload-item-radius, var(--nz-radius-md));
+    background: var(--nz-file-upload-item-bg, var(--nz-bg-surface));
+
+    &[data-error] {
+      border-color: var(--nz-border-critical);
+    }
+  }
+
+  .nz-file-upload-item-name {
+    grid-area: name;
+    min-inline-size: 0;
+    overflow: hidden;
+    color: var(--nz-text-primary);
+    font: var(--nz-font-label-m);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* the same height with a size, a bar, "Uploaded" or an error: no jump as the status changes */
+  .nz-file-upload-item-status {
+    display: flex;
+    grid-area: status;
+    align-items: center;
+    gap: var(--nz-space-2);
+    min-inline-size: 0;
+    block-size: var(--nz-font-body-s-line-height);
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-body-s);
+
+    & > .nz-progress-bar {
+      flex: 1 1 auto;
+      min-inline-size: 0;
+    }
+  }
+
+  .nz-file-upload-item-size {
+    flex: none;
+    font-variant-numeric: tabular-nums;
+    unicode-bidi: isolate;
+  }
+
+  .nz-file-upload-item-complete,
+  .nz-file-upload-item-error {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--nz-space-1);
+    min-inline-size: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    & > .nz-glyph {
+      flex: none;
+      font-size: var(--nz-size-icon-sm);
+    }
+  }
+
+  .nz-file-upload-item-complete {
+    color: var(--nz-text-success);
+  }
+
+  .nz-file-upload-item-error {
+    color: var(--nz-text-critical);
+  }
+
+  .nz-file-upload-item-actions {
+    display: inline-flex;
+    grid-area: actions;
+    align-items: center;
+    gap: var(--nz-space-1);
+  }
+
+  @media (forced-colors: active) {
+    /* the brand colour is gone: the browse word keeps a mark of its own */
+    .nz-file-upload-browse {
+      text-decoration: underline;
+    }
+
+    .nz-file-upload-dropzone[data-disabled] {
+      border-color: GrayText;
+      color: GrayText;
+    }
+  }
+}

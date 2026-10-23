@@ -1,0 +1,19 @@
+{
+  "name": "file-upload",
+  "status": "stable",
+  "tier": "own",
+  "engine": "react-aria",
+  "interactive": ["file-upload-dropzone"],
+  "focusTarget": "nested-input",
+  "stateIndicator": [
+    { "slot": "file-upload-dropzone", "state": "[data-drag-over]", "paint": "outline" }
+  ],
+  "cssDeps": ["base", "button", "icon-button", "progress-bar", "inline-error"],
+  "variants": {},
+  "figma": {
+    "canonical": ["7275:11548"],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": ["7396:153"]
+  }
+}
