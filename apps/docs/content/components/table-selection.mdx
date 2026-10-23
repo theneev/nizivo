@@ -1,0 +1,41 @@
+---
+title: TableSelection
+description: Row checkboxes for Table's bulk actions. Native checkboxes rendered on the server submit the checked ids with their form before any JavaScript runs; one small client island adds select-all, Shift-click ranges and Escape.
+keyboard:
+  - keys: Tab
+    action: Reaches the header's checkbox, then each row's, with the table's other controls in document order.
+  - keys: Space
+    action: On a row's checkbox, checks or clears it; on the header's, every row.
+  - keys: Shift + click
+    action: On a row's checkbox, gives every row between it and the last one clicked the same state.
+  - keys: Escape
+    action: Inside a TableSelection with rows checked, clears them; with none, does nothing, so an enclosing Dialog still closes.
+keyboardSource: Native checkboxes; TableSelection's own listener for select-all, Shift-click and Escape. Checked by the browser lane (test/browser/table-selection.spec.tsx) in Chromium, Firefox and WebKit.
+---
+
+<Callout type="warn" title="Not yet published (v0.2)">
+  This part is in the repository and ships in `@nizivo/react` 0.2.0; the 0.1.0 on npm does not have
+  it. Until then its API can change.
+</Callout>
+
+## Static or interactive
+
+**Server**, with one client part. `TableSelectAll` and `TableSelectRow` render native checkboxes with
+Checkbox's look and no client JavaScript; `TableSelection` is one client island around the whole
+table. Import them from `@nizivo/react/table-selection`, next to `Table` from
+`@nizivo/react/table`: a page that does not use selection loads none of it, under Turbopack and
+webpack alike. [How to choose](/docs/guides/static-or-interactive/).
+
+## Bulk actions
+
+Put a `TableSelectRow` in each row and a `TableSelectAll` in the header, and wrap the table in
+`TableSelection`. Each row's box is a native checkbox that submits its `value` under `name`
+(`ids` by default) with its form, so a bulk action works before any JavaScript runs: pass `form`
+with the id of a form outside the table, as the example's "Archive selected" does. Give every row's
+box its own name (`aria-label="Select order 1042"`). A checked row paints `bg/brand-subtle` through
+CSS, with no script.
+
+`TableSelection` adds what a native checkbox cannot do: the header's box checks or clears every
+row and shows the mixed state when only some are selected, Shift-click selects a range, and Escape
+clears the selection. A client owner hears every change through `onSelectionChange(ids)`; a Server
+Component reads the selection from the submitted form. Rows with `disabled` boxes are left out.

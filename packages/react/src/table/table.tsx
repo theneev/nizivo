@@ -3,14 +3,11 @@
 // (`render={<Link/>}` on Table.SortButton and Pagination) and no client data engine is involved.
 // Figma: Order Row 7275:14091 and Product Row 7275:14040 (figma/05 §3.3, §3.4), their orphan
 // headers 753:599 and 753:410; 08's "Recent orders" puts one in a card, radius 12 with a
-// border/subtle stroke (figma/08 §4.1). Row selection is form-based (§16.2): Table.SelectRow and
-// Table.SelectAll are native checkboxes rendered here, on the server, so the selected ids reach a
-// form's FormData before any JavaScript runs; Table.Selection (table-selection.client.tsx) is the one
-// client part, which adds the select-all's mixed state, Shift-click ranges and Escape.
+// border/subtle stroke (figma/08 §4.1). Row selection (a form-based island, §16.2) is not built yet.
 import type { ComponentPropsWithRef, ReactElement } from 'react';
 import { renderElement, type RenderProp } from '../contracts/render';
 import { cx } from '../_internal/cx';
-import { CheckGlyph, ChevronGlyph, ChevronsUpDownGlyph, MinusGlyph } from '../_internal/glyphs';
+import { ChevronGlyph, ChevronsUpDownGlyph } from '../_internal/glyphs';
 
 type Empty = Record<string, never>;
 
@@ -285,97 +282,5 @@ export function TableRowLink({ render, className, ...rest }: TableRowLinkProps):
     render,
     {},
     { 'data-slot': 'table-row-link', ...rest, className: cx('nz-table-row-link', className) },
-  );
-}
-
-/** Table's own strings (§16.4): serialisable, English defaults. */
-export interface TableLabels {
-  /** The select-all checkbox's name. @default 'Select all rows' */
-  selectAll: string;
-}
-
-type CheckboxInputProps = Omit<
-  ComponentPropsWithRef<'input'>,
-  'type' | 'children' | 'checked' | 'defaultChecked'
->;
-
-export interface TableSelectAllProps extends CheckboxInputProps {
-  /** An `aria-label` wins over `labels.selectAll`. */
-  labels?: Partial<TableLabels>;
-}
-
-export interface TableSelectRowProps extends CheckboxInputProps {
-  /** The row's id: what a form receives under `name` when the row is selected. */
-  value: string;
-  /** The checkbox's name, unique per row, for example "Select order 1042". */
-  'aria-label': string;
-  /** @default 'ids' */
-  name?: string;
-  /** Selected when the page loads. @default false */
-  defaultChecked?: boolean;
-}
-
-// Both checkboxes write Checkbox's markup (checkbox.css draws it) without its client module: the box
-// is a native input, so it works, and submits, before any JavaScript runs.
-
-/**
- * The header's checkbox: checks or clears every row of its `Table.Selection`, and shows the mixed
- * state when some are selected. It submits nothing. Without `Table.Selection` it does nothing.
- */
-export function TableSelectAll({ labels, className, ...rest }: TableSelectAllProps): ReactElement {
-  return (
-    <label
-      data-slot="table-select-all"
-      className={cx('nz-table-select-all nz-checkbox nz-hit-target', className)}
-    >
-      <input
-        aria-label={labels?.selectAll ?? 'Select all rows'}
-        {...rest}
-        type="checkbox"
-        className="nz-table-select-all-input nz-checkbox-input"
-        data-slot="table-select-all-input"
-      />
-      <span
-        className="nz-table-select-all-indicator nz-checkbox-indicator"
-        data-slot="table-select-all-indicator"
-        aria-hidden="true"
-      >
-        <CheckGlyph />
-        <MinusGlyph />
-      </span>
-    </label>
-  );
-}
-
-/**
- * A row's checkbox: a native input that submits `value` under `name` with its form (pass `form` to
- * reach a form outside the table). The row shows `bg/brand-subtle` while it is checked, through CSS.
- */
-export function TableSelectRow({
-  name = 'ids',
-  className,
-  ...rest
-}: TableSelectRowProps): ReactElement {
-  return (
-    <label
-      data-slot="table-select-row"
-      className={cx('nz-table-select-row nz-checkbox nz-hit-target', className)}
-    >
-      <input
-        name={name}
-        {...rest}
-        type="checkbox"
-        className="nz-table-select-row-input nz-checkbox-input"
-        data-slot="table-select-row-input"
-      />
-      <span
-        className="nz-table-select-row-indicator nz-checkbox-indicator"
-        data-slot="table-select-row-indicator"
-        aria-hidden="true"
-      >
-        <CheckGlyph />
-        <MinusGlyph />
-      </span>
-    </label>
   );
 }

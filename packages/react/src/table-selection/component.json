@@ -1,0 +1,15 @@
+{
+  "name": "table-selection",
+  "status": "stable",
+  "tier": "server",
+  "parts": [],
+  "exports": ["TableSelection", "TableSelectAll", "TableSelectRow"],
+  "cssDeps": ["base", "checkbox", "table"],
+  "variants": {},
+  "figma": {
+    "canonical": [],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": ["7275:14091"]
+  }
+}

@@ -2098,12 +2098,6 @@
     },
     {
       "definedIn": "./table",
-      "import": "import type { TableLabels } from '@nizivo/react'",
-      "kind": "type",
-      "name": "TableLabels"
-    },
-    {
-      "definedIn": "./table",
       "import": "import { TableRoot } from '@nizivo/react'",
       "kind": "part",
       "name": "TableRoot"
@@ -2151,37 +2145,43 @@
       "name": "TableSectionProps"
     },
     {
-      "definedIn": "./table",
+      "definedIn": "./table-selection",
       "import": "import { TableSelectAll } from '@nizivo/react'",
-      "kind": "part",
+      "kind": "component",
       "name": "TableSelectAll"
     },
     {
-      "definedIn": "./table",
+      "definedIn": "./table-selection",
       "import": "import type { TableSelectAllProps } from '@nizivo/react'",
       "kind": "type",
       "name": "TableSelectAllProps"
     },
     {
-      "definedIn": "./table",
+      "definedIn": "./table-selection",
       "import": "import { TableSelectRow } from '@nizivo/react'",
-      "kind": "part",
+      "kind": "component",
       "name": "TableSelectRow"
     },
     {
-      "definedIn": "./table",
+      "definedIn": "./table-selection",
       "import": "import type { TableSelectRowProps } from '@nizivo/react'",
       "kind": "type",
       "name": "TableSelectRowProps"
     },
     {
-      "definedIn": "./table",
+      "definedIn": "./table-selection",
       "import": "import { TableSelection } from '@nizivo/react'",
-      "kind": "part",
+      "kind": "component",
       "name": "TableSelection"
     },
     {
-      "definedIn": "./table",
+      "definedIn": "./table-selection",
+      "import": "import type { TableSelectionLabels } from '@nizivo/react'",
+      "kind": "type",
+      "name": "TableSelectionLabels"
+    },
+    {
+      "definedIn": "./table-selection",
       "import": "import type { TableSelectionProps } from '@nizivo/react'",
       "kind": "type",
       "name": "TableSelectionProps"

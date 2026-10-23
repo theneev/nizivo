@@ -11,12 +11,8 @@ export {
   TableCell,
   TableSortButton,
   TableRowLink,
-  TableSelectAll,
-  TableSelectRow,
 } from './table';
-export { TableSelection } from './table-selection.client';
 export * as Table from './table.parts';
-export type { TableSelectionProps } from './table-selection.client';
 export type {
   TableCaptionProps,
   TableCellProps,
@@ -24,14 +20,11 @@ export type {
   TableContainerProps,
   TableHeadProps,
   TableHeadState,
-  TableLabels,
   TableRootProps,
   TableRowLinkProps,
   TableRowProps,
   TableRowState,
   TableSectionProps,
-  TableSelectAllProps,
-  TableSelectRowProps,
   TableSort,
   TableSortButtonProps,
 } from './table';

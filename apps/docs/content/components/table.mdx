@@ -1,18 +1,12 @@
 ---
 title: Table
-description: A native table in server-rendered parts, for orders, products and customers. Rows can link to a detail page as a whole, columns sort through the URL, number columns line up, and rows can be selected for bulk actions with one small client island.
+description: A native table in server-rendered parts, for orders, products and customers. Rows can link to a detail page as a whole, columns sort through the URL, and number columns line up. No client JS.
 keyboard:
   - keys: Tab
-    action: Reaches each row's link, then any control in a row (a selection checkbox included), then the sort links in the header, in document order. The table and its cells take no focus.
-  - keys: Space
-    action: On a selection checkbox, checks or clears it; on the header's, every row.
-  - keys: Shift + click
-    action: On a row's checkbox, gives every row between it and the last one clicked the same state.
-  - keys: Escape
-    action: Inside a Table.Selection with rows selected, clears them; with none, does nothing, so an enclosing Dialog still closes.
+    action: Reaches each row's link, then any control in a row, then the sort links in the header, in document order. The table and its cells take no focus.
   - keys: Enter
     action: On a row's link, opens the row; on a sort link, loads the page sorted by that column.
-keyboardSource: Native table elements, links and checkboxes; Table.Selection's own listener for select-all, Shift-click and Escape; no engine, no grid role. Checked by the browser lane (test/browser/table.spec.tsx) in Chromium, Firefox and WebKit.
+keyboardSource: Native table elements and links; no engine, no grid role. Checked by the browser lane (test/browser/table.spec.tsx) in Chromium, Firefox and WebKit.
 ---
 
 <Callout type="warn" title="Not yet published (v0.2)">
@@ -22,13 +16,13 @@ keyboardSource: Native table elements, links and checkboxes; Table.Selection's o
 
 ## Static or interactive
 
-**Server**, with one client part. Every part but `Table.Selection` renders native table markup with
-no client JavaScript: `Table.Container` (a `<div>`, the border and the horizontal scroll),
-`Table.Root` (`<table>`), `Table.Caption`, `Table.Header`, `Table.Body`, `Table.Footer`,
-`Table.Row`, `Table.Head` (`<th>`), `Table.Cell`, `Table.SortButton`, `Table.RowLink`,
-`Table.SelectAll` and `Table.SelectRow`. `Table.Selection` is one client island around the whole
-table; a page without it ships none of its code. It is a table, not a grid: arrow keys do not move
-between cells, and assistive technology reads it as a table.
+**Server.** Every part renders native table markup with no client JavaScript: `Table.Container` (a
+`<div>`, the border and the horizontal scroll), `Table.Root` (`<table>`), `Table.Caption`,
+`Table.Header`, `Table.Body`, `Table.Footer`, `Table.Row`, `Table.Head` (`<th>`), `Table.Cell`,
+`Table.SortButton` and `Table.RowLink`. It is a table, not a grid: arrow keys do not move between
+cells, and assistive technology reads it as a table. Row checkboxes for bulk actions are a subpath of
+their own, [TableSelection](/docs/components/table-selection/), so a page that imports
+`@nizivo/react/table` loads no client module in any bundler.
 [How to choose](/docs/guides/static-or-interactive/).
 
 ## Name every table
@@ -50,20 +44,6 @@ same page sorted by that column (`render={<Link href="…" />}` for the router's
 `sort="ascending"` or `sort="descending"` to the column the page is sorted by: its `<th>` gets
 `aria-sort`, and the arrow follows. With neither `href` nor `render`, `Table.SortButton` is a
 `<button type="button">` for your own handler.
-
-## Selecting rows
-
-Put a `Table.SelectRow` in each row and a `Table.SelectAll` in the header, and wrap the table in
-`Table.Selection`. Each row's box is a native checkbox that submits its `value` under `name`
-(`ids` by default) with its form, so a bulk action works before any JavaScript runs: pass `form`
-with the id of a form outside the table, as the example's "Archive selected" does. Give every row's
-box its own name (`aria-label="Select order 1042"`). A checked row paints `bg/brand-subtle` through
-CSS, with no script.
-
-`Table.Selection` adds what a native checkbox cannot do: the header's box checks or clears every
-row and shows the mixed state when only some are selected, Shift-click selects a range, and Escape
-clears the selection. A client owner hears every change through `onSelectionChange(ids)`; a Server
-Component reads the selection from the submitted form. Rows with `disabled` boxes are left out.
 
 ## Numbers and dates
 

@@ -11,7 +11,4 @@ export {
   TableCell as Cell,
   TableSortButton as SortButton,
   TableRowLink as RowLink,
-  TableSelectAll as SelectAll,
-  TableSelectRow as SelectRow,
 } from './table';
-export { TableSelection as Selection } from './table-selection.client';

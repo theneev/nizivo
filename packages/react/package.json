@@ -223,6 +223,10 @@
       "types": "./dist/table/index.d.ts",
       "default": "./dist/table/index.js"
     },
+    "./table-selection": {
+      "types": "./dist/table-selection/index.d.ts",
+      "default": "./dist/table-selection/index.js"
+    },
     "./tabs": {
       "types": "./dist/tabs/index.d.ts",
       "default": "./dist/tabs/index.js"
@@ -296,6 +300,7 @@
     "./css/stack.css": "./dist/css/stack.css",
     "./css/switch.css": "./dist/css/switch.css",
     "./css/tab-nav.css": "./dist/css/tab-nav.css",
+    "./css/table-selection.css": "./dist/css/table-selection.css",
     "./css/table.css": "./dist/css/table.css",
     "./css/tabs.css": "./dist/css/tabs.css",
     "./css/text.css": "./dist/css/text.css",

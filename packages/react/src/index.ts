@@ -348,29 +348,29 @@ export {
   TableCell,
   TableSortButton,
   TableRowLink,
-  TableSelection,
-  TableSelectAll,
-  TableSelectRow,
 } from './table/index';
 export type {
-  TableSelectionProps,
   TableCaptionProps,
   TableCellProps,
   TableCellState,
   TableContainerProps,
   TableHeadProps,
   TableHeadState,
-  TableLabels,
   TableRootProps,
   TableRowLinkProps,
   TableRowProps,
   TableRowState,
   TableSectionProps,
-  TableSelectAllProps,
-  TableSelectRowProps,
   TableSort,
   TableSortButtonProps,
 } from './table/index';
+export { TableSelection, TableSelectAll, TableSelectRow } from './table-selection/index';
+export type {
+  TableSelectionProps,
+  TableSelectAllProps,
+  TableSelectRowProps,
+  TableSelectionLabels,
+} from './table-selection/index';
 export { Tabs, TabsRoot, TabsList, TabsTab, TabsPanel } from './tabs/index';
 export type {
   TabsActivationMode,

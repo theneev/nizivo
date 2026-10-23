@@ -1,0 +1,11 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/table-selection.css (ARCHITECTURE.md §16.2, D-cf): row selection for Table. The
+   checkboxes are Checkbox's own box (checkbox.css); table.css paints a checked row and narrows the
+   selection column, with no script. */
+@layer nz.components {
+  /* the island's box takes no space: the table keeps its container's layout */
+  .nz-table-selection {
+    display: contents;
+  }
+}

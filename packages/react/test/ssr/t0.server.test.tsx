@@ -70,6 +70,7 @@ const COMPONENTS = [
   'pagination',
   'page-header',
   'table',
+  'table-selection',
 ] as const;
 type Name = (typeof COMPONENTS)[number];
 
@@ -88,7 +89,7 @@ const TOOLTIP_LEAVES = [
 const CLIENT_LEAVES: Partial<Record<Name, string[]>> = {
   alert: ['src/alert/alert-dismiss.client.tsx'],
   banner: ['src/banner/banner-dismiss.client.tsx'],
-  table: ['src/table/table-selection.client.tsx'],
+  'table-selection': ['src/table-selection/table-selection.client.tsx'],
   field: [FIELD_SCOPE],
   'icon-button': TOOLTIP_LEAVES,
 };
@@ -102,7 +103,7 @@ const EXTERNALS: Partial<Record<Name, RegExp>> = {
 const CLIENT_EXPORTS: Record<string, string[]> = {
   'src/alert/alert-dismiss.client.tsx': ['AlertDismiss'],
   'src/banner/banner-dismiss.client.tsx': ['BannerDismiss'],
-  'src/table/table-selection.client.tsx': ['TableSelection'],
+  'src/table-selection/table-selection.client.tsx': ['TableSelection'],
   [FIELD_SCOPE]: ['FieldScope', 'useFieldControl'],
   'src/icon-button/icon-button.client.tsx': ['IconButtonTooltip'],
   // client controls the Field and Fieldset examples compose
@@ -154,6 +155,7 @@ const entries = {
   pagination: () => import('../../src/pagination/index'),
   'page-header': () => import('../../src/page-header/index'),
   table: () => import('../../src/table/index'),
+  'table-selection': () => import('../../src/table-selection/index'),
 } satisfies Record<Name, () => Promise<unknown>>;
 
 /** Each example module, imported again by the react-server test; every `*Example` export renders. */
@@ -195,13 +197,18 @@ const exampleModules = {
   pagination: () => import('../../src/pagination/pagination.example'),
   'page-header': () => import('../../src/page-header/page-header.example'),
   table: () => import('../../src/table/table.example'),
+  'table-selection': () => import('../../src/table-selection/table-selection.example'),
 } satisfies Record<Name, () => Promise<Record<string, unknown>>>;
 
 /**
  * What the rendered examples must contain: the component's own part, except ThemeScript, which
  * renders a bare `<script>` (no part to style).
  */
-const RENDERS: Partial<Record<Name, string>> = { 'theme-script': '"type":"script"' };
+const RENDERS: Partial<Record<Name, string>> = {
+  'theme-script': '"type":"script"',
+  // TableSelection is a client reference here; the server renders its checkboxes
+  'table-selection': '"data-slot":"table-select-all"',
+};
 
 const SRC = rekey(
   import.meta.glob('../../src/**/*.{ts,tsx,json}', {

@@ -116,6 +116,26 @@ describe('validation', () => {
     ]);
   });
 
+  test("keeps a client part out of a server component's namespace", () => {
+    const root = copyFixture();
+    edit(react(root, 'src/button/component.json'), (text) =>
+      text.replace('"tier": "server",', '"tier": "server",\n  "parts": ["Root", "Spinner"],'),
+    );
+    writeFileSync(
+      react(root, 'src/button/button-root.tsx'),
+      'export function ButtonRoot(): null {\n  return null;\n}\n',
+    );
+    writeFileSync(
+      react(root, 'src/button/button-spinner.client.tsx'),
+      "'use client';\nexport function ButtonSpinner(): null {\n  return null;\n}\n",
+    );
+    expect(errorsOf(root)).toEqual([
+      expect.stringContaining(
+        'a server component\'s namespace cannot hold a client part (Spinner): list ButtonSpinner in "exports" instead',
+      ),
+    ]);
+  });
+
   test('checks a second adapter like the default one, and keeps engine.ts on the default', () => {
     const root = copyFixture();
     edit(react(root, 'src/select/component.json'), (text) =>

@@ -1,6 +1,6 @@
 'use client';
-// Table's one client part (ARCHITECTURE.md §16.2, gap report A §3.6): a form-based selection island.
-// The row checkboxes (Table.SelectRow) are native inputs rendered on the server, so a form receives
+// Row selection's one client part (ARCHITECTURE.md §16.2, gap report A §3.6): a form-based island.
+// The row checkboxes (TableSelectRow) are native inputs rendered on the server, so a form receives
 // the selected ids before this module runs; one listener on this element's subtree adds what a
 // native checkbox cannot do: the select-all's checked and mixed state, checking every row from it,
 // Shift-click ranges, and Escape to clear. No per-row hydration: a table of 500 rows has one island.

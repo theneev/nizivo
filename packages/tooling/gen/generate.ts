@@ -185,6 +185,17 @@ function resolveComponent(
     const found = find(pascal + part);
     if (found !== undefined) parts.push({ part, export: found });
   }
+  // A namespace object references every part, so a client part in a server component's namespace
+  // ships to every page that uses the namespace (Next includes it in the page's client modules):
+  // a server component's client part is a flat export ("exports"), as AlertDismiss is (week 18).
+  if (config.tier === 'server') {
+    const client = parts.filter((part) => /\.client\.tsx?$/.test(part.export.module));
+    if (client.length > 0) {
+      errors.push(
+        `a server component's namespace cannot hold a client part (${client.map((part) => part.part).join(', ')}): list ${client.map((part) => part.export.name).join(', ')} in "exports" instead`,
+      );
+    }
+  }
   const values = parts.map((part) => part.export);
   for (const name of extra) {
     const found = find(name);
