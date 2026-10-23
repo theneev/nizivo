@@ -1,0 +1,57 @@
+---
+title: MobileTabBar
+description: Five destinations at the bottom of the screen below 640 px, in place of the Sidebar. They are links in a navigation landmark, and More opens the rest in a bottom sheet.
+apg: https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/
+keyboard:
+  - keys: Tab, Shift+Tab
+    action: Moves between the destinations and More, as on any link or button.
+  - keys: Enter
+    action: On a destination, follows its link. On More, opens the sheet and moves focus into it.
+  - keys: Space
+    action: On More, opens the sheet.
+  - keys: Escape
+    action: Closes the sheet and returns focus to More.
+keyboardSource: native `<a>` elements for the destinations; More is the Drawer's trigger and its sheet a bottom Drawer (react-aria-components 1.22.1 `ModalOverlay` and `Modal`), which contains focus while open. The browser lane (`test/browser/app-shell.spec.tsx`) checks opening, Escape with focus back on More, and a followed link closing the sheet, in Chromium, Firefox and WebKit.
+---
+
+<Callout type="warn" title="Not yet published (v0.2)">
+  This part is in the repository and ships in `@nizivo/react` 0.2.0; the 0.1.0 on npm does not have
+  it. Until then its API can change.
+</Callout>
+
+## Static or interactive
+
+**Split.** `MobileTabBar.Root` and `MobileTabBar.Item` render on the server. Two client parts come with
+them: a small island in the root, which writes the bar's height to the page (below), and
+`MobileTabBarMore`, which brings the Drawer for its sheet. [How to
+choose](/docs/guides/static-or-interactive/).
+
+In a client app (a Vite or React Router single-page app, or a `'use client'` file) it is an ordinary React component: event handlers, refs and state work as usual. [In a client app](/docs/guides/static-or-interactive/#in-a-client-app).
+
+## Destinations, not tabs
+
+Each destination is a page, so the bar is a `<nav>` named "Primary" around a list of links, not a
+tablist. The page says which one is `current` (`aria-current="page"`, the filled pill). Four
+destinations and More fit a 390 px screen. A `count` shows on the icon's corner and is part of the
+link's text, so write it to read well after the label ("12 open").
+
+## More
+
+`MobileTabBarMore` is the fifth cell: a button that opens a bottom sheet, titled "More"
+(`labels.more`, or `heading`), holding the destinations without a tab, usually `NavItem`s. The sheet
+is modal: focus moves in and stays there, Escape or a press outside closes it, and focus returns to
+More. Following a link in it closes it, as a route change does. When the page shown is one of the
+sheet's, pass `current` to More: the pill fills, and the sheet's own link carries `aria-current`.
+
+## The bottom inset
+
+While the bar is laid out, its island writes the bar's height to `--nz-layout-bottom-inset` on
+`<html>` and sets `data-nz-bottom-bar` there, in a layout effect, so the first paint already has
+them. StickyBar sticks above the bar, toasts rise above it, and `AppShell`'s `<main>` leaves room for
+it. When the bar is hidden (from 640 px in the shell) or unmounted, both are removed. The bar's
+bottom padding includes the device's safe area (`env(safe-area-inset-bottom)`, which needs
+`viewport-fit=cover` in the viewport meta).
+
+The bar is not fixed on its own: `AppShell` pins it to the bottom below 640 px.
+
+Hooks: `--nz-mobile-tab-bar-bg`, `--nz-mobile-tab-bar-border`.

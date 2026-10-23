@@ -1,0 +1,72 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/mobile-top-bar.css (Figma Mobile Top Bar, ghost 764:3397; figma/08 §8.1): 12 /
+   16 padding and 12 between the mark, the title and the actions, bg/canvas over a border/subtle
+   line. The title takes the free width in Heading/H4, with an ellipsis. Figma's actions are bare
+   20 px icons; the app's IconButtons sit 4 px apart. Public --nz-mobile-top-bar-* hooks are read
+   once, at the property. */
+@layer nz.components {
+  .nz-mobile-top-bar {
+    display: flex;
+    align-items: center;
+    gap: var(--nz-space-3);
+    box-sizing: border-box;
+    min-inline-size: 0;
+    padding-block: var(--nz-space-3);
+    padding-inline: var(--nz-mobile-top-bar-padding-inline, var(--nz-space-4));
+    border-block-end: var(--nz-border-width-default) solid
+      var(--nz-mobile-top-bar-border, var(--nz-border-subtle));
+    background: var(--nz-mobile-top-bar-bg, var(--nz-bg-canvas));
+    color: var(--nz-text-primary);
+  }
+
+  /* Figma's Store mark: 32 px, an 8 px radius, bg/brand with the initial in Label/M Strong */
+  .nz-mobile-top-bar-mark {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    inline-size: var(--nz-space-8);
+    block-size: var(--nz-space-8);
+    overflow: hidden;
+    border-radius: var(--nz-radius-sm);
+    background: var(--nz-mobile-top-bar-mark-bg, var(--nz-bg-brand));
+    color: var(--nz-text-on-brand);
+    font: var(--nz-font-label-m-strong);
+    letter-spacing: var(--nz-tracking-label-m-strong);
+
+    & > :is(img, svg) {
+      inline-size: 100%;
+      block-size: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .nz-mobile-top-bar-title {
+    flex: 1 1 0;
+    min-inline-size: 0;
+    overflow: hidden;
+    font: var(--nz-font-heading-h4);
+    letter-spacing: var(--nz-tracking-heading-h4);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .nz-mobile-top-bar-actions {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: var(--nz-space-1);
+  }
+
+  @media (forced-colors: active) {
+    .nz-mobile-top-bar {
+      border-block-end-color: CanvasText;
+    }
+
+    /* the mark's fill is dropped: an edge keeps its square */
+    .nz-mobile-top-bar-mark {
+      border: 1px solid CanvasText;
+    }
+  }
+}

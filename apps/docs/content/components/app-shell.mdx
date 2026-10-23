@@ -1,0 +1,50 @@
+---
+title: AppShell
+description: The page's frame. The Sidebar and the TopBar on screens 640 px and wider, the MobileTopBar and the MobileTabBar below that, around the page's main content, switched by CSS with no script.
+keyboard:
+  - keys: Tab
+    action: From the top of the page, the first stop is the skip link, shown while focused. Then the sidebar, the bar and the page, in document order.
+  - keys: Enter
+    action: On the skip link, moves focus to the page's main content.
+keyboardSource: a native skip link to `<main tabindex="-1">` (`app-shell.tsx`, no client code). The browser lane (`test/browser/app-shell.spec.tsx`) checks the skip link, the parts shown at 1280, 960 and 390 px, and the bottom inset, in Chromium, Firefox and WebKit.
+---
+
+<Callout type="warn" title="Not yet published (v0.2)">
+  This part is in the repository and ships in `@nizivo/react` 0.2.0; the 0.1.0 on npm does not have
+  it. Until then its API can change.
+</Callout>
+
+## Static or interactive
+
+**Server.** AppShell places the parts it is given and ships no client JavaScript of its own. The
+parts bring their own: the MobileTabBar's island and More sheet, and whatever the bars hold. [How to
+choose](/docs/guides/static-or-interactive/).
+
+In a client app (a Vite or React Router single-page app, or a `'use client'` file) it is an ordinary React component: event handlers, refs and state work as usual. [In a client app](/docs/guides/static-or-interactive/#in-a-client-app).
+
+## Slots
+
+- `sidebar`: a `Sidebar`, shown from 640 px.
+- `topBar`: a `TopBar`, shown from 640 px.
+- `mobileTopBar`: a `MobileTopBar`, shown below 640 px.
+- `tabBar`: a `MobileTabBar`, fixed to the bottom below 640 px.
+- `children`: the page, inside the `<main>` AppShell renders.
+
+The server renders both sets of bars, and CSS shows one: the hidden one is `display: none`, so it is
+out of the accessibility tree and its links are not Tab stops. In Next.js, render AppShell in a
+layout, so it stays mounted while the pages change.
+
+## Main and the skip link
+
+AppShell renders the page's one `<main>` (with `mainId`, or a generated id) and a skip link to it,
+the first Tab stop, shown only while focused ("Skip to content", `labels.skip`). Don't render
+another `<main>` in the page. The page is never wider than `layout/content-max`, with the grid's
+margin around it, and below 640 px it leaves room for the tab bar.
+
+## Layout
+
+From 640 px, a two-column grid: the Sidebar's own width (the 72 px rail, or 264 px from 1280 px)
+beside the bar and the page. Below 640 px, one column, with the tab bar fixed to the bottom in the
+`--nz-z-chrome` band.
+
+Hooks: `--nz-app-shell-bg`, `--nz-app-shell-main-padding`.

@@ -1,0 +1,34 @@
+---
+title: TopBar
+description: The bar above the page on screens 640 px and wider, with the page's name or a Breadcrumb at the start, the search, then notifications and the account.
+---
+
+<Callout type="warn" title="Not yet published (v0.2)">
+  This part is in the repository and ships in `@nizivo/react` 0.2.0; the 0.1.0 on npm does not have
+  it. Until then its API can change.
+</Callout>
+
+## Static or interactive
+
+**Server.** It is a layout with slots and ships no client JavaScript of its own. What you put in the
+slots brings its own: the examples' SearchField and IconButton are client components. [How to
+choose](/docs/guides/static-or-interactive/).
+
+In a client app (a Vite or React Router single-page app, or a `'use client'` file) it is an ordinary React component: event handlers, refs and state work as usual. [In a client app](/docs/guides/static-or-interactive/#in-a-client-app).
+
+## Slots
+
+- `title`: the page's name, in Heading/H3's look. It is text, not a heading: the page's `PageHeader`
+  holds its one `<h1>`.
+- `start`: in place of `title`, for example a `Breadcrumb` on a page deeper in the app.
+- `search`: usually a `SearchField` in a `<form method="get">`, a real input (M49). It is 360 px at most
+  and gives up width first.
+- `actions`: at the end, a notifications `IconButton` and the account's `Avatar` or menu.
+
+## In the shell
+
+`AppShell` shows the TopBar from 640 px and the `MobileTopBar` below that. The bar is not sticky: it
+scrolls with the page. Its padding follows the grid's margin, so its contents line up with the page's.
+
+Hooks: `--nz-top-bar-gap`, `--nz-top-bar-padding-inline`, `--nz-top-bar-search-width`,
+`--nz-top-bar-bg`, `--nz-top-bar-border`.

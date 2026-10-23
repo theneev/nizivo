@@ -1,0 +1,14 @@
+{
+  "name": "top-bar",
+  "status": "stable",
+  "tier": "server",
+  "parts": [],
+  "cssDeps": ["base"],
+  "variants": {},
+  "figma": {
+    "canonical": [],
+    "ghosts": ["755:1031"],
+    "variantsSeen": [],
+    "related": ["7275:14821"]
+  }
+}

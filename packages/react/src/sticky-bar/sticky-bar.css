@@ -23,6 +23,11 @@
     color: var(--nz-text-primary);
   }
 
+  /* above the shell's bottom bar, which already clears the safe area */
+  :root[data-nz-bottom-bar] .nz-sticky-bar {
+    padding-block-end: var(--nz-space-3);
+  }
+
   .nz-sticky-bar-summary {
     display: flex;
     flex: 1 1 auto;

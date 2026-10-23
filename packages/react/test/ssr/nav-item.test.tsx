@@ -176,8 +176,10 @@ describe('markup', () => {
     }
   });
 
-  test('the collapsed example sets the attribute the future Sidebar will set', () => {
-    expect(renderToString(<NavItemCollapsedExample />)).toMatch(/<nav [^>]*data-collapsed=""/);
+  test('the collapsed example is a Sidebar kept as the rail', () => {
+    expect(renderToString(<NavItemCollapsedExample />)).toMatch(
+      /<nav [^>]*data-slot="sidebar" data-collapsed=""/,
+    );
     expect(ALLOWED.has('data-collapsed')).toBe(true);
   });
 });

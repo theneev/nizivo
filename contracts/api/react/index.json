@@ -45,6 +45,24 @@
       "name": "AlertTone"
     },
     {
+      "definedIn": "./app-shell",
+      "import": "import { AppShell } from '@nizivo/react'",
+      "kind": "component",
+      "name": "AppShell"
+    },
+    {
+      "definedIn": "./app-shell",
+      "import": "import type { AppShellLabels } from '@nizivo/react'",
+      "kind": "type",
+      "name": "AppShellLabels"
+    },
+    {
+      "definedIn": "./app-shell",
+      "import": "import type { AppShellProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "AppShellProps"
+    },
+    {
       "definedIn": "./avatar",
       "import": "import { Avatar } from '@nizivo/react'",
       "kind": "component",
@@ -1521,6 +1539,78 @@
       "name": "MetricState"
     },
     {
+      "definedIn": "./mobile-tab-bar",
+      "import": "import { MobileTabBar } from '@nizivo/react'",
+      "kind": "namespace",
+      "name": "MobileTabBar"
+    },
+    {
+      "definedIn": "./mobile-tab-bar",
+      "import": "import { MobileTabBarItem } from '@nizivo/react'",
+      "kind": "part",
+      "name": "MobileTabBarItem"
+    },
+    {
+      "definedIn": "./mobile-tab-bar",
+      "import": "import type { MobileTabBarItemProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "MobileTabBarItemProps"
+    },
+    {
+      "definedIn": "./mobile-tab-bar",
+      "import": "import type { MobileTabBarItemState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "MobileTabBarItemState"
+    },
+    {
+      "definedIn": "./mobile-tab-bar",
+      "import": "import type { MobileTabBarLabels } from '@nizivo/react'",
+      "kind": "type",
+      "name": "MobileTabBarLabels"
+    },
+    {
+      "definedIn": "./mobile-tab-bar",
+      "import": "import { MobileTabBarMore } from '@nizivo/react'",
+      "kind": "component",
+      "name": "MobileTabBarMore"
+    },
+    {
+      "definedIn": "./mobile-tab-bar",
+      "import": "import type { MobileTabBarMoreLabels } from '@nizivo/react'",
+      "kind": "type",
+      "name": "MobileTabBarMoreLabels"
+    },
+    {
+      "definedIn": "./mobile-tab-bar",
+      "import": "import type { MobileTabBarMoreProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "MobileTabBarMoreProps"
+    },
+    {
+      "definedIn": "./mobile-tab-bar",
+      "import": "import { MobileTabBarRoot } from '@nizivo/react'",
+      "kind": "part",
+      "name": "MobileTabBarRoot"
+    },
+    {
+      "definedIn": "./mobile-tab-bar",
+      "import": "import type { MobileTabBarRootProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "MobileTabBarRootProps"
+    },
+    {
+      "definedIn": "./mobile-top-bar",
+      "import": "import { MobileTopBar } from '@nizivo/react'",
+      "kind": "component",
+      "name": "MobileTopBar"
+    },
+    {
+      "definedIn": "./mobile-top-bar",
+      "import": "import type { MobileTopBarProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "MobileTopBarProps"
+    },
+    {
       "definedIn": "./native-select",
       "import": "import { NativeSelect } from '@nizivo/react'",
       "kind": "component",
@@ -2187,6 +2277,66 @@
       "name": "SeparatorState"
     },
     {
+      "definedIn": "./sidebar",
+      "import": "import { Sidebar } from '@nizivo/react'",
+      "kind": "namespace",
+      "name": "Sidebar"
+    },
+    {
+      "definedIn": "./sidebar",
+      "import": "import { SidebarContent } from '@nizivo/react'",
+      "kind": "part",
+      "name": "SidebarContent"
+    },
+    {
+      "definedIn": "./sidebar",
+      "import": "import type { SidebarContentProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "SidebarContentProps"
+    },
+    {
+      "definedIn": "./sidebar",
+      "import": "import { SidebarFooter } from '@nizivo/react'",
+      "kind": "part",
+      "name": "SidebarFooter"
+    },
+    {
+      "definedIn": "./sidebar",
+      "import": "import type { SidebarFooterProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "SidebarFooterProps"
+    },
+    {
+      "definedIn": "./sidebar",
+      "import": "import { SidebarHeader } from '@nizivo/react'",
+      "kind": "part",
+      "name": "SidebarHeader"
+    },
+    {
+      "definedIn": "./sidebar",
+      "import": "import type { SidebarHeaderProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "SidebarHeaderProps"
+    },
+    {
+      "definedIn": "./sidebar",
+      "import": "import type { SidebarLabels } from '@nizivo/react'",
+      "kind": "type",
+      "name": "SidebarLabels"
+    },
+    {
+      "definedIn": "./sidebar",
+      "import": "import { SidebarRoot } from '@nizivo/react'",
+      "kind": "part",
+      "name": "SidebarRoot"
+    },
+    {
+      "definedIn": "./sidebar",
+      "import": "import type { SidebarRootProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "SidebarRootProps"
+    },
+    {
       "definedIn": "./skeleton",
       "import": "import { Skeleton } from '@nizivo/react'",
       "kind": "component",
@@ -2797,6 +2947,18 @@
       "import": "import type { TooltipTriggerState } from '@nizivo/react'",
       "kind": "type",
       "name": "TooltipTriggerState"
+    },
+    {
+      "definedIn": "./top-bar",
+      "import": "import { TopBar } from '@nizivo/react'",
+      "kind": "component",
+      "name": "TopBar"
+    },
+    {
+      "definedIn": "./top-bar",
+      "import": "import type { TopBarProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "TopBarProps"
     },
     {
       "definedIn": "./trend-card",

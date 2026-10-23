@@ -75,6 +75,11 @@ const COMPONENTS = [
   'table-selection',
   'form',
   'nav-item',
+  'sidebar',
+  'top-bar',
+  'mobile-top-bar',
+  'mobile-tab-bar',
+  'app-shell',
 ] as const;
 type Name = (typeof COMPONENTS)[number];
 
@@ -98,6 +103,21 @@ const CLIENT_LEAVES: Partial<Record<Name, string[]>> = {
   'icon-button': TOOLTIP_LEAVES,
   // Form reads FieldScope's module for the context the Fields read its errors from
   form: [FIELD_SCOPE, 'src/form/form.client.tsx', 'src/form/submit-button.client.tsx'].toSorted(),
+  // the bottom-inset island, and More's bottom sheet: the Drawer and its engine
+  'mobile-tab-bar': [
+    'src/mobile-tab-bar/mobile-tab-bar-inset.client.tsx',
+    'src/mobile-tab-bar/mobile-tab-bar-more.client.tsx',
+    'src/drawer/drawer.client.tsx',
+    'src/_engines/react-aria/dialog.client.tsx',
+    'src/_engines/react-aria/drawer.client.tsx',
+    'src/_engines/react-aria/locale.client.tsx',
+    'src/_engines/react-aria/open-state.client.tsx',
+    'src/_engines/react-aria/outside-press.client.tsx',
+    'src/_engines/react-aria/overlay.client.tsx',
+    'src/_engines/react-aria/popup.client.tsx',
+    'src/_internal/modal.client.tsx',
+    'src/config/config.client.tsx',
+  ].toSorted(),
 };
 
 /** Packages other than react a subpath may import: only through its client leaves (the engine). */
@@ -105,6 +125,7 @@ const EXTERNALS: Partial<Record<Name, RegExp>> = {
   'icon-button': /^react-aria(-components)?(\/|$)/,
   // SubmitButton's useFormStatus
   form: /^react-dom$/,
+  'mobile-tab-bar': /^(react-aria(-components)?|react-dom)(\/|$)/,
 };
 
 /** Each client module's exports, replaced by client references under react-server. */
@@ -114,6 +135,10 @@ const CLIENT_EXPORTS: Record<string, string[]> = {
   'src/table-selection/table-selection.client.tsx': ['TableSelection'],
   'src/form/form.client.tsx': ['Form'],
   'src/form/submit-button.client.tsx': ['SubmitButton'],
+  'src/mobile-tab-bar/mobile-tab-bar-inset.client.tsx': ['MobileTabBarInset'],
+  'src/mobile-tab-bar/mobile-tab-bar-more.client.tsx': ['MobileTabBarMore'],
+  // the SearchField the TopBar and AppShell examples put in their search slot
+  'src/search-field/search-field.client.tsx': ['SearchField'],
   [FIELD_SCOPE]: ['FieldScope', 'useFieldControl'],
   'src/icon-button/icon-button.client.tsx': ['IconButtonTooltip'],
   // client controls the Field and Fieldset examples compose
@@ -170,6 +195,11 @@ const entries = {
   'table-selection': () => import('../../src/table-selection/index'),
   form: () => import('../../src/form/index'),
   'nav-item': () => import('../../src/nav-item/index'),
+  sidebar: () => import('../../src/sidebar/index'),
+  'top-bar': () => import('../../src/top-bar/index'),
+  'mobile-top-bar': () => import('../../src/mobile-top-bar/index'),
+  'mobile-tab-bar': () => import('../../src/mobile-tab-bar/index'),
+  'app-shell': () => import('../../src/app-shell/index'),
 } satisfies Record<Name, () => Promise<unknown>>;
 
 /** Each example module, imported again by the react-server test; every `*Example` export renders. */
@@ -216,6 +246,11 @@ const exampleModules = {
   'table-selection': () => import('../../src/table-selection/table-selection.example'),
   form: () => import('../../src/form/form.example'),
   'nav-item': () => import('../../src/nav-item/nav-item.example'),
+  sidebar: () => import('../../src/sidebar/sidebar.example'),
+  'top-bar': () => import('../../src/top-bar/top-bar.example'),
+  'mobile-top-bar': () => import('../../src/mobile-top-bar/mobile-top-bar.example'),
+  'mobile-tab-bar': () => import('../../src/mobile-tab-bar/mobile-tab-bar.example'),
+  'app-shell': () => import('../../src/app-shell/app-shell.example'),
 } satisfies Record<Name, () => Promise<Record<string, unknown>>>;
 
 /**

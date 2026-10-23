@@ -1,0 +1,18 @@
+{
+  "name": "mobile-tab-bar",
+  "status": "stable",
+  "tier": "server",
+  "parts": ["Root", "Item"],
+  "exports": ["MobileTabBarMore"],
+  "interactive": ["mobile-tab-bar-link", "mobile-tab-bar-more-trigger"],
+  "focusTarget": "self",
+  "stateIndicator": [],
+  "cssDeps": ["base", "drawer", "icon-button"],
+  "variants": {},
+  "figma": {
+    "canonical": ["7275:18747"],
+    "ghosts": ["764:3482"],
+    "variantsSeen": ["7275:18748", "7275:18769"],
+    "related": ["7275:18978", "7275:19052"]
+  }
+}

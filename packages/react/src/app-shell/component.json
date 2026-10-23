@@ -1,0 +1,17 @@
+{
+  "name": "app-shell",
+  "status": "stable",
+  "tier": "server",
+  "parts": [],
+  "interactive": ["app-shell-skip"],
+  "focusTarget": "self",
+  "stateIndicator": [],
+  "cssDeps": ["base", "sidebar", "top-bar", "mobile-top-bar", "mobile-tab-bar"],
+  "variants": {},
+  "figma": {
+    "canonical": [],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": ["7275:15337", "7275:18887", "7275:18979"]
+  }
+}

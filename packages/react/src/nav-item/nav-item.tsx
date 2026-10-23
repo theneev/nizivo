@@ -3,9 +3,9 @@
 // aria-current="page", with any router's link through `render` (no router provider, so nothing forces
 // 'use client'; inventory §3.6). Tab moves between items as between any links.
 //
-// Collapsed is not a prop. A Sidebar (not built yet) sets `data-collapsed` on its root when it folds
-// to the icon rail, and nav-item.css reads it from any ancestor: the label and the count leave the
-// layout but stay in the DOM, so the link keeps its accessible name, and the count shows as a dot.
+// Collapsed is not a prop. In a Sidebar folded to the icon rail, nav-item.css folds the item through
+// the Sidebar's size container: the label and the count leave the layout but stay in the DOM, so the
+// link keeps its accessible name, the count shows as a dot, and hover or focus shows the label.
 import type { ComponentPropsWithRef, ReactElement, ReactNode } from 'react';
 import { renderElement, type RenderProp } from '../contracts/render';
 import { stateAttrs } from '../contracts/state';

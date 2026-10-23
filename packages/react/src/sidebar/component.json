@@ -1,0 +1,14 @@
+{
+  "name": "sidebar",
+  "status": "stable",
+  "tier": "server",
+  "parts": ["Root", "Header", "Content", "Footer"],
+  "cssDeps": ["base"],
+  "variants": {},
+  "figma": {
+    "canonical": ["7275:14732"],
+    "ghosts": ["755:869"],
+    "variantsSeen": ["7275:14733", "7275:14746"],
+    "related": ["755:663"]
+  }
+}

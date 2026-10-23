@@ -33,10 +33,23 @@ const LUCIDE: Record<string, string> = {
   eye: 'eye',
   'eye-off': 'eye-off',
   search: 'search',
+  ellipsis: 'ellipsis',
 };
 
-/** On Lucide's list of Feather-derived icons (lucide-static 1.56.0 LICENSE; `x-circle` is `circle-x`). */
-const FEATHER = new Set(['chevron-right', 'circle-x', 'info', 'x', 'check', 'minus', 'search']);
+/**
+ * On Lucide's list of Feather-derived icons (lucide-static 1.56.0 LICENSE; `x-circle` is `circle-x`,
+ * `more-horizontal` is `ellipsis`).
+ */
+const FEATHER = new Set([
+  'chevron-right',
+  'circle-x',
+  'info',
+  'x',
+  'check',
+  'minus',
+  'search',
+  'ellipsis',
+]);
 
 // _internal/glyphs.tsx reuses Lucide path data; ISC requires its notice in every copy (§14.2, §19.3).
 test('the tarball carries the Lucide ISC notice for the internal glyphs', () => {

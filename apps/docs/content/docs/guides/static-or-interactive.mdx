@@ -1,6 +1,6 @@
 ---
 title: 'Static or interactive: choosing a component'
-description: Which Nizivo components ship client JavaScript, what makes them ship it, and when to use a static variant (IconButtonStatic, FieldStatic) instead of the normal component. A checklist, a table of all 62 components, the measured costs and worked examples.
+description: Which Nizivo components ship client JavaScript, what makes them ship it, and when to use a static variant (IconButtonStatic, FieldStatic) instead of the normal component. A checklist, a table of all 67 components, the measured costs and worked examples.
 ---
 
 Every Nizivo component renders its HTML on the server (an overlay's popup only while it is open). What differs is whether the browser also
@@ -89,9 +89,9 @@ export function SortedProducts() {
 
 - **Server.** The component's module has no `'use client'` and imports no client module. Rendered by
   a Server Component and imported from its own subpath (`@nizivo/react/<name>`), it ships **no**
-  client JavaScript in any Next.js build mode (Turbopack, webpack, `next dev`). 36 components.
+  client JavaScript in any Next.js build mode (Turbopack, webpack, `next dev`). 40 components.
 - **Split.** A server shell plus a small client leaf that only certain props render. Without those
-  props no client code runs. 6 components: Alert, Banner, Field, Form, IconButton and TableSelection. Alert's shell does not import
+  props no client code runs. 7 components: Alert, Banner, Field, Form, IconButton, MobileTabBar and TableSelection. Alert's shell does not import
   its leaf, so an Alert without `dismiss` ships nothing in every mode. **Field's and IconButton's
   shells import their leaf**, and Turbopack and `next dev` ship every client module a page's server
   code imports, rendered or not: those two ship their leaf even when the interactive path is off.
@@ -171,6 +171,7 @@ module.
 | Component                                               | Kind   | Ships client JS                                                                                                                                      | Static alternative                                |
 | ------------------------------------------------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
 | [Alert](/docs/components/alert/)                        | split  | Only with `dismiss` (the AlertDismiss leaf), in every build mode                                                                                     | Leave out `dismiss`                               |
+| [AppShell](/docs/components/app-shell/)                 | server | Never; its slots ship what their parts ship (the MobileTabBar's island and More sheet)                                                               | None needed                                       |
 | [Avatar](/docs/components/avatar/)                      | server | Never (a photo that fails to load shows the initials with no script; WebKit draws its mark over them)                                                | None needed                                       |
 | [Badge](/docs/components/badge/)                        | server | Never                                                                                                                                                | None needed                                       |
 | [Banner](/docs/components/banner/)                      | split  | Only with `BannerDismiss`, in every build mode                                                                                                       | Leave out `BannerDismiss`                         |
@@ -202,6 +203,8 @@ module.
 | [Menu](/docs/components/menu/)                          | client | Always (React Aria)                                                                                                                                  | None                                              |
 | [Meter](/docs/components/meter/)                        | server | Never                                                                                                                                                | None needed                                       |
 | [Metric](/docs/components/metric/)                      | server | Never                                                                                                                                                | None needed                                       |
+| [MobileTabBar](/docs/components/mobile-tab-bar/)        | split  | Always: the bottom-inset island (the root renders it); `MobileTabBarMore` adds the Drawer for its sheet                                              | Leave out `MobileTabBarMore`                      |
+| [MobileTopBar](/docs/components/mobile-top-bar/)        | server | Never; its `actions` are whatever you pass                                                                                                           | None needed                                       |
 | [NativeSelect](/docs/components/native-select/)         | server | Never; in a `Field` see Field                                                                                                                        | It is the static alternative to Select            |
 | [NavItem](/docs/components/nav-item/)                   | server | Never (a link; a router link through `render` is the router's own code)                                                                              | None needed                                       |
 | [NumberValue](/docs/components/number-value/)           | server | Never                                                                                                                                                | None needed                                       |
@@ -217,6 +220,7 @@ module.
 | [SegmentedControl](/docs/components/segmented-control/) | client | Always (Field wiring)                                                                                                                                | TabNav, when each value is its own URL            |
 | [Select](/docs/components/select/)                      | client | Always (React Aria; FieldScope too)                                                                                                                  | NativeSelect                                      |
 | [Separator](/docs/components/separator/)                | server | Never                                                                                                                                                | None needed                                       |
+| [Sidebar](/docs/components/sidebar/)                    | server | Never (the rail is CSS: a size container and the `layout/sidebar` token)                                                                             | None needed                                       |
 | [Skeleton](/docs/components/skeleton/)                  | server | Never                                                                                                                                                | None needed                                       |
 | [Split](/docs/components/split/)                        | server | Never                                                                                                                                                | None needed                                       |
 | [Stack](/docs/components/stack/)                        | server | Never                                                                                                                                                | None needed                                       |
@@ -231,6 +235,7 @@ module.
 | [ThemeScript](/docs/components/theme-script/)           | server | No client module; it renders one inline `<script>` of 379 bytes that runs in `<head>`                                                                | None needed                                       |
 | [Toast](/docs/components/toast/)                        | client | Always: the `Toaster` region and `toast()`                                                                                                           | An inline `Alert` or `Banner`                     |
 | [Tooltip](/docs/components/tooltip/)                    | client | Always (React Aria)                                                                                                                                  | Visible text (a Button with words, a description) |
+| [TopBar](/docs/components/top-bar/)                     | server | Never; its `search` and `actions` are whatever you pass                                                                                              | None needed                                       |
 | [TrendCard](/docs/components/trend-card/)               | server | Never (its slots ship what their own modules ship: a Select, a chart's island)                                                                       | None needed                                       |
 
 The kinds come from each component's `component.json` (`tier`) and its source, and are tested:

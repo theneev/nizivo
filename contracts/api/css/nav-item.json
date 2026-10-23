@@ -72,16 +72,16 @@
       "name": "--nz-nav-item-count-bg-current",
       "reads": [
         {
-          "conditions": [],
+          "conditions": ["@container nz-sidebar (inline-size < 10rem)"],
           "property": "background",
-          "selector": ".nz-nav-item[aria-current=\"page\"] > .nz-nav-item-count",
-          "slot": "nav-item-count"
+          "selector": ".nz-nav-item:has( > .nz-nav-item-count) > .nz-nav-item-icon:after",
+          "slot": "nav-item-icon"
         },
         {
           "conditions": [],
           "property": "background",
-          "selector": ":where([data-collapsed]) .nz-nav-item:has( > .nz-nav-item-count) > .nz-nav-item-icon:after",
-          "slot": "nav-item-icon"
+          "selector": ".nz-nav-item[aria-current=\"page\"] > .nz-nav-item-count",
+          "slot": "nav-item-count"
         }
       ]
     },
@@ -144,9 +144,9 @@
           "slot": "nav-item"
         },
         {
-          "conditions": [],
+          "conditions": ["@container nz-sidebar (inline-size < 10rem)"],
           "property": "inline-size",
-          "selector": ":where([data-collapsed]) .nz-nav-item",
+          "selector": ".nz-nav-item",
           "slot": "nav-item"
         }
       ]

@@ -238,6 +238,14 @@
       "import": "@nizivo/react/nav-item",
       "export": "NavItem"
     },
+    "755:869": {
+      "component": "sidebar",
+      "role": "ghost",
+      "import": "@nizivo/react/sidebar",
+      "export": "Sidebar",
+      "parts": ["Root", "Header", "Content", "Footer"],
+      "props": {}
+    },
     "755:888": {
       "component": "search-field",
       "role": "ghost",
@@ -279,6 +287,13 @@
       "props": {
         "size": ["sm", "md"]
       }
+    },
+    "755:1031": {
+      "component": "top-bar",
+      "role": "ghost",
+      "import": "@nizivo/react/top-bar",
+      "export": "TopBar",
+      "props": {}
     },
     "756:868": {
       "component": "alert",
@@ -333,6 +348,21 @@
       "props": {
         "shape": ["line", "block", "circle"]
       }
+    },
+    "764:3397": {
+      "component": "mobile-top-bar",
+      "role": "ghost",
+      "import": "@nizivo/react/mobile-top-bar",
+      "export": "MobileTopBar",
+      "props": {}
+    },
+    "764:3482": {
+      "component": "mobile-tab-bar",
+      "role": "ghost",
+      "import": "@nizivo/react/mobile-tab-bar",
+      "export": "MobileTabBar",
+      "parts": ["Root", "Item"],
+      "props": {}
     },
     "7275:11244": {
       "component": "button",
@@ -541,6 +571,14 @@
       "import": "@nizivo/react/nav-item",
       "export": "NavItem"
     },
+    "7275:14732": {
+      "component": "sidebar",
+      "role": "canonical",
+      "import": "@nizivo/react/sidebar",
+      "export": "Sidebar",
+      "parts": ["Root", "Header", "Content", "Footer"],
+      "props": {}
+    },
     "7275:14764": {
       "component": "search-field",
       "role": "canonical",
@@ -619,6 +657,14 @@
       "props": {
         "shape": ["line", "block", "circle"]
       }
+    },
+    "7275:18747": {
+      "component": "mobile-tab-bar",
+      "role": "canonical",
+      "import": "@nizivo/react/mobile-tab-bar",
+      "export": "MobileTabBar",
+      "parts": ["Root", "Item"],
+      "props": {}
     },
     "7356:401": {
       "component": "select",

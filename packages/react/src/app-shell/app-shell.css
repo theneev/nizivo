@@ -1,0 +1,88 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/app-shell.css (figma/08 §4: Overview Desktop 1440, Tablet 1024, Mobile 390). A
+   two-column grid: the Sidebar's own width (layout/sidebar, or its `collapsed`) beside the frame,
+   whose bar sits over <main>. <main> is as wide as the frame, with the grid's margin around the
+   page, which is never wider than layout/content-max. Below 640 px (--nz-sm) the Sidebar and the
+   TopBar are hidden and the MobileTopBar and the MobileTabBar shown; the tab bar is fixed to the
+   bottom in the --nz-z-chrome band, and <main> leaves room for it through --nz-layout-bottom-inset,
+   which the tab bar's island writes. Public --nz-app-shell-* hooks are read once, at the property. */
+@layer nz.components {
+  .nz-app-shell {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    min-block-size: 100dvh;
+    background: var(--nz-app-shell-bg, var(--nz-bg-canvas));
+    color: var(--nz-text-primary);
+  }
+
+  /* off-screen until focused, then over the page's top-start corner */
+  .nz-app-shell-skip {
+    position: fixed;
+    inset-block-start: var(--nz-space-2);
+    inset-inline-start: var(--nz-space-2);
+    z-index: var(--nz-z-overlay);
+    padding: var(--nz-space-2) var(--nz-space-3);
+    border-radius: var(--nz-radius-md);
+    background: var(--nz-bg-inverse);
+    color: var(--nz-text-inverse);
+    font: var(--nz-font-label-m-strong);
+    letter-spacing: var(--nz-tracking-label-m-strong);
+    text-decoration: none;
+    translate: 0 calc(-100% - var(--nz-space-4));
+
+    &:focus-visible {
+      translate: none;
+    }
+  }
+
+  .nz-app-shell-sidebar {
+    grid-column: 1;
+  }
+
+  .nz-app-shell-frame {
+    display: flex;
+    grid-column: 2;
+    flex-direction: column;
+    min-inline-size: 0;
+  }
+
+  .nz-app-shell-main {
+    flex: 1 1 auto;
+    box-sizing: border-box;
+    inline-size: 100%;
+    max-inline-size: calc(var(--nz-layout-content-max) + 2 * var(--nz-grid-margin));
+    margin-inline: auto;
+    padding: var(--nz-app-shell-main-padding, var(--nz-section-gap) var(--nz-grid-margin));
+
+    /* room for the tab bar below --nz-sm (the inset is 0 from there) */
+    padding-block-end: calc(var(--nz-section-gap) + var(--nz-layout-bottom-inset, 0px));
+    outline: none;
+  }
+
+  /* below --nz-sm: the MobileTopBar, and the MobileTabBar fixed to the bottom */
+  .nz-app-shell-sidebar,
+  .nz-app-shell-top-bar {
+    display: none;
+  }
+
+  .nz-app-shell-tab-bar {
+    position: fixed;
+    inset-block-end: 0;
+    inset-inline: 0;
+    z-index: var(--nz-z-chrome);
+  }
+
+  /* from --nz-sm: the Sidebar and the TopBar */
+  @media (--nz-sm) {
+    .nz-app-shell-sidebar,
+    .nz-app-shell-top-bar {
+      display: block;
+    }
+
+    .nz-app-shell-mobile-top-bar,
+    .nz-app-shell-tab-bar {
+      display: none;
+    }
+  }
+}

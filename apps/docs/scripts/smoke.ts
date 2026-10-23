@@ -93,6 +93,10 @@ const NIZIVO_CLIENT_MARKERS = [
   'nz-password-input-toggle',
   // FileUpload (@nizivo/react/file-upload, v0.2): its dropzone's slot
   'file-upload-dropzone',
+  // MobileTabBar's two client parts (week 20): More's trigger class, and the bottom-inset island's
+  // attribute on <html>
+  'nz-mobile-tab-bar-more-trigger',
+  'data-nz-bottom-bar',
   // @nizivo/charts' ChartInteraction island (AreaChart's point mode, BarChart's column mode,
   // DonutChart's item mode). The charts parts have their own generated routes
   // (app/docs/(generated)/charts), so it may load on those three pages only; on any other page it
@@ -143,6 +147,24 @@ const CLIENT_PAGES: Record<string, string[]> = {
   // in Fields.
   '/docs/components/form/': ['nz-form-summary', 'input-prefix', 'willValidate'],
   '/docs/components/password-input/': ['nz-password-input-toggle', 'willValidate'],
+  // The shell (week 20): TopBar and MobileTopBar are server parts whose examples put a SearchField
+  // and IconButtons in their slots; MobileTabBar renders its inset island and More's Drawer sheet,
+  // and AppShell's example holds all of them.
+  '/docs/components/top-bar/': ['search-field-clear', 'willValidate', 'tooltip-popup'],
+  '/docs/components/mobile-top-bar/': ['tooltip-popup'],
+  '/docs/components/mobile-tab-bar/': [
+    'nz-mobile-tab-bar-more-trigger',
+    'data-nz-bottom-bar',
+    'drawer-popup',
+  ],
+  '/docs/components/app-shell/': [
+    'search-field-clear',
+    'willValidate',
+    'tooltip-popup',
+    'nz-mobile-tab-bar-more-trigger',
+    'data-nz-bottom-bar',
+    'drawer-popup',
+  ],
   // CountUp is the one client part of the dashboard set (M41); its page is titled by its subpath.
   '/docs/components/motion/': ['count-up-value'],
   // AreaChart, BarChart (M40) and DonutChart (M41) render the island by default

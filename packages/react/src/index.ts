@@ -7,6 +7,8 @@ export type {
   AlertState,
   AlertTone,
 } from './alert/index';
+export { AppShell } from './app-shell/index';
+export type { AppShellLabels, AppShellProps } from './app-shell/index';
 export { Avatar, AvatarGroup } from './avatar/index';
 export type {
   AvatarGroupLabels,
@@ -258,6 +260,22 @@ export type {
   MetricSize,
   MetricState,
 } from './metric/index';
+export {
+  MobileTabBar,
+  MobileTabBarRoot,
+  MobileTabBarItem,
+  MobileTabBarMore,
+} from './mobile-tab-bar/index';
+export type {
+  MobileTabBarMoreLabels,
+  MobileTabBarMoreProps,
+  MobileTabBarItemProps,
+  MobileTabBarItemState,
+  MobileTabBarLabels,
+  MobileTabBarRootProps,
+} from './mobile-tab-bar/index';
+export { MobileTopBar } from './mobile-top-bar/index';
+export type { MobileTopBarProps } from './mobile-top-bar/index';
 export { CountUp, useCountUp } from './motion/index';
 export type { CountUpOptions, CountUpProps, CountUpState } from './motion/index';
 export { NativeSelect } from './native-select/index';
@@ -378,6 +396,20 @@ export type {
 } from './select/index';
 export { Separator } from './separator/index';
 export type { SeparatorProps, SeparatorState } from './separator/index';
+export {
+  Sidebar,
+  SidebarRoot,
+  SidebarHeader,
+  SidebarContent,
+  SidebarFooter,
+} from './sidebar/index';
+export type {
+  SidebarContentProps,
+  SidebarFooterProps,
+  SidebarHeaderProps,
+  SidebarLabels,
+  SidebarRootProps,
+} from './sidebar/index';
 export { Skeleton } from './skeleton/index';
 export type { SkeletonProps, SkeletonShape, SkeletonState } from './skeleton/index';
 export { Split, SplitRoot, SplitMain, SplitAside } from './split/index';
@@ -469,5 +501,7 @@ export type {
   TooltipTriggerProps,
   TooltipTriggerState,
 } from './tooltip/index';
+export { TopBar } from './top-bar/index';
+export type { TopBarProps } from './top-bar/index';
 export { TrendCard } from './trend-card/index';
 export type { TrendCardProps, TrendCardState } from './trend-card/index';

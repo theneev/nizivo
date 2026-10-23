@@ -35,6 +35,10 @@
       "types": "./dist/alert/index.d.ts",
       "default": "./dist/alert/index.js"
     },
+    "./app-shell": {
+      "types": "./dist/app-shell/index.d.ts",
+      "default": "./dist/app-shell/index.js"
+    },
     "./augment": {
       "types": "./dist/augment.d.ts",
       "default": "./dist/augment.js"
@@ -167,6 +171,14 @@
       "types": "./dist/metric/index.d.ts",
       "default": "./dist/metric/index.js"
     },
+    "./mobile-tab-bar": {
+      "types": "./dist/mobile-tab-bar/index.d.ts",
+      "default": "./dist/mobile-tab-bar/index.js"
+    },
+    "./mobile-top-bar": {
+      "types": "./dist/mobile-top-bar/index.d.ts",
+      "default": "./dist/mobile-top-bar/index.js"
+    },
     "./motion": {
       "types": "./dist/motion/index.d.ts",
       "default": "./dist/motion/index.js"
@@ -231,6 +243,10 @@
       "types": "./dist/separator/index.d.ts",
       "default": "./dist/separator/index.js"
     },
+    "./sidebar": {
+      "types": "./dist/sidebar/index.d.ts",
+      "default": "./dist/sidebar/index.js"
+    },
     "./skeleton": {
       "types": "./dist/skeleton/index.d.ts",
       "default": "./dist/skeleton/index.js"
@@ -287,11 +303,16 @@
       "types": "./dist/tooltip/index.d.ts",
       "default": "./dist/tooltip/index.js"
     },
+    "./top-bar": {
+      "types": "./dist/top-bar/index.d.ts",
+      "default": "./dist/top-bar/index.js"
+    },
     "./trend-card": {
       "types": "./dist/trend-card/index.d.ts",
       "default": "./dist/trend-card/index.js"
     },
     "./css/alert.css": "./dist/css/alert.css",
+    "./css/app-shell.css": "./dist/css/app-shell.css",
     "./css/avatar.css": "./dist/css/avatar.css",
     "./css/badge.css": "./dist/css/badge.css",
     "./css/banner.css": "./dist/css/banner.css",
@@ -323,6 +344,8 @@
     "./css/menu.css": "./dist/css/menu.css",
     "./css/meter.css": "./dist/css/meter.css",
     "./css/metric.css": "./dist/css/metric.css",
+    "./css/mobile-tab-bar.css": "./dist/css/mobile-tab-bar.css",
+    "./css/mobile-top-bar.css": "./dist/css/mobile-top-bar.css",
     "./css/motion.css": "./dist/css/motion.css",
     "./css/native-select.css": "./dist/css/native-select.css",
     "./css/nav-item.css": "./dist/css/nav-item.css",
@@ -339,6 +362,7 @@
     "./css/segmented-control.css": "./dist/css/segmented-control.css",
     "./css/select.css": "./dist/css/select.css",
     "./css/separator.css": "./dist/css/separator.css",
+    "./css/sidebar.css": "./dist/css/sidebar.css",
     "./css/skeleton.css": "./dist/css/skeleton.css",
     "./css/split.css": "./dist/css/split.css",
     "./css/stack.css": "./dist/css/stack.css",
@@ -352,6 +376,7 @@
     "./css/textarea.css": "./dist/css/textarea.css",
     "./css/toast.css": "./dist/css/toast.css",
     "./css/tooltip.css": "./dist/css/tooltip.css",
+    "./css/top-bar.css": "./dist/css/top-bar.css",
     "./css/trend-card.css": "./dist/css/trend-card.css",
     "./styles.css": "./dist/styles.css",
     "./package.json": "./package.json"

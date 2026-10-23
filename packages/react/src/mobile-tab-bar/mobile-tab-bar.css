@@ -1,0 +1,171 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/mobile-tab-bar.css (Figma Mobile Tab Bar 7275:18747; figma/08 §7): equal
+   columns on bg/surface under a border/subtle line, 8 px padding; Figma's 24 px bottom padding was a
+   phone's home indicator, so the bottom is 8 px plus env(safe-area-inset-bottom) (needs
+   `viewport-fit=cover`). Each destination is 64 px tall: a 52 × 28 indicator pill around the 20 px
+   icon (bg/brand-subtle and icon/brand when current), 4 px, then the label in Label/M
+   (text/secondary; Label/M Strong in text/brand when current), with an ellipsis when long. Hover
+   and pressed are missing in Figma: bg/muted and bg/pressed on the pill. The bar is not fixed
+   here: AppShell pins it to the bottom below 640 px. Public --nz-mobile-tab-bar-* hooks are read
+   once, at the property. */
+@layer nz.components {
+  .nz-mobile-tab-bar {
+    box-sizing: border-box;
+    padding-block: var(--nz-space-2) calc(var(--nz-space-2) + env(safe-area-inset-bottom, 0px));
+    padding-inline: var(--nz-space-2);
+    border-block-start: var(--nz-border-width-default) solid
+      var(--nz-mobile-tab-bar-border, var(--nz-border-subtle));
+    background: var(--nz-mobile-tab-bar-bg, var(--nz-bg-surface));
+    color: var(--nz-text-secondary);
+  }
+
+  .nz-mobile-tab-bar-list {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .nz-mobile-tab-bar-item,
+  .nz-mobile-tab-bar-more {
+    display: flex;
+    flex: 1 1 0;
+    min-inline-size: 0;
+  }
+
+  /* a destination's link, or More's button */
+  .nz-mobile-tab-bar-link,
+  .nz-mobile-tab-bar-more-trigger {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--nz-space-1);
+    box-sizing: border-box;
+    min-inline-size: 0;
+    min-block-size: var(--nz-space-16);
+    margin: 0;
+    padding-block: var(--nz-space-1-5);
+    padding-inline: 0;
+    border: 0;
+    border-radius: var(--nz-radius-md);
+    background: none;
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-label-m);
+    letter-spacing: var(--nz-tracking-label-m);
+    text-decoration: none;
+    cursor: pointer;
+
+    &:is([aria-current='page'], [data-current]) {
+      color: var(--nz-text-brand);
+      font-weight: var(--nz-font-label-m-strong-font-weight);
+      letter-spacing: var(--nz-tracking-label-m-strong);
+    }
+  }
+
+  .nz-mobile-tab-bar-indicator,
+  .nz-mobile-tab-bar-more-indicator {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--nz-space-1) var(--nz-space-4);
+    border-radius: var(--nz-radius-full);
+    color: var(--nz-icon-secondary);
+    transition: background-color var(--nz-duration-fast) var(--nz-easing-standard);
+
+    @media (hover: hover) {
+      :is(.nz-mobile-tab-bar-link, .nz-mobile-tab-bar-more-trigger):hover:not(
+          [aria-current='page'],
+          [data-current]
+        )
+        > & {
+        background: var(--nz-bg-muted);
+      }
+    }
+
+    :is(.nz-mobile-tab-bar-link, .nz-mobile-tab-bar-more-trigger):active:not(
+        [aria-current='page'],
+        [data-current]
+      )
+      > & {
+      background: var(--nz-bg-pressed);
+    }
+
+    :is(.nz-mobile-tab-bar-link, .nz-mobile-tab-bar-more-trigger):is(
+        [aria-current='page'],
+        [data-current]
+      )
+      > & {
+      background: var(--nz-bg-brand-subtle);
+      color: var(--nz-icon-brand);
+    }
+  }
+
+  /* internal glyphs are 1em, so the slot sizes them */
+  .nz-mobile-tab-bar-icon {
+    display: inline-flex;
+    inline-size: var(--nz-size-icon-md);
+    block-size: var(--nz-size-icon-md);
+    font-size: var(--nz-size-icon-md);
+
+    & > svg {
+      inline-size: 100%;
+      block-size: 100%;
+    }
+  }
+
+  /* a count on the pill's top-end corner (missing in Figma; the sidebar shows "Orders 12") */
+  .nz-mobile-tab-bar-count {
+    position: absolute;
+    inset-block-start: calc(var(--nz-space-1) * -1);
+    inset-inline-end: 0;
+    box-sizing: border-box;
+    min-inline-size: var(--nz-space-5);
+    padding-inline: var(--nz-space-1);
+    border: 2px solid var(--nz-mobile-tab-bar-bg, var(--nz-bg-surface));
+    border-radius: var(--nz-radius-full);
+    background: var(--nz-bg-brand);
+    color: var(--nz-text-on-brand);
+    font: var(--nz-font-label-s);
+    letter-spacing: var(--nz-tracking-label-s);
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+  }
+
+  .nz-mobile-tab-bar-label,
+  .nz-mobile-tab-bar-more-label {
+    max-inline-size: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* the More sheet: its destinations 4 px apart */
+  .nz-mobile-tab-bar-more-sheet {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-1);
+  }
+
+  @media (forced-colors: active) {
+    .nz-mobile-tab-bar {
+      border-block-start-color: CanvasText;
+    }
+
+    .nz-mobile-tab-bar-link[aria-current='page'] > .nz-mobile-tab-bar-indicator,
+    .nz-mobile-tab-bar-more-trigger[data-current] > .nz-mobile-tab-bar-more-indicator {
+      background: Highlight;
+      color: HighlightText;
+      forced-color-adjust: none;
+    }
+
+    .nz-mobile-tab-bar-count {
+      border-color: Canvas;
+      background: CanvasText;
+      color: Canvas;
+      forced-color-adjust: none;
+    }
+  }
+}

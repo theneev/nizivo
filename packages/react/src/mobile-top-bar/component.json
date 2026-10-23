@@ -1,0 +1,14 @@
+{
+  "name": "mobile-top-bar",
+  "status": "stable",
+  "tier": "server",
+  "parts": [],
+  "cssDeps": ["base"],
+  "variants": {},
+  "figma": {
+    "canonical": [],
+    "ghosts": ["764:3397"],
+    "variantsSeen": [],
+    "related": ["7275:18746", "7275:18888", "7275:18980"]
+  }
+}

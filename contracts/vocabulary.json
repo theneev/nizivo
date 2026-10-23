@@ -261,8 +261,20 @@
     {
       "name": "data-collapsed",
       "presence": true,
-      "on": "Sidebar rail",
-      "meaning": "Collapsed to the rail"
+      "on": "Sidebar",
+      "meaning": "Kept as the icon rail by its collapsed prop"
+    },
+    {
+      "name": "data-expanded",
+      "presence": true,
+      "on": "Sidebar",
+      "meaning": "Kept at full width by collapsed={false}"
+    },
+    {
+      "name": "data-current",
+      "presence": true,
+      "on": "MobileTabBarMore",
+      "meaning": "The page shown is one of the More sheet's"
     },
     {
       "name": "data-validate-on",

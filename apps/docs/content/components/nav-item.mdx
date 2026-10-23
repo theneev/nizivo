@@ -1,12 +1,12 @@
 ---
 title: NavItem
-description: One sidebar destination, as a native link with an icon, a label and an optional count. The current one is `aria-current="page"`; a router's link goes in through `render`. Collapsed to the icon rail by an ancestor's `data-collapsed`, not by a prop.
+description: One sidebar destination, as a native link with an icon, a label and an optional count. The current one is `aria-current="page"`; a router's link goes in through `render`. In a Sidebar's icon rail it folds to its icon, with no prop.
 keyboard:
   - keys: Tab, Shift+Tab
     action: Moves between the links, as on any link. A disabled item is not a Tab stop.
   - keys: Enter
     action: Follows the focused link.
-keyboardSource: native `<a>` elements (`nav-item.tsx`, no client code). The browser lane (`test/browser/nav-item.spec.tsx`) checks Tab through the links in order, a disabled item not being a stop, the focus outline, the fixed 40 px row and the collapsed rail.
+keyboardSource: native `<a>` elements (`nav-item.tsx`, no client code). The browser lane (`test/browser/nav-item.spec.tsx`) checks Tab through the links in order, a disabled item not being a stop, the focus outline, the fixed 40 px row, the collapsed rail and the label shown beside a focused item.
 ---
 
 <Callout type="warn" title="Not yet published (v0.2)">
@@ -32,12 +32,11 @@ destinations. A list of NavItems needs no component of its own.
 
 ## The collapsed rail
 
-Collapsed is not a prop. The Sidebar (not built yet) will set `data-collapsed` on its root when it
-folds to the icon rail; any ancestor with that attribute collapses the NavItems inside it. Each item
-becomes a 40 px square around its icon. The label and the count leave the layout but stay in the
-DOM, so the link keeps its accessible name ("Orders 12"), and a count shows as a dot on the icon. Give
-every item an `icon` in a sidebar that collapses. A tooltip with the label, on hover and focus, comes
-with the Sidebar.
+Collapsed is not a prop. In a [Sidebar](/docs/components/sidebar/) folded to the icon rail (from
+640 px to 1280 px, or with `collapsed`), each item becomes a 40 px square around its icon. The label
+and the count leave the layout but stay in the DOM, so the link keeps its accessible name ("Orders
+12"), a count shows as a dot on the icon, and hovering or focusing an item shows its label beside it.
+Give every item an `icon` in a sidebar that collapses.
 
 ## Height and hover
 

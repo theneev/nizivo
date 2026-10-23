@@ -1,4 +1,5 @@
 import type { ComponentPropsWithRef, CSSProperties, JSX, ReactNode } from 'react';
+import { Sidebar } from '../sidebar/index';
 import { NavItem } from './index';
 
 /** Stands in for a router link (Next `Link`, React Router `Link`). */
@@ -126,29 +127,24 @@ export function NavItemRouterExample(): JSX.Element {
 }
 
 /**
- * The icon rail. A Sidebar (not built yet) sets `data-collapsed` on its root; here a plain wrapper
- * does. The labels and counts stay in the DOM as the links' names; a count shows as a dot.
+ * The icon rail: a Sidebar keeps it with `collapsed` (and draws it from 640 px to 1280 px on its
+ * own). The labels and counts stay in the DOM as the links' names; a count shows as a dot, and
+ * hovering or focusing an item shows its label beside it.
  */
 export function NavItemCollapsedExample(): JSX.Element {
   return (
-    <nav aria-label="Main, collapsed" data-collapsed="">
-      <ul style={{ ...LIST, inlineSize: 'auto' }}>
-        <li>
-          <NavItem href="/" icon={ICONS.home}>
-            Home
-          </NavItem>
-        </li>
-        <li>
-          <NavItem href="/orders" icon={ICONS.orders} count={12} current>
-            Orders
-          </NavItem>
-        </li>
-        <li>
-          <NavItem href="/customers" icon={ICONS.customers} count={3}>
-            Customers
-          </NavItem>
-        </li>
-      </ul>
-    </nav>
+    <Sidebar.Root collapsed aria-label="Main, collapsed" style={{ blockSize: 'auto' }}>
+      <Sidebar.Content>
+        <NavItem href="/" icon={ICONS.home}>
+          Home
+        </NavItem>
+        <NavItem href="/orders" icon={ICONS.orders} count={12} current>
+          Orders
+        </NavItem>
+        <NavItem href="/customers" icon={ICONS.customers} count={3}>
+          Customers
+        </NavItem>
+      </Sidebar.Content>
+    </Sidebar.Root>
   );
 }

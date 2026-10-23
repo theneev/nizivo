@@ -60,6 +60,10 @@
       display: none;
     }
   }
+  /* above the shell's bottom bar, whose height (the inset) already holds the safe area */
+  :root[data-nz-bottom-bar] .nz-toast-region {
+    inset-block-end: calc(var(--nz-space-6) + var(--nz-layout-bottom-inset, 0px));
+  }
 
   .nz-toast {
     display: flex;

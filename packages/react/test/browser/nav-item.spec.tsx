@@ -1,12 +1,12 @@
 // NavItem in a real engine (Figma Nav Item 755:658, figma/06 §6.1): the server HTML only, as an RSC
 // page ships it. Tab order (every enabled link; a disabled item is not a stop), aria-current, the
 // focus outline from nz.base, the fixed 40 px row with and without a count, the current item's fill,
-// and the collapsed rail an ancestor's data-collapsed draws (labels out of the layout, still the
-// links' text; a 40 px square; a count as a dot).
+// and the rail a collapsed Sidebar draws (labels out of the layout, still the links' text; a 40 px
+// square; a count as a dot; the label beside the item on keyboard focus).
 import type { ReactElement } from 'react';
 import { renderToString } from 'react-dom/server';
-import { afterEach, describe, expect, test } from 'vitest';
-import { server, userEvent } from 'vitest/browser';
+import { afterEach, beforeAll, describe, expect, test } from 'vitest';
+import { page, server, userEvent } from 'vitest/browser';
 import { NavItem } from '../../src/nav-item/index';
 import {
   NavItemCollapsedExample,
@@ -15,16 +15,30 @@ import {
 } from '../../src/nav-item/nav-item.example';
 
 const STYLES = import.meta.glob(
-  ['../../../tokens/dist/tokens.css', '../../styles/base.css', '../../src/nav-item/nav-item.css'],
+  [
+    '../../../tokens/dist/tokens.css',
+    '../../styles/base.css',
+    '../../src/nav-item/nav-item.css',
+    '../../src/sidebar/sidebar.css',
+  ],
   { query: '?raw', import: 'default', eager: true },
 );
-if (Object.keys(STYLES).length !== 3)
+if (Object.keys(STYLES).length !== 4)
   throw new Error('a stylesheet is missing; build @nizivo/tokens and run nz gen');
 const style = document.createElement('style');
-style.textContent = Object.values(STYLES).join('\n');
+// the build expands @custom-media (tokens' custom-media.css); the raw sources need it done here
+style.textContent = Object.values(STYLES)
+  .join('\n')
+  .replaceAll('(--nz-sm)', '(width >= 40rem)')
+  .replaceAll('(--nz-lg)', '(width >= 80rem)');
 document.head.append(style);
 
 const isWebKit = server.browser === 'webkit';
+
+// the Sidebar is shown from 640 px (vitest's own viewport is a phone's)
+beforeAll(async () => {
+  await page.viewport(1280, 800);
+});
 
 afterEach(() => {
   document.body.replaceChildren();
@@ -133,7 +147,7 @@ describe('NavItem', () => {
     expect(label.scrollWidth).toBeGreaterThan(label.clientWidth);
   });
 
-  test('collapsed by an ancestor: 40 px squares; the label and count stay as text, out of sight', async () => {
+  test('in a collapsed Sidebar: 40 px squares; the label and count stay as text, out of sight', async () => {
     const container = await mount(<NavItemCollapsedExample />);
     for (const item of items(container)) {
       const box = item.getBoundingClientRect();
@@ -152,5 +166,25 @@ describe('NavItem', () => {
     const home = items(container)[0];
     if (home === undefined) throw new Error('no item');
     expect(getComputedStyle(one(home, '.nz-nav-item-icon'), '::after').content).toBe('none');
+  });
+
+  test('in the rail, keyboard focus shows the label beside the item, past the sidebar', async () => {
+    const container = await mount(<NavItemCollapsedExample />);
+    const [home] = items(container);
+    if (home === undefined) throw new Error('no item');
+    const sidebar = one(container, '[data-slot="sidebar"]');
+    sidebar.tabIndex = -1;
+    await tabTo(sidebar, home);
+    expect(document.activeElement).toBe(home);
+    expect(home.matches(':focus-visible')).toBe(true);
+    const flyout = one(home, '.nz-nav-item-label');
+    const label = flyout.getBoundingClientRect();
+    expect(label.width).toBeGreaterThan(40);
+    // its painted box (inside the transparent bridge) starts past the sidebar's edge
+    const bridge = Number.parseFloat(getComputedStyle(flyout).borderInlineStartWidth);
+    expect(label.left + bridge).toBeGreaterThanOrEqual(sidebar.getBoundingClientRect().right);
+    expect(
+      Math.abs(label.top + label.height / 2 - (home.getBoundingClientRect().top + 20)),
+    ).toBeLessThan(1);
   });
 });

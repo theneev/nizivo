@@ -4,9 +4,10 @@
 // slots (Button icon, Select chevron) that size the glyph through font-size. `chevron` (Lucide's
 // `chevron-right`, the Breadcrumb separator and Pagination's marks), `circle-x` (the error mark of
 // Field, Fieldset and InlineError), `close` (Lucide's `x`, AlertDismiss's default), and `check` and
-// `minus` (Checkbox's checked mark and indeterminate dash), `info` (the neutral Toast's mark) and
-// `search` (SearchField's magnifier) are on Lucide's list of Feather-derived icons, so they also
-// carry the Feather MIT notice in THIRD_PARTY_NOTICES; `circle-check` (the success Toast's) and
+// `minus` (Checkbox's checked mark and indeterminate dash), `info` (the neutral Toast's mark),
+// `search` (SearchField's magnifier) and `ellipsis` (MobileTabBar's More, Feather's
+// `more-horizontal`) are on Lucide's list of Feather-derived icons, so they also carry the Feather
+// MIT notice in THIRD_PARTY_NOTICES; `circle-check` (the success Toast's) and
 // `eye` and `eye-off` (PasswordInput's show and hide marks) are Lucide's own.
 //
 // One export per glyph, so an entry carries only the paths it draws (a name → paths table kept every
@@ -25,7 +26,8 @@ export type GlyphName =
   | 'minus'
   | 'eye'
   | 'eye-off'
-  | 'search';
+  | 'search'
+  | 'ellipsis';
 
 function svg(name: GlyphName, paths: ReactNode): JSX.Element {
   return (
@@ -133,5 +135,16 @@ export const SearchGlyph = (): JSX.Element =>
     <>
       <path d="m21 21-4.34-4.34" />
       <circle cx="11" cy="11" r="8" />
+    </>,
+  );
+
+/** Lucide's `ellipsis` (Feather's `more-horizontal`): MobileTabBar's More. */
+export const EllipsisGlyph = (): JSX.Element =>
+  svg(
+    'ellipsis',
+    <>
+      <circle cx="12" cy="12" r="1" />
+      <circle cx="19" cy="12" r="1" />
+      <circle cx="5" cy="12" r="1" />
     </>,
   );

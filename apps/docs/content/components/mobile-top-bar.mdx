@@ -1,0 +1,28 @@
+---
+title: MobileTopBar
+description: The bar above the page below 640 px, with the store's mark or a back link, the page's name, and icon buttons for search and notifications.
+---
+
+<Callout type="warn" title="Not yet published (v0.2)">
+  This part is in the repository and ships in `@nizivo/react` 0.2.0; the 0.1.0 on npm does not have
+  it. Until then its API can change.
+</Callout>
+
+## Static or interactive
+
+**Server.** It is a layout with slots and ships no client JavaScript of its own; the example's
+IconButtons bring their tooltip's. [How to choose](/docs/guides/static-or-interactive/).
+
+In a client app (a Vite or React Router single-page app, or a `'use client'` file) it is an ordinary React component: event handlers, refs and state work as usual. [In a client app](/docs/guides/static-or-interactive/#in-a-client-app).
+
+## Slots
+
+- `mark`: Figma's 32 px Store mark, an initial or a logo image.
+- `leading`: in place of `mark`, for example a back link on a detail page.
+- `title`: the page's name in Heading/H4's look, with an ellipsis when long. As in the TopBar, it is
+  text, not a heading.
+- `actions`: `IconButton`s, usually search and notifications. Figma draws bare 20 px icons there; a
+  button gives each a name and a 44 px target under a touch pointer.
+
+Hooks: `--nz-mobile-top-bar-padding-inline`, `--nz-mobile-top-bar-bg`, `--nz-mobile-top-bar-border`,
+`--nz-mobile-top-bar-mark-bg`.
