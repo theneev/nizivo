@@ -137,6 +137,10 @@
       "measured": 2322,
       "limitKiB": 2.5
     },
+    "@nizivo/react/locales/en-US": {
+      "measured": 664,
+      "limitKiB": 0.8
+    },
     "@nizivo/react/menu": {
       "measured": 57165,
       "limitKiB": 57

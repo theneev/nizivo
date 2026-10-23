@@ -1,6 +1,6 @@
 // The list of documented entries, generated from @nizivo/react's exports map: a new subpath gets a
 // page with no hand edit (ARCHITECTURE.md §18.2). A subpath with a component.json is a component;
-// any other JS subpath (config, contracts, augment) is a utility entry.
+// any other JS subpath (config, contracts, augment, i18n, locales/<tag>) is a utility entry.
 import { hasExports, isRecord } from '../scripts/json';
 import { readRepoJson, repoFileExists } from './repo';
 
@@ -22,7 +22,7 @@ export interface ComponentManifest {
 }
 
 export interface CatalogEntry {
-  /** The subpath without `./`: `progress-bar`. */
+  /** The subpath without `./`: `progress-bar`, `locales/en-US`. */
   name: string;
   /** The exports key: `./progress-bar`. */
   entry: string;
@@ -62,7 +62,9 @@ export function catalog(): CatalogEntry[] {
     // Files (./css/<name>.css, ./styles.css, ./package.json) are not JS entries.
     if (!key.startsWith('./') || /\.[a-z]+$/.test(key)) continue;
     const name = key.slice(2);
-    if (name.includes('/')) {
+    // ./locales/<tag> (a string catalogue) is a utility page at /docs/utilities/locales/<tag>/.
+    const locale = /^locales\/([A-Za-z0-9-]+)$/.exec(name)?.[1];
+    if (name.includes('/') && locale === undefined) {
       // ./unstable/<name> joins the catalog once the docs design an unstable section.
       throw new Error(`docs: no page layout for the nested entry ${key} yet (lib/catalog.ts).`);
     }
@@ -78,7 +80,7 @@ export function catalog(): CatalogEntry[] {
       specifier: `@nizivo/react/${name}`,
       kind,
       // Utilities too, so the sidebar's Utilities group reads like the Components one.
-      title: pascal(name),
+      title: locale === undefined ? pascal(name) : `Locales/${locale}`,
       url: `/docs/${kind === 'component' ? 'components' : 'utilities'}/${name}/`,
       ...(stylesheet !== undefined && { stylesheet }),
       ...(manifest !== undefined && { manifest }),

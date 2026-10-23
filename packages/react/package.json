@@ -163,6 +163,10 @@
       "types": "./dist/kpi-tile/index.d.ts",
       "default": "./dist/kpi-tile/index.js"
     },
+    "./locales/en-US": {
+      "types": "./dist/locales/en-US.d.ts",
+      "default": "./dist/locales/en-US.js"
+    },
     "./menu": {
       "types": "./dist/menu/index.d.ts",
       "default": "./dist/menu/index.js"

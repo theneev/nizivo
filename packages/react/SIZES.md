@@ -138,6 +138,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /input             |    1,837 |        1.8 |      1,662 |           2 |          211 |
 | /kbd               |    1,192 |        1.2 |      1,087 |         1.3 |          139 |
 | /kpi-tile          |    2,322 |        2.3 |      2,122 |         2.5 |          238 |
+| /locales/en-US     |      664 |        0.6 |        560 |         0.8 |          155 |
 | /menu              |   57,165 |       55.8 |     49,449 |          57 |        1,203 |
 | /meter             |    1,143 |        1.1 |      1,058 |         1.3 |          188 |
 | /metric            |    2,144 |        2.1 |      1,951 |         2.4 |          313 |

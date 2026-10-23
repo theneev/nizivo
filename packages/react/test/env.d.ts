@@ -1,10 +1,15 @@
-// Vite's import.meta.glob, as the tests use it (raw file contents, eager). The package compiles with
+// Vite's import.meta.glob, as the tests use it (raw file contents, eager; or eager modules). The package compiles with
 // `types: []`, so neither vite/client nor @types/node is in scope.
 interface ImportMeta {
   glob(
     pattern: string | readonly string[],
     options: { query: '?raw'; import: 'default'; eager: true },
   ): Record<string, string>;
+  /** Eager modules: test/unit/locales.test.ts loads every catalogue under src/locales. */
+  glob<Module>(
+    pattern: string | readonly string[],
+    options: { eager: true },
+  ): Record<string, Module>;
 }
 
 /** The React line the lane runs, `'19.2'` or `'19.3'` (test/react-matrix.ts). */
