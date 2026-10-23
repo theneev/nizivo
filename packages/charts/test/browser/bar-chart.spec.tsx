@@ -23,11 +23,14 @@ if (Object.keys(STYLES).length !== 2) {
   throw new Error('a stylesheet is missing: build @nizivo/tokens and @nizivo/charts first');
 }
 const sheet = document.createElement('style');
-// Test scaffolding only: a white page and two frame widths. The y gutter is 2.75rem plus its 8 px
+// Test scaffolding only: a white page and three frames. The y gutter is 2.75rem plus its 8 px
 // padding (52 px), so a 1252 px frame has a 1200 px plot: four 300 px bands, whole-pixel centres.
+// The flat one is wide (no narrow-chart minimum height) with a short aspect ratio (the bar chart's
+// own hook, as a consumer sets it), so its plot is under an svg's intrinsic 150 px.
 sheet.textContent = `${Object.values(STYLES).join('\n')}
 body { margin: 0; background: #fff; }
 .probe-wide { inline-size: 1252px; }
+.probe-flat { inline-size: 1252px; --nz-bar-chart-aspect: 12 / 1; }
 .probe-narrow { inline-size: 212px; }`;
 document.head.append(sheet);
 
@@ -54,7 +57,7 @@ afterEach(() => {
 });
 
 async function mount(
-  probe: 'probe-wide' | 'probe-narrow',
+  probe: 'probe-wide' | 'probe-flat' | 'probe-narrow',
   xDirection: ChartXDirection = 'ltr',
   interaction: ChartInteractionMode = 'nizivo',
 ): Promise<HTMLElement> {
@@ -178,11 +181,19 @@ describe('BarChart geometry', () => {
     const plot = one('.nz-chart-frame-plot').getBoundingClientRect().width;
     expect(plot).toBe(160);
     const height = one('.nz-chart-frame-plot').getBoundingClientRect().height;
-    expect(height).toBeLessThan(150); // under an svg's intrinsic height, which must not leak in
+    // a narrow chart's body is at least 12rem tall (the aspect ratio alone would give 86 px)
+    expect(one('.nz-chart-frame-body').getBoundingClientRect().height).toBeGreaterThanOrEqual(192);
     for (const box of bars()) {
       expect(box.width).toBeCloseTo((plot / 4) * 0.52, 1);
       expect(box.height).toBeCloseTo(height, 1);
     }
+  });
+
+  test("a short plot keeps its height: an svg's intrinsic 150 px does not leak in", async () => {
+    await mount('probe-flat');
+    const height = one('.nz-chart-frame-plot').getBoundingClientRect().height;
+    expect(height).toBeLessThan(150);
+    for (const box of bars()) expect(box.height).toBeCloseTo(height, 1);
   });
 
   test('rounded at the data end only, a negative bar at its bottom', async () => {

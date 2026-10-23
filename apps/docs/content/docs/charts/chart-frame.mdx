@@ -124,6 +124,13 @@ Classes a renderer draws with: `nz-chart-svg` (the percent-space SVG that fills 
 `--nz-chart-frame-gutter` the y labels' column, which stays fixed in every status. Long localised y
 labels can be wider than the 2.75rem gutter; widen it with the hook.
 
+The frame is a size container (`container-type: inline-size`): a narrow chart adapts to its own
+width, never the viewport's. Under 31rem, a body with axes is at least 12rem tall, so the plot keeps
+about 10rem and the y labels their room (above that width the aspect ratio alone sizes it, a short
+one of yours included). Under 25rem, the x axis shows every other label, counting only the
+positions that have one, and always keeps the first and the last; the labels it hides are still in
+the data table.
+
 ## Accessibility
 
 - A `<figure>` named by its `<figcaption>`. The tick labels are `aria-hidden`: the data table

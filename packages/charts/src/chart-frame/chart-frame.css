@@ -4,7 +4,10 @@
    @nizivo/react CSS: the focus outline and the visually-hidden rule below are charts' own, scoped
    to .nz-chart-* (§5.2), and tokens come from either route (tokens.css or react's styles.css). */
 @layer nz.components {
-  /* A chart has no intrinsic width: it fills its container, flex and grid items included. */
+  /* A chart has no intrinsic width: it fills its container, flex and grid items included. It is a
+     size container, so a narrow chart lays itself out by its own width, never the viewport's (the
+     server does not know either): the plot's minimum height and the x labels below, DonutChart's
+     legend. Named, as a part inside it is a container too (the island's layer, a donut's ring). */
   .nz-chart-frame {
     display: flex;
     flex-direction: column;
@@ -14,6 +17,7 @@
     min-inline-size: 0;
     color: var(--nz-text-primary);
     font: var(--nz-font-body-m);
+    container: nz-chart / inline-size;
   }
 
   .nz-chart-frame-caption {
@@ -42,6 +46,17 @@
       var(--nz-font-body-m-font-size) * var(--nz-font-body-m-line-height)
     );
     --_nz-chart-frame-half-line: calc(var(--_nz-chart-frame-line) / 2);
+  }
+
+  /* A narrow chart with axes (under 31rem, where Figma's aspect ratios fall under it): the body is
+     at least 12rem tall, so the plot keeps about 10rem and the y labels room; wider, the aspect
+     ratio alone sizes it (and a consumer's short aspect ratio is kept). Firefox and WebKit carry a
+     minimum height through the aspect ratio into a minimum width: the maximum stops it. */
+  @container nz-chart (inline-size < 31rem) {
+    .nz-chart-frame-body:has(> .nz-chart-frame-y-ticks) {
+      min-block-size: 12rem;
+      max-inline-size: 100%;
+    }
   }
 
   .nz-chart-frame-plot {
@@ -144,6 +159,20 @@
 
   .nz-chart-frame-x-ticks-band > .nz-chart-frame-cell {
     justify-content: center;
+  }
+
+  /* A narrow chart (under 25rem, where BarChart's default "Oct 17" labels touch) shows every other
+     x label, counting only the cells that have one: the first is always in an odd one, and the last
+     label (the last cell's last tick) is never hidden; the one before it, in the same cell, always
+     is. Hidden, not removed, so the last tick keeps its place at the cell's end. Every value stays
+     in the data table. */
+  @container nz-chart (inline-size < 25rem) {
+    .nz-chart-frame-x-ticks
+      > :nth-child(even of :has(> .nz-chart-frame-tick:not(:empty))):not(:last-child)
+      > .nz-chart-frame-tick,
+    .nz-chart-frame-x-ticks > :last-child > .nz-chart-frame-tick:not(:last-child) {
+      visibility: hidden;
+    }
   }
 
   .nz-chart-frame-skeleton {
