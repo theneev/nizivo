@@ -107,7 +107,22 @@ Inside the [ChartFrame](/docs/charts/chart-frame/#data-attributes-and-slots) roo
 
 <ChartCssHooks />
 
-`--nz-donut-chart-size` is the ring's size (200 px), at most `40cqi`.
+`--nz-donut-chart-size` is the ring's size (200 px). Beside the legend the ring is at most 40 % of
+the chart's width.
+
+## Narrow widths
+
+The chart lays itself out by its own width (ChartFrame is a size container), never the viewport's,
+so it works the same in a sidebar, a card or on a phone, and on the server, which knows neither:
+
+- Under 24rem, the legend moves under the ring and takes the full width: each row's name wraps in
+  one flexible column, and its value and share never break. The ring takes up to the chart's whole
+  width, centred, and the island's card opens on the side with more room, at most half the ring
+  wide, so it never passes the chart's edge.
+- A legend name wraps, a long word too, rather than running into its value, at every width.
+- The centre steps down with the ring: Numeric/M over Body/S on a ring under 10rem. On a ring
+  under 6rem the total no longer fits: it is clipped out of sight but stays in the markup, so a
+  screen reader still reads it (it is in no legend row or table cell).
 
 ## Accessibility
 

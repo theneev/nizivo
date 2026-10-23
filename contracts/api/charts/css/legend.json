@@ -3,6 +3,7 @@
   "classes": [
     "nz-legend",
     "nz-legend-item",
+    "nz-legend-label",
     "nz-legend-mark",
     "nz-legend-share",
     "nz-legend-value"

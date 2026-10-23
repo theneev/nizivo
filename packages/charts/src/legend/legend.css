@@ -32,6 +32,12 @@
     grid-template-columns: subgrid;
   }
 
+  /* A narrow name column wraps the name, a long word too, rather than run into the value; the value
+     and the share never break */
+  .nz-legend[data-orientation='vertical'] .nz-legend-label {
+    overflow-wrap: anywhere;
+  }
+
   /* Figma 03 §4.1: a 14 px line swatch, 2 px thick (14 px is off the space scale) */
   .nz-legend-mark {
     flex: none;
@@ -82,12 +88,14 @@
     color: var(--nz-text-primary);
     font: var(--nz-font-numeric-m);
     text-align: end;
+    white-space: nowrap;
   }
 
   .nz-legend-share {
     color: var(--nz-text-tertiary);
     font: var(--nz-font-mono-m);
     text-align: end;
+    white-space: nowrap;
   }
 
   /* Forced colours (D-ax): system colours that match the marks they name, with the series rules'

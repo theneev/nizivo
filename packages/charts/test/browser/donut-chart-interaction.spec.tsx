@@ -3,7 +3,8 @@
 // over the slices in data order (clockwise, whatever the page's direction), the first slice first;
 // the active segment carries `data-highlighted`, which dims the other segments and legend rows and
 // swaps the centre; the island's ChartTooltip card sits at the slice's centre and opens toward the
-// legend, never past the chart; its swatch takes the slice's colour; the polite region speaks
+// legend (with the legend under the ring, under 24rem, toward the side with more room), never past
+// the chart; its swatch takes the slice's colour; the polite region speaks
 // "slice, value label, value, share, of total"; a pointer does the same without speaking, picking
 // the segment under it (the gaps and the hole keep the card); Escape on the ring hides only the
 // card, and with focus elsewhere hides a pointer-shown card and still reaches an enclosing dialog
@@ -26,10 +27,12 @@ if (Object.keys(STYLES).length !== 2) {
   throw new Error('a stylesheet is missing: build @nizivo/tokens and @nizivo/charts first');
 }
 const sheet = document.createElement('style');
-// Test scaffolding only: a white page and two chart widths (a 200 px ring, and 40 % of 300 px)
+// Test scaffolding only: a white page and three charts: a 200 px ring beside the legend, a 120 px
+// one beside it (the size hook, as a consumer sets it), and a 300 px chart, the legend under its ring
 sheet.textContent = `${Object.values(STYLES).join('\n')}
 body { margin: 0; background: #fff; }
 .probe-wide { inline-size: 640px; }
+.probe-mid { inline-size: 400px; --nz-donut-chart-size: 7.5rem; }
 .probe-narrow { inline-size: 300px; }`;
 document.head.append(sheet);
 
@@ -76,7 +79,7 @@ interface Mounted {
 }
 
 interface Options {
-  probe?: 'probe-wide' | 'probe-narrow';
+  probe?: 'probe-wide' | 'probe-mid' | 'probe-narrow';
   dir?: 'rtl';
   data?: Channel[];
 }
@@ -307,7 +310,7 @@ describe('DonutChart item mode: the card', () => {
     }
   });
 
-  test.each(['probe-wide', 'probe-narrow'] as const)(
+  test.each(['probe-wide', 'probe-mid'] as const)(
     '%s: at the slice centre, toward the legend, never past the chart, no page scroll',
     async (probe) => {
       const m = await hydrate({ probe });
@@ -337,8 +340,38 @@ describe('DonutChart item mode: the card', () => {
     },
   );
 
+  test('probe-narrow, the legend under the ring: the card takes the side with more room, never past the chart', async () => {
+    const m = await hydrate({ probe: 'probe-narrow' });
+    const scroll = document.documentElement.scrollWidth;
+    const figure = rect(m.figure);
+    expect(rect(m.container.querySelector('.nz-legend') ?? m.layer).top).toBeGreaterThanOrEqual(
+      rect(m.layer).bottom,
+    );
+    await tabIn();
+    for (const i of [0, 1, 2, 3]) {
+      // oxlint-disable-next-line no-await-in-loop -- one slice after the other
+      await userEvent.keyboard(i === 0 ? '{Home}' : '{ArrowRight}');
+      // oxlint-disable-next-line no-await-in-loop -- one slice after the other
+      await settled();
+      const tip = card(m);
+      if (tip === null) throw new Error('no card');
+      const box = rect(tip);
+      const layer = rect(m.layer);
+      const centre = at(m, middleOf(i));
+      // 14 px from the slice's centre, on the side with more room; centred on it vertically
+      const x = layer.left + centre.x;
+      const off = centre.x > layer.width / 2 ? box.right - x + 14 : box.left - x - 14;
+      expect(Math.abs(off)).toBeLessThanOrEqual(1);
+      expect(Math.abs(box.top + box.height / 2 - (layer.top + centre.y))).toBeLessThanOrEqual(1);
+      expect(box.width).toBeLessThanOrEqual(layer.width / 2 - 14 + 0.5);
+      expect(box.left).toBeGreaterThanOrEqual(figure.left);
+      expect(box.right).toBeLessThanOrEqual(figure.right + 0.5);
+      expect(document.documentElement.scrollWidth).toBe(scroll);
+    }
+  });
+
   test('under dir="rtl" the legend is on the left, and the card opens toward it', async () => {
-    const m = await hydrate({ dir: 'rtl', probe: 'probe-narrow' });
+    const m = await hydrate({ dir: 'rtl', probe: 'probe-mid' });
     const figure = rect(m.figure);
     expect(rect(m.container.querySelector('.nz-legend') ?? m.layer).right).toBeLessThan(
       rect(m.layer).left,

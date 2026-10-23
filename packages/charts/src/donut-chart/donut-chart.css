@@ -17,20 +17,23 @@
     grid-template-columns: auto minmax(0, 1fr);
     align-items: center;
     column-gap: var(--nz-space-8);
-    container-type: inline-size;
   }
 
   .nz-donut-chart > * {
     grid-column: 1 / -1;
   }
 
-  /* Figma's 200 px ring; it shrinks to 40 % of a narrow chart so the legend keeps its room */
+  /* Figma's 200 px ring; beside the legend it shrinks to 40 % of a narrow chart so the legend keeps
+     its room (cqi is the chart's: ChartFrame is a size container). The ring is a size container
+     too, for its centre. */
   .nz-donut-chart > .nz-chart-frame-body {
     grid-row: 2;
     grid-column: 1;
-    inline-size: min(var(--nz-donut-chart-size, 12.5rem), 40cqi);
+    inline-size: min(var(--nz-donut-chart-size, 12.5rem), var(--_nz-donut-chart-max));
     aspect-ratio: 1;
     padding: 0;
+    container-type: inline-size;
+    --_nz-donut-chart-max: 40cqi;
   }
 
   /* titleVisibility="hidden": the caption is out of flow, so the ring and the legend take the first
@@ -103,6 +106,25 @@
   .nz-donut-chart-value {
     color: var(--nz-text-primary);
     font: var(--nz-font-numeric-l);
+  }
+
+  /* The centre steps down with the ring (its nearest size container): Numeric/M over Body/S under
+     10rem. Under 6rem it no longer fits, and is clipped out of sight, never removed: the total is
+     in no legend row or table cell, so assistive technology still reads it here. */
+  @container (inline-size < 10rem) {
+    .nz-donut-chart-center {
+      font: var(--nz-font-body-s);
+    }
+
+    .nz-donut-chart-value {
+      font: var(--nz-font-numeric-m);
+    }
+  }
+
+  @container (inline-size < 6rem) {
+    .nz-donut-chart-center {
+      clip-path: inset(50%);
+    }
   }
 
   /* Figma's donut legend (7275:13455): a 120 px name column, rows 14 px apart and 10 px dots. The
@@ -198,6 +220,44 @@
 
   .nz-donut-chart .nz-chart-interaction-tip[data-side]:dir(rtl) {
     translate: calc(-100% - 0.875rem) -50%;
+  }
+
+  /* A narrow chart (under 24rem, where the legend beside a 40 % ring would wrap its names to a word
+     a line): the legend goes under the ring, full width, its names in one flexible column, and the
+     ring takes up to the chart's whole width, centred. With no legend beside the ring, the card
+     takes the island's own side, the one with more room, at most half the ring wide, as on
+     AreaChart, so it never passes the chart's edge (the attribute is doubled to outrank the
+     right-to-left rule above). */
+  @container nz-chart (inline-size < 24rem) {
+    .nz-donut-chart > .nz-chart-frame-body {
+      grid-column: 1 / -1;
+      justify-self: center;
+      --_nz-donut-chart-max: 100cqi;
+    }
+
+    .nz-donut-chart > .nz-chart-frame-legend {
+      grid-row: 3;
+      grid-column: 1 / -1;
+      justify-self: stretch;
+    }
+
+    .nz-donut-chart:has(> .nz-chart-frame-caption.nz-chart-visually-hidden)
+      > .nz-chart-frame-legend {
+      grid-row: 2;
+    }
+
+    .nz-donut-chart .nz-legend[data-orientation='vertical'] {
+      grid-template-columns: auto minmax(0, 1fr) auto auto;
+    }
+
+    .nz-donut-chart .nz-chart-interaction-tip[data-side][data-side] {
+      max-inline-size: calc(50cqi - 0.875rem);
+      translate: 0.875rem -50%;
+    }
+
+    .nz-donut-chart .nz-chart-interaction-tip[data-side='left'][data-side] {
+      translate: calc(-100% - 0.875rem) -50%;
+    }
   }
 
   /* Figma has no donut motion: a short fade and settle, 0 ms under Reduced motion */

@@ -1,5 +1,6 @@
 // DonutChart in a real layout engine (ARCHITECTURE.md §14.1; Figma 03 "Donut Chart"): the ring is a
-// 200 px square beside its legend (40 % of a narrow chart), the gaps between segments are real gaps
+// 200 px square beside its legend (40 % of a narrower chart; under 24rem the legend goes under it,
+// and the centre steps down with a small ring), the gaps between segments are real gaps
 // (the page shows through), and with interaction="none" hover works in CSS alone: a segment, or its
 // legend row, dims the other segments to 35 % and the other legend rows to 45 %, and the centre
 // swaps the total for the segment's share and name. Those rules lean on `:has()`; this spec is
@@ -21,11 +22,16 @@ if (Object.keys(STYLES).length !== 2) {
   throw new Error('a stylesheet is missing: build @nizivo/tokens and @nizivo/charts first');
 }
 const sheet = document.createElement('style');
-// test scaffolding only: a white page and two chart widths
+// test scaffolding only: a white page and the chart widths
 sheet.textContent = `${Object.values(STYLES).join('\n')}
 body { margin: 0; background: #fff; }
 .probe-wide { inline-size: 640px; }
-.probe-narrow { inline-size: 300px; }`;
+.probe-mid { inline-size: 400px; }
+.probe-narrow { inline-size: 300px; }
+.probe-small { inline-size: 140px; }
+.probe-tiny { inline-size: 90px; }`;
+
+type Probe = 'probe-wide' | 'probe-mid' | 'probe-narrow' | 'probe-small' | 'probe-tiny';
 document.head.append(sheet);
 
 // Figma 03's numbers: 64,120 + 34,526 + 17,263 + 7,398 (Other) = 123,307
@@ -49,10 +55,7 @@ afterEach(() => {
   host = undefined;
 });
 
-async function mount(
-  probe: 'probe-wide' | 'probe-narrow',
-  interaction: 'nizivo' | 'none' = 'nizivo',
-): Promise<void> {
+async function mount(probe: Probe, interaction: 'nizivo' | 'none' = 'nizivo'): Promise<void> {
   host = document.createElement('div');
   host.className = probe;
   document.body.append(host);
@@ -111,7 +114,7 @@ const shownCentres = (): string[] =>
     .map((el) => el.textContent ?? '');
 
 describe('DonutChart geometry', () => {
-  test('a 200 px ring beside the legend; 40 % of a narrow chart', async () => {
+  test('a 200 px ring beside the legend; 40 % of a narrower chart', async () => {
     await mount('probe-wide');
     const ring = one('.nz-chart-frame-plot').getBoundingClientRect();
     expect([ring.width, ring.height]).toEqual([200, 200]);
@@ -120,16 +123,68 @@ describe('DonutChart geometry', () => {
     expect(legend.y).toBeLessThan(ring.bottom);
     root?.unmount();
     host?.remove();
-    await mount('probe-narrow');
+    await mount('probe-mid');
     const small = one('.nz-chart-frame-plot').getBoundingClientRect();
-    expect(small.width).toBeCloseTo(120, 0);
+    expect(small.width).toBeCloseTo(160, 0);
     expect(small.height).toBeCloseTo(small.width, 0);
+    expect(one('.nz-legend').getBoundingClientRect().x).toBeGreaterThan(small.right);
     // the legend (Figma's 120 px name column at most) still fits beside the ring: no overflow
     const figure = one('.nz-donut-chart');
     expect(one('.nz-legend').getBoundingClientRect().right).toBeLessThanOrEqual(
       figure.getBoundingClientRect().right + 0.5,
     );
     expect(figure.scrollWidth).toBeLessThanOrEqual(figure.clientWidth);
+  });
+
+  test('under 24rem the legend goes under the ring, full width, and no row overprints', async () => {
+    await mount('probe-narrow');
+    const figure = one('.nz-donut-chart').getBoundingClientRect();
+    const ring = one('.nz-chart-frame-plot').getBoundingClientRect();
+    expect([ring.width, ring.height]).toEqual([200, 200]);
+    // centred
+    expect(ring.left - figure.left).toBeCloseTo(figure.right - ring.right, 0);
+    const legend = one('.nz-legend').getBoundingClientRect();
+    expect(legend.top).toBeGreaterThanOrEqual(ring.bottom);
+    expect([legend.left, legend.right]).toEqual([figure.left, figure.right]);
+    for (const item of all('.nz-legend-item')) {
+      const [mark, label, value, share] = [...item.children].map((el) =>
+        el.getBoundingClientRect(),
+      );
+      if (!mark || !label || !value || !share) throw new Error('a legend row is missing a part');
+      expect(label.left).toBeGreaterThanOrEqual(mark.right);
+      expect(value.left).toBeGreaterThanOrEqual(label.right);
+      expect(share.left).toBeGreaterThanOrEqual(value.right);
+      expect(share.right).toBeLessThanOrEqual(figure.right + 0.5);
+    }
+    expect(one('.nz-donut-chart').scrollWidth).toBeLessThanOrEqual(figure.width);
+  });
+
+  test('the centre steps down on a small ring, and under 6rem is clipped but still read', async () => {
+    await mount('probe-wide');
+    const value = (): CSSStyleDeclaration => getComputedStyle(one('.nz-donut-chart-value'));
+    expect(value().fontSize).toBe('24px');
+    root?.unmount();
+    host?.remove();
+    await mount('probe-small');
+    expect(one('.nz-chart-frame-plot').getBoundingClientRect().width).toBeCloseTo(140, 0);
+    expect(value().fontSize).toBe('16px');
+    const centre = one('.nz-donut-chart-center:not([data-series])');
+    expect(getComputedStyle(centre).clipPath).toBe('none');
+    // the total and its label fit inside the hole (74 % of the ring)
+    const hole = one('.nz-chart-frame-plot').getBoundingClientRect().width * 0.74;
+    for (const part of centre.children) {
+      expect(part.getBoundingClientRect().width).toBeLessThanOrEqual(hole);
+    }
+    root?.unmount();
+    host?.remove();
+    await mount('probe-tiny');
+    const tiny = one('.nz-donut-chart-center:not([data-series])');
+    const style = getComputedStyle(tiny);
+    expect(style.clipPath).not.toBe('none');
+    // out of sight, not out of the accessibility tree: the total is in no legend row or table cell
+    expect([style.display, style.visibility]).toEqual(['flex', 'visible']);
+    expect(tiny.getAttribute('aria-hidden')).toBeNull();
+    expect(tiny.textContent).toBe('$123.3KTotal');
   });
 
   test('the gaps between segments show the page', async () => {
