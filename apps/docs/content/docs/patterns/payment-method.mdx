@@ -1,0 +1,38 @@
+---
+title: Payment method
+description: A choice of saved cards, one ChoiceCard of a native radio group each, the brand in words, the last four digits, the expiry spoken as a month and year, and the default marked with a Badge.
+---
+
+From Figma 05 Commerce, Payment Method (`7275:14174`; Default `7275:14175`, Selected `7275:14183`).
+Uses [ChoiceCard](/docs/components/choice-card/), [Field](/docs/components/field/),
+[Badge](/docs/components/badge/), [Button](/docs/components/button/) and
+[Stack](/docs/components/stack/), with the `CreditCard` and `Plus` icons from
+[`@nizivo/icons`](/docs/icons/).
+
+## Examples
+
+### Saved cards
+
+<PatternExample name="PaymentMethodExample" />
+
+## Stylesheet
+
+<PatternStylesheet />
+
+## Notes
+
+- **Client JavaScript.** ChoiceCard and its Field are client components. The radios are native and
+  in a `<form>`, so the choice works and submits before they hydrate.
+- **A radio group.** Figma draws a fake radio (an ellipse with a 5 px stroke, 1.57:1 against
+  white). Here each card is a label around a native radio, the group is named "Payment method" by
+  its Field, and arrow keys move the choice.
+- **Spoken in words.** A card's name is "Visa ending in 4242, Default": the bullets are hidden and
+  "ending in" is visually hidden. Its description is "Expires August 2028" for screen readers, built
+  with `Intl.DateTimeFormat`, while the screen shows Figma's "Expires 08/28".
+- **Brand marks.** The generic card glyph stands in for Figma's 44 × 30 mark. Card brands' logos
+  have their own rules and colours, so they are the app's to supply; the brand's name is in the
+  text either way.
+- **No layout shift.** Figma's selected row grows from 73 to 74 px as its stroke thickens;
+  ChoiceCard keeps its size when chosen.
+- **Adding a card** is a link drawn as a tertiary Button, below the group, which Figma does not
+  draw.

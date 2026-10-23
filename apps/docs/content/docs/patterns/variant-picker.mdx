@@ -1,0 +1,33 @@
+---
+title: Variant picker
+description: A product's colour and size options as chips of native radios, with an out-of-stock option shown as sold out rather than disabled.
+---
+
+From Figma 05 Commerce, Variant Option (`7275:14018`; Colour `7275:14019`, Size `7275:14028`).
+Uses [ChipGroup](/docs/components/chip-group/), [Field](/docs/components/field/),
+[Button](/docs/components/button/), [Stack](/docs/components/stack/),
+[Text](/docs/components/text/) and [NumberValue](/docs/components/number-value/).
+
+## Examples
+
+### Colour and size
+
+<PatternExample name="VariantPickerExample" />
+
+## Notes
+
+- **Client JavaScript.** ChipGroup and its Field are client components. The chips are native radios
+  in a `<form>`, so the choice works and submits before they hydrate.
+- **Native radios.** Each group is a radio group named by its Field's label ("Colour", "Size"):
+  Tab enters the group, arrow keys move the choice, and the form submits `color` and `size`. No
+  headless library is needed.
+- **Unavailable, not disabled.** Figma's Disabled state greys the chip and replaces the colour.
+  Here an out-of-stock option keeps its colour, is struck through and is described as "Sold out",
+  and stays focusable, so a screen reader user learns it exists and an app can offer "Notify me".
+  Add `disabled` only for an option that cannot be chosen at all.
+- **Colour is data.** Figma binds the swatch to a chart token; the swatch is the variant's own
+  colour, passed as the leading element's background, with a thin ring so a light colour such as
+  Sand shows on white.
+- **No layout shift.** Figma's selected chip grows from 90 × 40 to 92 × 42 as its stroke thickens;
+  the chips keep their size when chosen.
+- **Spelling.** The visible label is "Colour", as Figma writes it; the form field is `color`.

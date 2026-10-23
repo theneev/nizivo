@@ -1,0 +1,25 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+@layer nz.patterns {
+  .nzp-payment-method {
+    max-inline-size: 27rem;
+  }
+
+  /* Figma's 44 × 30 card mark: a generic card glyph where the brand's logo goes */
+  .nzp-payment-method-mark {
+    display: inline-grid;
+    flex: none;
+    place-items: center;
+    inline-size: 2.75rem;
+    block-size: 1.875rem;
+    border-radius: var(--nz-radius-xs);
+    background: var(--nz-bg-inverse);
+    color: var(--nz-icon-inverse);
+  }
+
+  /* the last four digits in Mono, kept on one line with their bullets */
+  .nzp-payment-method-number {
+    font: var(--nz-font-mono-m-strong);
+    white-space: nowrap;
+  }
+}

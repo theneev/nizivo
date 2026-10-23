@@ -4,9 +4,11 @@
     "index",
     "order-summary",
     "product-card",
+    "variant-picker",
     "product-table",
     "order-table",
     "discount-card",
+    "payment-method",
     "plan-card",
     "customer-card"
   ]

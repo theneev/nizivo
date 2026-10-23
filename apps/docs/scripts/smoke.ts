@@ -176,6 +176,9 @@ const CLIENT_PAGES: Record<string, string[]> = {
   '/docs/charts/bar-chart/': ['nz-chart-interaction'],
   '/docs/charts/donut-chart/': ['nz-chart-interaction'],
   // The commerce patterns (week 21): each loads the client parts its examples render.
+  // VariantPicker and PaymentMethod: ChipGroup and ChoiceCard, each in a Field (FieldScope's module).
+  '/docs/patterns/variant-picker/': ['chip-input', 'willValidate'],
+  '/docs/patterns/payment-method/': ['choice-card-input', 'willValidate'],
   // ProductTable: one TableSelection island, and a Menu per row whose IconButton trigger has a Tooltip.
   '/docs/patterns/product-table/': ['nz-table-selection', 'menu-popup', 'tooltip-popup'],
   // PlanCard: the row of plans' SegmentedControl (its module holds Field's client wiring too).
