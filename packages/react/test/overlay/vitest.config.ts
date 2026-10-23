@@ -1,5 +1,6 @@
 import { defineConfig, type ViteUserConfig } from 'vitest/config';
 import { engine, provider } from '../browser-engine.ts';
+import { adapterSwap } from '../adapters.ts';
 import { reactMatrix } from '../react-matrix.ts';
 
 // The overlay conformance lane (ARCHITECTURE.md §9.6 case 8, §12.5): every overlay adapter of the
@@ -23,10 +24,18 @@ const config: ViteUserConfig = defineConfig({
       'react-aria/useFocusable',
       'react-aria/useObjectRef',
       'react-aria/useToast',
+      // the hooks Tooltip adapter (NZ_ADAPTER=hooks)
+      'react-aria/I18nProvider',
+      'react-aria/SSRProvider',
+      'react-aria/useOverlayPosition',
+      'react-aria/useTooltipTrigger',
+      'react-stately/useTooltipTriggerState',
     ],
   },
   // `NZ_REACT=19.2`: React 19.2 instead of the workspace's 19.3 (test/react-matrix.ts).
   ...reactMatrix(),
+  // `NZ_ADAPTER=hooks`: the hooks Tooltip adapter instead of the default (test/adapters.ts).
+  plugins: adapterSwap(),
   test: {
     include: ['test/overlay/**/*.spec.tsx'],
     // Spring transitions run up to 493 ms; a case waits for an exit to finish.

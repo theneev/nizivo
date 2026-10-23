@@ -1,5 +1,6 @@
 import { defineConfig, type ViteUserConfig } from 'vitest/config';
 import { engine, provider } from '../browser-engine.ts';
+import { adapterSwap } from '../adapters.ts';
 import { reactMatrix } from '../react-matrix.ts';
 
 // Browser lane (Chromium through Playwright): hydration and native validation, which need a real
@@ -21,10 +22,18 @@ const config: ViteUserConfig = defineConfig({
       'react-aria/useFocusable',
       'react-aria/useObjectRef',
       'react-aria/useToast',
+      // the hooks Tooltip adapter (NZ_ADAPTER=hooks)
+      'react-aria/I18nProvider',
+      'react-aria/SSRProvider',
+      'react-aria/useOverlayPosition',
+      'react-aria/useTooltipTrigger',
+      'react-stately/useTooltipTriggerState',
     ],
   },
   // `NZ_REACT=19.2`: React 19.2 instead of the workspace's 19.3 (test/react-matrix.ts).
   ...reactMatrix(),
+  // `NZ_ADAPTER=hooks`: the hooks Tooltip adapter instead of the default (test/adapters.ts).
+  plugins: adapterSwap(),
   test: {
     include: ['test/browser/**/*.spec.tsx'],
     // Each case renders, waits a few frames and drives real input: well under a second alone, but

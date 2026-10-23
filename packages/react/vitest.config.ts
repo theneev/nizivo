@@ -1,4 +1,5 @@
 import { configDefaults, defineConfig } from 'vitest/config';
+import { adapterSwap } from './test/adapters.ts';
 import { reactMatrix } from './test/react-matrix.ts';
 
 // Node environment for week 1: SSR, contracts and module-graph checks. Browser projects
@@ -7,6 +8,8 @@ import { reactMatrix } from './test/react-matrix.ts';
 // (test/react-matrix.ts; the `test:react-19.2` script).
 export default defineConfig({
   ...reactMatrix(),
+  // `NZ_ADAPTER=hooks`: the hooks Tooltip adapter instead of the default (test/adapters.ts).
+  plugins: adapterSwap(),
   test: {
     environment: 'node',
     include: ['test/**/*.test.{ts,tsx}'],

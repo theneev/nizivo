@@ -40,7 +40,7 @@ const lanes = RELEASE_LANES.filter((lane) => only === undefined || only.includes
 
 if (values.list === true) {
   for (const lane of lanes)
-    console.log(`${lane.id.padEnd(16)} ${lane.dir} "${lane.script}"  ${lane.why}`);
+    console.log(`${lane.id.padEnd(30)} ${lane.dir} "${lane.script}"  ${lane.why}`);
   process.exit(0);
 }
 
@@ -68,10 +68,10 @@ for (const lane of lanes) {
   });
 }
 
-console.log('\nlane             result  seconds');
+console.log('\nlane                           result  seconds');
 for (const r of results) {
   console.log(
-    `${r.id.padEnd(16)} ${(r.status === 0 ? 'ok' : `FAIL ${r.status}`).padEnd(7)} ${r.seconds}${r.blocking ? '' : '  (non-blocking)'}`,
+    `${r.id.padEnd(30)} ${(r.status === 0 ? 'ok' : `FAIL ${r.status}`).padEnd(7)} ${r.seconds}${r.blocking ? '' : '  (non-blocking)'}`,
   );
 }
 const reported = results.filter((r) => r.status !== 0 && !r.blocking);

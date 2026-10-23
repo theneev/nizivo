@@ -27,7 +27,7 @@ file fixes what those fields hold and what each one produces.
 | `figma`          | no                                      | `canonical`, `ghosts`, `variantsSeen`, `related`: node ids       |
 | `budget`         | no                                      | `measuredKB`, `limitKB`, `source`                                |
 
-`adapter` is rejected until v0.2 defines the second adapter's file layout. Unknown keys are errors. `budget` is accepted but read by nothing: since week 5 the size budgets are derived from the package exports and live in `packages/tooling/size/budgets.json` (D-ah), and no manifest carries one.
+`adapter` (tier `engine` only) names a second adapter in the same engine family (ARCHITECTURE.md §9.4, D-cc): `_engines/<engine>/<name>.<adapter>.client.tsx`, which must export every `<Pascal>Engine` member, as the default adapter does. engine.ts keeps re-exporting the default adapter; `NZ_ADAPTER=<adapter>` points the node and overlay lanes at the second one (`packages/react/test/adapters.ts`), and the size checks leave it out until it becomes the default. Unknown keys are errors. `budget` is accepted but read by nothing: since week 5 the size budgets are derived from the package exports and live in `packages/tooling/size/budgets.json` (D-ah), and no manifest carries one.
 
 ## `tier`
 

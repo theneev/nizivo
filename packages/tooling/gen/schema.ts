@@ -33,6 +33,8 @@ export interface ComponentConfig {
   tier: Tier;
   engine?: string;
   overlay?: boolean;
+  /** A second adapter in the same engine family (§9.4): `_engines/<engine>/<name>.<adapter>.client.tsx`. */
+  adapter?: string;
   parts?: string[];
   exports?: string[];
   /** `data-slot` values of the parts that get the nz.base focus outline and `touch-action`. */
@@ -329,9 +331,11 @@ export function validateComponentConfig(
   }
   if (overlay !== undefined && typeof overlay !== 'boolean') fail('overlay', 'a boolean');
   if (overlay === true && tier !== 'engine') errors.push('"overlay": true needs "tier": "engine"');
+  // A second adapter inside the family (§9.4, D-cc): tested against the same suite (NZ_ADAPTER),
+  // never engine.ts's target, so the default adapter stays the shipped one.
   if (adapter !== undefined) {
-    // A second adapter inside a family (the v0.2 hooks Tooltip) has no file layout in the plan yet.
-    errors.push('"adapter" is not supported by nz gen yet (planned for the v0.2 Tooltip)');
+    if (typeof adapter !== 'string' || !KEBAB.test(adapter)) fail('adapter', 'a kebab-case name');
+    else if (tier !== 'engine') errors.push('"adapter" needs "tier": "engine"');
   }
 
   if (parts !== undefined) {
@@ -394,6 +398,7 @@ export function validateComponentConfig(
   const config: ComponentConfig = { name, status, tier };
   if (typeof engine === 'string') config.engine = engine;
   if (typeof overlay === 'boolean') config.overlay = overlay;
+  if (typeof adapter === 'string') config.adapter = adapter;
   if (isStringArray(parts)) config.parts = parts;
   if (isStringArray(exports)) config.exports = exports;
   Object.assign(config, a11y);

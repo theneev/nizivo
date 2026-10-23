@@ -153,3 +153,15 @@ describe('stateIndicator', () => {
     ]);
   });
 });
+
+describe('adapter', () => {
+  test('names a second adapter of an engine-tier component, in kebab case', () => {
+    expect(config({ ...select, adapter: 'hooks' }).adapter).toBe('hooks');
+    expect(errors({ ...select, adapter: 'Hooks' })).toEqual([
+      expect.stringContaining('"adapter" must be a kebab-case name'),
+    ]);
+    expect(errors({ name: 'card', tier: 'server', adapter: 'hooks' })).toEqual([
+      '"adapter" needs "tier": "engine"',
+    ]);
+  });
+});

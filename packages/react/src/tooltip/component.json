@@ -3,6 +3,7 @@
   "status": "stable",
   "tier": "engine",
   "engine": "react-aria",
+  "adapter": "hooks",
   "overlay": true,
   "parts": ["Root", "Trigger", "Popup"],
   "interactive": ["tooltip-trigger"],

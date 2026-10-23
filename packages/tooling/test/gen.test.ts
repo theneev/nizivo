@@ -116,6 +116,35 @@ describe('validation', () => {
     ]);
   });
 
+  test('checks a second adapter like the default one, and keeps engine.ts on the default', () => {
+    const root = copyFixture();
+    edit(react(root, 'src/select/component.json'), (text) =>
+      text.replace('"engine": "react-aria",', '"engine": "react-aria",\n  "adapter": "hooks",'),
+    );
+    expect(errorsOf(root)).toEqual([
+      expect.stringContaining(
+        '"adapter": "hooks" names a missing file: packages/react/src/_engines/react-aria/select.hooks.client.tsx',
+      ),
+    ]);
+    const second = react(root, 'src/_engines/react-aria/select.hooks.client.tsx');
+    writeFileSync(
+      second,
+      readFileSync(react(root, 'src/_engines/react-aria/select.client.tsx'), 'utf8').replace(
+        'export const GroupLabel',
+        'const GroupLabel',
+      ),
+    );
+    expect(errorsOf(root)).toEqual([
+      expect.stringContaining(
+        'select.hooks.client.tsx must export every SelectEngine member, as the default adapter does; missing GroupLabel',
+      ),
+    ]);
+    edit(second, (text) => text.replace('const GroupLabel', 'export const GroupLabel'));
+    expect(run(root)['packages/react/src/select/engine.ts']).toContain(
+      "from '../_engines/react-aria/select.client'",
+    );
+  });
+
   test('takes engine.ts names from the engine interface, so a leaf-only part needs no adapter export', () => {
     const root = copyFixture();
     edit(react(root, 'src/select/component.json'), (text) =>

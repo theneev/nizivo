@@ -221,6 +221,24 @@ function resolveComponent(
       }
       engineSeam = { module, names };
     }
+    if (config.adapter !== undefined && names !== undefined && names.length > 0) {
+      const second = join(
+        srcDir,
+        '_engines',
+        engine,
+        `${config.name}.${config.adapter}.client.tsx`,
+      );
+      if (!existsSync(second)) {
+        errors.push(`"adapter": "${config.adapter}" names a missing file: ${rel(second)}`);
+      } else {
+        const missing = names.filter((name) => !readExports(second).values.has(name));
+        if (missing.length > 0) {
+          errors.push(
+            `${rel(second)} must export every ${seam} member, as the default adapter does; missing ${missing.join(', ')}`,
+          );
+        }
+      }
+    }
     if (config.overlay === true) {
       const overlayEngine = readOverlayEngine(reactDir);
       if (overlayEngine !== config.engine) {

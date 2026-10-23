@@ -296,6 +296,9 @@ catalogs:
     react-dom-19.2:
       specifier: npm:react-dom@19.2.9
       version: 19.2.9
+    react-stately:
+      specifier: ^3.51.0
+      version: 3.51.0
     simple-icons:
       specifier: 16.35.0
       version: 16.35.0
@@ -647,6 +650,9 @@ importers:
       react-dom-19.2:
         specifier: 'catalog:'
         version: react-dom@19.2.9(react@19.3.0)
+      react-stately:
+        specifier: 'catalog:'
+        version: 3.51.0(react@19.3.0)
       size-limit:
         specifier: 'catalog:'
         version: 14.2.0

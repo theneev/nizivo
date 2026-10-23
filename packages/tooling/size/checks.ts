@@ -14,6 +14,7 @@
 //   file       a CSS or JSON entry, gzipped as published (no bundler)
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
+import { isSecondAdapter } from '../gen/adapter.ts';
 import budgets from './budgets.json' with { type: 'json' };
 import {
   CHART_TARGETS_KIB,
@@ -76,12 +77,17 @@ export function publicExports(pkg: PackageName): Array<{ key: string; file: stri
     });
 }
 
-/** Every `*.client.tsx` module under packages/<pkg>/src, as its dist path relative to dist/. */
+/** Every shipped `*.client.tsx` module under packages/<pkg>/src, as its dist path relative to dist/. */
 export function clientModules(pkg: 'react' | 'charts' = 'react'): string[] {
   const src = join(PACKAGES_DIR, pkg, 'src');
   if (!existsSync(src)) return [];
   return readdirSync(src, { recursive: true, withFileTypes: true })
-    .filter((entry) => entry.isFile() && entry.name.endsWith('.client.tsx'))
+    .filter(
+      (entry) =>
+        entry.isFile() &&
+        entry.name.endsWith('.client.tsx') &&
+        !isSecondAdapter(join(entry.parentPath, entry.name)),
+    )
     .map((entry) =>
       relative(src, join(entry.parentPath, entry.name))
         .split(sep)

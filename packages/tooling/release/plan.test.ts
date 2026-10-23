@@ -420,6 +420,7 @@ function world(w: World = {}) {
                   'test:browser',
                   'test:overlay',
                   'test:react-19.2',
+                  'test:adapter',
                   'test:visual',
                 ]),
               }
@@ -609,8 +610,23 @@ describe('release', () => {
     expect(
       calls
         .filter((c) => c.args.includes('test:overlay'))
-        .map((c) => c.options.env?.['NZ_BROWSER'] ?? `react ${c.options.env?.['NZ_REACT'] ?? ''}`),
-    ).toEqual(['chromium', 'webkit', 'firefox', 'react 19.2']);
+        .map((c) =>
+          [
+            c.options.env?.['NZ_ADAPTER'],
+            c.options.env?.['NZ_BROWSER'] ?? `react ${c.options.env?.['NZ_REACT'] ?? ''}`,
+          ]
+            .filter(Boolean)
+            .join(' '),
+        ),
+    ).toEqual([
+      'chromium',
+      'webkit',
+      'firefox',
+      'react 19.2',
+      'hooks chromium',
+      'hooks webkit',
+      'hooks firefox',
+    ]);
     expect(
       calls
         .filter((c) => c.options.cwd === join(REPO_ROOT, 'packages/charts'))
@@ -968,6 +984,11 @@ describe('release', () => {
       'test-react-19.2',
       'browser-react-19.2',
       'overlay-react-19.2',
+      'test-tooltip-hooks',
+      'browser-tooltip-hooks',
+      'overlay-tooltip-hooks-chromium',
+      'overlay-tooltip-hooks-webkit',
+      'overlay-tooltip-hooks-firefox',
       'charts-chromium',
       'charts-webkit',
       'charts-firefox',

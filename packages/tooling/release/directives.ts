@@ -9,6 +9,7 @@
 // - Namespace objects are built in directive-free *.parts.js modules (spike S2).
 // - `export * as` never targets, and never sits in, a 'use client' module; `export *` never
 //   re-exports one (verdict V3: barrels re-export by name).
+import { isSecondAdapter } from '../gen/adapter.ts';
 
 export interface DirectiveInput {
   /** Published files, keyed `dist/…`. */
@@ -131,7 +132,10 @@ function sourceAgainstDist(input: DirectiveInput, failures: string[]): void {
     const built = distCounterpart(file);
     const builtText = dist.get(built);
     if (builtText === undefined) {
-      if (isClient(text)) failures.push(`${file}: 'use client' module has no ${built}`);
+      // a second adapter is not built until it becomes the default (gen/adapter.ts)
+      if (isClient(text) && !isSecondAdapter(file)) {
+        failures.push(`${file}: 'use client' module has no ${built}`);
+      }
     } else if (isClient(text) !== isClient(builtText)) {
       failures.push(
         isClient(text)

@@ -81,6 +81,30 @@ export const RELEASE_LANES: readonly Lane[] = [
     script,
     env: { NZ_REACT: '19.2' },
   })),
+  // The second Tooltip adapter (§9.4, D-cc): the node suite, the browser lane and overlay
+  // conformance in all three engines on React Aria's hooks with Nizivo's own DOM
+  // (NZ_ADAPTER=hooks, packages/react/test/adapters.ts). The node lane keeps its own module cache.
+  {
+    id: 'test-tooltip-hooks',
+    why: 'the node suite on the hooks Tooltip adapter (§9.4)',
+    dir: 'packages/react',
+    script: 'test:adapter',
+    env: { NZ_ADAPTER: 'hooks' },
+  },
+  {
+    id: 'browser-tooltip-hooks',
+    why: 'the browser lane on the hooks Tooltip adapter, Chromium (§9.4)',
+    dir: 'packages/react',
+    script: 'test:browser',
+    env: { NZ_ADAPTER: 'hooks' },
+  },
+  ...(['chromium', 'webkit', 'firefox'] as const).map((browser) => ({
+    id: `overlay-tooltip-hooks-${browser}`,
+    why: `overlay conformance on the hooks Tooltip adapter in ${browser} (§9.4, §12.5)`,
+    dir: 'packages/react',
+    script: 'test:overlay',
+    env: { NZ_ADAPTER: 'hooks', NZ_BROWSER: browser },
+  })),
   // @nizivo/charts (v0.2): its browser specs (the stroke check, the island, the marks, bars and
   // donut) in all three engines, then the charts-only fixture (tokens.css + charts' styles.css, no
   // @nizivo/react CSS; §14.1) on the packed tarballs. Both read the built dist/.
