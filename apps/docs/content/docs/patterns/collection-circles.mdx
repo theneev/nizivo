@@ -1,0 +1,34 @@
+---
+title: Collection circles
+description: A row of story-ring links to a store's collections, a cover in a ring and the name under it, that scrolls sideways. A server composition; it ships no JavaScript.
+---
+
+From Figma 10 Instagram Storefront, Collection Circle (`7275:19802`, with the orphan master
+`772:4320` the screens use) and the collections rail on the mobile storefront (`7275:20748`). Uses
+[Text](/docs/components/text/) and the `nz-visually-hidden` utility of `@nizivo/react/css/base.css`.
+
+## Examples
+
+### Collections rail
+
+<PatternExample name="CollectionCirclesExample" title="Collections rail" />
+
+## Stylesheet
+
+<PatternStylesheet />
+
+## Notes
+
+- **New and seen, not by colour alone.** Figma's only signal is the ring: brand green when new,
+  `border/default` when seen, and the seen ring is 1.18:1 against the canvas in light mode and 1.39:1
+  in dark (figma/10 §3.1). Here a new circle also has a ring twice as thick, at 5.9:1 in light and 5.7:1 in dark, and a bold
+  name, and its link says ", new picks" (visually hidden), so the accessible name is "Slow mornings,
+  new picks". A seen circle keeps the thin ring and a regular name in secondary text.
+- **Keyboard.** Each circle is one link and one Tab stop. The list scrolls sideways when it
+  outgrows its container, and a focused link scrolls into view, so the keyboard reaches every
+  circle without a focusable scroller. The list is a `<ul>` named "Collections".
+- **Where it differs from Figma.** The ring is a shadow inside a fixed 80 px box, so new and seen
+  circles are the same size and the rail does not jump when a collection turns seen (Figma's frame
+  grows 2 px with the thicker ring). The label is cut with an ellipsis on one line; the link's
+  accessible name keeps the whole name. Marking a collection seen is app state: the app sets
+  `seen` from what the shopper has opened.

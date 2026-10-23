@@ -1,0 +1,79 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+@layer nz.patterns {
+  /* One row that scrolls sideways when the circles outgrow it, never wraps. */
+  .nzp-collection-circles {
+    display: flex;
+    gap: var(--nz-space-3);
+    margin: 0;
+    padding: var(--nz-space-1);
+    overflow: auto hidden;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: inline proximity;
+    list-style: none;
+  }
+
+  .nzp-collection-circles > li {
+    flex: none;
+    scroll-snap-align: start;
+  }
+
+  .nzp-collection-circles-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--nz-space-2);
+    inline-size: 5.5rem;
+    padding-block: var(--nz-space-1);
+    border-radius: var(--nz-radius-md);
+    color: inherit;
+    text-decoration: none;
+
+    &:focus-visible {
+      outline: var(--nz-border-width-focus) solid var(--nz-border-focus);
+      outline-offset: 2px;
+    }
+  }
+
+  /* A fixed box: the ring is a shadow inside it, so a new and a seen circle are the same size
+     (Figma's hugging frame grows 2 px with the thicker ring, figma/10 §3.1). */
+  .nzp-collection-circles-ring {
+    display: grid;
+    box-sizing: border-box;
+    place-items: center;
+    inline-size: 5rem;
+    block-size: 5rem;
+    border-radius: var(--nz-radius-full);
+    box-shadow: inset 0 0 0 calc(2 * var(--nz-border-width-default)) var(--nz-border-brand);
+  }
+
+  .nzp-collection-circles-seen .nzp-collection-circles-ring {
+    box-shadow: inset 0 0 0 var(--nz-border-width-default) var(--nz-border-default);
+  }
+
+  .nzp-collection-circles-cover {
+    inline-size: 4.5rem;
+    block-size: 4.5rem;
+    border-radius: var(--nz-radius-full);
+    background: var(--nz-bg-muted);
+  }
+
+  /* A long name is cut on one line; the link's accessible name keeps all of it. */
+  .nzp-collection-circles-label {
+    max-inline-size: 100%;
+    overflow: hidden;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  @media (forced-colors: active) {
+    .nzp-collection-circles-ring {
+      border: calc(2 * var(--nz-border-width-default)) solid CanvasText;
+    }
+
+    .nzp-collection-circles-seen .nzp-collection-circles-ring {
+      border-width: var(--nz-border-width-default);
+    }
+  }
+}

@@ -11,6 +11,7 @@
     "payment-method",
     "shipment-tracker",
     "plan-card",
-    "customer-card"
+    "customer-card",
+    "collection-circles"
   ]
 }
