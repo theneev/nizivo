@@ -1,0 +1,93 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+@layer nz.patterns {
+  /* One row; when the identity would have less than 11rem, the actions wrap under it. */
+  .nzp-storefront-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--nz-space-3);
+    padding-block: var(--nz-space-3);
+    padding-inline: var(--nz-space-4);
+    border-block-end: var(--nz-border-width-default) solid var(--nz-border-subtle);
+    background: var(--nz-bg-canvas);
+  }
+
+  .nzp-storefront-bar-identity {
+    display: flex;
+    flex: 1 1 11rem;
+    align-items: center;
+    gap: var(--nz-space-2);
+    min-inline-size: 0;
+  }
+
+  .nzp-storefront-bar-text {
+    display: flex;
+    flex-direction: column;
+    min-inline-size: 0;
+  }
+
+  .nzp-storefront-bar-title {
+    display: flex;
+    align-items: center;
+    gap: var(--nz-space-1);
+    min-inline-size: 0;
+  }
+
+  .nzp-storefront-bar-name,
+  .nzp-storefront-bar-followers {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* 24 px around the 16 px glyph, and 44 px on a coarse pointer. */
+  .nzp-storefront-bar-instagram {
+    position: relative;
+    display: inline-grid;
+    flex: none;
+    place-items: center;
+    inline-size: 1.5rem;
+    block-size: 1.5rem;
+    border-radius: var(--nz-radius-full);
+    color: var(--nz-icon-primary);
+
+    &:focus-visible {
+      outline: var(--nz-border-width-focus) solid var(--nz-border-focus);
+      outline-offset: 2px;
+    }
+
+    @media (pointer: coarse) {
+      &::after {
+        content: '';
+        position: absolute;
+        inset: calc((1.5rem - var(--nz-size-touch-min)) / 2);
+      }
+    }
+  }
+
+  .nzp-storefront-bar-actions {
+    display: flex;
+    flex: none;
+    margin-inline-start: auto;
+    align-items: center;
+    gap: var(--nz-space-2);
+  }
+
+  .nzp-storefront-bar-bag {
+    position: relative;
+    display: inline-flex;
+  }
+
+  /* The count sits on the bag's top end corner; the bag's name says it, so it takes no press. */
+  .nzp-storefront-bar-count {
+    position: absolute;
+    inset-block-start: calc(-1 * var(--nz-space-1));
+    inset-inline-end: calc(-1 * var(--nz-space-1));
+    min-inline-size: 1.25rem;
+    justify-content: center;
+    padding-inline: var(--nz-space-1);
+    font: var(--nz-font-label-m-strong);
+    pointer-events: none;
+  }
+}

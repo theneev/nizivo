@@ -1,0 +1,40 @@
+---
+title: Storefront bar
+description: The top of a store, with its Avatar, its name and Instagram link, its followers in compact notation, a Follow Button and the bag with its count.
+---
+
+From Figma 10 Instagram Storefront, Storefront Bar (`7275:19889`, with the orphan master `772:4457`
+the screens use) and the profile header of the mobile storefront (`7275:20706`). Uses
+[Avatar](/docs/components/avatar/), [Badge](/docs/components/badge/),
+[Button](/docs/components/button/), [IconButton](/docs/components/icon-button/),
+[NumberValue](/docs/components/number-value/), [Text](/docs/components/text/), the `ShoppingBag`
+glyph of [`@nizivo/icons`](/docs/icons/) and the `Instagram` brand glyph of
+`@nizivo/icons/brands/instagram`.
+
+## Examples
+
+### Store header
+
+<PatternExample name="StorefrontBarExample" title="Store header" />
+
+## Stylesheet
+
+<PatternStylesheet />
+
+## Notes
+
+- **The bag says its count.** The IconButton is named "Bag, 2 items" and links to the bag; the
+  count badge on it is hidden from screen readers and takes no press. Past 99 it shows "99+", and
+  with an empty bag it shows nothing. The button is 40 px and its hit area grows to 44 px on a
+  coarse pointer (Figma's bag is 40 px, §3.5).
+- **The Instagram glyph.** Its usage rule allows it only on links that go to Instagram, so here it
+  is a link to the store's profile, named "Moss & Kiln on Instagram", with a 24 px target (44 px on
+  a coarse pointer). Do not use it as decoration.
+- **Followers.** `NumberValue` with `notation: 'compact'` prints 12,480 as "12.5K" in English and
+  as the locale writes it elsewhere.
+- **Where it differs from Figma.** No search: put a [SearchField](/docs/components/search-field/)
+  between the identity and the actions when the store has one (Figma's mobile search is a bare
+  20 px icon with no button, §3.5). The Follow Button and the follower count come from the
+  storefront's profile header (§4), where Figma draws them as custom frames. There is no
+  `Platform` variant: when the bar is too narrow for one row, the actions wrap under the store's
+  name, and a long name is cut with an ellipsis.

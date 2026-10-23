@@ -187,6 +187,7 @@ const CLIENT_PAGES: Record<string, string[]> = {
   '/docs/patterns/product-tag/': ['popover-popup'],
   // Tagged product and Storefront bar (patterns, Figma 10): their IconButtons carry the Tooltip.
   '/docs/patterns/tagged-product/': ['tooltip-popup'],
+  '/docs/patterns/storefront-bar/': ['tooltip-popup'],
 };
 
 /** Pages whose JavaScript the run prints. */
