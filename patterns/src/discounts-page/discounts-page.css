@@ -1,0 +1,50 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* Figma 08 Pattern 5 (7275:16204): the header, the notice, the KPI row (16 apart), the status links,
+   then the discount cards three to a row, 24 apart (Figma's Discount Card is a set with no code
+   component, so each is a Card). The grids follow the page's own width. */
+@layer nz.patterns {
+  .nzp-discounts-page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-6);
+    min-inline-size: 0;
+    container-type: inline-size;
+  }
+
+  .nzp-discounts-page-kpis {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--nz-space-4);
+  }
+
+  .nzp-discounts-page-list {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--nz-space-6);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @container (width >= 36rem) {
+    .nzp-discounts-page-kpis {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .nzp-discounts-page-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @container (width >= 56rem) {
+    .nzp-discounts-page-list {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .nzp-discounts-page-footer {
+    justify-content: space-between;
+    margin-block-start: auto;
+  }
+}

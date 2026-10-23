@@ -203,6 +203,7 @@ const CLIENT_PAGES: Record<string, string[]> = {
     'switch-thumb',
     'chip-input',
   ],
+  '/docs/patterns/orders-page/': ['search-field-clear', 'willValidate', 'drawer-popup'],
 };
 
 /** Pages whose JavaScript the run prints. */

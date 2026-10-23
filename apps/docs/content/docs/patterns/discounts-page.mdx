@@ -1,0 +1,44 @@
+---
+title: Discounts page
+description: A discount index inside the app shell, with a notice, key figures, status links and a card per discount showing its status, dates and usage on a Meter. It ships no JavaScript.
+---
+
+From Figma 08 Overview Dashboard, Pattern 5 · Discounts (`7275:16204`). Uses
+[PageHeader](/docs/components/page-header/), [Button](/docs/components/button/),
+[Alert](/docs/components/alert/), [KpiTile](/docs/components/kpi-tile/),
+[TabNav](/docs/components/tab-nav/), [Card](/docs/components/card/),
+[Badge](/docs/components/badge/), [Meter](/docs/components/meter/) and
+[Text](/docs/components/text/).
+
+The example is the page's content only: in the app it goes inside
+[AppShell](/docs/components/app-shell/), which owns the sidebar, the top bars and `<main>`.
+
+```tsx
+// app/(store)/layout.tsx: the shell wraps every store page; the page renders its content
+import { AppShell } from '@nizivo/react/app-shell';
+
+<AppShell sidebar={sidebar} topBar={topBar} mobileTopBar={mobileTopBar} tabBar={tabBar}>
+  <DiscountsPageExample />
+</AppShell>;
+```
+
+## Example
+
+### Discounts
+
+<PatternExample name="DiscountsPageExample" />
+
+## Stylesheet
+
+<PatternStylesheet />
+
+## Notes
+
+- **Heading levels.** This site's page already has its `<h1>`, so the example passes `level={2}` to
+  PageHeader. In your app, drop `level` (the title becomes the page's `<h1>`).
+- **A list.** The discounts are a `<ul>` whose items are Cards (`render={<li />}`), so a screen
+  reader announces how many there are. Each status is a Badge's words, never its colour alone.
+- **Usage is a Meter**, not a ProgressBar: it measures how much of a fixed limit is used, and
+  `valueText` reads it as "312 of 500".
+- **Not built.** Figma's Discount Card has no code component; each is a Card. The notice is not
+  dismissible here: add `dismiss={<AlertDismiss … />}` to let a reader close it.

@@ -1,0 +1,49 @@
+---
+title: Orders page
+description: An order index inside the app shell, with key figures, status filters, search, an orders table and pagination; each order opens in a Drawer.
+---
+
+From Figma 08 Overview Dashboard, Pattern 3 · Orders + drawer (`7275:15971`). Uses
+[PageHeader](/docs/components/page-header/), [Button](/docs/components/button/),
+[KpiTile](/docs/components/kpi-tile/), [Card](/docs/components/card/),
+[TabNav](/docs/components/tab-nav/), [SearchField](/docs/components/search-field/),
+[Table](/docs/components/table/), [Avatar](/docs/components/avatar/),
+[Badge](/docs/components/badge/), [NumberValue](/docs/components/number-value/),
+[Drawer](/docs/components/drawer/), [Separator](/docs/components/separator/),
+[Text](/docs/components/text/) and [Pagination](/docs/components/pagination/).
+
+The example is the page's content only: in the app it goes inside
+[AppShell](/docs/components/app-shell/), which owns the sidebar, the top bars and `<main>`.
+
+```tsx
+// app/(store)/layout.tsx: the shell wraps every store page; the page renders its content
+import { AppShell } from '@nizivo/react/app-shell';
+
+<AppShell sidebar={sidebar} topBar={topBar} mobileTopBar={mobileTopBar} tabBar={tabBar}>
+  <OrdersPageExample />
+</AppShell>;
+```
+
+## Example
+
+### Orders
+
+<PatternExample name="OrdersPageExample" />
+
+## Stylesheet
+
+<PatternStylesheet />
+
+## Notes
+
+- **Heading levels.** This site's page already has its `<h1>`, so the example passes `level={2}` to
+  PageHeader. In your app, drop `level` (the title becomes the page's `<h1>`).
+- **The drawer.** Each row's View is the trigger of its own `Drawer`, which opens from the end edge
+  over a scrim, moves focus into it and returns focus to the button when it closes. Without a
+  client component of your own there is no shared open state, so each row carries its drawer; in an
+  app that renders the order from the URL (`?order=1042`), one controlled Drawer is enough.
+- **Dates.** `Intl.DateTimeFormat` with an explicit locale and `timeZone`, so the server and the
+  browser print the same text.
+- **Not in Figma.** Figma's second header action is unread; the example uses "Create order". Figma
+  has no mobile design for this page, so the table scrolls sideways inside its card on a narrow
+  screen.

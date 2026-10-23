@@ -1,0 +1,50 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* Figma 08 Pattern 4 (7275:16097): the header, the KPI row (16 apart), the segment links, then
+   Split's two columns: the customers table and an aside of the top cities and a win-back card. The
+   KPI row follows the page's own width. */
+@layer nz.patterns {
+  .nzp-customers-page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-6);
+    min-inline-size: 0;
+    container-type: inline-size;
+  }
+
+  .nzp-customers-page-kpis {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--nz-space-4);
+  }
+
+  @container (width >= 36rem) {
+    .nzp-customers-page-kpis {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .nzp-customers-page-aside {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-6);
+  }
+
+  .nzp-customers-page-person {
+    display: flex;
+    align-items: center;
+    gap: var(--nz-space-3);
+  }
+
+  .nzp-customers-page-name {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-0-5);
+  }
+
+  .nzp-customers-page-title {
+    display: flex;
+    align-items: center;
+    gap: var(--nz-space-2);
+  }
+}

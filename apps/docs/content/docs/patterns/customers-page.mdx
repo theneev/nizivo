@@ -1,0 +1,46 @@
+---
+title: Customers page
+description: A customer index inside the app shell, with key figures, segment links and a customers table beside the top cities and a win-back card. It ships no JavaScript.
+---
+
+From Figma 08 Overview Dashboard, Pattern 4 · Customers (`7275:16097`). Uses
+[PageHeader](/docs/components/page-header/), [Button](/docs/components/button/),
+[KpiTile](/docs/components/kpi-tile/), [TabNav](/docs/components/tab-nav/),
+[Split](/docs/components/split/), [Table](/docs/components/table/),
+[Avatar](/docs/components/avatar/), [Badge](/docs/components/badge/),
+[Text](/docs/components/text/), [NumberValue](/docs/components/number-value/),
+[RankedList](/docs/components/ranked-list/) and [Card](/docs/components/card/).
+
+The example is the page's content only: in the app it goes inside
+[AppShell](/docs/components/app-shell/), which owns the sidebar, the top bars and `<main>`.
+
+```tsx
+// app/(store)/layout.tsx: the shell wraps every store page; the page renders its content
+import { AppShell } from '@nizivo/react/app-shell';
+
+<AppShell sidebar={sidebar} topBar={topBar} mobileTopBar={mobileTopBar} tabBar={tabBar}>
+  <CustomersPageExample />
+</AppShell>;
+```
+
+## Example
+
+### Customers
+
+<PatternExample name="CustomersPageExample" />
+
+## Stylesheet
+
+<PatternStylesheet />
+
+## Notes
+
+- **Heading levels.** This site's page already has its `<h1>`, so the example passes `level={2}` to
+  PageHeader. In your app, drop `level` (the title becomes the page's `<h1>`).
+- **A table, not cards.** Figma lays the customers out as Customer Cards, two to a row; that card
+  has no component, and a table reads and sorts better at this size, so the example uses one. Each
+  name is the row's link (`Table.RowLink`), so the whole row is the hit area.
+- **Avatars.** The avatar is decorative beside the printed name; it shows initials here, and a photo
+  through `src` in your app.
+- **Not built.** Figma's Insight Card, with its 3D render, has no component: the win-back prompt is
+  an accent `Card` with no media.
