@@ -1,6 +1,6 @@
 ---
 title: Strings and locales
-description: How Nizivo's built-in strings work. Every one is in a `labels` prop with an English default; `@nizivo/react/locales/en-US` lists them all; an app passes its own locale's strings by wrapping a component once; `formatLabel` fills placeholders and picks CLDR plural forms.
+description: How Nizivo's built-in strings work. Every one is in a `labels` prop with an English default; `@nizivo/react/locales/en-US` lists them all; `NizivoConfig` passes an app's own strings to the client parts, and a file that wraps each server part once passes them to the rest; `formatLabel` fills placeholders and picks CLDR plural forms.
 ---
 
 Nizivo writes a few words of its own: accessible names ("Pagination", "Close"), status text
@@ -37,26 +37,109 @@ them as engine-owned (for example `DialogLabels.dismiss`).
 
 ## Your own locale
 
-Write your locale's strings once, and wrap each component that takes `labels` once, so the rest of
-the app imports your component and never passes a string:
+Write your locale's strings once, in a catalogue of the `enUS` shape, and pass them in two ways: the
+client parts read them from `NizivoConfig`, and the server parts get them from a file that wraps
+each one once. A Server Component cannot read a React context, so no provider can reach the server
+parts; Nizivo has no module-level setting either, which would give every request on a server the
+same language.
 
-```tsx
-// app/ui/pagination.tsx
-import { Pagination as NizivoPagination, type PaginationProps } from '@nizivo/react/pagination';
-import type { enUS } from '@nizivo/react/locales/en-US';
+```ts
+// app/ui/de-DE.ts
+import type { NizivoLabels } from '@nizivo/react/config';
 
-export const deDE: Pick<typeof enUS, 'pagination' | 'avatarGroup'> = {
+export const deDE = {
+  button: { pending: 'Wird geladen…' },
+  dialog: { close: 'Schließen' },
   pagination: {
     nav: 'Seitennavigation',
     previous: 'Vorherige Seite',
     next: 'Nächste Seite',
     page: 'Seite {page}',
   },
-  avatarGroup: {
-    overflow: '+{count}',
-    more: { one: '{count} weitere Person', other: '{count} weitere Personen' },
-  },
-};
+  searchField: { label: 'Suchen', clear: 'Suche leeren' },
+  toaster: { region: 'Benachrichtigungen (F8)', dismiss: 'Schließen' },
+} satisfies NizivoLabels;
+```
+
+Once it holds every key, type it `typeof enUS` instead (`import type { enUS } from
+'@nizivo/react/locales/en-US'`), so a missing string is a type error. An app with an i18n library
+(next-intl, react-i18next, Lingui) builds the same object from its messages.
+
+### Client parts: NizivoConfig
+
+`NizivoConfig` takes `labels`, the same shape (`NizivoLabels` from `@nizivo/react/config`: every key
+and every string optional, so a whole catalogue fits). Put it around the app once, with the Toaster
+inside it:
+
+```tsx
+// app/layout.tsx
+import type { ReactNode } from 'react';
+import { NizivoConfig } from '@nizivo/react/config';
+import { Toaster } from '@nizivo/react/toast';
+import { deDE } from './ui/de-DE';
+
+export default function RootLayout({ children }: { children: ReactNode }) {
+  return (
+    <html lang="de-DE">
+      <body>
+        <NizivoConfig locale="de-DE" labels={deDE}>
+          {children}
+          <Toaster />
+        </NizivoConfig>
+      </body>
+    </html>
+  );
+}
+```
+
+`NizivoConfig` is a client component, and the catalogue is plain strings, so a Server Component
+layout passes it as it is; the pages under it stay Server Components. Each string resolves in this
+order: the part's own `labels` prop, key by key; then the nearest `NizivoConfig`'s `labels`; then
+the English default. A part outside every `NizivoConfig` shows English. Keep the object stable (a
+module constant, as here): a new object on every render re-renders every part that reads it.
+
+The provider reaches these parts:
+
+| Part             | Catalogue key      | Strings                                          |
+| ---------------- | ------------------ | ------------------------------------------------ |
+| BannerDismiss    | `bannerDismiss`    | `dismiss`                                        |
+| ChipGroup        | `chipGroup`        | `unavailable`                                    |
+| Dialog.Close     | `dialog`           | `close`                                          |
+| Drawer.Close     | `drawer`           | `close`                                          |
+| FileUpload       | `fileUpload`       | all 14 (`prompt`, `browse`, `summary`, …)        |
+| Form             | `form`             | `summaryTitle`                                   |
+| MobileTabBarMore | `mobileTabBarMore` | `more`, and `close` for its sheet's Close button |
+| PasswordInput    | `passwordInput`    | `toggle`                                         |
+| Popover.Close    | `popover`          | `close`                                          |
+| SearchField      | `searchField`      | `label`, `clear`                                 |
+| Toaster          | `toaster`          | `region`, `dismiss`                              |
+
+MobileTabBarMore names its sheet's Close button with its own `close`, so `mobileTabBarMore.close`
+applies there, not `drawer.close`.
+
+It does not reach the server parts, whose keys it ignores: AppShell (`appShell`), AvatarGroup
+(`avatarGroup`), Breadcrumb (`breadcrumb`), Button (`button`), KpiTile (`kpiTile`), Metric
+(`metric`), MobileTabBar's landmark (`mobileTabBar`), Pagination (`pagination`), RankedList
+(`rankedList`), Sidebar (`sidebar`), TableSelectAll (`tableSelection`) and TrendCard
+(`trendCard`). Two client parts do not read it yet either, so they also take `labels` per
+instance: AlertDismiss (`alertDismiss`), and SubmitButton, which passes its own `labels` on to
+Button and so shows `button.pending` only when you pass it.
+
+### Server parts: wrap once
+
+For the server parts, one app file wraps each one with the catalogue's strings, and the rest of
+the app imports them from there. The file has no `'use client'`, so the wrappers stay Server
+Components and ship no JavaScript; a `labels` prop passed to a wrapper still wins key by key.
+
+```tsx
+// app/ui/nizivo.tsx
+import { Button as NizivoButton, type ButtonProps } from '@nizivo/react/button';
+import { Pagination as NizivoPagination, type PaginationProps } from '@nizivo/react/pagination';
+import { deDE } from './de-DE';
+
+export function Button(props: ButtonProps) {
+  return <NizivoButton {...props} labels={{ ...deDE.button, ...props.labels }} />;
+}
 
 export function Pagination(props: PaginationProps) {
   return (
@@ -65,10 +148,13 @@ export function Pagination(props: PaginationProps) {
 }
 ```
 
-An app with an i18n library (next-intl, react-i18next, Lingui) builds the same object from its
-messages and passes it the same way. Nizivo has no global route for strings yet: a `labels` key on
-`NizivoConfig` is not built, so every string goes through the component's own prop. Whether to add
-one is open.
+```tsx
+// a page: import { Button, Pagination } from '../ui/nizivo', not from @nizivo/react
+<Pagination page={2} totalPages={9} getHref={(page) => `?page=${page}`} />
+```
+
+Wrap AvatarGroup the same way when its count strings need plural objects in your locale (see the
+next section).
 
 ## Plurals and formatLabel
 

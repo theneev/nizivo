@@ -48,9 +48,10 @@ text is not rendered visibly and the name is the label. Assistive technology als
 from `aria-disabled`. `labels={{ pending: '' }}` shows no text and keeps the label visible. The
 markup is the same in both motion modes; only CSS reads the preference.
 
-Translate the text with `labels.pending`. It is set per instance: 0.1.0 has no app-wide labels, and
-Button, a server component, could not read them from context anyway. A localised app wraps Button
-once and uses the wrapper everywhere:
+Translate the text with `labels.pending`. It is set per instance: Button is a server component, so
+`NizivoConfig`'s `labels`, which reach the client parts only, do not reach it, and neither does
+SubmitButton, which passes its own `labels` on to Button. A localised app wraps Button once and uses
+the wrapper everywhere (see [Strings and locales](/docs/guides/strings/)):
 
 ```tsx
 import { Button, type ButtonProps } from '@nizivo/react/button';
