@@ -1,0 +1,70 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+@layer nz.patterns {
+  .nzp-shoppable-post-single {
+    max-inline-size: 18.75rem;
+  }
+
+  /* The whole tile is one link; everything on it is decoration of that link. */
+  .nzp-shoppable-post {
+    position: relative;
+    display: block;
+    inline-size: 100%;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border-radius: var(--nz-radius-xs);
+    color: inherit;
+    text-decoration: none;
+
+    &:focus-visible {
+      outline: var(--nz-border-width-focus) solid var(--nz-border-focus);
+      outline-offset: 2px;
+    }
+  }
+
+  .nzp-shoppable-post-media {
+    position: absolute;
+    inset: 0;
+    background: var(--nz-bg-muted);
+  }
+
+  /* On-media surface: bg/code and text/on-dark are dark and white in both themes, a pair the
+     tokens' contrast check holds at 17.4:1 (light) and 18.7:1 (dark). Opaque, so the photo under it
+     cannot lower the contrast (Figma's #141714 at 62 % with text/inverse falls to 1.12:1 in dark
+     mode, figma/10 §3.2). */
+  .nzp-shoppable-post-badge {
+    position: absolute;
+    inset-block-end: var(--nz-space-2);
+    inset-inline-start: var(--nz-space-2);
+    gap: var(--nz-space-1);
+    background: var(--nz-bg-code);
+    color: var(--nz-text-on-dark);
+  }
+
+  .nzp-shoppable-post-count {
+    font: var(--nz-font-label-m-strong);
+  }
+
+  .nzp-shoppable-post-carousel {
+    position: absolute;
+    inset-block-start: var(--nz-space-2);
+    inset-inline-end: var(--nz-space-2);
+    display: grid;
+    place-items: center;
+    inline-size: 1.5rem;
+    block-size: 1.5rem;
+    border-radius: var(--nz-radius-full);
+    background: var(--nz-bg-code);
+    color: var(--nz-text-on-dark);
+  }
+
+  .nzp-shoppable-post-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--nz-space-0-5);
+    max-inline-size: 40rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+}
