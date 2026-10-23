@@ -61,10 +61,11 @@ function inputs(html: string): string[] {
 }
 
 describe('module graph', () => {
-  test('the subpath reaches its leaf and FieldScope, no engine, and imports only react', () => {
+  test('the subpath reaches its leaf, FieldScope and the config, no engine, and imports only react', () => {
     const { modules, externals } = graph(SRC, 'src/chip-group/index.ts');
     expect([...modules].filter((file) => isClient(SRC.get(file) ?? '')).toSorted()).toEqual([
       'src/chip-group/chip-group.client.tsx',
+      'src/config/config.client.tsx',
       'src/field/field-scope.client.tsx',
     ]);
     expect([...externals]).toEqual(['react']);

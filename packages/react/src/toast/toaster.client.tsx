@@ -16,6 +16,7 @@ import {
 } from 'react';
 import { createPortal } from 'react-dom';
 import { Button } from '../button/button';
+import { useLabels } from '../config/config.client';
 import { iconButtonElement } from '../icon-button/icon-button-static';
 import { cx } from '../_internal/cx';
 import { CircleCheckGlyph, CircleXGlyph, CloseGlyph, InfoGlyph } from '../_internal/glyphs';
@@ -345,6 +346,7 @@ export function Toaster({
   const toasts = all.slice(-limit);
   const hydrated = useHydrated();
   const ids = toasts.map((toast) => toast.id).join(' ');
+  const strings = { ...LABELS, ...useLabels('toaster', labels) };
 
   useEffect(attach, []);
   useEffect(() => show(ids === '' ? [] : ids.split(' ')), [ids]);
@@ -364,12 +366,7 @@ export function Toaster({
   return (
     <>
       {createPortal(
-        <Stack
-          toasts={toasts}
-          strings={{ ...LABELS, ...labels }}
-          hotkey={hotkey}
-          className={className}
-        />,
+        <Stack toasts={toasts} strings={strings} hotkey={hotkey} className={className} />,
         document.body,
       )}
       {createPortal(<Announcer />, document.body)}

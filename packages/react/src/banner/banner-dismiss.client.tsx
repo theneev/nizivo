@@ -1,6 +1,7 @@
 'use client';
 // The Banner's dismiss leaf: the only part of a Banner that hydrates (ARCHITECTURE.md §9.5, "split").
 import type { ComponentPropsWithRef, MouseEvent, ReactElement, ReactNode } from 'react';
+import { useLabels } from '../config/config.client';
 import { renderElement, type RenderProp } from '../contracts/render';
 import { cx } from '../_internal/cx';
 import { CloseGlyph } from '../_internal/glyphs';
@@ -37,7 +38,7 @@ export interface BannerDismissProps extends Omit<ComponentPropsWithRef<'button'>
  */
 export function BannerDismiss({
   onDismiss,
-  labels,
+  labels: labelsProp,
   'aria-label': ariaLabel,
   type,
   render,
@@ -46,6 +47,7 @@ export function BannerDismiss({
   children,
   ...rest
 }: BannerDismissProps): ReactElement {
+  const labels = useLabels('bannerDismiss', labelsProp);
   const own = render === undefined;
   return renderElement(
     'button',

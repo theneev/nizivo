@@ -61,9 +61,10 @@ function part(html: string, slot: string): string {
 }
 
 describe('module graph', () => {
-  test('the subpath reaches its leaf and FieldScope, no engine, and imports only react', () => {
+  test('the subpath reaches its leaf, FieldScope and the config, no engine, and imports only react', () => {
     const { modules, externals } = graph(SRC, 'src/search-field/index.ts');
     expect([...modules].filter((file) => isClient(SRC.get(file) ?? '')).toSorted()).toEqual([
+      'src/config/config.client.tsx',
       'src/field/field-scope.client.tsx',
       'src/search-field/search-field.client.tsx',
     ]);

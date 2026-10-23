@@ -22,10 +22,11 @@ describe('Banner is server-safe', () => {
 });
 
 describe('Banner is split', () => {
-  test('the subpath reaches exactly one client module, the dismiss leaf', () => {
+  test('the subpath reaches two client modules, the dismiss leaf and the config it reads', () => {
     const { modules } = graph(SRC, 'src/banner/index.ts');
-    expect([...modules].filter((file) => isClient(SRC.get(file) ?? ''))).toEqual([
+    expect([...modules].filter((file) => isClient(SRC.get(file) ?? '')).toSorted()).toEqual([
       'src/banner/banner-dismiss.client.tsx',
+      'src/config/config.client.tsx',
     ]);
   });
 });

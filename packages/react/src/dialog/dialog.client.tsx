@@ -1,6 +1,7 @@
 'use client';
 // PUBLIC Dialog parts (ARCHITECTURE.md §10.4): the leaf names every element; the adapter names none.
 import { createContext, use, type JSX, type ReactElement } from 'react';
+import { useLabels } from '../config/config.client';
 import { renderElement, toRenderFn } from '../contracts/render';
 import { cx } from '../_internal/cx';
 import { CloseGlyph } from '../_internal/glyphs';
@@ -170,9 +171,10 @@ export function DialogClose({
   className,
   render,
   children,
-  labels,
+  labels: labelsProp,
   ...rest
 }: DialogCloseProps): JSX.Element {
+  const labels = useLabels('dialog', labelsProp);
   return (
     <Engine.Close
       {...rest}

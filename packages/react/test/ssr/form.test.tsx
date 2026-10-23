@@ -33,9 +33,10 @@ const CLIENT = [
 const IDS = { control: 'c', label: 'l', description: 'd', error: 'e' };
 
 describe('module graph', () => {
-  test('the subpath reaches Form, SubmitButton and FieldScope; react and react-dom outside', () => {
+  test('the subpath reaches Form, SubmitButton, FieldScope and the config; react and react-dom outside', () => {
     const { modules, externals } = graph(SRC, 'src/form/index.ts');
     expect([...modules].filter((file) => isClient(SRC.get(file) ?? '')).toSorted()).toEqual([
+      'src/config/config.client.tsx',
       'src/field/field-scope.client.tsx',
       'src/form/form.client.tsx',
       'src/form/submit-button.client.tsx',

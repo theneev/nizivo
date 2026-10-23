@@ -4,6 +4,7 @@
 // (Figma draws no Popover; its popups, the Dropdown Menu 746:204 and the Date Range Picker 746:267,
 // have none), Escape and an outside press close it.
 import type { JSX, ReactElement } from 'react';
+import { useLabels } from '../config/config.client';
 import { toRenderFn } from '../contracts/render';
 import { cx } from '../_internal/cx';
 import { CloseGlyph } from '../_internal/glyphs';
@@ -147,9 +148,10 @@ export function PopoverClose({
   className,
   render,
   children,
-  labels,
+  labels: labelsProp,
   ...rest
 }: PopoverCloseProps): JSX.Element {
+  const labels = useLabels('popover', labelsProp);
   return (
     <Engine.Close
       {...rest}

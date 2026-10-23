@@ -17,6 +17,7 @@ import {
   type ReactElement,
   type ReactNode,
 } from 'react';
+import { useLabels } from '../config/config.client';
 import { mergeProps } from '../contracts/merge-props';
 import { renderElement, type RenderProp } from '../contracts/render';
 import { cx } from '../_internal/cx';
@@ -67,12 +68,13 @@ const NONE: ReadonlySet<string> = new Set();
 export function Form({
   errors,
   summary = false,
-  labels,
+  labels: labelsProp,
   render,
   className,
   children,
   ...rest
 }: FormProps): ReactElement {
+  const labels = useLabels('form', labelsProp);
   // Names edited since `errors` last changed: a server message is stale once the user changes the
   // value, so it is hidden, as React Aria's Form does with its server errors.
   const [edited, setEdited] = useState<{ for: FormErrors | undefined; names: ReadonlySet<string> }>(

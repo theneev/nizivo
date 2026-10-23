@@ -3,6 +3,7 @@
 // leaf names every element; the adapter names none. The Dialog pattern at an edge: modal, a scrim,
 // focus contained, the page's scroll locked, and focus back on the trigger when it closes.
 import { createContext, use, type JSX, type ReactElement } from 'react';
+import { useLabels } from '../config/config.client';
 import { renderElement, toRenderFn } from '../contracts/render';
 import { cx } from '../_internal/cx';
 import { CloseGlyph } from '../_internal/glyphs';
@@ -179,9 +180,10 @@ export function DrawerClose({
   className,
   render,
   children,
-  labels,
+  labels: labelsProp,
   ...rest
 }: DrawerCloseProps): JSX.Element {
+  const labels = useLabels('drawer', labelsProp);
   return (
     <Engine.Close
       {...rest}

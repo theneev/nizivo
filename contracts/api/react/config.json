@@ -15,6 +15,12 @@
           "type": "ReactNode"
         },
         {
+          "description": "Built-in strings for the client parts in this scope. A part's own `labels` prop wins key by key; a key neither sets falls back to the English default. Keep the object stable (a module constant or memoised), as with any context value.",
+          "name": "labels",
+          "required": false,
+          "type": "NizivoLabels"
+        },
+        {
           "default": "'en-US'",
           "description": "BCP 47 tag used by engine-backed parts.",
           "name": "locale",
@@ -32,6 +38,16 @@
       "name": "NizivoConfigProps",
       "propsOf": "NizivoConfig",
       "source": "packages/react/src/config/config.client.tsx",
+      "typeParameters": []
+    },
+    {
+      "declaration": "type",
+      "description": "Built-in strings for every client part in the scope, shaped like the `enUS` catalogue (`@nizivo/react/locales/en-US`): keyed by component, every key and every string optional, so a whole catalogue of another locale fits. Read by the client parts the Strings guide lists; the other keys (server parts such as Pagination, Button and Breadcrumb, which cannot read a context, and AlertDismiss) are ignored here, and those parts take `labels` per instance.",
+      "import": "import type { NizivoLabels } from '@nizivo/react/config'",
+      "kind": "type",
+      "name": "NizivoLabels",
+      "source": "packages/react/src/config/config.client.tsx",
+      "text": "{ [K in keyof typeof enUS]?: Partial<(typeof enUS)[K]>; }",
       "typeParameters": []
     }
   ],

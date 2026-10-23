@@ -55,10 +55,11 @@ function fileInput(html: string): string {
 }
 
 describe('module graph', () => {
-  test('the subpath reaches three client modules: FileUpload, its adapter and FieldScope', () => {
+  test('the subpath reaches four client modules: FileUpload, its adapter, FieldScope and the config', () => {
     const { modules, externals } = graph(SRC, 'src/file-upload/index.ts');
     expect([...modules].filter((file) => isClient(SRC.get(file) ?? '')).toSorted()).toEqual([
       'src/_engines/react-aria/file-upload.client.tsx',
+      'src/config/config.client.tsx',
       'src/field/field-scope.client.tsx',
       'src/file-upload/file-upload.client.tsx',
     ]);

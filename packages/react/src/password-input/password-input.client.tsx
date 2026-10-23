@@ -17,6 +17,7 @@ import {
   type ReactNode,
 } from 'react';
 import type { ControlSize } from '../augment';
+import { useLabels } from '../config/config.client';
 import { details, type ChangeDetails } from '../contracts/details';
 import { mergeProps } from '../contracts/merge-props';
 import { renderElement, type RenderProp } from '../contracts/render';
@@ -91,13 +92,14 @@ export function PasswordInput({
   onVisibleChange,
   showIcon,
   hideIcon,
-  labels,
+  labels: labelsProp,
   autoComplete = 'current-password',
   render,
   className,
   style,
   ...rest
 }: PasswordInputProps): JSX.Element {
+  const labels = useLabels('passwordInput', labelsProp);
   const field = useFieldControl({
     id,
     name,

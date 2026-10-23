@@ -15,6 +15,7 @@ import {
   type JSX,
   type ReactNode,
 } from 'react';
+import { useLabels } from '../config/config.client';
 import { details, type ChangeDetails } from '../contracts/details';
 import { mergeProps } from '../contracts/merge-props';
 import { renderElement, type RenderProp } from '../contracts/render';
@@ -139,7 +140,7 @@ export function ChipGroup<M extends boolean = false>({
   required: requiredProp,
   disabled,
   invalid,
-  labels,
+  labels: labelsProp,
   'aria-describedby': describedBy,
   'aria-labelledby': labelledBy,
   render,
@@ -147,6 +148,7 @@ export function ChipGroup<M extends boolean = false>({
   children,
   ...rest
 }: ChipGroupProps<M>): JSX.Element {
+  const labels = useLabels('chipGroup', labelsProp);
   // The conditional types resolve once M is known; inside, both shapes are handled at run time.
   const multiple = multipleProp === true;
   const value: string | null | readonly string[] | undefined = valueProp;

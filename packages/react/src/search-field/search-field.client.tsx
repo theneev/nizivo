@@ -18,6 +18,7 @@ import {
   type ReactNode,
 } from 'react';
 import type { ControlSize } from '../augment';
+import { useLabels } from '../config/config.client';
 import { mergeProps } from '../contracts/merge-props';
 import { renderElement, type RenderProp } from '../contracts/render';
 import { stateAttrs } from '../contracts/state';
@@ -105,12 +106,13 @@ export function SearchField({
   shortcut,
   icon,
   pending = false,
-  labels,
+  labels: labelsProp,
   render,
   className,
   style,
   ...rest
 }: SearchFieldProps): JSX.Element {
+  const labels = useLabels('searchField', labelsProp);
   const field = useFieldControl({
     id,
     name,

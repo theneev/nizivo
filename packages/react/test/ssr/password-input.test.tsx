@@ -34,9 +34,10 @@ const CLIENT = [
 const IDS = { control: 'c', label: 'l', description: 'd', error: 'e' };
 
 describe('module graph', () => {
-  test('the subpath reaches two client modules, PasswordInput and FieldScope; only react outside', () => {
+  test('the subpath reaches three client modules, PasswordInput, FieldScope and the config; only react outside', () => {
     const { modules, externals } = graph(SRC, 'src/password-input/index.ts');
     expect([...modules].filter((file) => isClient(SRC.get(file) ?? '')).toSorted()).toEqual([
+      'src/config/config.client.tsx',
       'src/field/field-scope.client.tsx',
       'src/password-input/password-input.client.tsx',
     ]);

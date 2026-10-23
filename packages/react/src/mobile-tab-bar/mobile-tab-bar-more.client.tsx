@@ -4,6 +4,7 @@
 // moves in and is trapped, Escape and an outside press close it, focus returns to the button).
 // Following a link in the sheet closes it, as a route change does.
 import { useState, type MouseEvent, type ReactElement, type ReactNode } from 'react';
+import { useLabels } from '../config/config.client';
 import {
   DrawerBody,
   DrawerClose,
@@ -44,11 +45,12 @@ export function MobileTabBarMore({
   current = false,
   icon,
   heading,
-  labels,
+  labels: labelsProp,
   className,
   children,
   ...rest
 }: MobileTabBarMoreProps): ReactElement {
+  const labels = useLabels('mobileTabBarMore', labelsProp);
   const [open, setOpen] = useState(false);
   const more = labels?.more ?? 'More';
   const closeOnLink = (event: MouseEvent<HTMLDivElement>): void => {

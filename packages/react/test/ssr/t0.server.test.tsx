@@ -97,12 +97,18 @@ const TOOLTIP_LEAVES = [
 /** The client leaves a split component's subpath may reach (§9.5 "split"); none for the others. */
 const CLIENT_LEAVES: Partial<Record<Name, string[]>> = {
   alert: ['src/alert/alert-dismiss.client.tsx'],
-  banner: ['src/banner/banner-dismiss.client.tsx'],
+  // a client part that reads NizivoConfig's labels reaches the config module (M55)
+  banner: ['src/banner/banner-dismiss.client.tsx', 'src/config/config.client.tsx'],
   'table-selection': ['src/table-selection/table-selection.client.tsx'],
   field: [FIELD_SCOPE],
   'icon-button': TOOLTIP_LEAVES,
   // Form reads FieldScope's module for the context the Fields read its errors from
-  form: [FIELD_SCOPE, 'src/form/form.client.tsx', 'src/form/submit-button.client.tsx'].toSorted(),
+  form: [
+    FIELD_SCOPE,
+    'src/config/config.client.tsx',
+    'src/form/form.client.tsx',
+    'src/form/submit-button.client.tsx',
+  ].toSorted(),
   // SidebarItem: NavItem's link as a Tooltip trigger (M52), and the Tooltip chain
   sidebar: [
     'src/sidebar/sidebar-item.client.tsx',

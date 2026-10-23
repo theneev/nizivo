@@ -22,6 +22,7 @@ import {
   type ReactNode,
 } from 'react';
 import { Button } from '../button/button';
+import { useLabels } from '../config/config.client';
 import { mergeProps } from '../contracts/merge-props';
 import { stateAttrs } from '../contracts/state';
 import { useFieldControl } from '../field/field-scope.client';
@@ -101,7 +102,7 @@ export function FileUpload({
   'aria-labelledby': ariaLabelledBy,
   ...rest
 }: FileUploadProps): JSX.Element {
-  const labels = { ...LABELS, ...labelsProp };
+  const labels = { ...LABELS, ...useLabels('fileUpload', labelsProp) };
   const base = useId();
   const hintId = `${base}-hint`;
   const messagesId = `${base}-messages`;

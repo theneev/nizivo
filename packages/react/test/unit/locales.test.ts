@@ -32,6 +32,8 @@ const LOCALES = new Map(
  */
 const NOT_CATALOGUED: Record<string, string> = {
   MenuLabels: 'only `dismiss`, engine-owned (React Aria renders and translates it)',
+  NizivoLabels:
+    "NizivoConfig's `labels`: the catalogue's own shape, derived from it, not a part's strings",
   SelectLabels: "`placeholder` is a prop whose default is React Aria's localized string",
   TooltipLabels: 'no strings',
 };
