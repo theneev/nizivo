@@ -13,11 +13,14 @@
     "Head",
     "Cell",
     "SortButton",
-    "RowLink"
+    "RowLink",
+    "Selection",
+    "SelectAll",
+    "SelectRow"
   ],
   "interactive": ["table-sort-button", "table-row-link"],
   "focusTarget": "self",
-  "cssDeps": ["base"],
+  "cssDeps": ["base", "checkbox"],
   "variants": {},
   "figma": {
     "canonical": ["7275:14091", "7275:14040"],

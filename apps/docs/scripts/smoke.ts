@@ -82,6 +82,8 @@ const NIZIVO_CLIENT_MARKERS = [
   'drawer-popup',
   // CountUp (@nizivo/react/motion, M41): its digits' slot
   'count-up-value',
+  // Table.Selection, Table's one client part (week 18): its class
+  'nz-table-selection',
   // @nizivo/charts' ChartInteraction island (AreaChart's point mode, BarChart's column mode,
   // DonutChart's item mode). The charts parts have their own generated routes
   // (app/docs/(generated)/charts), so it may load on those three pages only; on any other page it
@@ -115,6 +117,8 @@ const CLIENT_PAGES: Record<string, string[]> = {
   '/docs/components/segmented-control/': ['segmented-control-input', 'willValidate'],
   // PageHeader is a server part; its Overview example puts a SegmentedControl in the actions (week 16).
   '/docs/components/page-header/': ['segmented-control-input', 'willValidate'],
+  // TableSelectionExample wraps its table in Table.Selection; its "Archive selected" is a server Button.
+  '/docs/components/table/': ['nz-table-selection'],
   '/docs/components/tabs/': ['tabs-tab', 'nz-textarea', 'willValidate'],
   // MenuRowActionsExample's trigger is an IconButton, whose default tooltip leaf the page imports.
   '/docs/components/menu/': ['menu-popup', 'tooltip-popup'],

@@ -2,7 +2,11 @@ import { renderToString } from 'react-dom/server';
 import { describe, expect, test } from 'vitest';
 import { graph, isClient, reactImports, REACT_SERVER, rekey } from '../helpers/graph';
 import { Table } from '../../src/table/index';
-import { TableOrdersExample, TableSortExample } from '../../src/table/table.example';
+import {
+  TableOrdersExample,
+  TableSelectionExample,
+  TableSortExample,
+} from '../../src/table/table.example';
 
 const SRC = rekey(
   import.meta.glob('../../src/**/*.{ts,tsx}', { query: '?raw', import: 'default', eager: true }),
@@ -10,7 +14,7 @@ const SRC = rekey(
 );
 
 describe('Table is server-safe', () => {
-  const { modules, externals } = graph(SRC, 'src/table/index.ts');
+  const { modules, externals } = graph(SRC, 'src/table/table.tsx');
 
   test("no 'use client' module in its graph; it imports only react", () => {
     expect([...modules].filter((file) => isClient(SRC.get(file) ?? ''))).toEqual([]);
@@ -19,6 +23,15 @@ describe('Table is server-safe', () => {
 
   test('every react import exists under the react-server condition', () => {
     expect(reactImports(SRC, modules).filter((name) => !REACT_SERVER.has(name))).toEqual([]);
+  });
+});
+
+describe('Table is split', () => {
+  test('the subpath reaches exactly one client module, the selection island', () => {
+    const { modules } = graph(SRC, 'src/table/index.ts');
+    expect([...modules].filter((file) => isClient(SRC.get(file) ?? ''))).toEqual([
+      'src/table/table-selection.client.tsx',
+    ]);
   });
 });
 
@@ -67,6 +80,25 @@ describe('Table markup', () => {
     expect(html).toMatch(
       /^<button data-slot="table-sort-button" type="button" class="nz-table-sort-button nz-hit-target">Total<span/,
     );
+  });
+
+  test('selection: native checkboxes that submit with their form, named, with no client markup', () => {
+    const html = renderToString(<TableSelectionExample />);
+    expect(html).toContain('<div data-slot="table-selection" class="nz-table-selection">');
+    expect(html).toContain(
+      '<label data-slot="table-select-all" class="nz-table-select-all nz-checkbox nz-hit-target"><input aria-label="Select all rows" type="checkbox"',
+    );
+    const row = /<input[^>]*value="apron-002"[^>]*>/.exec(html)?.[0] ?? '';
+    for (const attribute of [
+      'name="ids"',
+      'form="products-bulk"',
+      'aria-label="Select Linen apron"',
+      'type="checkbox"',
+      'class="nz-table-select-row-input nz-checkbox-input"',
+      'checked=""',
+    ]) {
+      expect(row).toContain(attribute);
+    }
   });
 
   test('a container with a label is a named, focusable scroll region; without one, a plain box', () => {

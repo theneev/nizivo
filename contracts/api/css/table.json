@@ -11,6 +11,10 @@
     "nz-table-head",
     "nz-table-row",
     "nz-table-row-link",
+    "nz-table-select-all",
+    "nz-table-select-row",
+    "nz-table-select-row-input",
+    "nz-table-selection",
     "nz-table-sort-button",
     "nz-table-sort-icon"
   ],
@@ -165,6 +169,12 @@
       },
       "name": "--nz-table-row-bg-selected",
       "reads": [
+        {
+          "conditions": [],
+          "property": "background",
+          "selector": ".nz-table-row:has( > .nz-table-cell > .nz-table-select-row > .nz-table-select-row-input:checked)",
+          "slot": "table-row"
+        },
         {
           "conditions": [],
           "property": "background",

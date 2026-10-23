@@ -92,6 +92,11 @@ code.shiki:not(.not-fumadocs-code *) span {
     font: var(--nz-font-body-m);
     overflow-x: auto;
   }
+  /* An example wider than the preview shrinks to it, so a table in it scrolls in its own container:
+     flex items do not shrink below their content otherwise (TableSelectionExample's Stack). */
+  .nz-docs-preview > * {
+    min-inline-size: 0;
+  }
   /* An example's own wrapper <div> lays its items out in a row. */
   .nz-docs-preview > div:not([data-slot]) {
     display: flex;

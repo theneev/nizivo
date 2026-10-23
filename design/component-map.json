@@ -154,7 +154,10 @@
         "Head",
         "Cell",
         "SortButton",
-        "RowLink"
+        "RowLink",
+        "Selection",
+        "SelectAll",
+        "SelectRow"
       ],
       "props": {}
     },
@@ -174,7 +177,10 @@
         "Head",
         "Cell",
         "SortButton",
-        "RowLink"
+        "RowLink",
+        "Selection",
+        "SelectAll",
+        "SelectRow"
       ],
       "props": {}
     },
@@ -194,7 +200,10 @@
         "Head",
         "Cell",
         "SortButton",
-        "RowLink"
+        "RowLink",
+        "Selection",
+        "SelectAll",
+        "SelectRow"
       ],
       "props": {}
     },
@@ -214,7 +223,10 @@
         "Head",
         "Cell",
         "SortButton",
-        "RowLink"
+        "RowLink",
+        "Selection",
+        "SelectAll",
+        "SelectRow"
       ],
       "props": {}
     },
@@ -461,7 +473,10 @@
         "Head",
         "Cell",
         "SortButton",
-        "RowLink"
+        "RowLink",
+        "Selection",
+        "SelectAll",
+        "SelectRow"
       ],
       "props": {}
     },
@@ -481,7 +496,10 @@
         "Head",
         "Cell",
         "SortButton",
-        "RowLink"
+        "RowLink",
+        "Selection",
+        "SelectAll",
+        "SelectRow"
       ],
       "props": {}
     },

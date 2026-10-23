@@ -2,7 +2,7 @@
   "$comment": "Size budgets (ARCHITECTURE.md §17), written by `node packages/tooling/size/measure.ts --write`. measured: bytes, gzip -9, as size-limit 14.2 reports them. limitKiB: measured + 10%, rounded up (method.ts limitKiB), never above the entry's §17.1 plan limit (method.ts PLAN_LIMITS_KIB). Limits only go up through a labelled PR (§17.3).",
   "entries": {
     "@nizivo/react": {
-      "measured": 100924,
+      "measured": 101602,
       "limitKiB": 107
     },
     "@nizivo/react/alert": {
@@ -194,8 +194,8 @@
       "limitKiB": 1.2
     },
     "@nizivo/react/table": {
-      "measured": 1661,
-      "limitKiB": 1.8
+      "measured": 2513,
+      "limitKiB": 2.7
     },
     "@nizivo/react/tabs": {
       "measured": 33683,
@@ -230,7 +230,7 @@
       "limitKiB": 85
     },
     "@nizivo/react { Button } from the barrel": {
-      "measured": 1277,
+      "measured": 1278,
       "limitKiB": 1.4
     },
     "@nizivo/react { Select } from the barrel": {
@@ -357,6 +357,10 @@
       "measured": 552,
       "limitKiB": 0.6
     },
+    "@nizivo/react own: table/table-selection.client": {
+      "measured": 783,
+      "limitKiB": 0.9
+    },
     "@nizivo/react own: tabs/tabs.client": {
       "measured": 486,
       "limitKiB": 0.6
@@ -398,7 +402,7 @@
       "limitKiB": 0.8
     },
     "@nizivo/react/css/base.css": {
-      "measured": 1106,
+      "measured": 1113,
       "limitKiB": 1.1
     },
     "@nizivo/react/css/breadcrumb.css": {
@@ -562,7 +566,7 @@
       "limitKiB": 1
     },
     "@nizivo/react/css/table.css": {
-      "measured": 1042,
+      "measured": 1103,
       "limitKiB": 1.1
     },
     "@nizivo/react/css/tabs.css": {
@@ -590,7 +594,7 @@
       "limitKiB": 0.5
     },
     "@nizivo/react/styles.css": {
-      "measured": 19355,
+      "measured": 19422,
       "limitKiB": 19
     },
     "@nizivo/tokens": {

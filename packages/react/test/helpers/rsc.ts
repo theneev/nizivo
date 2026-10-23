@@ -107,6 +107,8 @@ export function serverRender(node: ReactNode, boundaries: ClientBoundary[] = [])
     const output: ReactNode = Reflect.apply(type, undefined, [props]);
     return serverRender(output, boundaries);
   }
+  // A Fragment adds no element: RSC sends its children as they are.
+  if (typeof type === 'symbol') return serverRender(props.children, boundaries);
   return { type, props: { ...props, children: serverRender(props.children, boundaries) } };
 }
 

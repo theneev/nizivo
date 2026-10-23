@@ -88,6 +88,7 @@ const TOOLTIP_LEAVES = [
 const CLIENT_LEAVES: Partial<Record<Name, string[]>> = {
   alert: ['src/alert/alert-dismiss.client.tsx'],
   banner: ['src/banner/banner-dismiss.client.tsx'],
+  table: ['src/table/table-selection.client.tsx'],
   field: [FIELD_SCOPE],
   'icon-button': TOOLTIP_LEAVES,
 };
@@ -101,6 +102,7 @@ const EXTERNALS: Partial<Record<Name, RegExp>> = {
 const CLIENT_EXPORTS: Record<string, string[]> = {
   'src/alert/alert-dismiss.client.tsx': ['AlertDismiss'],
   'src/banner/banner-dismiss.client.tsx': ['BannerDismiss'],
+  'src/table/table-selection.client.tsx': ['TableSelection'],
   [FIELD_SCOPE]: ['FieldScope', 'useFieldControl'],
   'src/icon-button/icon-button.client.tsx': ['IconButtonTooltip'],
   // client controls the Field and Fieldset examples compose

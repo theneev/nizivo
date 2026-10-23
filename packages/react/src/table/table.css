@@ -93,8 +93,21 @@
     font: var(--nz-font-label-m-strong);
   }
 
-  .nz-table-row[data-selected] {
+  .nz-table-row[data-selected],
+  .nz-table-row:has(> .nz-table-cell > .nz-table-select-row > .nz-table-select-row-input:checked) {
     background: var(--nz-table-row-bg-selected, var(--nz-bg-brand-subtle));
+  }
+
+  /* the selection column: as narrow as its checkbox */
+  .nz-table-cell:has(> .nz-table-select-row),
+  .nz-table-head:has(> .nz-table-select-all) {
+    inline-size: 1px;
+    padding-inline-end: 0;
+  }
+
+  /* the island's box takes no space: the table keeps its container's layout */
+  .nz-table-selection {
+    display: contents;
   }
 
   /* A stretched link (§16.2): the row is the link's hit area; other controls sit above it. */
@@ -115,7 +128,7 @@
   }
 
   .nz-table-row[data-interactive]
-    :is(a[href], button, input, select, textarea, [tabindex]):not(.nz-table-row-link) {
+    :is(a[href], button, input, select, textarea, label, [tabindex]):not(.nz-table-row-link) {
     position: relative;
     z-index: 1;
   }
@@ -193,7 +206,10 @@
 
   /* fills are replaced: a selected row keeps an outline */
   @media (forced-colors: active) {
-    .nz-table-row[data-selected] {
+    .nz-table-row[data-selected],
+    .nz-table-row:has(
+      > .nz-table-cell > .nz-table-select-row > .nz-table-select-row-input:checked
+    ) {
       outline: 2px solid Highlight;
       outline-offset: -2px;
     }

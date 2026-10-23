@@ -181,12 +181,14 @@ export function outline(entry: CatalogEntry): Outline {
         `- \`${s.slot}\` (\`.nz-${s.slot}\`, rendered by ${s.renderedBy})${s.attributes.length > 0 ? `: ${s.attributes.map((a) => a.name).join(', ')}` : ''}`,
       );
     }
-    contents.push({
-      heading: 'slots',
-      content: api.slots
-        .map((s) => [s.slot, ...s.attributes.map((a) => a.name)].join(' '))
-        .join(', '),
-    });
+    // One entry per slot: in a single entry, a part family's shared word (Table's six
+    // `table-select-*` slots) outweighed a page titled with that word (week 18).
+    for (const s of api.slots) {
+      contents.push({
+        heading: 'slots',
+        content: [s.slot, ...s.attributes.map((a) => a.name)].join(' '),
+      });
+    }
     md.push('');
   }
   if (css) {

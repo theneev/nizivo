@@ -11,7 +11,11 @@ import { page, userEvent } from 'vitest/browser';
 import { Button } from '../../src/button/index';
 import { PageHeader } from '../../src/page-header/index';
 import { Table } from '../../src/table/index';
-import { TableOrdersExample, TableSortExample } from '../../src/table/table.example';
+import {
+  TableOrdersExample,
+  TableSelectionExample,
+  TableSortExample,
+} from '../../src/table/table.example';
 
 const STYLES = import.meta.glob(
   [
@@ -23,10 +27,11 @@ const STYLES = import.meta.glob(
     '../../src/inline/inline.css',
     '../../src/page-header/page-header.css',
     '../../src/table/table.css',
+    '../../src/checkbox/checkbox.css',
   ],
   { query: '?raw', import: 'default', eager: true },
 );
-if (Object.keys(STYLES).length !== 8)
+if (Object.keys(STYLES).length !== 9)
   throw new Error('a stylesheet is missing; build @nizivo/tokens and run nz gen');
 const style = document.createElement('style');
 // the build expands @custom-media (tokens' custom-media.css); the raw sources need it done here
@@ -205,6 +210,107 @@ function sizeOf(font: string): string {
   probe.remove();
   return size;
 }
+
+const inputs = (slot: string): HTMLInputElement[] => [
+  ...document.querySelectorAll<HTMLInputElement>(`[data-slot="${slot}-input"]`),
+];
+
+/** The checked row ids a submit of the bulk form would send. */
+function submitted(): string[] {
+  const form = document.querySelector('form');
+  if (form === null) throw new Error('no form');
+  return new FormData(form).getAll('ids').map(String);
+}
+
+describe('Table selection', () => {
+  test('before hydration: the server checkboxes already submit with their form', async () => {
+    const container = document.createElement('div');
+    container.innerHTML = renderToString(<TableSelectionExample />);
+    document.body.append(container);
+    expect(submitted()).toEqual(['apron-002']);
+    const [first] = inputs('table-select-row');
+    if (first === undefined) throw new Error('no row');
+    await userEvent.click(first);
+    expect(submitted()).toEqual(['mug-014', 'apron-002']);
+    // no island yet: the select-all box is a plain checkbox
+    expect(inputs('table-select-all')[0]?.indeterminate).toBe(false);
+  });
+
+  test('hydrated: the select-all box is mixed, then checks and clears every row', async () => {
+    const { problems } = await hydrate(<TableSelectionExample />, 980);
+    expect(problems).toEqual([]);
+    const [selectAll] = inputs('table-select-all');
+    if (selectAll === undefined) throw new Error('no select-all');
+    expect(selectAll.indeterminate).toBe(true);
+    await userEvent.click(selectAll);
+    expect(submitted()).toEqual(['mug-014', 'apron-002', 'coaster-007', 'bowl-021']);
+    expect(selectAll.checked).toBe(true);
+    expect(selectAll.indeterminate).toBe(false);
+    await userEvent.click(selectAll);
+    expect(submitted()).toEqual([]);
+    expect(selectAll.checked).toBe(false);
+  });
+
+  test('Shift-click selects the range; a checked row shows bg/brand-subtle', async () => {
+    await hydrate(<TableSelectionExample />, 980);
+    const rows = inputs('table-select-row');
+    const [first, , , fourth] = rows;
+    if (first === undefined || fourth === undefined) throw new Error('no rows');
+    await userEvent.click(first);
+    await userEvent.keyboard('{Shift>}');
+    await userEvent.click(fourth);
+    await userEvent.keyboard('{/Shift}');
+    expect(submitted()).toEqual(['mug-014', 'apron-002', 'coaster-007', 'bowl-021']);
+    const row = first.closest('tr');
+    const probe = document.createElement('div');
+    probe.style.background = 'var(--nz-bg-brand-subtle)';
+    document.body.append(probe);
+    expect(row && getComputedStyle(row).backgroundColor).toBe(
+      getComputedStyle(probe).backgroundColor,
+    );
+  });
+
+  test('Escape in the table clears the selection, and only then stops', async () => {
+    const outer = vi.fn<() => void>();
+    document.addEventListener('keydown', outer);
+    await hydrate(<TableSelectionExample />, 980);
+    const [first] = inputs('table-select-row');
+    if (first === undefined) throw new Error('no row');
+    first.focus();
+    await userEvent.keyboard('{Escape}');
+    expect(submitted()).toEqual([]);
+    expect(outer).not.toHaveBeenCalled();
+    await userEvent.keyboard('{Escape}');
+    expect(outer).toHaveBeenCalledOnce();
+    document.removeEventListener('keydown', outer);
+  });
+
+  test('onSelectionChange hears every change with the selected values', async () => {
+    const changes: string[][] = [];
+    await hydrate(
+      <Table.Selection onSelectionChange={(ids) => changes.push(ids)}>
+        <Table.Container>
+          <Table.Root aria-label="Products">
+            <Table.Body>
+              <Table.Row>
+                <Table.Cell>
+                  <Table.SelectRow value="a" aria-label="Select A" />
+                </Table.Cell>
+              </Table.Row>
+            </Table.Body>
+          </Table.Root>
+        </Table.Container>
+      </Table.Selection>,
+      600,
+    );
+    const [box] = inputs('table-select-row');
+    if (box === undefined) throw new Error('no row');
+    await userEvent.click(box);
+    await userEvent.click(box);
+    // nothing on mount: no row was checked
+    expect(changes).toEqual([['a'], []]);
+  });
+});
 
 describe('PageHeader', () => {
   const header = (
