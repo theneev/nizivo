@@ -160,6 +160,30 @@ describe('markup', () => {
     expect(html).not.toContain('nz-pagination-summary');
   });
 
+  test('button mode (onPageChange): native buttons, the ends disabled, no href, no rel', () => {
+    const html = renderToString(
+      <Pagination page={1} totalPages={13} siblingCount={0} onPageChange={() => undefined} />,
+    );
+    expect(html).not.toContain('<a ');
+    expect(html).not.toContain('href=');
+    expect(html).not.toContain('rel=');
+    expect(html).toMatch(
+      /<button type="button" class="nz-pagination-step nz-pagination-previous" data-slot="pagination-previous" aria-label="Previous page" disabled="" data-disabled="">/,
+    );
+    expect(html).toContain(
+      '<button type="button" data-slot="pagination-page" class="nz-pagination-page" aria-label="Page 1" aria-current="page">1</button>',
+    );
+    expect(html).toMatch(/<button type="button" data-slot="pagination-next" class="[^"]*"[^>]*>/);
+    // previous, 1, 2, 3, 13, next
+    expect(html.match(/<button /g)).toHaveLength(6);
+  });
+
+  test('without getHref or onPageChange it says which to give', () => {
+    expect(() => renderToString(createElement(Pagination, { page: 1, totalPages: 3 }))).toThrow(
+      'Pagination needs getHref (links) or onPageChange',
+    );
+  });
+
   test('a single page: both steps disabled, one current page', () => {
     const html = renderToString(<Pagination page={1} totalPages={1} getHref={href} />);
     expect(html.match(/aria-disabled="true"/g)).toHaveLength(2);

@@ -229,6 +229,7 @@ export { PageHeader } from './page-header/index';
 export type { PageHeaderProps, PageHeaderTitleLevel } from './page-header/index';
 export { Pagination } from './pagination/index';
 export type {
+  PaginationChangeReason,
   PaginationLabels,
   PaginationLinkState,
   PaginationProps,

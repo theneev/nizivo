@@ -35,9 +35,9 @@
           "type": "number"
         },
         {
-          "description": "The URL of a page: for example, `?page=3` for page 3.",
+          "description": "Link mode: the URL of a page, for example `?page=3` for page 3. Give it or `onPageChange`.",
           "name": "getHref",
-          "required": true,
+          "required": false,
           "type": "(page: number) => string"
         },
         {
@@ -58,6 +58,12 @@
           "type": "ReactNode"
         },
         {
+          "description": "Button mode, for client state with no URL: the pages, previous and next are `<button type=\"button\">`s, and choosing another page calls this with it (the current page calls nothing). `getHref` and `renderLink` are not used. A client component passes it.",
+          "name": "onPageChange",
+          "required": false,
+          "type": "(page: number, details: ChangeDetails<PaginationChangeReason>) => void"
+        },
+        {
           "description": "The page being shown, from 1. Clamped to `1…totalPages`.",
           "name": "page",
           "required": true,
@@ -76,7 +82,7 @@
           "type": "RenderProp<PaginationState>"
         },
         {
-          "description": "The router's link for every page, previous and next link, for example `renderLink={(props) => <Link {...props} href={String(props['href'])} />}`, or an element such as `renderLink={<RouterLink />}`, which receives `href` from `getHref`. It must render an `<a>`. A previous or next link at the ends is not a link and does not use it.",
+          "description": "The router's link for every page, previous and next link, for example `renderLink={(props) => <Link {...props} href={String(props['href'])} />}`, or an element such as `renderLink={<RouterLink />}`, which receives `href` from `getHref`. It must render an `<a>`. A previous or next link at the ends is not a link and does not use it. Link mode only.",
           "name": "renderLink",
           "required": false,
           "type": "RenderProp<PaginationLinkState>"
@@ -133,6 +139,17 @@
       },
       "slot": "pagination",
       "source": "packages/react/src/pagination/pagination.tsx"
+    },
+    {
+      "declaration": "type",
+      "description": "Which control asked for the page.",
+      "import": "import type { PaginationChangeReason } from '@nizivo/react/pagination'",
+      "kind": "type",
+      "name": "PaginationChangeReason",
+      "source": "packages/react/src/pagination/pagination.tsx",
+      "text": "\"page\" | \"previous\" | \"next\"",
+      "typeParameters": [],
+      "values": ["page", "previous", "next"]
     },
     {
       "declaration": "interface",

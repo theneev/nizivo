@@ -1390,6 +1390,12 @@
     },
     {
       "definedIn": "./pagination",
+      "import": "import type { PaginationChangeReason } from '@nizivo/react'",
+      "kind": "type",
+      "name": "PaginationChangeReason"
+    },
+    {
+      "definedIn": "./pagination",
       "import": "import type { PaginationLabels } from '@nizivo/react'",
       "kind": "type",
       "name": "PaginationLabels"

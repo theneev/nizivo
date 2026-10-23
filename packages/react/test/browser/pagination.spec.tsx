@@ -4,9 +4,13 @@
 // fill, the chevrons' direction in LTR and RTL, and forced colours (Chromium): the current page in
 // Highlight, the disabled step in GrayText, the outline solid.
 //
+// Button mode (`onPageChange`, M48), rendered by React on the client: a click changes the page in
+// state with no navigation, and the squares match link mode's.
+//
 // Every engine: `NZ_BROWSER=webkit` (or `firefox`) runs it too. WebKit on macOS does not Tab to
 // links, so there the order is checked by script focus after a key press.
-import type { ReactElement } from 'react';
+import { useState, type ReactElement } from 'react';
+import { createRoot, type Root } from 'react-dom/client';
 import { renderToString } from 'react-dom/server';
 import { afterEach, describe, expect, test } from 'vitest';
 import { cdp, server, userEvent } from 'vitest/browser';
@@ -30,7 +34,9 @@ const isChromium = server.browser === 'chromium';
 const isWebKit = server.browser === 'webkit';
 const href = (page: number): string => `#page-${page}`;
 
+const roots: Root[] = [];
 afterEach(() => {
+  for (const root of roots.splice(0)) root.unmount();
   document.body.replaceChildren();
 });
 
@@ -256,5 +262,101 @@ describe.runIf(isChromium)('forced colours (Chromium)', () => {
     } finally {
       await session.send('Emulation.setEmulatedMedia', { features: [] });
     }
+  });
+});
+
+/** The current page's number. */
+const currentPage = (root: ParentNode): string | null =>
+  one(root, '[aria-current="page"]').textContent;
+
+/** A button by selector, or a failed test. */
+function buttonAt(root: ParentNode, selector: string): HTMLButtonElement {
+  const found = one(root, selector);
+  if (!(found instanceof HTMLButtonElement)) throw new Error(`${selector} is not a button`);
+  return found;
+}
+
+describe('button mode (onPageChange)', () => {
+  const calls: Array<[number, string]> = [];
+
+  function ClientPaging(): ReactElement {
+    const [page, setPage] = useState(1);
+    return (
+      <Pagination
+        page={page}
+        totalPages={13}
+        onPageChange={(next, details) => {
+          calls.push([next, details.reason]);
+          setPage(next);
+        }}
+      />
+    );
+  }
+
+  async function render(): Promise<HTMLElement> {
+    calls.length = 0;
+    const container = document.createElement('div');
+    container.style.width = '720px';
+    document.body.append(container);
+    const root = createRoot(container);
+    roots.push(root);
+    root.render(<ClientPaging />);
+    await frames();
+    return container;
+  }
+
+  test('a click changes the page in state, with no navigation; the current page calls nothing', async () => {
+    const root = await render();
+    const before = location.href;
+    await userEvent.click(one(root, '[aria-label="Page 2"]'));
+    await frames();
+    expect(currentPage(root)).toBe('2');
+    await userEvent.click(one(root, '[aria-label="Next page"]'));
+    await frames();
+    expect(currentPage(root)).toBe('3');
+    await userEvent.click(one(root, '[aria-label="Previous page"]'));
+    await frames();
+    await userEvent.click(one(root, '[aria-current="page"]'));
+    await frames();
+    expect(calls).toEqual([
+      [2, 'page'],
+      [3, 'next'],
+      [2, 'previous'],
+    ]);
+    expect(location.href).toBe(before);
+  });
+
+  test('the ends are disabled buttons; the pages are the same squares as links', async () => {
+    const root = await render();
+    const links = await mount(first);
+    // the last test's clicks left the pointer over a page: park it, so neither square is hovered
+    await userEvent.hover(one(links, '[data-after]'));
+    await Promise.all(root.getAnimations({ subtree: true }).map((a) => a.finished));
+    for (const selector of [
+      '[aria-label="Page 2"]',
+      '[aria-current="page"]',
+      '.nz-pagination-next',
+    ]) {
+      const button = getComputedStyle(one(root, selector));
+      const link = getComputedStyle(one(links, selector));
+      for (const property of [
+        'width',
+        'height',
+        'backgroundColor',
+        'color',
+        'borderColor',
+        'font',
+      ] as const) {
+        expect([selector, property, button[property]]).toEqual([
+          selector,
+          property,
+          link[property],
+        ]);
+      }
+    }
+    expect(buttonAt(root, '.nz-pagination-previous').disabled).toBe(true);
+    await userEvent.click(one(root, '[aria-label="Page 13"]'));
+    await frames();
+    expect(buttonAt(root, '.nz-pagination-next').disabled).toBe(true);
   });
 });

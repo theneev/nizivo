@@ -104,7 +104,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 | Entry              | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | ------------------ | -------: | ---------: | ---------: | ----------: | -----------: |
-| `.`                |  101,614 |       99.2 |     84,838 |         107 |        7,954 |
+| `.`                |  101,838 |       99.5 |     84,958 |         107 |        7,730 |
 | /alert             |    1,283 |        1.3 |      1,182 |         1.4 |          150 |
 | /augment           |        0 |        0.0 |          0 |           0 |            — |
 | /avatar            |    1,381 |        1.3 |      1,283 |         1.5 |          155 |
@@ -139,7 +139,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /native-select     |    1,560 |        1.5 |      1,411 |         1.7 |          180 |
 | /number-value      |      788 |        0.8 |        716 |         0.9 |          133 |
 | /page-header       |      890 |        0.9 |        814 |           1 |          134 |
-| /pagination        |    1,823 |        1.8 |      1,676 |           2 |          225 |
+| /pagination        |    1,990 |        1.9 |      1,828 |           2 |           58 |
 | /popover           |   36,008 |       35.2 |     31,948 |          39 |        3,928 |
 | /progress-bar      |    1,137 |        1.1 |      1,039 |         1.3 |          194 |
 | /progress-ring     |    1,194 |        1.2 |      1,097 |         1.3 |          137 |
@@ -253,7 +253,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/native-select.css     |      930 |        0.9 |        778 |           1 |           94 |
 | /css/number-value.css      |      154 |        0.2 |        116 |         0.2 |           50 |
 | /css/page-header.css       |      416 |        0.4 |        333 |         0.5 |           96 |
-| /css/pagination.css        |      789 |        0.8 |        656 |         0.9 |          132 |
+| /css/pagination.css        |      816 |        0.8 |        674 |         0.9 |          105 |
 | /css/popover.css           |      711 |        0.7 |        567 |         0.8 |          108 |
 | /css/progress-bar.css      |      800 |        0.8 |        664 |         0.9 |          121 |
 | /css/progress-ring.css     |      509 |        0.5 |        432 |         0.6 |          105 |
@@ -274,7 +274,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/toast.css             |      891 |        0.9 |        740 |           1 |          133 |
 | /css/tooltip.css           |      581 |        0.6 |        503 |         0.6 |           33 |
 | /css/trend-card.css        |      403 |        0.4 |        346 |         0.5 |          109 |
-| /styles.css                |   19,415 |       19.0 |     16,252 |          19 |           41 |
+| /styles.css                |   19,434 |       19.0 |     16,221 |          19 |           22 |
 
 #### `@nizivo/tokens`: Public JS entries (bundled with what they import, React Aria included)
 

@@ -18,10 +18,20 @@ keyboardSource: native `<a>` elements in a `<nav>` (`pagination.tsx`, no client 
 
 **Server.** It ships no client JavaScript when a Server Component renders it, in every Next.js build
 mode; its code is bundled only when a client component (a `'use client'` file) imports it. It has
-link mode only: the page is the state, `getHref(page)` gives each page's URL, and there is no
-callback mode (figma/06's `onPageChange` would make it a client part). `getHref`, and a function
-`renderLink`, run where Pagination renders, so a Server Component passes them directly. A router
-link passed through `renderLink` is the router's own code. [How to choose](/docs/guides/static-or-interactive/).
+two modes:
+
+- **Links** (`getHref`): the page is in the URL, `getHref(page)` gives each page's URL, and the
+  current page is `aria-current="page"`. `getHref`, and a function `renderLink`, run where
+  Pagination renders, so a Server Component passes them directly; a router link passed through
+  `renderLink` is the router's own code.
+- **Buttons** (`onPageChange`), for client state with no URL: each page, previous and next is a
+  `<button type="button">`, and choosing another page calls `onPageChange(page, details)`
+  (`details.reason` is `'page'`, `'previous'` or `'next'`) with no navigation. The ends are disabled
+  buttons. Pass it from a client component, for example `onPageChange={setPage}`. It adds no client
+  module of its own. [In a client app](/docs/guides/static-or-interactive/#in-a-client-app) has a
+  live demo.
+
+[How to choose](/docs/guides/static-or-interactive/).
 
 ## Which pages show
 

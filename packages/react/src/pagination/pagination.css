@@ -67,6 +67,14 @@
     color: var(--nz-pagination-step-fg, var(--nz-icon-secondary));
   }
 
+  /* button mode (`onPageChange`): the same squares, without the browser's button face */
+  .nz-pagination-page:is(button),
+  .nz-pagination-step:is(button) {
+    margin: 0;
+    background: none;
+    cursor: pointer;
+  }
+
   @media (hover: hover) {
     .nz-pagination-page:not([aria-current='page']):hover,
     .nz-pagination-step:not([data-disabled]):hover {

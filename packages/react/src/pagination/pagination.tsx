@@ -1,14 +1,17 @@
 // NO directive: Pagination is server-safe, 0 KB of client JS (ARCHITECTURE.md §9.5, §16.2; Figma
-// Pagination 755:1007, figma/06 §6.10). Link mode only: the page is the state, each page is a URL
-// from `getHref`, and the current page is `aria-current="page"`. There is no client state and no
-// callback mode in 0.2 (figma/06's `onPageChange` would make it a client part).
+// Pagination 755:1007, figma/06 §6.10). Two modes, and the current page is `aria-current="page"` in
+// both. Link mode (`getHref`): the page is the state, each page is a URL. Button mode
+// (`onPageChange`, M48): for client state with no URL, each page is a `<button type="button">` that
+// calls it. Only a client component can pass a function, so a Server Component uses link mode and
+// still ships nothing; button mode adds no module of its own.
 //
 // The ellipsis rule (MUI's, so the number of slots never changes while you page): the first and last
 // `boundaryCount` pages always show, so do `siblingCount` pages either side of the current one, and a
 // gap becomes "…" unless it hides a single page, which shows instead. With the defaults that is
 // always 7 slots once there are more than 7 pages: 1 2 3 4 5 … 13, 1 … 6 7 8 … 13, 1 … 9 10 11 12 13.
 // Figma's drawing (1 2 3 … 13) is `siblingCount={0}`.
-import type { ComponentPropsWithRef, ReactElement, ReactNode } from 'react';
+import type { ComponentPropsWithRef, MouseEvent, ReactElement, ReactNode } from 'react';
+import { details, type ChangeDetails } from '../contracts/details';
 import { renderElement, type RenderProp } from '../contracts/render';
 import { cx } from '../_internal/cx';
 import { ChevronGlyph } from '../_internal/glyphs';
@@ -27,6 +30,9 @@ export interface PaginationLabels {
   /** Each page link's name; the visible number stays in it (WCAG 2.5.3). @default 'Page {page}' */
   page: string;
 }
+
+/** Which control asked for the page. */
+export type PaginationChangeReason = 'page' | 'previous' | 'next';
 
 /** One slot of the list: a page number or a gap. */
 export type PaginationSlot = number | 'ellipsis';
@@ -49,8 +55,14 @@ export interface PaginationProps extends Omit<ComponentPropsWithRef<'nav'>, 'chi
   page: number;
   /** At least 1. */
   totalPages: number;
-  /** The URL of a page: for example, `?page=3` for page 3. */
-  getHref: (page: number) => string;
+  /** Link mode: the URL of a page, for example `?page=3` for page 3. Give it or `onPageChange`. */
+  getHref?: (page: number) => string;
+  /**
+   * Button mode, for client state with no URL: the pages, previous and next are
+   * `<button type="button">`s, and choosing another page calls this with it (the current page calls
+   * nothing). `getHref` and `renderLink` are not used. A client component passes it.
+   */
+  onPageChange?: (page: number, details: ChangeDetails<PaginationChangeReason>) => void;
   /** Pages shown either side of the current one. @default 1 */
   siblingCount?: number;
   /** Pages always shown at each end. @default 1 */
@@ -72,7 +84,7 @@ export interface PaginationProps extends Omit<ComponentPropsWithRef<'nav'>, 'chi
    * The router's link for every page, previous and next link, for example
    * `renderLink={(props) => <Link {...props} href={String(props['href'])} />}`, or an element such
    * as `renderLink={<RouterLink />}`, which receives `href` from `getHref`. It must render an `<a>`.
-   * A previous or next link at the ends is not a link and does not use it.
+   * A previous or next link at the ends is not a link and does not use it. Link mode only.
    */
   renderLink?: RenderProp<PaginationLinkState>;
   /** Composition of the `<nav>` landmark (a single-root part's `render`, §8.2). */
@@ -118,6 +130,7 @@ export function Pagination({
   page,
   totalPages,
   getHref,
+  onPageChange,
   siblingCount = 1,
   boundaryCount = 1,
   size = 'md',
@@ -139,17 +152,25 @@ export function Pagination({
   const link = (
     target: number,
     kind: PaginationLinkState['kind'],
-    props: Record<string, unknown>,
-  ): ReactElement =>
-    renderElement(
+    { rel, ...props }: Record<string, unknown>,
+  ): ReactElement => {
+    if (onPageChange !== undefined) {
+      return renderElement('button', undefined, undefined, {
+        type: 'button',
+        ...props,
+        onClick: (event: MouseEvent<HTMLButtonElement>) => {
+          if (target !== current) onPageChange(target, details(kind, event.nativeEvent));
+        },
+      });
+    }
+    if (getHref === undefined) throw new Error('Pagination needs getHref (links) or onPageChange');
+    return renderElement(
       'a',
       renderLink,
       { page: target, kind, current: kind === 'page' && target === current },
-      {
-        href: getHref(target),
-        ...props,
-      },
+      { href: getHref(target), ...props, rel },
     );
+  };
 
   const step = (kind: 'previous' | 'next', icon: ReactNode): ReactElement => {
     const target = kind === 'previous' ? current - 1 : current + 1;
@@ -180,6 +201,20 @@ export function Pagination({
     // Figma: "disabled, not hidden, at the ends". A step with nowhere to go is not an <a href>, so it
     // is out of the Tab order; it keeps the link role and its name, marked disabled (an <a> without
     // href has no role, and a name on a role-less element is prohibited ARIA).
+    if ((target < 1 || target > count) && onPageChange !== undefined) {
+      return (
+        <button
+          type="button"
+          className={stepClass}
+          {...slotAttribute}
+          aria-label={props['aria-label']}
+          disabled
+          data-disabled=""
+        >
+          {props.children}
+        </button>
+      );
+    }
     if (target < 1 || target > count) {
       return (
         <span
