@@ -188,6 +188,21 @@ const CLIENT_PAGES: Record<string, string[]> = {
   // Tagged product and Storefront bar (patterns, Figma 10): their IconButtons carry the Tooltip.
   '/docs/patterns/tagged-product/': ['tooltip-popup'],
   '/docs/patterns/storefront-bar/': ['tooltip-popup'],
+  // The overview dashboard's page templates (Figma 08 Patterns), each on its own pattern route.
+  '/docs/patterns/products-page/': [
+    'select-popup',
+    'search-field-clear',
+    'willValidate',
+    'nz-table-selection',
+  ],
+  '/docs/patterns/product-detail-page/': [
+    'input-prefix',
+    'willValidate',
+    'nz-textarea',
+    'checkbox-indicator',
+    'switch-thumb',
+    'chip-input',
+  ],
 };
 
 /** Pages whose JavaScript the run prints. */

@@ -1,0 +1,73 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* Figma 08 Pattern 1 (7275:15757): the page content, 24 between the header and the catalogue card;
+   inside the card the toolbar (16 / 24), the table full-bleed, then the footer (16 / 24). */
+@layer nz.patterns {
+  .nzp-products-page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-6);
+    min-inline-size: 0;
+  }
+
+  /* the parts pad themselves, so the table can run to the card's edges */
+  .nzp-products-page-catalogue {
+    gap: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .nzp-products-page-toolbar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-4);
+    padding: var(--nz-space-4) var(--nz-space-6);
+  }
+
+  .nzp-products-page-filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--nz-space-3);
+  }
+
+  .nzp-products-page-search {
+    flex: 1 1 16rem;
+    min-inline-size: 0;
+  }
+
+  .nzp-products-page-bulk {
+    display: flex;
+    padding: 0 var(--nz-space-6) var(--nz-space-3);
+  }
+
+  /* the card draws the edge: the table loses its own side borders and radius */
+  .nzp-products-page-table {
+    border-inline-width: 0;
+    border-radius: 0;
+  }
+
+  .nzp-products-page-product {
+    display: flex;
+    align-items: center;
+    gap: var(--nz-space-3);
+  }
+
+  .nzp-products-page-thumb {
+    flex: none;
+    inline-size: 2.5rem;
+    block-size: 2.5rem;
+    border-radius: var(--nz-radius-sm);
+    background: var(--nz-bg-muted);
+  }
+
+  .nzp-products-page-name {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-0-5);
+  }
+
+  .nzp-products-page-pagination {
+    padding: var(--nz-space-4) var(--nz-space-6);
+  }
+}

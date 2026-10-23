@@ -16,6 +16,8 @@
     "shoppable-post",
     "product-tag",
     "tagged-product",
-    "storefront-bar"
+    "storefront-bar",
+    "products-page",
+    "product-detail-page"
   ]
 }

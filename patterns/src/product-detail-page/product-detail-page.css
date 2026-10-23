@@ -1,0 +1,65 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* Figma 08 Pattern 2 (7275:15860): the breadcrumb, the header, then Split's two columns of cards,
+   24 apart. The gallery is one large tile and four small ones (the last an upload tile); the three
+   prices share a row once the column is 36rem wide (a container query on the column). */
+@layer nz.patterns {
+  .nzp-product-detail-page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-6);
+    min-inline-size: 0;
+  }
+
+  /* each column is the container its cards' grids query */
+  .nzp-product-detail-page-column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-6);
+    container-type: inline-size;
+  }
+
+  .nzp-product-detail-page-gallery {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--nz-space-3);
+  }
+
+  .nzp-product-detail-page-tile {
+    aspect-ratio: 1;
+    border-radius: var(--nz-radius-md);
+    background: var(--nz-bg-muted);
+  }
+
+  .nzp-product-detail-page-tile:first-child {
+    grid-column: 1 / -1;
+    aspect-ratio: 2;
+  }
+
+  .nzp-product-detail-page-upload {
+    block-size: auto;
+    min-block-size: var(--nz-size-control-md);
+    border-style: dashed;
+  }
+
+  .nzp-product-detail-page-prices {
+    display: grid;
+    gap: var(--nz-space-4);
+  }
+
+  @container (width >= 36rem) {
+    .nzp-product-detail-page-gallery {
+      grid-template-columns: 2fr repeat(2, minmax(0, 1fr));
+    }
+
+    .nzp-product-detail-page-tile:first-child {
+      grid-row: span 2;
+      grid-column: auto;
+      aspect-ratio: auto;
+    }
+
+    .nzp-product-detail-page-prices {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+}

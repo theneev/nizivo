@@ -4,4 +4,17 @@
   .nz-docs-pattern-preview {
     display: block;
   }
+  /* Nor do the component pages' rules for an example's own wrapper <div> (a row of items, each Card
+     16rem from the row's start) reach a pattern whose root is a <div>: revert-layer hands each
+     property back to the pattern's own nz.patterns rule, or to the element's default. */
+  .nz-docs-pattern-preview > div:not([data-slot]) {
+    display: revert-layer;
+    flex-wrap: revert-layer;
+    align-items: revert-layer;
+    gap: revert-layer;
+    inline-size: revert-layer;
+  }
+  .nz-docs-pattern-preview > div:not([data-slot]) > [data-slot='card'] {
+    flex: revert-layer;
+  }
 }
