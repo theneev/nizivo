@@ -8,9 +8,9 @@
 //
 // Every page of the export loads with HTTP 200, zero console errors or warnings and zero page errors
 // (React reports hydration failures there), hydrates, and makes no request outside the local server:
-// the site works offline. axe-core reports no WCAG 2.2 A/AA violation on it, of any impact, in light;
-// dark, and axe's best-practice rules, are reported and do not fail the run while dark is a preview
-// (ARCHITECTURE.md §18.1). At 375 px nothing in the page is cut off without a scroller to reach it
+// the site works offline. axe-core reports no WCAG 2.2 A/AA violation on it, of any impact, in light
+// (at 1280px) or dark (at 375px, blocking since dark left preview, M62); axe's best-practice rules
+// are reported and do not fail the run (ARCHITECTURE.md §18.1). At 375 px nothing in the page is cut off without a scroller to reach it
 // (WCAG 1.4.10), and no raw Markdown (a backtick) shows outside code. The 404
 // page answers an unknown path with status 404 and passes the same checks, and the non-HTML routes
 // (llms.txt, llms-full.txt, the search index) answer 200 with their media type. Then:
@@ -1328,11 +1328,12 @@ async function main(): Promise<void> {
       !failures.some((f) => f.includes('cut off with no scroller')),
       `${paths.length} pages reflow at 375px: every table, code block and preview fits or scrolls`,
     );
-    // Reported, not failed: dark ships as a preview in v0.1 (ARCHITECTURE.md §7.4, §18.1).
-    notes.push(
+    // Blocking since dark left preview (design sign-off, M62; ARCHITECTURE.md §7.4, §18.1).
+    check(
+      darkViolations.length === 0,
       darkViolations.length === 0
-        ? `ok: ${paths.length} pages have no axe violation in dark (at 375px)`
-        : `dark (reported, not failing): ${darkViolations.length} axe violations: ${darkViolations.join(' | ')}`,
+        ? `${paths.length} pages have no axe violation in dark (at 375px)`
+        : `dark: ${darkViolations.length} axe violations: ${darkViolations.join(' | ')}`,
     );
     jsChecks(results);
 
