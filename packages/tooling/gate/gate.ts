@@ -4,13 +4,18 @@
 // cannot replay a stale result. The last commit also runs with TURBO_FORCE=true, and so does a
 // commit from before `cache:audit` existed.
 //
+// The commits share one list of proven tasks (`cache:audit --proven`): a task whose turbo hash and
+// audit rules match one already proven earlier in this run is not audited again, because the same
+// inputs read the same files. The last commit's audit runs every task, as before.
+//
 //   node packages/tooling/gate/gate.ts [--worktree <dir>] <commit>…
 //
 // --worktree defaults to a `gate-wt` folder beside the repository; it is created when missing and
 // removed when the gate passes. Each step's output goes to `<worktree>.log`; a failing step prints
 // the lines of it that look like errors, and the gate stops there with exit code 1.
 import { spawnSync } from 'node:child_process';
-import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import { basename, dirname, join, resolve } from 'node:path';
 import { parseArgs } from 'node:util';
 
@@ -57,6 +62,10 @@ function rootScripts(manifest: unknown): Record<string, string> {
 }
 
 /** The steps of a root `check` script: `pnpm a && pnpm b` → ['a', 'b']. */
+/** The run's list of proven tasks, shared by every commit's audit. */
+const provenDir = mkdtempSync(join(tmpdir(), 'nz-gate-'));
+const proven = join(provenDir, 'proven.json');
+
 function checkSteps(scripts: Record<string, string>): string[] {
   const steps = (scripts['check'] ?? '')
     .split('&&')
@@ -81,7 +90,13 @@ for (const commit of commits) {
     ...(forced ? { TURBO_FORCE: 'true' } : {}),
   };
   if (!forced) delete env['TURBO_FORCE'];
-  for (const step of checkSteps(scripts)) {
+  // a commit's own audit.ts may predate --proven; the forced last commit audits every task
+  const auditFile = join(worktree, 'packages', 'tooling', 'cache-audit', 'audit.ts');
+  const knowsProven = existsSync(auditFile) && readFileSync(auditFile, 'utf8').includes('--proven');
+  const steps = checkSteps(scripts).map((step) =>
+    step === 'cache:audit' && !forced && knowsProven ? `${step} --proven ${proven}` : step,
+  );
+  for (const step of steps) {
     const [command, ...rest] = [...PNPM, ...step.split(/\s+/)];
     const result = spawnSync(command!, rest, {
       cwd: worktree,
@@ -105,6 +120,7 @@ for (const commit of commits) {
   if (!passed) break;
 }
 
+rmSync(provenDir, { recursive: true, force: true });
 if (passed && created) git('worktree', 'remove', '--force', worktree);
 console.log(
   passed

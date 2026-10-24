@@ -4,6 +4,7 @@
 // file, and turbo replays the old result instead of running the task.
 //
 //   node packages/tooling/cache-audit/audit.ts [--only <task id>,…] [--jobs <n>] [--keep]
+//                                              [--proven <file>]
 //
 // 1. `turbo run build` (the outputs every task depends on), then `turbo run <TASKS> --dry=json`: each
 //    task's hashed files, output globs and dependencies.
@@ -14,6 +15,13 @@
 //    its outputs differ from the repo's, or when one of its Node processes read a repo file outside
 //    what it may read (trace.ts, even when the read did not change the result this time).
 // --keep leaves the copies and the logs in the temporary folder it prints.
+//
+// --proven <file> (`pnpm gate` passes one file to every commit it checks): a JSON list of the tasks
+// already proven, each as `<task id> <turbo hash> <audit hash>`. A task whose key is in the list is
+// not run again, and each task that passes is added. Turbo's hash covers the task's hashed files,
+// its dependencies' hashes, the global inputs and the declared environment, and the audit hash covers
+// this tool's own files: the same key means the task reads the same files and is judged by the same
+// rules, so the proof made for an earlier commit holds for this one. A missing file is an empty list.
 /* oxlint-disable no-await-in-loop -- a fixed number of workers, each running tasks one at a time */
 import { spawn, spawnSync } from 'node:child_process';
 import {
@@ -32,6 +40,7 @@ import {
   symlinkSync,
   writeFileSync,
 } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { availableParallelism, tmpdir } from 'node:os';
 import { dirname, join, relative, sep } from 'node:path';
 import { parseArgs } from 'node:util';
@@ -68,6 +77,7 @@ const { values } = parseArgs({
     only: { type: 'string' },
     jobs: { type: 'string' },
     keep: { type: 'boolean' },
+    proven: { type: 'string' },
   },
 });
 const only = values.only === undefined ? undefined : new Set(values.only.split(','));
@@ -102,6 +112,8 @@ function turbo(args: string[]): string {
 /** The tasks and global inputs of a dry run, with every path repo-relative. */
 function readGraph(): {
   tasks: Map<string, TaskInfo>;
+  /** Each task's turbo hash. */
+  hashes: Map<string, string>;
   globalInputs: string[];
   /** Tasks Turbopack runs in: it refuses a node_modules link that leaves its root. */
   turbopack: Set<string>;
@@ -109,11 +121,13 @@ function readGraph(): {
   const dry: unknown = JSON.parse(turbo(['run', ...TASKS, '--dry=json']));
   if (!isRecord(dry) || !Array.isArray(dry['tasks'])) throw new Error('turbo --dry=json: no tasks');
   const tasks = new Map<string, TaskInfo>();
+  const hashes = new Map<string, string>();
   const turbopack = new Set<string>();
   for (const raw of dry['tasks']) {
     if (!isRecord(raw)) continue;
     const id = String(raw['taskId']);
     if (raw['framework'] === 'nextjs' && raw['task'] === 'build') turbopack.add(id);
+    hashes.set(id, String(raw['hash']));
     const dir = String(raw['directory']);
     const inputs = isRecord(raw['inputs']) ? Object.keys(raw['inputs']) : [];
     tasks.set(id, {
@@ -126,7 +140,12 @@ function readGraph(): {
     });
   }
   const global = isRecord(dry['globalCacheInputs']) ? dry['globalCacheInputs']['files'] : {};
-  return { tasks, globalInputs: isRecord(global) ? Object.keys(global) : [], turbopack };
+  return {
+    tasks,
+    hashes,
+    globalInputs: isRecord(global) ? Object.keys(global) : [],
+    turbopack,
+  };
 }
 
 /** The files a task's output globs match in `root`, repo-relative. */
@@ -316,11 +335,42 @@ async function audit(
   return { id: task.id, seconds: (performance.now() - start) / 1000, problems };
 }
 
+/** This tool's own files: a change to how tasks are judged makes every earlier proof stale. */
+function auditHash(): string {
+  const hash = createHash('sha256');
+  for (const file of readdirSync(import.meta.dirname)
+    .filter((f) => f.endsWith('.ts'))
+    .toSorted()) {
+    hash.update(file).update(readFileSync(join(import.meta.dirname, file)));
+  }
+  return hash.digest('hex').slice(0, 16);
+}
+
+function readProven(file: string): Set<string> {
+  if (!existsSync(file)) return new Set();
+  const list: unknown = JSON.parse(readFileSync(file, 'utf8'));
+  return new Set(Array.isArray(list) ? list.filter((k): k is string => typeof k === 'string') : []);
+}
+
 turbo(['run', 'build', '--output-logs=errors-only']);
 const graph = readGraph();
-const queue = [...graph.tasks.values()].filter(
-  (t) => t.command !== '<NONEXISTENT>' && (only === undefined || only.has(t.id)),
-);
+const tool = auditHash();
+/** A task's proof key; none without a turbo hash, so such a task is always run. */
+const keyOf = (id: string): string | undefined => {
+  const hash = graph.hashes.get(id);
+  return hash === undefined || hash === '' ? undefined : `${id} ${hash} ${tool}`;
+};
+const proven = values.proven === undefined ? undefined : readProven(values.proven);
+const skipped: string[] = [];
+const queue = [...graph.tasks.values()].filter((t) => {
+  if (t.command === '<NONEXISTENT>' || (only !== undefined && !only.has(t.id))) return false;
+  const key = keyOf(t.id);
+  if (key !== undefined && proven?.has(key) === true) {
+    skipped.push(t.id);
+    return false;
+  }
+  return true;
+});
 const work = mkdtempSync(join(tmpdir(), 'nz-cache-audit-'));
 const findings: Finding[] = [];
 await Promise.all(
@@ -334,12 +384,21 @@ await Promise.all(
     }
   }),
 );
+for (const id of skipped) console.log(`ok   ${id} (proven for the same inputs earlier)`);
 if (values.keep) console.log(`cache-audit: copies and logs kept in ${work}`);
 else rmSync(work, { recursive: true, force: true });
 const failed = findings.filter((f) => f.problems.length > 0);
+if (values.proven !== undefined && proven !== undefined) {
+  for (const f of findings) {
+    const key = keyOf(f.id);
+    if (f.problems.length === 0 && key !== undefined) proven.add(key);
+  }
+  writeFileSync(values.proven, `${JSON.stringify([...proven].toSorted(), null, 1)}\n`);
+}
 console.log(
   failed.length === 0
-    ? `cache-audit: ${findings.length} tasks read only what turbo hashes for them`
+    ? `cache-audit: ${findings.length + skipped.length} tasks read only what turbo hashes for them` +
+        (skipped.length > 0 ? ` (${skipped.length} proven earlier for the same inputs)` : '')
     : `cache-audit: ${failed.length} of ${findings.length} tasks read files turbo does not hash`,
 );
 process.exit(failed.length === 0 ? 0 : 1);
