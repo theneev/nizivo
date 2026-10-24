@@ -6,15 +6,11 @@ import { spawn, spawnSync } from 'node:child_process';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { basename, dirname, isAbsolute, join } from 'node:path';
+import { status } from './http.ts';
 import { REPO_ROOT } from './pack.ts';
 
 async function answers(base: string): Promise<boolean> {
-  try {
-    await fetch(base);
-    return true;
-  } catch {
-    return false;
-  }
+  return (await status(base)) !== undefined;
 }
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -40,11 +36,8 @@ export async function serve(
     if (await answers(base)) throw new Error(`${command} still answers on ${base}`);
   };
   for (let attempt = 0; attempt < 120; attempt++) {
-    try {
-      if ((await fetch(base)).ok) return stop;
-    } catch {
-      // not listening yet
-    }
+    const code = await status(base);
+    if (code !== undefined && code >= 200 && code < 300) return stop;
     await sleep(250);
   }
   await stop();

@@ -16,6 +16,7 @@ import { readFileSync, realpathSync, rmSync } from 'node:fs';
 import { isAbsolute, join } from 'node:path';
 import { parseArgs } from 'node:util';
 import { chromium } from 'playwright';
+import { status } from './http.ts';
 import { packInto, REPO_ROOT } from './pack.ts';
 import { resultsFile, writeResults } from './serve.ts';
 import { loadMarkers, runSpec, type PageResult } from './spec.ts';
@@ -51,12 +52,7 @@ function sync(command: string, args: string[], variant: Variant): string {
 }
 
 async function answers(): Promise<boolean> {
-  try {
-    await fetch(BASE);
-    return true;
-  } catch {
-    return false;
-  }
+  return (await status(BASE)) !== undefined;
 }
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -84,11 +80,8 @@ async function serve(variant: Variant): Promise<() => Promise<void>> {
     if (await answers()) throw new Error(`next ${args[0]} still answers on ${BASE}`);
   };
   for (let attempt = 0; attempt < 120; attempt++) {
-    try {
-      if ((await fetch(BASE)).ok) return stop;
-    } catch {
-      // not listening yet
-    }
+    const code = await status(BASE);
+    if (code !== undefined && code >= 200 && code < 300) return stop;
     await sleep(500);
   }
   await stop();

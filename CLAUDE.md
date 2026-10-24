@@ -44,7 +44,8 @@ steps (GitHub settings, npm, Figma, DNS). Dayitava owns design and accessibility
 
 Report them; never re-record baselines to make them pass.
 
-- `fixture-vite`: Node's `setTypeOfService EINVAL` socket error; a rerun passes.
+- `fixture-vite`: Node's `setTypeOfService EINVAL` socket error: fixed on 2026-10-24 (the fixture runner's
+  own requests use `node:http`, not `fetch`: `fixtures/runner/http.ts`); report it if it returns.
 - Charts visual: the `area-chart/rtl` dark baselines flip between two system Arabic fonts.
 - Firefox overlay conformance O-03 (Tooltip in Dialog, Escape), NIZ-126: fixed on 2026-10-22 (the pointer is parked before each nesting case); report it if it returns.
 - WebKit on macOS: 10 known Tab-order failures in the browser specs (IconButton 2, SegmentedControl 3,

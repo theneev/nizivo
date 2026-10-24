@@ -28,6 +28,7 @@
 /* oxlint-disable no-await-in-loop -- the cases share one browser and run one after another */
 import { readFileSync } from 'node:fs';
 import type { Browser, BrowserContext, Page } from 'playwright';
+import { getText } from './http.ts';
 
 interface Frame {
   t: number;
@@ -201,7 +202,7 @@ async function countLightDark(
     [...document.querySelectorAll('style')].map((style) => style.textContent ?? '').join('\n'),
   );
   let loaded = count(inline);
-  for (const href of hrefs) loaded += count(await (await fetch(href)).text());
+  for (const href of hrefs) loaded += count(await getText(href));
   return { packed, loaded, stylesheets: hrefs.length, ok: packed > 0 && loaded >= packed };
 }
 

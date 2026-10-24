@@ -23,6 +23,7 @@ import { createRequire } from 'node:module';
 import { dirname, join, normalize } from 'node:path';
 import { gzipSync } from 'node:zlib';
 import { chromium, type Browser, type Page } from 'playwright';
+import { getText } from './http.ts';
 import { REPO_ROOT } from './pack.ts';
 
 export type Component =
@@ -1541,7 +1542,7 @@ async function importClosure(
   const stack = [...seeds];
   for (let url = stack.pop(); url !== undefined; url = stack.pop()) {
     if (sources.has(url) || !url.startsWith(base)) continue;
-    const source = await (await fetch(url)).text();
+    const source = await getText(url);
     sources.set(url, source);
     if (!follow) continue;
     for (const m of source.matchAll(STATIC_IMPORT)) {
