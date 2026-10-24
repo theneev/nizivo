@@ -234,6 +234,22 @@ export function watchAttribute(attribute: string): { seen: Set<string>; stop: ()
   return { seen, stop: () => observer.disconnect() };
 }
 
+/**
+ * Records every CSS transition that starts while the listener runs, as `<data-slot> <property>`.
+ * A transition can end before a poll of `getAnimations()` sees it (Firefox under load);
+ * `transitionrun` cannot miss it.
+ */
+export function watchTransitions(): { seen: Set<string>; stop: () => void } {
+  const seen = new Set<string>();
+  const note = (event: TransitionEvent): void => {
+    const element = event.target;
+    if (!(element instanceof Element)) return;
+    seen.add(`${element.getAttribute('data-slot') ?? ''} ${event.propertyName}`);
+  };
+  document.addEventListener('transitionrun', note, true);
+  return { seen, stop: () => document.removeEventListener('transitionrun', note, true) };
+}
+
 /** Asserts the open popup and everything around it stay inside the DOM contract. */
 export function expectContract(): void {
   expect(outsideVocabulary()).toEqual([]);

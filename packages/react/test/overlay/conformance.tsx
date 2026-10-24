@@ -21,6 +21,7 @@ import {
   transitionMs,
   until,
   watchAttribute,
+  watchTransitions,
 } from './harness';
 
 export interface OverlaySubject {
@@ -201,16 +202,14 @@ export function describeOverlay(subject: OverlaySubject): void {
     test('enters through data-entering with a running transition, and exits through data-exiting before it unmounts', async () => {
       await mount(subject.app());
       const entering = watchAttribute('data-entering');
+      const transitions = watchTransitions();
       const popup = await open(subject);
       entering.stop();
       expect(entering.seen).toContain(subject.popup);
-      await until(() =>
-        expect(
-          popup
-            .getAnimations()
-            .map((a) => (a instanceof CSSTransition ? a.transitionProperty : '')),
-        ).toContain('opacity'),
-      );
+      // the fade from data-entering's styles, recorded as it starts: under load it can end before
+      // a poll of getAnimations() runs
+      await until(() => expect(transitions.seen).toContain(`${subject.popup} opacity`));
+      transitions.stop();
       await until(() => expect(popup.hasAttribute('data-entering')).toBe(false));
       await until(() => expect(popup.getAnimations()).toEqual([]), 3000);
       expect(getComputedStyle(popup).opacity).toBe('1');
