@@ -1,5 +1,0 @@
----
-'@nizivo/react': minor
----
-
-Form, SubmitButton and FormMessage (`./form`), and PasswordInput (`./password-input`). `Form` is an optional client `<form>`: its `errors`, keyed by Field `name` (a server action's field errors), appear in each Field after the Field's own `error` and before the native message, until the user edits that control; a new `errors` object moves focus to the first invalid control, or, with `summary`, to an error summary that links to each control. Native validation stays on. `SubmitButton` is a primary submit Button that is `pending` while its form's action runs (`useFormStatus`). `FormMessage` is a server part: the form-level message in a live container that is always rendered (`role="alert"` for `critical`, else `role="status"`). `PasswordInput` is a password input in Input's box with a show/hide toggle that keeps the name "Show password" and reports its state through `aria-pressed`; the password is hidden again when its form submits. Field reads Form's errors; a Field outside a Form is unchanged.
