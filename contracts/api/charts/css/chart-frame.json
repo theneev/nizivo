@@ -52,7 +52,7 @@
       "reads": [
         {
           "conditions": [],
-          "property": "inline-size",
+          "property": "min-inline-size",
           "selector": ".nz-chart-frame-y-ticks",
           "slot": "chart-frame-y-ticks"
         }

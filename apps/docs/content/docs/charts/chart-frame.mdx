@@ -115,8 +115,9 @@ Classes a renderer draws with: `nz-chart-svg` (the percent-space SVG that fills 
 <ChartCssHooks />
 
 `--nz-chart-frame-aspect` is the body's aspect ratio (18 / 7, Figma 03's 720 × 280 plot), and
-`--nz-chart-frame-gutter` the y labels' column, which stays fixed in every status. Long localised y
-labels can be wider than the 2.75rem gutter; widen it with the hook.
+`--nz-chart-frame-gutter` the y labels' column's minimum width (2.75rem). The column keeps it in
+every status, so the plot does not move while the labels are absent, and widens for longer labels
+(ar-EG's digits, say) instead of letting them overflow.
 
 The frame is a size container (`container-type: inline-size`): a narrow chart adapts to its own
 width, never the viewport's. Under 31rem, a body with axes is at least 12rem tall, so the plot keeps

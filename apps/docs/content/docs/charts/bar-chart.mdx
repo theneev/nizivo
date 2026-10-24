@@ -51,7 +51,8 @@ options (`{}`), as in every chart: a fractional value shows its fraction. `axisF
 `format` in compact notation with at most one fraction digit.
 
 `xTicks` (`ChartXTicks`): at most `max` x labels (BarChart: 8), the first and last always shown;
-`every` sets the bars between labels.
+`every` sets the bars between labels. A label sits centred under its bar; the first and last, when
+wider than their bar's band, are clamped inward to the plot's edges.
 
 <ChartMembers name="ChartXTicks" />
 

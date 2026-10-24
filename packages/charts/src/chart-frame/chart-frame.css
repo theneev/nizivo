@@ -83,13 +83,14 @@
     white-space: nowrap;
   }
 
-  /* Figma: no axis line, labels right-aligned in a fixed 44 px gutter (fixed, so the plot keeps
-     its width while the labels are absent: loading, empty, error) */
+  /* Figma: no axis line, labels right-aligned in a 44 px gutter. A minimum, so the plot keeps its
+     width while the labels are absent (loading, empty, error) and wider labels (ar-EG's digits)
+     widen the column instead of overflowing it (M61) */
   .nz-chart-frame-y-ticks {
     grid-column: 1;
     grid-row: 1;
     grid-auto-rows: minmax(0, 1fr);
-    inline-size: var(--nz-chart-frame-gutter, 2.75rem);
+    min-inline-size: var(--nz-chart-frame-gutter, 2.75rem);
     padding-inline-end: var(--nz-space-2);
   }
 
@@ -159,6 +160,22 @@
 
   .nz-chart-frame-x-ticks-band > .nz-chart-frame-cell {
     justify-content: center;
+  }
+
+  /* the first and last band labels stay under their band, clamped inward when wider than it
+     (M61): auto margins centre the label and drop to 0 when it overflows, leaving it at the cell's
+     main start, the plot's edge (the last cell is reversed, so its main start is the end) */
+  .nz-chart-frame-x-ticks-band > :is(:first-child, :last-child) {
+    justify-content: flex-start;
+
+    & > .nz-chart-frame-tick {
+      inline-size: max-content;
+      margin-inline: auto;
+    }
+  }
+
+  .nz-chart-frame-x-ticks-band > :last-child {
+    flex-direction: row-reverse;
   }
 
   /* A narrow chart (under 25rem, where BarChart's default "Oct 17" labels touch) shows every other

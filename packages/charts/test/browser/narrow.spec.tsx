@@ -5,7 +5,7 @@
 // shows every other label, counting only the positions that have one, and always the first and the
 // last; the labels it hides keep their boxes (visibility, so the last stays at its cell's end), and
 // the visible ones never overlap. AreaChart (point labels) and BarChart (band labels), left to right
-// and mirrored. Styled by the shipped stylesheets only (tokens.css and dist/styles.css), so build
+// and mirrored; BarChart's edge labels stay inside the plot, and the y labels inside their column (M61). Styled by the shipped stylesheets only (tokens.css and dist/styles.css), so build
 // first. Every engine: `NZ_BROWSER=webkit pnpm test:browser` (or firefox).
 import type { ReactElement } from 'react';
 import { flushSync } from 'react-dom';
@@ -156,8 +156,99 @@ describe('the x labels of a narrow chart', () => {
     apart(shown());
   });
 
+  test('BarChart: the first and last band labels stay inside the plot, in either direction (M61)', () => {
+    // 384 px: "Oct 30" is wider than its band, so centred it would hang past the plot's end
+    for (const dir of [undefined, 'rtl'] as const) {
+      mount(
+        <BarChart
+          title="Orders"
+          data={ORDERS}
+          x="date"
+          y="orders"
+          interaction="none"
+          xDirection="auto"
+        />,
+        'probe-mid',
+        dir,
+      );
+      const plot = one('.nz-chart-frame-plot').getBoundingClientRect();
+      const labels = shown();
+      expect(labels[0]?.box.left ?? 0).toBeGreaterThanOrEqual(plot.left - 0.5);
+      expect(labels.at(-1)?.box.right ?? 0).toBeLessThanOrEqual(plot.right + 0.5);
+      apart(labels);
+      root?.unmount();
+      host?.remove();
+    }
+  });
+
+  test('BarChart: an edge label narrower than its band stays centred under it', () => {
+    const week = ['Mon', 'Tue', 'Wed', 'Thu'].map((day, i) => ({ day, orders: 100 + i * 50 }));
+    mount(
+      <BarChart title="Orders" data={week} x="day" y="orders" interaction="none" />,
+      'probe-wide',
+    );
+    const cells = [
+      ...(host?.querySelectorAll('.nz-chart-frame-x-ticks .nz-chart-frame-cell') ?? []),
+    ];
+    for (const [cell, label] of [
+      [cells.at(0), shown().at(0)],
+      [cells.at(-1), shown().at(-1)],
+    ] as const) {
+      const band = cell?.getBoundingClientRect();
+      const box = label?.box;
+      expect(((box?.left ?? 0) + (box?.right ?? 0)) / 2).toBeCloseTo(
+        ((band?.left ?? 0) + (band?.right ?? 0)) / 2,
+        0,
+      );
+    }
+  });
+
   test('the data table keeps every value', () => {
     mount(area(), 'probe-narrow');
     expect(host?.querySelectorAll('.nz-chart-frame-table tbody tr')).toHaveLength(30);
+  });
+});
+
+/** Each y label's text box and the y labels' column. */
+function yLabels(): { column: DOMRect; boxes: DOMRect[] } {
+  const column = one('.nz-chart-frame-y-ticks').getBoundingClientRect();
+  const boxes = [...(host?.querySelectorAll('.nz-chart-frame-y-ticks .nz-chart-frame-tick') ?? [])]
+    .filter((tick) => tick.textContent !== '')
+    .map((tick) => {
+      const range = document.createRange();
+      range.selectNodeContents(tick);
+      return range.getBoundingClientRect();
+    });
+  return { column, boxes };
+}
+
+describe('the y labels', () => {
+  test('English keeps the 2.75rem gutter; wider labels (ar-EG) widen it instead of overflowing (M61)', () => {
+    const big = ORDERS.map((d) => ({ date: d.date, orders: d.orders * 1000 }));
+    mount(bars, 'probe-wide');
+    const english = one('.nz-chart-frame-y-ticks');
+    const padding = Number.parseFloat(getComputedStyle(english).paddingInlineEnd);
+    expect(english.getBoundingClientRect().width).toBeCloseTo(44 + padding, 0);
+    root?.unmount();
+    host?.remove();
+    for (const locale of ['ar-EG', 'en-US']) {
+      mount(
+        <BarChart
+          title="Orders"
+          data={big}
+          x="date"
+          y="orders"
+          interaction="none"
+          locale={locale}
+          axisFormat={{ maximumFractionDigits: 0 }}
+        />,
+        'probe-wide',
+      );
+      const { column, boxes } = yLabels();
+      expect(boxes.length).toBeGreaterThan(1);
+      for (const box of boxes) expect(box.left).toBeGreaterThanOrEqual(column.left - 0.5);
+      root?.unmount();
+      host?.remove();
+    }
   });
 });
