@@ -34,9 +34,11 @@ import { BrandGrid, IconCount, IconGrid } from './icons';
 import { JsRefGroups, TokensJsonCount, TokensJsonEntry, TokensJsonSummary } from './js-tokens';
 import { TailwindMap, TailwindSample } from './tailwind';
 import { ThemeScopesDemo } from './theme-demo';
+import { MarkdownTable } from './table';
 
 export const mdxComponents: MDXComponents = {
   ...defaultMdxComponents,
+  table: MarkdownTable,
   Callout,
   ClientPagingDemo,
   ClientSortDemo,

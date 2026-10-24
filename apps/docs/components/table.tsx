@@ -3,7 +3,7 @@
 // be cut off with no way to reach the clipped columns (WCAG 1.4.10). The scroller is focusable and
 // named, so a keyboard user can scroll it too: Safari does not make scrollers focusable on its own.
 // The classes are those of Fumadocs' own MDX table wrapper, so both kinds of table look the same.
-import type { JSX, ReactNode } from 'react';
+import type { ComponentProps, JSX, ReactNode } from 'react';
 
 export function Table({
   label,
@@ -29,6 +29,26 @@ export function Table({
       <table aria-label={label} className={className}>
         {children}
       </table>
+    </div>
+  );
+}
+
+/**
+ * A table written in Markdown, in the same focusable scroller as the generated tables: Fumadocs'
+ * own wrapper is not focusable, so a Markdown table wider than a phone could not be scrolled from
+ * the keyboard (axe `scrollable-region-focusable`; the Strings guide's table at 375px).
+ */
+export function MarkdownTable(props: ComponentProps<'table'>): JSX.Element {
+  return (
+    <div
+      className="nz-docs-table relative my-6 overflow-auto prose-no-margin"
+      // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role
+      role="group"
+      aria-label="Table"
+      // oxlint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+      tabIndex={0}
+    >
+      <table {...props} />
     </div>
   );
 }
