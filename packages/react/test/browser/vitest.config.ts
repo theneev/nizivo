@@ -1,3 +1,4 @@
+import { readdirSync } from 'node:fs';
 import { defineConfig, type ViteUserConfig } from 'vitest/config';
 import { engine, provider } from '../browser-engine.ts';
 import { adapterSwap } from '../adapters.ts';
@@ -11,6 +12,18 @@ import { reactMatrix } from '../react-matrix.ts';
 // Chromium and Firefox. The locale-determinism spec (test/browser/locale; ARCHITECTURE.md §16.4,
 // M56) runs in a second instance of the same engine, `<engine>-de-DE`, whose page is German
 // (Playwright's context `locale: 'de-DE'`).
+//
+// The default instance takes only this folder's own specs, so a spec in any other subfolder would be
+// left out of the lane without a word: refuse to start instead.
+const unrun = readdirSync(new URL('.', import.meta.url), { recursive: true }).filter(
+  (f) => f.endsWith('.spec.tsx') && f.includes('/') && !f.startsWith('locale/'),
+);
+if (unrun.length > 0) {
+  throw new Error(
+    `test/browser: ${unrun.join(', ')} would not run; specs live in test/browser/ or test/browser/locale/`,
+  );
+}
+
 const config: ViteUserConfig = defineConfig({
   // Pre-bundled up front: found mid-run on a cold cache, react-aria is re-bundled and a second React
   // copy loads ("reading 'useRef'" of null) until the cache is warm.
