@@ -46,7 +46,8 @@ Report them; never re-record baselines to make them pass.
 
 - `fixture-vite`: Node's `setTypeOfService EINVAL` socket error: fixed on 2026-10-24 (the fixture runner's
   own requests use `node:http`, not `fetch`: `fixtures/runner/http.ts`); report it if it returns.
-- Charts visual: the `area-chart/rtl` dark baselines flip between two system Arabic fonts.
+- Charts visual: the `area-chart/rtl` baselines flipped between two system Arabic fonts: fixed on 2026-10-24
+  (the visual harness pins Arabic to Geeza Pro: `packages/react/scripts/visual/run.ts`); report it if it returns.
 - Firefox overlay conformance O-03 (Tooltip in Dialog, Escape), NIZ-126: fixed on 2026-10-22 (the pointer is parked before each nesting case); report it if it returns.
 - WebKit on macOS: 10 known Tab-order failures in the browser specs (IconButton 2, SegmentedControl 3,
   Tabs 1, TabNav 1, ChipGroup 2, ChoiceCard 1): WebKit does not Tab to buttons, links or radios by default.

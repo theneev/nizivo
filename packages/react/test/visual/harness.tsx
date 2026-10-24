@@ -137,9 +137,25 @@ export function start(input: HarnessInput): void {
     examples: () => examples,
 
     async fontsReady(): Promise<boolean> {
+      // Geist is two faces over one file, 100-549 and 550-900 (run.ts)
       await document.fonts.load('16px "Geist"');
+      await document.fonts.load('700 16px "Geist"');
       await document.fonts.load('16px "Geist Mono"');
-      return document.fonts.check('16px "Geist"') && document.fonts.check('16px "Geist Mono"');
+      // the pinned Arabic faces (run.ts): a missing local font rejects, and a face that never
+      // loads would let Chromium fall back to a system font of its choosing again
+      const arabic = await Promise.all(
+        ['400 16px "Geist"', '700 16px "Geist"'].map((f) =>
+          document.fonts.load(f, '\u0645').catch(() => []),
+        ),
+      );
+      return (
+        document.fonts.check('16px "Geist"') &&
+        document.fonts.check('700 16px "Geist"') &&
+        document.fonts.check('16px "Geist Mono"') &&
+        arabic.every((faces) =>
+          faces.some((face) => face.status === 'loaded' && face.unicodeRange !== 'U+0-10FFFF'),
+        )
+      );
     },
 
     async mount(component, name): Promise<Mounted> {

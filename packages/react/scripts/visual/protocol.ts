@@ -53,7 +53,7 @@ export type Theme = 'light' | 'dark';
 
 export interface VisualApi {
   examples(): ExampleRef[];
-  /** Loads the Geist faces the tokens name and checks both are in use. */
+  /** Loads the Geist faces the tokens name, and the pinned Arabic faces, and checks all are in use. */
   fontsReady(): Promise<boolean>;
   mount(component: string, name: string): Promise<Mounted>;
   unmount(): Promise<void>;

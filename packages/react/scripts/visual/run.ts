@@ -294,6 +294,9 @@ async function bundle(list: Component[], out: string): Promise<string> {
 
 // --- server -------------------------------------------------------------------------------------
 
+/** The Arabic blocks, the presentation forms included. */
+const ARABIC = 'U+0600-06FF, U+0750-077F, U+0870-08FF, U+FB50-FDFF, U+FE70-FEFF';
+
 function page(sheets: ReadonlyArray<[string, string]>): string {
   const links = ['/tokens.css', ...sheets.map(([href]) => href)]
     .map((href) => `<link rel="stylesheet" href="${href}">`)
@@ -305,7 +308,15 @@ function page(sheets: ReadonlyArray<[string, string]>): string {
 <title>Nizivo visual regression</title>
 ${links}
 <style>
-@font-face { font-family: "Geist"; src: url(/fonts/geist-sans.woff2) format("woff2"); font-weight: 100 900; font-display: block; }
+/* Geist has no Arabic, and Chromium on macOS fell back to SF Arabic in some runs and Geeza Pro in
+   others (the charts area-chart/rtl flake), so Arabic is pinned to macOS's Geeza Pro, which local()
+   can name (SF Arabic is a hidden system font it cannot). Faces combine by unicode-range only when
+   their other descriptors match, so Geist is declared over the same two weight ranges as Geeza
+   Pro's regular and bold faces (one file; a used weight renders as it did from one 100-900 face) */
+@font-face { font-family: "Geist"; src: url(/fonts/geist-sans.woff2) format("woff2"); font-weight: 100 549; font-display: block; }
+@font-face { font-family: "Geist"; src: url(/fonts/geist-sans.woff2) format("woff2"); font-weight: 550 900; font-display: block; }
+@font-face { font-family: "Geist"; src: local("GeezaPro"); font-weight: 100 549; unicode-range: ${ARABIC}; }
+@font-face { font-family: "Geist"; src: local("GeezaPro-Bold"); font-weight: 550 900; unicode-range: ${ARABIC}; }
 @font-face { font-family: "Geist Mono"; src: url(/fonts/geist-mono.woff2) format("woff2"); font-weight: 100 900; font-display: block; }
 html { background: var(--nz-bg-surface); color: var(--nz-text-primary); }
 /* on body, not html: the root keeps the browser's 16 px, so every rem renders at the size Nizivo ships */
@@ -624,7 +635,8 @@ async function openPage(browser: Browser, origin: string, problems: string[]): P
   });
   await p.goto(`${origin}/`);
   await p.waitForFunction(() => 'nzVisual' in globalThis);
-  if (!(await call(p, 'fontsReady'))) throw new Error('the Geist fonts did not load');
+  if (!(await call(p, 'fontsReady')))
+    throw new Error('the Geist fonts or the pinned Arabic faces did not load');
   return p;
 }
 
