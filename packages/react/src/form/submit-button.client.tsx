@@ -8,6 +8,7 @@ import type { ReactElement } from 'react';
 import { useFormStatus } from 'react-dom';
 import type { ButtonVariant } from '../augment';
 import { Button, type ButtonProps } from '../button/button';
+import { useLabels } from '../config/config.client';
 
 export interface SubmitButtonProps extends Omit<ButtonProps, 'type'> {
   /**
@@ -27,8 +28,19 @@ export interface SubmitButtonProps extends Omit<ButtonProps, 'type'> {
 export function SubmitButton({
   variant = 'primary',
   pending = false,
+  labels: labelsProp,
   ...rest
 }: SubmitButtonProps): ReactElement {
   const status = useFormStatus();
-  return <Button {...rest} variant={variant} type="submit" pending={pending || status.pending} />;
+  // Button is a server part, so it cannot read NizivoConfig; its client twin passes the scope on (M58)
+  const labels = useLabels('button', labelsProp);
+  return (
+    <Button
+      {...rest}
+      {...(labels === undefined ? {} : { labels })}
+      variant={variant}
+      type="submit"
+      pending={pending || status.pending}
+    />
+  );
 }

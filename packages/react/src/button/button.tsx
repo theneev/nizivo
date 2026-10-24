@@ -51,6 +51,7 @@ export interface ButtonProps extends Omit<ComponentPropsWithRef<'button'>, 'chil
    * Overrides Button's strings, for example `labels={{ pending: 'Wird geladen…' }}`; `pending: ''`
    * shows no text and keeps the label visible. Translation is per instance: Button is a server
    * part, so `NizivoConfig labels` does not reach it, and an app wraps Button once to pass its own.
+   * SubmitButton, its client twin, does read them (`button.pending`).
    */
   labels?: Partial<ButtonLabels>;
   children?: ReactNode;

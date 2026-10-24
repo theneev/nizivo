@@ -6,7 +6,7 @@
       "limitKiB": 120
     },
     "@nizivo/react/alert": {
-      "measured": 1282,
+      "measured": 1379,
       "limitKiB": 1.4
     },
     "@nizivo/react/app-shell": {
@@ -26,7 +26,7 @@
       "limitKiB": 0.9
     },
     "@nizivo/react/banner": {
-      "measured": 1414,
+      "measured": 1413,
       "limitKiB": 1.5
     },
     "@nizivo/react/breadcrumb": {
@@ -70,11 +70,11 @@
       "limitKiB": 1.1
     },
     "@nizivo/react/dialog": {
-      "measured": 32660,
+      "measured": 32654,
       "limitKiB": 32
     },
     "@nizivo/react/drawer": {
-      "measured": 32731,
+      "measured": 32730,
       "limitKiB": 35
     },
     "@nizivo/react/empty-state": {
@@ -90,11 +90,11 @@
       "limitKiB": 1.9
     },
     "@nizivo/react/file-upload": {
-      "measured": 5685,
+      "measured": 5683,
       "limitKiB": 6.1
     },
     "@nizivo/react/form": {
-      "measured": 2833,
+      "measured": 2852,
       "limitKiB": 3
     },
     "@nizivo/react/grid": {
@@ -154,7 +154,7 @@
       "limitKiB": 2.4
     },
     "@nizivo/react/mobile-tab-bar": {
-      "measured": 33343,
+      "measured": 33341,
       "limitKiB": 36
     },
     "@nizivo/react/mobile-top-bar": {
@@ -186,11 +186,11 @@
       "limitKiB": 2
     },
     "@nizivo/react/password-input": {
-      "measured": 2672,
+      "measured": 2665,
       "limitKiB": 2.8
     },
     "@nizivo/react/popover": {
-      "measured": 36058,
+      "measured": 36056,
       "limitKiB": 39
     },
     "@nizivo/react/progress-bar": {
@@ -210,7 +210,7 @@
       "limitKiB": 2.7
     },
     "@nizivo/react/search-field": {
-      "measured": 3418,
+      "measured": 3413,
       "limitKiB": 3.6
     },
     "@nizivo/react/segmented-control": {
@@ -278,7 +278,7 @@
       "limitKiB": 0.4
     },
     "@nizivo/react/toast": {
-      "measured": 14912,
+      "measured": 14911,
       "limitKiB": 16
     },
     "@nizivo/react/tooltip": {
@@ -294,7 +294,7 @@
       "limitKiB": 2.7
     },
     "@nizivo/react dashboard set": {
-      "measured": 78944,
+      "measured": 78939,
       "limitKiB": 85
     },
     "@nizivo/react { Button } from the barrel": {
@@ -302,7 +302,7 @@
       "limitKiB": 1.4
     },
     "@nizivo/react { Select } from the barrel": {
-      "measured": 63685,
+      "measured": 63679,
       "limitKiB": 68
     },
     "@nizivo/react own: _engines/react-aria/dialog.client": {
@@ -366,8 +366,8 @@
       "limitKiB": 0.7
     },
     "@nizivo/react own: alert/alert-dismiss.client": {
-      "measured": 394,
-      "limitKiB": 0.4
+      "measured": 423,
+      "limitKiB": 0.5
     },
     "@nizivo/react own: banner/banner-dismiss.client": {
       "measured": 424,
@@ -390,11 +390,11 @@
       "limitKiB": 0.3
     },
     "@nizivo/react own: dialog/dialog.client": {
-      "measured": 1025,
+      "measured": 1023,
       "limitKiB": 1.4
     },
     "@nizivo/react own: drawer/drawer.client": {
-      "measured": 1091,
+      "measured": 1090,
       "limitKiB": 1.2
     },
     "@nizivo/react own: field/field-scope.client": {
@@ -402,7 +402,7 @@
       "limitKiB": 1.6
     },
     "@nizivo/react own: file-upload/file-upload.client": {
-      "measured": 3136,
+      "measured": 3135,
       "limitKiB": 3.4
     },
     "@nizivo/react own: form/form.client": {
@@ -410,8 +410,8 @@
       "limitKiB": 1.4
     },
     "@nizivo/react own: form/submit-button.client": {
-      "measured": 180,
-      "limitKiB": 0.2
+      "measured": 228,
+      "limitKiB": 0.3
     },
     "@nizivo/react own: icon-button/icon-button.client": {
       "measured": 353,
@@ -438,11 +438,11 @@
       "limitKiB": 1.2
     },
     "@nizivo/react own: password-input/password-input.client": {
-      "measured": 1117,
+      "measured": 1116,
       "limitKiB": 1.2
     },
     "@nizivo/react own: popover/popover.client": {
-      "measured": 966,
+      "measured": 965,
       "limitKiB": 1.1
     },
     "@nizivo/react own: radio-group/radio-group.client": {
@@ -858,7 +858,7 @@
       "limitKiB": 1.7
     },
     "@nizivo/charts/styles.css": {
-      "measured": 3506,
+      "measured": 3740,
       "limitKiB": 3.7
     }
   }

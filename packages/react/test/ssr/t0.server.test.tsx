@@ -96,8 +96,8 @@ const TOOLTIP_LEAVES = [
 
 /** The client leaves a split component's subpath may reach (§9.5 "split"); none for the others. */
 const CLIENT_LEAVES: Partial<Record<Name, string[]>> = {
-  alert: ['src/alert/alert-dismiss.client.tsx'],
-  // a client part that reads NizivoConfig's labels reaches the config module (M55)
+  // a client part that reads NizivoConfig's labels reaches the config module (M55, M58)
+  alert: ['src/alert/alert-dismiss.client.tsx', 'src/config/config.client.tsx'],
   banner: ['src/banner/banner-dismiss.client.tsx', 'src/config/config.client.tsx'],
   'table-selection': ['src/table-selection/table-selection.client.tsx'],
   field: [FIELD_SCOPE],

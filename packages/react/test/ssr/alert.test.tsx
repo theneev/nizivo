@@ -1,9 +1,9 @@
-import { isValidElement, type MouseEvent } from 'react';
+import type { MouseEvent } from 'react';
 import { renderToString } from 'react-dom/server';
 import { describe, expect, test, vi } from 'vitest';
 import { graph, isClient, reactImports, REACT_SERVER, rekey } from '../helpers/graph';
 import { Alert } from '../../src/alert/alert';
-import { AlertDismiss } from '../../src/alert/alert-dismiss.client';
+import { AlertDismiss, type AlertDismissProps } from '../../src/alert/alert-dismiss.client';
 import { AlertDismissibleExample, AlertExample } from '../../src/alert/alert.example';
 import { CloseGlyph } from '../../src/_internal/glyphs';
 import { IconButton } from '../../src/icon-button/icon-button';
@@ -29,8 +29,10 @@ describe('Alert is server-safe', () => {
 describe('Alert is split', () => {
   test('the subpath reaches exactly one client module, the dismiss leaf', () => {
     const { modules } = graph(SRC, 'src/alert/index.ts');
+    // the dismiss leaf, and NizivoConfig's module, whose labels it reads (M55, M58)
     expect([...modules].filter((file) => isClient(SRC.get(file) ?? ''))).toEqual([
       'src/alert/alert-dismiss.client.tsx',
+      'src/config/config.client.tsx',
     ]);
   });
 });
@@ -88,11 +90,30 @@ describe('Alert markup', () => {
 });
 
 /** Calls the leaf's click handler as React would, with a minimal event. */
-function click(element: unknown, defaultPrevented = false): void {
-  if (!isValidElement<{ onClick: (event: Partial<MouseEvent>) => void }>(element)) {
-    throw new Error('not an element');
-  }
-  element.props.onClick({ defaultPrevented });
+/**
+ * The button's click handler, as AlertDismiss renders it: it reads NizivoConfig through a hook, so it
+ * runs inside a render, and a `render` function hands over the props it gives its button.
+ */
+function isHandler(value: unknown): value is (event: Partial<MouseEvent>) => void {
+  return typeof value === 'function';
+}
+
+function clickOf(props: AlertDismissProps): (defaultPrevented?: boolean) => void {
+  let onClick: unknown;
+  renderToString(
+    <AlertDismiss
+      {...props}
+      render={(given) => {
+        onClick = given['onClick'];
+        return <button type="button" aria-label="Dismiss" />;
+      }}
+    />,
+  );
+  if (!isHandler(onClick)) throw new Error('no onClick');
+  const handler = onClick;
+  return (defaultPrevented = false) => {
+    handler({ defaultPrevented });
+  };
 }
 
 describe('AlertDismiss', () => {
@@ -111,7 +132,7 @@ describe('AlertDismiss', () => {
 
   test('onDismiss gets no arguments, so a Server Action can be passed', () => {
     const onDismiss = vi.fn<() => void>();
-    click(AlertDismiss({ onDismiss, children: '×' }));
+    clickOf({ onDismiss, children: '×' })();
     expect(onDismiss).toHaveBeenCalledTimes(1);
     expect(onDismiss).toHaveBeenCalledWith();
   });
@@ -121,10 +142,10 @@ describe('AlertDismiss', () => {
     const onDismiss = vi.fn<() => void>(() => {
       calls.push('dismiss');
     });
-    const element = AlertDismiss({ onDismiss, onClick: () => calls.push('click'), children: '×' });
-    click(element, true);
+    const click = clickOf({ onDismiss, onClick: () => calls.push('click'), children: '×' });
+    click(true);
     expect(onDismiss).not.toHaveBeenCalled();
-    click(element);
+    click();
     expect(calls).toEqual(['click', 'click', 'dismiss']);
   });
 

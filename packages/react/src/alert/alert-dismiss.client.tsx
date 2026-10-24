@@ -1,6 +1,7 @@
 'use client';
 // The Alert's dismiss leaf: the only part of an Alert that hydrates (ARCHITECTURE.md §9.5, "split").
 import type { ComponentPropsWithRef, MouseEvent, ReactElement, ReactNode } from 'react';
+import { useLabels } from '../config/config.client';
 import { renderElement, type RenderProp } from '../contracts/render';
 import { cx } from '../_internal/cx';
 import { CloseGlyph } from '../_internal/glyphs';
@@ -40,7 +41,7 @@ export interface AlertDismissProps extends Omit<ComponentPropsWithRef<'button'>,
  */
 export function AlertDismiss({
   onDismiss,
-  labels,
+  labels: labelsProp,
   'aria-label': ariaLabel,
   type,
   render,
@@ -49,6 +50,7 @@ export function AlertDismiss({
   children,
   ...rest
 }: AlertDismissProps): ReactElement {
+  const labels = useLabels('alertDismiss', labelsProp);
   const own = render === undefined;
   return renderElement(
     'button',

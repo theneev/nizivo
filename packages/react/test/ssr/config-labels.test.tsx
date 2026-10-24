@@ -13,7 +13,7 @@ import { Chip, ChipGroup } from '../../src/chip-group/index';
 import { NizivoConfig, type NizivoLabels } from '../../src/config/index';
 import { Field } from '../../src/field/index';
 import { FileUpload } from '../../src/file-upload/index';
-import { Form } from '../../src/form/index';
+import { Form, SubmitButton } from '../../src/form/index';
 import { Input } from '../../src/input/index';
 import { enUS } from '../../src/locales/en-US';
 import { MobileTabBarMore } from '../../src/mobile-tab-bar/index';
@@ -35,7 +35,10 @@ type Key = keyof typeof enUS;
 
 /** The catalogue keys NizivoConfig's labels reach, and the client module that reads each. */
 const REACHED: Partial<Record<Key, string>> = {
+  alertDismiss: 'src/alert/alert-dismiss.client.tsx',
   bannerDismiss: 'src/banner/banner-dismiss.client.tsx',
+  // SubmitButton, Button's client twin: Button itself is a server part and keeps per-instance labels
+  button: 'src/form/submit-button.client.tsx',
   chipGroup: 'src/chip-group/chip-group.client.tsx',
   dialog: 'src/dialog/dialog.client.tsx',
   drawer: 'src/drawer/drawer.client.tsx',
@@ -52,15 +55,9 @@ const SERVER = 'a server part: it cannot read a context, so it takes `labels` pe
 
 /** The keys it does not reach, and why. */
 const NOT_REACHED: Partial<Record<Key, string>> = {
-  // A client part, left out in week 22: reading the context takes its own code from 394 to 423 B,
-  // over its 0.4 KiB own-code limit; a size limit moves only by a maintainer decision (§17.3).
-  alertDismiss: 'client, but over its own-code size limit with the read (a maintainer decision)',
   appShell: SERVER,
   avatarGroup: SERVER,
   breadcrumb: SERVER,
-  // SubmitButton (client) renders Button's pending string too, and passes only its own `labels`:
-  // the read takes its own code from 180 to 212 B, over its 0.2 KiB limit.
-  button: SERVER,
   kpiTile: SERVER,
   metric: SERVER,
   mobileTabBar: SERVER,
@@ -108,8 +105,8 @@ const SCOPE: NizivoLabels = {
   mobileTabBarMore: { more: 'Mehr' },
   passwordInput: { toggle: 'Passwort anzeigen' },
   searchField: { label: 'Suchen', clear: 'Suche leeren' },
-  // keys of server parts and of AlertDismiss: ignored
   alertDismiss: { dismiss: 'Schließen' },
+  // the server parts' keys: ignored by them (SubmitButton, Button's client twin, reads `button`)
   breadcrumb: { nav: 'Brotkrumen' },
   button: { pending: 'Lädt…' },
   pagination: { nav: 'Seitennavigation', previous: 'Vorherige Seite' },
@@ -121,6 +118,7 @@ function clientParts(own: { searchField?: NizivoLabels['searchField'] } = {}): R
       <SearchField defaultValue="mug" {...(own.searchField && { labels: own.searchField })} />
       <PasswordInput aria-label="Password" />
       <BannerDismiss />
+      <AlertDismiss />
       <ChipGroup aria-label="Glaze">
         <Chip value="sand" unavailable>
           Sand
@@ -135,6 +133,7 @@ function clientParts(own: { searchField?: NizivoLabels['searchField'] } = {}): R
           <Input />
         </Field>
       </Form>
+      <SubmitButton pending>Save</SubmitButton>
     </>
   );
 }
@@ -142,7 +141,6 @@ function clientParts(own: { searchField?: NizivoLabels['searchField'] } = {}): R
 function serverParts(): ReactNode {
   return (
     <>
-      <AlertDismiss />
       <Breadcrumb.Root>
         <Breadcrumb.Item current>Mugs</Breadcrumb.Item>
       </Breadcrumb.Root>
@@ -160,11 +158,13 @@ describe('NizivoConfig labels, server-rendered', () => {
       'aria-label="Suche leeren"',
       'aria-label="Passwort anzeigen"',
       'aria-label="Ausblenden"',
+      'aria-label="Schließen"',
       'Ausverkauft',
       'Dateien hier ablegen oder ',
       'durchsuchen',
       'Mehr',
       'Es gibt ein Problem',
+      'Lädt…',
     ]) {
       expect(html).toContain(text);
     }
@@ -199,17 +199,17 @@ describe('NizivoConfig labels, server-rendered', () => {
         'browse',
         'More',
         'There is a problem',
+        'Loading…',
       ]) {
         expect(html).toContain(text);
       }
     }
   });
 
-  test('a server part, and AlertDismiss, ignore the scope', () => {
+  test('a server part ignores the scope', () => {
     const scoped = renderToString(<NizivoConfig labels={SCOPE}>{serverParts()}</NizivoConfig>);
     expect(scoped).toBe(renderToString(serverParts()));
     for (const text of [
-      'aria-label="Dismiss"',
       'aria-label="Breadcrumb"',
       'Loading…',
       'aria-label="Pagination"',
