@@ -29,6 +29,8 @@ export const PACKAGES = [
   // ~1,900 icon modules behind two wildcard subpaths (`./*`, `./brands/*`). attw checks only '.':
   // it does not expand wildcard subpaths, so their types are not covered here (§14.2).
   { name: '@nizivo/icons', dir: 'packages/icons', partsOnly: false },
+  // v0.2 (§14.1): one 'use client' island; no namespace objects, so no *.parts.js rule
+  { name: '@nizivo/charts', dir: 'packages/charts', partsOnly: false },
 ];
 const ATTW = join(import.meta.dirname, '..', 'node_modules', '.bin', 'attw');
 

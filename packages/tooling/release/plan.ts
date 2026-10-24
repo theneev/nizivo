@@ -9,6 +9,8 @@ export const PUBLISHED = [
   { name: '@nizivo/tokens', dir: 'packages/tokens' },
   { name: '@nizivo/icons', dir: 'packages/icons' },
   { name: '@nizivo/react', dir: 'packages/react' },
+  // v0.2: charts depends on tokens only, never on react (§14.1)
+  { name: '@nizivo/charts', dir: 'packages/charts' },
 ] as const;
 
 /** The npm owner account that publishes (decision 9). */

@@ -4,7 +4,7 @@ While GitHub Actions is off, the maintainer publishes by hand from their own mac
 
 ## Versioning
 
-- [Changesets](https://github.com/changesets/changesets) with one **fixed** group: `@nizivo/tokens`, `@nizivo/react`, `@nizivo/icons`. `@nizivo/charts` joins the group when v0.2 adds the package (Changesets reports a group entry that matches no package as a config error, so it is not listed before then). They always release together at the same version, so the CSS contract between tokens and components never skews. See [`.changeset/config.json`](.changeset/config.json).
+- [Changesets](https://github.com/changesets/changesets) with one **fixed** group: `@nizivo/tokens`, `@nizivo/react`, `@nizivo/icons` and, from 0.2.0, `@nizivo/charts` (public from 0.2.0; it was private until then, M60). They always release together at the same version, so the CSS contract between tokens and components never skews. See [`.changeset/config.json`](.changeset/config.json).
 - 0.x semantics: a breaking change is a minor bump with a `BREAKING:` note. `unstable/*` entries are outside semver.
 - 0.x goes to the **`next`** dist-tag (`npm publish --tag next`). After the first publish of each package, check with `npm dist-tag ls @nizivo/tokens` whether npm also pointed `latest` at it; if it did, record it here.
 
@@ -23,7 +23,7 @@ Before the first run on a machine: Node 24.16 or later, pnpm 12.11.2 through cor
    ```
 
 4. **Dry run again.** `pnpm release` must finish with no blockers.
-5. **Publish.** Run `pnpm release --publish` in a terminal. Type `publish` to confirm, then enter a fresh npm one-time password when asked, once per package, in the order `@nizivo/tokens`, `@nizivo/icons`, `@nizivo/react`. The password is passed to npm through its environment only, never on the command line or in a log. Pressing Enter on an empty prompt lets npm ask for it itself. Before each publish the script checks that the tarball is byte-for-byte the one it checked.
+5. **Publish.** Run `pnpm release --publish` in a terminal. Type `publish` to confirm, then enter a fresh npm one-time password when asked, once per package, in the order `@nizivo/tokens`, `@nizivo/icons`, `@nizivo/react`, `@nizivo/charts`. 0.2.0 is `@nizivo/charts`'s first publish: npm creates the package under the `@nizivo` scope then, and `npm dist-tag ls @nizivo/charts` should be checked afterwards as for the others. The password is passed to npm through its environment only, never on the command line or in a log. Pressing Enter on an empty prompt lets npm ask for it itself. Before each publish the script checks that the tarball is byte-for-byte the one it checked.
 6. **Tags.** The script creates annotated local tags `@nizivo/<package>@<version>` on HEAD and prints the `git push origin refs/tags/…` command. Run it yourself.
 7. **If a publish fails part-way**, fix the cause **outside the repo** (the network, the npm account, a one-time password) and run `pnpm release --publish` again from the same commit: versions already on the registry are skipped, so it carries on where it stopped. Do not commit a fix to a package that is already partly published before the rest is out: the script compares each published version's bytes with the tarball it just packed, and when they differ (HEAD is no longer what was published) it stops before publishing or tagging anything. A fix to the packages themselves goes out as the next version, through a changeset.
 

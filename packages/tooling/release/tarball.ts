@@ -30,6 +30,12 @@ export const POLICIES: Record<string, TarballPolicy> = {
     optional: [],
     dist: ['.js', '.d.ts'],
   },
+  // v0.2 (§14.1): its own code and d3's geometry modules as dependencies, nothing inlined
+  '@nizivo/charts': {
+    required: ['LICENSE', 'README.md'],
+    optional: [],
+    dist: ['.js', '.d.ts', '.css'],
+  },
 };
 
 /** npm lifecycle scripts that run on a consumer's machine or around a publish. */

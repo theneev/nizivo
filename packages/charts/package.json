@@ -1,7 +1,6 @@
 {
   "name": "@nizivo/charts",
   "version": "0.1.0",
-  "private": true,
   "description": "Nizivo charts: server-first SVG charts with one small interaction island, themed by @nizivo/tokens",
   "keywords": [
     "charts",
@@ -62,6 +61,9 @@
     },
     "./styles.css": "./dist/styles.css",
     "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
     "build": "tsdown && node scripts/build-css.ts",

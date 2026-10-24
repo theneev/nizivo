@@ -53,11 +53,12 @@ const group = (version: string, tokensRange: string) => [
 ];
 
 describe('plan', () => {
-  test('publishes tokens, then icons, then react', () => {
+  test('publishes tokens, then icons, then react, then charts', () => {
     expect(PUBLISHED.map((p) => p.name)).toEqual([
       '@nizivo/tokens',
       '@nizivo/icons',
       '@nizivo/react',
+      '@nizivo/charts',
     ]);
   });
 
@@ -179,6 +180,7 @@ describe('plan', () => {
       ['@nizivo/tokens', { kind: 'published', integrity: 'sha512-@nizivo/tokens' }],
       ['@nizivo/icons', { kind: 'published', integrity: 'sha512-other' }],
       ['@nizivo/react', { kind: 'absent' }],
+      ['@nizivo/charts', { kind: 'absent' }],
     ]);
     const { steps, problems } = planPublish(packed, registry, { dryRun: true });
     expect(problems).toEqual([]);
@@ -186,6 +188,7 @@ describe('plan', () => {
       ['@nizivo/tokens', 'skip'],
       ['@nizivo/icons', 'skip'],
       ['@nizivo/react', 'publish'],
+      ['@nizivo/charts', 'publish'],
     ]);
     expect(steps[0]).not.toHaveProperty('warning');
     expect(steps[1]).toHaveProperty('warning');
@@ -398,11 +401,6 @@ function world(w: World = {}) {
         ]),
       }),
     );
-    // @nizivo/charts is private until 0.2 (not in PUBLISHED), but its lanes run in every release
-    files.set(
-      join(REPO_ROOT, 'packages/charts/package.json'),
-      JSON.stringify({ name: '@nizivo/charts', scripts: scripts(['test:browser', 'test:visual']) }),
-    );
     files.set(
       join(REPO_ROOT, 'packages/tooling/react-hooks-lint/package.json'),
       JSON.stringify({ name: '@nizivo/react-hooks-lint', scripts: scripts(['lint:hooks']) }),
@@ -423,6 +421,13 @@ function world(w: World = {}) {
                   'test:adapter',
                   'test:visual',
                 ]),
+              }
+            : {}),
+          // @nizivo/charts (published from 0.2): its own lanes, and tokens as a dependency
+          ...(name === '@nizivo/charts'
+            ? {
+                dependencies: { '@nizivo/tokens': 'workspace:*' },
+                scripts: scripts(['test:browser', 'test:visual']),
               }
             : {}),
         }),
@@ -560,7 +565,9 @@ function world(w: World = {}) {
         manifest: {
           name,
           version,
-          ...(name === '@nizivo/react' ? { dependencies: { '@nizivo/tokens': version } } : {}),
+          ...(name === '@nizivo/react' || name === '@nizivo/charts'
+            ? { dependencies: { '@nizivo/tokens': version } }
+            : {}),
         },
       })),
     }),
@@ -598,6 +605,7 @@ describe('release', () => {
       `${STAGE}/nizivo-tokens-0.1.0.tgz`,
       `${STAGE}/nizivo-icons-0.1.0.tgz`,
       `${STAGE}/nizivo-react-0.1.0.tgz`,
+      `${STAGE}/nizivo-charts-0.1.0.tgz`,
     ]);
     // npm runs in its own folder: never the repo (EBADDEVENGINES), never home (~/.npmrc).
     expect(calls.filter((c) => c.command === 'npm').every((c) => c.options.cwd === NPM_CWD)).toBe(
@@ -646,7 +654,7 @@ describe('release', () => {
     const { io, lines, publishes, logs } = world({ npmUser: undefined, dirty: true, behind: true });
     expect(await release(DRY, io)).toBe(1);
     expectSafe(lines(), true);
-    expect(publishes()).toHaveLength(3);
+    expect(publishes()).toHaveLength(4);
     const text = logs.join('\n');
     expect(text).toContain(
       'cd ~/.config/nizivo && npm login --registry https://registry.npmjs.org/ --userconfig ~/.config/nizivo/npmrc',
@@ -688,7 +696,7 @@ describe('release', () => {
   test('every npm call carries --userconfig with the login file, in dry and real runs', async () => {
     const cases: [Options, World][] = [
       [DRY, READY],
-      [REAL, { ...READY, answers: ['publish'], otps: ['111111', '222222', '333333'] }],
+      [REAL, { ...READY, answers: ['publish'], otps: ['111111', '222222', '333333', '444444'] }],
       [DRY, { ...READY, env: { [USERCONFIG_ENV]: '/vault/nizivo/npmrc' } }],
       [DRY, { ...READY, env: { [USERCONFIG_ENV]: '~/.config/elsewhere/npmrc' } }],
     ];
@@ -696,13 +704,15 @@ describe('release', () => {
       const { io, npmCalls } = world(w);
       expect(await release(options, io)).toBe(0);
       const expected = (w.env?.[USERCONFIG_ENV] ?? USERCONFIG).replace(/^~/, HOME);
-      // whoami, profile get, three views and three publishes
+      // whoami, profile get, four views and four publishes
       expect(npmCalls().map((c) => c.args[0])).toEqual([
         'whoami',
         'profile',
         'view',
         'view',
         'view',
+        'view',
+        'publish',
         'publish',
         'publish',
         'publish',
@@ -743,7 +753,7 @@ describe('release', () => {
     expect(await release(DRY, dry.io)).toBe(1);
     expectSafe(dry.lines(), true);
     expect(dry.npmCalls().map((c) => c.args[0])).not.toContain('whoami');
-    expect(dry.publishes()).toHaveLength(3);
+    expect(dry.publishes()).toHaveLength(4);
     expect(dry.npmCalls().every((c) => c.args.at(-1) === USERCONFIG)).toBe(true);
     expect(dry.logs.join('\n')).toMatch(
       /BLOCKER {2}no npm login file at ~\/\.config\/nizivo\/npmrc/,
@@ -773,7 +783,7 @@ describe('release', () => {
   });
 
   test('a real run publishes in order with a one-time password each, kept off argv, then tags', async () => {
-    const otps = ['111111', '222222', '333333'];
+    const otps = ['111111', '222222', '333333', '444444'];
     const { io, calls, lines, publishes, asked, logs } = world({
       ...READY,
       answers: ['publish'],
@@ -787,6 +797,7 @@ describe('release', () => {
       'https://registry.npmjs.org/',
       'https://registry.npmjs.org/',
       'https://registry.npmjs.org/',
+      'https://registry.npmjs.org/',
     ]);
     expect(publishes().every((c) => !c.args.includes('--dry-run'))).toBe(true);
     expect(publishes().map((c) => c.options.env?.['npm_config_otp'])).toEqual(otps);
@@ -794,11 +805,12 @@ describe('release', () => {
       expect(lines().some((l) => l.includes(otp))).toBe(false);
       expect(logs.some((l) => l.includes(otp))).toBe(false);
     }
-    expect(asked.filter((q) => q.includes('one-time password'))).toHaveLength(3);
+    expect(asked.filter((q) => q.includes('one-time password'))).toHaveLength(4);
     expect(lines().filter((l) => l.startsWith('git tag'))).toEqual([
       'git tag -a @nizivo/tokens@0.1.0 -m @nizivo/tokens@0.1.0',
       'git tag -a @nizivo/icons@0.1.0 -m @nizivo/icons@0.1.0',
       'git tag -a @nizivo/react@0.1.0 -m @nizivo/react@0.1.0',
+      'git tag -a @nizivo/charts@0.1.0 -m @nizivo/charts@0.1.0',
     ]);
     expect(logs.join('\n')).toContain('git push origin refs/tags/@nizivo/tokens@0.1.0');
     expect(calls.some((c) => c.command === 'git' && c.args[0] === 'push')).toBe(false);
@@ -810,16 +822,17 @@ describe('release', () => {
       ...READY,
       registry: { '@nizivo/tokens': tarball },
       answers: ['publish'],
-      otps: ['', ''],
+      otps: ['', '', ''],
     });
     expect(await release(REAL, io)).toBe(0);
     expect(publishes().map((c) => c.args[1])).toEqual([
       `${STAGE}/nizivo-icons-0.1.0.tgz`,
       `${STAGE}/nizivo-react-0.1.0.tgz`,
+      `${STAGE}/nizivo-charts-0.1.0.tgz`,
     ]);
     // An empty answer lets npm ask itself.
     expect(publishes().every((c) => c.options.env?.['npm_config_otp'] === undefined)).toBe(true);
-    expect(lines().filter((l) => l.startsWith('git tag'))).toHaveLength(3);
+    expect(lines().filter((l) => l.startsWith('git tag'))).toHaveLength(4);
   });
 
   test('a version on the registry with other bytes stops a real run: no publish, no tag', async () => {
@@ -881,7 +894,9 @@ describe('release', () => {
     expect(publishes()).toHaveLength(2);
     expect(lines().some((l) => l.startsWith('git tag'))).toBe(false);
     const text = logs.join('\n');
-    expect(text).toContain('Not published: @nizivo/icons@0.1.0, @nizivo/react@0.1.0');
+    expect(text).toContain(
+      'Not published: @nizivo/icons@0.1.0, @nizivo/react@0.1.0, @nizivo/charts@0.1.0',
+    );
     expect(text).toContain('Published in this run: @nizivo/tokens@0.1.0');
   });
 
