@@ -1,16 +1,9 @@
 ---
 title: Charts
-description: "`@nizivo/charts`: server-rendered SVG charts with one small client island, a data table as the accessible alternative, and a frame that keeps Nizivo's caption, table, legend and status around any third-party renderer. Not yet published: it ships with v0.2."
+description: "`@nizivo/charts`: server-rendered SVG charts with one small client island, a data table as the accessible alternative, and a frame that keeps Nizivo's caption, table, legend and status around any third-party renderer."
 ---
 
 import { ChartsTable } from '../../../components/charts-table';
-
-<Callout type="warn" title="Not yet published (v0.2)">
-  `@nizivo/charts` is in the repository as a private package (`"private": true`, version 0.1.0) and
-  is not on npm. It joins the fixed release group with `@nizivo/tokens`, `@nizivo/react` and
-  `@nizivo/icons` and publishes at 0.2.0. Until then the API on these pages can change. Each part
-  page's Import section shows the entry the package's exports map has in the repository today.
-</Callout>
 
 ## The parts
 
@@ -35,8 +28,6 @@ checks that AreaChart, BarChart and DonutChart reach exactly the island and that
 ChartTooltip reach no client module.
 
 ## Install
-
-Once 0.2.0 is published:
 
 ```sh
 pnpm add @nizivo/charts @nizivo/tokens

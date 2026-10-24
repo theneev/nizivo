@@ -12,11 +12,6 @@ keyboard:
 keyboardSource: react-aria-components 1.22.1 `ModalOverlay` and `Modal` (react-aria 3.53.1 `useModalOverlay`, which contains focus), the Dialog's engine adapter (`_engines/react-aria/drawer.client.tsx` re-exports `dialog.client.tsx`). The first-focusable rule and focus return are Nizivo's (ARCHITECTURE.md §12.2), checked by the overlay lane (`test/overlay/drawer.spec.tsx`, `nesting-popover-drawer.spec.tsx`) in Chromium, Firefox and WebKit; apps/docs/scripts/smoke.ts checks opening with Enter, Tab staying inside, and Escape closing with focus back on the trigger.
 ---
 
-<Callout type="warn" title="Not yet published (v0.2)">
-  This part is in the repository and ships in `@nizivo/react` 0.2.0; the 0.1.0 on npm does not have
-  it. Until then its API can change.
-</Callout>
-
 ## Static or interactive
 
 **Client.** It is the Dialog's engine at an edge: `@nizivo/react/drawer` measures 31.7 KiB gzip with

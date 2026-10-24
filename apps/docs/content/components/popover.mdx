@@ -12,11 +12,6 @@ keyboard:
 keyboardSource: react-aria-components 1.22.1 `DialogTrigger`, `Popover` and `Dialog` (react-aria 3.53.1 `usePopover`, which contains focus while open) through `_engines/react-aria/popover.client.tsx`. The first-control rule and focus return are Nizivo's (ARCHITECTURE.md §12.2), checked by the overlay lane (`test/overlay/popover.spec.tsx`, `nesting-popover-drawer.spec.tsx`) in Chromium, Firefox and WebKit; apps/docs/scripts/smoke.ts checks opening with Enter, Escape closing and focus back on the trigger.
 ---
 
-<Callout type="warn" title="Not yet published (v0.2)">
-  This part is in the repository and ships in `@nizivo/react` 0.2.0; the 0.1.0 on npm does not have
-  it. Until then its API can change.
-</Callout>
-
 ## Static or interactive
 
 **Client.** It always ships React Aria's dialog, popover and positioning code: `@nizivo/react/popover`

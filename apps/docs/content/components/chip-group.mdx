@@ -14,11 +14,6 @@ keyboard:
 keyboardSource: native `<input type="radio">` or `<input type="checkbox">` elements inside `<label>`s (`chip-group.client.tsx`); its only key handler marks the chip `data-focus-visible`, because WebKit matches no `:focus-visible` on a radio reached by an arrow key. The browser lane (`test/browser/chip-group.spec.tsx`) checks Tab entry, arrows, Space, skipping a disabled chip and reaching an unavailable one.
 ---
 
-<Callout type="warn" title="Not yet published (v0.2)">
-  This part is in the repository and ships in `@nizivo/react` 0.2.0; the 0.1.0 on npm does not have
-  it. Until then its API can change.
-</Callout>
-
 ## Static or interactive
 
 **Client.** It always ships its client leaf, which wires it to a Field. The server HTML is native

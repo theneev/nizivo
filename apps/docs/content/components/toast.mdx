@@ -14,11 +14,6 @@ keyboard:
 keyboardSource: Nizivo's own queue and announcer (`src/toast/store.ts`, `toaster.client.tsx`), with react-aria 3.53.1 `useToastRegion` and `useToast` through `_engines/react-aria/toast.client.tsx` for the landmark, pausing and where focus goes as toasts leave. F8 and Escape are Nizivo's. Checked by the overlay lane (`test/overlay/toast.spec.tsx`, O-06, O-07, O-13, O-14) in Chromium, Firefox and WebKit.
 ---
 
-<Callout type="warn" title="Not yet published (v0.2)">
-  This part is in the repository and ships in `@nizivo/react` 0.2.0; the 0.1.0 on npm does not have
-  it. Until then its API can change.
-</Callout>
-
 ## Static or interactive
 
 **Client.** `<Toaster />` is a client component, and `toast()` runs in client code: an event handler,

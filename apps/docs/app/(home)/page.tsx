@@ -137,9 +137,6 @@ export default function HomePage(): JSX.Element {
 
       <section className="nz-home-install" aria-labelledby="install">
         <h2 id="install">Install</h2>
-        <p>
-          Not on npm yet. Once 0.1.0 is published to the <code>next</code> dist-tag:
-        </p>
         <ServerCodeBlock
           themes={CODE_THEMES}
           lang="sh"

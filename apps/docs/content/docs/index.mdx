@@ -7,9 +7,10 @@ Nizivo UI turns the Nizivo Figma library into framework-neutral design tokens an
 React components that render on the server first. It is open source (Apache-2.0) and built by Neev
 Technologies.
 
-<Callout type="warn" title="Pre-alpha">
-  Nothing is published to npm yet. The first release, 0.1.0, goes to the `next` dist-tag. Pages here
-  document the code on `main`; dark mode ships as a preview until design reviews it.
+<Callout type="warn" title="Pre-release">
+  0.2.0 is on npm. 0.x versions go to the `next` dist-tag, and a minor release may break (with a
+  `BREAKING` note in the changelog). Pages here document the code on `main`; dark mode ships as a
+  preview until design reviews it.
 </Callout>
 
 ## Packages
@@ -18,9 +19,11 @@ Technologies.
 | ---------------- | -------------------------------------------------------------------------------------------------- |
 | `@nizivo/tokens` | Design tokens as CSS custom properties, theme scopes, motion, and a Tailwind CSS v4 adapter        |
 | `@nizivo/react`  | React components and their static CSS: Server Components by default, `'use client'` only on leaves |
+| `@nizivo/icons`  | Tree-shakable Lucide icons at the Figma stroke, plus brand glyphs                                  |
+| `@nizivo/charts` | Server-rendered SVG charts with one small client island, themed by the tokens                      |
 
-Both are ESM-only, need React `^19.2.0` (for `@nizivo/react`) and Node `>=22.12`, and release
-together at the same version.
+All four are ESM-only and need Node `>=22.12`; all but `@nizivo/tokens` need React `^19.2.0`. They
+release together at the same version.
 
 ## Principles
 

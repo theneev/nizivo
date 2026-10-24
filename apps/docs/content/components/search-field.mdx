@@ -11,11 +11,6 @@ keyboard:
 keyboardSource: a native `<input type="search">` (`search-field.client.tsx`); its keydown handler clears on Escape in every engine (Firefox has no native clear), and the clear button empties the field through the native value setter and an `input` event, so `onChange` reports it. The browser lane (`test/browser/search-field.spec.tsx`) checks the clear button, Escape, GET submission, `form.reset()`, the focus outline and inline validation.
 ---
 
-<Callout type="warn" title="Not yet published (v0.2)">
-  This part is in the repository and ships in `@nizivo/react` 0.2.0; the 0.1.0 on npm does not have
-  it. Until then its API can change.
-</Callout>
-
 ## Static or interactive
 
 **Client.** It always ships its client leaf, which reads its Field through FieldScope and runs the

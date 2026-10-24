@@ -7,6 +7,8 @@ While GitHub Actions is off, the maintainer publishes by hand from their own mac
 - [Changesets](https://github.com/changesets/changesets) with one **fixed** group: `@nizivo/tokens`, `@nizivo/react`, `@nizivo/icons` and, from 0.2.0, `@nizivo/charts` (public from 0.2.0; it was private until then, M60). They always release together at the same version, so the CSS contract between tokens and components never skews. See [`.changeset/config.json`](.changeset/config.json).
 - 0.x semantics: a breaking change is a minor bump with a `BREAKING:` note. `unstable/*` entries are outside semver.
 - 0.x goes to the **`next`** dist-tag (`npm publish --tag next`). After the first publish of each package, check with `npm dist-tag ls @nizivo/tokens` whether npm also pointed `latest` at it; if it did, record it here.
+  - 0.1.0: npm pointed `latest` at 0.1.0 for tokens, icons and react, so `latest` and `next` were the same.
+  - 0.2.0 (2026-10-24): `next` moved to 0.2.0 for all four; `latest` moved only for `@nizivo/charts` (its first publish). The maintainer then moved `latest` by hand for the other three, with `npm dist-tag add @nizivo/<package>@0.2.0 latest` and the project's login file, so both tags are 0.2.0 for all four. After each later release, check `latest` the same way and move it if it should follow `next`. A non-interactive shell cannot wait for npm's browser login: run it in a terminal, or pass `--otp`.
 
 ## Publishing by hand
 
