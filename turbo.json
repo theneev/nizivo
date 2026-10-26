@@ -105,7 +105,7 @@
     },
     "@nizivo/react#lint": {
       "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/packages/charts/src/*/*.css"],
+      "inputs": ["$TURBO_DEFAULT$", "!**/*.md", "$TURBO_ROOT$/packages/charts/src/*/*.css"],
       "outputs": []
     },
     "@nizivo/charts#build": {
@@ -126,12 +126,16 @@
     },
     "@nizivo/charts#typecheck": {
       "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/packages/react/scripts/css/**"],
+      "inputs": ["$TURBO_DEFAULT$", "!**/*.md", "$TURBO_ROOT$/packages/react/scripts/css/**"],
       "outputs": []
     },
     "@nizivo/charts#lint": {
       "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/packages/react/src/**/component.json"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "!**/*.md",
+        "$TURBO_ROOT$/packages/react/src/**/component.json"
+      ],
       "outputs": []
     },
     "@nizivo/docs#build": {
