@@ -2,7 +2,7 @@
   "$comment": "Size budgets (ARCHITECTURE.md §17), written by `node packages/tooling/size/measure.ts --write`. measured: bytes, gzip -9, as size-limit 14.2 reports them. limitKiB: measured + 10%, rounded up (method.ts limitKiB), never above the entry's §17.1 plan limit (method.ts PLAN_LIMITS_KIB). Limits only go up through a labelled PR (§17.3).",
   "entries": {
     "@nizivo/react": {
-      "measured": 111063,
+      "measured": 111868,
       "limitKiB": 120
     },
     "@nizivo/react/alert": {
@@ -122,7 +122,7 @@
       "limitKiB": 0.8
     },
     "@nizivo/react/inline-error": {
-      "measured": 1048,
+      "measured": 1049,
       "limitKiB": 1.2
     },
     "@nizivo/react/input": {
@@ -134,11 +134,11 @@
       "limitKiB": 1.3
     },
     "@nizivo/react/kpi-tile": {
-      "measured": 2322,
+      "measured": 2323,
       "limitKiB": 2.5
     },
     "@nizivo/react/locales/en-US": {
-      "measured": 664,
+      "measured": 693,
       "limitKiB": 0.8
     },
     "@nizivo/react/menu": {
@@ -154,7 +154,7 @@
       "limitKiB": 2.4
     },
     "@nizivo/react/mobile-tab-bar": {
-      "measured": 33341,
+      "measured": 33342,
       "limitKiB": 36
     },
     "@nizivo/react/mobile-top-bar": {
@@ -200,6 +200,10 @@
     "@nizivo/react/progress-ring": {
       "measured": 1194,
       "limitKiB": 1.3
+    },
+    "@nizivo/react/quantity-stepper": {
+      "measured": 2654,
+      "limitKiB": 2.9
     },
     "@nizivo/react/radio-group": {
       "measured": 2200,
@@ -254,7 +258,7 @@
       "limitKiB": 1.2
     },
     "@nizivo/react/table": {
-      "measured": 1660,
+      "measured": 1661,
       "limitKiB": 1.8
     },
     "@nizivo/react/table-selection": {
@@ -294,11 +298,11 @@
       "limitKiB": 2.7
     },
     "@nizivo/react dashboard set": {
-      "measured": 78939,
+      "measured": 78936,
       "limitKiB": 85
     },
     "@nizivo/react { Button } from the barrel": {
-      "measured": 1278,
+      "measured": 1279,
       "limitKiB": 1.4
     },
     "@nizivo/react { Select } from the barrel": {
@@ -445,6 +449,10 @@
       "measured": 965,
       "limitKiB": 1.1
     },
+    "@nizivo/react own: quantity-stepper/quantity-stepper.client": {
+      "measured": 1286,
+      "limitKiB": 1.4
+    },
     "@nizivo/react own: radio-group/radio-group.client": {
       "measured": 614,
       "limitKiB": 0.7
@@ -518,7 +526,7 @@
       "limitKiB": 0.8
     },
     "@nizivo/react/css/base.css": {
-      "measured": 1250,
+      "measured": 1260,
       "limitKiB": 1.4
     },
     "@nizivo/react/css/breadcrumb.css": {
@@ -677,6 +685,10 @@
       "measured": 509,
       "limitKiB": 0.6
     },
+    "@nizivo/react/css/quantity-stepper.css": {
+      "measured": 535,
+      "limitKiB": 0.6
+    },
     "@nizivo/react/css/radio-group.css": {
       "measured": 824,
       "limitKiB": 0.9
@@ -766,7 +778,7 @@
       "limitKiB": 0.5
     },
     "@nizivo/react/styles.css": {
-      "measured": 23949,
+      "measured": 24131,
       "limitKiB": 26
     },
     "@nizivo/tokens": {
@@ -858,7 +870,7 @@
       "limitKiB": 1.7
     },
     "@nizivo/charts/styles.css": {
-      "measured": 3740,
+      "measured": 3783,
       "limitKiB": 3.7
     }
   }

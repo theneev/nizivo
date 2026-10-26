@@ -4,7 +4,7 @@
 // slots (Button icon, Select chevron) that size the glyph through font-size. `chevron` (Lucide's
 // `chevron-right`, the Breadcrumb separator and Pagination's marks), `circle-x` (the error mark of
 // Field, Fieldset and InlineError), `close` (Lucide's `x`, AlertDismiss's default), and `check` and
-// `minus` (Checkbox's checked mark and indeterminate dash), `info` (the neutral Toast's mark),
+// `minus` (Checkbox's checked mark and indeterminate dash; with `plus`, QuantityStepper's buttons), `info` (the neutral Toast's mark),
 // `search` (SearchField's magnifier) and `ellipsis` (MobileTabBar's More, Feather's
 // `more-horizontal`) are on Lucide's list of Feather-derived icons, so they also carry the Feather
 // MIT notice in THIRD_PARTY_NOTICES; `circle-check` (the success Toast's) and
@@ -24,6 +24,7 @@ export type GlyphName =
   | 'close'
   | 'check'
   | 'minus'
+  | 'plus'
   | 'eye'
   | 'eye-off'
   | 'search'
@@ -105,6 +106,16 @@ export const CloseGlyph = (): JSX.Element =>
 export const CheckGlyph = (): JSX.Element => svg('check', <path d="M20 6 9 17l-5-5" />);
 
 export const MinusGlyph = (): JSX.Element => svg('minus', <path d="M5 12h14" />);
+
+/** QuantityStepper's increment mark. */
+export const PlusGlyph = (): JSX.Element =>
+  svg(
+    'plus',
+    <>
+      <path d="M5 12h14" />
+      <path d="M12 5v14" />
+    </>,
+  );
 
 /** PasswordInput's toggle while the password is hidden. */
 export const EyeGlyph = (): JSX.Element =>

@@ -20,6 +20,7 @@ import { MobileTabBarMore } from '../../src/mobile-tab-bar/index';
 import { NavItem } from '../../src/nav-item/index';
 import { Pagination } from '../../src/pagination/index';
 import { PasswordInput } from '../../src/password-input/index';
+import { QuantityStepper } from '../../src/quantity-stepper/index';
 import { SearchField } from '../../src/search-field/index';
 
 const SRC = rekey(
@@ -47,6 +48,7 @@ const REACHED: Partial<Record<Key, string>> = {
   mobileTabBarMore: 'src/mobile-tab-bar/mobile-tab-bar-more.client.tsx',
   passwordInput: 'src/password-input/password-input.client.tsx',
   popover: 'src/popover/popover.client.tsx',
+  quantityStepper: 'src/quantity-stepper/quantity-stepper.client.tsx',
   searchField: 'src/search-field/search-field.client.tsx',
   toaster: 'src/toast/toaster.client.tsx',
 };
@@ -104,6 +106,7 @@ const SCOPE: NizivoLabels = {
   form: { summaryTitle: 'Es gibt ein Problem' },
   mobileTabBarMore: { more: 'Mehr' },
   passwordInput: { toggle: 'Passwort anzeigen' },
+  quantityStepper: { decrement: 'Verringern', increment: 'Erhöhen' },
   searchField: { label: 'Suchen', clear: 'Suche leeren' },
   alertDismiss: { dismiss: 'Schließen' },
   // the server parts' keys: ignored by them (SubmitButton, Button's client twin, reads `button`)
@@ -117,6 +120,7 @@ function clientParts(own: { searchField?: NizivoLabels['searchField'] } = {}): R
     <>
       <SearchField defaultValue="mug" {...(own.searchField && { labels: own.searchField })} />
       <PasswordInput aria-label="Password" />
+      <QuantityStepper aria-label="Quantity" />
       <BannerDismiss />
       <AlertDismiss />
       <ChipGroup aria-label="Glaze">
@@ -157,6 +161,8 @@ describe('NizivoConfig labels, server-rendered', () => {
       'aria-label="Suchen"',
       'aria-label="Suche leeren"',
       'aria-label="Passwort anzeigen"',
+      'aria-label="Verringern"',
+      'aria-label="Erhöhen"',
       'aria-label="Ausblenden"',
       'aria-label="Schließen"',
       'Ausverkauft',
@@ -168,7 +174,14 @@ describe('NizivoConfig labels, server-rendered', () => {
     ]) {
       expect(html).toContain(text);
     }
-    for (const english of ['Clear search', 'Show password', 'Unavailable', 'There is a problem']) {
+    for (const english of [
+      'Clear search',
+      'Show password',
+      'Decrease',
+      'Increase',
+      'Unavailable',
+      'There is a problem',
+    ]) {
       expect(html).not.toContain(english);
     }
   });
@@ -193,6 +206,8 @@ describe('NizivoConfig labels, server-rendered', () => {
         'aria-label="Search"',
         'aria-label="Clear search"',
         'aria-label="Show password"',
+        'aria-label="Decrease"',
+        'aria-label="Increase"',
         'aria-label="Dismiss"',
         'Unavailable',
         'Drop files here or ',

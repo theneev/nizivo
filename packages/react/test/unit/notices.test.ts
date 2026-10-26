@@ -30,6 +30,7 @@ const LUCIDE: Record<string, string> = {
   close: 'x',
   check: 'check',
   minus: 'minus',
+  plus: 'plus',
   eye: 'eye',
   'eye-off': 'eye-off',
   search: 'search',
@@ -47,6 +48,7 @@ const FEATHER = new Set([
   'x',
   'check',
   'minus',
+  'plus',
   'search',
   'ellipsis',
 ]);

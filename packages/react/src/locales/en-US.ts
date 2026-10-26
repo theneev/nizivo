@@ -22,6 +22,7 @@ import type { MobileTabBarLabels, MobileTabBarMoreLabels } from '../mobile-tab-b
 import type { PaginationLabels } from '../pagination/index';
 import type { PasswordInputLabels } from '../password-input/index';
 import type { PopoverLabels } from '../popover/index';
+import type { QuantityStepperLabels } from '../quantity-stepper/index';
 import type { RankedListLabels } from '../ranked-list/index';
 import type { SearchFieldLabels } from '../search-field/index';
 import type { SidebarLabels } from '../sidebar/index';
@@ -53,6 +54,7 @@ export const enUS: {
   pagination: PaginationLabels;
   passwordInput: PasswordInputLabels;
   popover: Pick<PopoverLabels, 'close'>;
+  quantityStepper: QuantityStepperLabels;
   rankedList: RankedListLabels;
   searchField: SearchFieldLabels;
   sidebar: SidebarLabels;
@@ -98,6 +100,7 @@ export const enUS: {
   },
   passwordInput: { toggle: 'Show password' },
   popover: { close: 'Close' },
+  quantityStepper: { decrement: 'Decrease', increment: 'Increase' },
   rankedList: { loading: 'Loading {label}', empty: 'No data', error: 'Could not load {label}' },
   searchField: { label: 'Search', clear: 'Clear search' },
   sidebar: { nav: 'Primary' },

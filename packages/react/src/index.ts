@@ -335,6 +335,13 @@ export type {
   ProgressRingState,
   ProgressRingTone,
 } from './progress-ring/index';
+export { QuantityStepper } from './quantity-stepper/index';
+export type {
+  QuantityStepperLabels,
+  QuantityStepperProps,
+  QuantityStepperState,
+  QuantityStepperValueReason,
+} from './quantity-stepper/index';
 export { RadioGroup, Radio } from './radio-group/index';
 export type {
   RadioProps,

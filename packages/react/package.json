@@ -227,6 +227,10 @@
       "types": "./dist/progress-ring/index.d.ts",
       "default": "./dist/progress-ring/index.js"
     },
+    "./quantity-stepper": {
+      "types": "./dist/quantity-stepper/index.d.ts",
+      "default": "./dist/quantity-stepper/index.js"
+    },
     "./radio-group": {
       "types": "./dist/radio-group/index.d.ts",
       "default": "./dist/radio-group/index.js"
@@ -364,6 +368,7 @@
     "./css/popover.css": "./dist/css/popover.css",
     "./css/progress-bar.css": "./dist/css/progress-bar.css",
     "./css/progress-ring.css": "./dist/css/progress-ring.css",
+    "./css/quantity-stepper.css": "./dist/css/quantity-stepper.css",
     "./css/radio-group.css": "./dist/css/radio-group.css",
     "./css/ranked-list.css": "./dist/css/ranked-list.css",
     "./css/search-field.css": "./dist/css/search-field.css",

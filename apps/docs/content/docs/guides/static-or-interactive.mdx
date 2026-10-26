@@ -1,6 +1,6 @@
 ---
 title: 'Static or interactive: choosing a component'
-description: Which Nizivo components ship client JavaScript, what makes them ship it, and when to use a static variant (IconButtonStatic, FieldStatic) instead of the normal component. A checklist, a table of all 67 components, the measured costs and worked examples.
+description: Which Nizivo components ship client JavaScript, what makes them ship it, and when to use a static variant (IconButtonStatic, FieldStatic) instead of the normal component. A checklist, a table of all 68 components, the measured costs and worked examples.
 ---
 
 Every Nizivo component renders its HTML on the server (an overlay's popup only while it is open). What differs is whether the browser also
@@ -214,6 +214,7 @@ module.
 | [Popover](/docs/components/popover/)                    | client | Always (React Aria)                                                                                                                                  | None                                              |
 | [ProgressBar](/docs/components/progress-bar/)           | server | Never                                                                                                                                                | None needed                                       |
 | [ProgressRing](/docs/components/progress-ring/)         | server | Never                                                                                                                                                | None needed                                       |
+| [QuantityStepper](/docs/components/quantity-stepper/)   | client | Always: the minus and plus buttons (the number input and its arrow keys work before hydration)                                                       | `Input type="number"`, without the buttons        |
 | [RadioGroup](/docs/components/radio-group/)             | client | Always: the Fieldset shell is server HTML, the radios' leaf ships                                                                                    | None                                              |
 | [RankedList](/docs/components/ranked-list/)             | server | Never                                                                                                                                                | None needed                                       |
 | [SearchField](/docs/components/search-field/)           | client | Always: a thin leaf reading the Field; inside `<form method="get">` it filters with no script                                                        | None needed                                       |

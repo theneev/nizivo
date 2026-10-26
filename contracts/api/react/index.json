@@ -1941,6 +1941,36 @@
       "name": "ProgressRingTone"
     },
     {
+      "definedIn": "./quantity-stepper",
+      "import": "import { QuantityStepper } from '@nizivo/react'",
+      "kind": "component",
+      "name": "QuantityStepper"
+    },
+    {
+      "definedIn": "./quantity-stepper",
+      "import": "import type { QuantityStepperLabels } from '@nizivo/react'",
+      "kind": "type",
+      "name": "QuantityStepperLabels"
+    },
+    {
+      "definedIn": "./quantity-stepper",
+      "import": "import type { QuantityStepperProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "QuantityStepperProps"
+    },
+    {
+      "definedIn": "./quantity-stepper",
+      "import": "import type { QuantityStepperState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "QuantityStepperState"
+    },
+    {
+      "definedIn": "./quantity-stepper",
+      "import": "import type { QuantityStepperValueReason } from '@nizivo/react'",
+      "kind": "type",
+      "name": "QuantityStepperValueReason"
+    },
+    {
       "definedIn": "./radio-group",
       "import": "import { Radio } from '@nizivo/react'",
       "kind": "component",

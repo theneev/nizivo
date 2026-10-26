@@ -1,0 +1,50 @@
+---
+title: QuantityStepper
+description: A whole-number quantity, such as a product page's or a cart line's, in Input's box between a minus and a plus button. The input is a native number input; the buttons step it for the pointer and are disabled at the ends of the range.
+keyboard:
+  - keys: Tab
+    action: Moves focus to the input. The buttons are skipped.
+  - keys: Arrow Up, Arrow Down
+    action: In the input, adds or takes away one step, within min and max (the browser's own number input).
+  - keys: Enter
+    action: In the input, submits its form.
+keyboardSource: a native `<input type="number">` between two `<button type="button" tabIndex={-1}>` (`quantity-stepper.client.tsx`). The browser lane (`test/browser/quantity-stepper.spec.tsx`) checks the buttons by pointer, the arrow keys, Tab reaching only the input, the events a press fires, controlled use and a Field's message for a typed fraction.
+---
+
+## Static or interactive
+
+**Client.** It always ships its client leaf, which reads its Field through FieldScope, so a page
+with a QuantityStepper also loads FieldScope. The server HTML is a native number input that works
+before hydration, arrow keys included; the buttons work once the page has hydrated.
+[How to choose](/docs/guides/static-or-interactive/).
+
+In a client app (a Vite or React Router single-page app, or a `'use client'` file) it is an ordinary React component: event handlers, refs and state work as usual. [In a client app](/docs/guides/static-or-interactive/#in-a-client-app).
+
+## The buttons
+
+The minus and plus buttons are for the pointer. They are out of the tab order, a press never moves
+focus, and each is named for a screen reader's pointer modes: "Decrease" and "Increase"
+(`labels.decrement` and `labels.increment`), with `aria-controls` pointing at the input. A keyboard
+user steps with the arrow keys, which a screen reader announces as the input's value. Each button is
+disabled at its end of the range, and both while the input is read-only or disabled.
+
+A press steps the input as an arrow key would (`stepUp()` and `stepDown()`; an empty input starts at
+`min`) and fires the native `input` and `change` events, so `onChange`, a form's own listeners and a
+Field see an ordinary edit. `decrementIcon` and `incrementIcon` replace the internal `minus` and
+`plus` glyphs.
+
+## Values
+
+`min` is 0 and `step` is 1 unless set; `max` has no default. `value` and `defaultValue` are numbers,
+and `value={null}` is an empty input. `onValueChange(value, details)` reports every change, typed or
+pressed: the number, or `null` while the input is empty, with `details.reason` `'increment'`,
+`'decrement'` or `'input'`.
+
+Quantities are whole numbers. A typed fraction fails the input's step, so inside a Field
+`messages.stepMismatch` names the problem; a decimal amount, such as a price, is a NumberField's
+job.
+
+## Width
+
+The input is three characters wide, enough for 999. `--nz-quantity-stepper-input-width` sets
+another width, for example `5ch`.
