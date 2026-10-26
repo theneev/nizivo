@@ -37,7 +37,10 @@ steps (GitHub settings, npm, Figma, DNS). Dayitava owns design and accessibility
   inputs. After a `turbo.json` or task-script change, or a new cross-package read, run
   `pnpm cache:audit` and fix what it reports.
 - Every commit must pass its own check: `pnpm gate <commit>…` checks each one out in a clean
-  worktree and runs its `check` steps from the cache plus `cache:audit`, the last one forced.
+  worktree and runs its `check` steps from the cache plus `cache:audit`, the last one forced and run
+  first (`--in-order` runs them oldest first).
+- The docs read `apps/docs/lib/plan.json`, not the plan: after editing a numbered heading, §18.2 or
+  §23.4, run `pnpm nz gen` (`gen:check` fails until you do).
 - Lanes that share the vitest/`.vite` cache run one after another, never in parallel.
 
 ## Known flakes on the maintainer's Mac

@@ -9,7 +9,9 @@
 // inputs read the same files. The last commit runs first: forced, with an empty list, so its audit
 // runs every task, as before, and the earlier commits then audit only what differs from it (the last
 // commit's tasks are usually most of theirs). `--in-order` keeps the old order, oldest first, which
-// finds a broken early commit sooner.
+// finds a broken early commit sooner. The known limit (M59, M64): a read by absolute path of an
+// unhashed file that is gone by the last commit is not audited at any earlier commit whose task
+// hash matches.
 //
 //   node packages/tooling/gate/gate.ts [--worktree <dir>] [--in-order] <commit>…
 //
