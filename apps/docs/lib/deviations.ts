@@ -12,6 +12,7 @@
 import { readdirSync } from 'node:fs';
 import { contract } from './tokens';
 import { isRecord } from '../scripts/json';
+import { planExtract } from './plan';
 import { readRepoJson, readRepoText, repoPath } from './repo';
 
 type Json = { [k: string]: unknown };
@@ -173,14 +174,12 @@ export function proposals(): ProposalRow[] {
 
 const PLAN = 'docs/ARCHITECTURE.md';
 
-/** The text of one `### <number>` section of the plan. */
+/** The text of one `### <number>` section of the plan, from lib/plan.json (`nz gen`). */
 function planSection(number: string): string {
-  const text = readRepoText(PLAN);
-  const start = text.search(new RegExp(`^### ${number.replace('.', '\\.')} `, 'm'));
-  if (start < 0) throw new Error(`docs: ${PLAN} has no section ${number}`);
-  const rest = text.slice(start + 4);
-  const end = rest.search(/^#{2,3} /m);
-  return end < 0 ? rest : rest.slice(0, end);
+  const text = planExtract().sections[number];
+  if (text === undefined)
+    throw new Error(`docs: lib/plan.json has no section ${number} of ${PLAN}`);
+  return text;
 }
 
 export interface Degradation {

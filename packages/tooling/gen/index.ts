@@ -2,7 +2,8 @@
  * `nz gen [--check] [--root <dir>]`: derives barrels, `engine.ts`, `*.parts.ts`, the @nizivo/react
  * exports map, design/component-map.json and styles/base.css from each `component.json`
  * (ARCHITECTURE.md §6, §8.5), and copies core's render/merge-props helpers into
- * packages/charts/src/_shared (vendor.ts; §14.1).
+ * packages/charts/src/_shared (vendor.ts; §14.1), and copies the parts of the plan the docs read into
+ * apps/docs/lib/plan.json (plan-extract.ts).
  * `--check` writes nothing and exits 1 when any file would change (the CI drift check).
  */
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
@@ -11,6 +12,7 @@ import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
 import { generateBaseCss } from './base-css.ts';
 import { generate, type GenResult } from './generate.ts';
+import { generatePlanExtract } from './plan-extract.ts';
 import { generateVendored } from './vendor.ts';
 
 const REPO_ROOT = fileURLToPath(new URL('../../../', import.meta.url));
@@ -37,6 +39,9 @@ export function gen(args: string[]): number {
       const vendored = generateVendored(root);
       result.errors.push(...vendored.errors);
       for (const [file, content] of vendored.files) result.files.set(file, content);
+      const extract = generatePlanExtract(root);
+      result.errors.push(...extract.errors);
+      for (const [file, content] of extract.files) result.files.set(file, content);
     }
   } catch (error) {
     console.error(`nz gen: ${error instanceof Error ? error.message : String(error)}`);

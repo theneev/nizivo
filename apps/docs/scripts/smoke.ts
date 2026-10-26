@@ -1131,8 +1131,21 @@ async function deviationsChecks(browser: Browser): Promise<void> {
     `deviations: ${proposals} proposal rows (${proposalTokens.size} in the proposal files)`,
   );
   const text = (await page.locator('article').textContent()) ?? '';
-  // Every degradation (§18.2) and every builder default (§23.4) the plan holds is on the page.
-  const plan = readFileSync(join(import.meta.dirname, '../../../docs/ARCHITECTURE.md'), 'utf8');
+  // Every degradation (§18.2) and every builder default (§23.4) the plan holds is on the page; the
+  // plan's sections as `nz gen` copies them into lib/plan.json (`nz gen --check` keeps them current).
+  const extract: unknown = JSON.parse(
+    readFileSync(join(import.meta.dirname, '../lib/plan.json'), 'utf8'),
+  );
+  const sections =
+    typeof extract === 'object' && extract !== null && 'sections' in extract
+      ? extract.sections
+      : undefined;
+  const plan =
+    typeof sections === 'object' && sections !== null
+      ? Object.values(sections)
+          .filter((s): s is string => typeof s === 'string')
+          .join('\n')
+      : '';
   const planDs = [...plan.matchAll(/^\s*- \*\*(D\d+)\.\*\* "/gm)].map((m) => m[1] ?? '');
   const planDefaults = [...plan.matchAll(/^\| (D-[a-z]+) \|/gm)].map((m) => m[1] ?? '');
   const missingDs = planDs.filter((d) => !text.includes(d));
