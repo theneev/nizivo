@@ -1,5 +1,12 @@
 # @nizivo/react
 
+## 0.2.1
+
+### Patch Changes
+
+- Updated dependencies [79d72f3]
+  - @nizivo/tokens@0.2.1
+
 ## 0.2.0
 
 ### Minor Changes
