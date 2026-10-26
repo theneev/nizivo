@@ -10,7 +10,7 @@
 //    (axe on every page) and the theme flash check (theme.ts) on the home page.
 //    --dev adds an informational `next dev` pass: development React reports hydration mismatches
 //    (attribute differences included) that production React does not log.
-/* oxlint-disable no-await-in-loop -- variants share one port and one .next folder, so they run one after another */
+/* oxlint-disable no-await-in-loop -- variants share one port (each has its own distDir), so they run one after another */
 import { spawn, spawnSync } from 'node:child_process';
 import { readFileSync, realpathSync, rmSync } from 'node:fs';
 import { isAbsolute, join } from 'node:path';
