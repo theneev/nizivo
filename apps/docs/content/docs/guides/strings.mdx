@@ -31,9 +31,11 @@ catalogue typed `typeof enUS` must give every string. A test keeps it equal to t
 defaults. See the [entry page](/docs/utilities/locales/en-US/) for its type.
 
 Strings that React Aria renders from its own translations are not in `labels` and not in the
-catalogue: the visually hidden "Dismiss" buttons of the overlays and Select's "Select an item".
-They follow the `locale` of the nearest `NizivoConfig`, and the component's `Labels` type names
-them as engine-owned (for example `DialogLabels.dismiss`).
+catalogue: the visually hidden "Dismiss" buttons of the overlays, Select's "Select an item", and
+NumberField's "Number field" role description and step buttons' names ("Increase Price"). They
+follow the `locale` of the nearest `NizivoConfig`, and the component's `Labels` type names them as
+engine-owned (for example `DialogLabels.dismiss`). NumberField's `labels` prop can still replace its
+step buttons' names for one field.
 
 ## Your own locale
 

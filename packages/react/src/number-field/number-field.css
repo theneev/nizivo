@@ -1,0 +1,71 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/number-field.css (ARCHITECTURE.md §16.1; no Figma component: Input's box). The
+   box, the input and the sizes are input.css's (.nz-input and .nz-input-control on the same
+   elements); this file draws the optional step buttons, which never take focus (the arrow keys
+   step the input), and sets the digits in tabular figures. The 2 px focus outline is the box's,
+   from nz.base (focusTarget "within"). Public --nz-number-field-* hooks are read once, at the
+   property. */
+@layer nz.components {
+  /* step buttons sit inside the padding; 24 px (the WCAG 2.5.8 target) at every size */
+  .nz-input.nz-number-field:has(> .nz-number-field-button) {
+    padding-inline: var(--nz-space-1);
+  }
+
+  .nz-number-field-input {
+    font-variant-numeric: tabular-nums;
+
+    .nz-number-field:has(> .nz-number-field-button) > & {
+      text-align: center;
+    }
+  }
+
+  .nz-number-field-button {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    inline-size: var(--nz-space-6);
+    block-size: var(--nz-space-6);
+    padding: 0;
+    border: 0;
+    border-radius: var(--nz-radius-sm);
+    background: transparent;
+    color: var(--nz-number-field-button-fg, var(--nz-icon-primary));
+    font-size: var(--nz-size-icon-sm);
+    cursor: pointer;
+    transition:
+      background-color var(--nz-duration-fast) var(--nz-easing-standard),
+      color var(--nz-duration-fast) var(--nz-easing-standard);
+
+    @media (hover: hover) {
+      &:hover:not(:disabled) {
+        background: var(--nz-bg-hover);
+      }
+    }
+
+    &[data-pressed]:not(:disabled) {
+      background: var(--nz-bg-pressed);
+    }
+
+    &:disabled {
+      color: var(--nz-text-disabled);
+      cursor: not-allowed;
+    }
+  }
+
+  .nz-number-field-icon {
+    display: inline-flex;
+  }
+
+  @media (forced-colors: active) {
+    .nz-number-field-button {
+      color: ButtonText;
+    }
+
+    .nz-number-field-button:disabled {
+      color: GrayText;
+    }
+  }
+}

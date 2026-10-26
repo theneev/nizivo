@@ -2,7 +2,7 @@
   "$comment": "Size budgets (ARCHITECTURE.md §17), written by `node packages/tooling/size/measure.ts --write`. measured: bytes, gzip -9, as size-limit 14.2 reports them. limitKiB: measured + 10%, rounded up (method.ts limitKiB), never above the entry's §17.1 plan limit (method.ts PLAN_LIMITS_KIB). Limits only go up through a labelled PR (§17.3).",
   "entries": {
     "@nizivo/react": {
-      "measured": 111868,
+      "measured": 122311,
       "limitKiB": 120
     },
     "@nizivo/react/alert": {
@@ -173,6 +173,10 @@
       "measured": 1221,
       "limitKiB": 1.4
     },
+    "@nizivo/react/number-field": {
+      "measured": 28926,
+      "limitKiB": 32
+    },
     "@nizivo/react/number-value": {
       "measured": 788,
       "limitKiB": 0.9
@@ -202,7 +206,7 @@
       "limitKiB": 1.3
     },
     "@nizivo/react/quantity-stepper": {
-      "measured": 2654,
+      "measured": 2671,
       "limitKiB": 2.9
     },
     "@nizivo/react/radio-group": {
@@ -329,6 +333,10 @@
       "measured": 1824,
       "limitKiB": 2
     },
+    "@nizivo/react own: _engines/react-aria/number-field.client": {
+      "measured": 712,
+      "limitKiB": 0.8
+    },
     "@nizivo/react own: _engines/react-aria/open-state.client": {
       "measured": 341,
       "limitKiB": 0.4
@@ -441,6 +449,10 @@
       "measured": 1032,
       "limitKiB": 1.2
     },
+    "@nizivo/react own: number-field/number-field.client": {
+      "measured": 957,
+      "limitKiB": 1.1
+    },
     "@nizivo/react own: password-input/password-input.client": {
       "measured": 1116,
       "limitKiB": 1.2
@@ -450,7 +462,7 @@
       "limitKiB": 1.1
     },
     "@nizivo/react own: quantity-stepper/quantity-stepper.client": {
-      "measured": 1286,
+      "measured": 1299,
       "limitKiB": 1.4
     },
     "@nizivo/react own: radio-group/radio-group.client": {
@@ -526,7 +538,7 @@
       "limitKiB": 0.8
     },
     "@nizivo/react/css/base.css": {
-      "measured": 1260,
+      "measured": 1266,
       "limitKiB": 1.4
     },
     "@nizivo/react/css/breadcrumb.css": {
@@ -657,6 +669,10 @@
       "measured": 1004,
       "limitKiB": 1.1
     },
+    "@nizivo/react/css/number-field.css": {
+      "measured": 491,
+      "limitKiB": 0.6
+    },
     "@nizivo/react/css/number-value.css": {
       "measured": 154,
       "limitKiB": 0.2
@@ -778,7 +794,7 @@
       "limitKiB": 0.5
     },
     "@nizivo/react/styles.css": {
-      "measured": 24131,
+      "measured": 24242,
       "limitKiB": 26
     },
     "@nizivo/tokens": {

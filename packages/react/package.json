@@ -199,6 +199,10 @@
       "types": "./dist/nav-item/index.d.ts",
       "default": "./dist/nav-item/index.js"
     },
+    "./number-field": {
+      "types": "./dist/number-field/index.d.ts",
+      "default": "./dist/number-field/index.js"
+    },
     "./number-value": {
       "types": "./dist/number-value/index.d.ts",
       "default": "./dist/number-value/index.js"
@@ -361,6 +365,7 @@
     "./css/motion.css": "./dist/css/motion.css",
     "./css/native-select.css": "./dist/css/native-select.css",
     "./css/nav-item.css": "./dist/css/nav-item.css",
+    "./css/number-field.css": "./dist/css/number-field.css",
     "./css/number-value.css": "./dist/css/number-value.css",
     "./css/page-header.css": "./dist/css/page-header.css",
     "./css/pagination.css": "./dist/css/pagination.css",

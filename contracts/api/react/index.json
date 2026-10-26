@@ -1647,6 +1647,84 @@
       "name": "NavItemState"
     },
     {
+      "definedIn": "./number-field",
+      "import": "import { NumberField } from '@nizivo/react'",
+      "kind": "namespace",
+      "name": "NumberField"
+    },
+    {
+      "definedIn": "./number-field",
+      "import": "import type { NumberFieldButtonProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "NumberFieldButtonProps"
+    },
+    {
+      "definedIn": "./number-field",
+      "import": "import type { NumberFieldButtonState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "NumberFieldButtonState"
+    },
+    {
+      "definedIn": "./number-field",
+      "import": "import { NumberFieldDecrement } from '@nizivo/react'",
+      "kind": "part",
+      "name": "NumberFieldDecrement"
+    },
+    {
+      "definedIn": "./number-field",
+      "import": "import { NumberFieldIncrement } from '@nizivo/react'",
+      "kind": "part",
+      "name": "NumberFieldIncrement"
+    },
+    {
+      "definedIn": "./number-field",
+      "import": "import { NumberFieldInput } from '@nizivo/react'",
+      "kind": "part",
+      "name": "NumberFieldInput"
+    },
+    {
+      "definedIn": "./number-field",
+      "import": "import type { NumberFieldInputProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "NumberFieldInputProps"
+    },
+    {
+      "definedIn": "./number-field",
+      "import": "import type { NumberFieldInputState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "NumberFieldInputState"
+    },
+    {
+      "definedIn": "./number-field",
+      "import": "import type { NumberFieldLabels } from '@nizivo/react'",
+      "kind": "type",
+      "name": "NumberFieldLabels"
+    },
+    {
+      "definedIn": "./number-field",
+      "import": "import { NumberFieldRoot } from '@nizivo/react'",
+      "kind": "part",
+      "name": "NumberFieldRoot"
+    },
+    {
+      "definedIn": "./number-field",
+      "import": "import type { NumberFieldRootProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "NumberFieldRootProps"
+    },
+    {
+      "definedIn": "./number-field",
+      "import": "import type { NumberFieldRootState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "NumberFieldRootState"
+    },
+    {
+      "definedIn": "./number-field",
+      "import": "import type { NumberFieldValueReason } from '@nizivo/react'",
+      "kind": "type",
+      "name": "NumberFieldValueReason"
+    },
+    {
       "definedIn": "./number-value",
       "import": "import { NumberValue } from '@nizivo/react'",
       "kind": "component",

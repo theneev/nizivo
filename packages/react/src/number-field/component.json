@@ -1,0 +1,20 @@
+{
+  "name": "number-field",
+  "status": "stable",
+  "tier": "engine",
+  "engine": "react-aria",
+  "parts": ["Root", "Input", "Decrement", "Increment"],
+  "interactive": ["number-field"],
+  "focusTarget": "within",
+  "stateIndicator": [],
+  "cssDeps": ["base", "input"],
+  "variants": {
+    "size": ["sm", "md", "lg"]
+  },
+  "figma": {
+    "canonical": [],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": ["7275:11397"]
+  }
+}

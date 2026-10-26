@@ -73,7 +73,13 @@
     outline: var(--nz-border-width-focus) solid var(--nz-border-focus);
     outline-offset: 2px;
   }
-  :where(.nz-input, .nz-password-input, .nz-quantity-stepper, .nz-search-field):focus-within {
+  :where(
+    .nz-input,
+    .nz-number-field,
+    .nz-password-input,
+    .nz-quantity-stepper,
+    .nz-search-field
+  ):focus-within {
     outline: var(--nz-border-width-focus) solid var(--nz-border-focus);
     outline-offset: 2px;
   }

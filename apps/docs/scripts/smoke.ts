@@ -94,6 +94,8 @@ const NIZIVO_CLIENT_MARKERS = [
   'nz-password-input-toggle',
   // QuantityStepper's client leaf (v0.3): its buttons' class
   'nz-quantity-stepper-button',
+  // NumberField's parts (v0.3): its input's slot
+  'number-field-input',
   // FileUpload (@nizivo/react/file-upload, v0.2): its dropzone's slot
   'file-upload-dropzone',
   // MobileTabBar's two client parts (week 20): More's trigger class, and the bottom-inset island's
@@ -151,6 +153,8 @@ const CLIENT_PAGES: Record<string, string[]> = {
   '/docs/components/form/': ['nz-form-summary', 'input-prefix', 'willValidate'],
   '/docs/components/password-input/': ['nz-password-input-toggle', 'willValidate'],
   '/docs/components/quantity-stepper/': ['nz-quantity-stepper-button', 'willValidate'],
+  // NumberField reads its Field through useFieldControl, which lives in FieldScope's module.
+  '/docs/components/number-field/': ['number-field-input', 'willValidate'],
   // The shell (week 20): TopBar and MobileTopBar are server parts whose examples put a SearchField
   // and IconButtons in their slots; MobileTabBar renders its inset island and More's Drawer sheet,
   // and AppShell's example holds all of them.

@@ -282,6 +282,23 @@ export { NativeSelect } from './native-select/index';
 export type { NativeSelectProps, NativeSelectState } from './native-select/index';
 export { NavItem } from './nav-item/index';
 export type { NavItemProps, NavItemState } from './nav-item/index';
+export {
+  NumberField,
+  NumberFieldRoot,
+  NumberFieldInput,
+  NumberFieldDecrement,
+  NumberFieldIncrement,
+} from './number-field/index';
+export type {
+  NumberFieldButtonProps,
+  NumberFieldButtonState,
+  NumberFieldInputProps,
+  NumberFieldInputState,
+  NumberFieldLabels,
+  NumberFieldRootProps,
+  NumberFieldRootState,
+  NumberFieldValueReason,
+} from './number-field/index';
 export { NumberValue, formatNumber } from './number-value/index';
 export type { NumberValueProps, NumberValueState } from './number-value/index';
 export { PageHeader } from './page-header/index';

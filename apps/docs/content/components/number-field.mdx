@@ -1,0 +1,64 @@
+---
+title: NumberField
+description: A number in the reader's locale, a price, a percent or a unit, in Input's box. It formats on blur, parses what is typed in the locale, clamps to min and max, and steps with the arrow keys; step buttons are optional. A form gets the plain number.
+keyboard:
+  - keys: Tab
+    action: Moves focus to the input. The step buttons are skipped.
+  - keys: Arrow Up, Arrow Down
+    action: Adds or takes away one step, within min and max.
+  - keys: Page Up, Page Down
+    action: As Arrow Up and Arrow Down, one step.
+  - keys: Home, End
+    action: Goes to min or max, when they are set.
+  - keys: Enter
+    action: Commits the typed value (parsed, clamped and formatted), as leaving the field does.
+keyboardSource: React Aria Components 1.22.1 `NumberField` (`_engines/react-aria/number-field.client.tsx`). The browser lane (`test/browser/number-field.spec.tsx`) checks typing and the commit, de-DE parsing, the arrow keys, the step buttons, Tab skipping them, FormData, controlled use and a Field's required message.
+---
+
+## Static or interactive
+
+**Client.** It is React Aria's NumberField, which reads its Field through FieldScope, so a page with
+a NumberField also loads FieldScope. The server HTML already shows the value formatted in the
+locale, and a form submits it before hydration; typing, formatting and stepping work once the page
+has hydrated. [How to choose](/docs/guides/static-or-interactive/).
+
+In a client app (a Vite or React Router single-page app, or a `'use client'` file) it is an ordinary React component: event handlers, refs and state work as usual. [In a client app](/docs/guides/static-or-interactive/#in-a-client-app).
+
+## Parts
+
+`NumberField.Root` is the box and holds the value. `NumberField.Input` is the text input.
+`NumberField.Decrement` before it and `NumberField.Increment` after it add step buttons; leave them
+out for a price or an amount, where the arrow keys are enough.
+
+## Formatting and parsing
+
+`formatOptions` takes `Intl.NumberFormat` options: `{ style: 'currency', currency: 'EUR' }`,
+`{ style: 'percent' }` (0.25 shows as 25 %), `{ style: 'unit', unit: 'kilogram' }`, or fraction
+digits. The locale is NizivoConfig's `locale`, `en-US` without one: in `de-DE`, "1.234,5" is
+1234.5 and shows as "1.234,50 €". The value is formatted on the server too, so the first paint
+already shows "€12.50".
+
+While the reader types, the text is theirs; on blur or Enter it is parsed, clamped to `min` and
+`max`, snapped to `step`, and formatted. `onValueChange(value, details)` reports that committed
+number, or `null` when the field is cleared. React Aria reports no cause, so `details.reason` is
+`'unknown'`.
+
+## Forms
+
+With `name` (or a Field's), a hidden input carries the plain number, `12.5` and never "€12.50",
+into `FormData`. Inside a Field, `required` is checked natively on the visible input, so the
+Field's `messages.valueMissing` applies.
+
+## Step buttons
+
+The buttons are out of the tab order, as the arrow keys step the input, and each is disabled at its
+end of the range. Their names come from React Aria, translated in 36 locales and ending with the
+field's label: "Decrease Price" and "Increase Price". `labels={{ decrement, increment }}` replaces
+them for one field. A child replaces the internal `minus` or `plus` mark.
+
+## Engine-owned
+
+The input's role description, "Number field" in English, comes from React Aria's catalogue (it is
+left out on iOS, where VoiceOver would not announce `required` with it). `labels` does not set it,
+and NizivoConfig's `labels` do not reach the step buttons: the [Strings guide](/docs/guides/strings/)
+lists the engine-owned strings.
