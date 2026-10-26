@@ -11,10 +11,18 @@
 //   node packages/tooling/gate/gate.ts [--worktree <dir>] <commit>…
 //
 // --worktree defaults to a `gate-wt` folder beside the repository; it is created when missing and
-// removed when the gate passes. Each step's output goes to `<worktree>.log`; a failing step prints
-// the lines of it that look like errors, and the gate stops there with exit code 1.
+// removed when the gate passes. Every step prints its time, and its output is appended to
+// `<worktree>.log` under a `## <commit> <step>` header, so the log holds the whole run; a failing
+// step prints the lines of it that look like errors, and the gate stops there with exit code 1.
 import { spawnSync } from 'node:child_process';
-import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import {
+  appendFileSync,
+  existsSync,
+  mkdtempSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from 'node:fs';
 import { tmpdir } from 'node:os';
 import { basename, dirname, join, resolve } from 'node:path';
 import { parseArgs } from 'node:util';
@@ -61,11 +69,11 @@ function rootScripts(manifest: unknown): Record<string, string> {
   );
 }
 
-/** The steps of a root `check` script: `pnpm a && pnpm b` → ['a', 'b']. */
 /** The run's list of proven tasks, shared by every commit's audit. */
 const provenDir = mkdtempSync(join(tmpdir(), 'nz-gate-'));
 const proven = join(provenDir, 'proven.json');
 
+/** The steps of a root `check` script: `pnpm a && pnpm b` → ['a', 'b']. */
 function checkSteps(scripts: Record<string, string>): string[] {
   const steps = (scripts['check'] ?? '')
     .split('&&')
@@ -73,16 +81,22 @@ function checkSteps(scripts: Record<string, string>): string[] {
   return [...steps.filter(Boolean), ...('cache:audit' in scripts ? ['cache:audit'] : [])];
 }
 
+/** Whole seconds since `from`. */
+const since = (from: number): number => Math.round((performance.now() - from) / 1000);
+
+writeFileSync(log, '');
 let passed = true;
 for (const commit of commits) {
+  const started = performance.now();
   git('-C', worktree, 'checkout', '-q', '--detach', commit);
   git('-C', worktree, 'clean', '-qfdx');
-  const started = performance.now();
   const scripts = rootScripts(JSON.parse(readFileSync(join(worktree, 'package.json'), 'utf8')));
   const forced = commit === commits.at(-1) || !('cache:audit' in scripts);
+  const short = git('-C', worktree, 'log', '-1', '--format=%h');
   console.log(
     `## ${git('-C', worktree, 'log', '-1', '--format=%h %s')} [${forced ? 'forced' : 'cached'}]`,
   );
+  console.log(`  ok: checkout and clean (${since(started)} s)`);
   const env = {
     ...process.env,
     COREPACK_ENABLE_DOWNLOAD_PROMPT: '0',
@@ -97,6 +111,7 @@ for (const commit of commits) {
     step === 'cache:audit' && !forced && knowsProven ? `${step} --proven ${proven}` : step,
   );
   for (const step of steps) {
+    const stepStarted = performance.now();
     const [command, ...rest] = [...PNPM, ...step.split(/\s+/)];
     const result = spawnSync(command!, rest, {
       cwd: worktree,
@@ -104,9 +119,9 @@ for (const commit of commits) {
       encoding: 'utf8',
       maxBuffer: 1 << 30,
     });
-    writeFileSync(log, `${result.stdout}${result.stderr}`);
+    appendFileSync(log, `## ${short} ${step}\n${result.stdout}${result.stderr}\n`);
     if (result.status !== 0) {
-      console.log(`  FAIL: ${step}`);
+      console.log(`  FAIL: ${step} (${since(stepStarted)} s)`);
       const lines = `${result.stdout}${result.stderr}`
         .split('\n')
         .filter((line) => ERROR_LINE.test(line));
@@ -114,9 +129,9 @@ for (const commit of commits) {
       passed = false;
       break;
     }
-    console.log(`  ok: ${step}`);
+    console.log(`  ok: ${step} (${since(stepStarted)} s)`);
   }
-  console.log(`  (${Math.round((performance.now() - started) / 1000)} s)`);
+  console.log(`  (${since(started)} s)`);
   if (!passed) break;
 }
 
@@ -125,6 +140,6 @@ if (passed && created) git('worktree', 'remove', '--force', worktree);
 console.log(
   passed
     ? `gate passed: ${commits.length} commit(s)`
-    : `gate failed; the step log is ${basename(log)}`,
+    : `gate failed; the run's log is ${basename(log)}, the failing step last`,
 );
 process.exit(passed ? 0 : 1);
