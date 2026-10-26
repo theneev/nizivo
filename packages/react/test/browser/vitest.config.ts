@@ -60,6 +60,8 @@ const config: ViteUserConfig = defineConfig({
       headless: true,
       // no failure screenshots written into the package
       screenshotFailures: false,
+      // no sourcemaps for dependencies (1 to 3 s a lane); our own code's stacks stay mapped
+      dependencySourcemaps: false,
       provider: provider(),
       instances: [
         { browser: engine },

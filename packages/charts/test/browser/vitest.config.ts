@@ -17,6 +17,8 @@ const config: ViteUserConfig = defineConfig({
       enabled: true,
       headless: true,
       screenshotFailures: false,
+      // no sourcemaps for dependencies (1 to 3 s a lane); our own code's stacks stay mapped
+      dependencySourcemaps: false,
       // wide enough for the widest plot the stroke spec draws (1200 px); the default is a phone
       viewport: { width: 1400, height: 900 },
       provider: provider(),
