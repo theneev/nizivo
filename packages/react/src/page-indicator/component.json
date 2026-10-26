@@ -1,0 +1,18 @@
+{
+  "name": "page-indicator",
+  "status": "stable",
+  "tier": "server",
+  "exports": ["PageIndicator"],
+  "interactive": [],
+  "cssDeps": ["base"],
+  "variants": {
+    "variant": ["dots", "fraction"],
+    "tone": ["surface", "media"]
+  },
+  "figma": {
+    "canonical": [],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": ["7275:20313", "7275:21014"]
+  }
+}

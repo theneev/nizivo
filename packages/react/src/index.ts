@@ -344,6 +344,8 @@ export { NumberValue, formatNumber } from './number-value/index';
 export type { NumberValueProps, NumberValueState } from './number-value/index';
 export { PageHeader } from './page-header/index';
 export type { PageHeaderProps, PageHeaderTitleLevel } from './page-header/index';
+export { PageIndicator } from './page-indicator/index';
+export type { PageIndicatorLabels, PageIndicatorProps } from './page-indicator/index';
 export { Pagination } from './pagination/index';
 export type {
   PaginationChangeReason,

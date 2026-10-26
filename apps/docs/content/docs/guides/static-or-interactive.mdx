@@ -1,6 +1,6 @@
 ---
 title: 'Static or interactive: choosing a component'
-description: Which Nizivo components ship client JavaScript, what makes them ship it, and when to use a static variant (IconButtonStatic, FieldStatic) instead of the normal component. A checklist, a table of all 71 components, the measured costs and worked examples.
+description: Which Nizivo components ship client JavaScript, what makes them ship it, and when to use a static variant (IconButtonStatic, FieldStatic) instead of the normal component. A checklist, a table of all 72 components, the measured costs and worked examples.
 ---
 
 Every Nizivo component renders its HTML on the server (an overlay's popup only while it is open). What differs is whether the browser also
@@ -212,6 +212,7 @@ module.
 | [NumberField](/docs/components/number-field/)           | client | Always (React Aria; FieldScope too)                                                                                                                  | `Input inputMode="decimal"`, which neither formats nor parses |
 | [NumberValue](/docs/components/number-value/)           | server | Never                                                                                                                                                | None needed                                                   |
 | [PageHeader](/docs/components/page-header/)             | server | Never; its `actions` are whatever you pass                                                                                                           | None needed                                                   |
+| [PageIndicator](/docs/components/page-indicator/)       | server | Never                                                                                                                                                | None needed                                                   |
 | [Pagination](/docs/components/pagination/)              | server | Never (links; a router's link component is the router's own code). With `onPageChange`, in a client component, the buttons are that component's code | None needed                                                   |
 | [PasswordInput](/docs/components/password-input/)       | client | Always: the show-password toggle                                                                                                                     | `Input type="password"`                                       |
 | [Popover](/docs/components/popover/)                    | client | Always (React Aria)                                                                                                                                  | None                                                          |

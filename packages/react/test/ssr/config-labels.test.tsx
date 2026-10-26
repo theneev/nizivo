@@ -63,6 +63,7 @@ const NOT_REACHED: Partial<Record<Key, string>> = {
   kpiTile: SERVER,
   metric: SERVER,
   mobileTabBar: SERVER,
+  pageIndicator: SERVER,
   pagination: SERVER,
   rankedList: SERVER,
   sidebar: SERVER,

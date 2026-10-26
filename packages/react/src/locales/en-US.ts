@@ -19,6 +19,7 @@ import type { FileUploadLabels } from '../file-upload/index';
 import type { FormLabels } from '../form/index';
 import type { MetricLabels } from '../metric/index';
 import type { MobileTabBarLabels, MobileTabBarMoreLabels } from '../mobile-tab-bar/index';
+import type { PageIndicatorLabels } from '../page-indicator/index';
 import type { PaginationLabels } from '../pagination/index';
 import type { PasswordInputLabels } from '../password-input/index';
 import type { PopoverLabels } from '../popover/index';
@@ -51,6 +52,7 @@ export const enUS: {
   metric: MetricLabels;
   mobileTabBar: MobileTabBarLabels;
   mobileTabBarMore: MobileTabBarMoreLabels;
+  pageIndicator: PageIndicatorLabels;
   pagination: PaginationLabels;
   passwordInput: PasswordInputLabels;
   popover: Pick<PopoverLabels, 'close'>;
@@ -92,6 +94,7 @@ export const enUS: {
   metric: { loading: 'Loading {label}', empty: 'No data', error: 'Could not load {label}' },
   mobileTabBar: { nav: 'Primary' },
   mobileTabBarMore: { more: 'More', close: 'Close' },
+  pageIndicator: { position: '{current} of {count}' },
   pagination: {
     nav: 'Pagination',
     previous: 'Previous page',

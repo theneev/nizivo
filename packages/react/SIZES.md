@@ -104,7 +104,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 | Entry              | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | ------------------ | -------: | ---------: | ---------: | ----------: | -----------: |
-| `.`                |  133,379 |      130.3 |    109,487 |         143 |       13,053 |
+| `.`                |  133,649 |      130.5 |    109,676 |         143 |       12,783 |
 | /accordion         |    1,312 |        1.3 |      1,205 |         1.5 |          224 |
 | /alert             |    1,379 |        1.3 |      1,273 |         1.4 |           54 |
 | /app-shell         |      462 |        0.5 |        433 |         0.5 |           50 |
@@ -140,7 +140,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /input             |    1,837 |        1.8 |      1,662 |           2 |          211 |
 | /kbd               |    1,192 |        1.2 |      1,087 |         1.3 |          139 |
 | /kpi-tile          |    2,323 |        2.3 |      2,117 |         2.5 |          237 |
-| /locales/en-US     |      693 |        0.7 |        583 |         0.8 |          126 |
+| /locales/en-US     |      716 |        0.7 |        601 |         0.8 |          103 |
 | /menu              |   57,163 |       55.8 |     49,372 |          57 |        1,205 |
 | /meter             |    1,143 |        1.1 |      1,058 |         1.3 |          188 |
 | /metric            |    2,144 |        2.1 |      1,948 |         2.4 |          313 |
@@ -152,6 +152,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /number-field      |   28,926 |       28.2 |     25,814 |          32 |        3,842 |
 | /number-value      |      788 |        0.8 |        716 |         0.9 |          133 |
 | /page-header       |      890 |        0.9 |        814 |           1 |          134 |
+| /page-indicator    |    1,147 |        1.1 |      1,043 |         1.3 |          184 |
 | /pagination        |    1,989 |        1.9 |      1,841 |           2 |           59 |
 | /password-input    |    2,672 |        2.6 |      2,400 |         2.8 |          195 |
 | /popover           |   36,054 |       35.2 |     31,988 |          39 |        3,882 |
@@ -300,6 +301,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/number-field.css      |      491 |        0.5 |        383 |         0.6 |          123 |
 | /css/number-value.css      |      154 |        0.2 |        116 |         0.2 |           50 |
 | /css/page-header.css       |      416 |        0.4 |        333 |         0.5 |           96 |
+| /css/page-indicator.css    |      564 |        0.6 |        473 |         0.7 |          152 |
 | /css/pagination.css        |      816 |        0.8 |        674 |         0.9 |          105 |
 | /css/password-input.css    |      486 |        0.5 |        386 |         0.6 |          128 |
 | /css/popover.css           |      711 |        0.7 |        567 |         0.8 |          108 |
@@ -328,7 +330,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/tooltip.css           |      581 |        0.6 |        503 |         0.6 |           33 |
 | /css/top-bar.css           |      452 |        0.4 |        379 |         0.5 |           60 |
 | /css/trend-card.css        |      403 |        0.4 |        346 |         0.5 |          109 |
-| /styles.css                |   24,930 |       24.3 |     19,981 |          26 |        1,694 |
+| /styles.css                |   25,154 |       24.6 |     20,237 |          26 |        1,470 |
 
 #### `@nizivo/tokens`: Public JS entries (bundled with what they import, React Aria included)
 

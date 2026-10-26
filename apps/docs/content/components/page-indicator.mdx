@@ -1,0 +1,29 @@
+---
+title: PageIndicator
+description: Where a carousel, a product's photos or an onboarding sequence is, as dots or as a "2 / 9" chip. The visual is decorative; a visually hidden "2 of 9" tells a screen reader the same.
+---
+
+## Static or interactive
+
+**Server.** No client JavaScript. It shows a position the page already knows; the carousel or the
+steps around it own the controls. [How to choose](/docs/guides/static-or-interactive/).
+
+## Dots or fraction
+
+`variant="dots"` (the default) draws one dot per page, and the current one longer and in the brand
+colour, so the position does not rest on colour alone. `variant="fraction"` shows "2 / 9" in a
+pill, better for more than about seven pages. `count` is how many there are and `current` the one
+shown now, from 1; `current` is kept between 1 and `count`.
+
+## On a photo
+
+`tone="media"` is for an indicator over a photo or a video: white dots, and a dark chip with white
+text. Design has not drawn an on-media colour family yet, so it uses `bg/code` and `text/on-dark`,
+as the storefront patterns do; their contrast holds in light and dark because neither flips.
+
+## Screen readers
+
+The dots and the chip are `aria-hidden`. A visually hidden "2 of 9" says the position instead;
+`labels.position` (with `{current}` and `{count}`) replaces it, for example
+`labels={{ position: 'Photo {current} of {count}' }}`, and `locale` formats the numbers. It is a
+server part, so a `NizivoConfig`'s labels do not reach it: pass `labels` on each instance.

@@ -1965,6 +1965,24 @@
       "name": "PageHeaderTitleLevel"
     },
     {
+      "definedIn": "./page-indicator",
+      "import": "import { PageIndicator } from '@nizivo/react'",
+      "kind": "component",
+      "name": "PageIndicator"
+    },
+    {
+      "definedIn": "./page-indicator",
+      "import": "import type { PageIndicatorLabels } from '@nizivo/react'",
+      "kind": "type",
+      "name": "PageIndicatorLabels"
+    },
+    {
+      "definedIn": "./page-indicator",
+      "import": "import type { PageIndicatorProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "PageIndicatorProps"
+    },
+    {
       "definedIn": "./pagination",
       "import": "import { Pagination } from '@nizivo/react'",
       "kind": "component",

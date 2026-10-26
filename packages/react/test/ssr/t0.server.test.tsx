@@ -81,6 +81,7 @@ const COMPONENTS = [
   'mobile-tab-bar',
   'app-shell',
   'accordion',
+  'page-indicator',
 ] as const;
 type Name = (typeof COMPONENTS)[number];
 
@@ -215,6 +216,7 @@ const entries = {
   'mobile-tab-bar': () => import('../../src/mobile-tab-bar/index'),
   'app-shell': () => import('../../src/app-shell/index'),
   accordion: () => import('../../src/accordion/index'),
+  'page-indicator': () => import('../../src/page-indicator/index'),
 } satisfies Record<Name, () => Promise<unknown>>;
 
 /** Each example module, imported again by the react-server test; every `*Example` export renders. */
@@ -267,6 +269,7 @@ const exampleModules = {
   'mobile-tab-bar': () => import('../../src/mobile-tab-bar/mobile-tab-bar.example'),
   'app-shell': () => import('../../src/app-shell/app-shell.example'),
   accordion: () => import('../../src/accordion/accordion.example'),
+  'page-indicator': () => import('../../src/page-indicator/page-indicator.example'),
 } satisfies Record<Name, () => Promise<Record<string, unknown>>>;
 
 /**

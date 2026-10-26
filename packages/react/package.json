@@ -219,6 +219,10 @@
       "types": "./dist/page-header/index.d.ts",
       "default": "./dist/page-header/index.js"
     },
+    "./page-indicator": {
+      "types": "./dist/page-indicator/index.d.ts",
+      "default": "./dist/page-indicator/index.js"
+    },
     "./pagination": {
       "types": "./dist/pagination/index.d.ts",
       "default": "./dist/pagination/index.js"
@@ -378,6 +382,7 @@
     "./css/number-field.css": "./dist/css/number-field.css",
     "./css/number-value.css": "./dist/css/number-value.css",
     "./css/page-header.css": "./dist/css/page-header.css",
+    "./css/page-indicator.css": "./dist/css/page-indicator.css",
     "./css/pagination.css": "./dist/css/pagination.css",
     "./css/password-input.css": "./dist/css/password-input.css",
     "./css/popover.css": "./dist/css/popover.css",
