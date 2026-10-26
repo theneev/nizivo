@@ -6,7 +6,8 @@
 // The server takes a free port unless --port names one, so runs can overlap. Pages load --pages at a
 // time (default 6), each in its own tab, and their failures are reported in page order.
 //
-// Every page of the export loads with HTTP 200, zero console errors or warnings and zero page errors
+// Every page of the export loads, in light at 1280px and in dark at 375px, with HTTP 200, zero console
+// errors or warnings and zero page errors
 // (React reports hydration failures there), hydrates, and makes no request outside the local server:
 // the site works offline. axe-core reports no WCAG 2.2 A/AA violation on it, of any impact, in light
 // (at 1280px) or dark (at 375px, blocking since dark left preview, M62); axe's best-practice rules
@@ -1309,21 +1310,33 @@ async function main(): Promise<void> {
     // Dark runs at phone width, so the same pass checks reflow (WCAG 1.4.10, 320 CSS px of content).
     const dark = await context(browser, 'dark', 375);
     const darkViolations: string[] = [];
+    let darkNoisy = 0;
     const darkPages = await pool(paths, async (path) => {
       const fail: string[] = [];
-      const { page } = await visit(dark, path, fail);
+      const { page, messages, external } = await visit(dark, path, fail);
       const violations = (await axe(page)).map((v) => `${path}: ${v}`);
       for (const c of await clipped(page)) {
         fail.push(`${path}: at 375px, ${c} is cut off with no scroller to reach it`);
       }
       await page.close();
-      return { violations, fail };
+      // the same console, page-error and offline checks as the light pass: a dark theme or a phone
+      // width can take a different code path
+      if (messages.length > 0) fail.push(`${path} (dark, 375px): ${messages.join(' | ')}`);
+      if (external.length > 0) {
+        fail.push(`${path} (dark, 375px): external requests ${external.join(', ')}`);
+      }
+      return { violations, fail, noisy: messages.length > 0 || external.length > 0 };
     });
-    for (const { violations, fail } of darkPages) {
+    for (const { violations, fail, noisy } of darkPages) {
       darkViolations.push(...violations);
       failures.push(...fail);
+      if (noisy) darkNoisy += 1;
     }
     await dark.close();
+    check(
+      darkNoisy === 0,
+      `${paths.length} pages load in dark at 375px with no console message, page error or external request`,
+    );
     check(
       !failures.some((f) => f.includes('cut off with no scroller')),
       `${paths.length} pages reflow at 375px: every table, code block and preview fits or scrolls`,
