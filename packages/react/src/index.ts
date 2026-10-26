@@ -86,6 +86,35 @@ export type {
   ChoiceCardProps,
   ChoiceCardState,
 } from './choice-card/index';
+export {
+  Combobox,
+  ComboboxRoot,
+  ComboboxInput,
+  ComboboxTrigger,
+  ComboboxPopup,
+  ComboboxItem,
+  ComboboxGroup,
+  ComboboxGroupLabel,
+  ComboboxSeparator,
+} from './combobox/index';
+export type {
+  ComboboxGroupLabelProps,
+  ComboboxGroupProps,
+  ComboboxInputProps,
+  ComboboxInputState,
+  ComboboxItemProps,
+  ComboboxItemState,
+  ComboboxMenuTrigger,
+  ComboboxPopupProps,
+  ComboboxPopupState,
+  ComboboxRootProps,
+  ComboboxRootState,
+  ComboboxSeparatorProps,
+  ComboboxTriggerProps,
+  ComboboxTriggerState,
+  ComboboxValueReason,
+  OpenReason,
+} from './combobox/index';
 export { Container } from './container/index';
 export type { ContainerProps } from './container/index';
 export { Delta } from './delta/index';
@@ -117,7 +146,6 @@ export type {
   DialogTitleProps,
   DialogTriggerProps,
   DialogTriggerState,
-  OpenReason,
 } from './dialog/index';
 export {
   Drawer,

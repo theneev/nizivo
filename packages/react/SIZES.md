@@ -104,7 +104,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 | Entry              | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | ------------------ | -------: | ---------: | ---------: | ----------: | -----------: |
-| `.`                |  122,311 |      119.4 |    101,616 |         120 |          569 |
+| `.`                |  133,051 |      129.9 |    109,173 |         143 |       13,381 |
 | /alert             |    1,379 |        1.3 |      1,263 |         1.4 |           54 |
 | /app-shell         |      462 |        0.5 |        433 |         0.5 |           50 |
 | /augment           |        0 |        0.0 |          0 |           0 |            — |
@@ -117,6 +117,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /checkbox          |    2,069 |        2.0 |      1,900 |         2.3 |          286 |
 | /chip-group        |    2,589 |        2.5 |      2,367 |         2.7 |          175 |
 | /choice-card       |    2,289 |        2.2 |      2,104 |         2.5 |          271 |
+| /combobox          |   66,726 |       65.2 |     57,321 |          72 |        7,002 |
 | /config            |      175 |        0.2 |        177 |         0.2 |           29 |
 | /container         |      694 |        0.7 |        633 |         0.8 |          125 |
 | /contracts         |    1,021 |        1.0 |        915 |         1.1 |          105 |
@@ -185,25 +186,26 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | Entry                      | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | -------------------------- | -------: | ---------: | ---------: | ----------: | -----------: |
 | dashboard set              |   78,936 |       77.1 |     66,702 |          85 |        8,104 |
-| { Button } from the barrel |    1,279 |        1.2 |      1,169 |         1.4 |          154 |
+| { Button } from the barrel |    1,279 |        1.2 |      1,173 |         1.4 |          154 |
 | { Select } from the barrel |   63,679 |       62.2 |     54,634 |          68 |        5,953 |
 
 #### `@nizivo/react`: Own code (one module minified alone, imports not counted)
 
 | Entry                                           | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | ----------------------------------------------- | -------: | ---------: | ---------: | ----------: | -----------: |
+| own: _engines/react-aria/combobox.client        |    1,543 |        1.5 |      1,379 |         1.7 |          197 |
 | own: _engines/react-aria/dialog.client          |    1,082 |        1.1 |        963 |         1.3 |          249 |
 | own: _engines/react-aria/drawer.client          |      100 |        0.1 |         90 |         0.2 |          104 |
 | own: _engines/react-aria/file-upload.client     |      369 |        0.4 |        332 |         0.4 |           40 |
 | own: _engines/react-aria/locale.client          |      162 |        0.2 |        142 |         0.2 |           42 |
-| own: _engines/react-aria/menu.client            |    1,824 |        1.8 |      1,613 |           2 |          224 |
+| own: _engines/react-aria/menu.client            |    1,822 |        1.8 |      1,613 |           2 |          226 |
 | own: _engines/react-aria/number-field.client    |      712 |        0.7 |        645 |         0.8 |          107 |
 | own: _engines/react-aria/open-state.client      |      341 |        0.3 |        305 |         0.4 |           68 |
 | own: _engines/react-aria/outside-press.client   |      503 |        0.5 |        425 |         0.6 |          111 |
 | own: _engines/react-aria/overlay.client         |      556 |        0.5 |        476 |         0.6 |           58 |
 | own: _engines/react-aria/popover.client         |    1,210 |        1.2 |      1,087 |         1.3 |          121 |
 | own: _engines/react-aria/popup.client           |    1,230 |        1.2 |      1,077 |         1.3 |          101 |
-| own: _engines/react-aria/select.client          |    1,505 |        1.5 |      1,327 |         1.6 |          133 |
+| own: _engines/react-aria/select.client          |    1,506 |        1.5 |      1,326 |         1.6 |          132 |
 | own: _engines/react-aria/tabs.client            |      769 |        0.8 |        702 |         0.9 |          152 |
 | own: _engines/react-aria/toast.client           |      325 |        0.3 |        296 |         0.4 |           84 |
 | own: _engines/react-aria/tooltip.client         |      723 |        0.7 |        660 |         0.8 |           96 |
@@ -213,6 +215,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | own: checkbox/checkbox.client                   |      750 |        0.7 |        692 |         0.9 |          171 |
 | own: chip-group/chip-group.client               |    1,332 |        1.3 |      1,210 |         1.5 |          204 |
 | own: choice-card/choice-card.client             |    1,091 |        1.1 |        991 |         1.2 |          137 |
+| own: combobox/combobox.client                   |    1,159 |        1.1 |      1,076 |         1.3 |          172 |
 | own: config/config.client                       |      249 |        0.2 |        230 |         0.3 |           58 |
 | own: dialog/dialog.client                       |    1,023 |        1.0 |        939 |         1.4 |          410 |
 | own: drawer/drawer.client                       |    1,090 |        1.1 |        995 |         1.2 |          138 |
@@ -258,13 +261,14 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/avatar.css            |      745 |        0.7 |        606 |         0.9 |          176 |
 | /css/badge.css             |      512 |        0.5 |        424 |         0.6 |          102 |
 | /css/banner.css            |      658 |        0.6 |        533 |         0.8 |          161 |
-| /css/base.css              |    1,266 |        1.2 |      1,066 |         1.4 |          167 |
+| /css/base.css              |    1,288 |        1.3 |      1,092 |         1.4 |          145 |
 | /css/breadcrumb.css        |      551 |        0.5 |        431 |         0.6 |           63 |
 | /css/button.css            |    1,153 |        1.1 |        974 |         1.3 |          178 |
 | /css/card.css              |      665 |        0.6 |        560 |         0.7 |           51 |
 | /css/checkbox.css          |      834 |        0.8 |        687 |         0.9 |           87 |
 | /css/chip-group.css        |      986 |        1.0 |        808 |         1.1 |          140 |
 | /css/choice-card.css       |    1,005 |        1.0 |        851 |         1.1 |          121 |
+| /css/combobox.css          |    1,047 |        1.0 |        857 |         1.2 |          181 |
 | /css/container.css         |      185 |        0.2 |        155 |         0.2 |           19 |
 | /css/delta.css             |      472 |        0.5 |        383 |         0.5 |           40 |
 | /css/dialog.css            |      944 |        0.9 |        787 |           1 |           80 |
@@ -322,7 +326,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/tooltip.css           |      581 |        0.6 |        503 |         0.6 |           33 |
 | /css/top-bar.css           |      452 |        0.4 |        379 |         0.5 |           60 |
 | /css/trend-card.css        |      403 |        0.4 |        346 |         0.5 |          109 |
-| /styles.css                |   24,242 |       23.7 |     19,707 |          26 |        2,382 |
+| /styles.css                |   24,705 |       24.1 |     19,893 |          26 |        1,919 |
 
 #### `@nizivo/tokens`: Public JS entries (bundled with what they import, React Aria included)
 

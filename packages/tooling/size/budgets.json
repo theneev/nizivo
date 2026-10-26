@@ -2,8 +2,8 @@
   "$comment": "Size budgets (ARCHITECTURE.md §17), written by `node packages/tooling/size/measure.ts --write`. measured: bytes, gzip -9, as size-limit 14.2 reports them. limitKiB: measured + 10%, rounded up (method.ts limitKiB), never above the entry's §17.1 plan limit (method.ts PLAN_LIMITS_KIB). Limits only go up through a labelled PR (§17.3).",
   "entries": {
     "@nizivo/react": {
-      "measured": 122311,
-      "limitKiB": 120
+      "measured": 133051,
+      "limitKiB": 143
     },
     "@nizivo/react/alert": {
       "measured": 1379,
@@ -52,6 +52,10 @@
     "@nizivo/react/choice-card": {
       "measured": 2289,
       "limitKiB": 2.5
+    },
+    "@nizivo/react/combobox": {
+      "measured": 66726,
+      "limitKiB": 72
     },
     "@nizivo/react/config": {
       "measured": 175,
@@ -313,6 +317,10 @@
       "measured": 63679,
       "limitKiB": 68
     },
+    "@nizivo/react own: _engines/react-aria/combobox.client": {
+      "measured": 1543,
+      "limitKiB": 1.7
+    },
     "@nizivo/react own: _engines/react-aria/dialog.client": {
       "measured": 1082,
       "limitKiB": 1.3
@@ -330,7 +338,7 @@
       "limitKiB": 0.2
     },
     "@nizivo/react own: _engines/react-aria/menu.client": {
-      "measured": 1824,
+      "measured": 1822,
       "limitKiB": 2
     },
     "@nizivo/react own: _engines/react-aria/number-field.client": {
@@ -358,7 +366,7 @@
       "limitKiB": 1.3
     },
     "@nizivo/react own: _engines/react-aria/select.client": {
-      "measured": 1505,
+      "measured": 1506,
       "limitKiB": 1.6
     },
     "@nizivo/react own: _engines/react-aria/tabs.client": {
@@ -396,6 +404,10 @@
     "@nizivo/react own: choice-card/choice-card.client": {
       "measured": 1091,
       "limitKiB": 1.2
+    },
+    "@nizivo/react own: combobox/combobox.client": {
+      "measured": 1159,
+      "limitKiB": 1.3
     },
     "@nizivo/react own: config/config.client": {
       "measured": 249,
@@ -538,7 +550,7 @@
       "limitKiB": 0.8
     },
     "@nizivo/react/css/base.css": {
-      "measured": 1266,
+      "measured": 1288,
       "limitKiB": 1.4
     },
     "@nizivo/react/css/breadcrumb.css": {
@@ -564,6 +576,10 @@
     "@nizivo/react/css/choice-card.css": {
       "measured": 1005,
       "limitKiB": 1.1
+    },
+    "@nizivo/react/css/combobox.css": {
+      "measured": 1047,
+      "limitKiB": 1.2
     },
     "@nizivo/react/css/container.css": {
       "measured": 185,
@@ -794,7 +810,7 @@
       "limitKiB": 0.5
     },
     "@nizivo/react/styles.css": {
-      "measured": 24242,
+      "measured": 24705,
       "limitKiB": 26
     },
     "@nizivo/tokens": {

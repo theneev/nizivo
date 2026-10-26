@@ -12,6 +12,7 @@
     .nz-breadcrumb-link,
     .nz-button,
     .nz-checkbox-input,
+    .nz-combobox-trigger,
     .nz-dialog-close,
     .nz-dialog-trigger,
     .nz-drawer-close,
@@ -50,6 +51,7 @@
     outline-offset: 2px;
   }
   :where(
+    .nz-combobox-item,
     .nz-menu-checkbox-item,
     .nz-menu-item,
     .nz-menu-radio-item,
@@ -58,6 +60,7 @@
     outline: none;
   }
   :where(
+    .nz-combobox-item,
     .nz-menu-checkbox-item,
     .nz-menu-item,
     .nz-menu-radio-item,
@@ -74,6 +77,7 @@
     outline-offset: 2px;
   }
   :where(
+    .nz-combobox-control,
     .nz-input,
     .nz-number-field,
     .nz-password-input,
@@ -100,6 +104,8 @@
     .nz-checkbox-input,
     .nz-chip,
     .nz-choice-card,
+    .nz-combobox-item,
+    .nz-combobox-trigger,
     .nz-dialog-close,
     .nz-dialog-trigger,
     .nz-drawer-close,
@@ -172,6 +178,7 @@
       .nz-chip,
       .nz-choice-card,
       .nz-choice-card-input,
+      .nz-combobox-popup,
       .nz-dialog-popup,
       .nz-drawer-popup,
       .nz-menu-popup,
@@ -256,7 +263,7 @@
     :where(.nz-file-upload-dropzone)[data-drag-over] {
       outline: 2px solid Highlight;
     }
-    :where(.nz-select-item)[data-selected] {
+    :where(.nz-combobox-item, .nz-select-item)[data-selected] {
       background: Highlight;
       color: HighlightText;
       outline-color: CanvasText;

@@ -79,6 +79,10 @@
       "types": "./dist/choice-card/index.d.ts",
       "default": "./dist/choice-card/index.js"
     },
+    "./combobox": {
+      "types": "./dist/combobox/index.d.ts",
+      "default": "./dist/combobox/index.js"
+    },
     "./config": {
       "types": "./dist/config/index.d.ts",
       "default": "./dist/config/index.js"
@@ -339,6 +343,7 @@
     "./css/checkbox.css": "./dist/css/checkbox.css",
     "./css/chip-group.css": "./dist/css/chip-group.css",
     "./css/choice-card.css": "./dist/css/choice-card.css",
+    "./css/combobox.css": "./dist/css/combobox.css",
     "./css/container.css": "./dist/css/container.css",
     "./css/delta.css": "./dist/css/delta.css",
     "./css/dialog.css": "./dist/css/dialog.css",

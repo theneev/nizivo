@@ -31,6 +31,11 @@ export interface OverlaySubject {
   /** `data-slot` of the trigger and of the positioned popup. */
   trigger: string;
   popup: string;
+  /**
+   * The element that draws the focus ring while the trigger has focus, when it is not the trigger
+   * itself: a combobox's box, around its input (focusTarget "within").
+   */
+  ring?: string;
   /** The outermost element the engine portals (a positioner), when it is not the popup itself. */
   portalRoot?: string;
   /** How a pointer user opens it: a press, or hovering the trigger. */
@@ -114,8 +119,8 @@ export function describeOverlay(subject: OverlaySubject): void {
       await gone(subject);
       expect(trigger.hasAttribute('data-open')).toBe(false);
       // Focus returns once the exit has finished and the popup has left the DOM; a hover never
-      // moved it.
-      await until(() => expect(focused() === trigger).toBe(inside));
+      // moved it, and a press on a trigger that keeps focus (a combobox's input) put it there.
+      await until(() => expect(focused() === trigger).toBe(inside || subject.pointer === 'press'));
       expect(pageStyles()).toBe(before);
     });
 
@@ -301,8 +306,8 @@ export function describeOverlay(subject: OverlaySubject): void {
         try {
           await mount(subject.app());
           await userEvent.keyboard('{Tab}');
-          const trigger = get(subject.trigger);
-          expect(getComputedStyle(trigger).outlineStyle).toBe('solid');
+          const ring = get(subject.ring ?? subject.trigger);
+          expect(getComputedStyle(ring).outlineStyle).toBe('solid');
           const popup = await open(subject);
           await until(() => expect(popup.hasAttribute('data-entering')).toBe(false));
           const edge = getComputedStyle(popup);

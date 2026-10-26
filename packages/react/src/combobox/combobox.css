@@ -1,0 +1,217 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/combobox.css (ARCHITECTURE.md §12.1, §16.1; no Figma component). The box is
+   Input's (.nz-input on the control) with a Trigger at its end; the popup and its rows are Select's
+   (Select Menu 7356:406 and its option set, M36), so a Combobox and a Select read as one family.
+   The 2 px focus outline is the box's, from nz.base (focusTarget "within"): the input keeps focus
+   while the keyboard moves the active row, which draws the generated ring inside itself
+   (data-focus-inset). Public --nz-combobox-* hooks are read once, at the property. */
+@layer nz.components {
+  .nz-combobox {
+    display: inline-flex;
+    flex-direction: column;
+    min-inline-size: 0;
+  }
+
+  /* the Trigger sits inside the padding; 24 px (the WCAG 2.5.8 target) at every size */
+  .nz-input.nz-combobox-control:has(> .nz-combobox-trigger) {
+    padding-inline-end: var(--nz-space-1);
+  }
+
+  .nz-combobox-trigger {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    inline-size: var(--nz-space-6);
+    block-size: var(--nz-space-6);
+    padding: 0;
+    border: 0;
+    border-radius: var(--nz-radius-sm);
+    background: transparent;
+    color: var(--nz-combobox-trigger-fg, var(--nz-text-secondary));
+    font-size: var(--nz-size-icon-sm);
+    cursor: pointer;
+    transition: background-color var(--nz-duration-fast) var(--nz-easing-standard);
+
+    @media (hover: hover) {
+      &:hover:not(:disabled) {
+        background: var(--nz-bg-hover);
+      }
+    }
+
+    &[data-pressed]:not(:disabled) {
+      background: var(--nz-bg-pressed);
+    }
+
+    &:disabled {
+      color: var(--nz-text-disabled);
+      cursor: not-allowed;
+    }
+  }
+
+  .nz-combobox-chevron {
+    display: inline-flex;
+  }
+
+  /* one overlay band, ordered by DOM (§12.1 L1). Popups enter on the spring pair from the trigger
+     side and exit on the fade (§12.2 Motion, §13.3; the Dropdown Menu master's "scale 0.96 → 1 +
+     fade"); the opacity reuses the spring's duration, which stays 120 ms when reduced, so the fade
+     survives reduced motion and the scale does not travel (--nz-scale-enter is 1). */
+  .nz-combobox-popup {
+    z-index: var(--nz-z-overlay);
+    /* the minimum is the whole popup, border included, so it matches the trigger (§8.1) */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    min-inline-size: var(--nz-trigger-width);
+    max-block-size: var(--nz-available-height);
+    overflow: auto;
+    border: var(--nz-border-width-default) solid var(--nz-border-subtle);
+    border-radius: var(--nz-radius-md);
+    background: var(--nz-bg-surface-raised);
+    box-shadow: var(--nz-elevation-4);
+    transform-origin: var(--nz-transform-origin);
+    transition:
+      scale var(--nz-duration-spring) var(--nz-easing-spring),
+      opacity var(--nz-duration-spring) var(--nz-easing-enter);
+
+    &[data-entering] {
+      opacity: 0;
+      scale: var(--nz-scale-enter);
+    }
+
+    &[data-exiting] {
+      opacity: 0;
+      transition: opacity var(--nz-duration-fade) var(--nz-easing-exit);
+    }
+  }
+
+  /* the listbox: the Select Menu's 6 px padding; rows touch (gap 0) */
+  .nz-combobox-list,
+  .nz-combobox-group {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .nz-combobox-list {
+    padding: var(--nz-space-1-5);
+    outline: none;
+  }
+
+  /* the Select Option: 8 / 12 px, Label/M, 36 px with or without a page reset (the minimum
+     includes the padding). The rows stay 14 px under a coarse pointer: they are not text fields. */
+  .nz-combobox-item {
+    display: flex;
+    align-items: center;
+    gap: var(--nz-space-2);
+    box-sizing: border-box;
+    min-block-size: 2.25rem;
+    padding-block: var(--nz-space-2);
+    padding-inline: var(--nz-space-3);
+    border-radius: var(--nz-radius-sm);
+    color: var(--nz-text-primary);
+    font: var(--nz-font-label-m);
+    letter-spacing: var(--nz-tracking-label-m);
+    cursor: default;
+
+    /* a pointer hint only (1.08:1 on the surface); keyboard focus is the generated ring */
+    &[data-highlighted] {
+      background: var(--nz-bg-hover);
+    }
+
+    /* Figma's Selected option is Label/M Strong in text/primary with a trailing check; code keeps
+       the brand-subtle tint as well (M36). The check and the weight, not the colour, carry the
+       state (WCAG 1.4.1). Same tracking as Label/M, so only the weight changes. */
+    &[data-selected] {
+      background: var(--nz-bg-brand-subtle);
+      font: var(--nz-font-label-m-strong);
+    }
+
+    /* under the pointer it swaps to the hover fill and keeps the strong label and the check */
+    &[data-selected][data-highlighted] {
+      background: var(--nz-bg-hover);
+    }
+
+    &[data-disabled] {
+      color: var(--nz-text-disabled);
+      cursor: not-allowed;
+    }
+  }
+
+  .nz-combobox-item-indicator {
+    display: inline-flex;
+    flex: none;
+    margin-inline-start: auto;
+    font-size: var(--nz-size-icon-sm);
+    color: var(--nz-icon-brand);
+    visibility: hidden;
+  }
+
+  .nz-combobox-item[data-selected] > .nz-combobox-item-indicator {
+    visibility: visible;
+  }
+
+  /* the Select Group Label: Label/S in text/secondary, 8 / 12 / 4 / 12 */
+  .nz-combobox-group-label {
+    padding-block: var(--nz-space-2) var(--nz-space-1);
+    padding-inline: var(--nz-space-3);
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-label-s);
+    letter-spacing: var(--nz-tracking-label-s);
+  }
+
+  /* the Select Divider: inset by the list padding, 4 px above and below */
+  .nz-combobox-separator {
+    flex: none;
+    block-size: var(--nz-border-width-default);
+    margin-block: var(--nz-space-1);
+    background: var(--nz-border-subtle);
+  }
+
+  @media (forced-colors: active) {
+    .nz-combobox-trigger {
+      color: ButtonText;
+    }
+
+    .nz-combobox-trigger:disabled {
+      color: GrayText;
+    }
+
+    .nz-combobox-popup {
+      border: 1px solid CanvasText;
+    }
+
+    /* base.css's [data-selected] floor (Highlight) loses to the fills above, a later layer, and its
+       forced-color-adjust: none would then leave HighlightText on a token colour. Repeat the
+       floor here (§8.5); the second selector outranks the
+       selected-and-highlighted hover fill, as Menu's does (week 5 visual lane). */
+    .nz-combobox-item[data-selected],
+    .nz-combobox-item[data-selected][data-highlighted] {
+      background: Highlight;
+      color: HighlightText;
+      /* forced-color-adjust is inherited: the ring and the check need system colours too. The rows
+         carry data-focus-inset, so the keyboard ring is drawn inside the Highlight fill, where
+         HighlightText shows (CanvasText there was about 1.9:1 against the fill: week 6 review) */
+      outline-color: HighlightText;
+      /* one ring width further in, so Highlight shows on both sides of it: at the row's edge it
+         would sit against the Canvas around the row and read as the fill shrinking */
+      outline-offset: calc(-2 * var(--nz-border-width-focus));
+      forced-color-adjust: none;
+
+      & > .nz-combobox-item-indicator {
+        color: HighlightText;
+      }
+    }
+
+    /* the options are divs with aria-disabled, which the browser does not grey out */
+    .nz-combobox-item[data-disabled] {
+      color: GrayText;
+    }
+
+    .nz-combobox-separator {
+      background: CanvasText;
+    }
+  }
+}

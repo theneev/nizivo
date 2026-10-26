@@ -1,0 +1,64 @@
+---
+title: Combobox
+description: A text input that suggests items from a list as the reader types, such as a country in a checkout form or search suggestions. Input's box, with Select's popup and rows; React Aria's ComboBox inside.
+keyboard:
+  - keys: Tab
+    action: Moves focus to the input. The Trigger is skipped; Tab out of the input closes the list.
+  - keys: Typing
+    action: Opens the list with the items that contain the text, in any case.
+  - keys: Arrow Down, Arrow Up
+    action: Open the list, then move the active item. Focus stays in the input, which names the active item for a screen reader.
+  - keys: Enter
+    action: Chooses the active item and closes the list.
+  - keys: Escape
+    action: Closes the list and puts back the chosen item's text (with allowsCustomValue, the typed text stays).
+keyboardSource: React Aria Components 1.22.1 `ComboBox` (`_engines/react-aria/combobox.client.tsx`). The overlay lane (`test/overlay/combobox.spec.tsx`) runs the family's overlay conformance and checks filtering, the active item, Enter, Escape, the Trigger, blur, custom values, forms and a Field's required message.
+---
+
+## Static or interactive
+
+**Client.** It is React Aria's ComboBox, which reads its Field through FieldScope, so a page with a
+Combobox also loads FieldScope. The server HTML is the input with the chosen item's text and, with
+a name, the hidden input with its value, so a form submits before hydration; the list opens once
+the page has hydrated. [How to choose](/docs/guides/static-or-interactive/).
+
+In a client app (a Vite or React Router single-page app, or a `'use client'` file) it is an ordinary React component: event handlers, refs and state work as usual. [In a client app](/docs/guides/static-or-interactive/#in-a-client-app).
+
+## Parts
+
+`Combobox.Root` holds the value and draws the box. `Combobox.Input` is the text input;
+`Combobox.Trigger` after it adds a chevron button that opens every item. `Combobox.Popup` holds
+`Combobox.Item`s, which may sit in `Combobox.Group`s with a `Combobox.GroupLabel`, apart from each
+other by a `Combobox.Separator`. The popup is as wide as the box, the Trigger included.
+
+## Value and text
+
+`value` is the chosen item's `value`, and `inputValue` the text in the input; each has a
+`default…` and an `on…Change`. Choosing an item puts its text (`textValue`, or its children when they
+are a string) in the input. Without `allowsCustomValue`, a blur or Escape puts back the chosen
+item's text, and clearing the input clears the choice. With it, the text may be anything: it stays
+as typed, and a form submits it.
+
+## When the list opens
+
+`menuTrigger` is `'input'` by default: the list opens as the reader types and shows the items that
+contain the text, matched in the locale's collation and ignoring case. `'focus'` also opens it,
+with every item, when the input takes focus or is pressed. `'manual'` opens it only from the
+Trigger or the arrow keys. With no match the list closes. `defaultOpen` opens it on the first
+render; React Aria keeps the open state itself, so there is no controlled `open`, and
+`onOpenChange` reports each change.
+
+## Forms
+
+With `name` (or a Field's), a hidden input carries the chosen item's `value`, `de` and never
+"Germany", into `FormData`; with `allowsCustomValue` the input itself carries the typed text.
+Inside a Field, `required` is checked natively on the input, so the Field's
+`messages.valueMissing` applies.
+
+## Engine-owned
+
+The Trigger's name, "Show suggestions" followed by the field's label, the list's name,
+"Suggestions" (used only when the field has no label; with one, the list is named by it), and the
+announcements of how many items are available come from React Aria's catalogue, translated in 36
+locales. `labels` does not set them: the [Strings guide](/docs/guides/strings/) lists the
+engine-owned strings.

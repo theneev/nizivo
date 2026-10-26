@@ -489,6 +489,150 @@
       "name": "ChoiceCardState"
     },
     {
+      "definedIn": "./combobox",
+      "import": "import { Combobox } from '@nizivo/react'",
+      "kind": "namespace",
+      "name": "Combobox"
+    },
+    {
+      "definedIn": "./combobox",
+      "import": "import { ComboboxGroup } from '@nizivo/react'",
+      "kind": "part",
+      "name": "ComboboxGroup"
+    },
+    {
+      "definedIn": "./combobox",
+      "import": "import { ComboboxGroupLabel } from '@nizivo/react'",
+      "kind": "part",
+      "name": "ComboboxGroupLabel"
+    },
+    {
+      "definedIn": "./combobox",
+      "import": "import type { ComboboxGroupLabelProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "ComboboxGroupLabelProps"
+    },
+    {
+      "definedIn": "./combobox",
+      "import": "import type { ComboboxGroupProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "ComboboxGroupProps"
+    },
+    {
+      "definedIn": "./combobox",
+      "import": "import { ComboboxInput } from '@nizivo/react'",
+      "kind": "part",
+      "name": "ComboboxInput"
+    },
+    {
+      "definedIn": "./combobox",
+      "import": "import type { ComboboxInputProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "ComboboxInputProps"
+    },
+    {
+      "definedIn": "./combobox",
+      "import": "import type { ComboboxInputState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "ComboboxInputState"
+    },
+    {
+      "definedIn": "./combobox",
+      "import": "import { ComboboxItem } from '@nizivo/react'",
+      "kind": "part",
+      "name": "ComboboxItem"
+    },
+    {
+      "definedIn": "./combobox",
+      "import": "import type { ComboboxItemProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "ComboboxItemProps"
+    },
+    {
+      "definedIn": "./combobox",
+      "import": "import type { ComboboxItemState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "ComboboxItemState"
+    },
+    {
+      "definedIn": "./combobox",
+      "import": "import type { ComboboxMenuTrigger } from '@nizivo/react'",
+      "kind": "type",
+      "name": "ComboboxMenuTrigger"
+    },
+    {
+      "definedIn": "./combobox",
+      "import": "import { ComboboxPopup } from '@nizivo/react'",
+      "kind": "part",
+      "name": "ComboboxPopup"
+    },
+    {
+      "definedIn": "./combobox",
+      "import": "import type { ComboboxPopupProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "ComboboxPopupProps"
+    },
+    {
+      "definedIn": "./combobox",
+      "import": "import type { ComboboxPopupState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "ComboboxPopupState"
+    },
+    {
+      "definedIn": "./combobox",
+      "import": "import { ComboboxRoot } from '@nizivo/react'",
+      "kind": "part",
+      "name": "ComboboxRoot"
+    },
+    {
+      "definedIn": "./combobox",
+      "import": "import type { ComboboxRootProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "ComboboxRootProps"
+    },
+    {
+      "definedIn": "./combobox",
+      "import": "import type { ComboboxRootState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "ComboboxRootState"
+    },
+    {
+      "definedIn": "./combobox",
+      "import": "import { ComboboxSeparator } from '@nizivo/react'",
+      "kind": "part",
+      "name": "ComboboxSeparator"
+    },
+    {
+      "definedIn": "./combobox",
+      "import": "import type { ComboboxSeparatorProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "ComboboxSeparatorProps"
+    },
+    {
+      "definedIn": "./combobox",
+      "import": "import { ComboboxTrigger } from '@nizivo/react'",
+      "kind": "part",
+      "name": "ComboboxTrigger"
+    },
+    {
+      "definedIn": "./combobox",
+      "import": "import type { ComboboxTriggerProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "ComboboxTriggerProps"
+    },
+    {
+      "definedIn": "./combobox",
+      "import": "import type { ComboboxTriggerState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "ComboboxTriggerState"
+    },
+    {
+      "definedIn": "./combobox",
+      "import": "import type { ComboboxValueReason } from '@nizivo/react'",
+      "kind": "type",
+      "name": "ComboboxValueReason"
+    },
+    {
       "definedIn": "./container",
       "import": "import { Container } from '@nizivo/react'",
       "kind": "component",

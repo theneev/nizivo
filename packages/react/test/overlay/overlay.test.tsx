@@ -26,6 +26,7 @@ import {
 import { Drawer } from '../../src/drawer/index';
 import { Popover } from '../../src/popover/index';
 import { Select } from '../../src/select/index';
+import { Combobox } from '../../src/combobox/index';
 import { Tooltip } from '../../src/tooltip/index';
 import { graph, rekey } from '../helpers/graph';
 
@@ -39,7 +40,7 @@ const SRC = rekey(
 );
 const ENGINE =
   /^(react-aria|react-aria-components|react-stately|@react-aria\/|@react-stately\/|@internationalized\/)/;
-const OVERLAYS = ['select', 'dialog', 'tooltip', 'menu', 'popover', 'drawer'] as const;
+const OVERLAYS = ['select', 'combobox', 'dialog', 'tooltip', 'menu', 'popover', 'drawer'] as const;
 
 describe('the react-aria OverlayEngine (§12.2)', () => {
   test('is one object whose members are the functions the adapters import by name', () => {
@@ -187,6 +188,19 @@ describe('SSR (§12.2: closed overlays render nothing; O-17)', () => {
       ),
       trigger: 'select-trigger',
       popup: 'select-popup',
+    },
+    Combobox: {
+      app: (open) => (
+        <Combobox.Root aria-label="Period" defaultOpen={open}>
+          <Combobox.Input />
+          <Combobox.Trigger />
+          <Combobox.Popup>
+            <Combobox.Item value="7d">Last 7 days</Combobox.Item>
+          </Combobox.Popup>
+        </Combobox.Root>
+      ),
+      trigger: 'combobox-input',
+      popup: 'combobox-popup',
     },
     Dialog: {
       app: (open) => (

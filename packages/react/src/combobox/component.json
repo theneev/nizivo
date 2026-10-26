@@ -1,0 +1,26 @@
+{
+  "name": "combobox",
+  "status": "stable",
+  "tier": "engine",
+  "engine": "react-aria",
+  "overlay": true,
+  "parts": ["Root", "Input", "Trigger", "Popup", "Item", "Group", "GroupLabel", "Separator"],
+  "interactive": ["combobox-control", "combobox-trigger", "combobox-item"],
+  "focusTarget": {
+    "combobox-control": "within",
+    "combobox-trigger": "self",
+    "combobox-item": "engine"
+  },
+  "stateIndicator": [
+    { "slot": "combobox-popup", "paint": "border" },
+    { "slot": "combobox-item", "state": "[data-selected]", "paint": "highlight" }
+  ],
+  "cssDeps": ["base", "input"],
+  "variants": { "size": ["sm", "md", "lg"] },
+  "figma": {
+    "canonical": [],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": ["7275:11397", "7356:406"]
+  }
+}

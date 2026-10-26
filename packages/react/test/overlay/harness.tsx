@@ -17,6 +17,8 @@ const STYLES = import.meta.glob(
     '../../src/icon-button/icon-button.css',
     '../../src/kbd/kbd.css',
     '../../src/select/select.css',
+    '../../src/input/input.css',
+    '../../src/combobox/combobox.css',
     '../../src/dialog/dialog.css',
     '../../src/tooltip/tooltip.css',
     '../../src/menu/menu.css',
@@ -26,7 +28,7 @@ const STYLES = import.meta.glob(
   ],
   { query: '?raw', import: 'default', eager: true },
 );
-if (Object.keys(STYLES).length !== 12) {
+if (Object.keys(STYLES).length !== 14) {
   throw new Error('a stylesheet is missing; build @nizivo/tokens and run nz gen');
 }
 const style = document.createElement('style');

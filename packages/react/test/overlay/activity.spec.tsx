@@ -12,6 +12,7 @@ import { Drawer } from '../../src/drawer/index';
 import { Menu } from '../../src/menu/index';
 import { Popover } from '../../src/popover/index';
 import { Select } from '../../src/select/index';
+import { Combobox } from '../../src/combobox/index';
 import { toast, Toaster } from '../../src/toast/index';
 import { Tooltip } from '../../src/tooltip/index';
 import { find, get, locked, mount, parkPointer, settle, until } from './harness';
@@ -107,6 +108,20 @@ const CASES: Case[] = [
     ),
     trigger: 'select-trigger',
     popup: 'select-popup',
+  },
+  {
+    name: 'Combobox',
+    app: (onOpenChange) => (
+      <Combobox.Root aria-label="Period" menuTrigger="focus" onOpenChange={onOpenChange}>
+        <Combobox.Input />
+        <Combobox.Popup>
+          <Combobox.Item value="7d">Last 7 days</Combobox.Item>
+          <Combobox.Item value="30d">Last 30 days</Combobox.Item>
+        </Combobox.Popup>
+      </Combobox.Root>
+    ),
+    trigger: 'combobox-input',
+    popup: 'combobox-popup',
   },
   {
     name: 'Popover',
