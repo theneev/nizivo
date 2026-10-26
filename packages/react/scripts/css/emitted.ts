@@ -7,6 +7,7 @@ import {
   CLASS_PATTERN,
   type ComponentManifest,
   type Components,
+  DISCLOSURE_PARTS,
   NATIVE_OVERLAY_STATE,
   variableProblem,
   type Vocabulary,
@@ -102,8 +103,23 @@ export function declaredProperties(code: string, filename: string): Set<string> 
   return names;
 }
 
+/** Whether the compound around `components[index]` names a native `<details>` part (DISCLOSURE_PARTS). */
+function onDisclosurePart(components: readonly Record<string, unknown>[], index: number): boolean {
+  for (const step of [-1, 1]) {
+    for (let at = index + step; at >= 0 && at < components.length; at += step) {
+      const component = components[at];
+      if (component === undefined || text(component.type) === 'combinator') break;
+      if (text(component.type) === 'class' && DISCLOSURE_PARTS.has(text(component.name))) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
 function checkSelector(selector: unknown, context: EmittedContext, problems: string[]): void {
-  for (const component of selectorComponents(selector)) {
+  const components = selectorComponents(selector);
+  for (const [index, component] of components.entries()) {
     const type = text(component.type);
     if (type === 'class') {
       const name = text(component.name);
@@ -113,7 +129,9 @@ function checkSelector(selector: unknown, context: EmittedContext, problems: str
     } else if (type === 'attribute') {
       const name = text(component.name);
       if (name === 'open') {
-        problems.push('[open] is native overlay state: select [data-open] (§8.3 rule 2)');
+        if (!onDisclosurePart(components, index)) {
+          problems.push('[open] is native overlay state: select [data-open] (§8.3 rule 2)');
+        }
         continue;
       }
       const operation = isRecord(component.operation) ? component.operation : undefined;

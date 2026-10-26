@@ -36,6 +36,12 @@ export const SURFACE_VARIABLES = new Map([['--nz-surface', 'card']]);
 /** Native overlay state exists only for native overlays, so it is never public (§8.3 rule 2). */
 export const NATIVE_OVERLAY_STATE = new Set([':popover-open', ':modal', '::backdrop', '[open]']);
 
+/**
+ * Parts that are a native `<details>` no engine renders (§8.3 rule 1, D-cy): their own `[open]` is
+ * the element's state whatever the engine, so it may be selected on them, and on nothing else.
+ */
+export const DISCLOSURE_PARTS = new Set(['nz-accordion-item']);
+
 const GROUPS = /** @type {const} */ (['state', 'presentational', 'local', 'scope']);
 const KEBAB = /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/;
 

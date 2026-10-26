@@ -31,6 +31,10 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
+    "./accordion": {
+      "types": "./dist/accordion/index.d.ts",
+      "default": "./dist/accordion/index.js"
+    },
     "./alert": {
       "types": "./dist/alert/index.d.ts",
       "default": "./dist/alert/index.js"
@@ -331,6 +335,7 @@
       "types": "./dist/trend-card/index.d.ts",
       "default": "./dist/trend-card/index.js"
     },
+    "./css/accordion.css": "./dist/css/accordion.css",
     "./css/alert.css": "./dist/css/alert.css",
     "./css/app-shell.css": "./dist/css/app-shell.css",
     "./css/avatar.css": "./dist/css/avatar.css",

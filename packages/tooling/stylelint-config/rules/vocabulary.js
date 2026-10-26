@@ -5,11 +5,23 @@ import selectorParser from 'postcss-selector-parser';
 import {
   attributeProblem,
   componentOf,
+  DISCLOSURE_PARTS,
   loadComponents,
   loadVocabulary,
   NATIVE_OVERLAY_STATE,
 } from '../contract.js';
 import { createRule, fileOf } from './shared.js';
+
+/** Whether a compound selector puts this node on a native `<details>` part (DISCLOSURE_PARTS). */
+function onDisclosurePart(/** @type {import('postcss-selector-parser').Node} */ node) {
+  for (const step of ['prev', 'next']) {
+    for (let sibling = node[step](); sibling !== undefined; sibling = sibling[step]()) {
+      if (sibling.type === 'combinator') break;
+      if (sibling.type === 'class' && DISCLOSURE_PARTS.has(sibling.value)) return true;
+    }
+  }
+  return false;
+}
 
 export default createRule('vocabulary', (root, report) => {
   const vocabulary = loadVocabulary();
@@ -23,7 +35,13 @@ export default createRule('vocabulary', (root, report) => {
       selectors.walkAttributes((attribute) => {
         const name = attribute.attribute;
         if (name === 'open') {
-          report(rule, '[open] is native overlay state: select [data-open] (§8.3 rule 2)', '[open');
+          if (!onDisclosurePart(attribute)) {
+            report(
+              rule,
+              '[open] is native overlay state: select [data-open] (§8.3 rule 2)',
+              '[open',
+            );
+          }
           return;
         }
         const problem = attributeProblem(

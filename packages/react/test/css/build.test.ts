@@ -251,6 +251,11 @@ describe('checkEmitted', () => {
       /:popover-open is native overlay state/,
     ],
     ['[open]', '.nz-button[open] { color: red; }', /\[open\] is native overlay state/],
+    [
+      '[open] beside, not on, a disclosure part',
+      '.nz-accordion-item > .nz-button[open] { color: red; }',
+      /\[open\] is native overlay state/,
+    ],
     ['a var() outside --nz-*', '.nz-button { color: var(--brand); }', /not a Nizivo variable/],
     ['a primitive', '.nz-button { color: var(--nz-p-green-700); }', /private primitive/],
     ['an undeclared private', '.nz-button { color: var(--_nz-button-fg); }', /never declared/],

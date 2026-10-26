@@ -24,6 +24,7 @@ export declare const RUNTIME_VARIABLES: ReadonlySet<string>;
 /** Surface variables (M42): name → the one component whose stylesheet declares it. */
 export declare const SURFACE_VARIABLES: ReadonlyMap<string, string>;
 export declare const NATIVE_OVERLAY_STATE: ReadonlySet<string>;
+export declare const DISCLOSURE_PARTS: ReadonlySet<string>;
 
 export declare function layerStatement(root?: string): string;
 export declare function layerNames(statement: string): string[];

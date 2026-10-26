@@ -169,6 +169,8 @@ suite(
     { code: layered(".nz-x[data-slot='select-trigger'] {}") },
     { code: layered("[data-nz-touch-targets='always'] .nz-hit-target {}"), file: BASE },
     { code: layered('@keyframes nz-button-spin { to { rotate: 1turn; } }') },
+    // a native <details> part's own state (§8.3 rule 1, D-cy)
+    { code: layered('.nz-accordion-item[open] > .nz-accordion-trigger {}') },
   ],
   [
     [{ code: layered('.nz-button[data-hovered] {}') }, /"data-hovered" is not in contracts/],
@@ -184,6 +186,10 @@ suite(
     [{ code: layered('.nz-dialog-popup:modal {}') }, /:modal is native overlay state/],
     [{ code: layered('.nz-dialog-popup::backdrop {}') }, /::backdrop is native overlay state/],
     [{ code: layered('.nz-dialog-popup[open] {}') }, /\[open\] is native overlay state/],
+    [
+      { code: layered('.nz-accordion-item > .nz-dialog-popup[open] {}') },
+      /\[open\] is native overlay state/,
+    ],
   ],
 );
 

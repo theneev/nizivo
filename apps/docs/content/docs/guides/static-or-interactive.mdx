@@ -1,6 +1,6 @@
 ---
 title: 'Static or interactive: choosing a component'
-description: Which Nizivo components ship client JavaScript, what makes them ship it, and when to use a static variant (IconButtonStatic, FieldStatic) instead of the normal component. A checklist, a table of all 70 components, the measured costs and worked examples.
+description: Which Nizivo components ship client JavaScript, what makes them ship it, and when to use a static variant (IconButtonStatic, FieldStatic) instead of the normal component. A checklist, a table of all 71 components, the measured costs and worked examples.
 ---
 
 Every Nizivo component renders its HTML on the server (an overlay's popup only while it is open). What differs is whether the browser also
@@ -170,6 +170,7 @@ module.
 
 | Component                                               | Kind   | Ships client JS                                                                                                                                      | Static alternative                                            |
 | ------------------------------------------------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| [Accordion](/docs/components/accordion/)                | server | Never (native `<details>`)                                                                                                                           | None needed                                                   |
 | [Alert](/docs/components/alert/)                        | split  | Only with `dismiss` (the AlertDismiss leaf), in every build mode                                                                                     | Leave out `dismiss`                                           |
 | [AppShell](/docs/components/app-shell/)                 | server | Never; its slots ship what their parts ship (the MobileTabBar's island and More sheet)                                                               | None needed                                                   |
 | [Avatar](/docs/components/avatar/)                      | server | Never (a photo that fails to load shows the initials with no script; WebKit draws its mark over them)                                                | None needed                                                   |

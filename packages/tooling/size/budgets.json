@@ -2,8 +2,12 @@
   "$comment": "Size budgets (ARCHITECTURE.md §17), written by `node packages/tooling/size/measure.ts --write`. measured: bytes, gzip -9, as size-limit 14.2 reports them. limitKiB: measured + 10%, rounded up (method.ts limitKiB), never above the entry's §17.1 plan limit (method.ts PLAN_LIMITS_KIB). Limits only go up through a labelled PR (§17.3).",
   "entries": {
     "@nizivo/react": {
-      "measured": 133103,
+      "measured": 133379,
       "limitKiB": 143
+    },
+    "@nizivo/react/accordion": {
+      "measured": 1312,
+      "limitKiB": 1.5
     },
     "@nizivo/react/alert": {
       "measured": 1379,
@@ -26,7 +30,7 @@
       "limitKiB": 0.9
     },
     "@nizivo/react/banner": {
-      "measured": 1413,
+      "measured": 1414,
       "limitKiB": 1.5
     },
     "@nizivo/react/breadcrumb": {
@@ -74,11 +78,11 @@
       "limitKiB": 1.1
     },
     "@nizivo/react/dialog": {
-      "measured": 32655,
+      "measured": 32661,
       "limitKiB": 32
     },
     "@nizivo/react/drawer": {
-      "measured": 32731,
+      "measured": 32732,
       "limitKiB": 35
     },
     "@nizivo/react/empty-state": {
@@ -94,7 +98,7 @@
       "limitKiB": 1.9
     },
     "@nizivo/react/file-upload": {
-      "measured": 5683,
+      "measured": 5685,
       "limitKiB": 6.1
     },
     "@nizivo/react/form": {
@@ -158,7 +162,7 @@
       "limitKiB": 2.4
     },
     "@nizivo/react/mobile-tab-bar": {
-      "measured": 33342,
+      "measured": 33344,
       "limitKiB": 36
     },
     "@nizivo/react/mobile-top-bar": {
@@ -194,11 +198,11 @@
       "limitKiB": 2
     },
     "@nizivo/react/password-input": {
-      "measured": 2665,
+      "measured": 2672,
       "limitKiB": 2.8
     },
     "@nizivo/react/popover": {
-      "measured": 36052,
+      "measured": 36054,
       "limitKiB": 39
     },
     "@nizivo/react/progress-bar": {
@@ -210,7 +214,7 @@
       "limitKiB": 1.3
     },
     "@nizivo/react/quantity-stepper": {
-      "measured": 2678,
+      "measured": 2679,
       "limitKiB": 2.9
     },
     "@nizivo/react/radio-group": {
@@ -222,7 +226,7 @@
       "limitKiB": 2.7
     },
     "@nizivo/react/search-field": {
-      "measured": 3413,
+      "measured": 3418,
       "limitKiB": 3.6
     },
     "@nizivo/react/segmented-control": {
@@ -290,7 +294,7 @@
       "limitKiB": 0.4
     },
     "@nizivo/react/toast": {
-      "measured": 14911,
+      "measured": 14912,
       "limitKiB": 16
     },
     "@nizivo/react/tooltip": {
@@ -306,7 +310,7 @@
       "limitKiB": 2.7
     },
     "@nizivo/react dashboard set": {
-      "measured": 78932,
+      "measured": 78936,
       "limitKiB": 85
     },
     "@nizivo/react { Button } from the barrel": {
@@ -314,7 +318,7 @@
       "limitKiB": 1.4
     },
     "@nizivo/react { Select } from the barrel": {
-      "measured": 63684,
+      "measured": 63690,
       "limitKiB": 68
     },
     "@nizivo/react own: _engines/react-aria/combobox.client": {
@@ -414,11 +418,11 @@
       "limitKiB": 0.3
     },
     "@nizivo/react own: dialog/dialog.client": {
-      "measured": 1023,
+      "measured": 1025,
       "limitKiB": 1.4
     },
     "@nizivo/react own: drawer/drawer.client": {
-      "measured": 1090,
+      "measured": 1091,
       "limitKiB": 1.2
     },
     "@nizivo/react own: field/field-scope.client": {
@@ -426,7 +430,7 @@
       "limitKiB": 1.6
     },
     "@nizivo/react own: file-upload/file-upload.client": {
-      "measured": 3135,
+      "measured": 3136,
       "limitKiB": 3.4
     },
     "@nizivo/react own: form/form.client": {
@@ -466,11 +470,11 @@
       "limitKiB": 1.1
     },
     "@nizivo/react own: password-input/password-input.client": {
-      "measured": 1116,
+      "measured": 1117,
       "limitKiB": 1.2
     },
     "@nizivo/react own: popover/popover.client": {
-      "measured": 965,
+      "measured": 966,
       "limitKiB": 1.1
     },
     "@nizivo/react own: quantity-stepper/quantity-stepper.client": {
@@ -529,6 +533,10 @@
       "measured": 678,
       "limitKiB": 0.8
     },
+    "@nizivo/react/css/accordion.css": {
+      "measured": 589,
+      "limitKiB": 0.7
+    },
     "@nizivo/react/css/alert.css": {
       "measured": 636,
       "limitKiB": 0.8
@@ -550,7 +558,7 @@
       "limitKiB": 0.8
     },
     "@nizivo/react/css/base.css": {
-      "measured": 1289,
+      "measured": 1296,
       "limitKiB": 1.4
     },
     "@nizivo/react/css/breadcrumb.css": {
@@ -810,7 +818,7 @@
       "limitKiB": 0.5
     },
     "@nizivo/react/styles.css": {
-      "measured": 24705,
+      "measured": 24930,
       "limitKiB": 26
     },
     "@nizivo/tokens": {

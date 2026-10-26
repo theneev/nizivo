@@ -1,0 +1,15 @@
+{
+  "name": "accordion",
+  "status": "stable",
+  "tier": "server",
+  "parts": ["Root", "Item", "Trigger", "Panel"],
+  "interactive": ["accordion-trigger"],
+  "focusTarget": "self",
+  "cssDeps": ["base"],
+  "figma": {
+    "canonical": [],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": []
+  }
+}

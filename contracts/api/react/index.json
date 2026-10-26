@@ -3,6 +3,60 @@
   "entry": ".",
   "exports": [
     {
+      "definedIn": "./accordion",
+      "import": "import { Accordion } from '@nizivo/react'",
+      "kind": "namespace",
+      "name": "Accordion"
+    },
+    {
+      "definedIn": "./accordion",
+      "import": "import { AccordionItem } from '@nizivo/react'",
+      "kind": "part",
+      "name": "AccordionItem"
+    },
+    {
+      "definedIn": "./accordion",
+      "import": "import type { AccordionItemProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "AccordionItemProps"
+    },
+    {
+      "definedIn": "./accordion",
+      "import": "import { AccordionPanel } from '@nizivo/react'",
+      "kind": "part",
+      "name": "AccordionPanel"
+    },
+    {
+      "definedIn": "./accordion",
+      "import": "import type { AccordionPanelProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "AccordionPanelProps"
+    },
+    {
+      "definedIn": "./accordion",
+      "import": "import { AccordionRoot } from '@nizivo/react'",
+      "kind": "part",
+      "name": "AccordionRoot"
+    },
+    {
+      "definedIn": "./accordion",
+      "import": "import type { AccordionRootProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "AccordionRootProps"
+    },
+    {
+      "definedIn": "./accordion",
+      "import": "import { AccordionTrigger } from '@nizivo/react'",
+      "kind": "part",
+      "name": "AccordionTrigger"
+    },
+    {
+      "definedIn": "./accordion",
+      "import": "import type { AccordionTriggerProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "AccordionTriggerProps"
+    },
+    {
       "definedIn": "./alert",
       "import": "import { Alert } from '@nizivo/react'",
       "kind": "component",

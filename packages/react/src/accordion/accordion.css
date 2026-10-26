@@ -1,0 +1,85 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/accordion.css (ARCHITECTURE.md §21.3; no Figma component: the collapsible order
+   summary on the 10 checkout screens). Items are native <details>, divided by border/subtle hairlines;
+   the trigger is the <summary>, a full-width row in Label/M Strong with a 16 px chevron at its end
+   that points down while closed and up while open. Its 2 px focus outline lives in nz.base
+   (component.json "interactive"). Open and closed read [open], which the browser sets. Public
+   --nz-accordion-* hooks are read once, at the property. */
+@layer nz.components {
+  .nz-accordion {
+    display: flex;
+    flex-direction: column;
+    border-block-start: var(--nz-border-width-default) solid
+      var(--nz-accordion-border, var(--nz-border-subtle));
+  }
+
+  .nz-accordion-item {
+    border-block-end: var(--nz-border-width-default) solid
+      var(--nz-accordion-border, var(--nz-border-subtle));
+  }
+
+  /* 48 px with the padding: a comfortable target at every pointer */
+  .nz-accordion-trigger {
+    display: flex;
+    align-items: center;
+    gap: var(--nz-space-3);
+    box-sizing: border-box;
+    min-block-size: var(--nz-space-12);
+    padding-block: var(--nz-space-3);
+    padding-inline: var(--nz-accordion-padding-inline, var(--nz-space-1));
+    border-radius: var(--nz-radius-sm);
+    color: var(--nz-accordion-trigger-fg, var(--nz-text-primary));
+    font: var(--nz-font-label-m-strong);
+    letter-spacing: var(--nz-tracking-label-m);
+    list-style: none;
+    cursor: pointer;
+
+    /* the browser's own disclosure triangle; the chevron replaces it */
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        background: var(--nz-bg-hover);
+      }
+    }
+  }
+
+  .nz-accordion-title {
+    flex: 1;
+    min-inline-size: 0;
+  }
+
+  .nz-accordion-indicator {
+    display: inline-flex;
+    flex: none;
+    color: var(--nz-icon-secondary);
+    font-size: var(--nz-size-icon-sm);
+    rotate: 90deg;
+    transition: rotate var(--nz-duration-fast) var(--nz-easing-standard);
+
+    .nz-accordion-item[open] > .nz-accordion-trigger > & {
+      rotate: -90deg;
+    }
+  }
+
+  .nz-accordion-panel {
+    padding-block: 0 var(--nz-space-4);
+    padding-inline: var(--nz-accordion-padding-inline, var(--nz-space-1));
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-body-m);
+  }
+
+  @media (forced-colors: active) {
+    .nz-accordion,
+    .nz-accordion-item {
+      border-color: CanvasText;
+    }
+
+    .nz-accordion-indicator {
+      color: CanvasText;
+    }
+  }
+}

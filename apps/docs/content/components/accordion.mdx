@@ -1,0 +1,37 @@
+---
+title: Accordion
+description: Sections that open and close under their headings, such as FAQs or a checkout's order summary. Each item is a native details element, so it works with no JavaScript, and items that share a name open one at a time.
+keyboard:
+  - keys: Tab
+    action: Moves focus to the next item's heading.
+  - keys: Enter, Space
+    action: On a heading, opens or closes its item.
+keyboardSource: native `<details>` and `<summary>` (`accordion.tsx`). The browser lane (`test/browser/accordion.spec.tsx`) checks the pointer, Tab, Enter and Space, exclusive items and the chevron.
+---
+
+## Static or interactive
+
+**Server.** No client JavaScript: each item is a native `<details>` with its `<summary>` as the
+heading, so it opens and closes before and without hydration, from the pointer and the keyboard.
+The browser's find in page opens a closed item that holds the match.
+[How to choose](/docs/guides/static-or-interactive/).
+
+## Parts
+
+`Accordion.Root` holds the items. Each `Accordion.Item` is a `<details>`, with an
+`Accordion.Trigger` (its `<summary>`: the heading, with a chevron at its end) and an
+`Accordion.Panel` (the content). `defaultOpen` opens an item on the first render; after that the
+browser keeps the open state.
+
+## One at a time
+
+Give `Accordion.Root` a `name` and every item that sets none gets it: opening one closes the
+others, with no script, as `<details name>` does. The name groups items across the whole page, so
+use one no other accordion on the page uses. Without a name, items open independently. Firefox 129,
+the oldest Firefox Nizivo supports, does not group them: there, several items can be open at once.
+
+## The heading
+
+The trigger's text is a heading for its panel, not a page heading: put an `<h3>` (or the level the
+page needs) inside it when the items should appear in a screen reader's headings list. `indicator`
+replaces the chevron, which is decorative.

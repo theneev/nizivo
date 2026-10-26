@@ -6,6 +6,7 @@
 @layer nz.base {
   /* a 2 px solid outline is the focus indicator; components may add the halo as decoration */
   :where(
+    .nz-accordion-trigger,
     .nz-alert-dismiss,
     .nz-app-shell-skip,
     .nz-banner-dismiss,
@@ -96,6 +97,7 @@
   }
   /* survives a blocked engine <style> under a strict CSP (gap report B §B1.3) */
   :where(
+    .nz-accordion-trigger,
     .nz-alert-dismiss,
     .nz-app-shell-skip,
     .nz-banner-dismiss,
