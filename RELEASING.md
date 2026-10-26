@@ -9,6 +9,7 @@ While GitHub Actions is off, the maintainer publishes by hand from their own mac
 - 0.x goes to the **`next`** dist-tag (`npm publish --tag next`). After the first publish of each package, check with `npm dist-tag ls @nizivo/tokens` whether npm also pointed `latest` at it; if it did, record it here.
   - 0.1.0: npm pointed `latest` at 0.1.0 for tokens, icons and react, so `latest` and `next` were the same.
   - 0.2.0 (2026-10-24): `next` moved to 0.2.0 for all four; `latest` moved only for `@nizivo/charts` (its first publish). The maintainer then moved `latest` by hand for the other three, with `npm dist-tag add @nizivo/<package>@0.2.0 latest` and the project's login file, so both tags are 0.2.0 for all four. After each later release, check `latest` the same way and move it if it should follow `next`. A non-interactive shell cannot wait for npm's browser login: run it in a terminal, or pass `--otp`.
+  - 0.2.1 (2026-10-26): `next` moved to 0.2.1 for all four; the maintainer moved `latest` by hand. npm showed the four versions over about three minutes, out of the publish order (charts first, icons last), so check all four before pushing the tags. Run the `dist-tag` command from an empty folder (`cd "$(mktemp -d)"`) with `--registry https://registry.npmjs.org/ --userconfig ~/.config/nizivo/npmrc`: run from `~`, npm also reads `~/.npmrc` and fails with E401 (the home-folder gotcha below).
 
 ## Publishing by hand
 
