@@ -10,6 +10,7 @@ import type { AlertDismissLabels } from '../alert/index';
 import type { AppShellLabels } from '../app-shell/index';
 import type { AvatarGroupLabels } from '../avatar/index';
 import type { BannerDismissLabels } from '../banner/index';
+import type { BulkActionBarLabels } from '../bulk-action-bar/index';
 import type { BreadcrumbLabels } from '../breadcrumb/index';
 import type { ButtonLabels } from '../button/index';
 import type { ChipGroupLabels } from '../chip-group/index';
@@ -42,6 +43,7 @@ export const enUS: {
   avatarGroup: AvatarGroupLabels;
   bannerDismiss: BannerDismissLabels;
   breadcrumb: BreadcrumbLabels;
+  bulkActionBar: BulkActionBarLabels;
   button: ButtonLabels;
   chipGroup: ChipGroupLabels;
   dialog: Pick<DialogLabels, 'close'>;
@@ -69,6 +71,7 @@ export const enUS: {
   avatarGroup: { overflow: '+{count}', more: '{count} more' },
   bannerDismiss: { dismiss: 'Dismiss' },
   breadcrumb: { nav: 'Breadcrumb' },
+  bulkActionBar: { selected: '{count} selected' },
   button: { pending: 'Loading…' },
   chipGroup: { unavailable: 'Unavailable' },
   dialog: { close: 'Close' },

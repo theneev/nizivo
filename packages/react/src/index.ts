@@ -48,6 +48,8 @@ export type {
   BreadcrumbLabels,
   BreadcrumbRootProps,
 } from './breadcrumb/index';
+export { BulkActionBar } from './bulk-action-bar/index';
+export type { BulkActionBarLabels, BulkActionBarProps } from './bulk-action-bar/index';
 export { Button } from './button/index';
 export type { ButtonLabels, ButtonProps, ButtonState } from './button/index';
 export {

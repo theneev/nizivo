@@ -63,6 +63,10 @@
       "types": "./dist/breadcrumb/index.d.ts",
       "default": "./dist/breadcrumb/index.js"
     },
+    "./bulk-action-bar": {
+      "types": "./dist/bulk-action-bar/index.d.ts",
+      "default": "./dist/bulk-action-bar/index.js"
+    },
     "./button": {
       "types": "./dist/button/index.d.ts",
       "default": "./dist/button/index.js"
@@ -347,6 +351,7 @@
     "./css/banner.css": "./dist/css/banner.css",
     "./css/base.css": "./dist/css/base.css",
     "./css/breadcrumb.css": "./dist/css/breadcrumb.css",
+    "./css/bulk-action-bar.css": "./dist/css/bulk-action-bar.css",
     "./css/button.css": "./dist/css/button.css",
     "./css/card.css": "./dist/css/card.css",
     "./css/checkbox.css": "./dist/css/checkbox.css",

@@ -1,6 +1,6 @@
 ---
 title: 'Static or interactive: choosing a component'
-description: Which Nizivo components ship client JavaScript, what makes them ship it, and when to use a static variant (IconButtonStatic, FieldStatic) instead of the normal component. A checklist, a table of all 72 components, the measured costs and worked examples.
+description: Which Nizivo components ship client JavaScript, what makes them ship it, and when to use a static variant (IconButtonStatic, FieldStatic) instead of the normal component. A checklist, a table of all 73 components, the measured costs and worked examples.
 ---
 
 Every Nizivo component renders its HTML on the server (an overlay's popup only while it is open). What differs is whether the browser also
@@ -178,6 +178,7 @@ module.
 | [Banner](/docs/components/banner/)                      | split  | Only with `BannerDismiss`, in every build mode                                                                                                       | Leave out `BannerDismiss`                                     |
 | [Breadcrumb](/docs/components/breadcrumb/)              | server | Never (links; a router's link component is the router's own code)                                                                                    | None needed                                                   |
 | [Button](/docs/components/button/)                      | server | Never                                                                                                                                                | None needed                                                   |
+| [BulkActionBar](/docs/components/bulk-action-bar/)      | server | Never; inside TableSelection, its island writes the count                                                                                            | None needed                                                   |
 | [Card](/docs/components/card/)                          | server | Never                                                                                                                                                | None needed                                                   |
 | [Checkbox](/docs/components/checkbox/)                  | client | Always (Field wiring, `indeterminate`)                                                                                                               | None                                                          |
 | [ChipGroup](/docs/components/chip-group/)               | client | Always: native radios or checkboxes in a client leaf; before hydration they still choose and submit                                                  | None needed                                                   |

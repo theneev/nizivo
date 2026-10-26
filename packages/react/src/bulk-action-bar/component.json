@@ -1,0 +1,15 @@
+{
+  "name": "bulk-action-bar",
+  "status": "stable",
+  "tier": "server",
+  "parts": [],
+  "interactive": [],
+  "cssDeps": ["base"],
+  "variants": {},
+  "figma": {
+    "canonical": [],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": ["7275:14040"]
+  }
+}

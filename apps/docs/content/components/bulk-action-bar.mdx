@@ -1,0 +1,25 @@
+---
+title: BulkActionBar
+description: The bar over a selectable table, with how many rows are selected and the actions for them. A server part; TableSelection's island writes the count, and the actions work before hydration.
+---
+
+## Static or interactive
+
+**Server.** It ships no client code of its own: `TableSelection`, the one island of
+[table selection](/docs/components/table-selection/), writes its count. Before hydration the count is
+hidden and the actions already work, because they submit the form the rows' checkboxes belong to.
+[How to choose](/docs/guides/static-or-interactive/).
+
+## Use
+
+`BulkActionBar` is the bar over the table: how many rows are selected, then the actions you put in
+it, such as the form the rows' boxes belong to. Place it inside `TableSelection`. The count ("2
+selected") is written by `TableSelection`'s island as the selection changes, and a screen reader
+hears it (`aria-live="polite"`). Pass `defaultCount`, the number of rows checked when the page
+renders, and the server writes the count too, so it shows before hydration and hydration leaves it
+as it is; without it, the count shows once the island runs. The actions work before hydration
+either way.
+The bar stays in place when nothing is selected, so checking the first row does not move the
+table. `labels.selected` (with `{count}`) and `locale` set the count's text and number, for
+example `labels={{ selected: '{count} ausgewählt' }} locale="de-DE"`. It is a server part, so a
+`NizivoConfig`'s labels do not reach it: pass `labels` on each instance.

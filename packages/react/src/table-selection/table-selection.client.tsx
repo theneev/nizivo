@@ -20,6 +20,7 @@ export interface TableSelectionProps extends Omit<ComponentPropsWithRef<'div'>, 
 
 const ROW = '[data-slot="table-select-row-input"]';
 const ALL = '[data-slot="table-select-all-input"]';
+const COUNT = '[data-slot="bulk-action-bar-count"]';
 
 export function TableSelection({
   onSelectionChange,
@@ -52,6 +53,15 @@ export function TableSelection({
       const ids = rows()
         .filter((input) => input.checked)
         .map((input) => input.value);
+      // BulkActionBar: its count, from the template beside it, in the bar's language
+      for (const count of element.querySelectorAll<HTMLElement>(COUNT)) {
+        const text = (count.nextElementSibling?.textContent ?? '').replaceAll(
+          '{count}',
+          new Intl.NumberFormat(count.lang).format(ids.length),
+        );
+        if (count.textContent !== text) count.textContent = text;
+        count.hidden = false;
+      }
       const key = ids.join('\u0000');
       if (key !== last) {
         last = key;

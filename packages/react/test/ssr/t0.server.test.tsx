@@ -82,6 +82,7 @@ const COMPONENTS = [
   'app-shell',
   'accordion',
   'page-indicator',
+  'bulk-action-bar',
 ] as const;
 type Name = (typeof COMPONENTS)[number];
 
@@ -217,6 +218,7 @@ const entries = {
   'app-shell': () => import('../../src/app-shell/index'),
   accordion: () => import('../../src/accordion/index'),
   'page-indicator': () => import('../../src/page-indicator/index'),
+  'bulk-action-bar': () => import('../../src/bulk-action-bar/index'),
 } satisfies Record<Name, () => Promise<unknown>>;
 
 /** Each example module, imported again by the react-server test; every `*Example` export renders. */
@@ -270,6 +272,7 @@ const exampleModules = {
   'app-shell': () => import('../../src/app-shell/app-shell.example'),
   accordion: () => import('../../src/accordion/accordion.example'),
   'page-indicator': () => import('../../src/page-indicator/page-indicator.example'),
+  'bulk-action-bar': () => import('../../src/bulk-action-bar/bulk-action-bar.example'),
 } satisfies Record<Name, () => Promise<Record<string, unknown>>>;
 
 /**

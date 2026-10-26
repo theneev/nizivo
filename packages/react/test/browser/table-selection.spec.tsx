@@ -7,6 +7,7 @@ import { renderToString } from 'react-dom/server';
 import { afterEach, beforeAll, describe, expect, test, vi } from 'vitest';
 import { page, userEvent } from 'vitest/browser';
 import { Table } from '../../src/table/index';
+import { BulkActionBar } from '../../src/bulk-action-bar/index';
 import { TableSelectRow, TableSelection } from '../../src/table-selection/index';
 import { TableSelectionExample } from '../../src/table-selection/table-selection.example';
 
@@ -19,10 +20,11 @@ const STYLES = import.meta.glob(
     '../../src/table/table.css',
     '../../src/checkbox/checkbox.css',
     '../../src/table-selection/table-selection.css',
+    '../../src/bulk-action-bar/bulk-action-bar.css',
   ],
   { query: '?raw', import: 'default', eager: true },
 );
-if (Object.keys(STYLES).length !== 7)
+if (Object.keys(STYLES).length !== 8)
   throw new Error('a stylesheet is missing; build @nizivo/tokens and run nz gen');
 const style = document.createElement('style');
 // the build expands @custom-media (tokens' custom-media.css); the raw sources need it done here
@@ -82,8 +84,50 @@ describe('Table selection', () => {
     if (first === undefined) throw new Error('no row');
     await userEvent.click(first);
     expect(submitted()).toEqual(['mug-014', 'apron-002']);
-    // no island yet: the select-all box is a plain checkbox
+    // no island yet: the select-all box is a plain checkbox, and the bar's count stays at the
+    // server's defaultCount
     expect(inputs('table-select-all')[0]?.indeterminate).toBe(false);
+    expect(document.querySelector('[data-slot="bulk-action-bar-count"]')?.textContent).toBe(
+      '1 selected',
+    );
+  });
+
+  test('BulkActionBar: the island writes the count and keeps it in step, announced politely', async () => {
+    await hydrate(<TableSelectionExample />, 980);
+    const count = document.querySelector<HTMLElement>('[data-slot="bulk-action-bar-count"]');
+    if (count === null) throw new Error('no count');
+    expect(count.hidden).toBe(false);
+    expect(count.textContent).toBe('1 selected');
+    expect(count.getAttribute('aria-live')).toBe('polite');
+    const [selectAll] = inputs('table-select-all');
+    if (selectAll === undefined) throw new Error('no select-all');
+    await userEvent.click(selectAll);
+    expect(count.textContent).toBe('4 selected');
+    await userEvent.click(selectAll);
+    expect(count.textContent).toBe('0 selected');
+    // the bar stays where it is with nothing selected
+    expect(count.closest('[data-slot="bulk-action-bar"]')?.checkVisibility()).toBe(true);
+  });
+
+  test('BulkActionBar: labels and locale shape the count', async () => {
+    await hydrate(
+      <TableSelection>
+        <BulkActionBar labels={{ selected: '{count} ausgewählt' }} locale="de-DE" />
+        <table>
+          <tbody>
+            <tr>
+              <td>
+                <TableSelectRow value="a" aria-label="A" defaultChecked />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </TableSelection>,
+      600,
+    );
+    const count = document.querySelector<HTMLElement>('[data-slot="bulk-action-bar-count"]');
+    expect(count?.textContent).toBe('1 ausgewählt');
+    expect(count?.lang).toBe('de-DE');
   });
 
   test('hydrated: the select-all box is mixed, then checks and clears every row', async () => {

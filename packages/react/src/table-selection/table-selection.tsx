@@ -3,7 +3,8 @@
 // selected ids reach a form's FormData before any JavaScript runs; TableSelection
 // (table-selection.client.tsx) is the one client part, which adds the select-all's mixed state,
 // Shift-click ranges and Escape. A subpath of its own, so a page that imports @nizivo/react/table
-// ships no client module under webpack either (week 18).
+// ships no client module under webpack either (week 18). The island also writes the count of a
+// BulkActionBar (@nizivo/react/bulk-action-bar, D-da) inside it.
 import type { ComponentPropsWithRef, ReactElement } from 'react';
 import { cx } from '../_internal/cx';
 import { CheckGlyph, MinusGlyph } from '../_internal/glyphs';

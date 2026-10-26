@@ -1,0 +1,42 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/bulk-action-bar.css (ARCHITECTURE.md §16.2, D-da; no Figma component: the
+   selected rows on 08's first pattern). The count in Label/M Strong, then the actions at the end, on
+   bg/subtle with a border/subtle edge; the actions wrap under the count when narrow. Public
+   --nz-bulk-action-bar-* hooks are read once, at the property. */
+@layer nz.components {
+  .nz-bulk-action-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--nz-space-2) var(--nz-space-4);
+    box-sizing: border-box;
+    min-block-size: var(--nz-space-12);
+    padding-block: var(--nz-space-2);
+    padding-inline: var(--nz-space-3);
+    border: var(--nz-border-width-default) solid var(--nz-border-subtle);
+    border-radius: var(--nz-radius-md);
+    background: var(--nz-bulk-action-bar-bg, var(--nz-bg-subtle));
+  }
+
+  .nz-bulk-action-bar-count {
+    color: var(--nz-text-primary);
+    font: var(--nz-font-label-m-strong);
+    letter-spacing: var(--nz-tracking-label-m);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .nz-bulk-action-bar-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--nz-space-2);
+    margin-inline-start: auto;
+  }
+
+  @media (forced-colors: active) {
+    .nz-bulk-action-bar {
+      border-color: CanvasText;
+    }
+  }
+}

@@ -4,6 +4,7 @@
 import { renderToString } from 'react-dom/server';
 import { describe, expect, test } from 'vitest';
 import { graph, isClient, rekey } from '../helpers/graph';
+import { BulkActionBar } from '../../src/bulk-action-bar/index';
 import { TableSelectionExample } from '../../src/table-selection/table-selection.example';
 
 const SRC = rekey(
@@ -36,5 +37,24 @@ describe('TableSelection', () => {
     ]) {
       expect(row).toContain(attribute);
     }
+  });
+
+  test('BulkActionBar: the server writes defaultCount, keeps the template, then the actions', () => {
+    const html = renderToString(<TableSelectionExample />);
+    expect(html).toContain(
+      '<div data-slot="bulk-action-bar" class="nz-bulk-action-bar"><span class="nz-bulk-action-bar-count" data-slot="bulk-action-bar-count" aria-live="polite" lang="en-US">1 selected</span><span class="nz-bulk-action-bar-template" data-slot="bulk-action-bar-template" hidden="">{count} selected</span><div class="nz-bulk-action-bar-actions" data-slot="bulk-action-bar-actions"><form id="products-bulk"',
+    );
+  });
+
+  test('BulkActionBar without defaultCount: the count is hidden until the island writes it', () => {
+    const html = renderToString(
+      <BulkActionBar locale="de-DE" labels={{ selected: '{count} ausgewählt' }} />,
+    );
+    expect(html).toContain(
+      '<span class="nz-bulk-action-bar-count" data-slot="bulk-action-bar-count" aria-live="polite" lang="de-DE" hidden=""></span><span class="nz-bulk-action-bar-template" data-slot="bulk-action-bar-template" hidden="">{count} ausgewählt</span>',
+    );
+    expect(renderToString(<BulkActionBar defaultCount={1200} locale="de-DE" />)).toContain(
+      'lang="de-DE">1.200 selected</span>',
+    );
   });
 });

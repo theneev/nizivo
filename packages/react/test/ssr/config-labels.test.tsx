@@ -60,6 +60,7 @@ const NOT_REACHED: Partial<Record<Key, string>> = {
   appShell: SERVER,
   avatarGroup: SERVER,
   breadcrumb: SERVER,
+  bulkActionBar: SERVER,
   kpiTile: SERVER,
   metric: SERVER,
   mobileTabBar: SERVER,

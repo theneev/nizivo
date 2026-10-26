@@ -2,6 +2,7 @@ import type { JSX } from 'react';
 import { Button } from '../button/index';
 import { Stack } from '../stack/index';
 import { Table } from '../table/index';
+import { BulkActionBar } from '../bulk-action-bar/index';
 import { TableSelectAll, TableSelection, TableSelectRow } from './index';
 
 const MONEY = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
@@ -14,19 +15,22 @@ const PRODUCTS = [
 ] as const;
 
 /**
- * Bulk actions: each row's checkbox is a native input of the form above the table (`form`), so
+ * Bulk actions: each row's checkbox is a native input of the form in the BulkActionBar (`form`), so
  * "Archive" submits the checked ids even before JavaScript runs. `TableSelection` adds the
- * select-all box (checked, mixed or clear), Shift-click ranges and Escape to clear.
+ * select-all box (checked, mixed or clear), Shift-click ranges, Escape to clear, and the bar's
+ * "1 selected".
  */
 export function TableSelectionExample(): JSX.Element {
   return (
     <Stack gap="3">
       <TableSelection>
-        <form id="products-bulk" action="#">
-          <Button type="submit" size="sm">
-            Archive selected
-          </Button>
-        </form>
+        <BulkActionBar defaultCount={1}>
+          <form id="products-bulk" action="#">
+            <Button type="submit" size="sm" variant="secondary">
+              Archive selected
+            </Button>
+          </form>
+        </BulkActionBar>
         <Table.Container>
           <Table.Root>
             <Table.Caption visuallyHidden>Products</Table.Caption>

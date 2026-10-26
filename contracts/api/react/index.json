@@ -273,6 +273,24 @@
       "name": "BreadcrumbRootProps"
     },
     {
+      "definedIn": "./bulk-action-bar",
+      "import": "import { BulkActionBar } from '@nizivo/react'",
+      "kind": "component",
+      "name": "BulkActionBar"
+    },
+    {
+      "definedIn": "./bulk-action-bar",
+      "import": "import type { BulkActionBarLabels } from '@nizivo/react'",
+      "kind": "type",
+      "name": "BulkActionBarLabels"
+    },
+    {
+      "definedIn": "./bulk-action-bar",
+      "import": "import type { BulkActionBarProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "BulkActionBarProps"
+    },
+    {
       "definedIn": "./button",
       "import": "import { Button } from '@nizivo/react'",
       "kind": "component",
