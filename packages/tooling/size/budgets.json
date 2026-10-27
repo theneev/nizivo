@@ -706,7 +706,7 @@
       "limitKiB": 1.1
     },
     "@nizivo/react/css/number-field.css": {
-      "measured": 491,
+      "measured": 517,
       "limitKiB": 0.6
     },
     "@nizivo/react/css/number-value.css": {
@@ -834,7 +834,7 @@
       "limitKiB": 0.5
     },
     "@nizivo/react/styles.css": {
-      "measured": 25274,
+      "measured": 25295,
       "limitKiB": 26
     },
     "@nizivo/tokens": {

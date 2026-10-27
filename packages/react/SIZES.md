@@ -300,7 +300,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/motion.css            |      192 |        0.2 |        154 |         0.3 |          115 |
 | /css/native-select.css     |      930 |        0.9 |        778 |           1 |           94 |
 | /css/nav-item.css          |    1,004 |        1.0 |        834 |         1.1 |          122 |
-| /css/number-field.css      |      491 |        0.5 |        383 |         0.6 |          123 |
+| /css/number-field.css      |      517 |        0.5 |        401 |         0.6 |           97 |
 | /css/number-value.css      |      154 |        0.2 |        116 |         0.2 |           50 |
 | /css/page-header.css       |      416 |        0.4 |        333 |         0.5 |           96 |
 | /css/page-indicator.css    |      564 |        0.6 |        473 |         0.7 |          152 |
@@ -332,7 +332,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/tooltip.css           |      581 |        0.6 |        503 |         0.6 |           33 |
 | /css/top-bar.css           |      452 |        0.4 |        379 |         0.5 |           60 |
 | /css/trend-card.css        |      403 |        0.4 |        346 |         0.5 |          109 |
-| /styles.css                |   25,274 |       24.7 |     20,255 |          26 |        1,350 |
+| /styles.css                |   25,295 |       24.7 |     20,340 |          26 |        1,329 |
 
 #### `@nizivo/tokens`: Public JS entries (bundled with what they import, React Aria included)
 

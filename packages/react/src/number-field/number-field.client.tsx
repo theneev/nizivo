@@ -1,7 +1,7 @@
 'use client';
-// PUBLIC NumberField parts (ARCHITECTURE.md §16.1; no Figma component: Input's box). A number in the
-// locale's format, a currency, a percent or a unit, which a native `type="number"` cannot show or
-// parse (gap report A §4). They own the CSS contract; the engine owns behaviour. Field wiring as
+// PUBLIC NumberField parts (ARCHITECTURE.md §16.1; no Figma component: Input's box, with the Number
+// Stepper's step buttons 7367:377). A number in the locale's format, a currency, a percent or a
+// unit, which a native `type="number"` cannot show or parse (gap report A §4). They own the CSS contract; the engine owns behaviour. Field wiring as
 // Input: the Field's label points at the input, and its id, description and error reach it.
 import { createContext, use, useId, useMemo, type JSX } from 'react';
 import { toRenderFn } from '../contracts/render';

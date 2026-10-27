@@ -1,15 +1,31 @@
 @layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
 
-/* @nizivo/react/css/number-field.css (ARCHITECTURE.md §16.1; no Figma component: Input's box). The
-   box, the input and the sizes are input.css's (.nz-input and .nz-input-control on the same
-   elements); this file draws the optional step buttons, which never take focus (the arrow keys
-   step the input), and sets the digits in tabular figures. The 2 px focus outline is the box's,
-   from nz.base (focusTarget "within"). Public --nz-number-field-* hooks are read once, at the
-   property. */
+/* @nizivo/react/css/number-field.css (ARCHITECTURE.md §16.1; no Figma component: Input's box, and
+   the step buttons of Figma's Number Stepper 7367:377, as on QuantityStepper). The box, the input
+   and the sizes are input.css's (.nz-input and .nz-input-control on the same elements); this file
+   draws the optional step buttons, which never take focus (the arrow keys step the input), and sets
+   the digits in tabular figures. With buttons the box has no padding and each button is a
+   full-height square as wide as the control is tall (40 x 40 at md). The 2 px focus outline is the
+   box's, from nz.base (focusTarget "within"). Public --nz-number-field-* hooks are read once, at
+   the property. */
 @layer nz.components {
-  /* step buttons sit inside the padding; 24 px (the WCAG 2.5.8 target) at every size */
-  .nz-input.nz-number-field:has(> .nz-number-field-button) {
-    padding-inline: var(--nz-space-1);
+  .nz-input.nz-number-field {
+    --_nz-number-field-button: var(--nz-size-control-md);
+
+    &[data-size='sm'] {
+      --_nz-number-field-button: var(--nz-size-control-sm);
+    }
+
+    &[data-size='lg'] {
+      --_nz-number-field-button: var(--nz-size-control-lg);
+    }
+
+    /* the buttons' hover fill stays inside the rounded corners */
+    &:has(> .nz-number-field-button) {
+      gap: 0;
+      padding-inline: 0;
+      overflow: clip;
+    }
   }
 
   .nz-number-field-input {
@@ -25,19 +41,15 @@
     flex: none;
     align-items: center;
     justify-content: center;
-    box-sizing: border-box;
-    inline-size: var(--nz-space-6);
-    block-size: var(--nz-space-6);
+    inline-size: var(--_nz-number-field-button);
+    block-size: 100%;
     padding: 0;
     border: 0;
-    border-radius: var(--nz-radius-sm);
     background: transparent;
     color: var(--nz-number-field-button-fg, var(--nz-icon-primary));
     font-size: var(--nz-size-icon-sm);
     cursor: pointer;
-    transition:
-      background-color var(--nz-duration-fast) var(--nz-easing-standard),
-      color var(--nz-duration-fast) var(--nz-easing-standard);
+    transition: background-color var(--nz-duration-fast) var(--nz-easing-standard);
 
     @media (hover: hover) {
       &:hover:not(:disabled) {

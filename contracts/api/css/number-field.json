@@ -35,10 +35,10 @@
     "--nz-duration-fast",
     "--nz-easing-standard",
     "--nz-icon-primary",
-    "--nz-radius-sm",
+    "--nz-size-control-lg",
+    "--nz-size-control-md",
+    "--nz-size-control-sm",
     "--nz-size-icon-sm",
-    "--nz-space-1",
-    "--nz-space-6",
     "--nz-text-disabled"
   ],
   "version": 1
