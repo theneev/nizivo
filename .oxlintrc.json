@@ -42,7 +42,13 @@
           {
             "patterns": [
               {
-                "group": ["react-aria*", "react-aria*/**", "@react-aria/**", "@react-stately/**"],
+                "group": [
+                  "react-aria*",
+                  "react-aria*/**",
+                  "@react-aria/**",
+                  "@react-stately/**",
+                  "@base-ui/**"
+                ],
                 "message": "Only src/_engines/** may import the behaviour engine (ARCHITECTURE.md §4.1 L4, §9.2)."
               },
               {

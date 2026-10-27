@@ -16,8 +16,20 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
 
+/**
+ * Second engine families (D-dk): `NZ_ADAPTER=base-ui` swaps the overlay family's Dialog and Select
+ * together to `src/_engines/base-ui/<name>.client.tsx`, never one of them alone (§4.1 L4).
+ */
+const FAMILIES: Readonly<Record<string, readonly string[]>> = { 'base-ui': ['dialog', 'select'] };
+
 /** Component name → its `<name>.<adapter>.client.tsx`, for every manifest naming `adapter`. */
 export function swaps(name: string): Map<string, string> {
+  const family = FAMILIES[name];
+  if (family !== undefined) {
+    return new Map(
+      family.map((c) => [c, new URL(`_engines/${name}/${c}.client.tsx`, SRC).pathname]),
+    );
+  }
   const out = new Map<string, string>();
   for (const file of readdirSync(SRC, { recursive: true })) {
     if (!file.endsWith('component.json')) continue;

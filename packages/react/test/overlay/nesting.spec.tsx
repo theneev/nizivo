@@ -65,6 +65,10 @@ function RemovableTrigger(): JSX.Element {
   );
 }
 
+/** Under the Base UI canary only Dialog and Select swap: a case with a Menu or Tooltip would mix
+ * two engine families, which never happens in a build (§4.1 L4; D-dk). */
+const MIXED = NZ_ADAPTER_NAME === 'base-ui';
+
 describe('nested overlays (§12.5 v0.1)', () => {
   // O-01 leaves the real pointer where it pressed the Select trigger, and O-03's tooltip trigger
   // passes under that spot while its dialog enters: Firefox then hovers it, with no pointermove,
@@ -137,40 +141,43 @@ describe('nested overlays (§12.5 v0.1)', () => {
     expect(find('dialog-popup')).not.toBeNull();
   });
 
-  test('O-03 Tooltip inside Dialog: paints above it, its description resolves, and Esc closes the tooltip first', async () => {
-    await mount(
-      <Dialog.Root>
-        <Dialog.Trigger>Share</Dialog.Trigger>
-        <Dialog.Popup>
-          <Dialog.Title>Share</Dialog.Title>
-          <Dialog.Body>
-            <Tooltip.Root delay={0}>
-              <Tooltip.Trigger>Copy link</Tooltip.Trigger>
-              <Tooltip.Popup>Copies the store link</Tooltip.Popup>
-            </Tooltip.Root>
-          </Dialog.Body>
-        </Dialog.Popup>
-      </Dialog.Root>,
-    );
-    // Opened from the keyboard, the dialog focuses the first tabbable element in its body (§12.2),
-    // the tooltip trigger, and a keyboard focus shows the tooltip.
-    await userEvent.keyboard('{Tab}');
-    await userEvent.keyboard('{Enter}');
-    await until(() => expect(find('dialog-popup')?.hasAttribute('data-entering')).toBe(false));
-    const trigger = get('tooltip-trigger');
-    await until(() => expect(document.activeElement).toBe(trigger));
-    await until(() => expect(find('tooltip-popup')).not.toBeNull());
-    const tip = get('tooltip-popup');
-    expect(tip.closest('[data-slot="dialog-positioner"]')).toBe(get('dialog-positioner'));
-    expect(document.getElementById(trigger.getAttribute('aria-describedby') ?? '')).toBe(tip);
-    await until(() => expect(paintsOnTop(tip)).toBe(true));
+  test.skipIf(MIXED)(
+    'O-03 Tooltip inside Dialog: paints above it, its description resolves, and Esc closes the tooltip first',
+    async () => {
+      await mount(
+        <Dialog.Root>
+          <Dialog.Trigger>Share</Dialog.Trigger>
+          <Dialog.Popup>
+            <Dialog.Title>Share</Dialog.Title>
+            <Dialog.Body>
+              <Tooltip.Root delay={0}>
+                <Tooltip.Trigger>Copy link</Tooltip.Trigger>
+                <Tooltip.Popup>Copies the store link</Tooltip.Popup>
+              </Tooltip.Root>
+            </Dialog.Body>
+          </Dialog.Popup>
+        </Dialog.Root>,
+      );
+      // Opened from the keyboard, the dialog focuses the first tabbable element in its body (§12.2),
+      // the tooltip trigger, and a keyboard focus shows the tooltip.
+      await userEvent.keyboard('{Tab}');
+      await userEvent.keyboard('{Enter}');
+      await until(() => expect(find('dialog-popup')?.hasAttribute('data-entering')).toBe(false));
+      const trigger = get('tooltip-trigger');
+      await until(() => expect(document.activeElement).toBe(trigger));
+      await until(() => expect(find('tooltip-popup')).not.toBeNull());
+      const tip = get('tooltip-popup');
+      expect(tip.closest('[data-slot="dialog-positioner"]')).toBe(get('dialog-positioner'));
+      expect(document.getElementById(trigger.getAttribute('aria-describedby') ?? '')).toBe(tip);
+      await until(() => expect(paintsOnTop(tip)).toBe(true));
 
-    await escape();
-    await until(() => expect(find('tooltip-popup')).toBeNull());
-    expect(find('dialog-popup')).not.toBeNull();
-    await escape();
-    await until(() => expect(find('dialog-popup')).toBeNull());
-  });
+      await escape();
+      await until(() => expect(find('tooltip-popup')).toBeNull());
+      expect(find('dialog-popup')).not.toBeNull();
+      await escape();
+      await until(() => expect(find('dialog-popup')).toBeNull());
+    },
+  );
 
   test('O-04 Dialog on Dialog: one backdrop, inner on top, Esc closes inner then outer, focus walks back, styles restored', async () => {
     await mount(
@@ -284,126 +291,132 @@ describe('nested overlays (§12.5 v0.1)', () => {
     expect(document.activeElement?.isConnected).toBe(true);
   });
 
-  test('O-22 Esc closes exactly one layer per press: Tooltip, Menu, Dialog, Dialog', async () => {
-    await mount(
-      <Dialog.Root>
-        <Dialog.Trigger>Outer</Dialog.Trigger>
-        <Dialog.Popup>
-          <Dialog.Title>Outer</Dialog.Title>
-          <Dialog.Body>
-            <Dialog.Root>
-              <Dialog.Trigger>Inner</Dialog.Trigger>
-              <Dialog.Popup>
-                <Dialog.Title>Inner</Dialog.Title>
-                <Dialog.Body>
-                  <Menu.Root>
-                    <Menu.Trigger>Actions</Menu.Trigger>
-                    <Menu.Popup>
-                      <Menu.Item>Duplicate</Menu.Item>
-                      <Menu.Item>Archive</Menu.Item>
-                    </Menu.Popup>
-                  </Menu.Root>
-                  <Tooltip.Root delay={0}>
-                    <Tooltip.Trigger>Help</Tooltip.Trigger>
-                    <Tooltip.Popup>What these actions do</Tooltip.Popup>
-                  </Tooltip.Root>
-                </Dialog.Body>
-              </Dialog.Popup>
-            </Dialog.Root>
-          </Dialog.Body>
-        </Dialog.Popup>
-      </Dialog.Root>,
-    );
-    await userEvent.click(get('dialog-trigger'));
-    await until(() => expect(all('dialog-popup')).toHaveLength(1));
-    const inner = all('dialog-trigger')[1];
-    if (inner === undefined) throw new Error('no inner trigger');
-    await userEvent.click(inner);
-    await until(() => expect(all('dialog-popup')).toHaveLength(2));
-    await until(() => expect(document.activeElement).toBe(get('menu-trigger')));
+  test.skipIf(MIXED)(
+    'O-22 Esc closes exactly one layer per press: Tooltip, Menu, Dialog, Dialog',
+    async () => {
+      await mount(
+        <Dialog.Root>
+          <Dialog.Trigger>Outer</Dialog.Trigger>
+          <Dialog.Popup>
+            <Dialog.Title>Outer</Dialog.Title>
+            <Dialog.Body>
+              <Dialog.Root>
+                <Dialog.Trigger>Inner</Dialog.Trigger>
+                <Dialog.Popup>
+                  <Dialog.Title>Inner</Dialog.Title>
+                  <Dialog.Body>
+                    <Menu.Root>
+                      <Menu.Trigger>Actions</Menu.Trigger>
+                      <Menu.Popup>
+                        <Menu.Item>Duplicate</Menu.Item>
+                        <Menu.Item>Archive</Menu.Item>
+                      </Menu.Popup>
+                    </Menu.Root>
+                    <Tooltip.Root delay={0}>
+                      <Tooltip.Trigger>Help</Tooltip.Trigger>
+                      <Tooltip.Popup>What these actions do</Tooltip.Popup>
+                    </Tooltip.Root>
+                  </Dialog.Body>
+                </Dialog.Popup>
+              </Dialog.Root>
+            </Dialog.Body>
+          </Dialog.Popup>
+        </Dialog.Root>,
+      );
+      await userEvent.click(get('dialog-trigger'));
+      await until(() => expect(all('dialog-popup')).toHaveLength(1));
+      const inner = all('dialog-trigger')[1];
+      if (inner === undefined) throw new Error('no inner trigger');
+      await userEvent.click(inner);
+      await until(() => expect(all('dialog-popup')).toHaveLength(2));
+      await until(() => expect(document.activeElement).toBe(get('menu-trigger')));
 
-    // Layer 3: the Menu, opened from the keyboard.
-    await userEvent.keyboard('{Enter}');
-    await until(() => expect(find('menu-popup')).not.toBeNull());
-    await escape();
-    await until(() => expect(find('menu-popup')).toBeNull());
-    expect(all('dialog-popup')).toHaveLength(2);
-    await until(() => expect(document.activeElement).toBe(get('menu-trigger')));
+      // Layer 3: the Menu, opened from the keyboard.
+      await userEvent.keyboard('{Enter}');
+      await until(() => expect(find('menu-popup')).not.toBeNull());
+      await escape();
+      await until(() => expect(find('menu-popup')).toBeNull());
+      expect(all('dialog-popup')).toHaveLength(2);
+      await until(() => expect(document.activeElement).toBe(get('menu-trigger')));
 
-    // Layer 4: the Tooltip on the next control.
-    await userEvent.keyboard('{Tab}');
-    await until(() => expect(find('tooltip-popup')).not.toBeNull());
-    await escape();
-    await until(() => expect(find('tooltip-popup')).toBeNull());
-    expect(all('dialog-popup')).toHaveLength(2);
+      // Layer 4: the Tooltip on the next control.
+      await userEvent.keyboard('{Tab}');
+      await until(() => expect(find('tooltip-popup')).not.toBeNull());
+      await escape();
+      await until(() => expect(find('tooltip-popup')).toBeNull());
+      expect(all('dialog-popup')).toHaveLength(2);
 
-    await escape();
-    await until(() => expect(all('dialog-popup')).toHaveLength(1));
-    // Focus walks back to the inner dialog's trigger, inside the outer dialog.
-    await until(() => expect(document.activeElement).toBe(inner));
-    await escape();
-    await until(() => expect(all('dialog-popup')).toHaveLength(0));
-  });
+      await escape();
+      await until(() => expect(all('dialog-popup')).toHaveLength(1));
+      // Focus walks back to the inner dialog's trigger, inside the outer dialog.
+      await until(() => expect(document.activeElement).toBe(inner));
+      await escape();
+      await until(() => expect(all('dialog-popup')).toHaveLength(0));
+    },
+  );
 
-  test('O-12 an outside press closes only the topmost: a Select, a Menu and a Dialog opened inside a Dialog', async () => {
-    await mount(
-      <Dialog.Root>
-        <Dialog.Trigger>Filters</Dialog.Trigger>
-        <Dialog.Popup>
-          <Dialog.Title>Filters</Dialog.Title>
-          <Dialog.Body>
-            <PeriodSelect />
-            <Menu.Root>
-              <Menu.Trigger>Actions</Menu.Trigger>
-              <Menu.Popup>
-                <Menu.Item>Duplicate</Menu.Item>
-              </Menu.Popup>
-            </Menu.Root>
-            <Dialog.Root>
-              <Dialog.Trigger>Rename</Dialog.Trigger>
-              <Dialog.Popup size="sm">
-                <Dialog.Title>Rename</Dialog.Title>
-              </Dialog.Popup>
-            </Dialog.Root>
-          </Dialog.Body>
-        </Dialog.Popup>
-      </Dialog.Root>,
-    );
-    await userEvent.click(get('dialog-trigger'));
-    await until(() => expect(all('dialog-popup')).toHaveLength(1));
-    const outer = get('dialog-title');
-    for (const [trigger, popup] of [
-      [get('select-trigger'), 'select-popup'],
-      [get('menu-trigger'), 'menu-popup'],
-    ] as const) {
-      // Sequential on purpose: each opens and closes before the next.
-      // oxlint-disable-next-line no-await-in-loop
-      await userEvent.click(trigger);
-      // oxlint-disable-next-line no-await-in-loop
-      await until(() => expect(find(popup)?.hasAttribute('data-entering')).toBe(false));
-      // A press on the dialog's title, outside the popup: the popup's underlay takes it, inside the
-      // dialog's top-layer nested container, where React Aria does not look (§12.2, D-bn).
-      // oxlint-disable-next-line no-await-in-loop
-      await userEvent.click(outer, { force: true });
-      // oxlint-disable-next-line no-await-in-loop
-      await until(() => expect(find(popup)).toBeNull());
-      expect(all('dialog-popup')).toHaveLength(1);
-      // oxlint-disable-next-line no-await-in-loop
-      await until(() => expect(document.activeElement).toBe(trigger));
-    }
-    const rename = all('dialog-trigger')[1];
-    if (rename === undefined) throw new Error('no inner trigger');
-    await userEvent.click(rename);
-    await until(() => expect(all('dialog-popup')).toHaveLength(2));
-    await until(() => expect(all('dialog-popup')[1]?.hasAttribute('data-entering')).toBe(false));
-    // The inner dialog's positioner covers the outer one: a press in its corner is outside it.
-    await userEvent.click(all('dialog-positioner')[1] ?? outer, {
-      force: true,
-      position: { x: 4, y: 4 },
-    });
-    await until(() => expect(all('dialog-popup')).toHaveLength(1));
-    await until(() => expect(document.activeElement).toBe(rename));
-    await escape();
-    await until(() => expect(all('dialog-popup')).toHaveLength(0));
-  });
+  test.skipIf(MIXED)(
+    'O-12 an outside press closes only the topmost: a Select, a Menu and a Dialog opened inside a Dialog',
+    async () => {
+      await mount(
+        <Dialog.Root>
+          <Dialog.Trigger>Filters</Dialog.Trigger>
+          <Dialog.Popup>
+            <Dialog.Title>Filters</Dialog.Title>
+            <Dialog.Body>
+              <PeriodSelect />
+              <Menu.Root>
+                <Menu.Trigger>Actions</Menu.Trigger>
+                <Menu.Popup>
+                  <Menu.Item>Duplicate</Menu.Item>
+                </Menu.Popup>
+              </Menu.Root>
+              <Dialog.Root>
+                <Dialog.Trigger>Rename</Dialog.Trigger>
+                <Dialog.Popup size="sm">
+                  <Dialog.Title>Rename</Dialog.Title>
+                </Dialog.Popup>
+              </Dialog.Root>
+            </Dialog.Body>
+          </Dialog.Popup>
+        </Dialog.Root>,
+      );
+      await userEvent.click(get('dialog-trigger'));
+      await until(() => expect(all('dialog-popup')).toHaveLength(1));
+      const outer = get('dialog-title');
+      for (const [trigger, popup] of [
+        [get('select-trigger'), 'select-popup'],
+        [get('menu-trigger'), 'menu-popup'],
+      ] as const) {
+        // Sequential on purpose: each opens and closes before the next.
+        // oxlint-disable-next-line no-await-in-loop
+        await userEvent.click(trigger);
+        // oxlint-disable-next-line no-await-in-loop
+        await until(() => expect(find(popup)?.hasAttribute('data-entering')).toBe(false));
+        // A press on the dialog's title, outside the popup: the popup's underlay takes it, inside the
+        // dialog's top-layer nested container, where React Aria does not look (§12.2, D-bn).
+        // oxlint-disable-next-line no-await-in-loop
+        await userEvent.click(outer, { force: true });
+        // oxlint-disable-next-line no-await-in-loop
+        await until(() => expect(find(popup)).toBeNull());
+        expect(all('dialog-popup')).toHaveLength(1);
+        // oxlint-disable-next-line no-await-in-loop
+        await until(() => expect(document.activeElement).toBe(trigger));
+      }
+      const rename = all('dialog-trigger')[1];
+      if (rename === undefined) throw new Error('no inner trigger');
+      await userEvent.click(rename);
+      await until(() => expect(all('dialog-popup')).toHaveLength(2));
+      await until(() => expect(all('dialog-popup')[1]?.hasAttribute('data-entering')).toBe(false));
+      // The inner dialog's positioner covers the outer one: a press in its corner is outside it.
+      await userEvent.click(all('dialog-positioner')[1] ?? outer, {
+        force: true,
+        position: { x: 4, y: 4 },
+      });
+      await until(() => expect(all('dialog-popup')).toHaveLength(1));
+      await until(() => expect(document.activeElement).toBe(rename));
+      await escape();
+      await until(() => expect(all('dialog-popup')).toHaveLength(0));
+    },
+  );
 });

@@ -10,7 +10,7 @@ const SRC = rekey(
   'src/',
 );
 const ENGINE =
-  /^(react-aria|react-aria-components|react-stately|@react-aria\/|@react-stately\/|@internationalized\/)/;
+  /^(react-aria|react-aria-components|react-stately|@react-aria\/|@react-stately\/|@internationalized\/|@base-ui\/)/;
 const files = [...SRC.keys()].filter(
   (file) => /\.tsx?$/.test(file) && !file.endsWith('.example.tsx'),
 );

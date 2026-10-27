@@ -137,6 +137,17 @@ export const RELEASE_LANES: readonly Lane[] = [
     dir: 'fixtures/runner',
     script: 'fixture:registry',
   },
+  // The Base UI canary (M65, D-dk): the overlay family's Dialog and Select on Base UI, through the
+  // same conformance specs. Non-blocking: its failures are the contract's drift toward React Aria,
+  // recorded in the week's results, until the maintainer makes it blocking.
+  {
+    id: 'overlay-base-ui-chromium',
+    why: 'the Base UI canary: Dialog and Select on a second overlay family, non-blocking (§10.4, D-dk)',
+    dir: 'packages/react',
+    script: 'test:overlay',
+    env: { NZ_ADAPTER: 'base-ui', NZ_BROWSER: 'chromium' },
+    blocking: false,
+  },
   // eslint-plugin-react-hooks 7 on the client leaves and adapters (§19 "Compiler rules", D14-hooks,
   // M47): non-blocking until React Compiler phase 2 is scheduled.
   {

@@ -1,0 +1,9 @@
+{
+  "$comment": "Base UI 1.9.0's own data-* markers that it reads back from the DOM (selectors), seen on the canary's parts in the overlay lane. engineDom() keeps only these; every other engine data-* is dropped (ARCHITECTURE.md §9.3 rule 6; D-dk). Undocumented on purpose: no shipped CSS or docs may reference them.",
+  "attributes": [
+    "data-base-ui-click-trigger",
+    "data-base-ui-focusable",
+    "data-base-ui-inert",
+    "data-base-ui-portal"
+  ]
+}

@@ -635,6 +635,7 @@ describe('release', () => {
       'hooks chromium',
       'hooks webkit',
       'hooks firefox',
+      'base-ui chromium',
     ]);
     expect(
       calls
@@ -1015,6 +1016,7 @@ describe('release', () => {
       'fixture-react-router',
       'fixture-astro',
       'fixture-registry',
+      'overlay-base-ui-chromium',
       'react-hooks',
       'visual',
       'visual-charts',

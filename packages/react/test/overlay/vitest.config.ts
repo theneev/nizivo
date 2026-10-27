@@ -30,6 +30,9 @@ const config: ViteUserConfig = defineConfig({
       'react-aria/useOverlayPosition',
       'react-aria/useTooltipTrigger',
       'react-stately/useTooltipTriggerState',
+      // the Base UI canary (NZ_ADAPTER=base-ui, D-dk)
+      '@base-ui/react/dialog',
+      '@base-ui/react/select',
     ],
   },
   // `NZ_REACT=19.2`: React 19.2 instead of the workspace's 19.3 (test/react-matrix.ts).
@@ -37,7 +40,12 @@ const config: ViteUserConfig = defineConfig({
   // `NZ_ADAPTER=hooks`: the hooks Tooltip adapter instead of the default (test/adapters.ts).
   plugins: adapterSwap(),
   test: {
-    include: ['test/overlay/**/*.spec.tsx'],
+    // The Base UI canary (NZ_ADAPTER=base-ui, D-dk) swaps only Dialog and Select, so it runs their
+    // specs and the nesting cases between them; nesting.spec skips its mixed-family cases.
+    include:
+      process.env['NZ_ADAPTER'] === 'base-ui'
+        ? ['dialog', 'select', 'select-field', 'nesting'].map((s) => `test/overlay/${s}.spec.tsx`)
+        : ['test/overlay/**/*.spec.tsx'],
     // Spring transitions run up to 493 ms; a case waits for an exit to finish.
     testTimeout: 15_000,
     browser: {

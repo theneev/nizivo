@@ -8,6 +8,7 @@ import { afterEach, expect, vi } from 'vitest';
 import { userEvent } from 'vitest/browser';
 import vocabulary from '../../../../contracts/vocabulary.json' with { type: 'json' };
 import allowlist from '../../src/_engines/react-aria/dom-allowlist.json' with { type: 'json' };
+import baseUiAllowlist from '../../src/_engines/base-ui/dom-allowlist.json' with { type: 'json' };
 
 const STYLES = import.meta.glob(
   [
@@ -97,7 +98,8 @@ const ALLOWED = new Set<string>([
     .filter((group) => Array.isArray(group))
     .flat()
     .map((entry: { name: string }) => entry.name),
-  ...allowlist.attributes,
+  // the engine family's own functional attributes: Base UI's under the canary (NZ_ADAPTER=base-ui)
+  ...(NZ_ADAPTER_NAME === 'base-ui' ? baseUiAllowlist.attributes : allowlist.attributes),
 ]);
 
 /**
@@ -179,7 +181,10 @@ export async function parkPointer(): Promise<void> {
 
 /** Whether the page is scroll-locked: React Aria hides overflow on <html>. */
 export function locked(): boolean {
-  return getComputedStyle(document.documentElement).overflow === 'hidden';
+  // React Aria locks <html>; Base UI locks <body> (the canary, D-dk): either stops the page scrolling
+  return [document.documentElement, document.body].some(
+    (element) => getComputedStyle(element).overflow === 'hidden',
+  );
 }
 
 /** Whether the element at the centre of `element` is `element` or inside it (it paints on top). */

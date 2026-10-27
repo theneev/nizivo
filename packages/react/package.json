@@ -472,6 +472,7 @@
     "tinykeys": "catalog:"
   },
   "devDependencies": {
+    "@base-ui/react": "catalog:",
     "@nizivo/stylelint-config": "workspace:*",
     "@nizivo/tsconfig": "workspace:*",
     "@nizivo/tsdown-preset": "workspace:*",
