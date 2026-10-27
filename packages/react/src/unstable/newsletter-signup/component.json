@@ -1,0 +1,17 @@
+{
+  "name": "newsletter-signup",
+  "status": "unstable",
+  "tier": "client",
+  "parts": [],
+  "exports": ["NewsletterSignup"],
+  "interactive": [],
+  "stateIndicator": [],
+  "cssDeps": ["base", "button", "field", "input"],
+  "variants": {},
+  "figma": {
+    "canonical": ["7395:100"],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": ["7275:11397"]
+  }
+}

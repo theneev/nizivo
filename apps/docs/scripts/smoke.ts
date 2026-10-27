@@ -126,6 +126,7 @@ const NIZIVO_CLIENT_MARKERS = [
   'nz-media-player',
   'nz-copy-button',
   'nz-code-block',
+  'nz-newsletter-signup',
 ];
 
 /**
@@ -189,6 +190,8 @@ const CLIENT_PAGES: Record<string, string[]> = {
   // CodeBlock's versions are the kit's Tabs; CopyButton's example is a CodeBlock
   '/docs/components/code-block/': ['nz-code-block', 'nz-copy-button', 'tabs-tab'],
   '/docs/components/copy-button/': ['nz-code-block', 'nz-copy-button', 'tabs-tab'],
+  // v0.6 (D-dp): the signup's field is an Input in a Field (FieldScope)
+  '/docs/components/newsletter-signup/': ['nz-newsletter-signup', 'input-prefix', 'willValidate'],
   '/docs/components/drawer/': ['drawer-popup'],
   // Form and SubmitButton are client leaves (FormMessage is a server part); the examples put Inputs
   // in Fields.

@@ -1,13 +1,18 @@
 // v0.6's marketing parts in a browser (ARCHITECTURE.md §21.4a, D-dp): each hydrates unchanged and
 // keeps its structure: a named region with a named close button, the section's h2, the card's h3,
-// a term and its value in a description list, and a quote in a figure with its caption.
+// a term and its value in a description list, a quote in a figure with its caption, the band's h2,
+// the footer's navs named by their headings, and the signup's label, validation and success.
 import type { ReactNode } from 'react';
 import { hydrateRoot, type Root } from 'react-dom/client';
 import { renderToString } from 'react-dom/server';
 import { afterEach, describe, expect, test, vi } from 'vitest';
+import { userEvent } from 'vitest/browser';
 import { AnnouncementBar } from '../../src/unstable/announcement-bar/announcement-bar';
+import { CtaBand } from '../../src/unstable/cta-band/cta-band';
 import { FeatureCard } from '../../src/unstable/feature-card/feature-card';
+import { NewsletterSignup } from '../../src/unstable/newsletter-signup/newsletter-signup.client';
 import { SectionHeader } from '../../src/unstable/section-header/section-header';
+import { SiteFooter } from '../../src/unstable/site-footer/site-footer';
 import { StatBlock } from '../../src/unstable/stat-block/stat-block';
 import { TestimonialCard } from '../../src/unstable/testimonial-card/testimonial-card';
 
@@ -73,5 +78,48 @@ describe('marketing parts', () => {
     expect(value?.tagName).toBe('DD');
     expect(container.querySelector('figure > blockquote')?.textContent).toBe('It works.');
     expect(container.querySelector('figure > figcaption')?.textContent).toBe('MayaFounder');
+  });
+
+  test('CtaBand and SiteFooter: an h2, and navs named by their headings', async () => {
+    const container = await hydrate(
+      <>
+        <CtaBand title="Ship it" />
+        <SiteFooter
+          columns={[{ title: 'Product', links: [{ label: 'Components', href: '/c' }] }]}
+          legal="Nizivo"
+        />
+      </>,
+    );
+    expect(container.querySelector('section h2')?.textContent).toBe('Ship it');
+    const nav = container.querySelector('footer nav');
+    const heading = document.getElementById(nav?.getAttribute('aria-labelledby') ?? '');
+    expect(heading?.textContent).toBe('Product');
+  });
+
+  test('NewsletterSignup: a labelled email field, validation, then an announced success', async () => {
+    const subscribed: string[] = [];
+    const container = await hydrate(
+      <NewsletterSignup
+        title="Release notes"
+        onSubscribe={(email) => void subscribed.push(email)}
+      />,
+    );
+    const input = container.querySelector('input');
+    expect(input?.type).toBe('email');
+    expect(input?.getAttribute('autocomplete')).toBe('email');
+    expect(input?.labels?.[0]?.textContent).toContain('Email');
+    const submit = container.querySelector<HTMLButtonElement>('button[type="submit"]');
+    if (input === null || submit === null) throw new Error('no form');
+    await userEvent.click(submit);
+    expect(subscribed).toEqual([]);
+    expect(input.validity.valueMissing).toBe(true);
+    await userEvent.type(input, 'maya@example.com');
+    await userEvent.click(submit);
+    await vi.waitFor(() => expect(subscribed).toEqual(['maya@example.com']));
+    await vi.waitFor(() =>
+      expect(container.querySelector('.nz-newsletter-signup-status')?.textContent).toBe(
+        'Thanks — check your inbox to confirm.',
+      ),
+    );
   });
 });

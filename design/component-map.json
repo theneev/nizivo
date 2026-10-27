@@ -818,11 +818,32 @@
       "export": "StatBlock",
       "props": {}
     },
+    "7394:50": {
+      "component": "cta-band",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/cta-band",
+      "export": "CtaBand",
+      "props": {}
+    },
+    "7394:81": {
+      "component": "site-footer",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/site-footer",
+      "export": "SiteFooter",
+      "props": {}
+    },
     "7395:85": {
       "component": "testimonial-card",
       "role": "canonical",
       "import": "@nizivo/react/unstable/testimonial-card",
       "export": "TestimonialCard",
+      "props": {}
+    },
+    "7395:100": {
+      "component": "newsletter-signup",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/newsletter-signup",
+      "export": "NewsletterSignup",
       "props": {}
     },
     "7396:26": {

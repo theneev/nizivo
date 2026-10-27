@@ -1,0 +1,17 @@
+---
+title: NewsletterSignup
+description: "Unstable: an email capture with a visible Email label, the browser's validation shown inline, a pending Subscribe button and a success message read aloud. Import it from @nizivo/react/unstable/newsletter-signup."
+---
+
+## Static or interactive
+
+**Client.** It is a form that waits for `onSubscribe`. [How to choose](/docs/guides/static-or-interactive/).
+
+## Use
+
+`title` (h3 by default) and `description` say what people get; `note` what happens next. The field
+is a [Field](/docs/components/field/) with an `type="email"` [Input](/docs/components/input/) and
+`autocomplete="email"`, named by its visible label, never a placeholder alone. The browser's own
+validation shows inline, in the words of `labels.missing` and `labels.invalid`. Subscribe is pending
+while `onSubscribe` runs; if it throws, its message shows under the field, and on success a polite
+live region says "Thanks — check your inbox to confirm."

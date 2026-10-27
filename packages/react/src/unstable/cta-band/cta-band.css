@@ -1,0 +1,83 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/cta-band.css (Figma CTA Band 7394:50), UNSTABLE. A band of radius/2xl at least
+   360 px tall, the content centred at most 720 px wide, 20 px between the Display/M title, the
+   Body/L line and the actions (12 px apart). Figma's Aurora Dark shader is drawn with gradients on
+   bg/code (dark in both themes): a deep brand pool and lime curtains, kept off the middle, where
+   the text sits on the darkest part (text/on-dark, at least 7:1). */
+@layer nz.components {
+  .nz-cta-band {
+    position: relative;
+    display: grid;
+    place-items: center;
+    box-sizing: border-box;
+    min-block-size: calc(var(--nz-space-10) * 9);
+    overflow: hidden;
+    padding: var(--nz-space-10) var(--nz-space-6);
+    border-radius: var(--nz-radius-2xl);
+    background: var(--nz-bg-code);
+    color: var(--nz-text-on-dark);
+    text-align: center;
+  }
+
+  .nz-cta-band-background {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(
+        30% 70% at 10% 45%,
+        color-mix(in oklab, var(--nz-bg-accent) 40%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(
+        25% 60% at 92% 70%,
+        color-mix(in oklab, var(--nz-bg-accent) 30%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(
+        60% 80% at 75% 100%,
+        color-mix(in oklab, var(--nz-bg-brand) 80%, transparent),
+        transparent 75%
+      );
+  }
+
+  .nz-cta-band-background > * {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  .nz-cta-band-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--nz-space-5);
+    max-inline-size: 45rem;
+  }
+
+  .nz-cta-band-title {
+    margin: 0;
+    font: var(--nz-font-display-m);
+    letter-spacing: var(--nz-tracking-display-m);
+  }
+
+  .nz-cta-band-description {
+    margin: 0;
+    font: var(--nz-font-body-l);
+  }
+
+  .nz-cta-band-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--nz-space-3);
+  }
+
+  @media (forced-colors: active) {
+    .nz-cta-band {
+      border: 1px solid CanvasText;
+    }
+  }
+}

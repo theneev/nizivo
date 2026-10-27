@@ -143,7 +143,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /input                       |    1,837 |        1.8 |      1,662 |           2 |          211 |
 | /kbd                         |    1,192 |        1.2 |      1,087 |         1.3 |          139 |
 | /kpi-tile                    |    2,324 |        2.3 |      2,110 |         2.5 |          236 |
-| /locales/en-US               |    1,691 |        1.7 |      1,433 |         1.8 |          152 |
+| /locales/en-US               |    1,788 |        1.7 |      1,496 |         1.8 |           55 |
 | /menu                        |   57,165 |       55.8 |     49,386 |          57 |        1,203 |
 | /meter                       |    1,143 |        1.1 |      1,058 |         1.3 |          188 |
 | /metric                      |    2,145 |        2.1 |      1,958 |         2.4 |          312 |
@@ -197,6 +197,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /unstable/command-menu       |   35,184 |       34.4 |     31,408 |          64 |       30,352 |
 | /unstable/comment            |    1,585 |        1.5 |      1,432 |         1.8 |          258 |
 | /unstable/copy-button        |    1,448 |        1.4 |      1,331 |         1.6 |          190 |
+| /unstable/cta-band           |      889 |        0.9 |        812 |           1 |          135 |
 | /unstable/date-range-picker  |   38,404 |       37.5 |     34,065 |          68 |       31,228 |
 | /unstable/docs-card          |    1,067 |        1.0 |        976 |         1.2 |          161 |
 | /unstable/event-card         |    1,303 |        1.3 |      1,186 |         1.4 |          130 |
@@ -207,12 +208,14 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /unstable/link               |    1,069 |        1.0 |        973 |         1.2 |          159 |
 | /unstable/media-player       |    2,638 |        2.6 |      2,421 |         2.7 |          126 |
 | /unstable/model-selector     |   63,785 |       62.3 |     54,785 |          69 |        6,871 |
+| /unstable/newsletter-signup  |    4,901 |        4.8 |      4,456 |         5.3 |          526 |
 | /unstable/notification-item  |      940 |        0.9 |        862 |         1.1 |          186 |
 | /unstable/profile-card       |      985 |        1.0 |        901 |         1.1 |          141 |
 | /unstable/prompt-composer    |    1,525 |        1.5 |      1,383 |         1.7 |          215 |
 | /unstable/rating             |    1,551 |        1.5 |      1,412 |         1.7 |          189 |
 | /unstable/response-block     |    2,310 |        2.3 |      2,077 |         2.5 |          250 |
 | /unstable/section-header     |      845 |        0.8 |        769 |           1 |          179 |
+| /unstable/site-footer        |      976 |        1.0 |        909 |         1.1 |          150 |
 | /unstable/slider             |    1,362 |        1.3 |      1,249 |         1.4 |           71 |
 | /unstable/source-card        |    1,348 |        1.3 |      1,229 |         1.5 |          188 |
 | /unstable/stat-block         |      817 |        0.8 |        750 |         0.9 |          104 |
@@ -302,6 +305,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | own: unstable/inline-assist/inline-assist.client         |      819 |        0.8 |        723 |         0.9 |          102 |
 | own: unstable/media-player/media-player.client           |    1,022 |        1.0 |        921 |         1.1 |          104 |
 | own: unstable/model-selector/model-selector.client       |      764 |        0.7 |        696 |         0.8 |           55 |
+| own: unstable/newsletter-signup/newsletter-signup.client |      907 |        0.9 |        789 |           1 |          117 |
 | own: unstable/prompt-composer/prompt-composer.client     |      747 |        0.7 |        648 |         0.9 |          174 |
 | own: unstable/slider/slider.client                       |      842 |        0.8 |        765 |           1 |          182 |
 
@@ -342,6 +346,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/comment.css            |      522 |        0.5 |        424 |         0.6 |           92 |
 | /css/container.css          |      185 |        0.2 |        155 |         0.2 |           19 |
 | /css/copy-button.css        |      336 |        0.3 |        280 |         0.4 |           73 |
+| /css/cta-band.css           |      583 |        0.6 |        496 |         0.7 |          133 |
 | /css/data-view.css          |      570 |        0.6 |        449 |         0.7 |          146 |
 | /css/date-range-picker.css  |    1,225 |        1.2 |      1,045 |         1.3 |          106 |
 | /css/delta.css              |      472 |        0.5 |        383 |         0.5 |           40 |
@@ -378,6 +383,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/motion.css             |      192 |        0.2 |        154 |         0.3 |          115 |
 | /css/native-select.css      |      930 |        0.9 |        778 |           1 |           94 |
 | /css/nav-item.css           |    1,004 |        1.0 |        834 |         1.1 |          122 |
+| /css/newsletter-signup.css  |      458 |        0.4 |        368 |         0.5 |           54 |
 | /css/notification-item.css  |      518 |        0.5 |        428 |         0.6 |           96 |
 | /css/number-field.css       |      517 |        0.5 |        401 |         0.6 |           97 |
 | /css/number-value.css       |      154 |        0.2 |        116 |         0.2 |           50 |
@@ -402,6 +408,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/select.css             |    1,237 |        1.2 |      1,040 |         1.4 |          196 |
 | /css/separator.css          |      261 |        0.3 |        203 |         0.3 |           46 |
 | /css/sidebar.css            |      928 |        0.9 |        753 |           1 |           96 |
+| /css/site-footer.css        |      505 |        0.5 |        407 |         0.6 |          109 |
 | /css/skeleton.css           |      365 |        0.4 |        325 |         0.4 |           44 |
 | /css/slider.css             |      681 |        0.7 |        571 |         0.8 |          138 |
 | /css/source-card.css        |      563 |        0.5 |        461 |         0.7 |          153 |

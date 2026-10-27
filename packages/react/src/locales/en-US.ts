@@ -53,6 +53,7 @@ import type { LinkLabels } from '../unstable/link/index';
 import type { CopyButtonLabels } from '../unstable/copy-button/index';
 import type { CodeBlockLabels } from '../unstable/code-block/index';
 import type { AnnouncementBarLabels } from '../unstable/announcement-bar/index';
+import type { NewsletterSignupLabels } from '../unstable/newsletter-signup/index';
 import type { RankedListLabels } from '../ranked-list/index';
 import type { SearchFieldLabels } from '../search-field/index';
 import type { SidebarLabels } from '../sidebar/index';
@@ -116,6 +117,7 @@ export const enUS: {
   copyButton: CopyButtonLabels;
   codeBlock: CodeBlockLabels;
   announcementBar: AnnouncementBarLabels;
+  newsletterSignup: NewsletterSignupLabels;
   rankedList: RankedListLabels;
   searchField: SearchFieldLabels;
   sidebar: SidebarLabels;
@@ -253,6 +255,13 @@ export const enUS: {
   copyButton: { copy: 'Copy', copied: 'Copied' },
   codeBlock: { versions: 'Versions' },
   announcementBar: { dismiss: 'Dismiss announcement', label: 'Announcement' },
+  newsletterSignup: {
+    email: 'Email',
+    subscribe: 'Subscribe',
+    success: 'Thanks — check your inbox to confirm.',
+    missing: 'Enter your email address.',
+    invalid: 'Enter an email address like name@example.com.',
+  },
   rankedList: { loading: 'Loading {label}', empty: 'No data', error: 'Could not load {label}' },
   searchField: { label: 'Search', clear: 'Clear search' },
   sidebar: { nav: 'Primary' },

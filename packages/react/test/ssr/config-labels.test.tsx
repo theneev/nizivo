@@ -56,6 +56,7 @@ const REACHED: Partial<Record<Key, string>> = {
   mediaPlayer: 'src/unstable/media-player/media-player.client.tsx',
   mobileTabBarMore: 'src/mobile-tab-bar/mobile-tab-bar-more.client.tsx',
   modelSelector: 'src/unstable/model-selector/model-selector.client.tsx',
+  newsletterSignup: 'src/unstable/newsletter-signup/newsletter-signup.client.tsx',
   passwordInput: 'src/password-input/password-input.client.tsx',
   popover: 'src/popover/popover.client.tsx',
   promptComposer: 'src/unstable/prompt-composer/prompt-composer.client.tsx',

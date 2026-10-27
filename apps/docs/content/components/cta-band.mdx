@@ -1,0 +1,20 @@
+---
+title: CtaBand
+description: 'Unstable: the last ask on a page, a heading, one line and two actions centred on a dark band. Import it from @nizivo/react/unstable/cta-band.'
+---
+
+## Static or interactive
+
+**Server.** No client JavaScript of its own. [How to choose](/docs/guides/static-or-interactive/).
+
+## Use
+
+`title` is the band's heading (h2 by default), `description` one line, and `actions` two
+[Buttons](/docs/components/button/): one primary, one quiet. The design makes the primary one
+Accent, since a Primary green sinks into the band. The band is dark in both themes, with
+text/on-dark.
+
+## The background
+
+The design's background is a shader. Shaders wait for a later package, so it is drawn with CSS
+gradients; `background` takes a picture in its place, hidden from assistive technology.

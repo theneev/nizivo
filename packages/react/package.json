@@ -399,6 +399,10 @@
       "types": "./dist/unstable/copy-button/index.d.ts",
       "default": "./dist/unstable/copy-button/index.js"
     },
+    "./unstable/cta-band": {
+      "types": "./dist/unstable/cta-band/index.d.ts",
+      "default": "./dist/unstable/cta-band/index.js"
+    },
     "./unstable/date-range-picker": {
       "types": "./dist/unstable/date-range-picker/index.d.ts",
       "default": "./dist/unstable/date-range-picker/index.js"
@@ -439,6 +443,10 @@
       "types": "./dist/unstable/model-selector/index.d.ts",
       "default": "./dist/unstable/model-selector/index.js"
     },
+    "./unstable/newsletter-signup": {
+      "types": "./dist/unstable/newsletter-signup/index.d.ts",
+      "default": "./dist/unstable/newsletter-signup/index.js"
+    },
     "./unstable/notification-item": {
       "types": "./dist/unstable/notification-item/index.d.ts",
       "default": "./dist/unstable/notification-item/index.js"
@@ -462,6 +470,10 @@
     "./unstable/section-header": {
       "types": "./dist/unstable/section-header/index.d.ts",
       "default": "./dist/unstable/section-header/index.js"
+    },
+    "./unstable/site-footer": {
+      "types": "./dist/unstable/site-footer/index.d.ts",
+      "default": "./dist/unstable/site-footer/index.js"
     },
     "./unstable/slider": {
       "types": "./dist/unstable/slider/index.d.ts",
@@ -529,6 +541,7 @@
     "./css/comment.css": "./dist/css/comment.css",
     "./css/container.css": "./dist/css/container.css",
     "./css/copy-button.css": "./dist/css/copy-button.css",
+    "./css/cta-band.css": "./dist/css/cta-band.css",
     "./css/data-view.css": "./dist/css/data-view.css",
     "./css/date-range-picker.css": "./dist/css/date-range-picker.css",
     "./css/delta.css": "./dist/css/delta.css",
@@ -565,6 +578,7 @@
     "./css/motion.css": "./dist/css/motion.css",
     "./css/native-select.css": "./dist/css/native-select.css",
     "./css/nav-item.css": "./dist/css/nav-item.css",
+    "./css/newsletter-signup.css": "./dist/css/newsletter-signup.css",
     "./css/notification-item.css": "./dist/css/notification-item.css",
     "./css/number-field.css": "./dist/css/number-field.css",
     "./css/number-value.css": "./dist/css/number-value.css",
@@ -589,6 +603,7 @@
     "./css/select.css": "./dist/css/select.css",
     "./css/separator.css": "./dist/css/separator.css",
     "./css/sidebar.css": "./dist/css/sidebar.css",
+    "./css/site-footer.css": "./dist/css/site-footer.css",
     "./css/skeleton.css": "./dist/css/skeleton.css",
     "./css/slider.css": "./dist/css/slider.css",
     "./css/source-card.css": "./dist/css/source-card.css",

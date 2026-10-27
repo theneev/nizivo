@@ -1,0 +1,15 @@
+{
+  "name": "cta-band",
+  "status": "unstable",
+  "tier": "server",
+  "exports": ["CtaBand"],
+  "interactive": [],
+  "cssDeps": ["base"],
+  "variants": {},
+  "figma": {
+    "canonical": ["7394:50"],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": ["7389:78"]
+  }
+}

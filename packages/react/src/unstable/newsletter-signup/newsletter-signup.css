@@ -1,0 +1,66 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/newsletter-signup.css (Figma Newsletter Signup 7395:100), UNSTABLE. bg/brand-subtle,
+   radius 24, padded 32 with 16 px between the Heading/H3 title, the Body/M text/secondary line, the
+   form (the Email field and the Subscribe button side by side, 8 px apart, aligned to the input's
+   edge) and the Body/S text/secondary note. The success line is Label/M text/success. */
+@layer nz.components {
+  /* Figma's 520 px at least, unless the container is narrower */
+  .nz-newsletter-signup {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-4);
+    box-sizing: border-box;
+    min-inline-size: min(100%, 32.5rem);
+    padding: var(--nz-space-8);
+    border-radius: calc(var(--nz-radius-xl) + var(--nz-space-1));
+    background: var(--nz-bg-brand-subtle);
+  }
+
+  .nz-newsletter-signup-title {
+    margin: 0;
+    color: var(--nz-text-primary);
+    font: var(--nz-font-heading-h3);
+    letter-spacing: var(--nz-tracking-heading-h3);
+  }
+
+  .nz-newsletter-signup-description {
+    margin: 0;
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-body-m);
+  }
+
+  .nz-newsletter-signup-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: var(--nz-space-2);
+  }
+
+  .nz-newsletter-signup-field {
+    flex: 1 1 14rem;
+  }
+
+  /* the button lines up with the input, under the field's label */
+  .nz-newsletter-signup-form > .nz-button {
+    margin-block-start: calc(
+      var(--nz-font-label-m-line-height) * var(--nz-font-label-m-font-size) + var(--nz-space-1-5)
+    );
+  }
+
+  .nz-newsletter-signup-status:empty {
+    display: none;
+  }
+
+  .nz-newsletter-signup-status {
+    margin: 0;
+    color: var(--nz-text-success);
+    font: var(--nz-font-label-m);
+  }
+
+  .nz-newsletter-signup-note {
+    margin: 0;
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-body-s);
+  }
+}

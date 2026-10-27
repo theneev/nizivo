@@ -1,0 +1,91 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/site-footer.css (Figma Site Footer 7394:81), UNSTABLE. bg/canvas, padded 56 on
+   top and 32 elsewhere, 48 px between the top row and the legal row. The top row: the brand (320
+   px, the logo over a Body/M text/secondary line, 12 px apart) and the columns, 64 px apart, each a
+   Label/M Strong heading over Body/M text/secondary links, 12 px apart. The legal row sits under a
+   border/subtle rule, padded 24 on top, in Body/S text/secondary (Figma: text/tertiary, under AA).
+   Narrow, the brand and the columns wrap and stack. */
+@layer nz.components {
+  .nz-site-footer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-12);
+    padding: calc(var(--nz-space-10) + var(--nz-space-4)) var(--nz-space-8) var(--nz-space-8);
+    background: var(--nz-bg-canvas);
+  }
+
+  /* the brand and the columns wrap: narrow, they stack (Figma: one column below 768 px) */
+  .nz-site-footer-top {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--nz-space-8) calc(var(--nz-space-10) + var(--nz-space-6));
+  }
+
+  .nz-site-footer-brand {
+    display: flex;
+    flex: 1 1 20rem;
+    max-inline-size: 20rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--nz-space-3);
+  }
+
+  .nz-site-footer-description {
+    margin: 0;
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-body-m);
+  }
+
+  .nz-site-footer-column {
+    display: flex;
+    flex: 1 1 10rem;
+    flex-direction: column;
+    gap: var(--nz-space-3);
+  }
+
+  .nz-site-footer-heading {
+    margin: 0;
+    color: var(--nz-text-primary);
+    font: var(--nz-font-label-m-strong);
+  }
+
+  .nz-site-footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .nz-site-footer-link {
+    border-radius: var(--nz-radius-xs);
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-body-m);
+    text-decoration: none;
+
+    @media (hover: hover) {
+      &:hover {
+        color: var(--nz-text-primary);
+        text-decoration-line: underline;
+      }
+    }
+  }
+
+  .nz-site-footer-legal {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--nz-space-3);
+    padding-block-start: var(--nz-space-6);
+    border-block-start: var(--nz-border-width-default) solid var(--nz-border-subtle);
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-body-s);
+  }
+
+  .nz-site-footer-legal a {
+    border-radius: var(--nz-radius-xs);
+    color: inherit;
+  }
+}

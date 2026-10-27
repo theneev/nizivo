@@ -158,7 +158,7 @@
       "limitKiB": 2.5
     },
     "@nizivo/react/locales/en-US": {
-      "measured": 1691,
+      "measured": 1788,
       "limitKiB": 1.8
     },
     "@nizivo/react/menu": {
@@ -373,6 +373,10 @@
       "measured": 1448,
       "limitKiB": 1.6
     },
+    "@nizivo/react/unstable/cta-band": {
+      "measured": 889,
+      "limitKiB": 1
+    },
     "@nizivo/react/unstable/date-range-picker": {
       "measured": 38404,
       "limitKiB": 68
@@ -413,6 +417,10 @@
       "measured": 63785,
       "limitKiB": 69
     },
+    "@nizivo/react/unstable/newsletter-signup": {
+      "measured": 4901,
+      "limitKiB": 5.3
+    },
     "@nizivo/react/unstable/notification-item": {
       "measured": 940,
       "limitKiB": 1.1
@@ -436,6 +444,10 @@
     "@nizivo/react/unstable/section-header": {
       "measured": 845,
       "limitKiB": 1
+    },
+    "@nizivo/react/unstable/site-footer": {
+      "measured": 976,
+      "limitKiB": 1.1
     },
     "@nizivo/react/unstable/slider": {
       "measured": 1362,
@@ -745,6 +757,10 @@
       "measured": 764,
       "limitKiB": 0.8
     },
+    "@nizivo/react own: unstable/newsletter-signup/newsletter-signup.client": {
+      "measured": 907,
+      "limitKiB": 1
+    },
     "@nizivo/react own: unstable/prompt-composer/prompt-composer.client": {
       "measured": 747,
       "limitKiB": 0.9
@@ -872,6 +888,10 @@
     "@nizivo/react/css/copy-button.css": {
       "measured": 336,
       "limitKiB": 0.4
+    },
+    "@nizivo/react/css/cta-band.css": {
+      "measured": 583,
+      "limitKiB": 0.7
     },
     "@nizivo/react/css/data-view.css": {
       "measured": 570,
@@ -1017,6 +1037,10 @@
       "measured": 1004,
       "limitKiB": 1.1
     },
+    "@nizivo/react/css/newsletter-signup.css": {
+      "measured": 458,
+      "limitKiB": 0.5
+    },
     "@nizivo/react/css/notification-item.css": {
       "measured": 518,
       "limitKiB": 0.6
@@ -1112,6 +1136,10 @@
     "@nizivo/react/css/sidebar.css": {
       "measured": 928,
       "limitKiB": 1
+    },
+    "@nizivo/react/css/site-footer.css": {
+      "measured": 505,
+      "limitKiB": 0.6
     },
     "@nizivo/react/css/skeleton.css": {
       "measured": 365,

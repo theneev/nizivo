@@ -1,0 +1,15 @@
+{
+  "name": "site-footer",
+  "status": "unstable",
+  "tier": "server",
+  "exports": ["SiteFooter"],
+  "interactive": [],
+  "cssDeps": ["base"],
+  "variants": {},
+  "figma": {
+    "canonical": ["7394:81"],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": []
+  }
+}

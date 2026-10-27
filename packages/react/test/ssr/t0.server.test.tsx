@@ -113,6 +113,8 @@ const COMPONENTS = [
   'feature-card',
   'stat-block',
   'testimonial-card',
+  'cta-band',
+  'site-footer',
 ] as const;
 type Name = (typeof COMPONENTS)[number];
 
@@ -280,6 +282,8 @@ const entries = {
   'feature-card': () => import('../../src/unstable/feature-card/index'),
   'stat-block': () => import('../../src/unstable/stat-block/index'),
   'testimonial-card': () => import('../../src/unstable/testimonial-card/index'),
+  'cta-band': () => import('../../src/unstable/cta-band/index'),
+  'site-footer': () => import('../../src/unstable/site-footer/index'),
   'bulk-action-bar': () => import('../../src/bulk-action-bar/index'),
   'data-view': () => import('../../src/data-view/index'),
   surface: () => import('../../src/surface/index'),
@@ -363,6 +367,8 @@ const exampleModules = {
   'feature-card': () => import('../../src/unstable/feature-card/feature-card.example'),
   'stat-block': () => import('../../src/unstable/stat-block/stat-block.example'),
   'testimonial-card': () => import('../../src/unstable/testimonial-card/testimonial-card.example'),
+  'cta-band': () => import('../../src/unstable/cta-band/cta-band.example'),
+  'site-footer': () => import('../../src/unstable/site-footer/site-footer.example'),
   'bulk-action-bar': () => import('../../src/bulk-action-bar/bulk-action-bar.example'),
   'data-view': () => import('../../src/data-view/data-view.example'),
   surface: () => import('../../src/surface/surface.example'),
