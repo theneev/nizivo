@@ -113,6 +113,9 @@ const NIZIVO_CLIENT_MARKERS = [
   // (app/docs/(generated)/charts), so it may load on those three pages only; on any other page it
   // means a charts import joined the shared MDX graph.
   'nz-chart-interaction',
+  // React Aria's RangeCalendar, the DateRangePicker's lazy chunk (M71): its own default class name.
+  // No page may load it at page load, the picker's included: it loads on the first open
+  'react-aria-RangeCalendar',
 ];
 
 /**
@@ -163,9 +166,12 @@ const CLIENT_PAGES: Record<string, string[]> = {
   '/docs/components/number-field/': ['number-field-input', 'willValidate'],
   // Combobox reads its Field through useFieldControl, which lives in FieldScope's module.
   '/docs/components/combobox/': ['combobox-popup', 'willValidate'],
-  // the Popover's popup holds the calendar; FieldScope for the Field in its examples
+  // the Popover's popup holds the calendar, which loads on the first open (M71); FieldScope for the
+  // Field in its examples
   '/docs/components/date-range-picker/': ['popover-popup', 'willValidate'],
-  // the Dialog's popup holds the search and the rows; menu-popup is in its own nz-command-menu-popup
+  // the Dialog's popup holds the search and the rows, which load on the first open (M72); the
+  // leaf's own nz-command-menu-popup class matches menu-popup (markers match substrings), so this
+  // marker cannot tell the lazy menu chunk apart: the size lane measures the split instead
   '/docs/components/command-menu/': ['dialog-popup', 'menu-popup'],
   // The shell (week 20): TopBar and MobileTopBar are server parts whose examples put a SearchField
   // and IconButtons in their slots; MobileTabBar renders its inset island and More's Drawer sheet,

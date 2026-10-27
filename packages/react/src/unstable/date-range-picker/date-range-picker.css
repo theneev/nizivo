@@ -101,6 +101,11 @@
     inline-size: 18.5rem;
   }
 
+  /* the calendar's place while its chunk loads (M71): a five-week month's height */
+  .nz-date-range-picker-pending {
+    min-block-size: 15.5rem;
+  }
+
   .nz-date-range-picker-header {
     display: flex;
     align-items: center;

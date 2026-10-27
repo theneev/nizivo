@@ -109,7 +109,9 @@ describe('opening', () => {
     await userEvent.keyboard('{Meta>}k{/Meta}');
     await settle();
     expect(popup()).not.toBeNull();
-    expect(document.activeElement).toBe(input());
+    // the search is a lazy chunk (M72): the first open waits for it, then the field has focus
+    await vi.waitFor(() => expect(document.activeElement).toBe(input()));
+    expect(document.querySelector('.nz-command-menu-pending')).toBeNull();
     expect(popup()?.querySelector('[role="dialog"]')?.getAttribute('aria-label')).toBe(
       'Command menu',
     );

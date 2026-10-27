@@ -54,6 +54,9 @@ function fixDate(): void {
   globalThis.Date = FixedDate as DateConstructor;
 }
 
+/** The placeholders a lazy chunk's Suspense shows while it loads (M71, M72). */
+const LAZY_PENDING = '.nz-date-range-picker-pending, .nz-command-menu-pending';
+
 /** Open popups, and the toast stack, which the Toaster portals to <body> like a popup. */
 const POPUP = '[data-slot$="-popup"], [data-slot="toast-region"]';
 const DISABLED = ':disabled, [data-disabled], [aria-disabled="true"]';
@@ -120,6 +123,8 @@ async function settle(): Promise<void> {
     await frame();
     const busy =
       document.querySelector('[data-entering], [data-exiting]') !== null ||
+      // a lazy chunk still loading (M71, M72): its placeholder holds the place
+      document.querySelector(LAZY_PENDING) !== null ||
       [...document.images].some((img) => !img.complete);
     if (!busy) return;
     if (performance.now() > deadline) {

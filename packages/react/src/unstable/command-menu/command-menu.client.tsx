@@ -1,7 +1,7 @@
 'use client';
 // CommandMenu (ARCHITECTURE.md §17 G18; gap report A §5; Figma's Command Menu 755:889). UNSTABLE:
-// async sources, a per-group cap, virtualisation, the result count announcement and the lazy chunk
-// are still to come (M72). The Dialog (its scrim, focus trap, Escape, return focus) holds React
+// async sources, a per-group cap, virtualisation and the result count announcement are still to
+// come; the search loads on the first open (M72). The Dialog (its scrim, focus trap, Escape, return focus) holds React
 // Aria's Autocomplete: a search field over a menu of rows, filtered as the reader types, the arrow
 // keys moving the active row while focus stays in the field. `mod+k` (⌘K or Ctrl+K) opens and
 // closes it through `@nizivo/react/hotkeys`, also from inside a text field; `CommandMenu.Trigger`
@@ -9,6 +9,8 @@
 // then closes the dialog. The server renders only the Trigger: a closed dialog emits no popup HTML.
 import {
   createContext,
+  lazy,
+  Suspense,
   use,
   useCallback,
   useId,
@@ -36,7 +38,20 @@ import type {
   CommandMenuRootProps,
   CommandMenuTriggerProps,
 } from './command-menu.contract';
-import * as Engine from './engine';
+/**
+ * React Aria's Autocomplete, SearchField and Menu load on the first open, in one chunk of their own
+ * (M72): the page ships the trigger and the Dialog, not the search. Every part comes from the same
+ * import, so the chunk loads once.
+ */
+const engine = (): Promise<typeof import('./engine')> => import('./engine');
+const Engine = {
+  Search: lazy(() => engine().then((e) => ({ default: e.Search }))),
+  Input: lazy(() => engine().then((e) => ({ default: e.Input }))),
+  List: lazy(() => engine().then((e) => ({ default: e.List }))),
+  Group: lazy(() => engine().then((e) => ({ default: e.Group }))),
+  GroupLabel: lazy(() => engine().then((e) => ({ default: e.GroupLabel }))),
+  Item: lazy(() => engine().then((e) => ({ default: e.Item }))),
+};
 
 interface ScopeValue {
   labels: CommandMenuLabels;
@@ -169,7 +184,10 @@ export function CommandMenuPopup({
   const { labels } = use(Scope);
   return (
     <DialogPopup aria-label={labels.label} className={cx('nz-command-menu-popup', className)}>
-      <Engine.Search filter={filter}>{children}</Engine.Search>
+      {/* the search row's place while the chunk loads, so the dialog does not jump */}
+      <Suspense fallback={<div className="nz-command-menu-pending" aria-hidden="true" />}>
+        <Engine.Search filter={filter}>{children}</Engine.Search>
+      </Suspense>
     </DialogPopup>
   );
 }

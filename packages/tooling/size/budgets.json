@@ -334,11 +334,11 @@
       "limitKiB": 2.7
     },
     "@nizivo/react/unstable/command-menu": {
-      "measured": 58773,
+      "measured": 35184,
       "limitKiB": 64
     },
     "@nizivo/react/unstable/date-range-picker": {
-      "measured": 62501,
+      "measured": 38410,
       "limitKiB": 68
     },
     "@nizivo/react dashboard set": {
@@ -574,12 +574,20 @@
       "limitKiB": 0.6
     },
     "@nizivo/react own: unstable/command-menu/command-menu.client": {
-      "measured": 1526,
+      "measured": 1609,
       "limitKiB": 1.7
     },
     "@nizivo/react own: unstable/date-range-picker/date-range-picker.client": {
-      "measured": 2372,
+      "measured": 2552,
       "limitKiB": 2.5
+    },
+    "@nizivo/react lazy: the DateRangePicker calendar": {
+      "measured": 39816,
+      "limitKiB": 43
+    },
+    "@nizivo/react lazy: the CommandMenu search": {
+      "measured": 44989,
+      "limitKiB": 49
     },
     "@nizivo/react seam K6 (stateAttrs, details, EngineLocale, engineDom)": {
       "measured": 757,
@@ -650,7 +658,7 @@
       "limitKiB": 1.2
     },
     "@nizivo/react/css/command-menu.css": {
-      "measured": 860,
+      "measured": 875,
       "limitKiB": 1
     },
     "@nizivo/react/css/container.css": {
@@ -662,7 +670,7 @@
       "limitKiB": 0.7
     },
     "@nizivo/react/css/date-range-picker.css": {
-      "measured": 1214,
+      "measured": 1225,
       "limitKiB": 1.3
     },
     "@nizivo/react/css/delta.css": {

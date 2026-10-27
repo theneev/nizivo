@@ -28,6 +28,11 @@
     border-block-end: var(--nz-border-width-default) solid var(--nz-border-subtle);
   }
 
+  /* the search row's place while the menu's chunk loads (M72) */
+  .nz-command-menu-pending {
+    min-block-size: 3.5rem;
+  }
+
   .nz-command-menu-search {
     display: inline-flex;
     flex: none;

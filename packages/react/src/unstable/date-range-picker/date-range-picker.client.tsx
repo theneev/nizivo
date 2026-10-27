@@ -8,7 +8,16 @@
 // "today" (the presets, the today mark) is counted in the required `timeZone`. The server renders
 // only the trigger and the hidden form input (closed overlays emit no popup HTML), so nothing that
 // depends on the clock reaches the server HTML.
-import { useId, useState, type JSX } from 'react';
+import {
+  lazy,
+  Suspense,
+  useId,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type JSX,
+  type RefObject,
+} from 'react';
 import { Button } from '../../button/index';
 import { useLabels, useResolvedLocale } from '../../config/config.client';
 import { details } from '../../contracts/details';
@@ -28,7 +37,26 @@ import type {
   DateRangePreset,
   DateRangePickerState,
 } from './date-range-picker.contract';
-import * as Engine from './engine';
+/**
+ * React Aria's RangeCalendar loads on the first open, in its own chunk (§16.3, M71): the page ships
+ * the trigger and the presets, not the calendar. Until it arrives the calendar's box holds its
+ * place, so the popup does not jump.
+ */
+const Calendar = lazy(() => import('./engine').then((engine) => ({ default: engine.Calendar })));
+
+/**
+ * On the first open the Popover chooses its first focus (§12.2) before the calendar has arrived, so
+ * with no presets it lands past it, in the footer. When the calendar mounts, the body's first button
+ * takes focus back if it is still there, as when the calendar was in the popup from the start.
+ */
+function FocusOnArrival({ body }: { body: RefObject<HTMLDivElement | null> }): null {
+  useLayoutEffect(() => {
+    if (document.activeElement?.closest('.nz-date-range-picker-footer')) {
+      body.current?.querySelector<HTMLElement>('button:not(:disabled)')?.focus();
+    }
+  }, [body]);
+  return null;
+}
 
 const ALL_PRESETS: readonly DateRangePreset[] = [
   'today',
@@ -186,6 +214,7 @@ export function DateRangePicker({
     labelBehavior: 'focus',
   });
   const valueId = useId();
+  const body = useRef<HTMLDivElement | null>(null);
 
   const [uncontrolled, setUncontrolled] = useState<DateRange | null>(defaultValue);
   const applied = controlled === undefined ? uncontrolled : controlled;
@@ -294,7 +323,7 @@ export function DateRangePicker({
             : { 'aria-labelledby': popupLabelledBy })}
           className="nz-date-range-picker-popup"
         >
-          <div className="nz-date-range-picker-body">
+          <div className="nz-date-range-picker-body" ref={body}>
             {presets.length > 0 && (
               <fieldset className="nz-date-range-picker-presets" aria-label={L.presets}>
                 {presets.map((preset) => (
@@ -316,26 +345,36 @@ export function DateRangePicker({
                 ))}
               </fieldset>
             )}
-            <Engine.Calendar
-              value={draft}
-              onChange={(picked) => {
-                setDraft(picked);
-                setChosen(null);
-              }}
-              focused={focused ?? applied?.end ?? today()}
-              onFocusChange={setFocused}
-              min={min}
-              max={max}
-              aria-label={L.placeholder}
-              root={(p) => renderDiv({ ...p, className: 'nz-date-range-picker-calendar' }, {})}
-              header={(p) => renderHeader({ ...p, className: 'nz-date-range-picker-header' }, {})}
-              heading={(p) => renderH2({ ...p, className: 'nz-date-range-picker-heading' }, {})}
-              previous={nav}
-              next={nav}
-              grid={(p) => renderTable({ ...p, className: 'nz-date-range-picker-grid' }, {})}
-              weekday={(p) => renderTh({ ...p, className: 'nz-date-range-picker-weekday' }, {})}
-              day={day}
-            />
+            <Suspense
+              fallback={
+                <div
+                  className="nz-date-range-picker-calendar nz-date-range-picker-pending"
+                  aria-hidden="true"
+                />
+              }
+            >
+              <Calendar
+                value={draft}
+                onChange={(picked) => {
+                  setDraft(picked);
+                  setChosen(null);
+                }}
+                focused={focused ?? applied?.end ?? today()}
+                onFocusChange={setFocused}
+                min={min}
+                max={max}
+                aria-label={L.placeholder}
+                root={(p) => renderDiv({ ...p, className: 'nz-date-range-picker-calendar' }, {})}
+                header={(p) => renderHeader({ ...p, className: 'nz-date-range-picker-header' }, {})}
+                heading={(p) => renderH2({ ...p, className: 'nz-date-range-picker-heading' }, {})}
+                previous={nav}
+                next={nav}
+                grid={(p) => renderTable({ ...p, className: 'nz-date-range-picker-grid' }, {})}
+                weekday={(p) => renderTh({ ...p, className: 'nz-date-range-picker-weekday' }, {})}
+                day={day}
+              />
+              <FocusOnArrival body={body} />
+            </Suspense>
           </div>
           <div className="nz-date-range-picker-footer">
             <span className="nz-date-range-picker-range">

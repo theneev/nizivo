@@ -13,6 +13,7 @@
     "nz-command-menu-kind",
     "nz-command-menu-label",
     "nz-command-menu-list",
+    "nz-command-menu-pending",
     "nz-command-menu-popup",
     "nz-command-menu-search",
     "nz-dialog-popup"

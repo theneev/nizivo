@@ -6,7 +6,8 @@
  * - A slot is a JSX `data-slot="x"` attribute or an object-literal `'data-slot': 'x'` property; its
  *   attributes are the other `data-*` names on the same element or object, plus `...stateAttrs(…)`.
  * - An element whose tag is `Engine.<Part>` hands its props to the engine adapter
- *   (`src/_engines/<engine>/<name>.client.tsx`, through `engine.ts`), which adds the attributes of
+ *   (`src/_engines/<engine>/<name>.client.tsx`, through `engine.ts`, imported statically or, for a
+ *   lazy leaf, with `import()` behind a `const Engine = { … }` of lazy parts), which adds the attributes of
  *   every `stateAttrs(…)` it merges with them (`mergeProps(…, dom, stateAttrs(s))`). A named object
  *   prop (`positioner={{ 'data-slot': … }}`) is followed the same way through that parameter.
  * - State keys map to attribute names through the PRESENCE and VALUED tables in
@@ -422,6 +423,17 @@ function engineNamespace(file: SourceFile): { name: string; module: string } | u
         module: resolveSource(dirname(file.getFilePath()), './engine'),
       };
     }
+  }
+  // A leaf that loads its engine on first use (D-dm) names the parts on a module-level object of
+  // `lazy(() => import('./engine')…)` components, `const Engine = { Item: lazy(…), … }`: the same
+  // parts, so the same adapter exports.
+  const lazy = file.getVariableDeclaration('Engine');
+  if (
+    lazy !== undefined &&
+    Node.isObjectLiteralExpression(lazy.getInitializer()) &&
+    file.getFullText().includes("import('./engine')")
+  ) {
+    return { name: 'Engine', module: resolveSource(dirname(file.getFilePath()), './engine') };
   }
   return undefined;
 }

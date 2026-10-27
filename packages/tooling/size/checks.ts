@@ -141,6 +141,14 @@ export function sizeEntries(): SizeEntry[] {
           path: join(dir, 'dist', `${module}.js`),
         });
       }
+      for (const chunk of LAZY_CHUNKS) {
+        out.push({
+          name: chunk.name,
+          pkg,
+          family: 'composite',
+          path: join(dir, 'dist', `${chunk.module}.js`),
+        });
+      }
       out.push(
         {
           name: '@nizivo/react seam K6 (stateAttrs, details, EngineLocale, engineDom)',
@@ -258,6 +266,32 @@ export const ownCodeOnly = {
   },
 };
 
+/**
+ * Leaves `import()` targets out of an entry's bundle: a lazy chunk (M71, M72) loads on first use,
+ * not with the entry, and LAZY_CHUNKS measures it on its own. Not in method.ts, so the seam harness
+ * (seam/seam.ts) measures exactly as before.
+ */
+export const lazyChunksExternal = {
+  name: 'nizivo-lazy-chunks-external',
+  setup(build: PluginBuild): void {
+    build.onResolve({ filter: /.*/ }, (args) =>
+      args.kind === 'dynamic-import' ? { path: args.path, external: true } : undefined,
+    );
+  },
+};
+
+/**
+ * The lazy chunks of @nizivo/react: the module a leaf imports with `import()`, measured with what it
+ * pulls in (React external), which is what the first open loads at most.
+ */
+export const LAZY_CHUNKS: readonly { name: string; module: string }[] = [
+  {
+    name: '@nizivo/react lazy: the DateRangePicker calendar',
+    module: 'unstable/date-range-picker/engine',
+  },
+  { name: '@nizivo/react lazy: the CommandMenu search', module: 'unstable/command-menu/engine' },
+];
+
 type EsbuildConfig = Record<string, unknown>;
 
 export interface SizeLimitCheck {
@@ -319,7 +353,7 @@ export function sizeLimitChecks({
     check.modifyEsbuildConfig = (config) => ({
       ...config,
       ...ESBUILD_METHOD,
-      ...(own ? { plugins: [ownCodeOnly] } : {}),
+      plugins: [own ? ownCodeOnly : lazyChunksExternal],
     });
     return check;
   });

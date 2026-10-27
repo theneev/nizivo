@@ -136,9 +136,13 @@ describe('the popover', () => {
     await userEvent.click(trigger(container));
     await settle();
     expect(popup()).not.toBeNull();
-    expect(document.querySelector('.nz-date-range-picker-heading')?.textContent).toBe(
-      'October 2026',
+    // the calendar is a lazy chunk (M71): the first open waits for it
+    await vi.waitFor(() =>
+      expect(document.querySelector('.nz-date-range-picker-heading')?.textContent).toBe(
+        'October 2026',
+      ),
     );
+    expect(document.querySelector('.nz-date-range-picker-pending')).toBeNull();
     const start = document.querySelector('[data-range-start]');
     const end = document.querySelector('[data-range-end]');
     expect(start?.textContent).toBe('1');

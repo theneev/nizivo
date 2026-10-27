@@ -8,6 +8,8 @@ import { afterAll, describe, expect, test } from 'vitest';
 import {
   BUDGETS,
   limitOf,
+  LAZY_CHUNKS,
+  lazyChunksExternal,
   ownCodeOnly,
   sizeEntries,
   sizeLimitChecks,
@@ -123,7 +125,12 @@ describe('budgets.json', () => {
                 conditions: config['conditions'],
                 bundle: config['bundle'],
               },
-        ownCodePlugin: config?.['plugins'] !== undefined,
+        // own code alone, or (every other bundled entry) lazy chunks left out
+        plugin: Array.isArray(config?.['plugins'])
+          ? config['plugins'].map((p: unknown) =>
+              typeof p === 'object' && p !== null ? Reflect.get(p, 'name') : undefined,
+            )
+          : undefined,
         engineExternal: check.ignore !== undefined,
         expected: {
           name: e?.name,
@@ -134,7 +141,10 @@ describe('budgets.json', () => {
             e?.family === 'file'
               ? undefined
               : { format: 'esm', conditions: ['production'], bundle: true },
-          ownCodePlugin: e?.family === 'own',
+          plugin:
+            e?.family === 'file'
+              ? undefined
+              : [e?.family === 'own' ? 'nizivo-own-code-only' : 'nizivo-lazy-chunks-external'],
           engineExternal: e?.engineExternal === true,
         },
       };
@@ -149,6 +159,23 @@ describe('budgets.json', () => {
       expect(check.gzip).toBeUndefined();
     }
   });
+});
+
+test('lazyChunksExternal leaves only import() targets out, and each lazy chunk has an entry', () => {
+  let callback: ((args: { path: string; kind: string }) => unknown) | undefined;
+  lazyChunksExternal.setup({
+    onResolve: (_options, cb) => {
+      callback = cb;
+    },
+  });
+  expect(callback?.({ path: './engine.js', kind: 'dynamic-import' })).toEqual({
+    path: './engine.js',
+    external: true,
+  });
+  expect(callback?.({ path: './engine.js', kind: 'import-statement' })).toBeUndefined();
+  expect(callback?.({ path: './x.js', kind: 'entry-point' })).toBeUndefined();
+  const names = new Set(sizeEntries().map((e) => e.name));
+  for (const chunk of LAZY_CHUNKS) expect(names.has(chunk.name)).toBe(true);
 });
 
 test('ownCodeOnly keeps the entry and makes every import external', () => {
