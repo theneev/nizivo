@@ -8,6 +8,7 @@ import { patternNames } from '../../apps/docs/scripts/examples.ts';
 import {
   buildItems,
   buildRegistry,
+  frozenVersions,
   componentSheets,
   packageVersions,
   range,
@@ -182,5 +183,28 @@ describe('the build', () => {
     expect(files.get('_headers')).toContain(
       '/r/latest/*\n  Access-Control-Allow-Origin: *\n  Cache-Control: public, max-age=300',
     );
+  });
+});
+
+describe('the frozen versions', () => {
+  it('are byte for byte as frozen: every file matches its manifest, and nothing is added', () => {
+    for (const [version, files] of frozenVersions()) {
+      const manifest: unknown = JSON.parse(files.get('manifest.json') ?? '');
+      expect(manifest).toMatchObject({ version, algorithm: 'sha256' });
+      const hashes =
+        typeof manifest === 'object' && manifest !== null && 'files' in manifest
+          ? Object.fromEntries(Object.entries(manifest.files ?? {}))
+          : {};
+      expect([...files.keys()].filter((f) => f !== 'manifest.json').toSorted()).toEqual(
+        Object.keys(hashes).toSorted(),
+      );
+      for (const [file, hash] of Object.entries(hashes)) {
+        expect(
+          createHash('sha256')
+            .update(files.get(file) ?? '')
+            .digest('hex'),
+        ).toBe(hash);
+      }
+    }
   });
 });

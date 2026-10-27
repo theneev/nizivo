@@ -15,6 +15,8 @@
 // (`node scripts/registry.ts --freeze`, RELEASING.md) under apps/docs/registry/v<version>/, and
 // every build serves the frozen versions as they are. A version that is frozen is served frozen,
 // so changes after a release reach the registry with the next version.
+// The frozen files are byte for byte what `--freeze` wrote (their manifest hashes them), so the
+// formatter leaves apps/docs/registry/ alone (.oxfmtrc.json) and nothing may rewrite them.
 import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { join, relative } from 'node:path';

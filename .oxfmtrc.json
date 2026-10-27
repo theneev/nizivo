@@ -6,6 +6,7 @@
     "pnpm-lock.yaml",
     "packages/tokens/figma/raw/**",
     "**/.next/**",
-    "**/.packed/**"
+    "**/.packed/**",
+    "apps/docs/registry/**"
   ]
 }
