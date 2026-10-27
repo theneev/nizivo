@@ -1,5 +1,25 @@
 # @nizivo/charts
 
+## 0.3.0
+
+### Minor Changes
+
+- 42ffb84: FunnelChart (`@nizivo/charts/funnel-chart`): steps in order, each a bar of its share of the first
+  step, with its count and its share of the step before as text, drawn on the server with no client
+  JavaScript (Figma 03's Funnel Chart). Screen readers read the data table: step, count and % of
+  previous. `funnelSteps` exports the rule.
+- 42ffb84: Heatmap (`@nizivo/charts/heatmap`): a value per row and column as a grid of cells on Figma's
+  five-step ramp (`chart/primary` at 8 to 100 %), with a "Fewer … More" scale, drawn on the server with
+  no client JavaScript. Screen readers read the data table, one row per row of the grid.
+  `heatmapStep` and `heatmapGrid` export the rules.
+
+### Patch Changes
+
+- 4371483: The declaration files name d3-shape's `CurveFactory` (AreaChart's and Sparkline's `curve`), so
+  `@types/d3-shape` is now a dependency rather than a development one: an app that typechecks its
+  dependencies (`skipLibCheck: false`) no longer fails on `@nizivo/charts`.
+- @nizivo/tokens@0.3.0
+
 ## 0.2.1
 
 ### Patch Changes

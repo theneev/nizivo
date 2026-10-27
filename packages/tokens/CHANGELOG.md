@@ -1,5 +1,9 @@
 # @nizivo/tokens
 
+## 0.3.0
+
+No changes in this release.
+
 ## 0.2.1
 
 ### Patch Changes

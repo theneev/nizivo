@@ -1,5 +1,72 @@
 # @nizivo/react
 
+## 0.3.0
+
+### Minor Changes
+
+- bc2bae7: Accordion (`@nizivo/react/accordion`): sections that open and close under their headings, with no
+  client JavaScript. Each `Accordion.Item` is a native `<details>` with an `Accordion.Trigger`
+  summary and an `Accordion.Panel`; `Accordion.Root name` makes the items exclusive through
+  `<details name>`, and `defaultOpen` opens one on the first render.
+- 251ef52: BulkActionBar (`@nizivo/react/bulk-action-bar`): the bar over a selectable table, with how many rows
+  are selected and the actions. A server part: inside TableSelection, its island writes the count ("2
+  selected", announced politely) as the selection changes, and the actions work before hydration
+  through the rows' form. `labels.selected` (catalogue key `bulkActionBar`) and `locale` set the
+  count.
+- f647e89: Combobox (`@nizivo/react/combobox`): a text input that suggests items from a list as the reader
+  types, on React Aria's ComboBox. `Combobox.Root` draws Input's box around `Combobox.Input` and an
+  optional `Combobox.Trigger`; `Combobox.Popup` holds `Combobox.Item`s with Groups, GroupLabels and
+  Separators, in Select's popup and rows. The list filters with a "contains" match in the locale; the
+  input keeps focus while the arrow keys move the active item; Enter chooses and Escape reverts.
+  `value` and `inputValue` are controllable, `allowsCustomValue` accepts any text, `menuTrigger` sets
+  when the list opens, and a hidden input carries the chosen value into forms. It joins the
+  react-aria overlay family and passes its conformance suite. Field wiring as Input.
+- 3579126: CommandMenu (`@nizivo/react/unstable/command-menu`, unstable): Figma's Command Menu, a search field
+  over groups of rows in the Dialog, filtered as the reader types (React Aria's Autocomplete). ⌘K (Ctrl+K
+  elsewhere) or `CommandMenu.Trigger` opens it; rows are links or actions with an icon, a kind and a
+  shortcut. Unstable until async sources, a per-group cap and the lazy chunk land.
+- 533f6dd: DataView (`@nizivo/react/data-view`): the same records as a table on a wide view and as a list on a
+  narrow one, with no client JavaScript. The server renders both and a container query on the root
+  shows the table from 40rem of its own width, the list below. `DataView.Item` rows follow Figma's
+  Order List Item, with an optional stretched `DataView.ItemLink`.
+- 565e10b: DateRangePicker (`@nizivo/react/unstable/date-range-picker`, unstable): a range of ISO plain dates
+  from a trigger in Select's look, through Figma's popover with presets, one month of React Aria's
+  RangeCalendar and Cancel and Apply. "Today" counts in the required `timeZone`; the form gets the ISO
+  interval `start/end`. Unstable until design draws the unavailable day and a comparison period.
+- 3579126: `@nizivo/react/hotkeys`: keyboard shortcuts in one page-wide registry (`registerHotkey`, `useHotkey`,
+  `useHotkeys`), written as Kbd takes them (`"mod+k"`) and matched by tinykeys. Never during an IME
+  composition, not while typing unless `allowInInputs`, and a single printable key warns in
+  development (WCAG 2.1.4).
+- 0814649: NumberField (`@nizivo/react/number-field`): a number in the reader's locale, a price, a percent or
+  a unit, in Input's box, on React Aria's NumberField. `formatOptions` takes `Intl.NumberFormat`
+  options; what is typed is parsed in the locale on blur or Enter, clamped to `min` and `max`,
+  snapped to `step` and formatted, and the server HTML already shows the formatted value. A hidden
+  input carries the plain number into forms. `NumberField.Decrement` and `NumberField.Increment` add
+  optional step buttons, out of the tab order and named by React Aria ("Increase Price"); `labels`
+  replaces the names. Field wiring as Input.
+- 100cf18: PageIndicator (`@nizivo/react/page-indicator`): where a carousel or a sequence is, as dots or a
+  "2 / 9" chip, with no client JavaScript. The visual is decorative and a visually hidden "2 of 9"
+  says the position (`labels.position`, catalogue key `pageIndicator`). `tone="media"` sits on a
+  photo, on `bg/code` and `text/on-dark` until design adds on-media tokens.
+- 533f6dd: PointerFx and `usePointerFx` (`@nizivo/react/pointer-fx`): an element that tilts toward a mouse
+  pointer and lifts (`effect="tilt"`), or leans toward it (`effect="magnetic"`). The hook writes
+  `--nz-pointer-x` and `--nz-pointer-y` once per frame; touch, pen and reduced motion leave the element
+  still, and the server renders only `data-pointer-fx`.
+- 2a535ec: QuantityStepper (`@nizivo/react/quantity-stepper`): a whole-number quantity in Input's box between a
+  minus and a plus button. The input is a native number input, so Tab reaches only it and the arrow
+  keys step it; the buttons, out of the tab order, step it for the pointer, fire the native `input`
+  and `change` events and are disabled at the ends of the range. Field wiring as Input, and
+  `labels.decrement` / `labels.increment` ("Decrease quantity" / "Increase quantity") in the `quantityStepper` catalogue
+  key.
+- 533f6dd: Surface (`@nizivo/react/surface`): a panel of the page's surface colour, with no client JavaScript.
+  `material="glass"` is Figma's Surface/Glass, `bg/surface` at 72 % over a 24 px backdrop blur with a
+  soft shadow; it stays opaque without `backdrop-filter` (Safari before 18), under
+  `prefers-reduced-transparency: reduce` and in forced colours.
+
+### Patch Changes
+
+- @nizivo/tokens@0.3.0
+
 ## 0.2.1
 
 ### Patch Changes
