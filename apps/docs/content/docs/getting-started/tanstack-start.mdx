@@ -1,0 +1,84 @@
+---
+title: TanStack Start
+description: Set up Nizivo in a TanStack Start app, server-rendered on Vite.
+---
+
+Everything on this page is checked by the TanStack Start fixture (`fixtures/tanstack-start`,
+`@tanstack/react-start` 1.169.4 and `@tanstack/react-router` 1.170.46 on Vite 8.3.4, `vite build`
+served by `vite preview`) on the packed packages, except where a note says otherwise.
+
+## Install
+
+```sh
+pnpm add @nizivo/react@next @nizivo/tokens@next
+```
+
+## Link the CSS from the root route
+
+Nizivo's JavaScript never imports CSS, so the server build needs no `ssr.noExternal`. Link the one
+stylesheet (the tokens, the accessibility floor and every stable component, in layer order) from the
+root route's `head().links`, with a `?url` import:
+
+```tsx title="src/routes/__root.tsx"
+import styles from '@nizivo/react/styles.css?url';
+import { createRootRoute } from '@tanstack/react-router';
+
+export const Route = createRootRoute({
+  head: () => ({
+    links: [{ rel: 'stylesheet', href: styles }],
+  }),
+  component: Root,
+});
+```
+
+Or link `@nizivo/tokens/tokens.css?url`, `@nizivo/react/css/base.css?url` and one
+`css/<name>.css?url` per component you use, never both. Set Vite's CSS target as on the
+[Vite page](/docs/getting-started/vite/#set-the-css-target): Start builds with Vite, and the same
+`light-dark()` rewrite applies.
+
+## Theme
+
+Put `data-nz-theme="system"` on `<html>` and `ThemeScript` first in `<head>`, so a stored choice
+applies before first paint. The script changes `<html>`'s attributes before hydration, so `<html>`
+takes `suppressHydrationWarning`:
+
+```tsx title="src/routes/__root.tsx"
+import { ThemeScript } from '@nizivo/react/theme-script';
+import { HeadContent, Outlet, Scripts } from '@tanstack/react-router';
+
+function Root() {
+  return (
+    <html lang="en" data-nz-theme="system" suppressHydrationWarning>
+      <head>
+        <ThemeScript />
+        <HeadContent />
+      </head>
+      <body>
+        <Outlet />
+        <Scripts />
+      </body>
+    </html>
+  );
+}
+```
+
+Under a strict CSP, pass `nonce` to `ThemeScript`, or allow it by the hash on its
+[page](/docs/components/theme-script/).
+
+## What the fixture checks
+
+Seven file routes (Buttons, every server-safe component through the barrel, a dismissible Alert,
+Select with Dialog and Tooltip, a Field around every control, a Menu open on first render, Tabs) are
+server-rendered and hydrated:
+
+- the build prints no warning, and the server build imports `@nizivo/*` from `node_modules`;
+- every route hydrates with no console message, and the interactions work after hydration;
+- axe finds nothing in light, dark, forced colours or with reduced motion;
+- Start splits a chunk per route, and each route ships only the client modules of what it renders:
+  a route that imports Buttons from the `@nizivo/react` barrel ships no Nizivo client module.
+
+## Not covered by the fixture yet
+
+Start's React Server Components (experimental: whether `@vitejs/plugin-rsc` honours `'use client'`
+inside `node_modules` is unverified), server functions, deployment adapters other than
+`vite preview`, and the dev server.

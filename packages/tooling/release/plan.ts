@@ -123,12 +123,14 @@ export const RELEASE_LANES: readonly Lane[] = [
     dir: 'fixtures/runner',
     script: 'fixture:charts',
   },
-  ...(['next', 'vite', 'vite-ssr', 'react-router', 'astro'] as const).map((fixture) => ({
-    id: `fixture-${fixture}`,
-    why: `the ${fixture} fixture on the packed packages (§18.1, exit criterion 2)`,
-    dir: 'fixtures/runner',
-    script: `fixture:${fixture}`,
-  })),
+  ...(['next', 'vite', 'vite-ssr', 'react-router', 'tanstack-start', 'astro'] as const).map(
+    (fixture) => ({
+      id: `fixture-${fixture}`,
+      why: `the ${fixture} fixture on the packed packages (§18.1, exit criterion 2)`,
+      dir: 'fixtures/runner',
+      script: `fixture:${fixture}`,
+    }),
+  ),
   // CSP Profile A/B and Trusted Types (v0.3, §19.3, R13): the Vite SSR fixture's server HTML under
   // each policy, in Chromium, WebKit and Firefox.
   {

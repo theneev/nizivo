@@ -32,6 +32,7 @@
     "fixture:vite": "pnpm --filter @nizivo/fixture-runner fixture:vite",
     "fixture:vite-ssr": "pnpm --filter @nizivo/fixture-runner fixture:vite-ssr",
     "fixture:react-router": "pnpm --filter @nizivo/fixture-runner fixture:react-router",
+    "fixture:tanstack-start": "pnpm --filter @nizivo/fixture-runner fixture:tanstack-start",
     "fixture:astro": "pnpm --filter @nizivo/fixture-runner fixture:astro",
     "fixture:charts": "pnpm --filter @nizivo/fixture-runner fixture:charts",
     "fixture:registry": "pnpm --filter @nizivo/fixture-runner fixture:registry",

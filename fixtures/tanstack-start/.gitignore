@@ -1,0 +1,4 @@
+.packed/
+dist/
+# written by Start's router plugin on every build
+src/routeTree.gen.ts

@@ -1,4 +1,4 @@
 {
   "title": "Getting started",
-  "pages": ["next", "vite", "react-router", "astro", "tailwind"]
+  "pages": ["next", "vite", "react-router", "tanstack-start", "astro", "tailwind"]
 }

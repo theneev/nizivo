@@ -1,0 +1,26 @@
+# This fixture is its own pnpm workspace root, excluded from the monorepo (../../pnpm-workspace.yaml),
+# as fixtures/react-router is: it installs @nizivo/* from the folders fixtures/runner/pack.ts unpacks
+# into the gitignored .packed/ folder, and the committed pnpm-lock.yaml stays valid across builds.
+
+# @nizivo/react depends on @nizivo/tokens at its exact version, which is not on the registry.
+overrides:
+  '@nizivo/tokens': 'file:.packed/tokens'
+
+# Same supply-chain policy as the monorepo root (ARCHITECTURE.md §19.3).
+minimumReleaseAge: 4320
+allowBuilds: {}
+trustPolicy: no-downgrade
+blockExoticSubdeps: true
+
+# semver 6.3.1 (@tanstack/start-plugin-core > @babel/core > semver ^6.3.1): the provenance downgrade
+# on a maintenance line that the root, React Router and registry fixtures accept (M47).
+trustPolicyExclude:
+  - semver@6.3.1
+
+# pnpm 12 asks before a dependency may provide agent skills; denied, as tokens-bruecke's is in the
+# root, so no third-party instructions reach coding agents through node_modules.
+permissions:
+  '@tanstack/react-router':
+    skills: false
+  '@tanstack/react-start':
+    skills: false
