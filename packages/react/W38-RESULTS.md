@@ -32,7 +32,17 @@ is under `@nizivo/react/unstable/<name>` and unreviewed.
 - **Glyphs:** copy, quote, menu (Lucide), arrow-up-right (Feather-derived). THIRD_PARTY_NOTICES
   lists 38.
 - **Not built:** the Docs Header (16), which is the docs app's own; the AI assistant panel (week 36);
-  12 Shaders & Motion, whose shaders wait for `@nizivo/lab`.
+  page 12's shaders, which wait for `@nizivo/lab`.
+
+## Then: page 12's CSS motion parts (D-dq)
+
+Ticker, CaretHeadline and LivePulse (server) and WordRotator (client), changeset `motion-parts.md`.
+D-dq splits page 12: its shaders stay with `@nizivo/lab`, its plain-CSS loops come here. Every loop
+runs on `--nz-duration-pulse` (0 under Reduced motion) and stops under the media query or
+`data-nz-motion="reduce"`; the Ticker pauses under the pointer or focus and hides its copy from
+assistive technology; WordRotator gives a screen reader every word once, as a list. Skeleton
+Shimmer and Toast Enter already exist as Skeleton and Toast. `motion-parts.spec.tsx` (5 cases)
+passes in the three engines; 16 new baselines, stable on three reruns.
 
 ## Where they differ from Figma
 
