@@ -1,0 +1,854 @@
+{
+  "fixture": "csp",
+  "command": "fixtures/vite-ssr built; served by fixtures/runner/csp.ts under each policy",
+  "themeHash": "sha256-nA1HUQWDdDUFqqoxWbjzCzcYSjzWLEe0pwDdRCMGqOw=",
+  "pass": true,
+  "serverStyleAttributes": {
+    "/": [],
+    "/button-only": [],
+    "/t0-barrel": [],
+    "/alert-dismiss": [],
+    "/overlays": ["div"],
+    "/forms": [],
+    "/menu": [],
+    "/tabs": []
+  },
+  "failures": [],
+  "profileBBlocked": {
+    "chromium": ["/overlays div"],
+    "webkit": [
+      "/forms native-select-trigger.nz-native-select-trigger",
+      "/overlays div",
+      "/overlays select"
+    ],
+    "firefox": ["/overlays div"]
+  },
+  "trustedTypesReports": [],
+  "engines": {
+    "chromium": {
+      "enforcesStyleSrcAttr": true,
+      "pages": {
+        "/": {
+          "a": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "hash": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "nometa": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "b": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "tt": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          }
+        },
+        "/button-only": {
+          "a": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "hash": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "nometa": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "b": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "tt": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          }
+        },
+        "/t0-barrel": {
+          "a": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "hash": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "nometa": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "b": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "tt": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          }
+        },
+        "/alert-dismiss": {
+          "a": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "hash": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "nometa": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "b": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "tt": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          }
+        },
+        "/overlays": {
+          "a": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true", "dialog opens: true", "select opens: true"],
+            "failures": []
+          },
+          "hash": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true", "dialog opens: true", "select opens: true"],
+            "failures": []
+          },
+          "nometa": {
+            "violations": [
+              {
+                "directive": "style-src-elem",
+                "disposition": "enforce",
+                "blocked": "inline",
+                "element": "style",
+                "sample": ""
+              }
+            ],
+            "console": [
+              "Applying inline style violates the following Content Security Policy directive 'style-src 'self' 'nonce-<n>''. Either the 'unsafe-inline' keyword, a hash ('sha256-38RhXrc7EdReTKsOm23ZPOCUgniTUUcjky8QOOrQx6o='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+            ],
+            "checks": ["theme script ran: true", "dialog opens: true", "select opens: true"],
+            "failures": []
+          },
+          "b": {
+            "violations": [
+              {
+                "directive": "style-src-attr",
+                "disposition": "enforce",
+                "blocked": "inline",
+                "element": "div",
+                "sample": ""
+              }
+            ],
+            "console": [
+              "Applying inline style violates the following Content Security Policy directive 'style-src-attr 'none''. Either the 'unsafe-inline' keyword, a hash ('sha256-nlaag70CeJ4ApAK6zDhDoc67sPQgJmu/ZcrF3ZRA718='), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply to event handlers, style attributes and javascript: navigations unless the 'unsafe-hashes' keyword is present. The action has been blocked."
+            ],
+            "checks": ["theme script ran: true", "dialog opens: true", "select opens: true"],
+            "failures": []
+          },
+          "tt": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          }
+        },
+        "/forms": {
+          "a": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "hash": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "nometa": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "b": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "tt": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          }
+        },
+        "/menu": {
+          "a": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "hash": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "nometa": {
+            "violations": [
+              {
+                "directive": "style-src-elem",
+                "disposition": "enforce",
+                "blocked": "inline",
+                "element": "style",
+                "sample": ""
+              }
+            ],
+            "console": [
+              "Applying inline style violates the following Content Security Policy directive 'style-src 'self' 'nonce-<n>''. Either the 'unsafe-inline' keyword, a hash ('sha256-38RhXrc7EdReTKsOm23ZPOCUgniTUUcjky8QOOrQx6o='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+            ],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "b": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "tt": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          }
+        },
+        "/tabs": {
+          "a": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "hash": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "nometa": {
+            "violations": [
+              {
+                "directive": "style-src-elem",
+                "disposition": "enforce",
+                "blocked": "inline",
+                "element": "style",
+                "sample": ""
+              }
+            ],
+            "console": [
+              "Applying inline style violates the following Content Security Policy directive 'style-src 'self' 'nonce-<n>''. Either the 'unsafe-inline' keyword, a hash ('sha256-38RhXrc7EdReTKsOm23ZPOCUgniTUUcjky8QOOrQx6o='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+            ],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "b": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "tt": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          }
+        }
+      }
+    },
+    "webkit": {
+      "enforcesStyleSrcAttr": true,
+      "pages": {
+        "/": {
+          "a": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "hash": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "nometa": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "b": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          }
+        },
+        "/button-only": {
+          "a": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "hash": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "nometa": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "b": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          }
+        },
+        "/t0-barrel": {
+          "a": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "hash": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "nometa": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "b": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          }
+        },
+        "/alert-dismiss": {
+          "a": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "hash": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "nometa": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "b": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          }
+        },
+        "/overlays": {
+          "a": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true", "dialog opens: true", "select opens: true"],
+            "failures": []
+          },
+          "hash": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true", "dialog opens: true", "select opens: true"],
+            "failures": []
+          },
+          "nometa": {
+            "violations": [
+              {
+                "directive": "style-src-elem",
+                "disposition": "enforce",
+                "blocked": "inline",
+                "element": "style",
+                "sample": ""
+              }
+            ],
+            "console": [
+              "Refused to apply a stylesheet because its hash, its nonce, or 'unsafe-inline' does not appear in the style-src directive of the Content Security Policy."
+            ],
+            "checks": ["theme script ran: true", "dialog opens: true", "select opens: true"],
+            "failures": []
+          },
+          "b": {
+            "violations": [
+              {
+                "directive": "style-src-attr",
+                "disposition": "enforce",
+                "blocked": "inline",
+                "element": "div",
+                "sample": ""
+              },
+              {
+                "directive": "style-src-attr",
+                "disposition": "enforce",
+                "blocked": "inline",
+                "element": "select",
+                "sample": ""
+              }
+            ],
+            "console": [
+              "Refused to apply a stylesheet because its hash, its nonce, or 'unsafe-inline' does not appear in the style-src directive of the Content Security Policy.",
+              "Refused to apply a stylesheet because its hash, its nonce, or 'unsafe-inline' does not appear in the style-src directive of the Content Security Policy."
+            ],
+            "checks": ["theme script ran: true", "dialog opens: true", "select opens: true"],
+            "failures": []
+          }
+        },
+        "/forms": {
+          "a": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "hash": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "nometa": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "b": {
+            "violations": [
+              {
+                "directive": "style-src-attr",
+                "disposition": "enforce",
+                "blocked": "inline",
+                "element": "native-select-trigger.nz-native-select-trigger",
+                "sample": ""
+              }
+            ],
+            "console": [
+              "Refused to apply a stylesheet because its hash, its nonce, or 'unsafe-inline' does not appear in the style-src directive of the Content Security Policy."
+            ],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          }
+        },
+        "/menu": {
+          "a": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "hash": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "nometa": {
+            "violations": [
+              {
+                "directive": "style-src-elem",
+                "disposition": "enforce",
+                "blocked": "inline",
+                "element": "style",
+                "sample": ""
+              }
+            ],
+            "console": [
+              "Refused to apply a stylesheet because its hash, its nonce, or 'unsafe-inline' does not appear in the style-src directive of the Content Security Policy."
+            ],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "b": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          }
+        },
+        "/tabs": {
+          "a": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "hash": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "nometa": {
+            "violations": [
+              {
+                "directive": "style-src-elem",
+                "disposition": "enforce",
+                "blocked": "inline",
+                "element": "style",
+                "sample": ""
+              }
+            ],
+            "console": [
+              "Refused to apply a stylesheet because its hash, its nonce, or 'unsafe-inline' does not appear in the style-src directive of the Content Security Policy."
+            ],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "b": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          }
+        }
+      }
+    },
+    "firefox": {
+      "enforcesStyleSrcAttr": true,
+      "pages": {
+        "/": {
+          "a": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "hash": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "nometa": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "b": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          }
+        },
+        "/button-only": {
+          "a": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "hash": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "nometa": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "b": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          }
+        },
+        "/t0-barrel": {
+          "a": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "hash": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "nometa": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "b": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          }
+        },
+        "/alert-dismiss": {
+          "a": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "hash": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "nometa": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "b": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          }
+        },
+        "/overlays": {
+          "a": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true", "dialog opens: true", "select opens: true"],
+            "failures": []
+          },
+          "hash": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true", "dialog opens: true", "select opens: true"],
+            "failures": []
+          },
+          "nometa": {
+            "violations": [
+              {
+                "directive": "style-src-elem",
+                "disposition": "enforce",
+                "blocked": "inline",
+                "element": "style",
+                "sample": ""
+              }
+            ],
+            "console": [
+              "[JavaScript Error: \"Content-Security-Policy: The page’s settings blocked an inline style (style-src-elem) from being applied because it violates the following directive: “style-src 'self' 'nonce-<n>'”. Consider using a hash ('sha256-38RhXrc7EdReTKsOm23ZPOCUgniTUUcjky8QOOrQx6o=', requires 'unsafe-hashes' for style attributes) or a nonce.\" {file: \"<origin>/assets/index-CnawYoFz.js\" line: 15}]"
+            ],
+            "checks": ["theme script ran: true", "dialog opens: true", "select opens: true"],
+            "failures": []
+          },
+          "b": {
+            "violations": [
+              {
+                "directive": "style-src-attr",
+                "disposition": "enforce",
+                "blocked": "inline",
+                "element": "div",
+                "sample": ""
+              }
+            ],
+            "console": [
+              "[JavaScript Error: \"Content-Security-Policy: The page’s settings blocked an inline style (style-src-attr) from being applied because it violates the following directive: “style-src-attr 'none'”. Consider using a hash ('sha256-nlaag70CeJ4ApAK6zDhDoc67sPQgJmu/ZcrF3ZRA718=', requires 'unsafe-hashes' for style attributes) or a nonce.\nSource: border:0;clip:rect(0 0 0 0);clip-path:in…\" {file: \"<origin>/overlays?csp=b\" line: 0}]"
+            ],
+            "checks": ["theme script ran: true", "dialog opens: true", "select opens: true"],
+            "failures": []
+          }
+        },
+        "/forms": {
+          "a": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "hash": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "nometa": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "b": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          }
+        },
+        "/menu": {
+          "a": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "hash": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "nometa": {
+            "violations": [
+              {
+                "directive": "style-src-elem",
+                "disposition": "enforce",
+                "blocked": "inline",
+                "element": "style",
+                "sample": ""
+              }
+            ],
+            "console": [
+              "[JavaScript Error: \"Content-Security-Policy: The page’s settings blocked an inline style (style-src-elem) from being applied because it violates the following directive: “style-src 'self' 'nonce-<n>'”. Consider using a hash ('sha256-38RhXrc7EdReTKsOm23ZPOCUgniTUUcjky8QOOrQx6o=', requires 'unsafe-hashes' for style attributes) or a nonce.\" {file: \"<origin>/assets/index-CnawYoFz.js\" line: 15}]"
+            ],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "b": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          }
+        },
+        "/tabs": {
+          "a": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "hash": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "nometa": {
+            "violations": [
+              {
+                "directive": "style-src-elem",
+                "disposition": "enforce",
+                "blocked": "inline",
+                "element": "style",
+                "sample": ""
+              }
+            ],
+            "console": [
+              "[JavaScript Error: \"Content-Security-Policy: The page’s settings blocked an inline style (style-src-elem) from being applied because it violates the following directive: “style-src 'self' 'nonce-<n>'”. Consider using a hash ('sha256-38RhXrc7EdReTKsOm23ZPOCUgniTUUcjky8QOOrQx6o=', requires 'unsafe-hashes' for style attributes) or a nonce.\" {file: \"<origin>/assets/index-CnawYoFz.js\" line: 15}]"
+            ],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          },
+          "b": {
+            "violations": [],
+            "console": [],
+            "checks": ["theme script ran: true"],
+            "failures": []
+          }
+        }
+      }
+    }
+  }
+}

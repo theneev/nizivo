@@ -1,6 +1,7 @@
 // ThemeScript (ARCHITECTURE.md §7.4, §8.3 scope attributes): a server-safe inline script that, before
 // first paint, restores the reader's saved theme (data-nz-theme from localStorage `nz-theme`) and
 // sets data-nz-platform, so Kbd shows ⌘ spellings on Apple devices without a flash.
+import { createHash } from 'node:crypto';
 import { renderToString } from 'react-dom/server';
 import { describe, expect, test } from 'vitest';
 import { graph, isClient, reactImports, REACT_SERVER, rekey } from '../helpers/graph';
@@ -50,6 +51,12 @@ describe('markup', () => {
     expect(renderToString(<ThemeScript nonce="abc" />)).toBe(
       `<script nonce="abc">${themeScript}</script>`,
     );
+  });
+
+  test('the CSP hash its JSDoc publishes is the hash of the script (§19.3)', () => {
+    const source = SRC.get('src/theme-script/theme-script.tsx') ?? '';
+    const published = /script-src '(sha256-[A-Za-z0-9+/=]+)'/.exec(source)?.[1];
+    expect(published).toBe(`sha256-${createHash('sha256').update(themeScript).digest('base64')}`);
   });
 
   test('it stays small (§7.4: ~250 B per half; both halves 379 B)', () => {

@@ -35,6 +35,7 @@
     "fixture:astro": "pnpm --filter @nizivo/fixture-runner fixture:astro",
     "fixture:charts": "pnpm --filter @nizivo/fixture-runner fixture:charts",
     "fixture:registry": "pnpm --filter @nizivo/fixture-runner fixture:registry",
+    "fixture:csp": "pnpm --filter @nizivo/fixture-runner fixture:csp",
     "lint:hooks": "pnpm --filter @nizivo/react-hooks-lint lint:hooks",
     "floor": "node fixtures/floor-lane/run.ts",
     "floor:gen": "node fixtures/floor-lane/gen-w5.ts",

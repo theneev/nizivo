@@ -22,3 +22,28 @@ the browser fails the page with one console message.
 
 Not measured here: which client modules each page ships. The pages share one client bundle, because
 `renderToString` does not wait for lazy chunks; fixtures/vite and fixtures/next measure tree-shaking.
+
+## CSP Profile A/B and Trusted Types (v0.3, 2026-10-27)
+
+`fixtures/runner/csp.ts` (lane `fixture-csp`; ARCHITECTURE.md §19.3, R13) serves this fixture's
+server HTML under each policy, with a fresh nonce per response on the header, every `<script>` and
+modulepreload, and `<meta property="csp-nonce">`, and checks Chromium, WebKit and Firefox.
+`results/csp.json` is the recorded run.
+
+**Verdict: Profile A holds on every page in all three engines; so does the theme script allowed by
+its published SHA-256 instead of a nonce; Profile B holds on the server-safe pages. Trusted Types
+(report-only, Chromium) reports nothing.**
+
+- **Profile A** (`style-src-attr 'unsafe-inline'`): no violation, no console message, the Dialog and
+  the Select open. The csp-nonce meta matters: without it, React Aria's injected `<style>` (its
+  `touch-action` rule for pressables) is blocked on every page with a pressable, in every engine.
+- **Profile B** (`style-src-attr 'none'`): the server renders one `style=` attribute on these pages:
+  React Aria's visually hidden wrapper around the Select's hidden `<select>` on `/overlays` (R13).
+  All three engines block it; the Select still opens and submits (its hidden control is off screen
+  either way). WebKit also reports `style-src-attr` on every `<select>` element (the NativeSelect on
+  `/forms`, the hidden one on `/overlays`) with no `style` attribute in the HTML: its own form
+  control rendering, recorded and not failed.
+- **All three engines enforce `style-src-attr`** (the control page's attribute is blocked), so the
+  plan's matrix is now verified in Firefox too.
+- **The theme script's hash** in its JSDoc is checked by a unit test
+  (`test/ssr/theme-script.test.tsx`) and allowed by the `hash` policy here.

@@ -14,7 +14,8 @@
     "fixture:react-router": "node react-router.ts",
     "fixture:astro": "node astro.ts",
     "fixture:charts": "node charts.ts --engines chromium,webkit,firefox",
-    "fixture:registry": "node registry.ts"
+    "fixture:registry": "node registry.ts",
+    "fixture:csp": "node csp.ts"
   },
   "devDependencies": {
     "@nizivo/tsconfig": "workspace:*",

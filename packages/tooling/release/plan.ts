@@ -129,6 +129,14 @@ export const RELEASE_LANES: readonly Lane[] = [
     dir: 'fixtures/runner',
     script: `fixture:${fixture}`,
   })),
+  // CSP Profile A/B and Trusted Types (v0.3, §19.3, R13): the Vite SSR fixture's server HTML under
+  // each policy, in Chromium, WebKit and Firefox.
+  {
+    id: 'fixture-csp',
+    why: 'CSP Profile A and B and Trusted Types on server-rendered pages, three engines (§19.3, R13)',
+    dir: 'fixtures/runner',
+    script: 'fixture:csp',
+  },
   // The copy-paste registry (v0.3, D-dj): the shadcn CLI adds every item to a Vite app on the
   // packed packages, which typechecks, builds and renders (§19.3, K13).
   {
