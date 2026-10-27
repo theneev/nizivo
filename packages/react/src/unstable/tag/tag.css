@@ -1,0 +1,108 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/tag.css (Figma Tag 7370:69), UNSTABLE. A 32 px pill, radius/full, padded 12 and
+   8, 6 px between its parts, Label/M: bg/surface with border/default; under the pointer bg/hover
+   with border/strong; selected bg/brand-subtle with border/brand, text/brand and a 16 px check;
+   disabled bg/disabled with text/secondary (Figma: text/disabled, under AA). The remove button is a 24 px round target with a 14 px
+   ×. Each button keeps the base focus outline. */
+@layer nz.components {
+  .nz-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--nz-space-1-5);
+    box-sizing: border-box;
+    block-size: var(--nz-space-8);
+    padding-inline: var(--nz-space-3) var(--nz-space-2);
+    border: var(--nz-border-width-default) solid var(--nz-border-default);
+    border-radius: var(--nz-radius-full);
+    background: var(--nz-bg-surface);
+    color: var(--nz-text-primary);
+    font: var(--nz-font-label-m);
+    white-space: nowrap;
+    transition:
+      background-color var(--nz-duration-fast) var(--nz-easing-standard),
+      border-color var(--nz-duration-fast) var(--nz-easing-standard);
+
+    @media (hover: hover) {
+      &:not([data-disabled]):has(.nz-tag-toggle:hover, .nz-tag-remove:hover) {
+        border-color: var(--nz-border-strong);
+        background: var(--nz-bg-hover);
+      }
+    }
+  }
+
+  /* without a remove button the end padding matches the start */
+  .nz-tag:not(:has(.nz-tag-remove)) {
+    padding-inline-end: var(--nz-space-3);
+  }
+
+  .nz-tag[data-selected] {
+    border-color: var(--nz-border-brand);
+    background: var(--nz-bg-brand-subtle);
+    color: var(--nz-text-brand);
+  }
+
+  /* text/secondary where Figma draws text/disabled: a disabled token's name is still read, and
+     text/disabled on bg/disabled is under AA (as D-co keeps an expired discount readable) */
+  .nz-tag[data-disabled] {
+    border-color: var(--nz-border-subtle);
+    background: var(--nz-bg-disabled);
+    color: var(--nz-text-secondary);
+  }
+
+  .nz-tag-toggle,
+  .nz-tag-remove {
+    display: inline-flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+
+  .nz-tag-toggle {
+    gap: var(--nz-space-1-5);
+    border-radius: var(--nz-radius-full);
+  }
+
+  .nz-tag-check {
+    display: inline-flex;
+    font-size: var(--nz-size-icon-sm);
+  }
+
+  .nz-tag-remove {
+    justify-content: center;
+    inline-size: var(--nz-space-6);
+    block-size: var(--nz-space-6);
+    border-radius: var(--nz-radius-full);
+    color: var(--nz-icon-secondary);
+    font-size: 0.875rem;
+
+    @media (hover: hover) {
+      &:hover:not(:disabled) {
+        color: var(--nz-text-primary);
+      }
+    }
+  }
+
+  .nz-tag[data-disabled] .nz-tag-remove {
+    color: var(--nz-text-disabled);
+  }
+
+  @media (forced-colors: active) {
+    .nz-tag {
+      border-color: ButtonText;
+    }
+
+    .nz-tag[data-selected] {
+      border-width: 2px;
+    }
+  }
+}

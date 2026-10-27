@@ -47,6 +47,7 @@ const LUCIDE: Record<string, string> = {
   'refresh-cw': 'refresh-cw',
   mic: 'mic',
   'arrow-up': 'arrow-up',
+  star: 'star',
 };
 
 /**

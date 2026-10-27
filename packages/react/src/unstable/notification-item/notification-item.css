@@ -1,0 +1,72 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/notification-item.css (Figma Notification Item 7396:102), UNSTABLE. A row padded
+   14 by 16 with radius/lg, 12 px between a 32 px avatar, the text (the Label/M title over the
+   Body/S text/secondary detail, 4 px apart) and, when unread, an 8 px bg/brand dot. Unread rows
+   are bg/brand-subtle; a read row lifts to bg/hover under the pointer. */
+@layer nz.components {
+  .nz-notification-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--nz-space-3);
+    padding-block: calc(var(--nz-space-3) + var(--nz-space-0-5));
+    padding-inline: var(--nz-space-4);
+    border-radius: var(--nz-radius-lg);
+    color: var(--nz-text-primary);
+    text-decoration: none;
+    transition: background-color var(--nz-duration-fast) var(--nz-easing-standard);
+
+    @media (hover: hover) {
+      &:hover {
+        background: var(--nz-bg-hover);
+      }
+    }
+  }
+
+  .nz-notification-item[data-variant='unread'] {
+    background: var(--nz-bg-brand-subtle);
+  }
+
+  .nz-notification-item-avatar {
+    display: inline-flex;
+    flex: none;
+  }
+
+  .nz-notification-item-text {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: var(--nz-space-1);
+    min-inline-size: 0;
+  }
+
+  .nz-notification-item-title {
+    font: var(--nz-font-label-m);
+  }
+
+  .nz-notification-item-detail {
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-body-s);
+  }
+
+  .nz-notification-item-dot {
+    flex: none;
+    inline-size: var(--nz-space-2);
+    block-size: var(--nz-space-2);
+    margin-block-start: var(--nz-space-1-5);
+    border-radius: var(--nz-radius-full);
+    background: var(--nz-bg-brand);
+  }
+
+  @media (forced-colors: active) {
+    .nz-notification-item[data-variant='unread'] {
+      outline: 1px solid CanvasText;
+      outline-offset: -1px;
+    }
+
+    .nz-notification-item-dot {
+      forced-color-adjust: none;
+      background: CanvasText;
+    }
+  }
+}

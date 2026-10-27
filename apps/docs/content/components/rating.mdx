@@ -1,0 +1,15 @@
+---
+title: Rating
+description: 'Unstable: a read-only score, five stars with the score and the review count written out, read as one sentence. Import it from @nizivo/react/unstable/rating.'
+---
+
+## Static or interactive
+
+**Server.** No client JavaScript. [How to choose](/docs/guides/static-or-interactive/).
+
+## Reading it
+
+The stars are decoration: the whole is one image named in words, "Rated 4.8 out of 5 from 1,208
+reviews". `value` is the score, `max` the scale (5), `count` the number of reviews, and `locale`
+formats the numbers. A star fills for each whole point. It is not an input: to ask for a rating,
+use a [RadioGroup](/docs/components/radio-group/).

@@ -1,0 +1,117 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/file-item.css (Figma File Item 7396:153), UNSTABLE. bg/surface in a border/subtle
+   edge (border/critical on an error), radius/lg, padded 12 and 16, 12 px between a 40 px tile
+   (radius 10, bg/brand-subtle, bg/critical-subtle on an error) with the 20 px file mark, the text
+   (the Label/M name, a 4 px progress track, the Body/S detail, 6 px apart) and an 18 px action:
+   cancel, the success mark in icon/success, or retry in icon/critical. */
+@layer nz.components {
+  .nz-file-item {
+    --_nz-file-item-edge: var(--nz-border-subtle);
+    --_nz-file-item-tile: var(--nz-bg-brand-subtle);
+    --_nz-file-item-tile-fg: var(--nz-icon-brand);
+
+    display: flex;
+    align-items: center;
+    gap: var(--nz-space-3);
+    padding-block: var(--nz-space-3);
+    padding-inline: var(--nz-space-3) var(--nz-space-4);
+    border: var(--nz-border-width-default) solid var(--_nz-file-item-edge);
+    border-radius: var(--nz-radius-lg);
+    background: var(--nz-bg-surface);
+  }
+
+  .nz-file-item[data-tone='error'] {
+    --_nz-file-item-edge: var(--nz-border-critical);
+    --_nz-file-item-tile: var(--nz-bg-critical-subtle);
+    --_nz-file-item-tile-fg: var(--nz-icon-critical);
+  }
+
+  .nz-file-item-icon {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    inline-size: var(--nz-space-10);
+    block-size: var(--nz-space-10);
+    overflow: hidden;
+    border-radius: calc(var(--nz-radius-sm) * 1.25);
+    background: var(--_nz-file-item-tile);
+    color: var(--_nz-file-item-tile-fg);
+    font-size: var(--nz-size-icon-md);
+  }
+
+  .nz-file-item-text {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: var(--nz-space-1-5);
+    min-inline-size: 0;
+  }
+
+  .nz-file-item-name {
+    overflow: hidden;
+    color: var(--nz-text-primary);
+    font: var(--nz-font-label-m);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .nz-file-item-progress .nz-progress-bar-track {
+    block-size: var(--nz-space-1);
+  }
+
+  .nz-file-item-detail {
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-body-s);
+  }
+
+  .nz-file-item[data-tone='error'] .nz-file-item-detail {
+    color: var(--nz-text-critical);
+  }
+
+  .nz-file-item-action,
+  .nz-file-item-mark {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.125rem;
+  }
+
+  .nz-file-item-action {
+    inline-size: var(--nz-space-6);
+    block-size: var(--nz-space-6);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: var(--nz-radius-full);
+    background: transparent;
+    color: var(--nz-icon-secondary);
+    cursor: pointer;
+
+    @media (hover: hover) {
+      &:hover {
+        color: var(--nz-text-primary);
+      }
+    }
+  }
+
+  .nz-file-item[data-tone='error'] .nz-file-item-action {
+    color: var(--nz-icon-critical);
+  }
+
+  .nz-file-item-mark {
+    color: var(--nz-icon-success);
+  }
+
+  @media (forced-colors: active) {
+    .nz-file-item {
+      border-color: CanvasText;
+    }
+
+    .nz-file-item[data-tone='error'] {
+      border-width: 2px;
+    }
+  }
+}

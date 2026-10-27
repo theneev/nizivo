@@ -1,0 +1,15 @@
+{
+  "name": "tag",
+  "status": "unstable",
+  "tier": "server",
+  "exports": ["Tag"],
+  "interactive": ["tag-toggle", "tag-remove"],
+  "cssDeps": ["base"],
+  "variants": {},
+  "figma": {
+    "canonical": ["7370:69"],
+    "ghosts": [],
+    "variantsSeen": ["7370:37", "7370:45", "7370:53", "7370:61"],
+    "related": []
+  }
+}

@@ -1,0 +1,17 @@
+---
+title: FileItem
+description: 'Unstable: an attachment or an upload, its name with real progress and a cancel button, a success mark, or a red edge, a written reason and a retry button. Import it from @nizivo/react/unstable/file-item.'
+---
+
+## Static or interactive
+
+**Server.** No client JavaScript: its buttons call `onCancel` and `onRetry`.
+[How to choose](/docs/guides/static-or-interactive/).
+
+## States
+
+`status` is `uploading` (a [ProgressBar](/docs/components/progress-bar/) named "Uploading
+autumn-lookbook.pdf", with `progress` from 0 to 100, and a cancel button), `done` (a success mark
+read as "Uploaded") or `error` (a red edge, the reason in `detail` and a retry button). Each button
+is named after the file. `detail` is the line under the name: the sizes, the percentage, or why it
+failed.

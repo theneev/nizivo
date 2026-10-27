@@ -1,0 +1,17 @@
+{
+  "name": "notification-item",
+  "status": "unstable",
+  "tier": "server",
+  "exports": ["NotificationItem"],
+  "interactive": ["notification-item"],
+  "cssDeps": ["base"],
+  "variants": {
+    "variant": ["unread", "read"]
+  },
+  "figma": {
+    "canonical": ["7396:102"],
+    "ghosts": [],
+    "variantsSeen": ["7396:88", "7396:95"],
+    "related": []
+  }
+}

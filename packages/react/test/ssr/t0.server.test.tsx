@@ -97,6 +97,11 @@ const COMPONENTS = [
   'voice-orb',
   'chat-message',
   'ai-welcome',
+  // v0.5 (D-do)
+  'tag',
+  'rating',
+  'notification-item',
+  'file-item',
 ] as const;
 type Name = (typeof COMPONENTS)[number];
 
@@ -250,6 +255,10 @@ const entries = {
   'voice-orb': () => import('../../src/unstable/voice-orb/index'),
   'chat-message': () => import('../../src/unstable/chat-message/index'),
   'ai-welcome': () => import('../../src/unstable/ai-welcome/index'),
+  tag: () => import('../../src/unstable/tag/index'),
+  rating: () => import('../../src/unstable/rating/index'),
+  'notification-item': () => import('../../src/unstable/notification-item/index'),
+  'file-item': () => import('../../src/unstable/file-item/index'),
   'bulk-action-bar': () => import('../../src/bulk-action-bar/index'),
   'data-view': () => import('../../src/data-view/index'),
   surface: () => import('../../src/surface/index'),
@@ -318,6 +327,11 @@ const exampleModules = {
   'voice-orb': () => import('../../src/unstable/voice-orb/voice-orb.example'),
   'chat-message': () => import('../../src/unstable/chat-message/chat-message.example'),
   'ai-welcome': () => import('../../src/unstable/ai-welcome/ai-welcome.example'),
+  tag: () => import('../../src/unstable/tag/tag.example'),
+  rating: () => import('../../src/unstable/rating/rating.example'),
+  'notification-item': () =>
+    import('../../src/unstable/notification-item/notification-item.example'),
+  'file-item': () => import('../../src/unstable/file-item/file-item.example'),
   'bulk-action-bar': () => import('../../src/bulk-action-bar/bulk-action-bar.example'),
   'data-view': () => import('../../src/data-view/data-view.example'),
   surface: () => import('../../src/surface/surface.example'),

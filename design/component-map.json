@@ -758,6 +758,13 @@
         "size": ["sm", "md", "lg", "xl"]
       }
     },
+    "7370:69": {
+      "component": "tag",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/tag",
+      "export": "Tag",
+      "props": {}
+    },
     "7370:88": {
       "component": "accordion",
       "role": "canonical",
@@ -780,6 +787,33 @@
       "import": "@nizivo/react/unstable/prompt-composer",
       "export": "PromptComposer",
       "props": {}
+    },
+    "7396:102": {
+      "component": "notification-item",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/notification-item",
+      "export": "NotificationItem",
+      "props": {
+        "variant": ["unread", "read"]
+      }
+    },
+    "7396:153": {
+      "component": "file-item",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/file-item",
+      "export": "FileItem",
+      "props": {
+        "tone": ["uploading", "done", "error"]
+      }
+    },
+    "7396:158": {
+      "component": "rating",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/rating",
+      "export": "Rating",
+      "props": {
+        "variant": ["filled", "empty"]
+      }
     },
     "7409:25": {
       "component": "ai-badge",

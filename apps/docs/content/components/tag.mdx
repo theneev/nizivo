@@ -1,0 +1,17 @@
+---
+title: Tag
+description: 'Unstable: a filter chip or a removable token, 32 px and fully rounded, that toggles with a check and removes with its own named button. Import it from @nizivo/react/unstable/tag.'
+---
+
+## Static or interactive
+
+**Server.** No client JavaScript: its buttons call `onToggle` and `onRemove`.
+[How to choose](/docs/guides/static-or-interactive/).
+
+## Filter or token
+
+With `selected` the tag is a filter: a button with `aria-pressed` that shows a check when on, so the
+state is not colour alone. Without it, the label is plain text. `removable` adds a 24 px remove
+button named "Remove Ceramics" (`labels.remove`, with `{label}`); the two are sibling buttons.
+For read-only status, use [Badge](/docs/components/badge/); for a set of choices in a form, use
+[ChipGroup](/docs/components/chip-group/).

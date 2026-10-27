@@ -1,0 +1,17 @@
+{
+  "name": "file-item",
+  "status": "unstable",
+  "tier": "server",
+  "exports": ["FileItem"],
+  "interactive": ["file-item-action"],
+  "cssDeps": ["base", "progress-bar"],
+  "variants": {
+    "tone": ["uploading", "done", "error"]
+  },
+  "figma": {
+    "canonical": ["7396:153"],
+    "ghosts": [],
+    "variantsSeen": ["7396:107", "7396:123", "7396:137"],
+    "related": []
+  }
+}

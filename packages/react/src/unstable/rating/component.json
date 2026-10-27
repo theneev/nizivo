@@ -1,0 +1,17 @@
+{
+  "name": "rating",
+  "status": "unstable",
+  "tier": "server",
+  "exports": ["Rating"],
+  "interactive": [],
+  "cssDeps": ["base"],
+  "variants": {
+    "variant": ["filled", "empty"]
+  },
+  "figma": {
+    "canonical": ["7396:158"],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": []
+  }
+}

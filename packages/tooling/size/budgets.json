@@ -2,15 +2,15 @@
   "$comment": "Size budgets (ARCHITECTURE.md §17), written by `node packages/tooling/size/measure.ts --write`. measured: bytes, gzip -9, as size-limit 14.2 reports them. limitKiB: measured + 10%, rounded up (method.ts limitKiB), never above the entry's §17.1 plan limit (method.ts PLAN_LIMITS_KIB). Limits only go up through a labelled PR (§17.3).",
   "entries": {
     "@nizivo/react": {
-      "measured": 134584,
+      "measured": 134577,
       "limitKiB": 143
     },
     "@nizivo/react/accordion": {
-      "measured": 1313,
+      "measured": 1312,
       "limitKiB": 1.5
     },
     "@nizivo/react/alert": {
-      "measured": 1382,
+      "measured": 1383,
       "limitKiB": 1.4
     },
     "@nizivo/react/app-shell": {
@@ -42,7 +42,7 @@
       "limitKiB": 1
     },
     "@nizivo/react/button": {
-      "measured": 1277,
+      "measured": 1278,
       "limitKiB": 1.4
     },
     "@nizivo/react/card": {
@@ -110,7 +110,7 @@
       "limitKiB": 6.1
     },
     "@nizivo/react/form": {
-      "measured": 2852,
+      "measured": 2851,
       "limitKiB": 3
     },
     "@nizivo/react/grid": {
@@ -130,7 +130,7 @@
       "limitKiB": 0.3
     },
     "@nizivo/react/icon-button": {
-      "measured": 17531,
+      "measured": 17534,
       "limitKiB": 19
     },
     "@nizivo/react/image": {
@@ -154,11 +154,11 @@
       "limitKiB": 1.3
     },
     "@nizivo/react/kpi-tile": {
-      "measured": 2322,
+      "measured": 2321,
       "limitKiB": 2.5
     },
     "@nizivo/react/locales/en-US": {
-      "measured": 1437,
+      "measured": 1536,
       "limitKiB": 1.6
     },
     "@nizivo/react/menu": {
@@ -170,7 +170,7 @@
       "limitKiB": 1.3
     },
     "@nizivo/react/metric": {
-      "measured": 2143,
+      "measured": 2142,
       "limitKiB": 2.4
     },
     "@nizivo/react/mobile-tab-bar": {
@@ -210,7 +210,7 @@
       "limitKiB": 1.3
     },
     "@nizivo/react/pagination": {
-      "measured": 1987,
+      "measured": 1988,
       "limitKiB": 2
     },
     "@nizivo/react/password-input": {
@@ -238,7 +238,7 @@
       "limitKiB": 2.9
     },
     "@nizivo/react/radio-group": {
-      "measured": 2203,
+      "measured": 2205,
       "limitKiB": 2.4
     },
     "@nizivo/react/ranked-list": {
@@ -294,7 +294,7 @@
       "limitKiB": 1.2
     },
     "@nizivo/react/table": {
-      "measured": 1660,
+      "measured": 1661,
       "limitKiB": 1.8
     },
     "@nizivo/react/table-selection": {
@@ -318,7 +318,7 @@
       "limitKiB": 0.4
     },
     "@nizivo/react/toast": {
-      "measured": 14911,
+      "measured": 14913,
       "limitKiB": 16
     },
     "@nizivo/react/tooltip": {
@@ -330,7 +330,7 @@
       "limitKiB": 1
     },
     "@nizivo/react/trend-card": {
-      "measured": 2443,
+      "measured": 2444,
       "limitKiB": 2.7
     },
     "@nizivo/react/unstable/ai-badge": {
@@ -365,16 +365,28 @@
       "measured": 19656,
       "limitKiB": 21.2
     },
+    "@nizivo/react/unstable/file-item": {
+      "measured": 2066,
+      "limitKiB": 2.3
+    },
     "@nizivo/react/unstable/inline-assist": {
-      "measured": 1690,
+      "measured": 1691,
       "limitKiB": 1.9
     },
     "@nizivo/react/unstable/model-selector": {
-      "measured": 63788,
+      "measured": 63787,
       "limitKiB": 69
     },
+    "@nizivo/react/unstable/notification-item": {
+      "measured": 940,
+      "limitKiB": 1.1
+    },
     "@nizivo/react/unstable/prompt-composer": {
-      "measured": 1525,
+      "measured": 1526,
+      "limitKiB": 1.7
+    },
+    "@nizivo/react/unstable/rating": {
+      "measured": 1549,
       "limitKiB": 1.7
     },
     "@nizivo/react/unstable/response-block": {
@@ -382,19 +394,23 @@
       "limitKiB": 2.5
     },
     "@nizivo/react/unstable/source-card": {
-      "measured": 1349,
+      "measured": 1347,
       "limitKiB": 1.5
     },
     "@nizivo/react/unstable/suggestion-chip": {
       "measured": 1213,
       "limitKiB": 1.4
     },
+    "@nizivo/react/unstable/tag": {
+      "measured": 1319,
+      "limitKiB": 1.5
+    },
     "@nizivo/react/unstable/thinking-indicator": {
       "measured": 844,
       "limitKiB": 1
     },
     "@nizivo/react/unstable/tool-call-card": {
-      "measured": 1636,
+      "measured": 1635,
       "limitKiB": 1.8
     },
     "@nizivo/react/unstable/usage-meter": {
@@ -718,7 +734,7 @@
       "limitKiB": 0.8
     },
     "@nizivo/react/css/base.css": {
-      "measured": 1464,
+      "measured": 1487,
       "limitKiB": 1.6
     },
     "@nizivo/react/css/breadcrumb.css": {
@@ -805,6 +821,10 @@
       "measured": 362,
       "limitKiB": 0.4
     },
+    "@nizivo/react/css/file-item.css": {
+      "measured": 683,
+      "limitKiB": 0.8
+    },
     "@nizivo/react/css/file-upload.css": {
       "measured": 1261,
       "limitKiB": 1.4
@@ -889,6 +909,10 @@
       "measured": 1004,
       "limitKiB": 1.1
     },
+    "@nizivo/react/css/notification-item.css": {
+      "measured": 518,
+      "limitKiB": 0.6
+    },
     "@nizivo/react/css/number-field.css": {
       "measured": 517,
       "limitKiB": 0.6
@@ -944,6 +968,10 @@
     "@nizivo/react/css/ranked-list.css": {
       "measured": 825,
       "limitKiB": 0.9
+    },
+    "@nizivo/react/css/rating.css": {
+      "measured": 333,
+      "limitKiB": 0.4
     },
     "@nizivo/react/css/response-block.css": {
       "measured": 819,
@@ -1017,6 +1045,10 @@
       "measured": 972,
       "limitKiB": 1.1
     },
+    "@nizivo/react/css/tag.css": {
+      "measured": 656,
+      "limitKiB": 0.8
+    },
     "@nizivo/react/css/text.css": {
       "measured": 574,
       "limitKiB": 0.7
@@ -1058,7 +1090,7 @@
       "limitKiB": 1.1
     },
     "@nizivo/react/styles.css": {
-      "measured": 25973,
+      "measured": 25997,
       "limitKiB": 26
     },
     "@nizivo/tokens": {

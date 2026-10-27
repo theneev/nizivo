@@ -391,6 +391,10 @@
       "types": "./dist/unstable/feedback-bar/index.d.ts",
       "default": "./dist/unstable/feedback-bar/index.js"
     },
+    "./unstable/file-item": {
+      "types": "./dist/unstable/file-item/index.d.ts",
+      "default": "./dist/unstable/file-item/index.js"
+    },
     "./unstable/inline-assist": {
       "types": "./dist/unstable/inline-assist/index.d.ts",
       "default": "./dist/unstable/inline-assist/index.js"
@@ -399,9 +403,17 @@
       "types": "./dist/unstable/model-selector/index.d.ts",
       "default": "./dist/unstable/model-selector/index.js"
     },
+    "./unstable/notification-item": {
+      "types": "./dist/unstable/notification-item/index.d.ts",
+      "default": "./dist/unstable/notification-item/index.js"
+    },
     "./unstable/prompt-composer": {
       "types": "./dist/unstable/prompt-composer/index.d.ts",
       "default": "./dist/unstable/prompt-composer/index.js"
+    },
+    "./unstable/rating": {
+      "types": "./dist/unstable/rating/index.d.ts",
+      "default": "./dist/unstable/rating/index.js"
     },
     "./unstable/response-block": {
       "types": "./dist/unstable/response-block/index.d.ts",
@@ -414,6 +426,10 @@
     "./unstable/suggestion-chip": {
       "types": "./dist/unstable/suggestion-chip/index.d.ts",
       "default": "./dist/unstable/suggestion-chip/index.js"
+    },
+    "./unstable/tag": {
+      "types": "./dist/unstable/tag/index.d.ts",
+      "default": "./dist/unstable/tag/index.js"
     },
     "./unstable/thinking-indicator": {
       "types": "./dist/unstable/thinking-indicator/index.d.ts",
@@ -462,6 +478,7 @@
     "./css/feedback-bar.css": "./dist/css/feedback-bar.css",
     "./css/field.css": "./dist/css/field.css",
     "./css/fieldset.css": "./dist/css/fieldset.css",
+    "./css/file-item.css": "./dist/css/file-item.css",
     "./css/file-upload.css": "./dist/css/file-upload.css",
     "./css/form.css": "./dist/css/form.css",
     "./css/grid.css": "./dist/css/grid.css",
@@ -483,6 +500,7 @@
     "./css/motion.css": "./dist/css/motion.css",
     "./css/native-select.css": "./dist/css/native-select.css",
     "./css/nav-item.css": "./dist/css/nav-item.css",
+    "./css/notification-item.css": "./dist/css/notification-item.css",
     "./css/number-field.css": "./dist/css/number-field.css",
     "./css/number-value.css": "./dist/css/number-value.css",
     "./css/page-header.css": "./dist/css/page-header.css",
@@ -497,6 +515,7 @@
     "./css/quantity-stepper.css": "./dist/css/quantity-stepper.css",
     "./css/radio-group.css": "./dist/css/radio-group.css",
     "./css/ranked-list.css": "./dist/css/ranked-list.css",
+    "./css/rating.css": "./dist/css/rating.css",
     "./css/response-block.css": "./dist/css/response-block.css",
     "./css/search-field.css": "./dist/css/search-field.css",
     "./css/segmented-control.css": "./dist/css/segmented-control.css",
@@ -515,6 +534,7 @@
     "./css/table-selection.css": "./dist/css/table-selection.css",
     "./css/table.css": "./dist/css/table.css",
     "./css/tabs.css": "./dist/css/tabs.css",
+    "./css/tag.css": "./dist/css/tag.css",
     "./css/text.css": "./dist/css/text.css",
     "./css/textarea.css": "./dist/css/textarea.css",
     "./css/thinking-indicator.css": "./dist/css/thinking-indicator.css",

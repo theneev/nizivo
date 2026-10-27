@@ -1,0 +1,16 @@
+---
+title: NotificationItem
+description: 'Unstable: one row of activity in a panel or an inbox, who did what and when, as one link; unread rows are tinted, carry a dot and say "Unread". Import it from @nizivo/react/unstable/notification-item.'
+---
+
+## Static or interactive
+
+**Server.** No client JavaScript: the row is a link (`href`, or `render` for a router link).
+[How to choose](/docs/guides/static-or-interactive/).
+
+## Content
+
+`title` says what happened, `detail` adds a quote or a figure and `time` when (a `<time>` is
+best). `avatar` takes an [Avatar](/docs/components/avatar/), decorative since the title names the
+person. `unread` tints the row, adds a dot and starts its name with "Unread" (`labels.unread`), so
+the state is never the tint alone.

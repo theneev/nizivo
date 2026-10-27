@@ -1,0 +1,49 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/rating.css (Figma Rating 7396:158), UNSTABLE. Five 18 px stars 2 px apart, filled
+   in icon/warning for each whole point and outlined in border/strong otherwise, then the score in
+   Label/M Strong and the count in Body/S text/secondary, 8 px apart. */
+@layer nz.components {
+  .nz-rating {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--nz-space-2);
+  }
+
+  .nz-rating-stars {
+    display: inline-flex;
+    gap: 2px;
+    font-size: 1.125rem;
+  }
+
+  .nz-rating-star {
+    display: inline-flex;
+    color: var(--nz-border-strong);
+  }
+
+  .nz-rating-star[data-variant='filled'] {
+    color: var(--nz-icon-warning);
+
+    & svg {
+      fill: currentColor;
+    }
+  }
+
+  .nz-rating-value {
+    color: var(--nz-text-primary);
+    font: var(--nz-font-label-m-strong);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .nz-rating-count {
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-body-s);
+  }
+
+  @media (forced-colors: active) {
+    .nz-rating-star,
+    .nz-rating-star[data-variant='filled'] {
+      color: CanvasText;
+    }
+  }
+}

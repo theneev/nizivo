@@ -42,6 +42,10 @@ import type { InlineAssistLabels } from '../unstable/inline-assist/index';
 import type { VoiceOrbLabels } from '../unstable/voice-orb/index';
 import type { ChatLogLabels, ChatMessageLabels } from '../unstable/chat-message/index';
 import type { PromptComposerLabels } from '../unstable/prompt-composer/index';
+import type { TagLabels } from '../unstable/tag/index';
+import type { RatingLabels } from '../unstable/rating/index';
+import type { NotificationItemLabels } from '../unstable/notification-item/index';
+import type { FileItemLabels } from '../unstable/file-item/index';
 import type { RankedListLabels } from '../ranked-list/index';
 import type { SearchFieldLabels } from '../search-field/index';
 import type { SidebarLabels } from '../sidebar/index';
@@ -94,6 +98,10 @@ export const enUS: {
   chatMessage: ChatMessageLabels;
   chatLog: ChatLogLabels;
   promptComposer: PromptComposerLabels;
+  tag: TagLabels;
+  rating: RatingLabels;
+  notificationItem: NotificationItemLabels;
+  fileItem: FileItemLabels;
   rankedList: RankedListLabels;
   searchField: SearchFieldLabels;
   sidebar: SidebarLabels;
@@ -204,6 +212,19 @@ export const enUS: {
   chatMessage: { user: 'You', assistant: 'Assistant' },
   chatLog: { label: 'Conversation' },
   promptComposer: { label: 'Message', placeholder: 'Ask anything…', send: 'Send' },
+  tag: { remove: 'Remove {label}' },
+  rating: {
+    label: 'Rated {value} out of {max}',
+    labelWithCount: 'Rated {value} out of {max} from {count} reviews',
+    count: '({count} reviews)',
+  },
+  notificationItem: { unread: 'Unread' },
+  fileItem: {
+    progress: 'Uploading {name}',
+    cancel: 'Cancel upload of {name}',
+    retry: 'Retry upload of {name}',
+    done: 'Uploaded',
+  },
   rankedList: { loading: 'Loading {label}', empty: 'No data', error: 'Could not load {label}' },
   searchField: { label: 'Search', clear: 'Clear search' },
   sidebar: { nav: 'Primary' },
