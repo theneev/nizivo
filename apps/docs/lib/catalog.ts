@@ -44,10 +44,6 @@ function isManifest(value: unknown): value is ComponentManifest {
   return isRecord(value) && typeof value.name === 'string' && typeof value.tier === 'string';
 }
 
-function isComponentMap(value: unknown): value is ComponentMap {
-  return isRecord(value) && isRecord(value.nodes);
-}
-
 export function pascal(kebab: string): string {
   return kebab.replace(/(^|-)([a-z0-9])/g, (_m, _d: string, c: string) => c.toUpperCase());
 }
@@ -99,37 +95,4 @@ export function stylesheetKeys(): Set<string> {
 
 export function findEntry(kind: CatalogEntry['kind'], name: string): CatalogEntry | undefined {
   return catalog().find((e) => e.kind === kind && e.name === name);
-}
-
-/** design/component-map.json, written by `nz gen` (§20.2). */
-interface ComponentMap {
-  nodes: Record<
-    string,
-    { component: string; role: 'canonical' | 'ghost'; import: string; export: string }
-  >;
-}
-
-export interface FigmaNodes {
-  canonical: string[];
-  ghosts: string[];
-}
-
-let figmaCache: Map<string, FigmaNodes> | undefined;
-
-/** Figma canonical and ghost node ids per component, from the generated component map. */
-export function figmaNodes(name: string): FigmaNodes {
-  if (!figmaCache) {
-    const map = readRepoJson(
-      'design/component-map.json',
-      isComponentMap,
-      'run `pnpm nz gen` to write it',
-    );
-    figmaCache = new Map();
-    for (const [id, node] of Object.entries(map.nodes)) {
-      const entry = figmaCache.get(node.component) ?? { canonical: [], ghosts: [] };
-      (node.role === 'canonical' ? entry.canonical : entry.ghosts).push(id);
-      figmaCache.set(node.component, entry);
-    }
-  }
-  return figmaCache.get(name) ?? { canonical: [], ghosts: [] };
 }

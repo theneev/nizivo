@@ -159,7 +159,6 @@
         "$TURBO_ROOT$/packages/react/src/**/*.example.tsx",
         "$TURBO_ROOT$/packages/react/src/**/component.json",
         "$TURBO_ROOT$/packages/tokens/src/code-owned/**",
-        "$TURBO_ROOT$/design/component-map.json",
         "$TURBO_ROOT$/docs/figma/11-w2-server-safe-components.md",
         "$TURBO_ROOT$/docs/figma/12-w3-forms.md",
         "$TURBO_ROOT$/docs/figma/13-w4-menu-tabs.md",

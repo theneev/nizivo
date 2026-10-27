@@ -44,13 +44,7 @@ export function repoFileExists(path: string): boolean {
   return existsSync(repoPath(path));
 }
 
-export const FIGMA_FILE_URL = 'https://www.figma.com/design/BIzJFf1wm8KP0YG2AVI1tP/';
 export const REPO_URL = 'https://github.com/theneev/nizivo';
-
-/** `7275:15091` → the Figma link that opens that node. */
-export function figmaNodeUrl(id: string): string {
-  return `${FIGMA_FILE_URL}?node-id=${id.replace(':', '-')}`;
-}
 
 /** A repo-relative path → its page on GitHub (main branch). */
 export function repoFileUrl(path: string): string {

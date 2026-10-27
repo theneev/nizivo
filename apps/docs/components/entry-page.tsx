@@ -1,5 +1,5 @@
 // The body of a generated page: one public subpath of @nizivo/react. Every section is rendered from
-// generated data (contracts/api, component.json, design/component-map.json, the examples); the
+// generated data (contracts/api, component.json, the examples); the
 // optional notes file (content/components/<name>.mdx) adds prose and the keyboard map.
 import type { JSX } from 'react';
 import { Heading } from 'fumadocs-ui/components/heading';
@@ -8,12 +8,12 @@ import { CODE_THEMES } from '../lib/code';
 import defaultMdxComponents from 'fumadocs-ui/mdx';
 import type { ReactApiFile, SlotInfo } from '@nizivo/tooling/api/schema';
 import type { CatalogEntry } from '../lib/catalog';
-import { figmaNodes, stylesheetKeys } from '../lib/catalog';
+import { stylesheetKeys } from '../lib/catalog';
 import { cssApi, documentedComponents, importLines, ownExports, reactApi } from '../lib/api';
 import { examplesFor } from '../lib/examples';
 import { notesFor } from '../lib/notes';
 import { partId } from '../lib/outline';
-import { figmaNodeUrl, repoFileUrl } from '../lib/repo';
+import { repoFileUrl } from '../lib/repo';
 import { ComponentDocView, HooksTable, OtherExports, SlotsTable } from './api';
 import { Example, type ExampleModule } from './example';
 import { BlockMd, InlineMd } from './inline-md';
@@ -128,48 +128,6 @@ function Accessibility({ entry, api }: { entry: CatalogEntry; api: ReactApiFile 
       ) : (
         <p>To be written.</p>
       )}
-    </>
-  );
-}
-
-function NodeList({ ids }: { ids: string[] }): JSX.Element {
-  return ids.length === 0 ? (
-    <span className="text-fd-muted-foreground">none</span>
-  ) : (
-    <>
-      {ids.map((id, i) => (
-        <span key={id}>
-          {i > 0 && ', '}
-          <a href={figmaNodeUrl(id)}>
-            Figma node <code>{id}</code>
-          </a>
-        </span>
-      ))}
-    </>
-  );
-}
-
-function Figma({ entry }: { entry: CatalogEntry }): JSX.Element {
-  const nodes = figmaNodes(entry.name);
-  return (
-    <>
-      <Heading as="h2" id="figma">
-        Figma
-      </Heading>
-      <p>
-        Node ids from{' '}
-        <a href={repoFileUrl('design/component-map.json')}>design/component-map.json</a>, which{' '}
-        <code>nz gen</code> writes from <code>component.json</code>. The links open the Nizivo Figma
-        library, which may ask you to sign in.
-      </p>
-      <ul>
-        <li>
-          Canonical: <NodeList ids={nodes.canonical} />
-        </li>
-        <li>
-          Ghost masters: <NodeList ids={nodes.ghosts} />
-        </li>
-      </ul>
     </>
   );
 }
@@ -341,7 +299,6 @@ export function EntryPage({
         </>
       )}
       {entry.kind === 'component' && <Accessibility entry={entry} api={api} />}
-      {entry.kind === 'component' && <Figma entry={entry} />}
     </>
   );
 }

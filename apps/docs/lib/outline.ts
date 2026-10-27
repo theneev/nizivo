@@ -6,7 +6,6 @@ import type { StructuredData } from 'fumadocs-core/mdx-plugins/remark-structure'
 import type { TOCItemType } from 'fumadocs-core/toc';
 import { isValidElement, type ReactNode } from 'react';
 import type { CatalogEntry } from './catalog';
-import { figmaNodes } from './catalog';
 import { cssApi, documentedComponents, importLines, ownExports, reactApi } from './api';
 import { exampleId, examplesFor } from './examples';
 import { plainText } from './markdown';
@@ -207,14 +206,6 @@ export function outline(entry: CatalogEntry): Outline {
       contents.push({ heading: 'accessibility', content: `${k.keys}: ${k.action}` });
     }
     md.push('');
-    const figma = figmaNodes(entry.name);
-    sections.push({ id: 'figma', title: 'Figma', depth: 2 });
-    md.push(
-      '## Figma',
-      '',
-      `Canonical: ${figma.canonical.join(', ') || 'none'}. Ghosts: ${figma.ghosts.join(', ') || 'none'}.`,
-      '',
-    );
   }
 
   const toc: TOCItemType[] = sections.map((s) => ({
