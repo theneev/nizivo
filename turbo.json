@@ -37,7 +37,13 @@
     },
     "@nizivo/tooling#typecheck": {
       "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/fixtures/runner/pack.ts"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/fixtures/runner/pack.ts",
+        "$TURBO_ROOT$/apps/docs/scripts/examples.ts",
+        "$TURBO_ROOT$/apps/docs/scripts/json.ts",
+        "$TURBO_ROOT$/apps/docs/scripts/registry.ts"
+      ],
       "outputs": []
     },
     "@nizivo/tooling#test": {
@@ -59,7 +65,10 @@
         "$TURBO_ROOT$/packages/charts/src/**",
         "$TURBO_ROOT$/packages/react/src/contracts/**",
         "$TURBO_ROOT$/packages/react/src/_internal/cx.ts",
-        "$TURBO_ROOT$/fixtures/runner/pack.ts"
+        "$TURBO_ROOT$/fixtures/runner/pack.ts",
+        "$TURBO_ROOT$/apps/docs/scripts/examples.ts",
+        "$TURBO_ROOT$/apps/docs/scripts/json.ts",
+        "$TURBO_ROOT$/apps/docs/scripts/registry.ts"
       ],
       "outputs": []
     },

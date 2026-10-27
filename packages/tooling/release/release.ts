@@ -13,7 +13,9 @@
 // 2. Version: pending changesets → (real run) `pnpm changeset version`, show the diff, commit it on
 //    confirmation, then stop: the maintainer pushes main and runs the script again from it (§19.2:
 //    the commit to publish already carries the version bumps). A dry run only shows the plan.
-// 3. The fixed group's version: one version for all three, never 0.0.0, internal dependencies exact.
+// 3. The fixed group's version: one version for all three, never 0.0.0, internal dependencies exact;
+//    and the copy-paste registry frozen at that version as this commit builds it (a real run blocks
+//    without the freeze; registry-freeze.ts).
 // 4. The full gate: `pnpm check` with TURBO_FORCE=true. 5. The slow lanes (plan.ts RELEASE_LANES).
 // 6. Pack each package and run check:release on those tarballs (check.ts checkPackages); then the
 //    shipped-runtime licence gate (§19.3). 7. `npm view` each name@version: a version already on the
@@ -42,6 +44,7 @@ import { isatty } from 'node:tty';
 import { parseArgs } from 'node:util';
 import { REPO_ROOT } from '../../../fixtures/runner/pack.ts';
 import { checkPackages, missingBuilds, type CheckedPackage } from './check.ts';
+import { registryFreeze, type RegistryFreeze } from './registry-freeze.ts';
 import {
   checkLicences,
   checkOrder,
@@ -105,6 +108,8 @@ export interface Io {
   env: Readonly<Record<string, string | undefined>>;
   checkPackages(stage: string): Promise<{ failed: number; packages: CheckedPackage[] }>;
   missingBuilds(): string[];
+  /** The copy-paste registry's freeze for a version (registry-freeze.ts). */
+  registryFreeze(version: string): RegistryFreeze;
 }
 
 export interface Options {
@@ -324,6 +329,21 @@ export async function release(options: Options, io: Io): Promise<number> {
     else block('the packages are at 0.0.0 and no changeset is pending: add one (`pnpm changeset`)');
   } else if (versions.version !== undefined) ok(`the fixed group is at ${versions.version}`);
   ok(`publish order: ${order.join(' → ')}`);
+  // The registry ships with the docs: a released version is frozen, and frozen as this commit builds it
+  if (versions.version !== undefined && !versions.unreleased) {
+    const v = versions.version;
+    const freeze = io.registryFreeze(v);
+    if (!freeze.frozen) {
+      const how = `run \`node apps/docs/scripts/registry.ts --freeze\` and commit apps/docs/registry/v${v}/`;
+      if (dryRun) note(`the registry's v${v} is not frozen yet: ${how}`);
+      else block(`the registry's v${v} is not frozen: ${how}`);
+    } else if (freeze.drift.length > 0) {
+      block(
+        `apps/docs/registry/v${v}/ differs from what this commit builds (${freeze.drift.join(', ')}): ` +
+          'a change landed after the freeze. Before publishing, delete the folder and run --freeze again',
+      );
+    } else ok(`the registry is frozen at v${v} and matches this commit`);
+  }
   if (halt()) return stop('the versions are not releasable');
 
   // 4. The full gate -------------------------------------------------------------------------------
@@ -663,6 +683,7 @@ export const realIo: Io = {
   env: process.env,
   checkPackages,
   missingBuilds,
+  registryFreeze,
 };
 
 if (import.meta.main) {

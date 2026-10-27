@@ -350,6 +350,8 @@ interface World {
   failScripts?: string[];
   /** the npm login file is missing (and its folder, unless in `existing`) */
   noUserconfig?: boolean;
+  /** the copy-paste registry's freeze (default: frozen and matching) */
+  registryFreeze?: { frozen: boolean; drift: string[] };
   env?: Record<string, string>;
   /** npm's working directory, if not NPM_CWD */
   npmCwd?: string;
@@ -575,6 +577,7 @@ function world(w: World = {}) {
       })),
     }),
     missingBuilds: () => [],
+    registryFreeze: () => w.registryFreeze ?? { frozen: true, drift: [] },
   };
   const lines = () => calls.map((c) => [c.command, ...c.args].join(' '));
   const publishes = () => calls.filter((c) => c.command === 'npm' && c.args[0] === 'publish');
@@ -871,6 +874,33 @@ describe('release', () => {
     expect(publishes()).toEqual([]);
     expect(logs.join('\n')).toContain(
       'the gate or a lane changed the tree: fixtures/vite/results/build.json',
+    );
+  });
+
+  test('the copy-paste registry: unfrozen is a note in a dry run and a blocker in a real one', async () => {
+    const dry = world({ ...READY, registryFreeze: { frozen: false, drift: [] } });
+    expect(await release(DRY, dry.io)).toBe(0);
+    expect(dry.logs.join('\n')).toContain("note     the registry's v0.1.0 is not frozen yet");
+    const real = world({
+      ...READY,
+      registryFreeze: { frozen: false, drift: [] },
+      answers: ['publish'],
+    });
+    expect(await release(REAL, real.io)).toBe(1);
+    expect(real.publishes()).toEqual([]);
+    expect(real.logs.join('\n')).toContain("the registry's v0.1.0 is not frozen: run");
+  });
+
+  test('a frozen registry that differs from this commit blocks the release', async () => {
+    const { io, publishes, logs } = world({
+      ...READY,
+      registryFreeze: { frozen: true, drift: ['button-css.json', 'manifest.json'] },
+      answers: ['publish'],
+    });
+    expect(await release(REAL, io)).toBe(1);
+    expect(publishes()).toEqual([]);
+    expect(logs.join('\n')).toContain(
+      'apps/docs/registry/v0.1.0/ differs from what this commit builds (button-css.json, manifest.json)',
     );
   });
 
