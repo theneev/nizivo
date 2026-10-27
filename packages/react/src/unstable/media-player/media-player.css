@@ -1,0 +1,121 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/media-player.css (Figma Media Player 7397:85), UNSTABLE. bg/surface with
+   Elevation/3, radius/2xl, padded 20 with 16 px between: the artwork (200 px, radius/xl), the
+   Label/L title over the Body/S subtitle, the scrubber (a Slider, then the two times in Label/M),
+   and the controls, 24 px apart: 22 px back and forward marks round a 56 px bg/brand play button. */
+@layer nz.components {
+  /* Figma's 360 px at least, unless the container is narrower */
+  .nz-media-player {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-4);
+    box-sizing: border-box;
+    min-inline-size: min(100%, 22.5rem);
+    padding: var(--nz-space-5);
+    border-radius: var(--nz-radius-2xl);
+    background: var(--nz-bg-surface);
+    box-shadow: var(--nz-elevation-3);
+  }
+
+  .nz-media-player-artwork {
+    block-size: calc(var(--nz-space-10) * 5);
+    overflow: hidden;
+    border-radius: var(--nz-radius-xl);
+    background: var(--nz-bg-muted);
+  }
+
+  .nz-media-player-artwork > * {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  .nz-media-player-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .nz-media-player-title {
+    color: var(--nz-text-primary);
+    font: var(--nz-font-label-l);
+    letter-spacing: var(--nz-tracking-label-l);
+  }
+
+  .nz-media-player-subtitle {
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-body-s);
+  }
+
+  .nz-media-player-scrubber {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: var(--nz-space-2);
+  }
+
+  .nz-media-player-scrubber .nz-slider {
+    min-inline-size: 0;
+  }
+
+  .nz-media-player-times {
+    display: flex;
+    justify-content: space-between;
+    color: var(--nz-text-primary);
+    font: var(--nz-font-label-m);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .nz-media-player-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--nz-space-6);
+  }
+
+  .nz-media-player-control {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: var(--nz-space-10);
+    block-size: var(--nz-space-10);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: var(--nz-radius-full);
+    background: transparent;
+    color: var(--nz-text-primary);
+    font-size: 1.375rem;
+    cursor: pointer;
+
+    @media (hover: hover) {
+      &:hover {
+        background: var(--nz-bg-hover);
+      }
+    }
+  }
+
+  .nz-media-player-play {
+    inline-size: calc(var(--nz-space-10) * 1.4);
+    block-size: calc(var(--nz-space-10) * 1.4);
+    background: var(--nz-bg-brand);
+    color: var(--nz-text-on-brand);
+
+    @media (hover: hover) {
+      &:hover {
+        background: var(--nz-bg-brand-hover);
+      }
+    }
+  }
+
+  @media (forced-colors: active) {
+    .nz-media-player {
+      border: 1px solid CanvasText;
+    }
+
+    .nz-media-player-play {
+      border: 2px solid ButtonText;
+    }
+  }
+}

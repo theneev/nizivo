@@ -36,8 +36,12 @@ Lucide icons:
   heart              (the Comment Like mark)
   message-circle     (the Comment Reply mark)
   clock              (the EventCard time mark)
+  play               (the MediaPlayer play mark)
+  pause              (the MediaPlayer pause mark)
+  skip-back          (the MediaPlayer back mark)
+  skip-forward       (the MediaPlayer forward mark)
 
-Lucide's licence covers all thirty:
+Lucide's licence covers all thirty-four:
 
 ISC License
 

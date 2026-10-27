@@ -238,6 +238,12 @@ export const VENDOR_PSEUDO_ELEMENTS: ReadonlySet<string> = new Set([
   '-webkit-search-decoration',
   '-webkit-details-marker',
   '-webkit-calendar-picker-indicator',
+  // the range input's parts (Slider, v0.5)
+  '-webkit-slider-runnable-track',
+  '-webkit-slider-thumb',
+  '-moz-range-track',
+  '-moz-range-progress',
+  '-moz-range-thumb',
 ]);
 
 export const VENDOR_PSEUDO_CLASSES: ReadonlySet<string> = new Set([

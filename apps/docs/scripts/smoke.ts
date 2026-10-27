@@ -122,6 +122,8 @@ const NIZIVO_CLIENT_MARKERS = [
   'nz-model-selector',
   'nz-inline-assist',
   'nz-prompt-composer',
+  'nz-slider',
+  'nz-media-player',
 ];
 
 /**
@@ -179,6 +181,9 @@ const CLIENT_PAGES: Record<string, string[]> = {
   // the composer's example puts IconButtons in its tools; AiWelcome's example holds a composer
   '/docs/components/prompt-composer/': ['nz-prompt-composer', 'tooltip-popup'],
   '/docs/components/ai-welcome/': ['nz-prompt-composer'],
+  // v0.5 (D-do): the player's scrubber is a Slider
+  '/docs/components/slider/': ['nz-slider'],
+  '/docs/components/media-player/': ['nz-media-player', 'nz-slider'],
   '/docs/components/drawer/': ['drawer-popup'],
   // Form and SubmitButton are client leaves (FormMessage is a server part); the examples put Inputs
   // in Fields.

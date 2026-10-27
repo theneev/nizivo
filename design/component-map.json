@@ -731,6 +731,13 @@
         "size": ["sm", "md", "lg"]
       }
     },
+    "7367:345": {
+      "component": "slider",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/slider",
+      "export": "Slider",
+      "props": {}
+    },
     "7367:377": {
       "component": "quantity-stepper",
       "role": "canonical",
@@ -820,6 +827,13 @@
       "role": "canonical",
       "import": "@nizivo/react/unstable/comment",
       "export": "Comment",
+      "props": {}
+    },
+    "7397:85": {
+      "component": "media-player",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/media-player",
+      "export": "MediaPlayer",
       "props": {}
     },
     "7397:114": {

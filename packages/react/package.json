@@ -407,6 +407,10 @@
       "types": "./dist/unstable/inline-assist/index.d.ts",
       "default": "./dist/unstable/inline-assist/index.js"
     },
+    "./unstable/media-player": {
+      "types": "./dist/unstable/media-player/index.d.ts",
+      "default": "./dist/unstable/media-player/index.js"
+    },
     "./unstable/model-selector": {
       "types": "./dist/unstable/model-selector/index.d.ts",
       "default": "./dist/unstable/model-selector/index.js"
@@ -430,6 +434,10 @@
     "./unstable/response-block": {
       "types": "./dist/unstable/response-block/index.d.ts",
       "default": "./dist/unstable/response-block/index.js"
+    },
+    "./unstable/slider": {
+      "types": "./dist/unstable/slider/index.d.ts",
+      "default": "./dist/unstable/slider/index.js"
     },
     "./unstable/source-card": {
       "types": "./dist/unstable/source-card/index.d.ts",
@@ -505,6 +513,7 @@
     "./css/input.css": "./dist/css/input.css",
     "./css/kbd.css": "./dist/css/kbd.css",
     "./css/kpi-tile.css": "./dist/css/kpi-tile.css",
+    "./css/media-player.css": "./dist/css/media-player.css",
     "./css/menu.css": "./dist/css/menu.css",
     "./css/meter.css": "./dist/css/meter.css",
     "./css/metric.css": "./dist/css/metric.css",
@@ -538,6 +547,7 @@
     "./css/separator.css": "./dist/css/separator.css",
     "./css/sidebar.css": "./dist/css/sidebar.css",
     "./css/skeleton.css": "./dist/css/skeleton.css",
+    "./css/slider.css": "./dist/css/slider.css",
     "./css/source-card.css": "./dist/css/source-card.css",
     "./css/split.css": "./dist/css/split.css",
     "./css/stack.css": "./dist/css/stack.css",

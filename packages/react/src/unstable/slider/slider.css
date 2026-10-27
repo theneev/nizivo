@@ -1,0 +1,129 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/slider.css (Figma Slider 7367:345), UNSTABLE. The Label/M name and the value in
+   text/secondary over the track, 8 px apart: a 4 px chart/track rail, the bg/brand fill and
+   a 20 px bg/brand thumb in a 24 px row, its hit area. */
+@layer nz.components {
+  /* Figma's 320 px at least, unless the container is narrower */
+  .nz-slider {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-2);
+    min-inline-size: min(100%, 20rem);
+  }
+
+  .nz-slider-top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--nz-space-3);
+    font: var(--nz-font-label-m);
+  }
+
+  .nz-slider-label {
+    color: var(--nz-text-primary);
+  }
+
+  .nz-slider-value {
+    margin-inline-start: auto;
+    color: var(--nz-text-secondary);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .nz-slider-input {
+    --_nz-slider-fill: 0%;
+
+    inline-size: 100%;
+    /* a 24 px row: the hit area Figma asks for, round a 20 px thumb */
+    block-size: var(--nz-space-6);
+    margin: 0;
+    background: transparent;
+    cursor: pointer;
+    appearance: none;
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+
+  .nz-slider-input::-webkit-slider-runnable-track {
+    block-size: var(--nz-space-1);
+    border-radius: 2px;
+    background: linear-gradient(
+      to var(--_nz-slider-towards, right),
+      var(--nz-bg-brand) var(--_nz-slider-fill),
+      var(--nz-chart-track) var(--_nz-slider-fill)
+    );
+  }
+
+  .nz-slider-input::-webkit-slider-thumb {
+    box-sizing: border-box;
+    inline-size: var(--nz-space-5);
+    block-size: var(--nz-space-5);
+    margin-block-start: calc((var(--nz-space-1) - var(--nz-space-5)) / 2);
+    border: 0;
+    border-radius: var(--nz-radius-full);
+    background: var(--nz-bg-brand);
+    appearance: none;
+  }
+
+  .nz-slider-input::-moz-range-track {
+    block-size: var(--nz-space-1);
+    border-radius: 2px;
+    background: var(--nz-chart-track);
+  }
+
+  .nz-slider-input::-moz-range-progress {
+    block-size: var(--nz-space-1);
+    border-radius: 2px;
+    background: var(--nz-bg-brand);
+  }
+
+  .nz-slider-input::-moz-range-thumb {
+    box-sizing: border-box;
+    inline-size: var(--nz-space-5);
+    block-size: var(--nz-space-5);
+    border: 0;
+    border-radius: var(--nz-radius-full);
+    background: var(--nz-bg-brand);
+  }
+
+  /* right to left, the fill grows from the right */
+  .nz-slider-input:dir(rtl) {
+    --_nz-slider-towards: left;
+  }
+
+  .nz-slider[data-disabled] .nz-slider-input {
+    opacity: 0.5;
+  }
+
+  @media (forced-colors: active) {
+    .nz-slider-input {
+      forced-color-adjust: none;
+    }
+
+    .nz-slider-input::-webkit-slider-runnable-track {
+      background: linear-gradient(
+        to var(--_nz-slider-towards, right),
+        Highlight var(--_nz-slider-fill),
+        CanvasText var(--_nz-slider-fill)
+      );
+    }
+
+    .nz-slider-input::-webkit-slider-thumb {
+      background: Highlight;
+    }
+
+    .nz-slider-input::-moz-range-track {
+      background: CanvasText;
+    }
+
+    .nz-slider-input::-moz-range-progress {
+      background: Highlight;
+    }
+
+    .nz-slider-input::-moz-range-thumb {
+      background: Highlight;
+    }
+  }
+}

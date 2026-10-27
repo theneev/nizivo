@@ -51,6 +51,7 @@ const REACHED: Partial<Record<Key, string>> = {
   fileUpload: 'src/file-upload/file-upload.client.tsx',
   form: 'src/form/form.client.tsx',
   inlineAssist: 'src/unstable/inline-assist/inline-assist.client.tsx',
+  mediaPlayer: 'src/unstable/media-player/media-player.client.tsx',
   mobileTabBarMore: 'src/mobile-tab-bar/mobile-tab-bar-more.client.tsx',
   modelSelector: 'src/unstable/model-selector/model-selector.client.tsx',
   passwordInput: 'src/password-input/password-input.client.tsx',

@@ -12,9 +12,10 @@
 // (PasswordInput's show and hide marks) are Lucide's own, as are the AI kit's `sparkles` (the AI
 // mark), `globe` and `file-text` (SourceCard's web and file marks), `thumbs-up` and `thumbs-down`
 // (FeedbackBar's votes), `wand-sparkles` (ToolCallCard's mark), `circle-stop` (ResponseBlock's Stop),
-// `refresh-cw` (its Retry), `mic` (VoiceOrb's start), `star` (Rating's), and `heart` and
-// `message-circle` (Comment's Like and Reply); `circle-alert` (ResponseBlock's error mark),
-// `arrow-up` (PromptComposer's send) and `clock` (EventCard's time) are Feather-derived.
+// `refresh-cw` (its Retry), `mic` (VoiceOrb's start), `star` (Rating's), `heart` and
+// `message-circle` (Comment's Like and Reply), and `play`, `pause`, `skip-back` and `skip-forward`
+// (MediaPlayer's); `circle-alert` (ResponseBlock's error mark), `arrow-up` (PromptComposer's send)
+// and `clock` (EventCard's time) are Feather-derived.
 //
 // One export per glyph, so an entry carries only the paths it draws (a name → paths table kept every
 // glyph in every entry that drew one: about 160 B gzip on the Dialog entry).
@@ -50,7 +51,11 @@ export type GlyphName =
   | 'star'
   | 'heart'
   | 'message-circle'
-  | 'clock';
+  | 'clock'
+  | 'play'
+  | 'pause'
+  | 'skip-back'
+  | 'skip-forward';
 
 function svg(name: GlyphName, paths: ReactNode): JSX.Element {
   return (
@@ -339,5 +344,42 @@ export const ClockGlyph = (): JSX.Element =>
     <>
       <circle cx="12" cy="12" r="10" />
       <path d="M12 6v6l4 2" />
+    </>,
+  );
+
+/** Lucide's `play`: MediaPlayer's play. */
+export const PlayGlyph = (): JSX.Element =>
+  svg(
+    'play',
+    <path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z" />,
+  );
+
+/** Lucide's `pause`: MediaPlayer's pause. */
+export const PauseGlyph = (): JSX.Element =>
+  svg(
+    'pause',
+    <>
+      <rect x="14" y="3" width="5" height="18" rx="1" />
+      <rect x="5" y="3" width="5" height="18" rx="1" />
+    </>,
+  );
+
+/** Lucide's `skip-back`: MediaPlayer's back. */
+export const SkipBackGlyph = (): JSX.Element =>
+  svg(
+    'skip-back',
+    <>
+      <path d="M17.971 4.285A2 2 0 0 1 21 6v12a2 2 0 0 1-3.029 1.715l-9.997-5.998a2 2 0 0 1-.003-3.432z" />
+      <path d="M3 20V4" />
+    </>,
+  );
+
+/** Lucide's `skip-forward`: MediaPlayer's forward. */
+export const SkipForwardGlyph = (): JSX.Element =>
+  svg(
+    'skip-forward',
+    <>
+      <path d="M21 4v16" />
+      <path d="M6.029 4.285A2 2 0 0 0 3 6v12a2 2 0 0 0 3.029 1.715l9.997-5.998a2 2 0 0 0 .003-3.432z" />
     </>,
   );

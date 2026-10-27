@@ -1,0 +1,21 @@
+---
+title: MediaPlayer
+description: 'Unstable: the controls for a podcast, a tutorial or a product video, artwork, title, a scrubber and play, pause, back and forward. It holds no media: wire it to your audio or video. Import it from @nizivo/react/unstable/media-player.'
+---
+
+## Static or interactive
+
+**Client.** It is controls only. [How to choose](/docs/guides/static-or-interactive/).
+
+## Wiring it
+
+Pass `playing`, `currentTime` and `duration` (in seconds) from your `<audio>` or `<video>`, and
+handle `onPlayingChange`, `onSeek`, `onSkipBack` and `onSkipForward`. It never starts playback on
+its own, so it never autoplays.
+
+## Accessibility
+
+Play and Pause are one button whose name changes with its icon. The scrubber is a
+[Slider](/docs/components/slider/) named "Seek" and read as "1 minute 12 seconds of 3 minutes 48
+seconds"; its arrow keys seek 5 seconds. Figma also asks for `aria-pressed` on the play button,
+but a name that changes already says the state, and the two together say it twice.

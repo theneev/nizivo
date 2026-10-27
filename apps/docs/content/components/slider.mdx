@@ -1,0 +1,24 @@
+---
+title: Slider
+description: 'Unstable: a value in a range on a native range input, its name and value written out above the track. Import it from @nizivo/react/unstable/slider.'
+---
+
+## Static or interactive
+
+**Client.** It holds the value; the input is the browser's own `<input type="range">`, so its
+role, keys (the arrows step, Page Up and Page Down jump, Home and End go to the ends) and form
+submission are native. [How to choose](/docs/guides/static-or-interactive/).
+
+## Value
+
+`value`, `defaultValue` and `onValueChange` hold the number; `min`, `max` and `step` set the range,
+and `keyStep` makes the arrow keys move further than one step (a media scrubber steps 1 second and
+seeks 5).
+The value is always written out above the track: `format` (Intl number options) or `valueText` (a
+function) gives the words, which a screen reader hears as `aria-valuetext` ("30%"). `label` names it,
+or `aria-label` when there is no visible name.
+
+## Fill
+
+The fill is drawn from a custom property set when the slider hydrates (no style attribute, so it
+works under a strict CSP); Firefox draws its own. Before hydration the track shows no fill.

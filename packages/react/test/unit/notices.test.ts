@@ -51,6 +51,10 @@ const LUCIDE: Record<string, string> = {
   heart: 'heart',
   'message-circle': 'message-circle',
   clock: 'clock',
+  play: 'play',
+  pause: 'pause',
+  'skip-back': 'skip-back',
+  'skip-forward': 'skip-forward',
 };
 
 /**

@@ -48,6 +48,7 @@ import type { NotificationItemLabels } from '../unstable/notification-item/index
 import type { FileItemLabels } from '../unstable/file-item/index';
 import type { CommentLabels } from '../unstable/comment/index';
 import type { EventCardLabels } from '../unstable/event-card/index';
+import type { MediaPlayerLabels } from '../unstable/media-player/index';
 import type { RankedListLabels } from '../ranked-list/index';
 import type { SearchFieldLabels } from '../search-field/index';
 import type { SidebarLabels } from '../sidebar/index';
@@ -106,6 +107,7 @@ export const enUS: {
   fileItem: FileItemLabels;
   comment: CommentLabels;
   eventCard: EventCardLabels;
+  mediaPlayer: MediaPlayerLabels;
   rankedList: RankedListLabels;
   searchField: SearchFieldLabels;
   sidebar: SidebarLabels;
@@ -231,6 +233,14 @@ export const enUS: {
   },
   comment: { like: 'Like, {count}', reply: 'Reply' },
   eventCard: { going: 'going' },
+  mediaPlayer: {
+    play: 'Play',
+    pause: 'Pause',
+    skipBack: 'Skip back',
+    skipForward: 'Skip forward',
+    seek: 'Seek',
+    position: '{current} of {duration}',
+  },
   rankedList: { loading: 'Loading {label}', empty: 'No data', error: 'Could not load {label}' },
   searchField: { label: 'Search', clear: 'Clear search' },
   sidebar: { nav: 'Primary' },
