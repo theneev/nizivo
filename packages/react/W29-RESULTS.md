@@ -68,9 +68,7 @@ CLI's `add` of 99 items in under a second). Visual regression: react 3,764 shots
 
 ## For the maintainer
 
-1. **Licence of the `-css` items.** They copy `packages/react/src/<name>/<name>.css`, Apache-2.0 in
-   the package, and publish it under MIT, as decision 5 says for item source. Neev holds the
-   copyright, so this is a relicensing it can make; confirm it, or the `-css` items go.
+1. **Licence of the `-css` items:** confirmed MIT by the maintainer on 2026-10-27 (M73).
 2. **The first deploy (M67):** make the Cloudflare account and the Pages project `nizivo`, add the
    custom domain and its `CNAME`, then at 0.3.0: `--freeze` after `changeset version`, publish, push
    the tags, `pnpm docs:deploy`, then `pnpm docs:deploy --deploy` in a terminal.
