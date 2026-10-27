@@ -10,6 +10,7 @@ While GitHub Actions is off, the maintainer publishes by hand from their own mac
   - 0.1.0: npm pointed `latest` at 0.1.0 for tokens, icons and react, so `latest` and `next` were the same.
   - 0.2.0 (2026-10-24): `next` moved to 0.2.0 for all four; `latest` moved only for `@nizivo/charts` (its first publish). The maintainer then moved `latest` by hand for the other three, with `npm dist-tag add @nizivo/<package>@0.2.0 latest` and the project's login file, so both tags are 0.2.0 for all four. After each later release, check `latest` the same way and move it if it should follow `next`. A non-interactive shell cannot wait for npm's browser login: run it in a terminal, or pass `--otp`.
   - 0.2.1 (2026-10-26): `next` moved to 0.2.1 for all four; the maintainer moved `latest` by hand. npm showed the four versions over about three minutes, out of the publish order (charts first, icons last), so check all four before pushing the tags. Run the `dist-tag` command from an empty folder (`cd "$(mktemp -d)"`) with `--registry https://registry.npmjs.org/ --userconfig ~/.config/nizivo/npmrc`: run from `~`, npm also reads `~/.npmrc` and fails with E401 (the home-folder gotcha below).
+  - 0.3.0 (2026-10-28): `next` moved to 0.3.0 for all four; the maintainer moved `latest` by hand with the same `dist-tag add` loop, so both are 0.3.0. `npm view <name>@0.3.0` lagged the dist-tags by a few minutes for one package. The first release with the registry: the freeze commit (`chore(registry): freeze v0.3.0`) failed `pnpm check` because the formatter wanted to rewrite the frozen JSON; the folder is now in `.oxfmtrc.json`'s ignore list and a test checks it against its manifest. The docs were deployed to Cloudflare Pages the same day (`pnpm docs:deploy --deploy`).
 
 ## Publishing by hand
 
@@ -38,7 +39,7 @@ The docs site and the copy-paste registry are a static export (`apps/docs/out`) 
 
 **Once:** make the Cloudflare account and a Pages project named `nizivo` (Workers & Pages → Create → Pages → "Upload assets"; skip the upload), then add the custom domain `nizivo.neevtechnologies.in` to the project and the `CNAME` record at neevtechnologies.in that Cloudflare shows.
 
-**At each release:**
+**At each release** (first deployed 2026-10-28). When `pnpm dlx` asks which packages to build (esbuild, workerd), select none and press Enter: `wrangler login` and `pages deploy` need neither script.
 
 1. `pnpm docs:deploy` is a dry run: it checks that you are on `main` equal to `origin/main` with a clean tree, that the tag `@nizivo/react@<version>` is on HEAD or before it, and that the registry of that version is frozen (`apps/docs/registry/v<version>/`); then it builds the export from clean and runs its smoke test (`pnpm docs:check` with `TURBO_FORCE=true`) and prints the deploy command.
 2. `pnpm docs:deploy --deploy` in a terminal does the same, then runs `wrangler pages deploy apps/docs/out` through `pnpm dlx` at a pinned Wrangler version, with Wrangler's metrics off. The first time, Wrangler opens a browser to log in to Cloudflare (`wrangler login`); the script never stores or prints a token. `wrangler logout` ends that login.
