@@ -59,3 +59,27 @@ Base UI does report why a popup opened or closed, so `details.reason` is real on
 
 - WebKit and Firefox: the canary runs in Chromium only.
 - Base UI's own announcements with a screen reader.
+
+## After M74 (2026-10-27)
+
+The maintainer chose the builder's recommendations: complete the adapter for the closed popup and
+the label, loosen the tests for the hidden control and the trigger's role.
+
+- **Completed in the adapter:** the Root reads its items' labels from its children and gives them to
+  Base UI (`items`), so the trigger shows "Last 30 days" from the first render; the Portal renders
+  only while the popup is open or exiting, because Base UI force-mounts it (hidden) once the trigger
+  has focus, which costs Base UI's typeahead on a closed trigger; the listbox is labelled by its
+  trigger, which Base UI leaves unnamed (a real accessibility gap, so the test stayed strict); an
+  option's `data-focus-visible` follows the last input (`modality.client.tsx`), since Base UI
+  reports no focus-visible state.
+- **Loosened in the tests:** `select-field.spec.tsx` reads the hidden form control (a native
+  `<select>` or an `<input>`), and a combobox trigger need not list its value element in
+  `aria-labelledby`.
+- **Canary: 68 of 78 pass, 5 fail, 5 skip.** The five are Base UI behaviour, recorded:
+  1. O-01, Select inside Dialog;
+  2. O-04, Dialog on Dialog;
+  3. a form reset does not restore the Select's default value;
+  4. no page scroll lock while a Select is open;
+  5. the Select's entry does not run the spring transition.
+- **React Aria unchanged:** the default overlay lane passes 247 cases in Chromium, 238 in WebKit and
+  Firefox.
