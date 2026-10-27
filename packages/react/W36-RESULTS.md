@@ -85,4 +85,7 @@ raised under M77.
    votes when they do not fit the row; ModelSelector keeps Select's brand-subtle selected row
    (M36) where Figma's Model Menu shows the hover fill; ChatMessage's meta line uses
    text/secondary where Figma draws text/tertiary (AA).
-6. **Not built yet:** the AI assistant panel (7411:607), a pattern of these parts.
+6. **Not built: the AI assistant panel** (7411:607). It is a pattern, so a registry item people
+   copy; it would copy code built on `unstable/` subpaths, which may change in a minor, and need
+   their stylesheets, which `init`'s `styles.css` does not carry. It waits until the AI parts are
+   promoted (an M77 call; say if you want it sooner, as a docs page rather than a registry item).
