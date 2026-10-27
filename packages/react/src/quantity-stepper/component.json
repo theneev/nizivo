@@ -11,9 +11,9 @@
     "size": ["sm", "md", "lg"]
   },
   "figma": {
-    "canonical": [],
+    "canonical": ["7367:377"],
     "ghosts": [],
     "variantsSeen": [],
-    "related": ["7275:11397"]
+    "related": ["7275:11397", "7367:378"]
   }
 }

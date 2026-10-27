@@ -179,8 +179,8 @@ describe('NizivoConfig labels, server-rendered', () => {
     for (const english of [
       'Clear search',
       'Show password',
-      'Decrease',
-      'Increase',
+      'Decrease quantity',
+      'Increase quantity',
       'Unavailable',
       'There is a problem',
     ]) {
@@ -208,8 +208,8 @@ describe('NizivoConfig labels, server-rendered', () => {
         'aria-label="Search"',
         'aria-label="Clear search"',
         'aria-label="Show password"',
-        'aria-label="Decrease"',
-        'aria-label="Increase"',
+        'aria-label="Decrease quantity"',
+        'aria-label="Increase quantity"',
         'aria-label="Dismiss"',
         'Unavailable',
         'Drop files here or ',

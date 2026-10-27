@@ -2,7 +2,7 @@
   "$comment": "Size budgets (ARCHITECTURE.md §17), written by `node packages/tooling/size/measure.ts --write`. measured: bytes, gzip -9, as size-limit 14.2 reports them. limitKiB: measured + 10%, rounded up (method.ts limitKiB), never above the entry's §17.1 plan limit (method.ts PLAN_LIMITS_KIB). Limits only go up through a labelled PR (§17.3).",
   "entries": {
     "@nizivo/react": {
-      "measured": 133974,
+      "measured": 133977,
       "limitKiB": 143
     },
     "@nizivo/react/accordion": {
@@ -150,7 +150,7 @@
       "limitKiB": 2.5
     },
     "@nizivo/react/locales/en-US": {
-      "measured": 736,
+      "measured": 739,
       "limitKiB": 0.8
     },
     "@nizivo/react/menu": {
@@ -222,7 +222,7 @@
       "limitKiB": 1.3
     },
     "@nizivo/react/quantity-stepper": {
-      "measured": 2679,
+      "measured": 2681,
       "limitKiB": 2.9
     },
     "@nizivo/react/radio-group": {
@@ -486,7 +486,7 @@
       "limitKiB": 1.1
     },
     "@nizivo/react own: quantity-stepper/quantity-stepper.client": {
-      "measured": 1303,
+      "measured": 1307,
       "limitKiB": 1.4
     },
     "@nizivo/react own: radio-group/radio-group.client": {
@@ -542,7 +542,7 @@
       "limitKiB": 0.8
     },
     "@nizivo/react/css/accordion.css": {
-      "measured": 589,
+      "measured": 530,
       "limitKiB": 0.7
     },
     "@nizivo/react/css/alert.css": {
@@ -742,7 +742,7 @@
       "limitKiB": 0.6
     },
     "@nizivo/react/css/quantity-stepper.css": {
-      "measured": 535,
+      "measured": 611,
       "limitKiB": 0.6
     },
     "@nizivo/react/css/radio-group.css": {
@@ -834,7 +834,7 @@
       "limitKiB": 0.5
     },
     "@nizivo/react/styles.css": {
-      "measured": 25233,
+      "measured": 25274,
       "limitKiB": 26
     },
     "@nizivo/tokens": {

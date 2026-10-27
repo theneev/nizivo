@@ -706,6 +706,15 @@
         "size": ["sm", "md", "lg"]
       }
     },
+    "7367:377": {
+      "component": "quantity-stepper",
+      "role": "canonical",
+      "import": "@nizivo/react/quantity-stepper",
+      "export": "QuantityStepper",
+      "props": {
+        "size": ["sm", "md", "lg"]
+      }
+    },
     "7370:21": {
       "component": "avatar",
       "role": "canonical",
@@ -723,6 +732,13 @@
       "props": {
         "size": ["sm", "md", "lg", "xl"]
       }
+    },
+    "7370:88": {
+      "component": "accordion",
+      "role": "canonical",
+      "import": "@nizivo/react/accordion",
+      "export": "Accordion",
+      "parts": ["Root", "Item", "Trigger", "Panel"]
     }
   }
 }

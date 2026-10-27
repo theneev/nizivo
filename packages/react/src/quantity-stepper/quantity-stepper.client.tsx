@@ -1,8 +1,7 @@
 'use client';
 // QuantityStepper: a native `<input type="number">` for whole quantities in Input's box, between a
-// minus and a plus button (ARCHITECTURE.md §16.1; no Figma component: the product page on 10 draws
-// the control). The input is the spinbutton: Tab reaches only it, and Arrow Up / Arrow Down step it
-// natively. The two buttons are for the pointer, so they are out of the tab order (`tabIndex={-1}`)
+// minus and a plus button (ARCHITECTURE.md §16.1; Figma's Number Stepper 7367:377). The input is
+// the spinbutton: Tab reaches only it, and Arrow Up / Arrow Down step it natively. The two buttons are for the pointer, so they are out of the tab order (`tabIndex={-1}`)
 // and a press on one never moves focus; each steps the input with stepUp() / stepDown() and fires
 // the native `input` and `change` events, so `onChange`, a form and a Field see a typed value. Each
 // is disabled at its end of the range. Integers only: `step` is a whole number, and Field's
@@ -29,9 +28,9 @@ import { useFieldControl } from '../field/field-scope.client';
 
 /** QuantityStepper's own strings (§16.4): serialisable, English defaults. */
 export interface QuantityStepperLabels {
-  /** The minus button's name. @default 'Decrease' */
+  /** The minus button's name. @default 'Decrease quantity' */
   decrement: string;
-  /** The plus button's name. @default 'Increase' */
+  /** The plus button's name. @default 'Increase quantity' */
   increment: string;
 }
 
@@ -184,8 +183,8 @@ export function QuantityStepper({
   };
 
   const names = {
-    decrement: labels?.decrement ?? 'Decrease',
-    increment: labels?.increment ?? 'Increase',
+    decrement: labels?.decrement ?? 'Decrease quantity',
+    increment: labels?.increment ?? 'Increase quantity',
   };
   // Both buttons but their slot, class, handler, mark and end of the range.
   const buttonProps = (direction: 'decrement' | 'increment', off: boolean) => ({
@@ -204,7 +203,8 @@ export function QuantityStepper({
     ...stateAttrs({ invalid: state.invalid, disabled: state.disabled, readOnly: state.readOnly }),
     className: cx('nz-quantity-stepper nz-input', className),
     style,
-    // A press on the padding focuses the input, as Input's box does.
+    // A press on the box's edge (its border; the buttons fill the rest) focuses the input, as Input's
+    // box does.
     onMouseDown: focusInput,
     children: (
       <>

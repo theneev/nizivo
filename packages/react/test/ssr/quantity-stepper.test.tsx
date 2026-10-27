@@ -97,10 +97,10 @@ describe('markup', () => {
       'type="number" class="nz-quantity-stepper-control nz-input-control" data-slot="quantity-stepper-control"',
     );
     expect(button(html, 'decrement')).toBe(
-      `<button type="button" tabindex="-1" aria-label="Decrease" aria-controls="${id}" class="nz-quantity-stepper-button nz-quantity-stepper-decrement" data-slot="quantity-stepper-decrement">`,
+      `<button type="button" tabindex="-1" aria-label="Decrease quantity" aria-controls="${id}" class="nz-quantity-stepper-button nz-quantity-stepper-decrement" data-slot="quantity-stepper-decrement">`,
     );
     expect(button(html, 'increment')).toBe(
-      `<button type="button" tabindex="-1" aria-label="Increase" aria-controls="${id}" class="nz-quantity-stepper-button nz-quantity-stepper-increment" data-slot="quantity-stepper-increment">`,
+      `<button type="button" tabindex="-1" aria-label="Increase quantity" aria-controls="${id}" class="nz-quantity-stepper-button nz-quantity-stepper-increment" data-slot="quantity-stepper-increment">`,
     );
     // minus, input, plus: the reading order matches the visual one
     expect(html.indexOf('quantity-stepper-decrement')).toBeLessThan(html.indexOf('<input'));

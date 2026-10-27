@@ -1,17 +1,15 @@
 @layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
 
-/* @nizivo/react/css/accordion.css (ARCHITECTURE.md §21.3; no Figma component: the collapsible order
-   summary on the 10 checkout screens). Items are native <details>, divided by border/subtle hairlines;
-   the trigger is the <summary>, a full-width row in Label/M Strong with a 16 px chevron at its end
-   that points down while closed and up while open. Its 2 px focus outline lives in nz.base
+/* @nizivo/react/css/accordion.css (ARCHITECTURE.md §21.3; Figma's Accordion Item 7370:88). Items are
+   native <details>, each with a border/subtle hairline below it and none above the first; the
+   trigger is the <summary>, a 52 px full-width row (16 px above and below) in Label/M Strong with a
+   16 px icon/secondary chevron at its end that points down while closed and up while open. Its 2 px focus outline lives in nz.base
    (component.json "interactive"). Open and closed read [open], which the browser sets. Public
    --nz-accordion-* hooks are read once, at the property. */
 @layer nz.components {
   .nz-accordion {
     display: flex;
     flex-direction: column;
-    border-block-start: var(--nz-border-width-default) solid
-      var(--nz-accordion-border, var(--nz-border-subtle));
   }
 
   .nz-accordion-item {
@@ -19,15 +17,14 @@
       var(--nz-accordion-border, var(--nz-border-subtle));
   }
 
-  /* 48 px with the padding: a comfortable target at every pointer */
+  /* the title and panel text start at the item's edge, as in Figma; Figma draws no hover, and with
+     no inset a hover fill would touch the text, so the row has none */
   .nz-accordion-trigger {
     display: flex;
     align-items: center;
     gap: var(--nz-space-3);
-    box-sizing: border-box;
-    min-block-size: var(--nz-space-12);
-    padding-block: var(--nz-space-3);
-    padding-inline: var(--nz-accordion-padding-inline, var(--nz-space-1));
+    padding-block: var(--nz-space-4);
+    padding-inline: var(--nz-accordion-padding-inline, var(--nz-space-0));
     border-radius: var(--nz-radius-sm);
     color: var(--nz-accordion-trigger-fg, var(--nz-text-primary));
     font: var(--nz-font-label-m-strong);
@@ -38,12 +35,6 @@
     /* the browser's own disclosure triangle; the chevron replaces it */
     &::-webkit-details-marker {
       display: none;
-    }
-
-    @media (hover: hover) {
-      &:hover {
-        background: var(--nz-bg-hover);
-      }
     }
   }
 
@@ -67,13 +58,12 @@
 
   .nz-accordion-panel {
     padding-block: 0 var(--nz-space-4);
-    padding-inline: var(--nz-accordion-padding-inline, var(--nz-space-1));
+    padding-inline: var(--nz-accordion-padding-inline, var(--nz-space-0));
     color: var(--nz-text-secondary);
     font: var(--nz-font-body-m);
   }
 
   @media (forced-colors: active) {
-    .nz-accordion,
     .nz-accordion-item {
       border-color: CanvasText;
     }

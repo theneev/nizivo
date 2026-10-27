@@ -7,9 +7,9 @@
   "focusTarget": "self",
   "cssDeps": ["base"],
   "figma": {
-    "canonical": [],
+    "canonical": ["7370:88"],
     "ghosts": [],
     "variantsSeen": [],
-    "related": []
+    "related": ["7370:89", "7425:11768"]
   }
 }

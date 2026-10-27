@@ -106,7 +106,7 @@ export const enUS: {
   },
   passwordInput: { toggle: 'Show password' },
   popover: { close: 'Close' },
-  quantityStepper: { decrement: 'Decrease', increment: 'Increase' },
+  quantityStepper: { decrement: 'Decrease quantity', increment: 'Increase quantity' },
   rankedList: { loading: 'Loading {label}', empty: 'No data', error: 'Could not load {label}' },
   searchField: { label: 'Search', clear: 'Clear search' },
   sidebar: { nav: 'Primary' },

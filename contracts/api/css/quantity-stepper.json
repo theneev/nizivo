@@ -28,7 +28,7 @@
     {
       "fallback": {
         "kind": "literal",
-        "value": "3ch"
+        "value": "3.5rem"
       },
       "name": "--nz-quantity-stepper-input-width",
       "reads": [
@@ -49,12 +49,14 @@
     "--nz-bg-pressed",
     "--nz-duration-fast",
     "--nz-easing-standard",
+    "--nz-font-label-m",
     "--nz-icon-primary",
-    "--nz-radius-sm",
+    "--nz-size-control-lg",
+    "--nz-size-control-md",
+    "--nz-size-control-sm",
     "--nz-size-icon-sm",
-    "--nz-space-1",
-    "--nz-space-6",
-    "--nz-text-disabled"
+    "--nz-text-disabled",
+    "--nz-tracking-label-m"
   ],
   "version": 1
 }

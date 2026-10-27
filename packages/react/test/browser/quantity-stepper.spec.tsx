@@ -273,10 +273,11 @@ describe('inside a Field', () => {
     expect(error?.textContent).toBe('Choose a whole number.');
   });
 
-  test('a press on the box’s padding focuses the input', async () => {
+  test('a press on the box’s edge focuses the input', async () => {
     const container = await mount(<QuantityStepper aria-label="Quantity" />);
     const { box, input } = parts(container);
-    await userEvent.click(box, { position: { x: 1, y: box.getBoundingClientRect().height / 2 } });
+    // the box's own 1 px border, too thin for a positioned click: the buttons fill the rest of it
+    box.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
     expect(document.activeElement).toBe(input);
   });
 });

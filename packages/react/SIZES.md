@@ -104,7 +104,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 | Entry              | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | ------------------ | -------: | ---------: | ---------: | ----------: | -----------: |
-| `.`                |  133,974 |      130.8 |    109,992 |         143 |       12,458 |
+| `.`                |  133,977 |      130.8 |    109,914 |         143 |       12,455 |
 | /accordion         |    1,312 |        1.3 |      1,205 |         1.5 |          224 |
 | /alert             |    1,379 |        1.3 |      1,273 |         1.4 |           54 |
 | /app-shell         |      462 |        0.5 |        433 |         0.5 |           50 |
@@ -141,7 +141,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /input             |    1,837 |        1.8 |      1,662 |           2 |          211 |
 | /kbd               |    1,192 |        1.2 |      1,087 |         1.3 |          139 |
 | /kpi-tile          |    2,323 |        2.3 |      2,117 |         2.5 |          237 |
-| /locales/en-US     |      736 |        0.7 |        623 |         0.8 |           83 |
+| /locales/en-US     |      739 |        0.7 |        624 |         0.8 |           80 |
 | /menu              |   57,163 |       55.8 |     49,372 |          57 |        1,205 |
 | /meter             |    1,143 |        1.1 |      1,058 |         1.3 |          188 |
 | /metric            |    2,144 |        2.1 |      1,948 |         2.4 |          313 |
@@ -159,7 +159,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /popover           |   36,054 |       35.2 |     31,988 |          39 |        3,882 |
 | /progress-bar      |    1,137 |        1.1 |      1,039 |         1.3 |          194 |
 | /progress-ring     |    1,194 |        1.2 |      1,097 |         1.3 |          137 |
-| /quantity-stepper  |    2,679 |        2.6 |      2,466 |         2.9 |          290 |
+| /quantity-stepper  |    2,681 |        2.6 |      2,468 |         2.9 |          288 |
 | /radio-group       |    2,200 |        2.1 |      2,026 |         2.4 |          257 |
 | /ranked-list       |    2,475 |        2.4 |      2,284 |         2.7 |          289 |
 | /search-field      |    3,418 |        3.3 |      3,102 |         3.6 |          268 |
@@ -235,7 +235,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | own: number-field/number-field.client           |      957 |        0.9 |        900 |         1.1 |          169 |
 | own: password-input/password-input.client       |    1,117 |        1.1 |        971 |         1.2 |          111 |
 | own: popover/popover.client                     |      966 |        0.9 |        867 |         1.1 |          160 |
-| own: quantity-stepper/quantity-stepper.client   |    1,303 |        1.3 |      1,190 |         1.4 |          130 |
+| own: quantity-stepper/quantity-stepper.client   |    1,307 |        1.3 |      1,185 |         1.4 |          126 |
 | own: radio-group/radio-group.client             |      614 |        0.6 |        541 |         0.7 |          102 |
 | own: search-field/search-field.client           |    1,297 |        1.3 |      1,160 |         1.4 |          136 |
 | own: segmented-control/segmented-control.client |    1,169 |        1.1 |      1,052 |         1.3 |          162 |
@@ -259,7 +259,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 | Entry                      | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | -------------------------- | -------: | ---------: | ---------: | ----------: | -----------: |
-| /css/accordion.css         |      589 |        0.6 |        494 |         0.7 |          127 |
+| /css/accordion.css         |      530 |        0.5 |        437 |         0.7 |          186 |
 | /css/alert.css             |      636 |        0.6 |        522 |         0.8 |          183 |
 | /css/app-shell.css         |      610 |        0.6 |        504 |         0.7 |          106 |
 | /css/avatar.css            |      745 |        0.7 |        606 |         0.9 |          176 |
@@ -309,7 +309,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/popover.css           |      711 |        0.7 |        567 |         0.8 |          108 |
 | /css/progress-bar.css      |      800 |        0.8 |        664 |         0.9 |          121 |
 | /css/progress-ring.css     |      509 |        0.5 |        432 |         0.6 |          105 |
-| /css/quantity-stepper.css  |      535 |        0.5 |        420 |         0.6 |           79 |
+| /css/quantity-stepper.css  |      611 |        0.6 |        498 |         0.6 |            3 |
 | /css/radio-group.css       |      824 |        0.8 |        678 |         0.9 |           97 |
 | /css/ranked-list.css       |      825 |        0.8 |        677 |         0.9 |           96 |
 | /css/search-field.css      |    1,087 |        1.1 |        934 |         1.2 |          141 |
@@ -332,7 +332,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/tooltip.css           |      581 |        0.6 |        503 |         0.6 |           33 |
 | /css/top-bar.css           |      452 |        0.4 |        379 |         0.5 |           60 |
 | /css/trend-card.css        |      403 |        0.4 |        346 |         0.5 |          109 |
-| /styles.css                |   25,233 |       24.6 |     20,284 |          26 |        1,391 |
+| /styles.css                |   25,274 |       24.7 |     20,255 |          26 |        1,350 |
 
 #### `@nizivo/tokens`: Public JS entries (bundled with what they import, React Aria included)
 

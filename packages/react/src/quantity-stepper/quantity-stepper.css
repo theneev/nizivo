@@ -1,22 +1,45 @@
 @layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
 
-/* @nizivo/react/css/quantity-stepper.css (ARCHITECTURE.md §16.1; no Figma component: Input's box
-   with a minus and a plus button at its ends). The box, the native input and the sizes are
-   input.css's (.nz-input and .nz-input-control on the same elements); this file draws the buttons,
-   centres the number and hides the browser's own spin buttons (the arrow keys still step it). The
-   2 px focus outline is the box's, from nz.base (focusTarget "within"): the buttons never take
-   focus. Public --nz-quantity-stepper-* hooks are read once, at the property. */
+/* @nizivo/react/css/quantity-stepper.css (ARCHITECTURE.md §16.1; Figma's Number Stepper 7367:377:
+   136 x 40 at md, a full-height 40 x 40 minus and plus at the box's ends, the number centred in
+   Label/M). The box, the native input and its states are input.css's (.nz-input and
+   .nz-input-control on the same elements); this file draws the buttons, centres the number and
+   hides the browser's own spin buttons (the arrow keys still step it). Figma draws md only: at sm
+   and lg each button is as wide as the control is tall. The 2 px focus outline is the box's, from
+   nz.base (focusTarget "within"): the buttons never take focus. Public --nz-quantity-stepper-*
+   hooks are read once, at the property. */
 @layer nz.components {
-  /* the 24 px buttons (the WCAG 2.5.8 target) fit every size, 32 px included */
   .nz-input.nz-quantity-stepper {
-    padding-inline: var(--nz-space-1);
+    --_nz-quantity-stepper-button: var(--nz-size-control-md);
+
+    gap: 0;
+    padding-inline: 0;
+    /* the buttons' hover fill stays inside the rounded corners */
+    overflow: clip;
+
+    &[data-size='sm'] {
+      --_nz-quantity-stepper-button: var(--nz-size-control-sm);
+    }
+
+    &[data-size='lg'] {
+      --_nz-quantity-stepper-button: var(--nz-size-control-lg);
+    }
   }
 
+  /* 56 px: with the two buttons, Figma's 136 px box */
   .nz-quantity-stepper-control {
-    inline-size: var(--nz-quantity-stepper-input-width, 3ch);
+    inline-size: var(--nz-quantity-stepper-input-width, 3.5rem);
+    font: var(--nz-font-label-m);
+    letter-spacing: var(--nz-tracking-label-m);
     text-align: center;
     font-variant-numeric: tabular-nums;
     appearance: textfield;
+
+    /* iOS Safari zooms into a focused field under 16 px: Input's larger line, as on every input */
+    @media (pointer: coarse) {
+      font: inherit;
+      letter-spacing: inherit;
+    }
 
     &::-webkit-inner-spin-button,
     &::-webkit-outer-spin-button {
@@ -30,19 +53,15 @@
     flex: none;
     align-items: center;
     justify-content: center;
-    box-sizing: border-box;
-    inline-size: var(--nz-space-6);
-    block-size: var(--nz-space-6);
+    inline-size: var(--_nz-quantity-stepper-button);
+    block-size: 100%;
     padding: 0;
     border: 0;
-    border-radius: var(--nz-radius-sm);
     background: transparent;
     color: var(--nz-quantity-stepper-button-fg, var(--nz-icon-primary));
     font-size: var(--nz-size-icon-sm);
     cursor: pointer;
-    transition:
-      background-color var(--nz-duration-fast) var(--nz-easing-standard),
-      color var(--nz-duration-fast) var(--nz-easing-standard);
+    transition: background-color var(--nz-duration-fast) var(--nz-easing-standard);
 
     @media (hover: hover) {
       &:hover:not(:disabled) {
