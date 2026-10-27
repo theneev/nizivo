@@ -1,0 +1,63 @@
+---
+title: The registry
+description: Copy a pattern, or one component's stylesheet, into your app with the shadcn CLI. Each item has an immutable URL per release, depends only on the @nizivo packages it imports, and is yours to edit under MIT; it gets no updates.
+---
+
+The registry serves the [patterns](/docs/patterns/) and every component's stylesheet as
+[shadcn](https://ui.shadcn.com/docs/registry) items. `shadcn add` copies an item's files into your
+app and adds the `@nizivo` packages they import to your `package.json`. What it copies is yours:
+the registry sends no updates, so run it again (or diff by hand) to take a newer version.
+Components, behaviour and accessibility stay in the npm packages, which do get updates.
+
+## Adding an item
+
+Your app needs a `components.json` (from `npx shadcn init`) whose `components` alias points where
+you keep components; each item writes into `<components>/nizivo/`. Add `init` first: it installs
+`@nizivo/react` and `@nizivo/icons` and writes `nizivo/nizivo.css`, which imports Nizivo's
+stylesheet. Import that file once, before your own CSS.
+
+```sh
+npx shadcn@latest add https://nizivo.neevtechnologies.in/r/v0.3.0/init.json
+npx shadcn@latest add https://nizivo.neevtechnologies.in/r/v0.3.0/product-card.json
+```
+
+`product-card` writes `nizivo/product-card.tsx`, which imports its own `product-card.css`. Its
+exports are the examples on the [Product card](/docs/patterns/product-card/) page; rename them, and
+change the data, the markup or the stylesheet as you like.
+
+## The items
+
+| Item              | What it writes                                                                                                                                                                                              |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `init`            | `nizivo/nizivo.css` (`@import '@nizivo/react/styles.css'`), and installs `@nizivo/react` and `@nizivo/icons`                                                                                                |
+| `<pattern>`       | one per [pattern](/docs/patterns/): `nizivo/<pattern>.tsx` and, when it has one, `nizivo/<pattern>.css`; a pattern that draws charts also imports `@nizivo/charts/styles.css` and installs `@nizivo/charts` |
+| `<component>-css` | `nizivo/<component>-css.css`, a readable copy of `@nizivo/react/css/<component>.css`                                                                                                                        |
+
+`/r/v0.3.0/index.json` lists every item of a release.
+
+## Re-skinning one component
+
+A `<component>-css` item is that component's stylesheet with its comments, for you to own. Stop
+importing `@nizivo/react/css/<component>.css` and import the copy instead; with `styles.css`, import
+the copy after it, and its rules win by order inside the same `nz.components` layer. Markup,
+classes, `data-*` attributes, behaviour and the base layer still come from npm, so a copy only
+changes how the component looks. Keep its selectors: the class and attribute names are the contract
+the component renders.
+
+## Versions
+
+- **`/r/v<version>/`** never changes once released, and is cached for a year. Pin this one.
+- **`/r/latest/`** is the newest release, cached for five minutes.
+- **`/r/v<version>/manifest.json`** gives the SHA-256 of every file of that release, to check a
+  download against.
+
+An item depends on the `@nizivo` packages at `~x.y.0` of the release that built it, never an exact
+version, so items added from different patch releases do not move your packages back and forth.
+Items have no `registryDependencies`, so the CLI fetches nothing from any other registry.
+
+## Licence
+
+Item files are under the [MIT licence](https://github.com/theneev/nizivo/blob/main/patterns/LICENSE),
+not Apache-2.0 like the packages, so a copy you edit owes no change notice. Each file carries the
+notice: a stylesheet at its top, a module after its imports (the shadcn CLI drops comments above a
+module's first import).

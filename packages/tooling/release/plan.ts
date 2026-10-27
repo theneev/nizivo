@@ -129,6 +129,14 @@ export const RELEASE_LANES: readonly Lane[] = [
     dir: 'fixtures/runner',
     script: `fixture:${fixture}`,
   })),
+  // The copy-paste registry (v0.3, D-dj): the shadcn CLI adds every item to a Vite app on the
+  // packed packages, which typechecks, builds and renders (§19.3, K13).
+  {
+    id: 'fixture-registry',
+    why: 'the registry fixture: `shadcn add` of every item, then tsc, build and render (§19.3, K13)',
+    dir: 'fixtures/runner',
+    script: 'fixture:registry',
+  },
   // eslint-plugin-react-hooks 7 on the client leaves and adapters (§19 "Compiler rules", D14-hooks,
   // M47): non-blocking until React Compiler phase 2 is scheduled.
   {

@@ -1,0 +1,5 @@
+/* The app's own stylesheet; `shadcn add` reads its path from components.json. Nizivo's comes from the
+   init item (src/components/nizivo/nizivo.css). */
+body {
+  margin: 0;
+}

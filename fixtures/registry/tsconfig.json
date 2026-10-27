@@ -1,0 +1,18 @@
+{
+  // The shape `shadcn init` writes for a Vite app: the `@/*` alias the CLI resolves targets with.
+  "compilerOptions": {
+    "target": "es2022",
+    "lib": ["es2024", "dom", "dom.iterable"],
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": false,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "noUncheckedIndexedAccess": true,
+    "paths": { "@/*": ["./src/*"] }
+  },
+  "include": ["src"]
+}

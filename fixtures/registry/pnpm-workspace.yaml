@@ -1,0 +1,20 @@
+# This fixture is its own pnpm workspace root, excluded from the monorepo (../../pnpm-workspace.yaml),
+# as fixtures/vite is: it installs @nizivo/* from the folders fixtures/runner/pack.ts unpacks into the
+# gitignored .packed/ folder (`node fixtures/runner/pack.ts --fixture registry`), and the committed
+# pnpm-lock.yaml stays valid across library builds. It also installs the shadcn CLI, pinned, which
+# fixtures/runner/registry.ts runs against the registry served from 127.0.0.1.
+
+# @nizivo/react depends on @nizivo/tokens at its exact version, which is not on the registry.
+overrides:
+  '@nizivo/tokens': 'file:.packed/tokens'
+
+# Same supply-chain policy as the monorepo root (ARCHITECTURE.md §19.3).
+minimumReleaseAge: 4320
+allowBuilds: {}
+trustPolicy: no-downgrade
+blockExoticSubdeps: true
+
+# semver 6.3.1 (shadcn > @babel/core > semver ^6.3.1): the provenance downgrade on a maintenance line
+# that the monorepo root and the React Router fixture accept (M47); see ../../pnpm-workspace.yaml.
+trustPolicyExclude:
+  - semver@6.3.1

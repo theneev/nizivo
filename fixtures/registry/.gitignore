@@ -1,0 +1,5 @@
+.packed/
+# written by each run of fixtures/runner/registry.ts: what `shadcn add` copied, and the page that
+# renders it
+src/components/
+src/registry.tsx

@@ -159,10 +159,14 @@
         "$TURBO_ROOT$/packages/charts/src/index.ts",
         "$TURBO_ROOT$/packages/charts/src/**/*.example.tsx",
         "$TURBO_ROOT$/packages/charts/src/**/*.tsx",
+        "$TURBO_ROOT$/packages/react/src/**/*.css",
+        "$TURBO_ROOT$/packages/icons/package.json",
+        "$TURBO_ROOT$/packages/tokens/package.json",
+        "$TURBO_ROOT$/patterns/LICENSE",
         "$TURBO_ROOT$/patterns/package.json",
         "$TURBO_ROOT$/patterns/src/**"
       ],
-      "outputs": ["out/**"]
+      "outputs": ["out/**", "public/r/**", "public/_headers"]
     },
     "@nizivo/docs#typecheck": {
       "dependsOn": ["^build"],
@@ -175,15 +179,60 @@
         "$TURBO_ROOT$/packages/charts/package.json",
         "$TURBO_ROOT$/packages/charts/src/index.ts",
         "$TURBO_ROOT$/packages/charts/src/**/*.example.tsx",
+        "$TURBO_ROOT$/packages/react/src/**/*.css",
+        "$TURBO_ROOT$/packages/icons/package.json",
+        "$TURBO_ROOT$/packages/tokens/package.json",
+        "$TURBO_ROOT$/patterns/LICENSE",
         "$TURBO_ROOT$/patterns/src/**"
       ],
       "outputs": [
+        "public/r/**",
+        "public/_headers",
         ".source/**",
         ".generated/**",
         "app/docs/?generated?/**",
         ".next/types/**",
         "next-env.d.ts"
       ]
+    },
+    "@nizivo/patterns#test": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/apps/docs/scripts/examples.ts",
+        "$TURBO_ROOT$/apps/docs/scripts/json.ts",
+        "$TURBO_ROOT$/apps/docs/scripts/registry.ts",
+        "$TURBO_ROOT$/apps/docs/content/docs/patterns/*.mdx",
+        "$TURBO_ROOT$/apps/docs/registry/**",
+        "$TURBO_ROOT$/packages/charts/package.json",
+        "$TURBO_ROOT$/packages/react/package.json",
+        "$TURBO_ROOT$/packages/react/src/**/*.css",
+        "$TURBO_ROOT$/packages/icons/package.json",
+        "$TURBO_ROOT$/packages/tokens/package.json",
+        "$TURBO_ROOT$/patterns/LICENSE",
+        "$TURBO_ROOT$/packages/charts/src/index.ts"
+      ],
+      "outputs": []
+    },
+    "@nizivo/patterns#typecheck": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/apps/docs/scripts/examples.ts",
+        "$TURBO_ROOT$/apps/docs/scripts/json.ts",
+        "$TURBO_ROOT$/apps/docs/scripts/registry.ts"
+      ],
+      "outputs": []
+    },
+    "@nizivo/fixture-runner#typecheck": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/apps/docs/scripts/examples.ts",
+        "$TURBO_ROOT$/apps/docs/scripts/json.ts",
+        "$TURBO_ROOT$/apps/docs/scripts/registry.ts"
+      ],
+      "outputs": []
     },
     "@nizivo/docs#smoke": {
       "dependsOn": ["build"],

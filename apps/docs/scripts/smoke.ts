@@ -14,7 +14,9 @@
 // are reported and do not fail the run (ARCHITECTURE.md §18.1). At 375 px nothing in the page is cut off without a scroller to reach it
 // (WCAG 1.4.10), and no raw Markdown (a backtick) shows outside code. The 404
 // page answers an unknown path with status 404 and passes the same checks, and the non-HTML routes
-// (llms.txt, llms-full.txt, the search index) answer 200 with their media type. Then:
+// (llms.txt, llms-full.txt, the search index) answer 200 with their media type. The registry: every
+// file /r/latest/manifest.json lists answers as JSON at /r/latest/ and at /r/v<version>/ with the
+// SHA-256 the manifest gives, and out/_headers caches both (scripts/registry.ts). Then:
 // - JavaScript: the scripts each page's HTML loads (`noModule` polyfills excluded, since modern
 //   browsers skip them; prefetches of other routes excluded, since they belong to those routes).
 //   A page loads a Nizivo client module only when one of its examples renders it: Select, Tooltip,
@@ -37,12 +39,14 @@
 //   default, and every degradation (D1, D2, …) the plan records.
 // Exit code 1 on any failure.
 /* oxlint-disable no-await-in-loop -- steps run one after another in a page, pages in a pool */
+import { createHash } from 'node:crypto';
 import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import type { Server } from 'node:http';
 import { join, relative, sep } from 'node:path';
 import { gzipSync } from 'node:zlib';
 import { chromium, type Browser, type BrowserContext, type Page } from 'playwright';
+import { isRecord } from './json.ts';
 import { serve } from './serve.ts';
 
 const OUT = join(import.meta.dirname, '..', 'out');
@@ -1216,6 +1220,48 @@ const FILE_ROUTES: [path: string, type: string][] = [
   ['/api/search.json', 'application/json'],
 ];
 
+/** The copy-paste registry in the export: the manifest's files, as served, with its hashes. */
+async function registryChecks(): Promise<void> {
+  const res = await fetch(`${ORIGIN}/r/latest/manifest.json`);
+  const manifest: unknown = res.ok ? await res.json() : undefined;
+  const version =
+    isRecord(manifest) && typeof manifest.version === 'string' ? manifest.version : '';
+  const files =
+    isRecord(manifest) && isRecord(manifest.files)
+      ? Object.entries(manifest.files).filter(
+          (entry): entry is [string, string] => typeof entry[1] === 'string',
+        )
+      : [];
+  check(
+    version !== '' && files.length > 1,
+    `registry: /r/latest/manifest.json answers ${res.status} with ${files.length} files`,
+  );
+  const bad: string[] = [];
+  for (const [file, hash] of files) {
+    for (const dir of ['latest', `v${version}`]) {
+      const item = await fetch(`${ORIGIN}/r/${dir}/${file}`);
+      const body = await item.text();
+      if (
+        item.status !== 200 ||
+        !(item.headers.get('content-type') ?? '').startsWith('application/json') ||
+        createHash('sha256').update(body).digest('hex') !== hash
+      ) {
+        bad.push(`/r/${dir}/${file} (${item.status})`);
+      }
+    }
+  }
+  check(
+    bad.length === 0,
+    `registry: ${files.length} files at /r/latest/ and /r/v${version}/ match the manifest${bad.length > 0 ? `; not: ${bad.join(', ')}` : ''}`,
+  );
+  const headers = join(OUT, '_headers');
+  const text = existsSync(headers) ? readFileSync(headers, 'utf8') : '';
+  check(
+    text.includes(`/r/v${version}/*`) && text.includes('/r/latest/*'),
+    'registry: out/_headers caches /r/v<version>/ and /r/latest/',
+  );
+}
+
 async function routeChecks(browser: Browser): Promise<void> {
   for (const [path, type] of FILE_ROUTES) {
     const res = await fetch(`${ORIGIN}${path}`);
@@ -1227,6 +1273,7 @@ async function routeChecks(browser: Browser): Promise<void> {
       `${path}: HTTP ${res.status}, ${res.headers.get('content-type') ?? 'no type'}, ${body.length} bytes`,
     );
   }
+  await registryChecks();
   // The 404 page: an unknown path gets it with status 404, and it passes the page checks.
   const ctx = await context(browser, 'light');
   const page = await ctx.newPage();

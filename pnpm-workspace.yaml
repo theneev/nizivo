@@ -11,6 +11,7 @@ packages:
   - '!fixtures/vite-ssr'
   - '!fixtures/react-router'
   - '!fixtures/astro'
+  - '!fixtures/registry'
 
 # One version of each shared dependency across the repo (ARCHITECTURE.md §19.1).
 # Tooling is pinned exactly; engine dependencies use caret ranges so consumer trees dedupe (§5.3).

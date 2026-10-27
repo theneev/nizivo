@@ -7,3 +7,6 @@ next-env.d.ts
 .source/
 .generated/
 app/docs/(generated)/
+# and the registry (scripts/registry.ts); released versions are frozen in registry/ instead
+public/r/
+public/_headers

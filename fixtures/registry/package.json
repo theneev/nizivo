@@ -1,0 +1,23 @@
+{
+  "name": "nizivo-fixture-registry",
+  "version": "0.0.0",
+  "private": true,
+  "description": "The copy-paste registry's fixture: `shadcn add` of every item into a Vite app on the packed packages; fixtures/runner/registry.ts runs it (ARCHITECTURE.md §19.3, D-dj)",
+  "license": "Apache-2.0",
+  "type": "module",
+  "dependencies": {
+    "@nizivo/charts": "file:.packed/charts",
+    "@nizivo/icons": "file:.packed/icons",
+    "@nizivo/react": "file:.packed/react",
+    "@nizivo/tokens": "file:.packed/tokens",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.1.2",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "shadcn": "4.22.1",
+    "typescript": "7.0.2",
+    "vite": "8.3.4"
+  },
+  "packageManager": "pnpm@12.11.2"
+}

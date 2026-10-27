@@ -398,6 +398,7 @@ function world(w: World = {}) {
           'fixture:vite-ssr',
           'fixture:react-router',
           'fixture:astro',
+          'fixture:registry',
         ]),
       }),
     );
@@ -1013,6 +1014,7 @@ describe('release', () => {
       'fixture-vite-ssr',
       'fixture-react-router',
       'fixture-astro',
+      'fixture-registry',
       'react-hooks',
       'visual',
       'visual-charts',
