@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "kpi-tile-css",
+  "type": "registry:item",
+  "title": "Kpi tile CSS",
+  "description": "The Kpi tile stylesheet to own and edit (re-skin). Import components/nizivo/kpi-tile-css.css instead of @nizivo/react/css/kpi-tile.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+  "dependencies": [
+    "@nizivo/react@~0.3.0"
+  ],
+  "files": [
+    {
+      "path": "nizivo/kpi-tile-css.css",
+      "type": "registry:file",
+      "target": "components/nizivo/kpi-tile-css.css",
+      "content": "/*\n * Nizivo registry item \"kpi-tile-css\", v0.3.0: https://nizivo.neevtechnologies.in/r/v0.3.0/kpi-tile-css.json\n * Yours to edit: the registry sends no updates. Licensed under MIT:\n *\n * MIT License\n *\n * Copyright (c) 2026 Neev Technologies\n *\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in all\n * copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n */\n@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;\n\n/* @nizivo/react/css/kpi-tile.css (Figma KPI Tile 7275:13780). The surface is Card's (card.css: the\n   tone, padding sm, radius xl, no shadow at rest) and the block is Metric's (metric.css); this file\n   only lets the tile fill a stretched grid row with its change row at the bottom, as a KPI row of\n   equal heights draws it. */\n@layer nz.components {\n  /* no minimum from the content: in a dashboard row (repeat(N, 1fr)) the column is the tile's width in\n     every status, so a one-line error or an enlarged number cannot widen it in one status only\n     (§16.5; week 12 review A11Y-W12-2). Two classes, so the order of the sheets does not matter. */\n  .nz-card.nz-kpi-tile {\n    min-inline-size: 0;\n  }\n\n  .nz-kpi-tile > .nz-metric {\n    flex: 1 1 auto;\n  }\n\n  .nz-kpi-tile > .nz-metric > .nz-metric-change {\n    margin-block-start: auto;\n  }\n}\n"
+    }
+  ]
+}
