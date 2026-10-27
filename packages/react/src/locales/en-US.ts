@@ -27,6 +27,12 @@ import type { PopoverLabels } from '../popover/index';
 import type { QuantityStepperLabels } from '../quantity-stepper/index';
 import type { CommandMenuLabels } from '../unstable/command-menu/index';
 import type { DateRangePickerLabels } from '../unstable/date-range-picker/index';
+import type { AiBadgeLabels } from '../unstable/ai-badge/index';
+import type { CitationLabels } from '../unstable/citation/index';
+import type { SourceCardLabels } from '../unstable/source-card/index';
+import type { SuggestionGroupLabels } from '../unstable/suggestion-chip/index';
+import type { ThinkingIndicatorLabels } from '../unstable/thinking-indicator/index';
+import type { UsageMeterLabels } from '../unstable/usage-meter/index';
 import type { RankedListLabels } from '../ranked-list/index';
 import type { SearchFieldLabels } from '../search-field/index';
 import type { SidebarLabels } from '../sidebar/index';
@@ -63,6 +69,12 @@ export const enUS: {
   quantityStepper: QuantityStepperLabels;
   dateRangePicker: DateRangePickerLabels;
   commandMenu: CommandMenuLabels;
+  aiBadge: AiBadgeLabels;
+  thinkingIndicator: ThinkingIndicatorLabels;
+  citation: CitationLabels;
+  sourceCard: SourceCardLabels;
+  suggestionGroup: SuggestionGroupLabels;
+  usageMeter: UsageMeterLabels;
   rankedList: RankedListLabels;
   searchField: SearchFieldLabels;
   sidebar: SidebarLabels;
@@ -131,6 +143,12 @@ export const enUS: {
     navigate: 'Navigate',
     open: 'Open',
   },
+  aiBadge: { label: 'AI generated' },
+  thinkingIndicator: { label: 'Thinking…' },
+  citation: { source: 'Source {number}', sourceTitled: 'Source {number}: {title}' },
+  sourceCard: { newTab: '(opens in a new tab)' },
+  suggestionGroup: { label: 'Suggestions' },
+  usageMeter: { label: 'AI credits', valueText: '{value} of {max} credits used' },
   rankedList: { loading: 'Loading {label}', empty: 'No data', error: 'Could not load {label}' },
   searchField: { label: 'Search', clear: 'Clear search' },
   sidebar: { nav: 'Primary' },

@@ -1,0 +1,33 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/citation.css (Figma Citation 7410:151), UNSTABLE. A Label/S number on bg/muted,
+   radius 6 (radius/xs × 1.5), padded 1 / 6; it sits in a line of text, so it never wraps. */
+@layer nz.components {
+  .nz-citation {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding-block: calc(var(--nz-space-0-5) / 2);
+    padding-inline: var(--nz-space-1-5);
+    border-radius: calc(var(--nz-radius-xs) * 1.5);
+    background: var(--nz-citation-bg, var(--nz-bg-muted));
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-label-s);
+    text-decoration: none;
+    vertical-align: baseline;
+    white-space: nowrap;
+  }
+
+  .nz-citation:hover {
+    background: var(--nz-bg-pressed);
+    color: var(--nz-text-primary);
+  }
+
+  @media (forced-colors: active) {
+    .nz-citation {
+      outline: 1px solid LinkText;
+      outline-offset: -1px;
+      color: LinkText;
+    }
+  }
+}

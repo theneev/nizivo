@@ -1,0 +1,75 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/thinking-indicator.css (Figma Thinking Indicator 7409:103), UNSTABLE. Three dots in
+   a 30 x 8 box: the active one 8 px in bg/brand, the others 6 px in border/control; the active dot
+   moves every 320 ms: the cycle is duration/spin × 1.2 (960 ms), so Reduced mode, which sets
+   duration/spin to 0, stops it as it stops every infinite animation (§13.2). 10 px before the
+   Label/M label in text/secondary. */
+@layer nz.components {
+  .nz-thinking-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: calc(var(--nz-space-2) + var(--nz-space-0-5));
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-label-m);
+  }
+
+  .nz-thinking-indicator-dots {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: calc(var(--nz-space-1) - var(--nz-space-0-5) / 2);
+    block-size: var(--nz-space-2);
+  }
+
+  .nz-thinking-indicator-dot {
+    inline-size: var(--nz-space-2);
+    block-size: var(--nz-space-2);
+    border-radius: var(--nz-radius-full);
+    background: var(--nz-border-control);
+    scale: 0.75;
+    animation: nz-thinking-indicator calc(var(--nz-duration-spin) * 1.2) linear infinite;
+  }
+
+  /* each dot is active for one third of the cycle, in turn */
+  .nz-thinking-indicator-dot:nth-child(2) {
+    animation-delay: calc(var(--nz-duration-spin) * -0.8);
+  }
+
+  .nz-thinking-indicator-dot:nth-child(3) {
+    animation-delay: calc(var(--nz-duration-spin) * -0.4);
+  }
+
+  @keyframes nz-thinking-indicator {
+    0%,
+    33.3% {
+      background: var(--nz-bg-brand);
+      scale: 1;
+    }
+
+    33.4%,
+    100% {
+      background: var(--nz-border-control);
+      scale: 0.75;
+    }
+  }
+
+  /* reduced motion: still dots, the first one active; the label still changes */
+  @media (prefers-reduced-motion: reduce) {
+    .nz-thinking-indicator-dot {
+      animation: none;
+    }
+
+    .nz-thinking-indicator-dot:first-child {
+      background: var(--nz-bg-brand);
+      scale: 1;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .nz-thinking-indicator-dot {
+      background: CanvasText;
+      forced-color-adjust: none;
+    }
+  }
+}

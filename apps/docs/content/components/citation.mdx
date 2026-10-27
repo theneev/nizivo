@@ -1,0 +1,20 @@
+---
+title: Citation
+description: 'Unstable: a numbered link after a claim in an AI answer, to the source behind it. Its accessible name says "Source 1: …", not just "1". Import it from @nizivo/react/unstable/citation.'
+---
+
+## Static or interactive
+
+**Server.** No client JavaScript: it is a link. [How to choose](/docs/guides/static-or-interactive/).
+
+## Linking
+
+`number` is the source's number as the answer counts them, and `href` where it is: `#source-1` for a
+[SourceCard](/docs/components/source-card/) under the answer (give the card that `id`), or the
+source's own URL. `title` adds the source's title to the accessible name: "Source 1: Moss & Kiln
+sales report". `labels.source` and `labels.sourceTitled` change those words.
+
+## Not yet
+
+Figma also shows the source in a popover when the citation is hovered or focused. That is not built
+yet; the link goes to the source.

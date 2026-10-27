@@ -1,0 +1,57 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/suggestion-chip.css (Figma Suggestion Chip 7409:46, Suggestion Group 7409:47),
+   UNSTABLE. A pill on bg/surface with a border/default edge, padded 8 / 14 / 8 / 12 with an 8 px
+   gap, the 16 px sparkles in icon/brand and a Label/M label: 36 px tall, as Figma's note says.
+   Hover: bg/hover and border/strong. The group wraps chips 8 px apart. */
+@layer nz.components {
+  .nz-suggestion-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--nz-space-2);
+    min-block-size: calc(var(--nz-space-8) + var(--nz-space-1));
+    padding-block: var(--nz-space-2);
+    padding-inline: var(--nz-space-3) calc(var(--nz-space-3) + var(--nz-space-0-5));
+    border: var(--nz-border-width-default) solid var(--nz-border-default);
+    border-radius: var(--nz-radius-full);
+    background: var(--nz-suggestion-chip-bg, var(--nz-bg-surface));
+    color: var(--nz-text-primary);
+    font: var(--nz-font-label-m);
+    text-align: start;
+    cursor: pointer;
+  }
+
+  .nz-suggestion-chip:hover:not(:disabled) {
+    border-color: var(--nz-border-strong);
+    background: var(--nz-bg-hover);
+  }
+
+  .nz-suggestion-chip:active:not(:disabled) {
+    background: var(--nz-bg-pressed);
+  }
+
+  .nz-suggestion-chip:disabled {
+    background: var(--nz-bg-disabled);
+    color: var(--nz-text-disabled);
+    cursor: not-allowed;
+  }
+
+  .nz-suggestion-chip-icon {
+    display: inline-flex;
+    flex: none;
+    color: var(--nz-icon-brand);
+    font-size: var(--nz-size-icon-sm);
+  }
+
+  .nz-suggestion-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--nz-space-2);
+  }
+
+  @media (forced-colors: active) {
+    .nz-suggestion-chip {
+      border-color: ButtonText;
+    }
+  }
+}

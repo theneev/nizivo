@@ -1,0 +1,75 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/source-card.css (Figma Source Card 7410:177), UNSTABLE. bg/surface with a
+   border/subtle edge, radius/lg, padded 14 (space/3 + space/0.5), 8 px between the header and the
+   title. The header: a 22 px bg/brand-subtle tile with the 14 px mark in icon/brand, the domain in
+   Body/S text/secondary, and the number as Citation draws it. The title is Label/M Strong. */
+@layer nz.components {
+  .nz-source-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-2);
+    min-inline-size: 0;
+    padding: calc(var(--nz-space-3) + var(--nz-space-0-5));
+    border: var(--nz-border-width-default) solid var(--nz-border-subtle);
+    border-radius: var(--nz-source-card-radius, var(--nz-radius-lg));
+    background: var(--nz-source-card-bg, var(--nz-bg-surface));
+    color: var(--nz-text-primary);
+    text-decoration: none;
+  }
+
+  .nz-source-card:hover {
+    border-color: var(--nz-border-default);
+    background: var(--nz-bg-hover);
+  }
+
+  .nz-source-card-header {
+    display: flex;
+    align-items: center;
+    gap: var(--nz-space-2);
+    min-inline-size: 0;
+  }
+
+  .nz-source-card-icon {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    inline-size: calc(var(--nz-space-5) + var(--nz-space-0-5));
+    block-size: calc(var(--nz-space-5) + var(--nz-space-0-5));
+    border-radius: calc(var(--nz-radius-xs) * 1.5);
+    background: var(--nz-bg-brand-subtle);
+    color: var(--nz-icon-brand);
+    font-size: 0.875rem;
+  }
+
+  .nz-source-card-domain {
+    flex: 1 1 auto;
+    min-inline-size: 0;
+    overflow: hidden;
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-body-s);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .nz-source-card-number {
+    flex: none;
+    padding-block: calc(var(--nz-space-0-5) / 2);
+    padding-inline: var(--nz-space-1-5);
+    border-radius: calc(var(--nz-radius-xs) * 1.5);
+    background: var(--nz-bg-muted);
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-label-s);
+  }
+
+  .nz-source-card-title {
+    font: var(--nz-font-label-m-strong);
+  }
+
+  @media (forced-colors: active) {
+    .nz-source-card {
+      border-color: CanvasText;
+    }
+  }
+}

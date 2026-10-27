@@ -1,0 +1,20 @@
+---
+title: AiBadge
+description: 'Unstable: says that the content beside it was written or changed by AI. Subtle or solid, in the lime that marks AI everywhere in Nizivo. Import it from @nizivo/react/unstable/ai-badge.'
+---
+
+## Static or interactive
+
+**Server.** No client JavaScript. [How to choose](/docs/guides/static-or-interactive/).
+
+## Where it goes
+
+Put it next to the content it describes, never as decoration: under a generated product
+description, beside an edited caption, in an answer's header. `variant="subtle"` (the default) is
+for text on a page; `variant="solid"` stands out over busier surfaces. Lime (`bg/accent`) marks AI
+in Nizivo and nothing else.
+
+## Words
+
+It says "AI generated". Pass children, or `labels={{ label: 'Edited with AI' }}`, to say something
+more exact. The sparkles mark is decorative; the words carry the meaning.

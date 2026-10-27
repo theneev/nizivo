@@ -1,0 +1,21 @@
+---
+title: UsageMeter
+description: 'Unstable: how much AI usage is left, as a meter with the value written out and a note such as when it resets. From 80 % it turns to the warning colour. Import it from @nizivo/react/unstable/usage-meter.'
+---
+
+## Static or interactive
+
+**Server.** No client JavaScript: it is a native `<meter>` ([Meter](/docs/components/meter/)).
+[How to choose](/docs/guides/static-or-interactive/).
+
+## Values
+
+`value` is how much is used and `max` the allowance; the card shows "640 / 1,000" and a screen reader
+hears "640 of 1,000 credits used" (`labels.valueText`, with `{value}` and `{max}`). `label` names it
+("AI credits" by default) and `note` adds a line under the bar.
+
+## Warning
+
+From `warnAt` (0.8, so 80 %) the bar turns to `chart/warning`: Meter's high range, with `optimum` at
+zero, since less used is better. Say what happens next in the note, and never stop people silently
+when the allowance runs out.

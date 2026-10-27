@@ -9,7 +9,8 @@
 // DateRangePicker trigger's) and `ellipsis` (MobileTabBar's More, Feather's `more-horizontal`) are
 // on Lucide's list of Feather-derived icons, so they also carry the Feather MIT notice in
 // THIRD_PARTY_NOTICES; `circle-check` (the success Toast's) and `eye` and `eye-off`
-// (PasswordInput's show and hide marks) are Lucide's own.
+// (PasswordInput's show and hide marks) are Lucide's own, as are the AI kit's `sparkles` (the AI
+// mark), `globe` and `file-text` (SourceCard's web and file marks).
 //
 // One export per glyph, so an entry carries only the paths it draws (a name → paths table kept every
 // glyph in every entry that drew one: about 160 B gzip on the Dialog entry).
@@ -30,7 +31,10 @@ export type GlyphName =
   | 'eye-off'
   | 'search'
   | 'calendar'
-  | 'ellipsis';
+  | 'ellipsis'
+  | 'sparkles'
+  | 'globe'
+  | 'file-text';
 
 function svg(name: GlyphName, paths: ReactNode): JSX.Element {
   return (
@@ -171,5 +175,38 @@ export const CalendarGlyph = (): JSX.Element =>
       <path d="M16 2v3" />
       <rect x="3" y="3" width="18" height="18" rx="2" />
       <path d="M3 9h18" />
+    </>,
+  );
+
+export const SparklesGlyph = (): JSX.Element =>
+  svg(
+    'sparkles',
+    <>
+      <path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z" />
+      <path d="M20 2v4" />
+      <path d="M22 4h-4" />
+      <circle cx="4" cy="20" r="2" />
+    </>,
+  );
+
+export const GlobeGlyph = (): JSX.Element =>
+  svg(
+    'globe',
+    <>
+      <circle cx="12" cy="12" r="10" />
+      <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+      <path d="M2 12h20" />
+    </>,
+  );
+
+export const FileTextGlyph = (): JSX.Element =>
+  svg(
+    'file-text',
+    <>
+      <path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" />
+      <path d="M14 2v5a1 1 0 0 0 1 1h5" />
+      <path d="M10 9H8" />
+      <path d="M16 13H8" />
+      <path d="M16 17H8" />
     </>,
   );

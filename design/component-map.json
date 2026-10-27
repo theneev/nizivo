@@ -764,6 +764,59 @@
       "import": "@nizivo/react/accordion",
       "export": "Accordion",
       "parts": ["Root", "Item", "Trigger", "Panel"]
+    },
+    "7409:25": {
+      "component": "ai-badge",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/ai-badge",
+      "export": "AiBadge",
+      "props": {
+        "variant": ["subtle", "solid"]
+      }
+    },
+    "7409:46": {
+      "component": "suggestion-chip",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/suggestion-chip",
+      "export": "SuggestionChip",
+      "props": {}
+    },
+    "7409:47": {
+      "component": "suggestion-chip",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/suggestion-chip",
+      "export": "SuggestionChip",
+      "props": {}
+    },
+    "7409:103": {
+      "component": "thinking-indicator",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/thinking-indicator",
+      "export": "ThinkingIndicator",
+      "props": {}
+    },
+    "7410:151": {
+      "component": "citation",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/citation",
+      "export": "Citation",
+      "props": {}
+    },
+    "7410:177": {
+      "component": "source-card",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/source-card",
+      "export": "SourceCard",
+      "props": {
+        "variant": ["web", "file"]
+      }
+    },
+    "7411:307": {
+      "component": "usage-meter",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/usage-meter",
+      "export": "UsageMeter",
+      "props": {}
     }
   }
 }

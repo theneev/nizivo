@@ -1,0 +1,46 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/ai-badge.css (Figma AI Badge 7409:25), UNSTABLE. Figma pads 4 / 8 / 4 / 10
+   with a 4 px gap: the 10 px end is snapped to 8, as Badge snaps its 10. Lime (bg/accent) marks AI
+   only. Public --nz-ai-badge-* hooks are read once, at the property. */
+@layer nz.components {
+  .nz-ai-badge {
+    --_nz-ai-badge-bg: var(--nz-bg-accent-subtle);
+    --_nz-ai-badge-fg: var(--nz-text-brand);
+    --_nz-ai-badge-icon: var(--nz-icon-brand);
+    --_nz-ai-badge-edge: var(--nz-border-brand);
+
+    display: inline-flex;
+    align-items: center;
+    gap: var(--nz-space-1);
+    padding-block: var(--nz-space-1);
+    padding-inline: var(--nz-space-2);
+    border: var(--nz-border-width-default) solid var(--nz-ai-badge-border, var(--_nz-ai-badge-edge));
+    border-radius: var(--nz-radius-full);
+    background: var(--nz-ai-badge-bg, var(--_nz-ai-badge-bg));
+    color: var(--nz-ai-badge-fg, var(--_nz-ai-badge-fg));
+    font: var(--nz-font-label-s);
+    white-space: nowrap;
+  }
+
+  .nz-ai-badge[data-variant='solid'] {
+    --_nz-ai-badge-bg: var(--nz-bg-accent);
+    --_nz-ai-badge-fg: var(--nz-text-on-accent);
+    --_nz-ai-badge-icon: var(--nz-text-on-accent);
+    /* Figma's solid badge has no edge: the border keeps the box but takes the fill's colour */
+    --_nz-ai-badge-edge: transparent;
+  }
+
+  .nz-ai-badge-icon {
+    display: inline-flex;
+    flex: none;
+    color: var(--_nz-ai-badge-icon);
+    font-size: 0.875rem;
+  }
+
+  @media (forced-colors: active) {
+    .nz-ai-badge {
+      border-color: CanvasText;
+    }
+  }
+}

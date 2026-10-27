@@ -1,0 +1,15 @@
+{
+  "name": "usage-meter",
+  "status": "unstable",
+  "tier": "server",
+  "exports": ["UsageMeter"],
+  "interactive": [],
+  "cssDeps": ["base", "meter"],
+  "variants": {},
+  "figma": {
+    "canonical": ["7411:307"],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": []
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "citation",
+  "status": "unstable",
+  "tier": "server",
+  "exports": ["Citation"],
+  "interactive": ["citation"],
+  "cssDeps": ["base"],
+  "variants": {},
+  "figma": {
+    "canonical": ["7410:151"],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": ["7410:177"]
+  }
+}

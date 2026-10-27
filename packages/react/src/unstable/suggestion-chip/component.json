@@ -1,0 +1,15 @@
+{
+  "name": "suggestion-chip",
+  "status": "unstable",
+  "tier": "server",
+  "exports": ["SuggestionChip", "SuggestionGroup"],
+  "interactive": ["suggestion-chip"],
+  "cssDeps": ["base"],
+  "variants": {},
+  "figma": {
+    "canonical": ["7409:46", "7409:47"],
+    "ghosts": [],
+    "variantsSeen": ["7409:30", "7409:38"],
+    "related": []
+  }
+}

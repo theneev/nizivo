@@ -1,0 +1,57 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/usage-meter.css (Figma Usage Meter 7411:307), UNSTABLE. bg/subtle with a
+   border/subtle edge, radius/lg, padded 16 with 10 px between rows: the Label/M Strong name with the
+   14 px sparkles in icon/brand and the Label/M value in text/secondary, the 8 px Meter bar (radius
+   4), and a Body/S note in text/secondary. The bar is Meter's, 8 px tall here. */
+@layer nz.components {
+  .nz-usage-meter {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--nz-space-2) + var(--nz-space-0-5));
+    padding: var(--nz-space-4);
+    border: var(--nz-border-width-default) solid var(--nz-border-subtle);
+    border-radius: var(--nz-usage-meter-radius, var(--nz-radius-lg));
+    background: var(--nz-usage-meter-bg, var(--nz-bg-subtle));
+  }
+
+  .nz-usage-meter-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--nz-space-3);
+  }
+
+  .nz-usage-meter-label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--nz-space-1-5);
+    color: var(--nz-text-primary);
+    font: var(--nz-font-label-m-strong);
+  }
+
+  .nz-usage-meter-icon {
+    display: inline-flex;
+    flex: none;
+    color: var(--nz-icon-brand);
+    font-size: 0.875rem;
+  }
+
+  .nz-usage-meter-value {
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-label-m);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  /* Figma's bar is 8 px; Meter's track is 6 (its fill and ends follow the track) */
+  .nz-usage-meter-bar .nz-meter-track {
+    block-size: var(--nz-space-2);
+  }
+
+  .nz-usage-meter-note {
+    margin: 0;
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-body-s);
+  }
+}

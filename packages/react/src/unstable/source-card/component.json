@@ -1,0 +1,17 @@
+{
+  "name": "source-card",
+  "status": "unstable",
+  "tier": "server",
+  "exports": ["SourceCard"],
+  "interactive": ["source-card"],
+  "cssDeps": ["base"],
+  "variants": {
+    "variant": ["web", "file"]
+  },
+  "figma": {
+    "canonical": ["7410:177"],
+    "ghosts": [],
+    "variantsSeen": ["7410:153", "7410:164"],
+    "related": ["7410:151"]
+  }
+}

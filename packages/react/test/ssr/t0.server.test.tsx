@@ -85,8 +85,20 @@ const COMPONENTS = [
   'bulk-action-bar',
   'data-view',
   'surface',
+  // v0.4's AI kit, under src/unstable/ (D-dn)
+  'ai-badge',
+  'thinking-indicator',
+  'citation',
+  'source-card',
+  'suggestion-chip',
+  'usage-meter',
 ] as const;
 type Name = (typeof COMPONENTS)[number];
+
+/** A component's folder under src/: `ai-badge` is `unstable/ai-badge`. */
+function folderOf(name: string): string {
+  return SRC.has(`src/unstable/${name}/index.ts`) ? `unstable/${name}` : name;
+}
 
 const FIELD_SCOPE = 'src/field/field-scope.client.tsx';
 const TOOLTIP_LEAVES = [
@@ -220,6 +232,12 @@ const entries = {
   'app-shell': () => import('../../src/app-shell/index'),
   accordion: () => import('../../src/accordion/index'),
   'page-indicator': () => import('../../src/page-indicator/index'),
+  'ai-badge': () => import('../../src/unstable/ai-badge/index'),
+  'thinking-indicator': () => import('../../src/unstable/thinking-indicator/index'),
+  citation: () => import('../../src/unstable/citation/index'),
+  'source-card': () => import('../../src/unstable/source-card/index'),
+  'suggestion-chip': () => import('../../src/unstable/suggestion-chip/index'),
+  'usage-meter': () => import('../../src/unstable/usage-meter/index'),
   'bulk-action-bar': () => import('../../src/bulk-action-bar/index'),
   'data-view': () => import('../../src/data-view/index'),
   surface: () => import('../../src/surface/index'),
@@ -276,6 +294,13 @@ const exampleModules = {
   'app-shell': () => import('../../src/app-shell/app-shell.example'),
   accordion: () => import('../../src/accordion/accordion.example'),
   'page-indicator': () => import('../../src/page-indicator/page-indicator.example'),
+  'ai-badge': () => import('../../src/unstable/ai-badge/ai-badge.example'),
+  'thinking-indicator': () =>
+    import('../../src/unstable/thinking-indicator/thinking-indicator.example'),
+  citation: () => import('../../src/unstable/citation/citation.example'),
+  'source-card': () => import('../../src/unstable/source-card/source-card.example'),
+  'suggestion-chip': () => import('../../src/unstable/suggestion-chip/suggestion-chip.example'),
+  'usage-meter': () => import('../../src/unstable/usage-meter/usage-meter.example'),
   'bulk-action-bar': () => import('../../src/bulk-action-bar/bulk-action-bar.example'),
   'data-view': () => import('../../src/data-view/data-view.example'),
   surface: () => import('../../src/surface/surface.example'),
@@ -335,8 +360,8 @@ test('the list is every tier "server" manifest', () => {
 describe('module graph', () => {
   for (const name of COMPONENTS) {
     test(`${name}: no 'use client' module but its own leaves; only react-server React before them`, () => {
-      const { modules, externals } = graph(SRC, `src/${name}/index.ts`);
-      expect(modules).toContain(`src/${name}/${name}.tsx`);
+      const { modules, externals } = graph(SRC, `src/${folderOf(name)}/index.ts`);
+      expect(modules).toContain(`src/${folderOf(name)}/${name}.tsx`);
       expect([...modules].filter((file) => isClient(SRC.get(file) ?? '')).toSorted()).toEqual(
         CLIENT_LEAVES[name] ?? [],
       );
@@ -346,7 +371,7 @@ describe('module graph', () => {
           (external) => external !== 'react' && !(allowed?.test(external) ?? false),
         ),
       ).toEqual([]);
-      const half = serverHalf(`src/${name}/index.ts`);
+      const half = serverHalf(`src/${folderOf(name)}/index.ts`);
       expect(reactImports(SRC, half).filter((n) => !REACT_SERVER.has(n))).toEqual([]);
     });
   }
@@ -373,7 +398,10 @@ describe('react-server build of React', () => {
     test(`${name}: the entry loads and every example renders; boundary props serialise`, async () => {
       // Every client module the entry or its examples reach (an example may compose a Field).
       const reached = new Set<string>();
-      for (const file of [`src/${name}/index.ts`, `src/${name}/${name}.example.tsx`]) {
+      for (const file of [
+        `src/${folderOf(name)}/index.ts`,
+        `src/${folderOf(name)}/${name}.example.tsx`,
+      ]) {
         for (const module of graph(SRC, file).modules) reached.add(module);
       }
       const clients = [...reached].flatMap((file) => {

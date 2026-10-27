@@ -21,8 +21,11 @@ Lucide icons:
   search             (the SearchField magnifier)
   ellipsis           (the MobileTabBar More mark)
   calendar           (the DateRangePicker trigger mark)
+  sparkles           (the AI kit's mark: AiBadge, SuggestionChip, UsageMeter)
+  globe              (the SourceCard web mark)
+  file-text          (the SourceCard file mark)
 
-Lucide's licence covers all fifteen:
+Lucide's licence covers all eighteen:
 
 ISC License
 

@@ -1,0 +1,21 @@
+---
+title: SourceCard
+description: 'Unstable: where an AI answer came from, a web page or a file, as one link with its domain, title and number. A web source opens in a new tab and says so. Import it from @nizivo/react/unstable/source-card.'
+---
+
+## Static or interactive
+
+**Server.** No client JavaScript: it is a link. [How to choose](/docs/guides/static-or-interactive/).
+
+## Web or file
+
+`type="web"` (the default) shows a globe and opens in a new tab, with a visually hidden "(opens in a
+new tab)" after the title; `type="file"` shows a document and opens in place. `newTab` overrides
+either. `domain` is where it lives and `title` the card's main line. `number` repeats the
+[Citation](/docs/components/citation/) that points here; it is decorative, since the citation already
+names the source.
+
+## Layout
+
+The card fills the width you give it: lay several out in a grid under the answer. The domain is cut
+short with an ellipsis when it does not fit; the title wraps.

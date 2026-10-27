@@ -1,0 +1,20 @@
+---
+title: SuggestionChip
+description: 'Unstable: prompt starters and follow-ups. A chip is a button that fills the composer so people can edit before they send; a SuggestionGroup wraps a few of them as a labelled group. Import them from @nizivo/react/unstable/suggestion-chip.'
+---
+
+## Static or interactive
+
+**Server.** No client JavaScript of its own: each chip is a button, and what its `onClick` does is your
+component's code. [How to choose](/docs/guides/static-or-interactive/).
+
+## Fill, don't send
+
+A chip puts its words in the composer; people still press send. Do that in `onClick`, and move focus
+to the composer so they can edit. Keep about five in view at most, under an empty composer or after
+an answer as follow-ups.
+
+## The group
+
+`SuggestionGroup` wraps the chips with 8 px between them and is a group named "Suggestions"
+(`labels.label`, or your own `aria-label` or `aria-labelledby`).

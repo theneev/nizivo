@@ -1,0 +1,17 @@
+{
+  "name": "ai-badge",
+  "status": "unstable",
+  "tier": "server",
+  "exports": ["AiBadge"],
+  "interactive": [],
+  "cssDeps": ["base"],
+  "variants": {
+    "variant": ["subtle", "solid"]
+  },
+  "figma": {
+    "canonical": ["7409:25"],
+    "ghosts": [],
+    "variantsSeen": ["7409:9", "7409:17"],
+    "related": []
+  }
+}

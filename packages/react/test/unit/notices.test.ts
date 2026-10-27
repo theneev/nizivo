@@ -36,6 +36,9 @@ const LUCIDE: Record<string, string> = {
   search: 'search',
   ellipsis: 'ellipsis',
   calendar: 'calendar',
+  sparkles: 'sparkles',
+  globe: 'globe',
+  'file-text': 'file-text',
 };
 
 /**

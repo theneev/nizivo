@@ -1,0 +1,15 @@
+{
+  "name": "thinking-indicator",
+  "status": "unstable",
+  "tier": "server",
+  "exports": ["ThinkingIndicator"],
+  "interactive": [],
+  "cssDeps": ["base"],
+  "variants": {},
+  "figma": {
+    "canonical": ["7409:103"],
+    "ghosts": [],
+    "variantsSeen": ["7409:85", "7409:91", "7409:97"],
+    "related": []
+  }
+}

@@ -1,0 +1,19 @@
+---
+title: ThinkingIndicator
+description: "Unstable: the wait before an AI answer's first word, three stepping dots and a label that can name the step. A polite status region; the dots stop under reduced motion. Import it from @nizivo/react/unstable/thinking-indicator."
+---
+
+## Static or interactive
+
+**Server.** No client JavaScript: the dots are CSS. [How to choose](/docs/guides/static-or-interactive/).
+
+## Name the step
+
+It says "Thinking…". When the assistant knows what it is doing, say it: children replace the label
+(`<ThinkingIndicator>Reading last week's orders…</ThinkingIndicator>`). Replace the indicator with the
+answer once the first words arrive.
+
+## Screen readers and motion
+
+The indicator is `role="status"`, so a screen reader announces the label, and each new step, politely.
+The dots are decorative. Under reduced motion they stand still and only the label changes.
