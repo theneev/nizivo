@@ -889,6 +889,15 @@ describe('release', () => {
     expect(await release(REAL, real.io)).toBe(1);
     expect(real.publishes()).toEqual([]);
     expect(real.logs.join('\n')).toContain("the registry's v0.1.0 is not frozen: run");
+    // with changesets pending, the freeze waits for the version the version step makes
+    const pending = world({
+      ...READY,
+      pending: true,
+      registryFreeze: { frozen: false, drift: [] },
+    });
+    expect(await release(DRY, pending.io)).toBe(0);
+    expect(pending.logs.join('\n')).toContain('after the version step, freeze the registry');
+    expect(pending.logs.join('\n')).not.toContain('is not frozen');
   });
 
   test('a frozen registry that differs from this commit blocks the release', async () => {

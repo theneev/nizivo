@@ -330,7 +330,10 @@ export async function release(options: Options, io: Io): Promise<number> {
   } else if (versions.version !== undefined) ok(`the fixed group is at ${versions.version}`);
   ok(`publish order: ${order.join(' → ')}`);
   // The registry ships with the docs: a released version is frozen, and frozen as this commit builds it
-  if (versions.version !== undefined && !versions.unreleased) {
+  if (pending.length > 0) {
+    // the version step comes first; the freeze is for the version it makes
+    note('after the version step, freeze the registry at the new version (RELEASING.md step 2)');
+  } else if (versions.version !== undefined && !versions.unreleased) {
     const v = versions.version;
     const freeze = io.registryFreeze(v);
     if (!freeze.frozen) {
