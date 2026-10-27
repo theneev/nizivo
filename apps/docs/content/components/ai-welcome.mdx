@@ -1,0 +1,21 @@
+---
+title: AiWelcome
+description: 'Unstable: the empty state of a new conversation, a greeting, what the assistant can see and do, then the starters and the composer. Import it from @nizivo/react/unstable/ai-welcome.'
+---
+
+## Static or interactive
+
+**Server.** No client JavaScript of its own; its children (a
+[PromptComposer](/docs/components/prompt-composer/)) may have some.
+[How to choose](/docs/guides/static-or-interactive/).
+
+## Content
+
+`greeting` is the heading (`headingLevel`, 2 by default); `description` says what the assistant can
+see and do. Be honest about its scope and its access to data. The children follow at full width:
+a [SuggestionGroup](/docs/components/suggestion-chip/) of starters and the composer.
+
+## The orb
+
+The orb is decoration, drawn with CSS as [VoiceOrb](/docs/components/voice-orb/)'s is; `orb` takes
+any picture in its place, hidden from assistive technology.

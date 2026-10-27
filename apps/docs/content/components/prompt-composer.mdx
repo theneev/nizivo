@@ -1,0 +1,27 @@
+---
+title: PromptComposer
+description: 'Unstable: where people write to the assistant, a textarea that grows with the text, tools at the start and a send button at the end. Enter sends, Shift+Enter adds a line. Import it from @nizivo/react/unstable/prompt-composer.'
+---
+
+## Static or interactive
+
+**Client.** It holds the text and sends on Enter. [How to choose](/docs/guides/static-or-interactive/).
+
+## Text and sending
+
+`value`, `defaultValue` and `onValueChange` hold the text; `onSend` gets it on Enter or the send
+button, unless it is only spaces, and an uncontrolled composer clears after. Shift+Enter adds a
+line, and Enter while an input method is composing does neither. `pending` keeps the send button
+disabled while an answer is on its way; the text stays editable. The composer is a `<form>`, so
+`name` posts the text with it.
+
+## Tools
+
+`tools` sits at the start of the toolbar: [IconButtons](/docs/components/icon-button/) that attach
+or dictate ("Attach file", "Dictate"), a [ModelSelector](/docs/components/model-selector/).
+
+## Accessibility
+
+The textarea is named by a hidden label ("Message"); the placeholder is a hint, not its name. It
+grows with the text, to 12 lines, where the browser has `field-sizing`. The send button stays
+focusable while there is nothing to send, marked `aria-disabled`.

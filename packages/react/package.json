@@ -363,9 +363,17 @@
       "types": "./dist/unstable/ai-badge/index.d.ts",
       "default": "./dist/unstable/ai-badge/index.js"
     },
+    "./unstable/ai-welcome": {
+      "types": "./dist/unstable/ai-welcome/index.d.ts",
+      "default": "./dist/unstable/ai-welcome/index.js"
+    },
     "./unstable/approval-card": {
       "types": "./dist/unstable/approval-card/index.d.ts",
       "default": "./dist/unstable/approval-card/index.js"
+    },
+    "./unstable/chat-message": {
+      "types": "./dist/unstable/chat-message/index.d.ts",
+      "default": "./dist/unstable/chat-message/index.js"
     },
     "./unstable/citation": {
       "types": "./dist/unstable/citation/index.d.ts",
@@ -390,6 +398,10 @@
     "./unstable/model-selector": {
       "types": "./dist/unstable/model-selector/index.d.ts",
       "default": "./dist/unstable/model-selector/index.js"
+    },
+    "./unstable/prompt-composer": {
+      "types": "./dist/unstable/prompt-composer/index.d.ts",
+      "default": "./dist/unstable/prompt-composer/index.js"
     },
     "./unstable/response-block": {
       "types": "./dist/unstable/response-block/index.d.ts",
@@ -421,6 +433,7 @@
     },
     "./css/accordion.css": "./dist/css/accordion.css",
     "./css/ai-badge.css": "./dist/css/ai-badge.css",
+    "./css/ai-welcome.css": "./dist/css/ai-welcome.css",
     "./css/alert.css": "./dist/css/alert.css",
     "./css/app-shell.css": "./dist/css/app-shell.css",
     "./css/approval-card.css": "./dist/css/approval-card.css",
@@ -432,6 +445,7 @@
     "./css/bulk-action-bar.css": "./dist/css/bulk-action-bar.css",
     "./css/button.css": "./dist/css/button.css",
     "./css/card.css": "./dist/css/card.css",
+    "./css/chat-message.css": "./dist/css/chat-message.css",
     "./css/checkbox.css": "./dist/css/checkbox.css",
     "./css/chip-group.css": "./dist/css/chip-group.css",
     "./css/choice-card.css": "./dist/css/choice-card.css",
@@ -479,6 +493,7 @@
     "./css/popover.css": "./dist/css/popover.css",
     "./css/progress-bar.css": "./dist/css/progress-bar.css",
     "./css/progress-ring.css": "./dist/css/progress-ring.css",
+    "./css/prompt-composer.css": "./dist/css/prompt-composer.css",
     "./css/quantity-stepper.css": "./dist/css/quantity-stepper.css",
     "./css/radio-group.css": "./dist/css/radio-group.css",
     "./css/ranked-list.css": "./dist/css/ranked-list.css",

@@ -31,8 +31,9 @@ Lucide icons:
   circle-stop        (the ResponseBlock Stop generating mark)
   refresh-cw         (the ResponseBlock Retry mark)
   mic                (the VoiceOrb start mark)
+  arrow-up           (the PromptComposer send mark)
 
-Lucide's licence covers all twenty-five:
+Lucide's licence covers all twenty-six:
 
 ISC License
 
@@ -54,9 +55,9 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 Feather (https://feathericons.com)
 
 chevron-right, circle-x (Feather's x-circle), info, x, check, minus, plus, search,
-calendar, ellipsis (Feather's more-horizontal) and circle-alert (Feather's alert-circle) are on
-Lucide's list of icons derived from the
-Feather project, so their path data is also under Feather's licence:
+calendar, ellipsis (Feather's more-horizontal), circle-alert (Feather's alert-circle) and arrow-up
+are on Lucide's list of icons derived from the Feather project, so their path data is also
+under Feather's licence:
 
 The MIT License (MIT)
 

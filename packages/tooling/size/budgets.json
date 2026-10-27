@@ -2,11 +2,11 @@
   "$comment": "Size budgets (ARCHITECTURE.md §17), written by `node packages/tooling/size/measure.ts --write`. measured: bytes, gzip -9, as size-limit 14.2 reports them. limitKiB: measured + 10%, rounded up (method.ts limitKiB), never above the entry's §17.1 plan limit (method.ts PLAN_LIMITS_KIB). Limits only go up through a labelled PR (§17.3).",
   "entries": {
     "@nizivo/react": {
-      "measured": 134588,
+      "measured": 134584,
       "limitKiB": 143
     },
     "@nizivo/react/accordion": {
-      "measured": 1312,
+      "measured": 1313,
       "limitKiB": 1.5
     },
     "@nizivo/react/alert": {
@@ -30,7 +30,7 @@
       "limitKiB": 0.9
     },
     "@nizivo/react/banner": {
-      "measured": 1412,
+      "measured": 1413,
       "limitKiB": 1.5
     },
     "@nizivo/react/breadcrumb": {
@@ -106,7 +106,7 @@
       "limitKiB": 1.9
     },
     "@nizivo/react/file-upload": {
-      "measured": 5688,
+      "measured": 5689,
       "limitKiB": 6.1
     },
     "@nizivo/react/form": {
@@ -154,12 +154,12 @@
       "limitKiB": 1.3
     },
     "@nizivo/react/kpi-tile": {
-      "measured": 2323,
+      "measured": 2322,
       "limitKiB": 2.5
     },
     "@nizivo/react/locales/en-US": {
-      "measured": 1376,
-      "limitKiB": 1.4
+      "measured": 1437,
+      "limitKiB": 1.6
     },
     "@nizivo/react/menu": {
       "measured": 57163,
@@ -210,7 +210,7 @@
       "limitKiB": 1.3
     },
     "@nizivo/react/pagination": {
-      "measured": 1988,
+      "measured": 1987,
       "limitKiB": 2
     },
     "@nizivo/react/password-input": {
@@ -298,7 +298,7 @@
       "limitKiB": 1.8
     },
     "@nizivo/react/table-selection": {
-      "measured": 1860,
+      "measured": 1861,
       "limitKiB": 1.9
     },
     "@nizivo/react/tabs": {
@@ -334,12 +334,20 @@
       "limitKiB": 2.7
     },
     "@nizivo/react/unstable/ai-badge": {
-      "measured": 1138,
+      "measured": 1139,
       "limitKiB": 1.3
+    },
+    "@nizivo/react/unstable/ai-welcome": {
+      "measured": 876,
+      "limitKiB": 1
     },
     "@nizivo/react/unstable/approval-card": {
       "measured": 2096,
       "limitKiB": 2.3
+    },
+    "@nizivo/react/unstable/chat-message": {
+      "measured": 1339,
+      "limitKiB": 1.5
     },
     "@nizivo/react/unstable/citation": {
       "measured": 932,
@@ -364,6 +372,10 @@
     "@nizivo/react/unstable/model-selector": {
       "measured": 63788,
       "limitKiB": 69
+    },
+    "@nizivo/react/unstable/prompt-composer": {
+      "measured": 1525,
+      "limitKiB": 1.7
     },
     "@nizivo/react/unstable/response-block": {
       "measured": 2309,
@@ -390,15 +402,15 @@
       "limitKiB": 2.1
     },
     "@nizivo/react/unstable/voice-orb": {
-      "measured": 1888,
-      "limitKiB": 20
+      "measured": 1889,
+      "limitKiB": 2.1
     },
     "@nizivo/react dashboard set": {
       "measured": 78934,
       "limitKiB": 85
     },
     "@nizivo/react { Button } from the barrel": {
-      "measured": 1279,
+      "measured": 1280,
       "limitKiB": 1.4
     },
     "@nizivo/react { Select } from the barrel": {
@@ -649,6 +661,10 @@
       "measured": 764,
       "limitKiB": 0.8
     },
+    "@nizivo/react own: unstable/prompt-composer/prompt-composer.client": {
+      "measured": 747,
+      "limitKiB": 0.9
+    },
     "@nizivo/react lazy: the DateRangePicker calendar": {
       "measured": 39816,
       "limitKiB": 43
@@ -672,6 +688,10 @@
     "@nizivo/react/css/ai-badge.css": {
       "measured": 418,
       "limitKiB": 0.5
+    },
+    "@nizivo/react/css/ai-welcome.css": {
+      "measured": 562,
+      "limitKiB": 0.7
     },
     "@nizivo/react/css/alert.css": {
       "measured": 636,
@@ -698,7 +718,7 @@
       "limitKiB": 0.8
     },
     "@nizivo/react/css/base.css": {
-      "measured": 1444,
+      "measured": 1464,
       "limitKiB": 1.6
     },
     "@nizivo/react/css/breadcrumb.css": {
@@ -716,6 +736,10 @@
     "@nizivo/react/css/card.css": {
       "measured": 665,
       "limitKiB": 0.7
+    },
+    "@nizivo/react/css/chat-message.css": {
+      "measured": 537,
+      "limitKiB": 0.6
     },
     "@nizivo/react/css/checkbox.css": {
       "measured": 834,
@@ -905,6 +929,10 @@
       "measured": 509,
       "limitKiB": 0.6
     },
+    "@nizivo/react/css/prompt-composer.css": {
+      "measured": 745,
+      "limitKiB": 0.9
+    },
     "@nizivo/react/css/quantity-stepper.css": {
       "measured": 611,
       "limitKiB": 0.6
@@ -1030,7 +1058,7 @@
       "limitKiB": 1.1
     },
     "@nizivo/react/styles.css": {
-      "measured": 25950,
+      "measured": 25973,
       "limitKiB": 26
     },
     "@nizivo/tokens": {

@@ -157,6 +157,11 @@ function mapSpecifier(file: string, name: string, from: string, subpaths: Set<st
     ? /^\.\.\/\.\.\/([a-z0-9-]+)\/index$/.exec(from)
     : /^\.\.\/([a-z0-9-]+)\/index$/.exec(from);
   if (sibling?.[1] !== undefined && subpaths.has(sibling[1])) return `@nizivo/react/${sibling[1]}`;
+  // and another unstable part from ../<name>/ (AiWelcome's PromptComposer)
+  const unstable = name.startsWith('unstable/') ? /^\.\.\/([a-z0-9-]+)\/index$/.exec(from) : null;
+  if (unstable?.[1] !== undefined && subpaths.has(`unstable/${unstable[1]}`)) {
+    return `@nizivo/react/unstable/${unstable[1]}`;
+  }
   const pub = /^@nizivo\/react\/([a-z0-9-]+)$/.exec(from);
   if (pub?.[1] !== undefined && subpaths.has(pub[1])) return from;
   return fail(

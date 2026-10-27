@@ -104,19 +104,19 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 | Entry                        | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | ---------------------------- | -------: | ---------: | ---------: | ----------: | -----------: |
-| `.`                          |  134,588 |      131.4 |    110,487 |         143 |       11,844 |
-| /accordion                   |    1,312 |        1.3 |      1,207 |         1.5 |          224 |
-| /alert                       |    1,382 |        1.3 |      1,265 |         1.4 |           51 |
+| `.`                          |  134,584 |      131.4 |    110,355 |         143 |       11,848 |
+| /accordion                   |    1,313 |        1.3 |      1,207 |         1.5 |          223 |
+| /alert                       |    1,382 |        1.3 |      1,261 |         1.4 |           51 |
 | /app-shell                   |      462 |        0.5 |        433 |         0.5 |           50 |
 | /augment                     |        0 |        0.0 |          0 |           0 |            — |
 | /avatar                      |    1,472 |        1.4 |      1,355 |         1.5 |           64 |
 | /badge                       |      796 |        0.8 |        727 |         0.9 |          125 |
-| /banner                      |    1,412 |        1.4 |      1,298 |         1.5 |          124 |
-| /breadcrumb                  |    1,292 |        1.3 |      1,193 |         1.4 |          141 |
+| /banner                      |    1,413 |        1.4 |      1,305 |         1.5 |          123 |
+| /breadcrumb                  |    1,292 |        1.3 |      1,194 |         1.4 |          141 |
 | /bulk-action-bar             |      941 |        0.9 |        858 |           1 |           83 |
-| /button                      |    1,277 |        1.2 |      1,172 |         1.4 |          156 |
+| /button                      |    1,277 |        1.2 |      1,173 |         1.4 |          156 |
 | /card                        |    1,086 |        1.1 |        971 |         1.2 |          142 |
-| /checkbox                    |    2,068 |        2.0 |      1,911 |         2.3 |          287 |
+| /checkbox                    |    2,068 |        2.0 |      1,904 |         2.3 |          287 |
 | /chip-group                  |    2,589 |        2.5 |      2,367 |         2.7 |          175 |
 | /choice-card                 |    2,289 |        2.2 |      2,104 |         2.5 |          271 |
 | /combobox                    |   66,820 |       65.3 |     57,409 |          72 |        6,908 |
@@ -128,10 +128,10 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /dialog                      |   32,660 |       31.9 |     29,009 |          32 |          108 |
 | /drawer                      |   32,732 |       32.0 |     29,043 |          35 |        3,108 |
 | /empty-state                 |      840 |        0.8 |        768 |           1 |          184 |
-| /field                       |    3,628 |        3.5 |      3,305 |         3.9 |          365 |
-| /fieldset                    |    1,714 |        1.7 |      1,561 |         1.9 |          231 |
-| /file-upload                 |    5,688 |        5.6 |      5,195 |         6.1 |          558 |
-| /form                        |    2,852 |        2.8 |      2,591 |           3 |          220 |
+| /field                       |    3,628 |        3.5 |      3,309 |         3.9 |          365 |
+| /fieldset                    |    1,714 |        1.7 |      1,563 |         1.9 |          231 |
+| /file-upload                 |    5,689 |        5.6 |      5,191 |         6.1 |          557 |
+| /form                        |    2,852 |        2.8 |      2,590 |           3 |          220 |
 | /grid                        |      793 |        0.8 |        737 |         0.9 |          128 |
 | /heading                     |      767 |        0.7 |        697 |         0.9 |          154 |
 | /hotkeys                     |    1,572 |        1.5 |      1,422 |         1.7 |          168 |
@@ -142,30 +142,30 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /inline-error                |    1,048 |        1.0 |        953 |         1.2 |          180 |
 | /input                       |    1,837 |        1.8 |      1,662 |           2 |          211 |
 | /kbd                         |    1,192 |        1.2 |      1,087 |         1.3 |          139 |
-| /kpi-tile                    |    2,323 |        2.3 |      2,107 |         2.5 |          237 |
-| /locales/en-US               |    1,376 |        1.3 |      1,149 |         1.4 |           57 |
+| /kpi-tile                    |    2,322 |        2.3 |      2,121 |         2.5 |          238 |
+| /locales/en-US               |    1,437 |        1.4 |      1,209 |         1.6 |          201 |
 | /menu                        |   57,163 |       55.8 |     49,434 |          57 |        1,205 |
 | /meter                       |    1,143 |        1.1 |      1,058 |         1.3 |          188 |
 | /metric                      |    2,143 |        2.1 |      1,958 |         2.4 |          314 |
 | /mobile-tab-bar              |   33,344 |       32.6 |     29,672 |          36 |        3,520 |
 | /mobile-top-bar              |      840 |        0.8 |        771 |           1 |          184 |
 | /motion                      |    1,573 |        1.5 |      1,436 |         1.7 |          167 |
-| /native-select               |    1,561 |        1.5 |      1,423 |         1.7 |          179 |
+| /native-select               |    1,561 |        1.5 |      1,435 |         1.7 |          179 |
 | /nav-item                    |    1,221 |        1.2 |      1,102 |         1.4 |          212 |
 | /number-field                |   28,925 |       28.2 |     25,841 |          32 |        3,843 |
 | /number-value                |      788 |        0.8 |        716 |         0.9 |          133 |
 | /page-header                 |      890 |        0.9 |        814 |           1 |          134 |
 | /page-indicator              |    1,147 |        1.1 |      1,043 |         1.3 |          184 |
-| /pagination                  |    1,988 |        1.9 |      1,835 |           2 |           60 |
-| /password-input              |    2,670 |        2.6 |      2,398 |         2.8 |          197 |
+| /pagination                  |    1,987 |        1.9 |      1,826 |           2 |           61 |
+| /password-input              |    2,670 |        2.6 |      2,405 |         2.8 |          197 |
 | /pointer-fx                  |    1,107 |        1.1 |      1,004 |         1.2 |          121 |
 | /popover                     |   36,054 |       35.2 |     31,999 |          39 |        3,882 |
 | /progress-bar                |    1,137 |        1.1 |      1,039 |         1.3 |          194 |
 | /progress-ring               |    1,194 |        1.2 |      1,097 |         1.3 |          137 |
-| /quantity-stepper            |    2,682 |        2.6 |      2,466 |         2.9 |          287 |
-| /radio-group                 |    2,203 |        2.2 |      2,024 |         2.4 |          254 |
-| /ranked-list                 |    2,473 |        2.4 |      2,285 |         2.7 |          291 |
-| /search-field                |    3,417 |        3.3 |      3,110 |         3.6 |          269 |
+| /quantity-stepper            |    2,682 |        2.6 |      2,465 |         2.9 |          287 |
+| /radio-group                 |    2,203 |        2.2 |      2,033 |         2.4 |          254 |
+| /ranked-list                 |    2,473 |        2.4 |      2,286 |         2.7 |          291 |
+| /search-field                |    3,417 |        3.3 |      3,101 |         3.6 |          269 |
 | /segmented-control           |    2,371 |        2.3 |      2,172 |         2.6 |          291 |
 | /select                      |   63,745 |       62.3 |     54,722 |          66 |        3,839 |
 | /separator                   |      772 |        0.8 |        699 |         0.9 |          149 |
@@ -178,7 +178,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /switch                      |    1,734 |        1.7 |      1,579 |         1.9 |          211 |
 | /tab-nav                     |    1,031 |        1.0 |        949 |         1.2 |          197 |
 | /table                       |    1,660 |        1.6 |      1,507 |         1.8 |          183 |
-| /table-selection             |    1,860 |        1.8 |      1,692 |         1.9 |           85 |
+| /table-selection             |    1,861 |        1.8 |      1,683 |         1.9 |           84 |
 | /tabs                        |   33,683 |       32.9 |     29,840 |          35 |        2,157 |
 | /text                        |      716 |        0.7 |        653 |         0.8 |          103 |
 | /textarea                    |    1,368 |        1.3 |      1,251 |         1.5 |          168 |
@@ -186,29 +186,32 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /toast                       |   14,911 |       14.6 |     13,326 |          16 |        1,473 |
 | /tooltip                     |   16,530 |       16.1 |     14,971 |          18 |        1,902 |
 | /top-bar                     |      846 |        0.8 |        781 |           1 |          178 |
-| /trend-card                  |    2,443 |        2.4 |      2,231 |         2.7 |          321 |
-| /unstable/ai-badge           |    1,138 |        1.1 |      1,048 |         1.3 |          193 |
+| /trend-card                  |    2,443 |        2.4 |      2,225 |         2.7 |          321 |
+| /unstable/ai-badge           |    1,139 |        1.1 |      1,048 |         1.3 |          192 |
+| /unstable/ai-welcome         |      876 |        0.9 |        805 |           1 |          148 |
 | /unstable/approval-card      |    2,096 |        2.0 |      1,919 |         2.3 |          259 |
+| /unstable/chat-message       |    1,339 |        1.3 |      1,235 |         1.5 |          197 |
 | /unstable/citation           |      932 |        0.9 |        855 |         1.1 |          194 |
 | /unstable/command-menu       |   35,184 |       34.4 |     31,420 |          64 |       30,352 |
 | /unstable/date-range-picker  |   38,407 |       37.5 |     34,074 |          68 |       31,225 |
 | /unstable/feedback-bar       |   19,656 |       19.2 |     17,717 |        21.2 |        2,052 |
 | /unstable/inline-assist      |    1,690 |        1.7 |      1,545 |         1.9 |          255 |
 | /unstable/model-selector     |   63,788 |       62.3 |     54,760 |          69 |        6,868 |
-| /unstable/response-block     |    2,309 |        2.3 |      2,070 |         2.5 |          251 |
-| /unstable/source-card        |    1,349 |        1.3 |      1,225 |         1.5 |          187 |
-| /unstable/suggestion-chip    |    1,213 |        1.2 |      1,115 |         1.4 |          220 |
+| /unstable/prompt-composer    |    1,525 |        1.5 |      1,383 |         1.7 |          215 |
+| /unstable/response-block     |    2,309 |        2.3 |      2,069 |         2.5 |          251 |
+| /unstable/source-card        |    1,349 |        1.3 |      1,232 |         1.5 |          187 |
+| /unstable/suggestion-chip    |    1,213 |        1.2 |      1,118 |         1.4 |          220 |
 | /unstable/thinking-indicator |      844 |        0.8 |        765 |           1 |          180 |
-| /unstable/tool-call-card     |    1,636 |        1.6 |      1,492 |         1.8 |          207 |
-| /unstable/usage-meter        |    1,872 |        1.8 |      1,739 |         2.1 |          278 |
-| /unstable/voice-orb          |    1,888 |        1.8 |      1,715 |          20 |       18,592 |
+| /unstable/tool-call-card     |    1,636 |        1.6 |      1,494 |         1.8 |          207 |
+| /unstable/usage-meter        |    1,872 |        1.8 |      1,732 |         2.1 |          278 |
+| /unstable/voice-orb          |    1,889 |        1.8 |      1,716 |         2.1 |          261 |
 
 #### `@nizivo/react`: Composite bundles (one bundle; React Aria counted once)
 
 | Entry                              | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | ---------------------------------- | -------: | ---------: | ---------: | ----------: | -----------: |
 | dashboard set                      |   78,934 |       77.1 |     66,644 |          85 |        8,106 |
-| { Button } from the barrel         |    1,279 |        1.2 |      1,173 |         1.4 |          154 |
+| { Button } from the barrel         |    1,280 |        1.3 |      1,173 |         1.4 |          153 |
 | { Select } from the barrel         |   63,690 |       62.2 |     54,667 |          68 |        5,942 |
 | lazy: the DateRangePicker calendar |   39,816 |       38.9 |     34,877 |          43 |        4,216 |
 | lazy: the CommandMenu search       |   44,989 |       43.9 |     39,070 |          49 |        5,187 |
@@ -278,6 +281,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | own: unstable/feedback-bar/feedback-bar.client           |      849 |        0.8 |        771 |           1 |          175 |
 | own: unstable/inline-assist/inline-assist.client         |      819 |        0.8 |        723 |         0.9 |          102 |
 | own: unstable/model-selector/model-selector.client       |      764 |        0.7 |        696 |         0.8 |           55 |
+| own: unstable/prompt-composer/prompt-composer.client     |      747 |        0.7 |        648 |         0.9 |          174 |
 
 #### `@nizivo/react`: Seam helpers (seam ledger K6 and K7; React Aria external)
 
@@ -292,17 +296,19 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | --------------------------- | -------: | ---------: | ---------: | ----------: | -----------: |
 | /css/accordion.css          |      530 |        0.5 |        437 |         0.7 |          186 |
 | /css/ai-badge.css           |      418 |        0.4 |        341 |         0.5 |           94 |
+| /css/ai-welcome.css         |      562 |        0.5 |        472 |         0.7 |          154 |
 | /css/alert.css              |      636 |        0.6 |        522 |         0.8 |          183 |
 | /css/app-shell.css          |      610 |        0.6 |        504 |         0.7 |          106 |
 | /css/approval-card.css      |      508 |        0.5 |        403 |         0.6 |          106 |
 | /css/avatar.css             |      745 |        0.7 |        606 |         0.9 |          176 |
 | /css/badge.css              |      512 |        0.5 |        424 |         0.6 |          102 |
 | /css/banner.css             |      658 |        0.6 |        533 |         0.8 |          161 |
-| /css/base.css               |    1,444 |        1.4 |      1,236 |         1.6 |          194 |
+| /css/base.css               |    1,464 |        1.4 |      1,249 |         1.6 |          174 |
 | /css/breadcrumb.css         |      551 |        0.5 |        431 |         0.6 |           63 |
 | /css/bulk-action-bar.css    |      400 |        0.4 |        325 |         0.5 |          112 |
 | /css/button.css             |    1,153 |        1.1 |        974 |         1.3 |          178 |
 | /css/card.css               |      665 |        0.6 |        560 |         0.7 |           51 |
+| /css/chat-message.css       |      537 |        0.5 |        432 |         0.6 |           77 |
 | /css/checkbox.css           |      834 |        0.8 |        687 |         0.9 |           87 |
 | /css/chip-group.css         |      986 |        1.0 |        808 |         1.1 |          140 |
 | /css/choice-card.css        |    1,005 |        1.0 |        851 |         1.1 |          121 |
@@ -350,6 +356,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/popover.css            |      711 |        0.7 |        567 |         0.8 |          108 |
 | /css/progress-bar.css       |      800 |        0.8 |        664 |         0.9 |          121 |
 | /css/progress-ring.css      |      509 |        0.5 |        432 |         0.6 |          105 |
+| /css/prompt-composer.css    |      745 |        0.7 |        592 |         0.9 |          176 |
 | /css/quantity-stepper.css   |      611 |        0.6 |        498 |         0.6 |            3 |
 | /css/radio-group.css        |      824 |        0.8 |        678 |         0.9 |           97 |
 | /css/ranked-list.css        |      825 |        0.8 |        677 |         0.9 |           96 |
@@ -381,7 +388,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/trend-card.css         |      403 |        0.4 |        346 |         0.5 |          109 |
 | /css/usage-meter.css        |      443 |        0.4 |        356 |         0.5 |           69 |
 | /css/voice-orb.css          |      955 |        0.9 |        825 |         1.1 |          171 |
-| /styles.css                 |   25,950 |       25.3 |     20,827 |          26 |          674 |
+| /styles.css                 |   25,973 |       25.4 |     20,850 |          26 |          651 |
 
 #### `@nizivo/tokens`: Public JS entries (bundled with what they import, React Aria included)
 

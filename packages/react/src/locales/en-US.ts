@@ -40,6 +40,8 @@ import type { ApprovalCardLabels } from '../unstable/approval-card/index';
 import type { ModelSelectorLabels } from '../unstable/model-selector/index';
 import type { InlineAssistLabels } from '../unstable/inline-assist/index';
 import type { VoiceOrbLabels } from '../unstable/voice-orb/index';
+import type { ChatLogLabels, ChatMessageLabels } from '../unstable/chat-message/index';
+import type { PromptComposerLabels } from '../unstable/prompt-composer/index';
 import type { RankedListLabels } from '../ranked-list/index';
 import type { SearchFieldLabels } from '../search-field/index';
 import type { SidebarLabels } from '../sidebar/index';
@@ -89,6 +91,9 @@ export const enUS: {
   modelSelector: ModelSelectorLabels;
   inlineAssist: InlineAssistLabels;
   voiceOrb: VoiceOrbLabels;
+  chatMessage: ChatMessageLabels;
+  chatLog: ChatLogLabels;
+  promptComposer: PromptComposerLabels;
   rankedList: RankedListLabels;
   searchField: SearchFieldLabels;
   sidebar: SidebarLabels;
@@ -196,6 +201,9 @@ export const enUS: {
     start: 'Start talking',
     stop: 'Stop',
   },
+  chatMessage: { user: 'You', assistant: 'Assistant' },
+  chatLog: { label: 'Conversation' },
+  promptComposer: { label: 'Message', placeholder: 'Ask anything…', send: 'Send' },
   rankedList: { loading: 'Loading {label}', empty: 'No data', error: 'Could not load {label}' },
   searchField: { label: 'Search', clear: 'Clear search' },
   sidebar: { nav: 'Primary' },

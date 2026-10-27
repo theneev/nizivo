@@ -1,0 +1,64 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/ai-welcome.css (Figma AI Welcome 7411:321), UNSTABLE. A centred column, padded
+   32 with 20 px between: the 72 px orb, the greeting in Heading/H1, the description in Body/M
+   text/secondary, then the children (the starters, the composer) at full width. Figma's orb is the
+   Glow Orb shader; until @nizivo/lab, gradients draw it, as in VoiceOrb. */
+@layer nz.components {
+  .nz-ai-welcome {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--nz-space-5);
+    padding-block: var(--nz-space-8);
+    text-align: center;
+  }
+
+  .nz-ai-welcome > :not(.nz-ai-welcome-orb, .nz-ai-welcome-greeting, .nz-ai-welcome-description) {
+    align-self: stretch;
+    text-align: start;
+  }
+
+  .nz-ai-welcome-orb {
+    display: grid;
+    place-items: center;
+    inline-size: calc(var(--nz-space-10) * 1.8);
+    block-size: calc(var(--nz-space-10) * 1.8);
+    overflow: hidden;
+    border-radius: var(--nz-radius-full);
+    background: radial-gradient(
+      circle,
+      color-mix(in oklab, var(--nz-bg-accent) 45%, var(--nz-bg-canvas)) 0 45%,
+      var(--nz-bg-canvas) 72%
+    );
+  }
+
+  .nz-ai-welcome-sphere {
+    inline-size: 68%;
+    block-size: 68%;
+    border-radius: var(--nz-radius-full);
+    background:
+      radial-gradient(circle at 34% 28%, rgb(255 255 255 / 0.9) 0 6%, transparent 22%),
+      radial-gradient(circle at 36% 32%, var(--nz-bg-accent) 0 30%, var(--nz-bg-brand) 92%);
+  }
+
+  .nz-ai-welcome-greeting {
+    margin: 0;
+    color: var(--nz-text-primary);
+    font: var(--nz-font-heading-h1);
+    letter-spacing: var(--nz-tracking-heading-h1);
+  }
+
+  .nz-ai-welcome-description {
+    max-inline-size: 36rem;
+    margin: 0;
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-body-m);
+  }
+
+  @media (forced-colors: active) {
+    .nz-ai-welcome-orb {
+      outline: 1px solid CanvasText;
+    }
+  }
+}

@@ -62,6 +62,8 @@
     "nz-popover-popup",
     "nz-popover-trigger",
     "nz-progress-bar-track",
+    "nz-prompt-composer-input",
+    "nz-prompt-composer-send",
     "nz-quantity-stepper",
     "nz-radio-input",
     "nz-ranked-list-action",

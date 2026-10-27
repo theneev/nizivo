@@ -1,0 +1,21 @@
+{
+  "name": "prompt-composer",
+  "status": "unstable",
+  "tier": "client",
+  "parts": [],
+  "exports": ["PromptComposer"],
+  "interactive": ["prompt-composer-input", "prompt-composer-send"],
+  "focusTarget": {
+    "prompt-composer-input": "self",
+    "prompt-composer-send": "self"
+  },
+  "stateIndicator": [],
+  "cssDeps": ["base"],
+  "variants": {},
+  "figma": {
+    "canonical": ["7396:83"],
+    "ghosts": [],
+    "variantsSeen": ["7396:31"],
+    "related": []
+  }
+}

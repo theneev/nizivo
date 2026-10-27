@@ -258,12 +258,15 @@ function distImports(): Rolldown.Plugin {
     resolveId(source, importer) {
       if (importer === undefined || !importer.endsWith('.example.tsx')) return null;
       if (!importer.startsWith(SRC)) return null;
-      // an unstable component's entry is dist/unstable/<name>; its examples reach the others at ../../
+      // an unstable component's entry is dist/unstable/<name>; its examples reach the others at
+      // ../../, and another unstable part (AiWelcome's PromptComposer) at ../
       const unstable = basename(dirname(dirname(importer))) === 'unstable';
       const own = `${unstable ? 'unstable/' : ''}${basename(dirname(importer))}`;
+      const sibling = /^\.\.\/([a-z0-9-]+)\/index$/.exec(source)?.[1];
       const other = unstable
-        ? /^\.\.\/\.\.\/([a-z0-9-]+)\/index$/.exec(source)?.[1]
-        : /^\.\.\/([a-z0-9-]+)\/index$/.exec(source)?.[1];
+        ? (/^\.\.\/\.\.\/([a-z0-9-]+)\/index$/.exec(source)?.[1] ??
+          (sibling === undefined ? undefined : `unstable/${sibling}`))
+        : sibling;
       const target = source === './index' ? own : other;
       if (target === undefined) {
         if (source.startsWith('.')) {

@@ -1,0 +1,111 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/prompt-composer.css (Figma Prompt Composer 7396:83), UNSTABLE. bg/surface in a
+   border/control edge with Elevation/2, radius 24, padded 16 with 12 px between the text and the
+   toolbar. The text is Body/L; it grows with what is written, to 12 lines, where the browser has
+   field-sizing. The tools sit at the start, 8 px apart; the 36 px round send button at the end is
+   bg/disabled until there is text, then bg/brand. */
+@layer nz.components {
+  .nz-prompt-composer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-3);
+    padding: var(--nz-space-4);
+    border: var(--nz-border-width-default) solid var(--nz-border-control);
+    border-radius: calc(var(--nz-radius-xl) + var(--nz-space-1));
+    background: var(--nz-bg-surface);
+    box-shadow: var(--nz-elevation-2);
+
+    /* the ring goes round the card: the text has no edge of its own */
+    &:has(.nz-prompt-composer-input:focus-visible) {
+      outline: var(--nz-border-width-focus) solid var(--nz-border-focus);
+      outline-offset: 2px;
+    }
+  }
+
+  .nz-prompt-composer-input {
+    box-sizing: border-box;
+    inline-size: 100%;
+    min-block-size: 1lh;
+    max-block-size: 12lh;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--nz-text-primary);
+    font: var(--nz-font-body-l);
+    resize: none;
+
+    @supports (field-sizing: content) {
+      field-sizing: content;
+    }
+
+    &::placeholder {
+      color: var(--nz-text-tertiary);
+      opacity: 1;
+    }
+
+    /* the card shows focus (above); the outline comes back in forced colours */
+    &:focus-visible {
+      outline-color: transparent;
+    }
+  }
+
+  .nz-prompt-composer-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--nz-space-2);
+  }
+
+  .nz-prompt-composer-tools {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--nz-space-2);
+    min-inline-size: 0;
+  }
+
+  .nz-prompt-composer-send {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    inline-size: calc(var(--nz-space-8) + var(--nz-space-1));
+    block-size: calc(var(--nz-space-8) + var(--nz-space-1));
+    padding: 0;
+    border: 0;
+    border-radius: var(--nz-radius-full);
+    background: var(--nz-bg-brand);
+    color: var(--nz-text-on-brand);
+    font-size: 1.125rem;
+    cursor: pointer;
+    transition: background-color var(--nz-duration-fast) var(--nz-easing-standard);
+
+    @media (hover: hover) {
+      &:hover:not([aria-disabled='true'], :disabled) {
+        background: var(--nz-bg-brand-hover);
+      }
+    }
+
+    &:is([aria-disabled='true'], :disabled) {
+      background: var(--nz-bg-disabled);
+      color: var(--nz-text-disabled);
+      cursor: not-allowed;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .nz-prompt-composer {
+      border-color: CanvasText;
+    }
+
+    .nz-prompt-composer-input:focus-visible {
+      outline-color: Highlight;
+    }
+
+    .nz-prompt-composer-send {
+      border: 1px solid ButtonText;
+    }
+  }
+}

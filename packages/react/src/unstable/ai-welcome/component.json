@@ -1,0 +1,15 @@
+{
+  "name": "ai-welcome",
+  "status": "unstable",
+  "tier": "server",
+  "exports": ["AiWelcome"],
+  "interactive": [],
+  "cssDeps": ["base"],
+  "variants": {},
+  "figma": {
+    "canonical": ["7411:321"],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": ["7389:78"]
+  }
+}

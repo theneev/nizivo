@@ -1,0 +1,20 @@
+---
+title: ChatMessage
+description: "Unstable: one turn of a conversation, the person's or the assistant's, with its sender named in text, and ChatLog, the live region that holds them. Import them from @nizivo/react/unstable/chat-message."
+---
+
+## Static or interactive
+
+**Server.** No client JavaScript. [How to choose](/docs/guides/static-or-interactive/).
+
+## Turns
+
+`from` is `user` (a bg/brand bubble at the end of the line) or `assistant` (bg/muted at the start,
+after the sparkles mark, which `avatar` replaces). Under the bubble, `sender` ("You" or "Assistant"
+by default) and `time` name who wrote it and when: never only the side or the colour.
+
+## The log
+
+Put the turns in a `ChatLog`: `role="log"`, a polite live region named "Conversation", so a screen
+reader reads each new turn as it is added. For an answer that streams, use a
+[ResponseBlock](/docs/components/response-block/) inside it, which is read once, when complete.

@@ -1,0 +1,17 @@
+{
+  "name": "chat-message",
+  "status": "unstable",
+  "tier": "server",
+  "exports": ["ChatMessage", "ChatLog"],
+  "interactive": [],
+  "cssDeps": ["base"],
+  "variants": {
+    "variant": ["user", "assistant"]
+  },
+  "figma": {
+    "canonical": ["7396:26"],
+    "ghosts": [],
+    "variantsSeen": ["7396:9", "7396:21"],
+    "related": []
+  }
+}

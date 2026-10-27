@@ -46,6 +46,7 @@ const LUCIDE: Record<string, string> = {
   'circle-stop': 'circle-stop',
   'refresh-cw': 'refresh-cw',
   mic: 'mic',
+  'arrow-up': 'arrow-up',
 };
 
 /**
@@ -64,6 +65,7 @@ const FEATHER = new Set([
   'ellipsis',
   'calendar',
   'circle-alert',
+  'arrow-up',
 ]);
 
 // _internal/glyphs.tsx reuses Lucide path data; ISC requires its notice in every copy (§14.2, §19.3).

@@ -1,0 +1,86 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/chat-message.css (Figma Chat Message 7396:26), UNSTABLE. A turn: the bubble
+   (padded 12 by 16, radius 18, Body/M) over the meta line (Body/S, 6 px down). The person's bubble
+   is bg/brand with text/on-brand at the end of the line; the assistant's is bg/muted at the start,
+   after a 32 px bg/brand mark and 12 px. The meta is text/secondary where Figma draws
+   text/tertiary, which fails AA on the page. The log stacks turns 16 px apart. */
+@layer nz.components {
+  .nz-chat-log {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-4);
+  }
+
+  .nz-chat-message {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--nz-space-3);
+  }
+
+  .nz-chat-message[data-variant='user'] {
+    justify-content: flex-end;
+  }
+
+  .nz-chat-message-avatar {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    inline-size: var(--nz-space-8);
+    block-size: var(--nz-space-8);
+    overflow: hidden;
+    border-radius: var(--nz-radius-full);
+    background: var(--nz-bg-brand);
+    color: var(--nz-text-on-brand);
+    font-size: var(--nz-size-icon-sm);
+  }
+
+  .nz-chat-message-body {
+    display: flex;
+    flex: 0 1 auto;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--nz-space-1-5);
+    min-inline-size: 0;
+    max-inline-size: min(100%, 36rem);
+  }
+
+  .nz-chat-message[data-variant='user'] .nz-chat-message-body {
+    align-items: flex-end;
+  }
+
+  .nz-chat-message-bubble {
+    padding-block: var(--nz-space-3);
+    padding-inline: var(--nz-space-4);
+    border-radius: calc(var(--nz-radius-xs) * 4.5);
+    background: var(--nz-bg-muted);
+    color: var(--nz-text-primary);
+    font: var(--nz-font-body-m);
+    overflow-wrap: anywhere;
+  }
+
+  .nz-chat-message[data-variant='user'] .nz-chat-message-bubble {
+    background: var(--nz-bg-brand);
+    color: var(--nz-text-on-brand);
+  }
+
+  .nz-chat-message-bubble > :first-child {
+    margin-block-start: 0;
+  }
+
+  .nz-chat-message-bubble > :last-child {
+    margin-block-end: 0;
+  }
+
+  .nz-chat-message-meta {
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-body-s);
+  }
+
+  @media (forced-colors: active) {
+    .nz-chat-message-bubble {
+      border: 1px solid CanvasText;
+    }
+  }
+}

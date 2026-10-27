@@ -765,6 +765,22 @@
       "export": "Accordion",
       "parts": ["Root", "Item", "Trigger", "Panel"]
     },
+    "7396:26": {
+      "component": "chat-message",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/chat-message",
+      "export": "ChatMessage",
+      "props": {
+        "variant": ["user", "assistant"]
+      }
+    },
+    "7396:83": {
+      "component": "prompt-composer",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/prompt-composer",
+      "export": "PromptComposer",
+      "props": {}
+    },
     "7409:25": {
       "component": "ai-badge",
       "role": "canonical",
@@ -878,6 +894,13 @@
       "role": "canonical",
       "import": "@nizivo/react/unstable/usage-meter",
       "export": "UsageMeter",
+      "props": {}
+    },
+    "7411:321": {
+      "component": "ai-welcome",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/ai-welcome",
+      "export": "AiWelcome",
       "props": {}
     }
   }

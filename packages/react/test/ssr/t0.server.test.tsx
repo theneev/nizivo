@@ -95,6 +95,8 @@ const COMPONENTS = [
   'tool-call-card',
   'response-block',
   'voice-orb',
+  'chat-message',
+  'ai-welcome',
 ] as const;
 type Name = (typeof COMPONENTS)[number];
 
@@ -182,6 +184,8 @@ const CLIENT_EXPORTS: Record<string, string[]> = {
     'SegmentedControlRoot',
     'SegmentedControlItem',
   ],
+  // the PromptComposer the AiWelcome example puts under its starters
+  'src/unstable/prompt-composer/prompt-composer.client.tsx': ['PromptComposer'],
 };
 
 /** Each entry, imported again by the react-server test. */
@@ -244,6 +248,8 @@ const entries = {
   'tool-call-card': () => import('../../src/unstable/tool-call-card/index'),
   'response-block': () => import('../../src/unstable/response-block/index'),
   'voice-orb': () => import('../../src/unstable/voice-orb/index'),
+  'chat-message': () => import('../../src/unstable/chat-message/index'),
+  'ai-welcome': () => import('../../src/unstable/ai-welcome/index'),
   'bulk-action-bar': () => import('../../src/bulk-action-bar/index'),
   'data-view': () => import('../../src/data-view/index'),
   surface: () => import('../../src/surface/index'),
@@ -310,6 +316,8 @@ const exampleModules = {
   'tool-call-card': () => import('../../src/unstable/tool-call-card/tool-call-card.example'),
   'response-block': () => import('../../src/unstable/response-block/response-block.example'),
   'voice-orb': () => import('../../src/unstable/voice-orb/voice-orb.example'),
+  'chat-message': () => import('../../src/unstable/chat-message/chat-message.example'),
+  'ai-welcome': () => import('../../src/unstable/ai-welcome/ai-welcome.example'),
   'bulk-action-bar': () => import('../../src/bulk-action-bar/bulk-action-bar.example'),
   'data-view': () => import('../../src/data-view/data-view.example'),
   surface: () => import('../../src/surface/surface.example'),
