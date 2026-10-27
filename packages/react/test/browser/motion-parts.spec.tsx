@@ -6,6 +6,7 @@ import type { ReactNode } from 'react';
 import { createRoot, hydrateRoot, type Root } from 'react-dom/client';
 import { renderToString } from 'react-dom/server';
 import { afterEach, describe, expect, test, vi } from 'vitest';
+import { userEvent } from 'vitest/browser';
 import { CaretHeadline } from '../../src/unstable/caret-headline/caret-headline';
 import { LivePulse } from '../../src/unstable/live-pulse/live-pulse';
 import { Ticker } from '../../src/unstable/ticker/ticker';
@@ -95,6 +96,11 @@ describe('the CSS loops', () => {
     expect(copy?.getAttribute('aria-hidden')).toBe('true');
     const track = container.querySelector('.nz-ticker-track');
     if (track === null) throw new Error('no track');
+    // the pointer may be parked where an earlier spec left it, over the strip: move it away
+    const away = document.createElement('div');
+    away.style.blockSize = '200px';
+    document.body.append(away);
+    await userEvent.hover(away);
     expect(getComputedStyle(track).animationPlayState).toBe('running');
     container.querySelector('a')?.focus();
     expect(getComputedStyle(track).animationPlayState).toBe('paused');
