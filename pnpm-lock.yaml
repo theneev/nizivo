@@ -498,6 +498,9 @@ importers:
       '@nizivo/tokens':
         specifier: workspace:*
         version: link:../tokens
+      '@types/d3-shape':
+        specifier: 'catalog:'
+        version: 3.2.0
       d3-array:
         specifier: 'catalog:'
         version: 3.2.4
@@ -517,9 +520,6 @@ importers:
       '@types/d3-array':
         specifier: 'catalog:'
         version: 3.2.2
-      '@types/d3-shape':
-        specifier: 'catalog:'
-        version: 3.2.0
       '@types/node':
         specifier: 'catalog:'
         version: 24.19.2

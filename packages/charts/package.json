@@ -83,6 +83,7 @@
   },
   "dependencies": {
     "@nizivo/tokens": "workspace:*",
+    "@types/d3-shape": "catalog:",
     "d3-array": "catalog:",
     "d3-shape": "catalog:"
   },
@@ -91,7 +92,6 @@
     "@nizivo/tsconfig": "workspace:*",
     "@nizivo/tsdown-preset": "workspace:*",
     "@types/d3-array": "catalog:",
-    "@types/d3-shape": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
