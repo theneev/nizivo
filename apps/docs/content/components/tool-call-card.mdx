@@ -1,0 +1,22 @@
+---
+title: ToolCallCard
+description: 'Unstable: an action the AI is taking in the product, shown step by step, with its status and a scoped retry when a step fails. Import it from @nizivo/react/unstable/tool-call-card.'
+---
+
+## Static or interactive
+
+**Server.** No client JavaScript; a retry is a [Button](/docs/components/button/) you pass in
+`actions`. [How to choose](/docs/guides/static-or-interactive/).
+
+## Status
+
+`status` is the whole action's: `running` (a spinner, and the card is `aria-busy`), `done` or
+`failed` (a critical edge). The pill always carries a word as well as its mark, so the state never
+rests on colour; under Reduced motion the spinner stands still.
+
+## Steps
+
+`steps` is the plan, in order: each has a `label` and a `status` (`todo`, `running`, `done`,
+`failed`). A screen reader hears each step's status after its label ("Apply tags, failed"). For a
+failure, say which step and why in its label, and offer a retry of that step, not of the whole
+action. Never hide an action the AI took.

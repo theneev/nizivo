@@ -10,7 +10,9 @@
 // on Lucide's list of Feather-derived icons, so they also carry the Feather MIT notice in
 // THIRD_PARTY_NOTICES; `circle-check` (the success Toast's) and `eye` and `eye-off`
 // (PasswordInput's show and hide marks) are Lucide's own, as are the AI kit's `sparkles` (the AI
-// mark), `globe` and `file-text` (SourceCard's web and file marks).
+// mark), `globe` and `file-text` (SourceCard's web and file marks), `thumbs-up` and `thumbs-down`
+// (FeedbackBar's votes), `wand-sparkles` (ToolCallCard's mark), `circle-stop` (ResponseBlock's Stop)
+// and `refresh-cw` (its Retry); `circle-alert` (ResponseBlock's error mark) is Feather-derived.
 //
 // One export per glyph, so an entry carries only the paths it draws (a name → paths table kept every
 // glyph in every entry that drew one: about 160 B gzip on the Dialog entry).
@@ -34,7 +36,13 @@ export type GlyphName =
   | 'ellipsis'
   | 'sparkles'
   | 'globe'
-  | 'file-text';
+  | 'file-text'
+  | 'thumbs-up'
+  | 'thumbs-down'
+  | 'wand-sparkles'
+  | 'circle-alert'
+  | 'circle-stop'
+  | 'refresh-cw';
 
 function svg(name: GlyphName, paths: ReactNode): JSX.Element {
   return (
@@ -208,5 +216,68 @@ export const FileTextGlyph = (): JSX.Element =>
       <path d="M10 9H8" />
       <path d="M16 13H8" />
       <path d="M16 17H8" />
+    </>,
+  );
+
+export const ThumbsUpGlyph = (): JSX.Element =>
+  svg(
+    'thumbs-up',
+    <>
+      <path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z" />
+      <path d="M7 10v12" />
+    </>,
+  );
+
+export const ThumbsDownGlyph = (): JSX.Element =>
+  svg(
+    'thumbs-down',
+    <>
+      <path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z" />
+      <path d="M17 14V2" />
+    </>,
+  );
+
+export const WandSparklesGlyph = (): JSX.Element =>
+  svg(
+    'wand-sparkles',
+    <>
+      <path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72" />
+      <path d="m14 7 3 3" />
+      <path d="M5 6v4" />
+      <path d="M19 14v4" />
+      <path d="M10 2v2" />
+      <path d="M7 8H3" />
+      <path d="M21 16h-4" />
+      <path d="M11 3H9" />
+    </>,
+  );
+
+export const CircleAlertGlyph = (): JSX.Element =>
+  svg(
+    'circle-alert',
+    <>
+      <circle cx="12" cy="12" r="10" />
+      <line x1="12" x2="12" y1="8" y2="12" />
+      <line x1="12" x2="12.01" y1="16" y2="16" />
+    </>,
+  );
+
+export const CircleStopGlyph = (): JSX.Element =>
+  svg(
+    'circle-stop',
+    <>
+      <circle cx="12" cy="12" r="10" />
+      <rect x="9" y="9" width="6" height="6" rx="1" />
+    </>,
+  );
+
+export const RefreshCwGlyph = (): JSX.Element =>
+  svg(
+    'refresh-cw',
+    <>
+      <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+      <path d="M21 3v5h-5" />
+      <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+      <path d="M8 16H3v5" />
     </>,
   );

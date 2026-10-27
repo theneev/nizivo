@@ -9,6 +9,7 @@
     .nz-accordion-trigger,
     .nz-alert-dismiss,
     .nz-app-shell-skip,
+    .nz-approval-card-action,
     .nz-banner-dismiss,
     .nz-breadcrumb-link,
     .nz-button,
@@ -26,6 +27,7 @@
     .nz-dialog-trigger,
     .nz-drawer-close,
     .nz-drawer-trigger,
+    .nz-feedback-bar-vote,
     .nz-form-summary,
     .nz-form-summary-link,
     .nz-icon-button,
@@ -82,10 +84,13 @@
     outline: var(--nz-border-width-focus) solid var(--nz-border-focus);
     outline-offset: 2px;
   }
-  :where(.nz-chip, .nz-choice-card, .nz-file-upload-dropzone, .nz-segmented-control-item):is(
-    :has(> input:focus-visible),
-    [data-focus-visible]
-  ) {
+  :where(
+    .nz-chip,
+    .nz-choice-card,
+    .nz-feedback-bar-reason,
+    .nz-file-upload-dropzone,
+    .nz-segmented-control-item
+  ):is(:has(> input:focus-visible), [data-focus-visible]) {
     outline: var(--nz-border-width-focus) solid var(--nz-border-focus);
     outline-offset: 2px;
   }
@@ -112,6 +117,7 @@
     .nz-accordion-trigger,
     .nz-alert-dismiss,
     .nz-app-shell-skip,
+    .nz-approval-card-action,
     .nz-banner-dismiss,
     .nz-breadcrumb-link,
     .nz-button,
@@ -133,6 +139,8 @@
     .nz-dialog-trigger,
     .nz-drawer-close,
     .nz-drawer-trigger,
+    .nz-feedback-bar-reason,
+    .nz-feedback-bar-vote,
     .nz-file-upload-dropzone,
     .nz-form-summary,
     .nz-form-summary-link,

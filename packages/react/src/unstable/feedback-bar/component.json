@@ -1,0 +1,21 @@
+{
+  "name": "feedback-bar",
+  "status": "unstable",
+  "tier": "client",
+  "parts": [],
+  "exports": ["FeedbackBar"],
+  "interactive": ["feedback-bar-vote", "feedback-bar-reason"],
+  "focusTarget": {
+    "feedback-bar-vote": "self",
+    "feedback-bar-reason": "nested-input"
+  },
+  "stateIndicator": [],
+  "cssDeps": ["base", "chip-group", "icon-button"],
+  "variants": {},
+  "figma": {
+    "canonical": ["7409:298"],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": []
+  }
+}

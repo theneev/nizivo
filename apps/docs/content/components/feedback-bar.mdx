@@ -1,0 +1,20 @@
+---
+title: FeedbackBar
+description: 'Unstable: "Was this helpful?" under an AI answer, a thumbs up and a thumbs down that toggle, and optional reasons after a thumbs down. Import it from @nizivo/react/unstable/feedback-bar.'
+---
+
+## Static or interactive
+
+**Client.** The votes are [IconButtons](/docs/components/icon-button/) with `aria-pressed`, and the
+reasons a [ChipGroup](/docs/components/chip-group/). [How to choose](/docs/guides/static-or-interactive/).
+
+## Votes
+
+`value`, `defaultValue` and `onValueChange` hold the vote: `'up'`, `'down'` or `null`. Pressing the
+pressed vote clears it. The buttons keep their names ("Good answer", "Bad answer"); the prompt
+changes to a thanks, and a screen reader hears it. A vote never opens a dialog or moves focus.
+
+## Reasons
+
+Pass `reasons` to offer them after a thumbs down, one to pick; `reason`, `defaultReason` and
+`onReasonChange` hold it. Keep them few and short: "Not accurate", "Too long".

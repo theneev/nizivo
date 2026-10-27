@@ -1,0 +1,17 @@
+{
+  "name": "tool-call-card",
+  "status": "unstable",
+  "tier": "server",
+  "exports": ["ToolCallCard"],
+  "interactive": [],
+  "cssDeps": ["base"],
+  "variants": {
+    "tone": ["todo", "running", "done", "failed"]
+  },
+  "figma": {
+    "canonical": ["7410:294"],
+    "ghosts": [],
+    "variantsSeen": ["7410:184", "7410:217", "7410:248"],
+    "related": []
+  }
+}

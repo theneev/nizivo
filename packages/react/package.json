@@ -363,6 +363,10 @@
       "types": "./dist/unstable/ai-badge/index.d.ts",
       "default": "./dist/unstable/ai-badge/index.js"
     },
+    "./unstable/approval-card": {
+      "types": "./dist/unstable/approval-card/index.d.ts",
+      "default": "./dist/unstable/approval-card/index.js"
+    },
     "./unstable/citation": {
       "types": "./dist/unstable/citation/index.d.ts",
       "default": "./dist/unstable/citation/index.js"
@@ -374,6 +378,14 @@
     "./unstable/date-range-picker": {
       "types": "./dist/unstable/date-range-picker/index.d.ts",
       "default": "./dist/unstable/date-range-picker/index.js"
+    },
+    "./unstable/feedback-bar": {
+      "types": "./dist/unstable/feedback-bar/index.d.ts",
+      "default": "./dist/unstable/feedback-bar/index.js"
+    },
+    "./unstable/response-block": {
+      "types": "./dist/unstable/response-block/index.d.ts",
+      "default": "./dist/unstable/response-block/index.js"
     },
     "./unstable/source-card": {
       "types": "./dist/unstable/source-card/index.d.ts",
@@ -387,6 +399,10 @@
       "types": "./dist/unstable/thinking-indicator/index.d.ts",
       "default": "./dist/unstable/thinking-indicator/index.js"
     },
+    "./unstable/tool-call-card": {
+      "types": "./dist/unstable/tool-call-card/index.d.ts",
+      "default": "./dist/unstable/tool-call-card/index.js"
+    },
     "./unstable/usage-meter": {
       "types": "./dist/unstable/usage-meter/index.d.ts",
       "default": "./dist/unstable/usage-meter/index.js"
@@ -395,6 +411,7 @@
     "./css/ai-badge.css": "./dist/css/ai-badge.css",
     "./css/alert.css": "./dist/css/alert.css",
     "./css/app-shell.css": "./dist/css/app-shell.css",
+    "./css/approval-card.css": "./dist/css/approval-card.css",
     "./css/avatar.css": "./dist/css/avatar.css",
     "./css/badge.css": "./dist/css/badge.css",
     "./css/banner.css": "./dist/css/banner.css",
@@ -416,6 +433,7 @@
     "./css/dialog.css": "./dist/css/dialog.css",
     "./css/drawer.css": "./dist/css/drawer.css",
     "./css/empty-state.css": "./dist/css/empty-state.css",
+    "./css/feedback-bar.css": "./dist/css/feedback-bar.css",
     "./css/field.css": "./dist/css/field.css",
     "./css/fieldset.css": "./dist/css/fieldset.css",
     "./css/file-upload.css": "./dist/css/file-upload.css",
@@ -450,6 +468,7 @@
     "./css/quantity-stepper.css": "./dist/css/quantity-stepper.css",
     "./css/radio-group.css": "./dist/css/radio-group.css",
     "./css/ranked-list.css": "./dist/css/ranked-list.css",
+    "./css/response-block.css": "./dist/css/response-block.css",
     "./css/search-field.css": "./dist/css/search-field.css",
     "./css/segmented-control.css": "./dist/css/segmented-control.css",
     "./css/select.css": "./dist/css/select.css",
@@ -471,6 +490,7 @@
     "./css/textarea.css": "./dist/css/textarea.css",
     "./css/thinking-indicator.css": "./dist/css/thinking-indicator.css",
     "./css/toast.css": "./dist/css/toast.css",
+    "./css/tool-call-card.css": "./dist/css/tool-call-card.css",
     "./css/tooltip.css": "./dist/css/tooltip.css",
     "./css/top-bar.css": "./dist/css/top-bar.css",
     "./css/trend-card.css": "./dist/css/trend-card.css",

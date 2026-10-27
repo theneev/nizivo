@@ -24,8 +24,14 @@ Lucide icons:
   sparkles           (the AI kit's mark: AiBadge, SuggestionChip, UsageMeter)
   globe              (the SourceCard web mark)
   file-text          (the SourceCard file mark)
+  thumbs-up          (the FeedbackBar Good answer vote)
+  thumbs-down        (the FeedbackBar Bad answer vote)
+  wand-sparkles      (the ToolCallCard mark)
+  circle-alert       (the ResponseBlock error mark)
+  circle-stop        (the ResponseBlock Stop generating mark)
+  refresh-cw         (the ResponseBlock Retry mark)
 
-Lucide's licence covers all eighteen:
+Lucide's licence covers all twenty-four:
 
 ISC License
 
@@ -47,7 +53,8 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 Feather (https://feathericons.com)
 
 chevron-right, circle-x (Feather's x-circle), info, x, check, minus, plus, search,
-calendar and ellipsis (Feather's more-horizontal) are on Lucide's list of icons derived from the
+calendar, ellipsis (Feather's more-horizontal) and circle-alert (Feather's alert-circle) are on
+Lucide's list of icons derived from the
 Feather project, so their path data is also under Feather's licence:
 
 The MIT License (MIT)

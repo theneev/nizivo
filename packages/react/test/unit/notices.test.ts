@@ -39,11 +39,17 @@ const LUCIDE: Record<string, string> = {
   sparkles: 'sparkles',
   globe: 'globe',
   'file-text': 'file-text',
+  'thumbs-up': 'thumbs-up',
+  'thumbs-down': 'thumbs-down',
+  'wand-sparkles': 'wand-sparkles',
+  'circle-alert': 'circle-alert',
+  'circle-stop': 'circle-stop',
+  'refresh-cw': 'refresh-cw',
 };
 
 /**
  * On Lucide's list of Feather-derived icons (lucide-static 1.56.0 LICENSE; `x-circle` is `circle-x`,
- * `more-horizontal` is `ellipsis`).
+ * `more-horizontal` is `ellipsis`, `alert-circle` is `circle-alert`).
  */
 const FEATHER = new Set([
   'chevron-right',
@@ -56,6 +62,7 @@ const FEATHER = new Set([
   'search',
   'ellipsis',
   'calendar',
+  'circle-alert',
 ]);
 
 // _internal/glyphs.tsx reuses Lucide path data; ISC requires its notice in every copy (§14.2, §19.3).

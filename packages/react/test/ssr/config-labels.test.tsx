@@ -38,6 +38,7 @@ type Key = keyof typeof enUS;
 /** The catalogue keys NizivoConfig's labels reach, and the client module that reads each. */
 const REACHED: Partial<Record<Key, string>> = {
   alertDismiss: 'src/alert/alert-dismiss.client.tsx',
+  approvalCard: 'src/unstable/approval-card/approval-card.client.tsx',
   bannerDismiss: 'src/banner/banner-dismiss.client.tsx',
   // SubmitButton, Button's client twin: Button itself is a server part and keeps per-instance labels
   button: 'src/form/submit-button.client.tsx',
@@ -46,6 +47,7 @@ const REACHED: Partial<Record<Key, string>> = {
   dateRangePicker: 'src/unstable/date-range-picker/date-range-picker.client.tsx',
   dialog: 'src/dialog/dialog.client.tsx',
   drawer: 'src/drawer/drawer.client.tsx',
+  feedbackBar: 'src/unstable/feedback-bar/feedback-bar.client.tsx',
   fileUpload: 'src/file-upload/file-upload.client.tsx',
   form: 'src/form/form.client.tsx',
   mobileTabBarMore: 'src/mobile-tab-bar/mobile-tab-bar-more.client.tsx',
@@ -70,6 +72,8 @@ const NOT_REACHED: Partial<Record<Key, string>> = {
   sourceCard: SERVER,
   suggestionGroup: SERVER,
   usageMeter: SERVER,
+  toolCallCard: SERVER,
+  responseBlock: SERVER,
   kpiTile: SERVER,
   metric: SERVER,
   mobileTabBar: SERVER,

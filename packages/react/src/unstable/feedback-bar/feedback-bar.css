@@ -1,0 +1,38 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/feedback-bar.css (Figma Feedback Bar 7409:298), UNSTABLE. One row that wraps,
+   8 px apart: the prompt in Body/S text/secondary, two 32 px round votes (IconButton secondary sm,
+   whose pressed state is Figma's selected one: bg/brand-subtle, border/brand), and after a thumbs
+   down the reasons as 36 px chips, Figma's Suggestion Chip without its icon. */
+@layer nz.components {
+  .nz-feedback-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--nz-space-2);
+  }
+
+  .nz-feedback-bar-row {
+    display: contents;
+  }
+
+  .nz-feedback-bar-prompt {
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-body-s);
+  }
+
+  .nz-feedback-bar-votes {
+    display: inline-flex;
+    gap: var(--nz-space-2);
+  }
+
+  .nz-feedback-bar .nz-feedback-bar-reason {
+    block-size: calc(var(--nz-space-8) + var(--nz-space-1));
+    min-inline-size: 0;
+    padding-inline: var(--nz-space-3) calc(var(--nz-space-3) + var(--nz-space-0-5));
+  }
+
+  .nz-feedback-bar .nz-feedback-bar-vote {
+    border-radius: var(--nz-radius-full);
+  }
+}

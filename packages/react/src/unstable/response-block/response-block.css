@@ -1,0 +1,140 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/response-block.css (Figma Response Block 7409:247), UNSTABLE. A header (a 28 px
+   bg/brand mark with the sparkles, the Label/M Strong name, the AiBadge), then the body 38 px in
+   (the mark and its 10 px gap), 12 px between its parts, in Body/M. Streaming ends the text with a
+   brand caret that blinks on --nz-duration-pulse; the error is a bg/critical-subtle box, radius 14,
+   padded 12 by 14. */
+@layer nz.components {
+  .nz-response-block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-2);
+    color: var(--nz-text-primary);
+    font: var(--nz-font-body-m);
+  }
+
+  .nz-response-block-header {
+    display: flex;
+    align-items: center;
+    gap: calc(var(--nz-space-2) + var(--nz-space-0-5));
+  }
+
+  .nz-response-block-avatar {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    inline-size: calc(var(--nz-space-6) + var(--nz-space-1));
+    block-size: calc(var(--nz-space-6) + var(--nz-space-1));
+    overflow: hidden;
+    border-radius: var(--nz-radius-full);
+    background: var(--nz-bg-brand);
+    color: var(--nz-text-on-brand);
+    font-size: var(--nz-size-icon-sm);
+  }
+
+  .nz-response-block-name {
+    color: var(--nz-text-primary);
+    font: var(--nz-font-label-m-strong);
+  }
+
+  .nz-response-block-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-3);
+    padding-inline-start: calc(var(--nz-space-8) + var(--nz-space-1-5));
+  }
+
+  .nz-response-block:not([data-tone='streaming']) .nz-response-block-content:empty {
+    display: none;
+  }
+
+  .nz-response-block-content > :first-child {
+    margin-block-start: 0;
+  }
+
+  .nz-response-block-content > :last-child {
+    margin-block-end: 0;
+  }
+
+  /* the caret ends the text: after the last block's last line, or the bare text's */
+  .nz-response-block[data-tone='streaming'] .nz-response-block-content > :last-child::after,
+  .nz-response-block[data-tone='streaming'] .nz-response-block-content:not(:has(> *))::after {
+    content: '';
+    display: inline-block;
+    inline-size: 2px;
+    block-size: 1.1em;
+    margin-inline-start: var(--nz-space-0-5);
+    vertical-align: text-bottom;
+    background: var(--nz-bg-brand);
+    animation: nz-response-block-blink var(--nz-duration-pulse) steps(2, jump-none) infinite;
+  }
+
+  @keyframes nz-response-block-blink {
+    to {
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nz-response-block-content::after,
+    .nz-response-block-content > *::after {
+      animation: none;
+    }
+  }
+
+  [data-nz-motion='reduce'] .nz-response-block-content::after,
+  [data-nz-motion='reduce'] .nz-response-block-content > *::after {
+    animation: none;
+  }
+
+  .nz-response-block-error {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--nz-space-2) calc(var(--nz-space-2) + var(--nz-space-0-5));
+    padding-block: var(--nz-space-3);
+    padding-inline: calc(var(--nz-space-3) + var(--nz-space-0-5));
+    border-radius: calc(var(--nz-radius-xs) * 3.5);
+    background: var(--nz-bg-critical-subtle);
+    color: var(--nz-text-critical);
+    font: var(--nz-font-body-s);
+  }
+
+  .nz-response-block-error-icon {
+    display: inline-flex;
+    flex: none;
+    color: var(--nz-icon-critical);
+    font-size: 1.125rem;
+  }
+
+  .nz-response-block-error-text {
+    flex: 1 1 12rem;
+  }
+
+  .nz-response-block-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--nz-space-1);
+  }
+
+  @media (forced-colors: active) {
+    .nz-response-block-avatar {
+      forced-color-adjust: none;
+      background: CanvasText;
+      color: Canvas;
+    }
+
+    .nz-response-block-content::after,
+    .nz-response-block-content > *::after {
+      forced-color-adjust: none;
+      background: CanvasText;
+    }
+
+    .nz-response-block-error {
+      border: 1px solid CanvasText;
+    }
+  }
+}

@@ -1,0 +1,29 @@
+---
+title: ResponseBlock
+description: 'Unstable: one AI answer from the first wait to its end, thinking, streaming with a Stop button, complete with its actions, or an error with a retry. Import it from @nizivo/react/unstable/response-block.'
+---
+
+## Static or interactive
+
+**Server.** No client JavaScript of its own: Stop and Retry are [Buttons](/docs/components/button/)
+that call `onStop` and `onRetry`, so the block is rendered by the client component that streams the
+answer. [How to choose](/docs/guides/static-or-interactive/).
+
+## States
+
+`status` moves through `thinking` (a [ThinkingIndicator](/docs/components/thinking-indicator/),
+with the step in `thinking`), `streaming` (the text so far, a caret, and a Stop button that calls
+`onStop`), `complete` (the answer and `actions`, such as copy, regenerate and a
+[FeedbackBar](/docs/components/feedback-bar/)) and `error` (the `error` message, and a Retry
+button that calls `onRetry`).
+
+## Screen readers
+
+The answer sits in a polite live region that is `aria-busy` while it streams, so it is read once,
+when complete, not word by word. The error is an alert. Stop is an ordinary button, always in the
+Tab order while the answer streams.
+
+## Header
+
+`name` ("Assistant" by default) names the block; `avatar` replaces the sparkles mark and `badge`
+the [AiBadge](/docs/components/ai-badge/) (`badge={null}` hides it).

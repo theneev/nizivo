@@ -1,0 +1,69 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/approval-card.css (Figma Approval Card 7410:300), UNSTABLE. bg/surface with a
+   border/brand edge and Elevation/2, radius/xl, padded 20 with 14 px between parts: the AiBadge, the
+   Heading/H3 title, the Body/M text/secondary body, a bg/subtle summary (radius/md, padded 12 by
+   14, Body/S), and the three 40 px buttons at the end. */
+@layer nz.components {
+  .nz-approval-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: calc(var(--nz-space-3) + var(--nz-space-0-5));
+    padding: var(--nz-space-5);
+    border: var(--nz-border-width-default) solid var(--nz-border-brand);
+    border-radius: var(--nz-approval-card-radius, var(--nz-radius-xl));
+    background: var(--nz-approval-card-bg, var(--nz-bg-surface));
+    box-shadow: var(--nz-elevation-2);
+  }
+
+  .nz-approval-card-title {
+    margin: 0;
+    color: var(--nz-text-primary);
+    font: var(--nz-font-heading-h3);
+  }
+
+  .nz-approval-card-body {
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-body-m);
+  }
+
+  .nz-approval-card-body > :first-child {
+    margin-block-start: 0;
+  }
+
+  .nz-approval-card-body > :last-child {
+    margin-block-end: 0;
+  }
+
+  .nz-approval-card-summary {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-1-5);
+    align-self: stretch;
+    padding-block: var(--nz-space-3);
+    padding-inline: calc(var(--nz-space-3) + var(--nz-space-0-5));
+    border-radius: var(--nz-radius-md);
+    background: var(--nz-bg-subtle);
+    color: var(--nz-text-primary);
+    font: var(--nz-font-body-s);
+  }
+
+  .nz-approval-card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-self: stretch;
+    justify-content: flex-end;
+    gap: var(--nz-space-2);
+  }
+
+  @media (forced-colors: active) {
+    .nz-approval-card {
+      border-color: Highlight;
+    }
+
+    .nz-approval-card-summary {
+      border: 1px solid CanvasText;
+    }
+  }
+}

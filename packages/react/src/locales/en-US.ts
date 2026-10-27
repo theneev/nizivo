@@ -33,6 +33,10 @@ import type { SourceCardLabels } from '../unstable/source-card/index';
 import type { SuggestionGroupLabels } from '../unstable/suggestion-chip/index';
 import type { ThinkingIndicatorLabels } from '../unstable/thinking-indicator/index';
 import type { UsageMeterLabels } from '../unstable/usage-meter/index';
+import type { ToolCallCardLabels } from '../unstable/tool-call-card/index';
+import type { ResponseBlockLabels } from '../unstable/response-block/index';
+import type { FeedbackBarLabels } from '../unstable/feedback-bar/index';
+import type { ApprovalCardLabels } from '../unstable/approval-card/index';
 import type { RankedListLabels } from '../ranked-list/index';
 import type { SearchFieldLabels } from '../search-field/index';
 import type { SidebarLabels } from '../sidebar/index';
@@ -75,6 +79,10 @@ export const enUS: {
   sourceCard: SourceCardLabels;
   suggestionGroup: SuggestionGroupLabels;
   usageMeter: UsageMeterLabels;
+  toolCallCard: ToolCallCardLabels;
+  responseBlock: ResponseBlockLabels;
+  feedbackBar: FeedbackBarLabels;
+  approvalCard: ApprovalCardLabels;
   rankedList: RankedListLabels;
   searchField: SearchFieldLabels;
   sidebar: SidebarLabels;
@@ -149,6 +157,30 @@ export const enUS: {
   sourceCard: { newTab: '(opens in a new tab)' },
   suggestionGroup: { label: 'Suggestions' },
   usageMeter: { label: 'AI credits', valueText: '{value} of {max} credits used' },
+  toolCallCard: {
+    running: 'Running',
+    done: 'Done',
+    failed: 'Failed',
+    stepTodo: 'not started',
+    stepRunning: 'in progress',
+    stepDone: 'done',
+    stepFailed: 'failed',
+  },
+  responseBlock: {
+    name: 'Assistant',
+    stop: 'Stop generating',
+    retry: 'Retry',
+    error: 'Something went wrong. Try again.',
+  },
+  feedbackBar: {
+    prompt: 'Was this helpful?',
+    thanksUp: 'Thanks — glad it helped.',
+    thanksDown: 'Thanks. What went wrong?',
+    up: 'Good answer',
+    down: 'Bad answer',
+    reasons: 'What went wrong',
+  },
+  approvalCard: { badge: 'Needs your approval', cancel: 'Cancel', edit: 'Edit first' },
   rankedList: { loading: 'Loading {label}', empty: 'No data', error: 'Could not load {label}' },
   searchField: { label: 'Search', clear: 'Clear search' },
   sidebar: { nav: 'Primary' },

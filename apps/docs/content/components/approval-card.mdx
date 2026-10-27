@@ -1,0 +1,23 @@
+---
+title: ApprovalCard
+description: 'Unstable: the AI asks before an action it cannot undo, saying what will happen and to whom, with Cancel, Edit first and a confirm that names the action. Import it from @nizivo/react/unstable/approval-card.'
+---
+
+## Static or interactive
+
+**Client.** It moves focus to Cancel when it appears and cancels on Escape.
+[How to choose](/docs/guides/static-or-interactive/).
+
+## Content
+
+`title` is the action ("Send 3 emails to customers?"), the children say what will happen and what
+cannot be taken back, and `summary` sets out the details (the recipients, the subject, the amount).
+`confirmLabel` names the action ("Send emails"), never "OK". `onEdit` adds an "Edit first" button.
+`pending` shows the confirm in flight.
+
+## Focus
+
+As Figma asks, focus lands on Cancel when the card mounts, without scrolling (`autoFocus={false}`
+turns that off, for a card rendered with the page rather than in answer to the reader), and Escape
+anywhere in the card calls `onCancel`. It is a section named by its title, not a modal: the
+conversation stays readable around it. `headingLevel` (3 by default) fits it into the page outline.

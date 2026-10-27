@@ -341,6 +341,13 @@ function liveness(code: string): { live: boolean; reason?: string } {
         'It shows toasts from an event handler or an effect, code that runs in a client component of your app, so it is shown as source only.',
     };
   }
+  if (/\bon[A-Z]\w*=\{\s*\(/.test(code)) {
+    return {
+      live: false,
+      reason:
+        'It passes an event handler, code that runs in a client component of your app, so it is shown as source only.',
+    };
+  }
   const asset = /\bsrc=(?:"|\{\s*['"`])(\/[^"'`]*)/.exec(code);
   if (asset) {
     return {

@@ -1,0 +1,161 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/tool-call-card.css (Figma Tool Call Card 7410:294), UNSTABLE. bg/surface, radius/xl,
+   padded 16 with 12 px between parts; the edge is border/subtle, border/critical when it failed. The
+   header: a 32 px bg/accent-subtle tile (radius 10, radius/sm × 1.25) with the 16 px wand, the
+   Label/M Strong title, and a status pill (Label/S on bg/muted, success-subtle or critical-subtle).
+   The steps sit 42 px in (the tile and its gap), 8 px apart, a 14 px mark and Body/S each. */
+@layer nz.components {
+  .nz-tool-call-card {
+    --_nz-tool-call-card-edge: var(--nz-border-subtle);
+    --_nz-tool-call-card-pill-bg: var(--nz-bg-muted);
+    --_nz-tool-call-card-pill-fg: var(--nz-text-secondary);
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-3);
+    padding: var(--nz-space-4);
+    border: var(--nz-border-width-default) solid var(--_nz-tool-call-card-edge);
+    border-radius: var(--nz-tool-call-card-radius, var(--nz-radius-xl));
+    background: var(--nz-tool-call-card-bg, var(--nz-bg-surface));
+  }
+
+  .nz-tool-call-card[data-tone='done'] {
+    --_nz-tool-call-card-pill-bg: var(--nz-bg-success-subtle);
+    --_nz-tool-call-card-pill-fg: var(--nz-text-success);
+  }
+
+  .nz-tool-call-card[data-tone='failed'] {
+    --_nz-tool-call-card-edge: var(--nz-border-critical);
+    --_nz-tool-call-card-pill-bg: var(--nz-bg-critical-subtle);
+    --_nz-tool-call-card-pill-fg: var(--nz-text-critical);
+  }
+
+  .nz-tool-call-card-header {
+    display: flex;
+    align-items: center;
+    gap: calc(var(--nz-space-2) + var(--nz-space-0-5));
+  }
+
+  .nz-tool-call-card-icon {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    inline-size: var(--nz-space-8);
+    block-size: var(--nz-space-8);
+    border-radius: calc(var(--nz-radius-sm) * 1.25);
+    background: var(--nz-bg-accent-subtle);
+    color: var(--nz-icon-brand);
+    font-size: var(--nz-size-icon-sm);
+  }
+
+  .nz-tool-call-card-title {
+    flex: 1 1 auto;
+    min-inline-size: 0;
+    color: var(--nz-text-primary);
+    font: var(--nz-font-label-m-strong);
+  }
+
+  .nz-tool-call-card-status {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: var(--nz-space-1-5);
+    padding-block: var(--nz-space-1);
+    padding-inline: var(--nz-space-2) calc(var(--nz-space-2) + var(--nz-space-0-5));
+    border-radius: var(--nz-radius-full);
+    background: var(--_nz-tool-call-card-pill-bg);
+    color: var(--_nz-tool-call-card-pill-fg);
+    font: var(--nz-font-label-s);
+    white-space: nowrap;
+  }
+
+  .nz-tool-call-card-status-icon,
+  .nz-tool-call-card-step-icon {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    inline-size: 0.875rem;
+    block-size: 0.875rem;
+    font-size: 0.875rem;
+  }
+
+  .nz-tool-call-card-steps {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-2);
+    margin: 0;
+    padding: 0;
+    padding-inline-start: calc(var(--nz-space-8) + var(--nz-space-2) + var(--nz-space-0-5));
+    list-style: none;
+  }
+
+  .nz-tool-call-card-step {
+    display: flex;
+    align-items: center;
+    gap: var(--nz-space-2);
+    color: var(--nz-text-primary);
+    font: var(--nz-font-body-s);
+  }
+
+  .nz-tool-call-card-step[data-tone='done'] .nz-tool-call-card-step-icon {
+    color: var(--nz-icon-success);
+  }
+
+  .nz-tool-call-card-step[data-tone='todo'] {
+    color: var(--nz-text-tertiary);
+  }
+
+  .nz-tool-call-card-step[data-tone='failed'] {
+    color: var(--nz-text-critical);
+  }
+
+  .nz-tool-call-card-todo {
+    inline-size: 0.625rem;
+    block-size: 0.625rem;
+    border: var(--nz-border-width-default) solid var(--nz-border-control);
+    border-radius: var(--nz-radius-full);
+  }
+
+  .nz-tool-call-card-status-icon .nz-glyph-spinner,
+  .nz-tool-call-card-step-icon .nz-glyph-spinner {
+    animation: nz-tool-call-card-spin var(--nz-duration-spin) linear infinite;
+  }
+
+  @keyframes nz-tool-call-card-spin {
+    to {
+      rotate: 1turn;
+    }
+  }
+
+  /* reduced motion: the spinner stands still; "Running" and "in progress" carry the state */
+  @media (prefers-reduced-motion: reduce) {
+    .nz-tool-call-card .nz-glyph-spinner {
+      animation: none;
+    }
+  }
+
+  [data-nz-motion='reduce'] .nz-tool-call-card .nz-glyph-spinner {
+    animation: none;
+  }
+
+  .nz-tool-call-card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--nz-space-2);
+    padding-inline-start: calc(var(--nz-space-8) + var(--nz-space-2) + var(--nz-space-0-5));
+  }
+
+  @media (forced-colors: active) {
+    .nz-tool-call-card {
+      border-color: CanvasText;
+    }
+
+    .nz-tool-call-card-status {
+      outline: 1px solid CanvasText;
+      outline-offset: -1px;
+    }
+  }
+}

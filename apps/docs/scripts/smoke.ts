@@ -116,6 +116,9 @@ const NIZIVO_CLIENT_MARKERS = [
   // React Aria's RangeCalendar, the DateRangePicker's lazy chunk (M71): its own default class name.
   // No page may load it at page load, the picker's included: it loads on the first open
   'react-aria-RangeCalendar',
+  // the AI kit's client parts (v0.4, D-dn): their root classes
+  'nz-feedback-bar',
+  'nz-approval-card',
 ];
 
 /**
@@ -156,6 +159,17 @@ const CLIENT_PAGES: Record<string, string[]> = {
   // MenuRowActionsExample's trigger is an IconButton, whose default tooltip leaf the page imports.
   '/docs/components/menu/': ['menu-popup', 'tooltip-popup'],
   '/docs/components/popover/': ['popover-popup'],
+  // the AI kit (v0.4): FeedbackBar's votes are IconButtons (their tooltip leaf) and its reasons a
+  // ChipGroup, which reads its Field through FieldScope; ResponseBlock's example puts IconButtons in
+  // its actions
+  '/docs/components/feedback-bar/': [
+    'nz-feedback-bar',
+    'tooltip-popup',
+    'chip-input',
+    'willValidate',
+  ],
+  '/docs/components/response-block/': ['tooltip-popup'],
+  '/docs/components/approval-card/': ['nz-approval-card'],
   '/docs/components/drawer/': ['drawer-popup'],
   // Form and SubmitButton are client leaves (FormMessage is a server part); the examples put Inputs
   // in Fields.

@@ -795,6 +795,22 @@
       "export": "ThinkingIndicator",
       "props": {}
     },
+    "7409:247": {
+      "component": "response-block",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/response-block",
+      "export": "ResponseBlock",
+      "props": {
+        "tone": ["thinking", "streaming", "complete", "error"]
+      }
+    },
+    "7409:298": {
+      "component": "feedback-bar",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/feedback-bar",
+      "export": "FeedbackBar",
+      "props": {}
+    },
     "7410:151": {
       "component": "citation",
       "role": "canonical",
@@ -810,6 +826,22 @@
       "props": {
         "variant": ["web", "file"]
       }
+    },
+    "7410:294": {
+      "component": "tool-call-card",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/tool-call-card",
+      "export": "ToolCallCard",
+      "props": {
+        "tone": ["todo", "running", "done", "failed"]
+      }
+    },
+    "7410:300": {
+      "component": "approval-card",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/approval-card",
+      "export": "ApprovalCard",
+      "props": {}
     },
     "7411:307": {
       "component": "usage-meter",

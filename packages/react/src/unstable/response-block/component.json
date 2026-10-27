@@ -1,0 +1,17 @@
+{
+  "name": "response-block",
+  "status": "unstable",
+  "tier": "server",
+  "exports": ["ResponseBlock"],
+  "interactive": [],
+  "cssDeps": ["base", "button", "ai-badge", "thinking-indicator"],
+  "variants": {
+    "tone": ["thinking", "streaming", "complete", "error"]
+  },
+  "figma": {
+    "canonical": ["7409:247"],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": []
+  }
+}
