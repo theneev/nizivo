@@ -192,6 +192,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /unstable/announcement-bar   |    1,128 |        1.1 |      1,035 |         1.3 |          203 |
 | /unstable/approval-card      |    2,096 |        2.0 |      1,916 |         2.3 |          259 |
 | /unstable/bento-tile         |      889 |        0.9 |        815 |           1 |          135 |
+| /unstable/caret-headline     |      793 |        0.8 |        729 |         0.9 |          128 |
 | /unstable/chat-message       |    1,341 |        1.3 |      1,235 |         1.5 |          195 |
 | /unstable/citation           |      932 |        0.9 |        855 |         1.1 |          194 |
 | /unstable/code-block         |   34,535 |       33.7 |     30,644 |          38 |        4,377 |
@@ -207,6 +208,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /unstable/file-item          |    2,065 |        2.0 |      1,883 |         2.3 |          290 |
 | /unstable/inline-assist      |    1,687 |        1.6 |      1,544 |         1.9 |          258 |
 | /unstable/link               |    1,069 |        1.0 |        974 |         1.2 |          159 |
+| /unstable/live-pulse         |      776 |        0.8 |        709 |         0.9 |          145 |
 | /unstable/media-player       |    2,638 |        2.6 |      2,421 |         2.7 |          126 |
 | /unstable/model-selector     |   63,785 |       62.3 |     54,785 |          69 |        6,871 |
 | /unstable/newsletter-signup  |    4,900 |        4.8 |      4,453 |         5.3 |          527 |
@@ -225,9 +227,11 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /unstable/tag                |    1,319 |        1.3 |      1,206 |         1.5 |          217 |
 | /unstable/testimonial-card   |    1,153 |        1.1 |      1,049 |         1.3 |          178 |
 | /unstable/thinking-indicator |      844 |        0.8 |        765 |           1 |          180 |
+| /unstable/ticker             |      852 |        0.8 |        799 |           1 |          172 |
 | /unstable/tool-call-card     |    1,637 |        1.6 |      1,492 |         1.8 |          206 |
 | /unstable/usage-meter        |    1,874 |        1.8 |      1,743 |         2.1 |          276 |
 | /unstable/voice-orb          |    1,889 |        1.8 |      1,716 |         2.1 |          261 |
+| /unstable/word-rotator       |    1,202 |        1.2 |      1,087 |         1.3 |          129 |
 
 #### `@nizivo/react`: Composite bundles (one bundle; React Aria counted once)
 
@@ -310,6 +314,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | own: unstable/newsletter-signup/newsletter-signup.client |      907 |        0.9 |        789 |           1 |          117 |
 | own: unstable/prompt-composer/prompt-composer.client     |      747 |        0.7 |        648 |         0.9 |          174 |
 | own: unstable/slider/slider.client                       |      842 |        0.8 |        765 |           1 |          182 |
+| own: unstable/word-rotator/word-rotator.client           |      686 |        0.7 |        636 |         0.8 |          133 |
 
 #### `@nizivo/react`: Seam helpers (seam ledger K6 and K7; React Aria external)
 
@@ -338,6 +343,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/bulk-action-bar.css    |      400 |        0.4 |        325 |         0.5 |          112 |
 | /css/button.css             |    1,153 |        1.1 |        974 |         1.3 |          178 |
 | /css/card.css               |      665 |        0.6 |        560 |         0.7 |           51 |
+| /css/caret-headline.css     |      401 |        0.4 |        327 |         0.5 |          111 |
 | /css/chat-message.css       |      537 |        0.5 |        432 |         0.6 |           77 |
 | /css/checkbox.css           |      834 |        0.8 |        687 |         0.9 |           87 |
 | /css/chip-group.css         |      986 |        1.0 |        808 |         1.1 |          140 |
@@ -376,6 +382,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/kbd.css                |      377 |        0.4 |        303 |         0.5 |          135 |
 | /css/kpi-tile.css           |      162 |        0.2 |        134 |         0.2 |           42 |
 | /css/link.css               |      301 |        0.3 |        238 |         0.4 |          108 |
+| /css/live-pulse.css         |      466 |        0.5 |        392 |         0.6 |          148 |
 | /css/media-player.css       |      669 |        0.7 |        550 |         0.8 |          150 |
 | /css/menu.css               |    1,050 |        1.0 |        867 |         1.2 |          178 |
 | /css/meter.css              |      657 |        0.6 |        537 |         0.8 |          162 |
@@ -432,6 +439,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/text.css               |      574 |        0.6 |        489 |         0.7 |          142 |
 | /css/textarea.css           |      751 |        0.7 |        624 |         0.8 |           68 |
 | /css/thinking-indicator.css |      472 |        0.5 |        408 |         0.6 |          142 |
+| /css/ticker.css             |      551 |        0.5 |        459 |         0.6 |           63 |
 | /css/toast.css              |      918 |        0.9 |        767 |           1 |          106 |
 | /css/tool-call-card.css     |      913 |        0.9 |        794 |           1 |          111 |
 | /css/tooltip.css            |      581 |        0.6 |        503 |         0.6 |           33 |
@@ -439,6 +447,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/trend-card.css         |      403 |        0.4 |        346 |         0.5 |          109 |
 | /css/usage-meter.css        |      443 |        0.4 |        356 |         0.5 |           69 |
 | /css/voice-orb.css          |      955 |        0.9 |        825 |         1.1 |          171 |
+| /css/word-rotator.css       |      298 |        0.3 |        234 |         0.4 |          111 |
 | /styles.css                 |   26,063 |       25.5 |     20,936 |          26 |          561 |
 
 #### `@nizivo/tokens`: Public JS entries (bundled with what they import, React Aria included)

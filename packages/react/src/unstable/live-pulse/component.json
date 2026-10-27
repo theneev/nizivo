@@ -1,0 +1,15 @@
+{
+  "name": "live-pulse",
+  "status": "unstable",
+  "tier": "server",
+  "exports": ["LivePulse"],
+  "interactive": [],
+  "cssDeps": ["base"],
+  "variants": {},
+  "figma": {
+    "canonical": ["7390:171"],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": []
+  }
+}

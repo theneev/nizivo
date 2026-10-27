@@ -1,0 +1,15 @@
+{
+  "name": "ticker",
+  "status": "unstable",
+  "tier": "server",
+  "exports": ["Ticker"],
+  "interactive": [],
+  "cssDeps": ["base"],
+  "variants": {},
+  "figma": {
+    "canonical": ["7390:123"],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": []
+  }
+}

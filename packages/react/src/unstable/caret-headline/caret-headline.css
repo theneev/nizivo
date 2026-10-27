@@ -1,0 +1,47 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/caret-headline.css (Figma Caret Headline 7390:134), UNSTABLE. Heading/H1 in
+   text/primary, then a 16 by 4 px bg/brand caret on the baseline, 4 px after the text, blinking on
+   1.06 s (0.53 × --nz-duration-pulse, half on, half off); on and still under Reduced motion. */
+@layer nz.components {
+  .nz-caret-headline {
+    margin: 0;
+    color: var(--nz-text-primary);
+    font: var(--nz-font-heading-h1);
+    letter-spacing: var(--nz-tracking-heading-h1);
+  }
+
+  .nz-caret-headline-caret {
+    display: inline-block;
+    inline-size: var(--nz-space-4);
+    block-size: var(--nz-space-1);
+    margin-inline-start: var(--nz-space-1);
+    background: var(--nz-bg-brand);
+    vertical-align: baseline;
+    animation: nz-caret-headline-blink calc(var(--nz-duration-pulse) * 0.53) steps(2, jump-none)
+      infinite;
+  }
+
+  @keyframes nz-caret-headline-blink {
+    to {
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nz-caret-headline-caret {
+      animation: none;
+    }
+  }
+
+  [data-nz-motion='reduce'] .nz-caret-headline-caret {
+    animation: none;
+  }
+
+  @media (forced-colors: active) {
+    .nz-caret-headline-caret {
+      forced-color-adjust: none;
+      background: CanvasText;
+    }
+  }
+}

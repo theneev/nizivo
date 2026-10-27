@@ -1,0 +1,15 @@
+{
+  "name": "caret-headline",
+  "status": "unstable",
+  "tier": "server",
+  "exports": ["CaretHeadline"],
+  "interactive": [],
+  "cssDeps": ["base"],
+  "variants": {},
+  "figma": {
+    "canonical": ["7390:134"],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": []
+  }
+}

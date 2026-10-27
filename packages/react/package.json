@@ -379,6 +379,10 @@
       "types": "./dist/unstable/bento-tile/index.d.ts",
       "default": "./dist/unstable/bento-tile/index.js"
     },
+    "./unstable/caret-headline": {
+      "types": "./dist/unstable/caret-headline/index.d.ts",
+      "default": "./dist/unstable/caret-headline/index.js"
+    },
     "./unstable/chat-message": {
       "types": "./dist/unstable/chat-message/index.d.ts",
       "default": "./dist/unstable/chat-message/index.js"
@@ -438,6 +442,10 @@
     "./unstable/link": {
       "types": "./dist/unstable/link/index.d.ts",
       "default": "./dist/unstable/link/index.js"
+    },
+    "./unstable/live-pulse": {
+      "types": "./dist/unstable/live-pulse/index.d.ts",
+      "default": "./dist/unstable/live-pulse/index.js"
     },
     "./unstable/media-player": {
       "types": "./dist/unstable/media-player/index.d.ts",
@@ -511,6 +519,10 @@
       "types": "./dist/unstable/thinking-indicator/index.d.ts",
       "default": "./dist/unstable/thinking-indicator/index.js"
     },
+    "./unstable/ticker": {
+      "types": "./dist/unstable/ticker/index.d.ts",
+      "default": "./dist/unstable/ticker/index.js"
+    },
     "./unstable/tool-call-card": {
       "types": "./dist/unstable/tool-call-card/index.d.ts",
       "default": "./dist/unstable/tool-call-card/index.js"
@@ -522,6 +534,10 @@
     "./unstable/voice-orb": {
       "types": "./dist/unstable/voice-orb/index.d.ts",
       "default": "./dist/unstable/voice-orb/index.js"
+    },
+    "./unstable/word-rotator": {
+      "types": "./dist/unstable/word-rotator/index.d.ts",
+      "default": "./dist/unstable/word-rotator/index.js"
     },
     "./css/accordion.css": "./dist/css/accordion.css",
     "./css/ai-badge.css": "./dist/css/ai-badge.css",
@@ -539,6 +555,7 @@
     "./css/bulk-action-bar.css": "./dist/css/bulk-action-bar.css",
     "./css/button.css": "./dist/css/button.css",
     "./css/card.css": "./dist/css/card.css",
+    "./css/caret-headline.css": "./dist/css/caret-headline.css",
     "./css/chat-message.css": "./dist/css/chat-message.css",
     "./css/checkbox.css": "./dist/css/checkbox.css",
     "./css/chip-group.css": "./dist/css/chip-group.css",
@@ -577,6 +594,7 @@
     "./css/kbd.css": "./dist/css/kbd.css",
     "./css/kpi-tile.css": "./dist/css/kpi-tile.css",
     "./css/link.css": "./dist/css/link.css",
+    "./css/live-pulse.css": "./dist/css/live-pulse.css",
     "./css/media-player.css": "./dist/css/media-player.css",
     "./css/menu.css": "./dist/css/menu.css",
     "./css/meter.css": "./dist/css/meter.css",
@@ -633,6 +651,7 @@
     "./css/text.css": "./dist/css/text.css",
     "./css/textarea.css": "./dist/css/textarea.css",
     "./css/thinking-indicator.css": "./dist/css/thinking-indicator.css",
+    "./css/ticker.css": "./dist/css/ticker.css",
     "./css/toast.css": "./dist/css/toast.css",
     "./css/tool-call-card.css": "./dist/css/tool-call-card.css",
     "./css/tooltip.css": "./dist/css/tooltip.css",
@@ -640,6 +659,7 @@
     "./css/trend-card.css": "./dist/css/trend-card.css",
     "./css/usage-meter.css": "./dist/css/usage-meter.css",
     "./css/voice-orb.css": "./dist/css/voice-orb.css",
+    "./css/word-rotator.css": "./dist/css/word-rotator.css",
     "./styles.css": "./dist/styles.css",
     "./package.json": "./package.json"
   },

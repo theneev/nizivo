@@ -127,6 +127,7 @@ const NIZIVO_CLIENT_MARKERS = [
   'nz-copy-button',
   'nz-code-block',
   'nz-newsletter-signup',
+  'nz-word-rotator',
 ];
 
 /**
@@ -192,6 +193,8 @@ const CLIENT_PAGES: Record<string, string[]> = {
   '/docs/components/copy-button/': ['nz-code-block', 'nz-copy-button', 'tabs-tab'],
   // v0.6 (D-dp): the signup's field is an Input in a Field (FieldScope)
   '/docs/components/newsletter-signup/': ['nz-newsletter-signup', 'input-prefix', 'willValidate'],
+  // D-dq
+  '/docs/components/word-rotator/': ['nz-word-rotator'],
   '/docs/components/drawer/': ['drawer-popup'],
   // Form and SubmitButton are client leaves (FormMessage is a server part); the examples put Inputs
   // in Fields.

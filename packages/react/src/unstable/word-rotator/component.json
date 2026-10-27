@@ -1,0 +1,17 @@
+{
+  "name": "word-rotator",
+  "status": "unstable",
+  "tier": "client",
+  "parts": [],
+  "exports": ["WordRotator"],
+  "interactive": [],
+  "stateIndicator": [],
+  "cssDeps": ["base"],
+  "variants": {},
+  "figma": {
+    "canonical": ["7390:161"],
+    "ghosts": [],
+    "variantsSeen": ["7390:137", "7390:145", "7390:153"],
+    "related": []
+  }
+}

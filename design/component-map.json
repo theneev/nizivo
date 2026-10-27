@@ -786,6 +786,34 @@
       "export": "Accordion",
       "parts": ["Root", "Item", "Trigger", "Panel"]
     },
+    "7390:123": {
+      "component": "ticker",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/ticker",
+      "export": "Ticker",
+      "props": {}
+    },
+    "7390:134": {
+      "component": "caret-headline",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/caret-headline",
+      "export": "CaretHeadline",
+      "props": {}
+    },
+    "7390:161": {
+      "component": "word-rotator",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/word-rotator",
+      "export": "WordRotator",
+      "props": {}
+    },
+    "7390:171": {
+      "component": "live-pulse",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/live-pulse",
+      "export": "LivePulse",
+      "props": {}
+    },
     "7392:9": {
       "component": "announcement-bar",
       "role": "canonical",

@@ -1,0 +1,37 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/word-rotator.css (Figma Word Rotator 7390:161), UNSTABLE. A one-line window as wide
+   as the longest word, in text/brand and the surrounding heading's type; the words stack in it and
+   slide up one line at a time on --nz-duration-slower with --nz-easing-enter (Figma: 450 ms). */
+@layer nz.components {
+  .nz-word-rotator {
+    display: inline-block;
+    color: var(--nz-text-brand);
+    vertical-align: bottom;
+  }
+
+  .nz-word-rotator-window {
+    display: inline-block;
+    block-size: 1lh;
+    overflow: hidden;
+    vertical-align: bottom;
+  }
+
+  .nz-word-rotator-words {
+    --_nz-word-rotator-index: 0;
+
+    display: flex;
+    flex-direction: column;
+    translate: 0 calc(var(--_nz-word-rotator-index) * -1lh);
+    transition: translate var(--nz-duration-slower) var(--nz-easing-enter);
+  }
+
+  .nz-word-rotator-snap {
+    transition: none;
+  }
+
+  .nz-word-rotator-word {
+    block-size: 1lh;
+    white-space: nowrap;
+  }
+}

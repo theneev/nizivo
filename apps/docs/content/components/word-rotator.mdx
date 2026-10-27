@@ -1,0 +1,15 @@
+---
+title: WordRotator
+description: 'Unstable: the keyword of a headline that turns over, one word at a time; a screen reader hears every word once. Import it from @nizivo/react/unstable/word-rotator.'
+---
+
+## Static or interactive
+
+**Client.** A timer turns the words. [How to choose](/docs/guides/static-or-interactive/).
+
+## Use
+
+Put it inside the heading: `<h2>Design for <WordRotator words={…} /></h2>`. Each word holds for 1.8
+seconds, then the next slides up. A screen reader hears the words once, as a list ("dashboards,
+commerce and websites", in `locale`); the moving window is hidden from it. Under Reduced motion the
+first word stays.

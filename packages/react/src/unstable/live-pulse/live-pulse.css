@@ -1,0 +1,64 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/live-pulse.css (Figma Live Pulse 7390:171), UNSTABLE. A 10 px bg/brand dot whose
+   ring grows to 2.5 × and fades every 1.6 s (0.8 × --nz-duration-pulse), 8 px before Label/M words.
+   Under Reduced motion the ring is gone and the dot stays. */
+@layer nz.components {
+  .nz-live-pulse {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--nz-space-2);
+    color: var(--nz-text-primary);
+    font: var(--nz-font-label-m);
+  }
+
+  .nz-live-pulse-dot {
+    position: relative;
+    flex: none;
+    inline-size: calc(var(--nz-space-2) + var(--nz-space-0-5));
+    block-size: calc(var(--nz-space-2) + var(--nz-space-0-5));
+    border-radius: var(--nz-radius-full);
+    background: var(--nz-bg-brand);
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: inherit;
+      animation: nz-live-pulse-ring calc(var(--nz-duration-pulse) * 0.8) var(--nz-easing-standard)
+        infinite;
+    }
+  }
+
+  @keyframes nz-live-pulse-ring {
+    from {
+      opacity: 0.6;
+      scale: 1;
+    }
+
+    to {
+      opacity: 0;
+      scale: 2.5;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nz-live-pulse-dot::after {
+      animation: none;
+      opacity: 0;
+    }
+  }
+
+  [data-nz-motion='reduce'] .nz-live-pulse-dot::after {
+    animation: none;
+    opacity: 0;
+  }
+
+  @media (forced-colors: active) {
+    .nz-live-pulse-dot {
+      forced-color-adjust: none;
+      background: CanvasText;
+    }
+  }
+}

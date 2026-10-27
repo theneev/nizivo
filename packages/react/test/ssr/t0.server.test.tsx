@@ -117,6 +117,10 @@ const COMPONENTS = [
   'site-footer',
   'bento-tile',
   'site-navbar',
+  // D-dq: page 12's motion parts
+  'ticker',
+  'caret-headline',
+  'live-pulse',
 ] as const;
 type Name = (typeof COMPONENTS)[number];
 
@@ -288,6 +292,9 @@ const entries = {
   'site-footer': () => import('../../src/unstable/site-footer/index'),
   'bento-tile': () => import('../../src/unstable/bento-tile/index'),
   'site-navbar': () => import('../../src/unstable/site-navbar/index'),
+  ticker: () => import('../../src/unstable/ticker/index'),
+  'caret-headline': () => import('../../src/unstable/caret-headline/index'),
+  'live-pulse': () => import('../../src/unstable/live-pulse/index'),
   'bulk-action-bar': () => import('../../src/bulk-action-bar/index'),
   'data-view': () => import('../../src/data-view/index'),
   surface: () => import('../../src/surface/index'),
@@ -375,6 +382,9 @@ const exampleModules = {
   'site-footer': () => import('../../src/unstable/site-footer/site-footer.example'),
   'bento-tile': () => import('../../src/unstable/bento-tile/bento-tile.example'),
   'site-navbar': () => import('../../src/unstable/site-navbar/site-navbar.example'),
+  ticker: () => import('../../src/unstable/ticker/ticker.example'),
+  'caret-headline': () => import('../../src/unstable/caret-headline/caret-headline.example'),
+  'live-pulse': () => import('../../src/unstable/live-pulse/live-pulse.example'),
   'bulk-action-bar': () => import('../../src/bulk-action-bar/bulk-action-bar.example'),
   'data-view': () => import('../../src/data-view/data-view.example'),
   surface: () => import('../../src/surface/surface.example'),

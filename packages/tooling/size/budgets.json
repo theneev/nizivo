@@ -353,6 +353,10 @@
       "measured": 889,
       "limitKiB": 1
     },
+    "@nizivo/react/unstable/caret-headline": {
+      "measured": 793,
+      "limitKiB": 0.9
+    },
     "@nizivo/react/unstable/chat-message": {
       "measured": 1341,
       "limitKiB": 1.5
@@ -412,6 +416,10 @@
     "@nizivo/react/unstable/link": {
       "measured": 1069,
       "limitKiB": 1.2
+    },
+    "@nizivo/react/unstable/live-pulse": {
+      "measured": 776,
+      "limitKiB": 0.9
     },
     "@nizivo/react/unstable/media-player": {
       "measured": 2638,
@@ -485,6 +493,10 @@
       "measured": 844,
       "limitKiB": 1
     },
+    "@nizivo/react/unstable/ticker": {
+      "measured": 852,
+      "limitKiB": 1
+    },
     "@nizivo/react/unstable/tool-call-card": {
       "measured": 1637,
       "limitKiB": 1.8
@@ -496,6 +508,10 @@
     "@nizivo/react/unstable/voice-orb": {
       "measured": 1889,
       "limitKiB": 2.1
+    },
+    "@nizivo/react/unstable/word-rotator": {
+      "measured": 1202,
+      "limitKiB": 1.3
     },
     "@nizivo/react dashboard set": {
       "measured": 78934,
@@ -777,6 +793,10 @@
       "measured": 842,
       "limitKiB": 1
     },
+    "@nizivo/react own: unstable/word-rotator/word-rotator.client": {
+      "measured": 686,
+      "limitKiB": 0.8
+    },
     "@nizivo/react lazy: the DateRangePicker calendar": {
       "measured": 39816,
       "limitKiB": 43
@@ -856,6 +876,10 @@
     "@nizivo/react/css/card.css": {
       "measured": 665,
       "limitKiB": 0.7
+    },
+    "@nizivo/react/css/caret-headline.css": {
+      "measured": 401,
+      "limitKiB": 0.5
     },
     "@nizivo/react/css/chat-message.css": {
       "measured": 537,
@@ -1008,6 +1032,10 @@
     "@nizivo/react/css/link.css": {
       "measured": 301,
       "limitKiB": 0.4
+    },
+    "@nizivo/react/css/live-pulse.css": {
+      "measured": 466,
+      "limitKiB": 0.6
     },
     "@nizivo/react/css/media-player.css": {
       "measured": 669,
@@ -1233,6 +1261,10 @@
       "measured": 472,
       "limitKiB": 0.6
     },
+    "@nizivo/react/css/ticker.css": {
+      "measured": 551,
+      "limitKiB": 0.6
+    },
     "@nizivo/react/css/toast.css": {
       "measured": 918,
       "limitKiB": 1
@@ -1260,6 +1292,10 @@
     "@nizivo/react/css/voice-orb.css": {
       "measured": 955,
       "limitKiB": 1.1
+    },
+    "@nizivo/react/css/word-rotator.css": {
+      "measured": 298,
+      "limitKiB": 0.4
     },
     "@nizivo/react/styles.css": {
       "measured": 26063,
