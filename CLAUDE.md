@@ -57,6 +57,9 @@ Report them; never re-record baselines to make them pass.
 - React visual: `toast/stack--focus-8-toast-action` and `stack--focus-9-toast-close`, about one run in
   four, 30 px on the upper toasts' rounded corners in one mode (week 14).
 - React visual: `drawer/sheet--focus-4-drawer-body--light`, now and then 4 px on the focus halo.
+- React visual: `combobox/states--open-key-combobox-trigger-0--forced` (18 px) and
+  `states--open-combobox-trigger-0--forced` (7 px), about one run in two or three: the input's
+  blinking text caret (2026-10-28).
 - Firefox overlay: Tooltip's "enters through data-entering with a running transition" found no running
   opacity transition under load: fixed on 2026-10-24 (the check records `transitionrun` events instead of
   polling `getAnimations()`: `watchTransitions` in `test/overlay/harness.tsx`); report it if it returns.

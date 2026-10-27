@@ -62,4 +62,15 @@ them their own (`./locales/en-US/unstable`), so stable apps do not carry them.
   this was written (see the hand-back).
 - Browser specs: `docs-parts.spec.tsx` (4) and `marketing.spec.tsx` (6), passing in Chromium,
   Firefox and WebKit.
-- The visual lane: 356 new baselines, stable on reruns; no existing baseline moved.
+- The visual lane: 356 new baselines, stable on reruns of their own parts; no existing baseline
+  moved.
+- **Known problem: the full visual lane fails on CodeBlock and CopyButton.** 32 shots (dark and
+  forced modes, about 850 px each, only the glyphs' anti-aliasing) differ whenever they run after
+  BentoTile in the same page, as the full lane runs them: `--only code-block` passes,
+  `--only bento-tile,code-block` fails, `--only announcement-bar,code-block` passes. Ruled out:
+  BentoTile's backdrop blur, its example's width, an opaque `<pre>` background, greyscale font
+  smoothing (worse) and the `<pre>` scroller. The baselines stay as recorded alone (recording them in
+  the full order would encode the leak). The release visual lane fails until this is found.
+- **Flake seen:** Combobox `states--open-key-combobox-trigger-0--forced` (18 px) and
+  `states--open-combobox-trigger-0--forced` (7 px), the input's blinking text caret, about one run
+  in two or three; an existing baseline, not re-recorded.
