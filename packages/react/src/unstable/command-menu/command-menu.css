@@ -1,0 +1,169 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/command-menu.css (ARCHITECTURE.md §17 G18; Figma's Command Menu 755:889).
+   UNSTABLE. The Dialog's popup (dialog.css) at Figma's size and look: 560 px, radius/xl, bg/surface
+   with a border/subtle hairline (Elevation/4 is the Dialog's). The search row: 16 / 16 / 16 / 20 px,
+   12 px apart, a 20 px magnifier, the query in Body/L, an "esc" Kbd, a hairline below. The rows: in
+   8 px of padding, 2 px apart; each 10 / 12 px with 12 px between a 20 px icon, the label (Label/M),
+   its kind (Body/M, text/tertiary) and its shortcut; the active row bg/hover, radius 10. Group
+   headings are Select's (Label/S, text/secondary). The footer: bg/subtle, 12 / 20 px, the keys in
+   Body/M text/tertiary. The list scrolls past 20rem. Public --nz-command-menu-* hooks are read
+   once, at the property. */
+@layer nz.components {
+  .nz-dialog-popup.nz-command-menu-popup {
+    --_nz-dialog-width: 35rem;
+
+    border: var(--nz-border-width-default) solid var(--nz-border-subtle);
+    border-radius: var(--nz-radius-xl);
+    background: var(--nz-command-menu-bg, var(--nz-bg-surface));
+  }
+
+  .nz-command-menu-field {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: var(--nz-space-3);
+    padding-block: var(--nz-space-4);
+    padding-inline: var(--nz-space-5) var(--nz-space-4);
+    border-block-end: var(--nz-border-width-default) solid var(--nz-border-subtle);
+  }
+
+  .nz-command-menu-search {
+    display: inline-flex;
+    flex: none;
+    color: var(--nz-icon-secondary);
+    font-size: var(--nz-size-icon-md);
+  }
+
+  .nz-command-menu-input {
+    flex: 1;
+    min-inline-size: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--nz-text-primary);
+    font: var(--nz-font-body-l);
+    letter-spacing: var(--nz-tracking-body-l);
+    outline: none;
+
+    &::placeholder {
+      color: var(--nz-text-tertiary);
+      opacity: 1;
+    }
+
+    /* the browser's own clear button: Escape clears the field */
+    &::-webkit-search-cancel-button {
+      appearance: none;
+    }
+  }
+
+  .nz-command-menu-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-0-5);
+    max-block-size: 20rem;
+    padding: var(--nz-space-2);
+    overflow: auto;
+    outline: none;
+  }
+
+  .nz-command-menu-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-0-5);
+  }
+
+  .nz-command-menu-group-label {
+    padding-block: var(--nz-space-2) var(--nz-space-1);
+    padding-inline: var(--nz-space-3);
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-label-s);
+    letter-spacing: var(--nz-tracking-label-s);
+  }
+
+  .nz-command-menu-item {
+    display: flex;
+    align-items: center;
+    gap: var(--nz-space-3);
+    padding-block: calc(var(--nz-space-2) + var(--nz-space-0-5));
+    padding-inline: var(--nz-space-3);
+    border-radius: calc(var(--nz-radius-sm) * 1.25);
+    color: var(--nz-text-primary);
+    text-decoration: none;
+    cursor: pointer;
+    outline: none;
+
+    &[data-highlighted] {
+      background: var(--nz-command-menu-item-bg-active, var(--nz-bg-hover));
+    }
+
+    &[data-disabled] {
+      color: var(--nz-text-disabled);
+      cursor: not-allowed;
+    }
+  }
+
+  .nz-command-menu-icon {
+    display: inline-flex;
+    flex: none;
+    color: var(--nz-icon-secondary);
+    font-size: var(--nz-size-icon-md);
+  }
+
+  .nz-command-menu-label {
+    flex: 1;
+    min-inline-size: 0;
+    overflow: hidden;
+    font: var(--nz-font-label-m);
+    letter-spacing: var(--nz-tracking-label-m);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .nz-command-menu-kind {
+    flex: none;
+    color: var(--nz-text-tertiary);
+    font: var(--nz-font-body-m);
+    letter-spacing: var(--nz-tracking-body-m);
+  }
+
+  .nz-command-menu-empty {
+    margin: 0;
+    padding: var(--nz-space-6) var(--nz-space-3);
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-body-m);
+    letter-spacing: var(--nz-tracking-body-m);
+    text-align: center;
+  }
+
+  .nz-command-menu-footer {
+    display: flex;
+    flex: none;
+    gap: var(--nz-space-4);
+    padding-block: var(--nz-space-3);
+    padding-inline: var(--nz-space-5);
+    background: var(--nz-bg-subtle);
+    color: var(--nz-text-tertiary);
+    font: var(--nz-font-body-m);
+    letter-spacing: var(--nz-tracking-body-m);
+  }
+
+  .nz-command-menu-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--nz-space-1-5);
+  }
+
+  @media (forced-colors: active) {
+    .nz-command-menu-item[data-highlighted] {
+      forced-color-adjust: none;
+      background: Highlight;
+      color: HighlightText;
+    }
+
+    .nz-command-menu-field {
+      border-color: CanvasText;
+    }
+  }
+}

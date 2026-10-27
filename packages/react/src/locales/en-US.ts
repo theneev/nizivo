@@ -25,6 +25,7 @@ import type { PaginationLabels } from '../pagination/index';
 import type { PasswordInputLabels } from '../password-input/index';
 import type { PopoverLabels } from '../popover/index';
 import type { QuantityStepperLabels } from '../quantity-stepper/index';
+import type { CommandMenuLabels } from '../unstable/command-menu/index';
 import type { DateRangePickerLabels } from '../unstable/date-range-picker/index';
 import type { RankedListLabels } from '../ranked-list/index';
 import type { SearchFieldLabels } from '../search-field/index';
@@ -61,6 +62,7 @@ export const enUS: {
   popover: Pick<PopoverLabels, 'close'>;
   quantityStepper: QuantityStepperLabels;
   dateRangePicker: DateRangePickerLabels;
+  commandMenu: CommandMenuLabels;
   rankedList: RankedListLabels;
   searchField: SearchFieldLabels;
   sidebar: SidebarLabels;
@@ -121,6 +123,13 @@ export const enUS: {
     last30Days: 'Last 30 days',
     thisQuarter: 'This quarter',
     yearToDate: 'Year to date',
+  },
+  commandMenu: {
+    label: 'Command menu',
+    placeholder: 'Search',
+    empty: 'No results',
+    navigate: 'Navigate',
+    open: 'Open',
   },
   rankedList: { loading: 'Loading {label}', empty: 'No data', error: 'Could not load {label}' },
   searchField: { label: 'Search', clear: 'Clear search' },

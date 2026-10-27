@@ -134,6 +134,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /form                       |    2,854 |        2.8 |      2,589 |           3 |          218 |
 | /grid                       |      793 |        0.8 |        737 |         0.9 |          128 |
 | /heading                    |      767 |        0.7 |        697 |         0.9 |          154 |
+| /hotkeys                    |    1,572 |        1.5 |      1,422 |         1.7 |          168 |
 | /i18n                       |      208 |        0.2 |        182 |         0.3 |           99 |
 | /icon-button                |   17,531 |       17.1 |     15,820 |          19 |        1,925 |
 | /image                      |      794 |        0.8 |        723 |         0.9 |          127 |
@@ -142,7 +143,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /input                      |    1,837 |        1.8 |      1,662 |           2 |          211 |
 | /kbd                        |    1,192 |        1.2 |      1,087 |         1.3 |          139 |
 | /kpi-tile                   |    2,322 |        2.3 |      2,117 |         2.5 |          238 |
-| /locales/en-US              |      873 |        0.9 |        730 |           1 |          151 |
+| /locales/en-US              |      918 |        0.9 |        767 |           1 |          106 |
 | /menu                       |   57,163 |       55.8 |     49,372 |          57 |        1,205 |
 | /meter                      |    1,143 |        1.1 |      1,058 |         1.3 |          188 |
 | /metric                     |    2,144 |        2.1 |      1,949 |         2.4 |          313 |
@@ -186,6 +187,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /tooltip                    |   16,530 |       16.1 |     14,971 |          18 |        1,902 |
 | /top-bar                    |      846 |        0.8 |        781 |           1 |          178 |
 | /trend-card                 |    2,442 |        2.4 |      2,216 |         2.7 |          322 |
+| /unstable/command-menu      |   58,773 |       57.4 |     50,747 |          64 |        6,763 |
 | /unstable/date-range-picker |   62,501 |       61.0 |     54,063 |          68 |        7,131 |
 
 #### `@nizivo/react`: Composite bundles (one bundle; React Aria counted once)
@@ -201,6 +203,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | Entry                                                    | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | -------------------------------------------------------- | -------: | ---------: | ---------: | ----------: | -----------: |
 | own: _engines/react-aria/combobox.client                 |    1,614 |        1.6 |      1,443 |         1.7 |          126 |
+| own: _engines/react-aria/command-menu.client             |      616 |        0.6 |        540 |         0.7 |          100 |
 | own: _engines/react-aria/date-range-picker.client        |      762 |        0.7 |        706 |         0.9 |          159 |
 | own: _engines/react-aria/dialog.client                   |    1,084 |        1.1 |        967 |         1.3 |          247 |
 | own: _engines/react-aria/drawer.client                   |      100 |        0.1 |         90 |         0.2 |          104 |
@@ -231,6 +234,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | own: file-upload/file-upload.client                      |    3,136 |        3.1 |      2,870 |         3.4 |          345 |
 | own: form/form.client                                    |    1,322 |        1.3 |      1,188 |         1.4 |          111 |
 | own: form/submit-button.client                           |      228 |        0.2 |        191 |         0.3 |           79 |
+| own: hotkeys/hotkeys.client                              |      748 |        0.7 |        687 |         0.9 |          173 |
 | own: icon-button/icon-button.client                      |      353 |        0.3 |        304 |         0.4 |           56 |
 | own: input/input.client                                  |      721 |        0.7 |        639 |         0.8 |           98 |
 | own: menu/menu.client                                    |    1,035 |        1.0 |        932 |         1.2 |          193 |
@@ -253,6 +257,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | own: textarea/textarea.client                            |      350 |        0.3 |        305 |         0.4 |           59 |
 | own: toast/toaster.client                                |    2,114 |        2.1 |      1,907 |         2.2 |          138 |
 | own: tooltip/tooltip.client                              |      519 |        0.5 |        460 |         0.6 |           95 |
+| own: unstable/command-menu/command-menu.client           |    1,526 |        1.5 |      1,388 |         1.7 |          214 |
 | own: unstable/date-range-picker/date-range-picker.client |    2,372 |        2.3 |      2,189 |         2.5 |          188 |
 
 #### `@nizivo/react`: Seam helpers (seam ledger K6 and K7; React Aria external)
@@ -272,7 +277,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/avatar.css            |      745 |        0.7 |        606 |         0.9 |          176 |
 | /css/badge.css             |      512 |        0.5 |        424 |         0.6 |          102 |
 | /css/banner.css            |      658 |        0.6 |        533 |         0.8 |          161 |
-| /css/base.css              |    1,333 |        1.3 |      1,136 |         1.4 |          100 |
+| /css/base.css              |    1,353 |        1.3 |      1,152 |         1.4 |           80 |
 | /css/breadcrumb.css        |      551 |        0.5 |        431 |         0.6 |           63 |
 | /css/bulk-action-bar.css   |      400 |        0.4 |        325 |         0.5 |          112 |
 | /css/button.css            |    1,153 |        1.1 |        974 |         1.3 |          178 |
@@ -281,6 +286,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/chip-group.css        |      986 |        1.0 |        808 |         1.1 |          140 |
 | /css/choice-card.css       |    1,005 |        1.0 |        851 |         1.1 |          121 |
 | /css/combobox.css          |    1,047 |        1.0 |        857 |         1.2 |          181 |
+| /css/command-menu.css      |      860 |        0.8 |        701 |           1 |          164 |
 | /css/container.css         |      185 |        0.2 |        155 |         0.2 |           19 |
 | /css/data-view.css         |      570 |        0.6 |        449 |         0.7 |          146 |
 | /css/date-range-picker.css |    1,214 |        1.2 |      1,036 |         1.3 |          117 |
@@ -343,7 +349,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/tooltip.css           |      581 |        0.6 |        503 |         0.6 |           33 |
 | /css/top-bar.css           |      452 |        0.4 |        379 |         0.5 |           60 |
 | /css/trend-card.css        |      403 |        0.4 |        346 |         0.5 |          109 |
-| /styles.css                |   25,835 |       25.2 |     20,760 |          26 |          789 |
+| /styles.css                |   25,856 |       25.3 |     20,739 |          26 |          768 |
 
 #### `@nizivo/tokens`: Public JS entries (bundled with what they import, React Aria included)
 

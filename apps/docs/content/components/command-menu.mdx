@@ -1,0 +1,49 @@
+---
+title: CommandMenu
+description: "Unstable: a searchable list of places and actions in a dialog, opened with ⌘K (Ctrl+K elsewhere) or a button, as Figma's Command Menu draws it. Import it from @nizivo/react/unstable/command-menu."
+keyboard:
+  - keys: ⌘K, Ctrl+K
+    action: Opens the menu, also from a text field; again, closes it.
+  - keys: Typing
+    action: Filters the rows, case and accents ignored.
+  - keys: Arrow Down, Arrow Up
+    action: Move the active row; focus stays in the search field.
+  - keys: Enter
+    action: Runs the active row and closes the menu.
+  - keys: Escape
+    action: Clears the search first; on an empty search, closes the menu and returns focus.
+keyboardSource: React Aria Components 1.22.1 `Autocomplete`, `SearchField` and `Menu` (`_engines/react-aria/command-menu.client.tsx`) inside the Dialog; the shortcut from `@nizivo/react/hotkeys`. The browser lane (`test/browser/command-menu.spec.tsx`) checks ⌘K, the trigger, filtering, the arrow keys, Enter, Escape and the hotkeys policy.
+---
+
+## Unstable
+
+It ships at `@nizivo/react/unstable/command-menu`, outside the semver promise. Still to come:
+results that load as the reader types (async sources), a cap per group, a long list that renders
+only what shows, a spoken count of the results, and loading the menu only on the first ⌘K.
+
+## Static or interactive
+
+**Client.** It is the Dialog with React Aria's Autocomplete inside. The server renders the trigger;
+the dialog renders only after hydration, when it opens. [How to choose](/docs/guides/static-or-interactive/).
+
+## Parts
+
+`CommandMenu.Root` holds whether it is open and registers its shortcut (`hotkey`, `'mod+k'` by
+default; `null` for none). `CommandMenu.Trigger` opens it from the pointer and touch, and names the
+shortcut through `aria-keyshortcuts`. `CommandMenu.Popup` is the dialog; in it, `CommandMenu.Input`
+(the search row, with an "esc" hint), `CommandMenu.List` of `CommandMenu.Group`s with a heading and
+their `CommandMenu.Item`s, and `CommandMenu.Footer`, the keys as Figma shows them.
+
+## Rows
+
+An item is a link (`href`) or an action (`onAction`, in a client component); choosing it closes the
+menu. `icon` draws a 20 px mark before its text, `kind` says what it is at the row's end ("Product",
+"Order"), and `shortcut` draws its own Kbd and announces it. The search matches `textValue`, or the
+item's text when it is a string. `filter` on the Popup is `'contains'` (default) or `'startsWith'`.
+
+## Shortcuts
+
+The menu's shortcut is registered in `@nizivo/react/hotkeys`, one list for the whole page that a
+help dialog can read with `useHotkeys`. `useHotkey` and `registerHotkey` add your own: they never
+fire during an IME composition or while the reader types in a field, unless `allowInInputs`, and a
+single printable key with no modifier warns in development (WCAG 2.1.4).

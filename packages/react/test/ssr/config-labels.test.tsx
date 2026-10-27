@@ -42,6 +42,7 @@ const REACHED: Partial<Record<Key, string>> = {
   // SubmitButton, Button's client twin: Button itself is a server part and keeps per-instance labels
   button: 'src/form/submit-button.client.tsx',
   chipGroup: 'src/chip-group/chip-group.client.tsx',
+  commandMenu: 'src/unstable/command-menu/command-menu.client.tsx',
   dateRangePicker: 'src/unstable/date-range-picker/date-range-picker.client.tsx',
   dialog: 'src/dialog/dialog.client.tsx',
   drawer: 'src/drawer/drawer.client.tsx',

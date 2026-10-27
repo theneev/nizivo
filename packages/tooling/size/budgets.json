@@ -121,6 +121,10 @@
       "measured": 767,
       "limitKiB": 0.9
     },
+    "@nizivo/react/hotkeys": {
+      "measured": 1572,
+      "limitKiB": 1.7
+    },
     "@nizivo/react/i18n": {
       "measured": 208,
       "limitKiB": 0.3
@@ -154,7 +158,7 @@
       "limitKiB": 2.5
     },
     "@nizivo/react/locales/en-US": {
-      "measured": 873,
+      "measured": 918,
       "limitKiB": 1
     },
     "@nizivo/react/menu": {
@@ -329,6 +333,10 @@
       "measured": 2442,
       "limitKiB": 2.7
     },
+    "@nizivo/react/unstable/command-menu": {
+      "measured": 58773,
+      "limitKiB": 64
+    },
     "@nizivo/react/unstable/date-range-picker": {
       "measured": 62501,
       "limitKiB": 68
@@ -348,6 +356,10 @@
     "@nizivo/react own: _engines/react-aria/combobox.client": {
       "measured": 1614,
       "limitKiB": 1.7
+    },
+    "@nizivo/react own: _engines/react-aria/command-menu.client": {
+      "measured": 616,
+      "limitKiB": 0.7
     },
     "@nizivo/react own: _engines/react-aria/date-range-picker.client": {
       "measured": 762,
@@ -469,6 +481,10 @@
       "measured": 228,
       "limitKiB": 0.3
     },
+    "@nizivo/react own: hotkeys/hotkeys.client": {
+      "measured": 748,
+      "limitKiB": 0.9
+    },
     "@nizivo/react own: icon-button/icon-button.client": {
       "measured": 353,
       "limitKiB": 0.4
@@ -557,6 +573,10 @@
       "measured": 519,
       "limitKiB": 0.6
     },
+    "@nizivo/react own: unstable/command-menu/command-menu.client": {
+      "measured": 1526,
+      "limitKiB": 1.7
+    },
     "@nizivo/react own: unstable/date-range-picker/date-range-picker.client": {
       "measured": 2372,
       "limitKiB": 2.5
@@ -594,7 +614,7 @@
       "limitKiB": 0.8
     },
     "@nizivo/react/css/base.css": {
-      "measured": 1333,
+      "measured": 1353,
       "limitKiB": 1.4
     },
     "@nizivo/react/css/breadcrumb.css": {
@@ -628,6 +648,10 @@
     "@nizivo/react/css/combobox.css": {
       "measured": 1047,
       "limitKiB": 1.2
+    },
+    "@nizivo/react/css/command-menu.css": {
+      "measured": 860,
+      "limitKiB": 1
     },
     "@nizivo/react/css/container.css": {
       "measured": 185,
@@ -878,7 +902,7 @@
       "limitKiB": 0.5
     },
     "@nizivo/react/styles.css": {
-      "measured": 25835,
+      "measured": 25856,
       "limitKiB": 26
     },
     "@nizivo/tokens": {

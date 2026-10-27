@@ -47,8 +47,10 @@ function unquote(text: string): string {
   return text.replace(/\\(.)/g, '$1');
 }
 
+/** A component's folder: `src/alert`, or `src/unstable/command-menu` one level deeper. */
 function folder(file: string): string {
-  return file.split('/').slice(0, 2).join('/');
+  const parts = file.split('/');
+  return parts.slice(0, parts[1] === 'unstable' ? 3 : 2).join('/');
 }
 
 interface LabelsType {

@@ -1,6 +1,6 @@
 ---
 title: 'Static or interactive: choosing a component'
-description: Which Nizivo components ship client JavaScript, what makes them ship it, and when to use a static variant (IconButtonStatic, FieldStatic) instead of the normal component. A checklist, a table of all 77 components, the measured costs and worked examples.
+description: Which Nizivo components ship client JavaScript, what makes them ship it, and when to use a static variant (IconButtonStatic, FieldStatic) instead of the normal component. A checklist, a table of all 78 components, the measured costs and worked examples.
 ---
 
 Every Nizivo component renders its HTML on the server (an overlay's popup only while it is open). What differs is whether the browser also
@@ -185,6 +185,7 @@ module.
 | [ChoiceCard](/docs/components/choice-card/)             | client | Always: real radios in a client leaf; before hydration they still choose and submit                                                                  | None needed                                                   |
 | [Container](/docs/components/container/)                | server | Never                                                                                                                                                | None needed                                                   |
 | [Combobox](/docs/components/combobox/)                  | client | Always (React Aria; FieldScope too)                                                                                                                  | NativeSelect, for a short list without typing                 |
+| [CommandMenu](/docs/components/command-menu/)           | client | Always (React Aria in the Dialog; unstable, at `@nizivo/react/unstable/command-menu`)                                                                | None                                                          |
 | [CountUp](/docs/components/motion/)                     | client | Always (`@nizivo/react/motion`; the server renders the final value)                                                                                  | NumberValue, which does not count                             |
 | [DataView](/docs/components/data-view/)                 | server | Never                                                                                                                                                | None needed                                                   |
 | [DateRangePicker](/docs/components/date-range-picker/)  | client | Always (React Aria; unstable, at `@nizivo/react/unstable/date-range-picker`)                                                                         | None                                                          |

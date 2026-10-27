@@ -14,6 +14,8 @@
     .nz-button,
     .nz-checkbox-input,
     .nz-combobox-trigger,
+    .nz-command-menu-input,
+    .nz-command-menu-trigger,
     .nz-data-view-item-link,
     .nz-date-range-picker-day,
     .nz-date-range-picker-nav,
@@ -58,6 +60,7 @@
   }
   :where(
     .nz-combobox-item,
+    .nz-command-menu-item,
     .nz-menu-checkbox-item,
     .nz-menu-item,
     .nz-menu-radio-item,
@@ -67,6 +70,7 @@
   }
   :where(
     .nz-combobox-item,
+    .nz-command-menu-item,
     .nz-menu-checkbox-item,
     .nz-menu-item,
     .nz-menu-radio-item,
@@ -113,6 +117,9 @@
     .nz-choice-card,
     .nz-combobox-item,
     .nz-combobox-trigger,
+    .nz-command-menu-input,
+    .nz-command-menu-item,
+    .nz-command-menu-trigger,
     .nz-data-view-item-link,
     .nz-date-range-picker-day,
     .nz-date-range-picker-nav,

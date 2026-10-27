@@ -1,0 +1,22 @@
+{
+  "name": "command-menu",
+  "status": "unstable",
+  "tier": "own",
+  "engine": "react-aria",
+  "parts": ["Root", "Trigger", "Popup", "Input", "List", "Group", "Item", "Footer"],
+  "interactive": ["command-menu-trigger", "command-menu-input", "command-menu-item"],
+  "focusTarget": {
+    "command-menu-trigger": "self",
+    "command-menu-input": "self",
+    "command-menu-item": "engine"
+  },
+  "stateIndicator": [],
+  "cssDeps": ["base", "dialog", "kbd"],
+  "variants": {},
+  "figma": {
+    "canonical": ["755:889"],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": ["7275:14764"]
+  }
+}

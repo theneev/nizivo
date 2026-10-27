@@ -21,6 +21,8 @@ catalog:
   # Dates for the DateRangePicker (§16.3): ISO plain dates in, React Aria's CalendarDate inside;
   # the version React Aria depends on, so the two dedupe.
   '@internationalized/date': ^3.12.4
+  # The hotkeys matcher (§17 G18, gap report A D19): zero dependencies, MIT; caret by design.
+  tinykeys: ^4.0.1
   # The hooks Tooltip adapter's trigger state (§9.4, D-cc); the version react-aria itself depends on,
   # so the two dedupe. A devDependency of @nizivo/react until that adapter ships.
   react-stately: ^3.51.0

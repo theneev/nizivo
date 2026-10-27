@@ -191,10 +191,12 @@ function components(): Component[] {
     const interactive = Array.isArray(json['interactive'])
       ? json['interactive'].filter((s): s is string => typeof s === 'string')
       : [];
-    // a component that composes the Popover (its sheet in cssDeps: the DateRangePicker) opens one
-    // from its trigger too, so its open state is shot as an overlay's
+    // a component that composes the Popover or the Dialog (its sheet in cssDeps: the DateRangePicker,
+    // the CommandMenu) opens one from its trigger too, so its open state is shot as an overlay's
+    const deps = Array.isArray(json['cssDeps']) ? json['cssDeps'] : [];
     const composesPopover =
-      Array.isArray(json['cssDeps']) && json['cssDeps'].includes('popover') && name !== 'popover';
+      (deps.includes('popover') || deps.includes('dialog')) &&
+      !['popover', 'dialog'].includes(name);
     found.push({
       name,
       example,

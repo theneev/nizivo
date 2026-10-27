@@ -147,6 +147,10 @@
       "types": "./dist/heading/index.d.ts",
       "default": "./dist/heading/index.js"
     },
+    "./hotkeys": {
+      "types": "./dist/hotkeys/index.d.ts",
+      "default": "./dist/hotkeys/index.js"
+    },
     "./i18n": {
       "types": "./dist/i18n/index.d.ts",
       "default": "./dist/i18n/index.js"
@@ -355,6 +359,10 @@
       "types": "./dist/trend-card/index.d.ts",
       "default": "./dist/trend-card/index.js"
     },
+    "./unstable/command-menu": {
+      "types": "./dist/unstable/command-menu/index.d.ts",
+      "default": "./dist/unstable/command-menu/index.js"
+    },
     "./unstable/date-range-picker": {
       "types": "./dist/unstable/date-range-picker/index.d.ts",
       "default": "./dist/unstable/date-range-picker/index.js"
@@ -374,6 +382,7 @@
     "./css/chip-group.css": "./dist/css/chip-group.css",
     "./css/choice-card.css": "./dist/css/choice-card.css",
     "./css/combobox.css": "./dist/css/combobox.css",
+    "./css/command-menu.css": "./dist/css/command-menu.css",
     "./css/container.css": "./dist/css/container.css",
     "./css/data-view.css": "./dist/css/data-view.css",
     "./css/date-range-picker.css": "./dist/css/date-range-picker.css",
@@ -459,7 +468,8 @@
     "@internationalized/date": "catalog:",
     "@nizivo/tokens": "workspace:*",
     "react-aria": "catalog:",
-    "react-aria-components": "catalog:"
+    "react-aria-components": "catalog:",
+    "tinykeys": "catalog:"
   },
   "devDependencies": {
     "@nizivo/stylelint-config": "workspace:*",

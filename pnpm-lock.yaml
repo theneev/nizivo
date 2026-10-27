@@ -320,6 +320,9 @@ catalogs:
     tailwindcss:
       specifier: 4.3.3
       version: 4.3.3
+    tinykeys:
+      specifier: ^4.0.1
+      version: 4.0.1
     tokens-bruecke:
       specifier: 3.18.0
       version: 3.18.0
@@ -610,6 +613,9 @@ importers:
       react-aria-components:
         specifier: 'catalog:'
         version: 1.22.1(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+      tinykeys:
+        specifier: 'catalog:'
+        version: 4.0.1
     devDependencies:
       '@nizivo/stylelint-config':
         specifier: workspace:*
@@ -4955,6 +4961,10 @@ packages:
   tinyglobby@0.2.17:
     resolution: {integrity: sha512-wXR/dYpcqKmfWpEdZjiKJOwCNFndD0DMnrW/cYjVGttEkBfVgcLFHoNrlj47mjOVic9yyNu65alsgF4NQyTa2g==}
     engines: {node: '>=12.0.0'}
+
+  tinykeys@4.0.1:
+    resolution: {integrity: sha512-rClxhLQl+I5UMB5Ny7sfnZqDNa51u7h7h4gJV2UWslwADHEw75IuVPCnWrpO/otM7jHrHpwcZdRHd+//SiI55A==}
+    engines: {node: '>=22'}
 
   tinypool@2.2.0:
     resolution: {integrity: sha512-jBrmx4lYmaC9k/mgPbylxs7kBUxHtD8256up+HjLaDFfXScKJQyil+SWXSvhAtT7XHo+yTVlpB81PGmHP8oLSQ==}
@@ -9443,6 +9453,8 @@ snapshots:
     dependencies:
       fdir: 6.5.0(picomatch@4.0.7)
       picomatch: 4.0.7
+
+  tinykeys@4.0.1: {}
 
   tinypool@2.2.0: {}
 

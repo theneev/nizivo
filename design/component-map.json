@@ -264,6 +264,14 @@
         "size": ["sm", "md", "lg"]
       }
     },
+    "755:889": {
+      "component": "command-menu",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/command-menu",
+      "export": "CommandMenu",
+      "parts": ["Root", "Trigger", "Popup", "Input", "List", "Group", "Item", "Footer"],
+      "props": {}
+    },
     "755:961": {
       "component": "tabs",
       "role": "ghost",

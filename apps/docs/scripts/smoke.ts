@@ -161,6 +161,8 @@ const CLIENT_PAGES: Record<string, string[]> = {
   '/docs/components/combobox/': ['combobox-popup', 'willValidate'],
   // the Popover's popup holds the calendar; FieldScope for the Field in its examples
   '/docs/components/date-range-picker/': ['popover-popup', 'willValidate'],
+  // the Dialog's popup holds the search and the rows; menu-popup is in its own nz-command-menu-popup
+  '/docs/components/command-menu/': ['dialog-popup', 'menu-popup'],
   // The shell (week 20): TopBar and MobileTopBar are server parts whose examples put a SearchField
   // and IconButtons in their slots; MobileTabBar renders its inset island and More's Drawer sheet,
   // and AppShell's example holds all of them.
