@@ -1,0 +1,101 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/comment.css (Figma Comment 7397:64), UNSTABLE. 8 px between the header (a 32 px
+   avatar, the Label/M Strong name and the Body/S time, 10 px apart), the Body/M text and the
+   actions, both 42 px in (the avatar and its gap). The actions are Label/S text/secondary with a
+   16 px mark, 16 px apart; a liked heart fills in icon/critical. The time is text/secondary where
+   Figma draws text/tertiary (AA). Replies sit 42 px in, 16 px down. */
+@layer nz.components {
+  .nz-comment {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-2);
+  }
+
+  .nz-comment-header {
+    display: flex;
+    align-items: center;
+    gap: calc(var(--nz-space-2) + var(--nz-space-0-5));
+  }
+
+  .nz-comment-avatar {
+    display: inline-flex;
+    flex: none;
+  }
+
+  .nz-comment-author {
+    color: var(--nz-text-primary);
+    font: var(--nz-font-label-m-strong);
+  }
+
+  .nz-comment-time {
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-body-s);
+  }
+
+  .nz-comment-body,
+  .nz-comment-actions,
+  .nz-comment-replies {
+    padding-inline-start: calc(var(--nz-space-8) + var(--nz-space-2) + var(--nz-space-0-5));
+  }
+
+  .nz-comment-body {
+    color: var(--nz-text-primary);
+    font: var(--nz-font-body-m);
+  }
+
+  .nz-comment-body > :first-child {
+    margin-block-start: 0;
+  }
+
+  .nz-comment-body > :last-child {
+    margin-block-end: 0;
+  }
+
+  .nz-comment-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--nz-space-4);
+  }
+
+  .nz-comment-action {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--nz-space-1-5);
+    min-block-size: var(--nz-space-6);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: var(--nz-radius-xs);
+    background: transparent;
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-label-s);
+    cursor: pointer;
+
+    @media (hover: hover) {
+      &:hover {
+        color: var(--nz-text-primary);
+      }
+    }
+  }
+
+  .nz-comment-action-icon {
+    display: inline-flex;
+    font-size: var(--nz-size-icon-sm);
+  }
+
+  .nz-comment-action[aria-pressed='true'] .nz-comment-action-icon {
+    color: var(--nz-icon-critical);
+
+    & svg {
+      fill: currentColor;
+    }
+  }
+
+  .nz-comment-replies {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-4);
+    margin-block-start: var(--nz-space-2);
+  }
+}

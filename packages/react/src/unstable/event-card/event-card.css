@@ -1,0 +1,84 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/event-card.css (Figma Event Card 7397:145), UNSTABLE. bg/surface in a
+   border/subtle edge, radius 24, padded 16 with 16 px between the date block (72 by 80, radius/lg,
+   bg/brand: the weekday in Label/S over the day in Heading/H1, text/on-brand) and the details (the
+   Label/L title, the Body/S time with a 14 px clock, the attendees, 6 px apart). */
+@layer nz.components {
+  .nz-event-card {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--nz-space-4);
+    padding: var(--nz-space-4);
+    border: var(--nz-border-width-default) solid var(--nz-border-subtle);
+    border-radius: calc(var(--nz-radius-xl) + var(--nz-space-1));
+    background: var(--nz-bg-surface);
+  }
+
+  .nz-event-card-date {
+    display: flex;
+    flex: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    inline-size: calc(var(--nz-space-10) * 1.8);
+    block-size: calc(var(--nz-space-10) * 2);
+    border-radius: var(--nz-radius-lg);
+    background: var(--nz-bg-brand);
+    color: var(--nz-text-on-brand);
+  }
+
+  .nz-event-card-month {
+    font: var(--nz-font-label-s);
+    text-transform: uppercase;
+  }
+
+  .nz-event-card-day {
+    font: var(--nz-font-heading-h1);
+    letter-spacing: var(--nz-tracking-heading-h1);
+  }
+
+  .nz-event-card-details {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: var(--nz-space-1-5);
+    min-inline-size: 0;
+  }
+
+  .nz-event-card-title {
+    margin: 0;
+    color: var(--nz-text-primary);
+    font: var(--nz-font-label-l);
+    letter-spacing: var(--nz-tracking-label-l);
+  }
+
+  .nz-event-card-when,
+  .nz-event-card-people {
+    display: flex;
+    align-items: center;
+    gap: var(--nz-space-1-5);
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-body-s);
+  }
+
+  .nz-event-card-people {
+    gap: var(--nz-space-2);
+  }
+
+  .nz-event-card-icon {
+    display: inline-flex;
+    flex: none;
+    font-size: 0.875rem;
+  }
+
+  @media (forced-colors: active) {
+    .nz-event-card {
+      border-color: CanvasText;
+    }
+
+    .nz-event-card-date {
+      border: 1px solid CanvasText;
+    }
+  }
+}

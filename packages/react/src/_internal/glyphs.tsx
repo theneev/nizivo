@@ -12,8 +12,9 @@
 // (PasswordInput's show and hide marks) are Lucide's own, as are the AI kit's `sparkles` (the AI
 // mark), `globe` and `file-text` (SourceCard's web and file marks), `thumbs-up` and `thumbs-down`
 // (FeedbackBar's votes), `wand-sparkles` (ToolCallCard's mark), `circle-stop` (ResponseBlock's Stop),
-// `refresh-cw` (its Retry), `mic` (VoiceOrb's start) and `star` (Rating's); `circle-alert`
-// (ResponseBlock's error mark) and `arrow-up` (PromptComposer's send) are Feather-derived.
+// `refresh-cw` (its Retry), `mic` (VoiceOrb's start), `star` (Rating's), and `heart` and
+// `message-circle` (Comment's Like and Reply); `circle-alert` (ResponseBlock's error mark),
+// `arrow-up` (PromptComposer's send) and `clock` (EventCard's time) are Feather-derived.
 //
 // One export per glyph, so an entry carries only the paths it draws (a name → paths table kept every
 // glyph in every entry that drew one: about 160 B gzip on the Dialog entry).
@@ -46,7 +47,10 @@ export type GlyphName =
   | 'refresh-cw'
   | 'mic'
   | 'arrow-up'
-  | 'star';
+  | 'star'
+  | 'heart'
+  | 'message-circle'
+  | 'clock';
 
 function svg(name: GlyphName, paths: ReactNode): JSX.Element {
   return (
@@ -312,4 +316,28 @@ export const StarGlyph = (): JSX.Element =>
   svg(
     'star',
     <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" />,
+  );
+
+/** Lucide's `heart`: Comment's Like, filled by CSS when pressed. */
+export const HeartGlyph = (): JSX.Element =>
+  svg(
+    'heart',
+    <path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5" />,
+  );
+
+/** Lucide's `message-circle`: Comment's Reply. */
+export const MessageCircleGlyph = (): JSX.Element =>
+  svg(
+    'message-circle',
+    <path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719" />,
+  );
+
+/** Lucide's `clock` (Feather-derived): EventCard's time. */
+export const ClockGlyph = (): JSX.Element =>
+  svg(
+    'clock',
+    <>
+      <circle cx="12" cy="12" r="10" />
+      <path d="M12 6v6l4 2" />
+    </>,
   );

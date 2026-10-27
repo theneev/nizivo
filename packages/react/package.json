@@ -383,9 +383,17 @@
       "types": "./dist/unstable/command-menu/index.d.ts",
       "default": "./dist/unstable/command-menu/index.js"
     },
+    "./unstable/comment": {
+      "types": "./dist/unstable/comment/index.d.ts",
+      "default": "./dist/unstable/comment/index.js"
+    },
     "./unstable/date-range-picker": {
       "types": "./dist/unstable/date-range-picker/index.d.ts",
       "default": "./dist/unstable/date-range-picker/index.js"
+    },
+    "./unstable/event-card": {
+      "types": "./dist/unstable/event-card/index.d.ts",
+      "default": "./dist/unstable/event-card/index.js"
     },
     "./unstable/feedback-bar": {
       "types": "./dist/unstable/feedback-bar/index.d.ts",
@@ -406,6 +414,10 @@
     "./unstable/notification-item": {
       "types": "./dist/unstable/notification-item/index.d.ts",
       "default": "./dist/unstable/notification-item/index.js"
+    },
+    "./unstable/profile-card": {
+      "types": "./dist/unstable/profile-card/index.d.ts",
+      "default": "./dist/unstable/profile-card/index.js"
     },
     "./unstable/prompt-composer": {
       "types": "./dist/unstable/prompt-composer/index.d.ts",
@@ -468,6 +480,7 @@
     "./css/citation.css": "./dist/css/citation.css",
     "./css/combobox.css": "./dist/css/combobox.css",
     "./css/command-menu.css": "./dist/css/command-menu.css",
+    "./css/comment.css": "./dist/css/comment.css",
     "./css/container.css": "./dist/css/container.css",
     "./css/data-view.css": "./dist/css/data-view.css",
     "./css/date-range-picker.css": "./dist/css/date-range-picker.css",
@@ -475,6 +488,7 @@
     "./css/dialog.css": "./dist/css/dialog.css",
     "./css/drawer.css": "./dist/css/drawer.css",
     "./css/empty-state.css": "./dist/css/empty-state.css",
+    "./css/event-card.css": "./dist/css/event-card.css",
     "./css/feedback-bar.css": "./dist/css/feedback-bar.css",
     "./css/field.css": "./dist/css/field.css",
     "./css/fieldset.css": "./dist/css/fieldset.css",
@@ -509,6 +523,7 @@
     "./css/password-input.css": "./dist/css/password-input.css",
     "./css/pointer-fx.css": "./dist/css/pointer-fx.css",
     "./css/popover.css": "./dist/css/popover.css",
+    "./css/profile-card.css": "./dist/css/profile-card.css",
     "./css/progress-bar.css": "./dist/css/progress-bar.css",
     "./css/progress-ring.css": "./dist/css/progress-ring.css",
     "./css/prompt-composer.css": "./dist/css/prompt-composer.css",

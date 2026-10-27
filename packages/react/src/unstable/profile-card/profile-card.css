@@ -1,0 +1,116 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/profile-card.css (Figma Profile Card 7397:114), UNSTABLE. bg/surface in a
+   border/subtle edge, radius/2xl, padded 20, centred, 16 px between: a 96 px cover (radius 18; the
+   Aurora shader's colours as CSS gradients on bg/brand-muted), a 56 px avatar in a 4 px bg/surface
+   ring, the Heading/H3 name, the Body/S text/secondary description, three counts on bg/subtle
+   (radius 14, padded 10: the value in Label/M Strong over the label in Body/S) and the action. */
+@layer nz.components {
+  /* Figma's 320 px at least, unless the container is narrower; it still stretches in a grid */
+  .nz-profile-card {
+    box-sizing: border-box;
+    min-inline-size: min(100%, 20rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--nz-space-4);
+    padding: var(--nz-space-5);
+    border: var(--nz-border-width-default) solid var(--nz-border-subtle);
+    border-radius: var(--nz-radius-2xl);
+    background: var(--nz-bg-surface);
+    text-align: center;
+  }
+
+  .nz-profile-card-cover {
+    display: block;
+    align-self: stretch;
+    block-size: calc(var(--nz-space-10) * 2.4);
+    overflow: hidden;
+    border-radius: calc(var(--nz-radius-xs) * 4.5);
+    background:
+      radial-gradient(
+        60% 90% at 22% 30%,
+        color-mix(in oklab, var(--nz-bg-accent) 55%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(
+        50% 80% at 80% 40%,
+        color-mix(in oklab, var(--nz-bg-accent) 40%, transparent),
+        transparent 70%
+      ),
+      linear-gradient(180deg, var(--nz-bg-canvas), var(--nz-bg-brand-muted));
+  }
+
+  .nz-profile-card-cover > * {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  .nz-profile-card-avatar {
+    display: inline-flex;
+    border: var(--nz-space-1) solid var(--nz-bg-surface);
+    border-radius: var(--nz-radius-full);
+    background: var(--nz-bg-surface);
+  }
+
+  .nz-profile-card-name {
+    margin: 0;
+    color: var(--nz-text-primary);
+    font: var(--nz-font-heading-h3);
+    letter-spacing: var(--nz-tracking-heading-h3);
+  }
+
+  .nz-profile-card-description {
+    margin: 0;
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-body-s);
+  }
+
+  .nz-profile-card-stats {
+    display: flex;
+    align-self: stretch;
+    gap: var(--nz-space-2);
+    margin: 0;
+  }
+
+  .nz-profile-card-stat {
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 2px;
+    min-inline-size: 0;
+    padding-block: calc(var(--nz-space-2) + var(--nz-space-0-5));
+    border-radius: calc(var(--nz-radius-xs) * 3.5);
+    background: var(--nz-bg-subtle);
+  }
+
+  .nz-profile-card-stat-label {
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-body-s);
+  }
+
+  .nz-profile-card-stat-value {
+    margin: 0;
+    color: var(--nz-text-primary);
+    font: var(--nz-font-label-m-strong);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .nz-profile-card-action {
+    display: grid;
+    align-self: stretch;
+  }
+
+  @media (forced-colors: active) {
+    .nz-profile-card {
+      border-color: CanvasText;
+    }
+
+    .nz-profile-card-stat {
+      border: 1px solid CanvasText;
+    }
+  }
+}

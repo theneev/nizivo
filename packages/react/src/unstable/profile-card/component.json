@@ -1,0 +1,15 @@
+{
+  "name": "profile-card",
+  "status": "unstable",
+  "tier": "server",
+  "exports": ["ProfileCard"],
+  "interactive": [],
+  "cssDeps": ["base"],
+  "variants": {},
+  "figma": {
+    "canonical": ["7397:114"],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": ["7389:78"]
+  }
+}

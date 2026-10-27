@@ -1,0 +1,22 @@
+---
+title: ProfileCard
+description: 'Unstable: a person at a glance, a cover, the avatar, the name as the heading, what they do, a few counts and one action. Import it from @nizivo/react/unstable/profile-card.'
+---
+
+## Static or interactive
+
+**Server.** No client JavaScript of its own; the action you pass may have some.
+[How to choose](/docs/guides/static-or-interactive/).
+
+## Content
+
+`name` is the card's heading (`headingLevel`, 3 by default), `avatar` an xl
+[Avatar](/docs/components/avatar/), decorative since the name follows, and `description` what
+they do. `stats` (up to three) is a description list, each read as "Posts, 142". `action` is one
+full-width action: for Follow, a [Button](/docs/components/button/) with `aria-pressed` that
+becomes "Following".
+
+## The cover
+
+The design's cover is a shader. Shaders wait for a later package, so the cover is drawn with CSS
+gradients; `cover` takes a picture in its place, hidden from assistive technology.

@@ -1,0 +1,16 @@
+---
+title: Comment
+description: 'Unstable: one comment in a discussion, who, when and what, with Like and Reply buttons and its replies indented under it. Import it from @nizivo/react/unstable/comment.'
+---
+
+## Static or interactive
+
+**Server.** No client JavaScript: Like and Reply call `onLike` and `onReply`.
+[How to choose](/docs/guides/static-or-interactive/).
+
+## Content
+
+`author` names the writer and `avatar` takes an [Avatar](/docs/components/avatar/), decorative
+since the name is printed beside it. `time` is best a `<time>` with the full date as its `title`.
+`likes` adds Like, a toggle (`liked`) named with its count ("Like, 12"); `replyable` adds Reply.
+`replies` holds more Comments, indented under this one. Each comment is an `<article>`.

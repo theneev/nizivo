@@ -1,13 +1,18 @@
-// v0.5's first parts in a browser (ARCHITECTURE.md §21.4a, D-do): Tag (a pressed toggle with a
-// check, a named remove button, sibling buttons), Rating (one image named in words), NotificationItem
-// (one link that says "Unread") and FileItem (a named progress bar, buttons named after the file).
+// v0.5's parts in a browser (ARCHITECTURE.md §21.4a, D-do): Tag (a pressed toggle with a check, a
+// named remove button, sibling buttons), Rating (one image named in words), NotificationItem (one
+// link that says "Unread"), FileItem (a named progress bar, buttons named after the file), Comment
+// (Like named with its count), EventCard (the full date for screen readers) and ProfileCard (a
+// heading and a description list).
 import { useState, type JSX, type ReactNode } from 'react';
 import { createRoot, hydrateRoot, type Root } from 'react-dom/client';
 import { renderToString } from 'react-dom/server';
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import { userEvent } from 'vitest/browser';
+import { Comment } from '../../src/unstable/comment/comment';
+import { EventCard } from '../../src/unstable/event-card/event-card';
 import { FileItem } from '../../src/unstable/file-item/file-item';
 import { NotificationItem } from '../../src/unstable/notification-item/notification-item';
+import { ProfileCard } from '../../src/unstable/profile-card/profile-card';
 import { Rating } from '../../src/unstable/rating/rating';
 import { Tag } from '../../src/unstable/tag/tag';
 
@@ -20,10 +25,13 @@ const STYLES = import.meta.glob(
     '../../src/unstable/rating/rating.css',
     '../../src/unstable/notification-item/notification-item.css',
     '../../src/unstable/file-item/file-item.css',
+    '../../src/unstable/comment/comment.css',
+    '../../src/unstable/event-card/event-card.css',
+    '../../src/unstable/profile-card/profile-card.css',
   ],
   { query: '?raw', import: 'default', eager: true },
 );
-if (Object.keys(STYLES).length !== 7)
+if (Object.keys(STYLES).length !== 10)
   throw new Error('a stylesheet is missing; build @nizivo/tokens');
 const style = document.createElement('style');
 style.textContent = Object.values(STYLES).join('\n');
@@ -156,5 +164,53 @@ describe('FileItem', () => {
     await userEvent.click(cancel);
     expect(onCancel).toHaveBeenCalledTimes(1);
     expect(container.textContent).toContain('Uploaded');
+  });
+});
+
+describe('Comment', () => {
+  test('Like is a toggle named with its count; replies nest as articles', async () => {
+    const onLike = vi.fn<() => void>();
+    const container = await hydrate(
+      <Comment
+        author="Priya"
+        likes={1208}
+        onLike={onLike}
+        replyable
+        replies={<Comment author="Jonah">Yes.</Comment>}
+      >
+        Try the sage glaze.
+      </Comment>,
+    );
+    const [like, reply] = [
+      ...container.querySelectorAll<HTMLElement>('[data-slot="comment-action"]'),
+    ];
+    expect(like?.getAttribute('aria-label')).toBe('Like, 1,208');
+    expect(like?.getAttribute('aria-pressed')).toBe('false');
+    expect(reply?.textContent).toBe('Reply');
+    expect(container.querySelectorAll('article article')).toHaveLength(1);
+  });
+});
+
+describe('EventCard', () => {
+  test('the date block is hidden; the full date is a time element', async () => {
+    const container = await hydrate(
+      <EventCard title="Live drop" date="2026-11-16T18:00:00Z" timeZone="UTC" when="18:00" />,
+    );
+    expect(one(container, '.nz-event-card-date').getAttribute('aria-hidden')).toBe('true');
+    const time = one(container, 'time');
+    expect(time.getAttribute('datetime')).toBe('2026-11-16T18:00:00.000Z');
+    expect(time.textContent).toBe('Monday, November 16, 2026');
+    expect(one(container, 'h3').textContent).toBe('Live drop');
+  });
+});
+
+describe('ProfileCard', () => {
+  test('the name is the heading; the counts are a description list', async () => {
+    const container = await hydrate(
+      <ProfileCard name="Alex Rivera" stats={[{ label: 'Posts', value: '142' }]} />,
+    );
+    expect(one(container, 'h3').textContent).toBe('Alex Rivera');
+    expect(one(container, 'dt').textContent).toBe('Posts');
+    expect(one(container, 'dd').textContent).toBe('142');
   });
 });

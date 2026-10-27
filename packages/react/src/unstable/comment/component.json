@@ -1,0 +1,15 @@
+{
+  "name": "comment",
+  "status": "unstable",
+  "tier": "server",
+  "exports": ["Comment"],
+  "interactive": ["comment-action"],
+  "cssDeps": ["base"],
+  "variants": {},
+  "figma": {
+    "canonical": ["7397:64"],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": []
+  }
+}

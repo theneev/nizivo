@@ -815,6 +815,27 @@
         "variant": ["filled", "empty"]
       }
     },
+    "7397:64": {
+      "component": "comment",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/comment",
+      "export": "Comment",
+      "props": {}
+    },
+    "7397:114": {
+      "component": "profile-card",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/profile-card",
+      "export": "ProfileCard",
+      "props": {}
+    },
+    "7397:145": {
+      "component": "event-card",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/event-card",
+      "export": "EventCard",
+      "props": {}
+    },
     "7409:25": {
       "component": "ai-badge",
       "role": "canonical",

@@ -20,6 +20,7 @@
     "nz-command-menu-input",
     "nz-command-menu-item",
     "nz-command-menu-trigger",
+    "nz-comment-action",
     "nz-data-view-item-link",
     "nz-date-range-picker-day",
     "nz-date-range-picker-nav",

@@ -102,6 +102,9 @@ const COMPONENTS = [
   'rating',
   'notification-item',
   'file-item',
+  'comment',
+  'event-card',
+  'profile-card',
 ] as const;
 type Name = (typeof COMPONENTS)[number];
 
@@ -259,6 +262,9 @@ const entries = {
   rating: () => import('../../src/unstable/rating/index'),
   'notification-item': () => import('../../src/unstable/notification-item/index'),
   'file-item': () => import('../../src/unstable/file-item/index'),
+  comment: () => import('../../src/unstable/comment/index'),
+  'event-card': () => import('../../src/unstable/event-card/index'),
+  'profile-card': () => import('../../src/unstable/profile-card/index'),
   'bulk-action-bar': () => import('../../src/bulk-action-bar/index'),
   'data-view': () => import('../../src/data-view/index'),
   surface: () => import('../../src/surface/index'),
@@ -332,6 +338,9 @@ const exampleModules = {
   'notification-item': () =>
     import('../../src/unstable/notification-item/notification-item.example'),
   'file-item': () => import('../../src/unstable/file-item/file-item.example'),
+  comment: () => import('../../src/unstable/comment/comment.example'),
+  'event-card': () => import('../../src/unstable/event-card/event-card.example'),
+  'profile-card': () => import('../../src/unstable/profile-card/profile-card.example'),
   'bulk-action-bar': () => import('../../src/bulk-action-bar/bulk-action-bar.example'),
   'data-view': () => import('../../src/data-view/data-view.example'),
   surface: () => import('../../src/surface/surface.example'),

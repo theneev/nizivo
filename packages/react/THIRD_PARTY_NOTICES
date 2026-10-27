@@ -33,8 +33,11 @@ Lucide icons:
   mic                (the VoiceOrb start mark)
   arrow-up           (the PromptComposer send mark)
   star               (the Rating stars)
+  heart              (the Comment Like mark)
+  message-circle     (the Comment Reply mark)
+  clock              (the EventCard time mark)
 
-Lucide's licence covers all twenty-seven:
+Lucide's licence covers all thirty:
 
 ISC License
 
@@ -56,8 +59,8 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 Feather (https://feathericons.com)
 
 chevron-right, circle-x (Feather's x-circle), info, x, check, minus, plus, search,
-calendar, ellipsis (Feather's more-horizontal), circle-alert (Feather's alert-circle) and arrow-up
-are on Lucide's list of icons derived from the Feather project, so their path data is also
+calendar, ellipsis (Feather's more-horizontal), circle-alert (Feather's alert-circle), arrow-up and
+clock are on Lucide's list of icons derived from the Feather project, so their path data is also
 under Feather's licence:
 
 The MIT License (MIT)

@@ -1,0 +1,19 @@
+---
+title: EventCard
+description: 'Unstable: a launch, a live session or a booking, a date block, the title, when and where, and who is going. Import it from @nizivo/react/unstable/event-card.'
+---
+
+## Static or interactive
+
+**Server.** No client JavaScript. [How to choose](/docs/guides/static-or-interactive/).
+
+## The date
+
+`date` is a Date or an ISO 8601 string. The block shows the weekday and the day; it is
+presentational, and the full date is a `<time datetime>` read with the details. `locale` formats it
+and `timeZone` sets the zone: pass one, so the server's date and the browser's agree.
+
+## Content
+
+`title` is the card's heading (`headingLevel`, 3 by default), `when` the time and place, and
+`attendees` who is going, best an [AvatarGroup](/docs/components/avatar/), followed by "going".

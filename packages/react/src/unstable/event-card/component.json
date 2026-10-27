@@ -1,0 +1,15 @@
+{
+  "name": "event-card",
+  "status": "unstable",
+  "tier": "server",
+  "exports": ["EventCard"],
+  "interactive": [],
+  "cssDeps": ["base"],
+  "variants": {},
+  "figma": {
+    "canonical": ["7397:145"],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": []
+  }
+}

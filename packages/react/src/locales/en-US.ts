@@ -46,6 +46,8 @@ import type { TagLabels } from '../unstable/tag/index';
 import type { RatingLabels } from '../unstable/rating/index';
 import type { NotificationItemLabels } from '../unstable/notification-item/index';
 import type { FileItemLabels } from '../unstable/file-item/index';
+import type { CommentLabels } from '../unstable/comment/index';
+import type { EventCardLabels } from '../unstable/event-card/index';
 import type { RankedListLabels } from '../ranked-list/index';
 import type { SearchFieldLabels } from '../search-field/index';
 import type { SidebarLabels } from '../sidebar/index';
@@ -102,6 +104,8 @@ export const enUS: {
   rating: RatingLabels;
   notificationItem: NotificationItemLabels;
   fileItem: FileItemLabels;
+  comment: CommentLabels;
+  eventCard: EventCardLabels;
   rankedList: RankedListLabels;
   searchField: SearchFieldLabels;
   sidebar: SidebarLabels;
@@ -225,6 +229,8 @@ export const enUS: {
     retry: 'Retry upload of {name}',
     done: 'Uploaded',
   },
+  comment: { like: 'Like, {count}', reply: 'Reply' },
+  eventCard: { going: 'going' },
   rankedList: { loading: 'Loading {label}', empty: 'No data', error: 'Could not load {label}' },
   searchField: { label: 'Search', clear: 'Clear search' },
   sidebar: { nav: 'Primary' },
