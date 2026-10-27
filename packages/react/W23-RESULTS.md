@@ -1,9 +1,10 @@
 # Week 23 results (v0.3 week 1: QuantityStepper, NumberField, Combobox)
 
 Recorded on 2026-10-27 (ARCHITECTURE.md §21.3 "Week 23 status", §23.3 M65 and M66, §23.4 D-cv to
-D-cx). The first three of v0.3's new components, in the order M65 set. None has a Figma component,
-so each is built on the existing tokens (Input's box, Select's popup and rows) as a builder default,
-for Dayitava to review from the renders. Every number below comes from a command run on the
+D-cx). The first three of v0.3's new components, in the order M65 set. Built on the existing tokens
+(Input's box, Select's popup and rows) as builder defaults, for Dayitava to review from the renders.
+Correction (2026-10-27): QuantityStepper does have a Figma component, Number Stepper 7367:377, which
+this build missed; it now follows it (W24-RESULTS.md, "Figma cross-check"). Every number below comes from a command run on the
 maintainer's Mac.
 
 ## What was built
@@ -69,7 +70,8 @@ new baselines; charts 164 (160 and 4). No existing baseline moved.
 
 ## For the maintainer
 
-1. **For Dayitava:** the three components have no Figma component. Their renders (light, dark,
+1. **For Dayitava:** NumberField and Combobox have no Figma component (QuantityStepper does; see the
+   correction above). Their renders (light, dark,
    forced colours, at rest, hovered, pressed, focused, and Combobox open) are the 260 new baselines;
    a review page like the dark one can collect the verdicts.
 2. **Found, not fixed:** Select's trigger carries React Aria's description and error slot ids in

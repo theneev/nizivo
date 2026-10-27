@@ -2,8 +2,9 @@
 
 Recorded on 2026-10-27 (ARCHITECTURE.md §21.3 "Week 24 status", §8.3 rule 2, §23.4 D-cy to
 D-da). The next three of v0.3's new components, in the order M65 set, all server parts with no
-client JavaScript of their own. None has a Figma component (PageIndicator follows Figma's media
-pager frames), so each is built on the existing tokens for Dayitava to review from the renders.
+client JavaScript of their own, built on the existing tokens for Dayitava to review from the
+renders. Accordion has a Figma component, Accordion Item 7370:88, which the first build missed; it
+now follows it ("Figma cross-check" below). PageIndicator follows Figma's media pager frames.
 Every number below comes from a command run on the maintainer's Mac.
 
 ## What was built
@@ -62,6 +63,28 @@ All 25 release lanes on the week's code. On the first run the four browser lanes
    baselines; week 1's review page has the first three.
 3. **Sizes with little room:** the table-selection island (25 B), `./dialog` (107 B under its plan cap).
    The next change to either needs a limit decision.
+
+## Figma cross-check (2026-10-27)
+
+The maintainer asked for every page of the Figma file to be checked for the six new components.
+All 22 Nizivo pages were read again (read-only):
+
+| Component       | In Figma                                                              | Now                                                                                                                                                                                  |
+| --------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| QuantityStepper | Number Stepper 7367:377 (02 Actions & Forms)                          | Follows it (D-cv): 40 x 40 buttons, Label/M, 136 px at md, "Decrease quantity" / "Increase quantity"                                                                                 |
+| Accordion       | Accordion Item 7370:88 (11 Data Display)                              | Follows it (D-cy): 52 px trigger, no inline padding, no top line, no hover fill                                                                                                      |
+| Combobox        | No component; Select Menu 7356:406 and Select Option 7356:401         | Already follows them (M36), in Input's box                                                                                                                                           |
+| NumberField     | None                                                                  | Unchanged; its step buttons stay 24 px inside the box, unlike the Number Stepper's (for the maintainer)                                                                              |
+| PageIndicator   | Only the storefront's Pager frames 7275:20313, 7275:20962, 7275:21014 | Unchanged, with D-cz's deltas: a longer current dot, border/strong for the others (Figma: border/default, 1.2:1), the bg/code chip over media (Figma: white at 80 %, 1.08:1 in dark) |
+| BulkActionBar   | None (Table Row 7371:89 has the Selected state it sits over)          | Unchanged                                                                                                                                                                            |
+
+Figma's Accordion Item description asks for a `<button>` in a heading and a `duration/base` height
+animation; the build keeps `<summary>` and no animation (D-cy). 148 baselines re-recorded (the two
+components' examples in four modes); the two browser specs pass in Chromium, Firefox and WebKit
+(QuantityStepper's padding-press case now presses the box's border, as the box has no padding).
+
+Sizes after: `css/quantity-stepper.css` 611 B (0.6 KiB limit, 3 B left), `css/accordion.css` 530 B,
+`./locales/en-US` 739 B, own `quantity-stepper.client` 1,307 B, `styles.css` 25,274 B. No limit moved.
 
 ## Unverified
 
