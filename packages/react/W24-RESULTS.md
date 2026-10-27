@@ -80,7 +80,7 @@ All 22 Nizivo pages were read again (read-only):
 
 Figma's Accordion Item description asks for a `<button>` in a heading and a `duration/base` height
 animation; the build keeps `<summary>` and no animation (D-cy), as the maintainer confirmed on 2026-10-27 ("keep
-details"). 148 baselines re-recorded (the two
+details"). 148 baselines re-recorded, and 32 of NumberField's for its step buttons (the two
 components' examples in four modes); the two browser specs pass in Chromium, Firefox and WebKit
 (QuantityStepper's padding-press case now presses the box's border, as the box has no padding).
 
