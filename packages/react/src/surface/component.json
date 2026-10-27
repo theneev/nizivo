@@ -1,0 +1,17 @@
+{
+  "name": "surface",
+  "status": "stable",
+  "tier": "server",
+  "exports": ["Surface"],
+  "interactive": [],
+  "cssDeps": ["base"],
+  "variants": {
+    "material": ["solid", "glass"]
+  },
+  "figma": {
+    "canonical": [],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": ["7275:19634", "7392:80"]
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "pointer-fx",
+  "status": "stable",
+  "tier": "own",
+  "exports": ["PointerFx", "usePointerFx"],
+  "parts": [],
+  "cssDeps": ["base"],
+  "variants": {
+    "effect": ["tilt", "magnetic"]
+  },
+  "figma": {
+    "canonical": [],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": ["7275:19633"]
+  }
+}

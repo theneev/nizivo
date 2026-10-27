@@ -364,6 +364,14 @@
       "parts": ["Root", "Item"],
       "props": {}
     },
+    "764:3483": {
+      "component": "data-view",
+      "role": "canonical",
+      "import": "@nizivo/react/data-view",
+      "export": "DataView",
+      "parts": ["Root", "Table", "List", "Item", "ItemLink"],
+      "props": {}
+    },
     "7275:11244": {
       "component": "button",
       "role": "canonical",

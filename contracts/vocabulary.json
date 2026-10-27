@@ -259,6 +259,18 @@
       "meaning": "Current presentation"
     },
     {
+      "name": "data-pointer-fx",
+      "values": ["tilt", "magnetic"],
+      "on": "an element given usePointerFx",
+      "meaning": "Which pointer effect it has: a tilt toward the pointer, or a lean toward it"
+    },
+    {
+      "name": "data-material",
+      "values": ["solid", "glass"],
+      "on": "Surface",
+      "meaning": "The panel's material: opaque, or translucent over a blurred backdrop"
+    },
+    {
       "name": "data-collapsed",
       "presence": true,
       "on": "Sidebar",

@@ -24,6 +24,8 @@ export const RUNTIME_VARIABLES = new Set([
   '--nz-toast-inset',
   '--nz-layout-top-inset',
   '--nz-layout-bottom-inset',
+  '--nz-pointer-x',
+  '--nz-pointer-y',
 ]);
 
 /**

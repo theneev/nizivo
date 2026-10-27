@@ -741,6 +741,72 @@
       "name": "CountUpState"
     },
     {
+      "definedIn": "./data-view",
+      "import": "import { DataView } from '@nizivo/react'",
+      "kind": "namespace",
+      "name": "DataView"
+    },
+    {
+      "definedIn": "./data-view",
+      "import": "import { DataViewItem } from '@nizivo/react'",
+      "kind": "part",
+      "name": "DataViewItem"
+    },
+    {
+      "definedIn": "./data-view",
+      "import": "import { DataViewItemLink } from '@nizivo/react'",
+      "kind": "part",
+      "name": "DataViewItemLink"
+    },
+    {
+      "definedIn": "./data-view",
+      "import": "import type { DataViewItemLinkProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "DataViewItemLinkProps"
+    },
+    {
+      "definedIn": "./data-view",
+      "import": "import type { DataViewItemProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "DataViewItemProps"
+    },
+    {
+      "definedIn": "./data-view",
+      "import": "import { DataViewList } from '@nizivo/react'",
+      "kind": "part",
+      "name": "DataViewList"
+    },
+    {
+      "definedIn": "./data-view",
+      "import": "import type { DataViewListProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "DataViewListProps"
+    },
+    {
+      "definedIn": "./data-view",
+      "import": "import { DataViewRoot } from '@nizivo/react'",
+      "kind": "part",
+      "name": "DataViewRoot"
+    },
+    {
+      "definedIn": "./data-view",
+      "import": "import type { DataViewRootProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "DataViewRootProps"
+    },
+    {
+      "definedIn": "./data-view",
+      "import": "import { DataViewTable } from '@nizivo/react'",
+      "kind": "part",
+      "name": "DataViewTable"
+    },
+    {
+      "definedIn": "./data-view",
+      "import": "import type { DataViewTableProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "DataViewTableProps"
+    },
+    {
       "definedIn": "./delta",
       "import": "import { Delta } from '@nizivo/react'",
       "kind": "component",
@@ -2079,6 +2145,42 @@
       "name": "PasswordInputVisibleReason"
     },
     {
+      "definedIn": "./pointer-fx",
+      "import": "import { PointerFx } from '@nizivo/react'",
+      "kind": "component",
+      "name": "PointerFx"
+    },
+    {
+      "definedIn": "./pointer-fx",
+      "import": "import type { PointerFxEffect } from '@nizivo/react'",
+      "kind": "type",
+      "name": "PointerFxEffect"
+    },
+    {
+      "definedIn": "./pointer-fx",
+      "import": "import type { PointerFxHookProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "PointerFxHookProps"
+    },
+    {
+      "definedIn": "./pointer-fx",
+      "import": "import type { PointerFxOptions } from '@nizivo/react'",
+      "kind": "type",
+      "name": "PointerFxOptions"
+    },
+    {
+      "definedIn": "./pointer-fx",
+      "import": "import type { PointerFxProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "PointerFxProps"
+    },
+    {
+      "definedIn": "./pointer-fx",
+      "import": "import type { PointerFxState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "PointerFxState"
+    },
+    {
       "definedIn": "./toast",
       "import": "import type { Politeness } from '@nizivo/react'",
       "kind": "type",
@@ -2805,6 +2907,30 @@
       "name": "SubmitButtonProps"
     },
     {
+      "definedIn": "./surface",
+      "import": "import { Surface } from '@nizivo/react'",
+      "kind": "component",
+      "name": "Surface"
+    },
+    {
+      "definedIn": "./surface",
+      "import": "import type { SurfaceMaterial } from '@nizivo/react'",
+      "kind": "type",
+      "name": "SurfaceMaterial"
+    },
+    {
+      "definedIn": "./surface",
+      "import": "import type { SurfaceProps } from '@nizivo/react'",
+      "kind": "type",
+      "name": "SurfaceProps"
+    },
+    {
+      "definedIn": "./surface",
+      "import": "import type { SurfaceState } from '@nizivo/react'",
+      "kind": "type",
+      "name": "SurfaceState"
+    },
+    {
       "definedIn": "./switch",
       "import": "import { Switch } from '@nizivo/react'",
       "kind": "component",
@@ -3373,6 +3499,12 @@
       "import": "import { useFieldControl } from '@nizivo/react'",
       "kind": "hook",
       "name": "useFieldControl"
+    },
+    {
+      "definedIn": "./pointer-fx",
+      "import": "import { usePointerFx } from '@nizivo/react'",
+      "kind": "hook",
+      "name": "usePointerFx"
     }
   ],
   "package": "@nizivo/react",

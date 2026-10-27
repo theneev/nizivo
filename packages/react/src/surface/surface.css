@@ -1,0 +1,46 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/surface.css (ARCHITECTURE.md §13, §21.3). A panel: bg/surface, a border/subtle
+   hairline and radius/xl. `data-material="glass"` is Figma's Nizivo/Surface/Glass: a 24 px backdrop
+   blur behind bg/surface at 72 % (the floating Site Navbar 7392:80), with Elevation/3's shadow (Figma
+   draws 0 16 40 -8 at 10 %; Elevation/3 is 0 16 32 -8 at 8 %, with the dark ring). The fill turns
+   translucent only where backdrop-filter works and transparency is not reduced; elsewhere, and in
+   forced colours, the panel stays opaque (§13). No public hooks: --nz-surface-* is a token family
+   (--nz-surface-inner-highlight), so a consumer's class overrides it instead; it never declares the
+   shared --nz-surface, which only Card does (M42). */
+@layer nz.components {
+  .nz-surface {
+    --_nz-surface-bg: var(--nz-bg-surface);
+
+    border: var(--nz-border-width-default) solid var(--nz-border-subtle);
+    border-radius: var(--nz-radius-xl);
+    background: var(--_nz-surface-bg);
+    color: var(--nz-text-primary);
+
+    &[data-material='glass'] {
+      box-shadow: var(--nz-elevation-3);
+
+      /* Figma's 24 px; no blur token exists (§7: the normalizer skips a blur effect) */
+      @supports (backdrop-filter: blur(1px)) {
+        --_nz-surface-bg: color-mix(in srgb, var(--nz-bg-surface) 72%, transparent);
+
+        backdrop-filter: blur(1.5rem);
+      }
+
+      /* "reduce" only: Firefox and Safari do not know the feature, and keep the glass */
+      @media (prefers-reduced-transparency: reduce) {
+        --_nz-surface-bg: var(--nz-bg-surface);
+
+        backdrop-filter: none;
+      }
+    }
+  }
+
+  @media (forced-colors: active) {
+    .nz-surface {
+      border-color: CanvasText;
+      background: Canvas;
+      backdrop-filter: none;
+    }
+  }
+}

@@ -1,0 +1,34 @@
+---
+title: Surface
+description: A panel of the page's surface colour, solid or glass. Glass is the surface at 72 % over a blurred backdrop, for a panel over a photo, a shader or a busy page, and it stays opaque wherever the blur is not available.
+---
+
+## Static or interactive
+
+**Server.** No client JavaScript: it is a styled element.
+[How to choose](/docs/guides/static-or-interactive/).
+
+## Solid or glass
+
+`material="solid"` (the default) paints `bg/surface` with a hairline border and `radius/xl`.
+`material="glass"` is Figma's Surface/Glass style: `bg/surface` at 72 % with a 24 px blur of
+whatever is behind it, and a soft shadow, as on the floating navbar over a shader hero. Put it over
+an image or colour, as the design says ("always on a tinted card, never on white"); over a plain
+white page it looks like a solid panel.
+
+`render` makes it any element: `render={<nav aria-label="Main" />}` for a navbar,
+`render={<section />}` for a card.
+
+## Where glass stays opaque
+
+The text on glass keeps the surface's contrast because the panel falls back to solid whenever the
+blur cannot happen or should not:
+
+- in browsers without `backdrop-filter` (Safari before 18, the floor's Safari 17.5);
+- when the reader asks for reduced transparency (`prefers-reduced-transparency: reduce`);
+- in forced colours, where it is the system's `Canvas`.
+
+## Styling
+
+Surface has no public hooks (`--nz-surface-*` names design tokens), so set its padding, radius or
+border with your own class or `style`.

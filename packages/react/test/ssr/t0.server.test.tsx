@@ -83,6 +83,8 @@ const COMPONENTS = [
   'accordion',
   'page-indicator',
   'bulk-action-bar',
+  'data-view',
+  'surface',
 ] as const;
 type Name = (typeof COMPONENTS)[number];
 
@@ -219,6 +221,8 @@ const entries = {
   accordion: () => import('../../src/accordion/index'),
   'page-indicator': () => import('../../src/page-indicator/index'),
   'bulk-action-bar': () => import('../../src/bulk-action-bar/index'),
+  'data-view': () => import('../../src/data-view/index'),
+  surface: () => import('../../src/surface/index'),
 } satisfies Record<Name, () => Promise<unknown>>;
 
 /** Each example module, imported again by the react-server test; every `*Example` export renders. */
@@ -273,6 +277,8 @@ const exampleModules = {
   accordion: () => import('../../src/accordion/accordion.example'),
   'page-indicator': () => import('../../src/page-indicator/page-indicator.example'),
   'bulk-action-bar': () => import('../../src/bulk-action-bar/bulk-action-bar.example'),
+  'data-view': () => import('../../src/data-view/data-view.example'),
+  surface: () => import('../../src/surface/surface.example'),
 } satisfies Record<Name, () => Promise<Record<string, unknown>>>;
 
 /**

@@ -1,0 +1,27 @@
+---
+title: PointerFx
+description: A card that tilts toward a mouse pointer and lifts, or a button that leans toward it. Decorative, mouse only, and still under reduced motion. Also usePointerFx, for an element of your own in a client component.
+---
+
+## Static or interactive
+
+**Client.** `PointerFx` and `usePointerFx` are one client module at `@nizivo/react/pointer-fx`, so
+the page ships it (about 0.6 KB). It has a subpath of its own so a page that only counts numbers
+with [CountUp](/docs/components/motion/) never ships it. The server renders only
+`data-pointer-fx`, so hydration changes nothing. [How to choose](/docs/guides/static-or-interactive/).
+
+## Effects
+
+`effect="tilt"` (the default) turns the element up to 6 degrees toward the pointer and lifts it by
+`--nz-distance-lift` while hovered, for a product or feature card. `effect="magnetic"` moves it up to
+`--nz-magnetic-pull` toward the pointer, for a call to action. `render` puts it on your element:
+`<PointerFx render={<Card />}>`. In a client component, `usePointerFx({ effect })` returns the same
+as props to spread: `<div {...usePointerFx()}>`.
+
+## How it moves
+
+The hook writes `--nz-pointer-x` and `--nz-pointer-y` (from -1 to 1) on the element, once per
+frame, and 0 when the pointer leaves; `pointer-fx.css` turns them into the transform. Only a mouse
+that can hover moves it; touch and pen never do. Under reduced motion it writes nothing and both
+tokens are 0, so the element stays still. The effect never carries meaning, and the element's
+focus and click work as without it.

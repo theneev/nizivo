@@ -1,0 +1,16 @@
+{
+  "name": "data-view",
+  "status": "stable",
+  "tier": "server",
+  "parts": ["Root", "Table", "List", "Item", "ItemLink"],
+  "interactive": ["data-view-item-link"],
+  "focusTarget": "self",
+  "cssDeps": ["base"],
+  "variants": {},
+  "figma": {
+    "canonical": ["764:3483"],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": ["7275:18740"]
+  }
+}

@@ -1,0 +1,30 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/pointer-fx.css: PointerFx and usePointerFx (ARCHITECTURE.md §13.3, r6 §3).
+   The hook writes --nz-pointer-x and --nz-pointer-y (-1 to 1) on the element; here they become a
+   tilt of up to 6 degrees with a --nz-distance-lift lift while hovered, or a --nz-magnetic-pull
+   lean. Under reduced motion the hook writes nothing and both tokens are 0. */
+@layer nz.components {
+  [data-pointer-fx] {
+    transition:
+      transform var(--nz-duration-base) var(--nz-easing-standard),
+      translate var(--nz-duration-base) var(--nz-easing-standard);
+  }
+
+  /* Figma has no tilt angle token: 6 degrees, r6's sketch */
+  [data-pointer-fx='tilt'] {
+    transform: perspective(50rem) rotateX(calc(var(--nz-pointer-y, 0) * -6deg))
+      rotateY(calc(var(--nz-pointer-x, 0) * 6deg));
+
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        translate: 0 calc(-1 * var(--nz-distance-lift));
+      }
+    }
+  }
+
+  [data-pointer-fx='magnetic'] {
+    translate: calc(var(--nz-pointer-x, 0) * var(--nz-magnetic-pull))
+      calc(var(--nz-pointer-y, 0) * var(--nz-magnetic-pull));
+  }
+}

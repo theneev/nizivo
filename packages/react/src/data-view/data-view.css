@@ -1,0 +1,81 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/data-view.css (ARCHITECTURE.md §16.2; Figma's Order List Item 764:3483 and 08
+   Responsive 7275:18740). The root is a size container: from 40rem (`sm`) of its own width it shows
+   the table presentation, below that the list, whatever the viewport. The hidden one is
+   `display: none`. A list row is Figma's: 14 / 16 px padding, 12 px apart, at least 44 px tall,
+   with a border/subtle hairline below; an interactive row has the table rows' stretched link and
+   hover. The link's 2 px focus outline lives in nz.base (component.json "interactive"). Public
+   --nz-data-view-* hooks are read once, at the property. */
+@layer nz.components {
+  .nz-data-view {
+    container: nz-data-view / inline-size;
+  }
+
+  .nz-data-view-list {
+    display: none;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @container nz-data-view (inline-size < 40rem) {
+    .nz-data-view-table {
+      display: none;
+    }
+
+    .nz-data-view-list {
+      display: block;
+    }
+  }
+
+  .nz-data-view-item {
+    display: flex;
+    align-items: center;
+    gap: var(--nz-space-3);
+    box-sizing: border-box;
+    min-block-size: var(--nz-size-touch-min);
+    padding-block: calc(var(--nz-space-3) + var(--nz-space-0-5));
+    padding-inline: var(--nz-space-4);
+    border-block-end: var(--nz-border-width-default) solid var(--nz-border-subtle);
+
+    &[data-interactive] {
+      position: relative;
+    }
+  }
+
+  .nz-data-view-item-link {
+    color: inherit;
+    font: var(--nz-font-label-m-strong);
+    letter-spacing: var(--nz-tracking-label-m-strong);
+    text-decoration: none;
+
+    .nz-data-view-item[data-interactive] &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+    }
+  }
+
+  .nz-data-view-item[data-interactive]
+    :is(a[href], button, input, select, textarea, [tabindex]):not(.nz-data-view-item-link) {
+    position: relative;
+    z-index: 1;
+  }
+
+  @media (hover: hover) {
+    .nz-data-view-item[data-interactive]:hover {
+      background: var(--nz-data-view-item-bg-hover, var(--nz-bg-hover));
+    }
+
+    .nz-data-view-item-link:hover {
+      text-decoration: underline;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .nz-data-view-item {
+      border-color: CanvasText;
+    }
+  }
+}

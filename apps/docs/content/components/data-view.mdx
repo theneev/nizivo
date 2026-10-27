@@ -1,0 +1,36 @@
+---
+title: DataView
+description: The same records as a table on a wide screen and as a list on a narrow one. The server renders both and a container query shows one, by the view's own width, so nothing changes on hydration.
+keyboard:
+  - keys: Tab
+    action: Moves through the links and controls of the presentation that is shown; the hidden one is skipped.
+keyboardSource: native links and controls; the hidden presentation is display none (`data-view.css`). The browser lane (`test/browser/data-view.spec.tsx`) checks which presentation shows at each width, Tab and the list rows' stretched link.
+---
+
+## Static or interactive
+
+**Server.** No client JavaScript. The server renders the table and the list, and CSS shows one of
+them, so no script measures the screen and the server HTML is final.
+[How to choose](/docs/guides/static-or-interactive/).
+
+## Parts
+
+`DataView.Root` holds a `DataView.Table` (the wide presentation: put a `Table.Container` in it)
+and a `DataView.List` (the narrow one: `DataView.Item` rows). From 40rem of the root's own width
+the table shows; below that, the list. It is the view's width, not the screen's, so a DataView in
+a narrow column shows the list on a wide screen too.
+
+## List rows
+
+A `DataView.Item` is a row of Figma's Order List Item: 14 / 16 px padding, 12 px between its
+parts, at least 44 px tall, with a hairline below. Lay out what goes in it (an avatar, a title and
+a line under it, a value and a badge at the end). With `interactive`, the row's
+`DataView.ItemLink` is a stretched link, so the whole row is one hit area and one tab stop, as on
+`Table.Row`; other buttons and links in the row stay clickable above it.
+
+## Both presentations are in the page
+
+The hidden presentation is `display: none`: out of the accessibility tree and the tab order. But
+both are in the HTML, so the records are rendered twice. Give the list an `aria-label` (the table
+has its caption), and do not put form controls with the same `id` or `name` in both; a selectable
+table keeps its selection in the table presentation only.

@@ -103,6 +103,10 @@
       "types": "./dist/contracts/index.d.ts",
       "default": "./dist/contracts/index.js"
     },
+    "./data-view": {
+      "types": "./dist/data-view/index.d.ts",
+      "default": "./dist/data-view/index.js"
+    },
     "./delta": {
       "types": "./dist/delta/index.d.ts",
       "default": "./dist/delta/index.js"
@@ -235,6 +239,10 @@
       "types": "./dist/password-input/index.d.ts",
       "default": "./dist/password-input/index.js"
     },
+    "./pointer-fx": {
+      "types": "./dist/pointer-fx/index.d.ts",
+      "default": "./dist/pointer-fx/index.js"
+    },
     "./popover": {
       "types": "./dist/popover/index.d.ts",
       "default": "./dist/popover/index.js"
@@ -294,6 +302,10 @@
     "./sticky-bar": {
       "types": "./dist/sticky-bar/index.d.ts",
       "default": "./dist/sticky-bar/index.js"
+    },
+    "./surface": {
+      "types": "./dist/surface/index.d.ts",
+      "default": "./dist/surface/index.js"
     },
     "./switch": {
       "types": "./dist/switch/index.d.ts",
@@ -359,6 +371,7 @@
     "./css/choice-card.css": "./dist/css/choice-card.css",
     "./css/combobox.css": "./dist/css/combobox.css",
     "./css/container.css": "./dist/css/container.css",
+    "./css/data-view.css": "./dist/css/data-view.css",
     "./css/delta.css": "./dist/css/delta.css",
     "./css/dialog.css": "./dist/css/dialog.css",
     "./css/drawer.css": "./dist/css/drawer.css",
@@ -390,6 +403,7 @@
     "./css/page-indicator.css": "./dist/css/page-indicator.css",
     "./css/pagination.css": "./dist/css/pagination.css",
     "./css/password-input.css": "./dist/css/password-input.css",
+    "./css/pointer-fx.css": "./dist/css/pointer-fx.css",
     "./css/popover.css": "./dist/css/popover.css",
     "./css/progress-bar.css": "./dist/css/progress-bar.css",
     "./css/progress-ring.css": "./dist/css/progress-ring.css",
@@ -405,6 +419,7 @@
     "./css/split.css": "./dist/css/split.css",
     "./css/stack.css": "./dist/css/stack.css",
     "./css/sticky-bar.css": "./dist/css/sticky-bar.css",
+    "./css/surface.css": "./dist/css/surface.css",
     "./css/switch.css": "./dist/css/switch.css",
     "./css/tab-nav.css": "./dist/css/tab-nav.css",
     "./css/table-selection.css": "./dist/css/table-selection.css",

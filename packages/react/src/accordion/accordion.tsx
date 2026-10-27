@@ -1,9 +1,9 @@
 // NO directive: Accordion is server-safe, 0 KB of client JS (ARCHITECTURE.md §9.5, §21.3; Figma's
-// Accordion Item 7370:88, whose trigger it draws on <summary>, not a button in a heading). Each item is a native
-// `<details>` with its `<summary>` as the trigger, so it opens and closes, by pointer and keyboard,
-// before and without hydration, and the browser's find-in-page opens a closed item that holds the
-// match. `Accordion.Root name` gives every item the same `<details name>`, so opening one closes the
-// others (exclusive, with no script); without it items open independently.
+// Accordion Item 7370:88, whose trigger it draws on <summary>, not a button in a heading). Each
+// item is a native `<details>` with its `<summary>` as the trigger, so it opens and closes, by
+// pointer and keyboard, before and without hydration, and the browser's find-in-page opens a closed
+// item that holds the match. `Accordion.Root name` gives every item the same `<details name>`, so
+// opening one closes the others (exclusive, with no script); without it items open independently.
 import {
   Children,
   cloneElement,

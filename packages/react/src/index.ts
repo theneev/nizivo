@@ -132,6 +132,21 @@ export type {
 } from './combobox/index';
 export { Container } from './container/index';
 export type { ContainerProps } from './container/index';
+export {
+  DataView,
+  DataViewRoot,
+  DataViewTable,
+  DataViewList,
+  DataViewItem,
+  DataViewItemLink,
+} from './data-view/index';
+export type {
+  DataViewItemLinkProps,
+  DataViewItemProps,
+  DataViewListProps,
+  DataViewRootProps,
+  DataViewTableProps,
+} from './data-view/index';
 export { Delta } from './delta/index';
 export type { DeltaProps, DeltaState, DeltaTone, DeltaTrend } from './delta/index';
 export {
@@ -365,6 +380,14 @@ export type {
   PasswordInputState,
   PasswordInputVisibleReason,
 } from './password-input/index';
+export { PointerFx, usePointerFx } from './pointer-fx/index';
+export type {
+  PointerFxEffect,
+  PointerFxHookProps,
+  PointerFxOptions,
+  PointerFxProps,
+  PointerFxState,
+} from './pointer-fx/index';
 export {
   Popover,
   PopoverRoot,
@@ -494,6 +517,8 @@ export { Stack } from './stack/index';
 export type { LayoutGap, StackProps, StackState } from './stack/index';
 export { StickyBar } from './sticky-bar/index';
 export type { StickyBarProps } from './sticky-bar/index';
+export { Surface } from './surface/index';
+export type { SurfaceMaterial, SurfaceProps, SurfaceState } from './surface/index';
 export { Switch } from './switch/index';
 export type { SwitchChangeReason, SwitchProps, SwitchState } from './switch/index';
 export { TabNav, TabNavRoot, TabNavLink } from './tab-nav/index';

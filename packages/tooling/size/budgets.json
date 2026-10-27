@@ -2,7 +2,7 @@
   "$comment": "Size budgets (ARCHITECTURE.md §17), written by `node packages/tooling/size/measure.ts --write`. measured: bytes, gzip -9, as size-limit 14.2 reports them. limitKiB: measured + 10%, rounded up (method.ts limitKiB), never above the entry's §17.1 plan limit (method.ts PLAN_LIMITS_KIB). Limits only go up through a labelled PR (§17.3).",
   "entries": {
     "@nizivo/react": {
-      "measured": 133977,
+      "measured": 134591,
       "limitKiB": 143
     },
     "@nizivo/react/accordion": {
@@ -75,6 +75,10 @@
     },
     "@nizivo/react/contracts": {
       "measured": 1021,
+      "limitKiB": 1.1
+    },
+    "@nizivo/react/data-view": {
+      "measured": 980,
       "limitKiB": 1.1
     },
     "@nizivo/react/delta": {
@@ -209,6 +213,10 @@
       "measured": 2672,
       "limitKiB": 2.8
     },
+    "@nizivo/react/pointer-fx": {
+      "measured": 1107,
+      "limitKiB": 1.2
+    },
     "@nizivo/react/popover": {
       "measured": 36054,
       "limitKiB": 39
@@ -268,6 +276,10 @@
     "@nizivo/react/sticky-bar": {
       "measured": 799,
       "limitKiB": 0.9
+    },
+    "@nizivo/react/surface": {
+      "measured": 714,
+      "limitKiB": 0.8
     },
     "@nizivo/react/switch": {
       "measured": 1734,
@@ -481,6 +493,10 @@
       "measured": 1117,
       "limitKiB": 1.2
     },
+    "@nizivo/react own: pointer-fx/pointer-fx.client": {
+      "measured": 586,
+      "limitKiB": 0.7
+    },
     "@nizivo/react own: popover/popover.client": {
       "measured": 966,
       "limitKiB": 1.1
@@ -566,7 +582,7 @@
       "limitKiB": 0.8
     },
     "@nizivo/react/css/base.css": {
-      "measured": 1296,
+      "measured": 1307,
       "limitKiB": 1.4
     },
     "@nizivo/react/css/breadcrumb.css": {
@@ -604,6 +620,10 @@
     "@nizivo/react/css/container.css": {
       "measured": 185,
       "limitKiB": 0.2
+    },
+    "@nizivo/react/css/data-view.css": {
+      "measured": 570,
+      "limitKiB": 0.7
     },
     "@nizivo/react/css/delta.css": {
       "measured": 472,
@@ -729,6 +749,10 @@
       "measured": 486,
       "limitKiB": 0.6
     },
+    "@nizivo/react/css/pointer-fx.css": {
+      "measured": 299,
+      "limitKiB": 0.4
+    },
     "@nizivo/react/css/popover.css": {
       "measured": 711,
       "limitKiB": 0.8
@@ -789,6 +813,10 @@
       "measured": 479,
       "limitKiB": 0.5
     },
+    "@nizivo/react/css/surface.css": {
+      "measured": 384,
+      "limitKiB": 0.5
+    },
     "@nizivo/react/css/switch.css": {
       "measured": 883,
       "limitKiB": 1
@@ -834,7 +862,7 @@
       "limitKiB": 0.5
     },
     "@nizivo/react/styles.css": {
-      "measured": 25295,
+      "measured": 25805,
       "limitKiB": 26
     },
     "@nizivo/tokens": {
