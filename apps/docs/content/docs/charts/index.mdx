@@ -15,6 +15,8 @@ import { ChartsTable } from '../../../components/charts-table';
 | [AreaChart](/docs/charts/area-chart/)       | `@nizivo/charts/area-chart`    | split  | The ChartInteraction island, when `status` is `'ready'` and `interaction` is `'nizivo'` (default)                |
 | [BarChart](/docs/charts/bar-chart/)         | `@nizivo/charts/bar-chart`     | split  | The ChartInteraction island in column mode, when `status` is `'ready'` and `interaction` is `'nizivo'` (default) |
 | [DonutChart](/docs/charts/donut-chart/)     | `@nizivo/charts/donut-chart`   | split  | The ChartInteraction island in item mode, when `status` is `'ready'` and `interaction` is `'nizivo'` (default)   |
+| [FunnelChart](/docs/charts/funnel-chart/)   | `@nizivo/charts/funnel-chart`  | server | Never                                                                                                            |
+| [Heatmap](/docs/charts/heatmap/)            | `@nizivo/charts/heatmap`       | server | Never                                                                                                            |
 | [Sparkline](/docs/charts/sparkline/)        | `@nizivo/charts/sparkline`     | server | Never                                                                                                            |
 | [Legend](/docs/charts/legend/)              | `@nizivo/charts/legend`        | server | Never                                                                                                            |
 | [ChartTooltip](/docs/charts/chart-tooltip/) | `@nizivo/charts/chart-tooltip` | server | Never                                                                                                            |
@@ -24,8 +26,8 @@ import { ChartsTable } from '../../../components/charts-table';
 The kinds are the ones the [static or interactive guide](/docs/guides/static-or-interactive/) uses
 for `@nizivo/react`. AreaChart, BarChart and DonutChart are the parts whose modules import a client
 module, the island; the others import none. `island-graph.test.ts` in `packages/charts/test/unit`
-checks that AreaChart, BarChart and DonutChart reach exactly the island and that Sparkline and
-ChartTooltip reach no client module.
+checks that AreaChart, BarChart and DonutChart reach exactly the island and that Sparkline,
+ChartTooltip, FunnelChart and Heatmap reach no client module.
 
 ## Install
 

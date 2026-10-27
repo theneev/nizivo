@@ -1,0 +1,88 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* FunnelChart (Figma 03 "Funnel Chart", 751:319; ARCHITECTURE.md §14.1). Each step is a row of four
+   columns, 16 px apart, the rows 12 px apart: the name (Label/M, text/secondary, 150 px at most),
+   the track (chart/track, 36 px tall, radius/sm) with the bar (chart/primary) as long as the step's
+   share of the first, the count (Numeric/M, text/primary) and the share of the previous step
+   (Mono/M, text/brand; the first step's "—" in text/tertiary). The body sizes to its rows instead
+   of the frame's aspect ratio; while loading, empty or failed it keeps Figma's four-step height.
+   Forced colours: the track is outlined in CanvasText and the bar is Highlight. Public
+   --nz-funnel-chart-* hooks are read once, at the property. */
+@layer nz.components {
+  .nz-funnel-chart > .nz-chart-frame-body {
+    aspect-ratio: auto;
+  }
+
+  .nz-funnel-chart:is([data-loading], [data-empty], [data-error]) > .nz-chart-frame-body {
+    min-block-size: 11.25rem;
+  }
+
+  .nz-funnel-chart-steps {
+    display: grid;
+    grid-template-columns: minmax(0, max-content) minmax(0, 1fr) max-content max-content;
+    gap: var(--nz-space-3) var(--nz-space-4);
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .nz-funnel-chart-step {
+    display: contents;
+  }
+
+  .nz-funnel-chart-label {
+    max-inline-size: 9.375rem;
+    overflow: hidden;
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-label-m);
+    letter-spacing: var(--nz-tracking-label-m);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .nz-funnel-chart-track {
+    display: block;
+    inline-size: 100%;
+    /* Figma's 36 px; no size token */
+    block-size: 2.25rem;
+    overflow: visible;
+  }
+
+  .nz-funnel-chart-track-fill {
+    fill: var(--nz-funnel-chart-track, var(--nz-chart-track));
+  }
+
+  .nz-funnel-chart-bar {
+    fill: var(--nz-funnel-chart-bar, var(--nz-chart-primary));
+  }
+
+  .nz-funnel-chart-value {
+    color: var(--nz-text-primary);
+    font: var(--nz-font-numeric-m);
+    text-align: end;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .nz-funnel-chart-share {
+    min-inline-size: 3.75rem;
+    color: var(--nz-text-brand);
+    font: var(--nz-font-mono-m);
+    text-align: end;
+
+    .nz-funnel-chart-step:first-child > & {
+      color: var(--nz-text-tertiary);
+    }
+  }
+
+  @media (forced-colors: active) {
+    .nz-funnel-chart-track-fill {
+      fill: Canvas;
+      stroke: CanvasText;
+    }
+
+    .nz-funnel-chart-bar {
+      fill: Highlight;
+    }
+  }
+}

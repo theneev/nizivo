@@ -119,7 +119,7 @@ describe('ChartFrame: the data table, server-rendered', () => {
     expect(count(out, /<tr>/)).toBe(4);
   });
 
-  test('tableView="details": a native disclosure, no JS, the table visible inside', () => {
+  test('tableView="details": a native disclosure, no JS, the table visible inside its scroller', () => {
     const out = html(
       <ChartFrame title="Sales" table={table} tableView="details">
         {svg}
@@ -127,7 +127,7 @@ describe('ChartFrame: the data table, server-rendered', () => {
     );
     expect(out).toContain(
       `<details class="nz-chart-frame-details" data-slot="chart-frame-details"><summary class="nz-chart-frame-details-summary">${chartFrameLabels.table}</summary>` +
-        '<table class="nz-chart-frame-table" data-slot="chart-frame-table"',
+        '<div class="nz-chart-frame-table-scroll"><table class="nz-chart-frame-table" data-slot="chart-frame-table"',
     );
   });
 });

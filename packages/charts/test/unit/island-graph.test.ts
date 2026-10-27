@@ -54,12 +54,14 @@ describe('client modules per entry', () => {
     },
   );
 
-  test.each(['src/sparkline/index.ts', 'src/chart-tooltip/index.ts'])(
-    '%s reaches none',
-    (entry) => {
-      expect(clientModules(entry)).toEqual([]);
-    },
-  );
+  test.each([
+    'src/sparkline/index.ts',
+    'src/chart-tooltip/index.ts',
+    'src/funnel-chart/index.ts',
+    'src/heatmap/index.ts',
+  ])('%s reaches none', (entry) => {
+    expect(clientModules(entry)).toEqual([]);
+  });
 });
 
 test("the island's graph: React and the tooltip card only (no d3, no ChartFrame, no core maths)", () => {

@@ -377,12 +377,14 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 | Entry          | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | -------------- | -------: | ---------: | ---------: | ----------: | -----------: |
-| `.`            |    9,296 |        9.1 |      8,381 |         9.7 |          636 |
-| /area-chart    |    6,711 |        6.6 |      6,082 |         7.1 |          559 |
-| /bar-chart     |    5,407 |        5.3 |      4,875 |         5.7 |          429 |
-| /chart-frame   |    1,820 |        1.8 |      1,629 |           2 |          228 |
+| `.`            |   10,372 |       10.1 |      9,397 |        11.2 |        1,096 |
+| /area-chart    |    6,724 |        6.6 |      6,078 |         7.1 |          546 |
+| /bar-chart     |    5,418 |        5.3 |      4,885 |         5.7 |          418 |
+| /chart-frame   |    1,828 |        1.8 |      1,638 |           2 |          220 |
 | /chart-tooltip |      413 |        0.4 |        373 |         0.5 |           99 |
-| /donut-chart   |    4,885 |        4.8 |      4,390 |         5.3 |          542 |
+| /donut-chart   |    4,894 |        4.8 |      4,397 |         5.3 |          533 |
+| /funnel-chart  |    2,583 |        2.5 |      2,344 |         2.8 |          284 |
+| /heatmap       |    2,579 |        2.5 |      2,344 |         2.8 |          288 |
 | /legend        |      870 |        0.8 |        796 |           1 |          154 |
 | /sparkline     |    1,618 |        1.6 |      1,526 |         1.8 |          225 |
 
@@ -390,14 +392,14 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 | Entry                         | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | ----------------------------- | -------: | ---------: | ---------: | ----------: | -----------: |
-| { AreaChart } from the barrel |    6,709 |        6.6 |      6,074 |         7.1 |          561 |
+| { AreaChart } from the barrel |    6,719 |        6.6 |      6,078 |         7.1 |          551 |
 | island with its imports       |    1,580 |        1.5 |      1,420 |         1.7 |          160 |
 
 #### `@nizivo/charts`: CSS and JSON entries (the published file, gzip)
 
 | Entry       | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | ----------- | -------: | ---------: | ---------: | ----------: | -----------: |
-| /styles.css |    3,783 |        3.7 |      3,354 |         3.7 |            5 |
+| /styles.css |    4,349 |        4.2 |      3,860 |         4.7 |          463 |
 
 <!-- size:tables:end -->
 

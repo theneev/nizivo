@@ -477,12 +477,22 @@ async function clipped(page: Page): Promise<string[]> {
       }
       return false;
     };
+    // Visually hidden content (a chart's screen-reader table) is clipped on purpose: a 1 px box
+    // with clip-path inset(50%), never meant to be seen or scrolled to.
+    // oxlint-disable-next-line unicorn/consistent-function-scoping -- page.evaluate serialises this callback alone
+    const hidden = (el: Element): boolean => {
+      for (let e: Element | null = el; e !== null && e !== document.body; e = e.parentElement) {
+        const s = getComputedStyle(e);
+        if (s.clipPath === 'inset(50%)' && e.getBoundingClientRect().width <= 1) return true;
+      }
+      return false;
+    };
     const out: string[] = [];
     for (const el of document.querySelectorAll(
       'main table, main pre, main code, main img, main .nz-docs-preview > *',
     )) {
       const r = el.getBoundingClientRect();
-      if (r.width === 0 || r.right <= vw + 1 || reachable(el, r.right)) continue;
+      if (r.width === 0 || r.right <= vw + 1 || reachable(el, r.right) || hidden(el)) continue;
       const label = el.getAttribute('aria-label');
       out.push(
         `${el.tagName.toLowerCase()}${label ? `[${label}]` : ''} to ${Math.round(r.right)}px`,

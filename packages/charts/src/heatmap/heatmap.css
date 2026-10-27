@@ -1,0 +1,128 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* Heatmap (Figma 03 "Heatmap", 751:393; ARCHITECTURE.md §14.1). Rows of square cells (32 px at most,
+   6 px apart, radius 6) after a row label (Label/M, text/tertiary, 44 px), the column labels under
+   them (Mono/M, text/tertiary) and the "Fewer … More" scale under those. The ramp is Figma's:
+   chart/primary at 8, 25, 45, 70 and 100 % (data-step 1 to 5), over the surface in either theme; a
+   cell with no value is only a hairline. The cells shrink with a narrow chart, every one the same.
+   The body sizes to its rows; while loading, empty or failed it keeps Figma's seven-day height.
+   Forced colours: the cells are Highlight at the same strengths, each outlined in CanvasText.
+   Public --nz-heatmap-* hooks are read once, at the property. */
+@layer nz.components {
+  .nz-heatmap > .nz-chart-frame-body {
+    aspect-ratio: auto;
+  }
+
+  .nz-heatmap:is([data-loading], [data-empty], [data-error]) > .nz-chart-frame-body {
+    min-block-size: 20rem;
+  }
+
+  .nz-heatmap-grid {
+    display: grid;
+    gap: var(--nz-space-1-5);
+  }
+
+  .nz-heatmap-row {
+    display: flex;
+    gap: var(--nz-space-1-5);
+    align-items: center;
+  }
+
+  .nz-heatmap-label {
+    flex: none;
+    inline-size: 2.75rem;
+    overflow: hidden;
+    color: var(--nz-text-tertiary);
+    font: var(--nz-font-label-m);
+    letter-spacing: var(--nz-tracking-label-m);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .nz-heatmap-cell,
+  .nz-heatmap-column {
+    flex: 1 1 0;
+    min-inline-size: 0;
+    max-inline-size: 2rem;
+  }
+
+  .nz-heatmap-cell {
+    aspect-ratio: 1;
+    border-radius: calc(var(--nz-radius-xs) * 1.5);
+    box-shadow: inset 0 0 0 var(--nz-border-width-default) var(--nz-border-subtle);
+  }
+
+  .nz-heatmap-column {
+    overflow: visible;
+    color: var(--nz-text-tertiary);
+    font: var(--nz-font-mono-m);
+    white-space: nowrap;
+  }
+
+  .nz-heatmap-scale {
+    display: flex;
+    gap: var(--nz-space-1-5);
+    align-items: center;
+    padding-block-start: var(--nz-space-2);
+    padding-inline-start: calc(2.75rem + var(--nz-space-1-5));
+    color: var(--nz-text-tertiary);
+    font: var(--nz-font-label-m);
+    letter-spacing: var(--nz-tracking-label-m);
+  }
+
+  .nz-heatmap-swatch {
+    inline-size: var(--nz-space-4);
+    block-size: var(--nz-space-4);
+    border-radius: var(--nz-radius-xs);
+  }
+
+  :is(.nz-heatmap-cell, .nz-heatmap-swatch)[data-step] {
+    --_nz-heatmap-strength: 100%;
+
+    box-shadow: none;
+  }
+
+  .nz-heatmap-cell[data-step] {
+    background: color-mix(
+      in srgb,
+      var(--nz-heatmap-color, var(--nz-chart-primary)) var(--_nz-heatmap-strength),
+      transparent
+    );
+  }
+
+  .nz-heatmap-swatch[data-step] {
+    background: color-mix(
+      in srgb,
+      var(--nz-heatmap-color, var(--nz-chart-primary)) var(--_nz-heatmap-strength),
+      transparent
+    );
+  }
+
+  :is(.nz-heatmap-cell, .nz-heatmap-swatch)[data-step='1'] {
+    --_nz-heatmap-strength: 8%;
+  }
+
+  :is(.nz-heatmap-cell, .nz-heatmap-swatch)[data-step='2'] {
+    --_nz-heatmap-strength: 25%;
+  }
+
+  :is(.nz-heatmap-cell, .nz-heatmap-swatch)[data-step='3'] {
+    --_nz-heatmap-strength: 45%;
+  }
+
+  :is(.nz-heatmap-cell, .nz-heatmap-swatch)[data-step='4'] {
+    --_nz-heatmap-strength: 70%;
+  }
+
+  @media (forced-colors: active) {
+    :is(.nz-heatmap-cell, .nz-heatmap-swatch) {
+      forced-color-adjust: none;
+      outline: 1px solid CanvasText;
+      outline-offset: -1px;
+    }
+
+    :is(.nz-heatmap-cell, .nz-heatmap-swatch)[data-step] {
+      background: color-mix(in srgb, Highlight var(--_nz-heatmap-strength), Canvas);
+    }
+  }
+}

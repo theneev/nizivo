@@ -267,7 +267,9 @@ function TableDetails({
   return (
     <details className="nz-chart-frame-details" data-slot="chart-frame-details">
       <summary className="nz-chart-frame-details-summary">{summary}</summary>
-      <DataTable table={table} titleId={titleId} />
+      <div className="nz-chart-frame-table-scroll">
+        <DataTable table={table} titleId={titleId} />
+      </div>
     </details>
   );
 }

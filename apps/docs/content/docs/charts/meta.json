@@ -6,6 +6,8 @@
     "area-chart",
     "bar-chart",
     "donut-chart",
+    "funnel-chart",
+    "heatmap",
     "sparkline",
     "legend",
     "chart-tooltip"

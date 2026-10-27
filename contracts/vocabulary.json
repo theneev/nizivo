@@ -259,6 +259,12 @@
       "meaning": "Current presentation"
     },
     {
+      "name": "data-step",
+      "values": ["1", "2", "3", "4", "5"],
+      "on": "Heatmap cell and scale swatch",
+      "meaning": "The value's step on the ramp, from fewest to most"
+    },
+    {
       "name": "data-pointer-fx",
       "values": ["tilt", "magnetic"],
       "on": "an element given usePointerFx",

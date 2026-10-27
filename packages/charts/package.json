@@ -51,6 +51,14 @@
       "types": "./dist/donut-chart/index.d.ts",
       "default": "./dist/donut-chart/index.js"
     },
+    "./funnel-chart": {
+      "types": "./dist/funnel-chart/index.d.ts",
+      "default": "./dist/funnel-chart/index.js"
+    },
+    "./heatmap": {
+      "types": "./dist/heatmap/index.d.ts",
+      "default": "./dist/heatmap/index.js"
+    },
     "./legend": {
       "types": "./dist/legend/index.d.ts",
       "default": "./dist/legend/index.js"

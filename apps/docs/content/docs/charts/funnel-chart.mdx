@@ -1,0 +1,87 @@
+---
+title: FunnelChart
+description: Steps in order, as bars of each step's share of the first, with the counts and the share of the step before as text. Drawn on the server, with no client JavaScript.
+---
+
+## Import
+
+<ChartImport names="FunnelChart" />
+
+## Static or interactive
+
+**Server.** FunnelChart has no `'use client'` and renders no island: every value is already text in
+its rows, so there is nothing to rove. The rows are hidden from assistive technology, which reads the
+data table instead (step, count and % of previous), as Figma's description asks; `tableView="details"`
+shows the table to everyone. [How to choose](/docs/guides/static-or-interactive/).
+
+## Examples
+
+### Basic
+
+<ChartExample name="FunnelChartExample" />
+
+### Locale
+
+<ChartExample name="FunnelChartLocaleExample" />
+
+### Status
+
+<ChartExample name="FunnelChartStatusExample" />
+
+## Steps
+
+`funnelSteps(items)` is the rule FunnelChart applies, exported so a server can compute the same
+numbers:
+
+1. Steps keep their input order. A value that is not a finite number, or is below zero, counts as 0.
+2. A bar is as long as the step's value over the first step's, clamped to 0–1: a later step above
+   the first draws a full bar, and a first step of 0 draws none.
+3. The share is the step's value over the previous step's. The first step has none, nor does a step
+   after a step of 0; `labels.noShare` ("—") stands in for it.
+
+## Props
+
+<ChartProps />
+
+`step` and `value` are an `Accessor`: a key of the datum (`step="name"`, which a Server Component
+can pass), or a `(datum, index) => value` function, as in every chart. `format` defaults to
+`Intl.NumberFormat`'s own options and `shareFormat` to a percent with one fraction digit ("20.0%").
+
+`labels` takes `Partial<FunnelChartLabels>`, on top of [ChartFrame's](/docs/charts/chart-frame/#props):
+
+<ChartsTable label="FunnelChart label defaults">
+
+| Key       | Default         |
+| --------- | --------------- |
+| `step`    | `Step`          |
+| `value`   | `Count`         |
+| `share`   | `% of previous` |
+| `noShare` | `—`             |
+
+</ChartsTable>
+
+## Other exports
+
+<ChartOtherExports />
+
+## Data attributes and slots
+
+Inside the [ChartFrame](/docs/charts/chart-frame/#data-attributes-and-slots) root, which carries
+`nz-funnel-chart` (with `axes="none"` and `interaction="none"`):
+
+<ChartsTable label="FunnelChart data attributes and slots">
+
+| Element                     | Attributes                                                                     |
+| --------------------------- | ------------------------------------------------------------------------------ |
+| `ol.nz-funnel-chart-steps`  | `aria-hidden`; one `li` per step, `data-slot="funnel-chart-step"`              |
+| `svg.nz-funnel-chart-track` | `data-slot="funnel-chart-track"`: the track, and the bar as a `rect`           |
+| `rect.nz-funnel-chart-bar`  | `data-slot="funnel-chart-bar"`, `width` the share of the first step in percent |
+
+</ChartsTable>
+
+## CSS hooks
+
+<ChartCssHooks />
+
+The body sizes to its rows rather than ChartFrame's aspect ratio. While loading, empty or failed it
+keeps Figma's four-step height, so nothing moves when the data arrives.

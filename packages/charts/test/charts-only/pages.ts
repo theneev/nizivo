@@ -7,7 +7,7 @@
 //   node packages/charts/test/charts-only/pages.ts   prints { "<path>": "<body markup>", … } as JSON
 //
 // Plain `createElement` calls: Node runs this file with type stripping, which has no JSX. Every
-// framed part (AreaChart, BarChart, DonutChart) is on `/parts`, imported through its own dist entry;
+// framed part (AreaChart, BarChart, DonutChart, FunnelChart, Heatmap) is on `/parts`, imported through its own dist entry;
 // a new framed part adds one section there with its sample props.
 import { Fragment, createElement as h, type ReactNode } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
@@ -22,6 +22,10 @@ const { BarChart }: typeof import('../../src/bar-chart/index') = await import(di
 const { DonutChart }: typeof import('../../src/donut-chart/index') = await import(
   dist('donut-chart')
 );
+const { FunnelChart }: typeof import('../../src/funnel-chart/index') = await import(
+  dist('funnel-chart')
+);
+const { Heatmap }: typeof import('../../src/heatmap/index') = await import(dist('heatmap'));
 const { Sparkline }: typeof import('../../src/sparkline/index') = await import(dist('sparkline'));
 const { ChartTooltip }: typeof import('../../src/chart-tooltip/index') = await import(
   dist('chart-tooltip')
@@ -208,6 +212,34 @@ export const PAGES: Record<string, { title: string; body: ReactNode }> = {
           category: (d) => d.name,
           value: (d) => d.sales,
           format: USD,
+        }),
+      ),
+      section(
+        'FunnelChart',
+        h(FunnelChart<{ name: string; n: number }>, {
+          id: 'funnel',
+          title: 'Checkout funnel',
+          data: [
+            { name: 'Sessions', n: 48210 },
+            { name: 'Added to cart', n: 9642 },
+            { name: 'Purchased', n: 2914 },
+          ],
+          step: 'name',
+          value: 'n',
+        }),
+      ),
+      section(
+        'Heatmap',
+        h(Heatmap<{ day: string; hour: string; n: number | null }>, {
+          id: 'heatmap',
+          title: 'Orders by hour',
+          data: ['Mon', 'Tue'].flatMap((day, d) =>
+            ['00', '06', '12', '18'].map((hour, i) => ({ day, hour, n: (d + 1) * (i + 1) * 5 })),
+          ),
+          x: 'hour',
+          y: 'day',
+          value: 'n',
+          tableView: 'details',
         }),
       ),
       section(

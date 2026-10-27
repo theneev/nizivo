@@ -429,6 +429,54 @@
       "typeParameters": []
     },
     {
+      "definedIn": "./funnel-chart",
+      "import": "import { FunnelChart } from '@nizivo/charts'",
+      "kind": "component",
+      "name": "FunnelChart"
+    },
+    {
+      "definedIn": "./funnel-chart",
+      "import": "import type { FunnelChartLabels } from '@nizivo/charts'",
+      "kind": "type",
+      "name": "FunnelChartLabels"
+    },
+    {
+      "definedIn": "./funnel-chart",
+      "import": "import type { FunnelChartProps } from '@nizivo/charts'",
+      "kind": "type",
+      "name": "FunnelChartProps"
+    },
+    {
+      "definedIn": "./funnel-chart",
+      "import": "import type { FunnelStep } from '@nizivo/charts'",
+      "kind": "type",
+      "name": "FunnelStep"
+    },
+    {
+      "definedIn": "./heatmap",
+      "import": "import { HEATMAP_STEPS } from '@nizivo/charts'",
+      "kind": "constant",
+      "name": "HEATMAP_STEPS"
+    },
+    {
+      "definedIn": "./heatmap",
+      "import": "import { Heatmap } from '@nizivo/charts'",
+      "kind": "component",
+      "name": "Heatmap"
+    },
+    {
+      "definedIn": "./heatmap",
+      "import": "import type { HeatmapLabels } from '@nizivo/charts'",
+      "kind": "type",
+      "name": "HeatmapLabels"
+    },
+    {
+      "definedIn": "./heatmap",
+      "import": "import type { HeatmapProps } from '@nizivo/charts'",
+      "kind": "type",
+      "name": "HeatmapProps"
+    },
+    {
       "definedIn": "./legend",
       "import": "import { Legend } from '@nizivo/charts'",
       "kind": "component",
@@ -761,6 +809,36 @@
       "import": "import { foldCategories } from '@nizivo/charts'",
       "kind": "function",
       "name": "foldCategories"
+    },
+    {
+      "definedIn": "./funnel-chart",
+      "import": "import { funnelChartLabels } from '@nizivo/charts'",
+      "kind": "constant",
+      "name": "funnelChartLabels"
+    },
+    {
+      "definedIn": "./funnel-chart",
+      "import": "import { funnelSteps } from '@nizivo/charts'",
+      "kind": "function",
+      "name": "funnelSteps"
+    },
+    {
+      "definedIn": "./heatmap",
+      "import": "import { heatmapGrid } from '@nizivo/charts'",
+      "kind": "function",
+      "name": "heatmapGrid"
+    },
+    {
+      "definedIn": "./heatmap",
+      "import": "import { heatmapLabels } from '@nizivo/charts'",
+      "kind": "constant",
+      "name": "heatmapLabels"
+    },
+    {
+      "definedIn": "./heatmap",
+      "import": "import { heatmapStep } from '@nizivo/charts'",
+      "kind": "function",
+      "name": "heatmapStep"
     },
     {
       "client": false,

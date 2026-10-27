@@ -8,6 +8,8 @@ export * from './area-chart/index';
 export * from './bar-chart/index';
 export * from './chart-tooltip/index';
 export * from './donut-chart/index';
+export * from './funnel-chart/index';
+export * from './heatmap/index';
 export * from './sparkline/index';
 export type { Accessor, CartesianChartOptions, ChartXTicks } from './_core/api';
 export { band, linear, point, valueDomain } from './_core/scale';

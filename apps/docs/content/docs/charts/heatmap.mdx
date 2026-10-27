@@ -1,0 +1,89 @@
+---
+title: Heatmap
+description: A value for each row and column, such as orders by day and hour, as a grid of cells on a five-step ramp with a "Fewer … More" scale. Drawn on the server, with no client JavaScript, and never the only view of the data.
+---
+
+## Import
+
+<ChartImport names="Heatmap" />
+
+## Static or interactive
+
+**Server.** Heatmap has no `'use client'` and renders no island. The grid is hidden from assistive
+technology, which reads the data table instead: one row per row of the grid, one column per column,
+every value as text. Figma asks for focusable cells or a table alternative; the table is it, and
+`tableView="details"` shows it to everyone. [How to choose](/docs/guides/static-or-interactive/).
+
+## Examples
+
+### Basic
+
+<ChartExample name="HeatmapExample" />
+
+### Missing values and the table
+
+<ChartExample name="HeatmapDetailsExample" />
+
+### Status
+
+<ChartExample name="HeatmapStatusExample" />
+
+## The ramp
+
+The colours are Figma's: `chart/primary` at 8, 25, 45, 70 and 100 %, over the surface in light and
+dark. `heatmapStep(value, max)` is the rule, exported so a server can bucket the same way:
+
+1. Five equal widths over 0 to the largest value: 0 to 20 % of it is step 1, up to 40 % step 2, and
+   so on, the largest value step 5.
+2. 0 and negative values are step 1; when the largest value is 0, every value is step 1.
+3. A value that is not a finite number is a cell with no value: drawn as a hairline only, and
+   `labels.missing` ("—") in the table.
+
+Rows and columns come in the order they first appear in `data` (`heatmapGrid`).
+
+## Props
+
+<ChartProps />
+
+`x` (the column, such as an hour), `y` (the row, such as a day) and `value` are an `Accessor`, as in
+every chart. `xTicks` labels every `every`-th column, or at most `max` of them (default 6: every
+other column of twelve).
+
+`labels` takes `Partial<HeatmapLabels>`, on top of [ChartFrame's](/docs/charts/chart-frame/#props):
+
+<ChartsTable label="Heatmap label defaults">
+
+| Key       | Default |
+| --------- | ------- |
+| `row`     | `Row`   |
+| `missing` | `—`     |
+| `fewer`   | `Fewer` |
+| `more`    | `More`  |
+
+</ChartsTable>
+
+## Other exports
+
+<ChartOtherExports />
+
+## Data attributes and slots
+
+Inside the [ChartFrame](/docs/charts/chart-frame/#data-attributes-and-slots) root, which carries
+`nz-heatmap` (with `axes="none"` and `interaction="none"`):
+
+<ChartsTable label="Heatmap data attributes and slots">
+
+| Element                | Attributes                                                                                   |
+| ---------------------- | -------------------------------------------------------------------------------------------- |
+| `div.nz-heatmap-grid`  | `aria-hidden`: the rows, the column labels and the scale                                     |
+| `span.nz-heatmap-cell` | `data-slot="heatmap-cell"`, `data-step="1"`…`"5"`; no `data-step` when the cell has no value |
+| `div.nz-heatmap-scale` | `data-slot="heatmap-scale"`: "Fewer", five swatches (`data-step`), "More"                    |
+
+</ChartsTable>
+
+## CSS hooks
+
+<ChartCssHooks />
+
+Cells are square, at most 32 px, and shrink together in a narrow chart. While loading, empty or
+failed the body keeps Figma's seven-row height.

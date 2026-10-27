@@ -209,6 +209,13 @@
     text-align: center;
   }
 
+  /* An open table wider than the chart (a heatmap's columns on a phone) scrolls sideways in its own
+     box under the summary, never past the page */
+  .nz-chart-frame-table-scroll {
+    max-inline-size: 100%;
+    overflow-x: auto;
+  }
+
   .nz-chart-frame-details-summary {
     inline-size: fit-content;
     border-radius: var(--nz-radius-sm);
