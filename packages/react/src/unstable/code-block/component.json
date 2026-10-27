@@ -1,0 +1,20 @@
+{
+  "name": "code-block",
+  "status": "unstable",
+  "tier": "client",
+  "parts": [],
+  "exports": ["CodeBlock"],
+  "interactive": ["code-block-code"],
+  "focusTarget": "self",
+  "stateIndicator": [],
+  "cssDeps": ["base", "copy-button", "tabs"],
+  "variants": {
+    "variant": ["command", "snippet"]
+  },
+  "figma": {
+    "canonical": ["7416:53"],
+    "ghosts": [],
+    "variantsSeen": ["7416:22", "7416:39"],
+    "related": ["7416:21"]
+  }
+}

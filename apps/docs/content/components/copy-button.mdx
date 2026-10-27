@@ -1,0 +1,15 @@
+---
+title: CopyButton
+description: 'Unstable: copies text to the clipboard, then reads "Copied" for 2 seconds and announces it. It lives on the dark code surface of a CodeBlock. Import it from @nizivo/react/unstable/copy-button.'
+---
+
+## Static or interactive
+
+**Client.** It writes to the clipboard. [How to choose](/docs/guides/static-or-interactive/).
+
+## Use
+
+`value` is the text to copy. After a copy the button reads "Copied" for 2 seconds, and a polite live
+region says so; its name stays "Copy". `onCopied` hears the copy, and `onCopyFailed` hears why
+the clipboard refused (nothing claims a copy then). It is drawn for the dark
+[CodeBlock](/docs/components/code-block/) surface.

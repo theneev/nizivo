@@ -379,6 +379,10 @@
       "types": "./dist/unstable/citation/index.d.ts",
       "default": "./dist/unstable/citation/index.js"
     },
+    "./unstable/code-block": {
+      "types": "./dist/unstable/code-block/index.d.ts",
+      "default": "./dist/unstable/code-block/index.js"
+    },
     "./unstable/command-menu": {
       "types": "./dist/unstable/command-menu/index.d.ts",
       "default": "./dist/unstable/command-menu/index.js"
@@ -387,9 +391,17 @@
       "types": "./dist/unstable/comment/index.d.ts",
       "default": "./dist/unstable/comment/index.js"
     },
+    "./unstable/copy-button": {
+      "types": "./dist/unstable/copy-button/index.d.ts",
+      "default": "./dist/unstable/copy-button/index.js"
+    },
     "./unstable/date-range-picker": {
       "types": "./dist/unstable/date-range-picker/index.d.ts",
       "default": "./dist/unstable/date-range-picker/index.js"
+    },
+    "./unstable/docs-card": {
+      "types": "./dist/unstable/docs-card/index.d.ts",
+      "default": "./dist/unstable/docs-card/index.js"
     },
     "./unstable/event-card": {
       "types": "./dist/unstable/event-card/index.d.ts",
@@ -406,6 +418,10 @@
     "./unstable/inline-assist": {
       "types": "./dist/unstable/inline-assist/index.d.ts",
       "default": "./dist/unstable/inline-assist/index.js"
+    },
+    "./unstable/link": {
+      "types": "./dist/unstable/link/index.d.ts",
+      "default": "./dist/unstable/link/index.js"
     },
     "./unstable/media-player": {
       "types": "./dist/unstable/media-player/index.d.ts",
@@ -486,14 +502,17 @@
     "./css/chip-group.css": "./dist/css/chip-group.css",
     "./css/choice-card.css": "./dist/css/choice-card.css",
     "./css/citation.css": "./dist/css/citation.css",
+    "./css/code-block.css": "./dist/css/code-block.css",
     "./css/combobox.css": "./dist/css/combobox.css",
     "./css/command-menu.css": "./dist/css/command-menu.css",
     "./css/comment.css": "./dist/css/comment.css",
     "./css/container.css": "./dist/css/container.css",
+    "./css/copy-button.css": "./dist/css/copy-button.css",
     "./css/data-view.css": "./dist/css/data-view.css",
     "./css/date-range-picker.css": "./dist/css/date-range-picker.css",
     "./css/delta.css": "./dist/css/delta.css",
     "./css/dialog.css": "./dist/css/dialog.css",
+    "./css/docs-card.css": "./dist/css/docs-card.css",
     "./css/drawer.css": "./dist/css/drawer.css",
     "./css/empty-state.css": "./dist/css/empty-state.css",
     "./css/event-card.css": "./dist/css/event-card.css",
@@ -513,6 +532,7 @@
     "./css/input.css": "./dist/css/input.css",
     "./css/kbd.css": "./dist/css/kbd.css",
     "./css/kpi-tile.css": "./dist/css/kpi-tile.css",
+    "./css/link.css": "./dist/css/link.css",
     "./css/media-player.css": "./dist/css/media-player.css",
     "./css/menu.css": "./dist/css/menu.css",
     "./css/meter.css": "./dist/css/meter.css",

@@ -124,6 +124,8 @@ const NIZIVO_CLIENT_MARKERS = [
   'nz-prompt-composer',
   'nz-slider',
   'nz-media-player',
+  'nz-copy-button',
+  'nz-code-block',
 ];
 
 /**
@@ -184,6 +186,9 @@ const CLIENT_PAGES: Record<string, string[]> = {
   // v0.5 (D-do): the player's scrubber is a Slider
   '/docs/components/slider/': ['nz-slider'],
   '/docs/components/media-player/': ['nz-media-player', 'nz-slider'],
+  // CodeBlock's versions are the kit's Tabs; CopyButton's example is a CodeBlock
+  '/docs/components/code-block/': ['nz-code-block', 'nz-copy-button', 'tabs-tab'],
+  '/docs/components/copy-button/': ['nz-code-block', 'nz-copy-button', 'tabs-tab'],
   '/docs/components/drawer/': ['drawer-popup'],
   // Form and SubmitButton are client leaves (FormMessage is a server part); the examples put Inputs
   // in Fields.

@@ -1,0 +1,15 @@
+{
+  "name": "link",
+  "status": "unstable",
+  "tier": "server",
+  "exports": ["Link"],
+  "interactive": ["link"],
+  "cssDeps": ["base"],
+  "variants": {},
+  "figma": {
+    "canonical": ["7367:397"],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": []
+  }
+}

@@ -14,8 +14,9 @@
 // (FeedbackBar's votes), `wand-sparkles` (ToolCallCard's mark), `circle-stop` (ResponseBlock's Stop),
 // `refresh-cw` (its Retry), `mic` (VoiceOrb's start), `star` (Rating's), `heart` and
 // `message-circle` (Comment's Like and Reply), and `play`, `pause`, `skip-back` and `skip-forward`
-// (MediaPlayer's); `circle-alert` (ResponseBlock's error mark), `arrow-up` (PromptComposer's send)
-// and `clock` (EventCard's time) are Feather-derived.
+// (MediaPlayer's), and `copy` (CopyButton's); `circle-alert` (ResponseBlock's error mark), `arrow-up`
+// (PromptComposer's send), `clock` (EventCard's time) and `arrow-up-right` (Link's and DocsCard's
+// external mark) are Feather-derived.
 //
 // One export per glyph, so an entry carries only the paths it draws (a name → paths table kept every
 // glyph in every entry that drew one: about 160 B gzip on the Dialog entry).
@@ -55,7 +56,9 @@ export type GlyphName =
   | 'play'
   | 'pause'
   | 'skip-back'
-  | 'skip-forward';
+  | 'skip-forward'
+  | 'copy'
+  | 'arrow-up-right';
 
 function svg(name: GlyphName, paths: ReactNode): JSX.Element {
   return (
@@ -381,5 +384,25 @@ export const SkipForwardGlyph = (): JSX.Element =>
     <>
       <path d="M21 4v16" />
       <path d="M6.029 4.285A2 2 0 0 0 3 6v12a2 2 0 0 0 3.029 1.715l9.997-5.998a2 2 0 0 0 .003-3.432z" />
+    </>,
+  );
+
+/** Lucide's `copy`: CopyButton's. */
+export const CopyGlyph = (): JSX.Element =>
+  svg(
+    'copy',
+    <>
+      <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+      <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+    </>,
+  );
+
+/** Lucide's `arrow-up-right` (Feather-derived): an external Link's, and DocsCard's. */
+export const ArrowUpRightGlyph = (): JSX.Element =>
+  svg(
+    'arrow-up-right',
+    <>
+      <path d="M7 7h10v10" />
+      <path d="M7 17 17 7" />
     </>,
   );

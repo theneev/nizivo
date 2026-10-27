@@ -1,0 +1,15 @@
+{
+  "name": "docs-card",
+  "status": "unstable",
+  "tier": "server",
+  "exports": ["DocsCard"],
+  "interactive": ["docs-card"],
+  "cssDeps": ["base"],
+  "variants": {},
+  "figma": {
+    "canonical": ["7416:59"],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": []
+  }
+}

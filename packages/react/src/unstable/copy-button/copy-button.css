@@ -1,0 +1,38 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/copy-button.css (Figma Copy Button 7416:21), UNSTABLE. On a dark code surface:
+   padded 6 by 8, radius/sm, 6 px between a 16 px mark and the Label/S word in text/code. Copied
+   turns the word text/inverse-accent with a check, on bg/code-elevated, for 2 seconds. */
+@layer nz.components {
+  .nz-copy-button {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: var(--nz-space-1-5);
+    margin: 0;
+    padding-block: var(--nz-space-1-5);
+    padding-inline: var(--nz-space-2);
+    border: 0;
+    border-radius: var(--nz-radius-sm);
+    background: transparent;
+    color: var(--nz-text-code);
+    font: var(--nz-font-label-s);
+    cursor: pointer;
+
+    @media (hover: hover) {
+      &:hover {
+        background: var(--nz-bg-code-elevated);
+      }
+    }
+  }
+
+  .nz-copy-button[data-variant='copied'] {
+    background: var(--nz-bg-code-elevated);
+    color: var(--nz-text-inverse-accent);
+  }
+
+  .nz-copy-button-icon {
+    display: inline-flex;
+    font-size: var(--nz-size-icon-sm);
+  }
+}

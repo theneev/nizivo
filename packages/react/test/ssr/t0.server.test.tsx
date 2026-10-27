@@ -105,6 +105,8 @@ const COMPONENTS = [
   'comment',
   'event-card',
   'profile-card',
+  'link',
+  'docs-card',
 ] as const;
 type Name = (typeof COMPONENTS)[number];
 
@@ -265,6 +267,8 @@ const entries = {
   comment: () => import('../../src/unstable/comment/index'),
   'event-card': () => import('../../src/unstable/event-card/index'),
   'profile-card': () => import('../../src/unstable/profile-card/index'),
+  link: () => import('../../src/unstable/link/index'),
+  'docs-card': () => import('../../src/unstable/docs-card/index'),
   'bulk-action-bar': () => import('../../src/bulk-action-bar/index'),
   'data-view': () => import('../../src/data-view/index'),
   surface: () => import('../../src/surface/index'),
@@ -341,6 +345,8 @@ const exampleModules = {
   comment: () => import('../../src/unstable/comment/comment.example'),
   'event-card': () => import('../../src/unstable/event-card/event-card.example'),
   'profile-card': () => import('../../src/unstable/profile-card/profile-card.example'),
+  link: () => import('../../src/unstable/link/link.example'),
+  'docs-card': () => import('../../src/unstable/docs-card/docs-card.example'),
   'bulk-action-bar': () => import('../../src/bulk-action-bar/bulk-action-bar.example'),
   'data-view': () => import('../../src/data-view/data-view.example'),
   surface: () => import('../../src/surface/surface.example'),

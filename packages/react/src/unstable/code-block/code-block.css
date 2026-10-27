@@ -1,0 +1,89 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/code-block.css (Figma Code Block 7416:53), UNSTABLE. bg/code, radius/lg. A bar
+   (padded 8, 8 and 12) holds the tabs, pills of Label/S (text/code-muted; the selected one
+   text/code on bg/code-elevated, radius 6, padded 4 by 10, 4 px apart), and the CopyButton; a
+   snippet's bar has a bg/code-elevated rule under it. The code is Mono/M in text/code, padded 16
+   (a command 4 on top), never wrapped. The kit's Tabs draw an underlined strip; here they are
+   pills, by the rules below. */
+@layer nz.components {
+  /* Figma's 520 px at least, unless the container is narrower */
+  .nz-code-block {
+    box-sizing: border-box;
+    min-inline-size: min(100%, 32.5rem);
+    overflow: hidden;
+    border-radius: var(--nz-radius-lg);
+    background: var(--nz-bg-code);
+    color: var(--nz-text-code);
+  }
+
+  .nz-code-block .nz-code-block-tabs {
+    gap: 0;
+  }
+
+  .nz-code-block-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--nz-space-2);
+    padding-block: var(--nz-space-2);
+    padding-inline: var(--nz-space-3) var(--nz-space-2);
+  }
+
+  .nz-code-block[data-variant='snippet'] .nz-code-block-bar {
+    border-block-end: var(--nz-border-width-default) solid var(--nz-bg-code-elevated);
+  }
+
+  .nz-code-block-label {
+    color: var(--nz-text-code-muted);
+    font: var(--nz-font-label-s);
+  }
+
+  .nz-code-block .nz-tabs-list {
+    gap: var(--nz-space-1);
+    border: 0;
+  }
+
+  .nz-code-block .nz-tabs-tab {
+    block-size: auto;
+    padding-block: var(--nz-space-1);
+    padding-inline: calc(var(--nz-space-2) + var(--nz-space-0-5));
+    border-radius: calc(var(--nz-radius-xs) * 1.5);
+    color: var(--nz-text-code-muted);
+    font: var(--nz-font-label-s);
+  }
+
+  .nz-code-block .nz-tabs-tab::before {
+    display: none;
+  }
+
+  .nz-code-block .nz-tabs-tab[data-selected] {
+    background: var(--nz-bg-code-elevated);
+    color: var(--nz-text-code);
+  }
+
+  .nz-code-block-code {
+    margin: 0;
+    padding: var(--nz-space-4);
+    overflow-x: auto;
+    color: var(--nz-text-code);
+    font: var(--nz-font-mono-m);
+    white-space: pre;
+    tab-size: 2;
+  }
+
+  .nz-code-block[data-variant='command'] .nz-code-block-code {
+    padding-block-start: var(--nz-space-1);
+  }
+
+  .nz-code-block-prompt {
+    color: var(--nz-text-code-muted);
+    user-select: none;
+  }
+
+  @media (forced-colors: active) {
+    .nz-code-block {
+      border: 1px solid CanvasText;
+    }
+  }
+}

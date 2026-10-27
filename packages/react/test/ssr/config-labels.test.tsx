@@ -43,7 +43,9 @@ const REACHED: Partial<Record<Key, string>> = {
   // SubmitButton, Button's client twin: Button itself is a server part and keeps per-instance labels
   button: 'src/form/submit-button.client.tsx',
   chipGroup: 'src/chip-group/chip-group.client.tsx',
+  codeBlock: 'src/unstable/code-block/code-block.client.tsx',
   commandMenu: 'src/unstable/command-menu/command-menu.client.tsx',
+  copyButton: 'src/unstable/copy-button/copy-button.client.tsx',
   dateRangePicker: 'src/unstable/date-range-picker/date-range-picker.client.tsx',
   dialog: 'src/dialog/dialog.client.tsx',
   drawer: 'src/drawer/drawer.client.tsx',
@@ -87,6 +89,7 @@ const NOT_REACHED: Partial<Record<Key, string>> = {
   fileItem: SERVER,
   comment: SERVER,
   eventCard: SERVER,
+  link: SERVER,
   kpiTile: SERVER,
   metric: SERVER,
   mobileTabBar: SERVER,

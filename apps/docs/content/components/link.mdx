@@ -1,0 +1,16 @@
+---
+title: Link
+description: 'Unstable: navigation in text, always underlined so it is never told by colour alone; external links open in a new tab, show an arrow and say so. Import it from @nizivo/react/unstable/link.'
+---
+
+## Static or interactive
+
+**Server.** No client JavaScript: an `<a>`, or your router's link through `render`.
+[How to choose](/docs/guides/static-or-interactive/).
+
+## Use
+
+A link goes somewhere; for an action, use a [Button](/docs/components/button/). It is underlined
+in text/brand, so it is not told by colour alone (WCAG 1.4.1). `external` sets `target="_blank"`
+and `rel="noopener noreferrer"`, adds the arrow and reads "(opens in a new tab)" after the text
+(`labels.newTab`).

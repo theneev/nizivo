@@ -1,0 +1,16 @@
+---
+title: CodeBlock
+description: 'Unstable: copyable code on a dark surface, a shell command per package manager or a snippet per language, with tabs and a Copy button. Import it from @nizivo/react/unstable/code-block.'
+---
+
+## Static or interactive
+
+**Client.** Its versions are [Tabs](/docs/components/tabs/) and its Copy is a
+[CopyButton](/docs/components/copy-button/). [How to choose](/docs/guides/static-or-interactive/).
+
+## Content
+
+`items` lists the versions (`label` and `code`), in tab order; one item shows its label instead of
+tabs. `variant="command"` puts a "$" before one shell line (it is not copied); a snippet shows
+lines as written. Copy copies the version shown. Code never wraps: a long line scrolls sideways,
+and the code takes focus so a keyboard can scroll it too.

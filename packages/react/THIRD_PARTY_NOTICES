@@ -40,8 +40,10 @@ Lucide icons:
   pause              (the MediaPlayer pause mark)
   skip-back          (the MediaPlayer back mark)
   skip-forward       (the MediaPlayer forward mark)
+  copy               (the CopyButton mark)
+  arrow-up-right     (the external Link and DocsCard mark)
 
-Lucide's licence covers all thirty-four:
+Lucide's licence covers all thirty-six:
 
 ISC License
 
@@ -63,9 +65,9 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 Feather (https://feathericons.com)
 
 chevron-right, circle-x (Feather's x-circle), info, x, check, minus, plus, search,
-calendar, ellipsis (Feather's more-horizontal), circle-alert (Feather's alert-circle), arrow-up and
-clock are on Lucide's list of icons derived from the Feather project, so their path data is also
-under Feather's licence:
+calendar, ellipsis (Feather's more-horizontal), circle-alert (Feather's alert-circle), arrow-up,
+clock and arrow-up-right are on Lucide's list of icons derived from the Feather project, so their
+path data is also under Feather's licence:
 
 The MIT License (MIT)
 

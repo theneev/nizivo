@@ -1,0 +1,78 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/docs-card.css (Figma Docs Card 7416:59), UNSTABLE. bg/surface in a border/subtle
+   edge, radius 24, padded 24 with 12 px between: a 40 px bg/brand-subtle tile (radius/md) and an
+   18 px arrow at the end, the Heading/H3 title, the Body/M text/secondary line and the Label/S
+   text/brand count. Under the pointer the edge turns border/strong. */
+@layer nz.components {
+  /* Figma's 300 px at least, unless the container is narrower; it still stretches in a grid */
+  .nz-docs-card {
+    box-sizing: border-box;
+    min-inline-size: min(100%, 18.75rem);
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-3);
+    padding: var(--nz-space-6);
+    border: var(--nz-border-width-default) solid var(--nz-border-subtle);
+    border-radius: calc(var(--nz-radius-xl) + var(--nz-space-1));
+    background: var(--nz-bg-surface);
+    color: var(--nz-text-primary);
+    text-decoration: none;
+    transition: border-color var(--nz-duration-fast) var(--nz-easing-standard);
+
+    @media (hover: hover) {
+      &:hover {
+        border-color: var(--nz-border-strong);
+      }
+    }
+  }
+
+  .nz-docs-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nz-docs-card-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: var(--nz-space-10);
+    block-size: var(--nz-space-10);
+    border-radius: var(--nz-radius-md);
+    background: var(--nz-bg-brand-subtle);
+    color: var(--nz-icon-brand);
+    font-size: var(--nz-size-icon-md);
+  }
+
+  .nz-docs-card-arrow {
+    display: inline-flex;
+    color: var(--nz-icon-secondary);
+    font-size: 1.125rem;
+  }
+
+  .nz-docs-card-arrow:dir(rtl) {
+    scale: -1 1;
+  }
+
+  .nz-docs-card-title {
+    font: var(--nz-font-heading-h3);
+    letter-spacing: var(--nz-tracking-heading-h3);
+  }
+
+  .nz-docs-card-description {
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-body-m);
+  }
+
+  .nz-docs-card-meta {
+    color: var(--nz-text-brand);
+    font: var(--nz-font-label-s);
+  }
+
+  @media (forced-colors: active) {
+    .nz-docs-card {
+      border-color: CanvasText;
+    }
+  }
+}

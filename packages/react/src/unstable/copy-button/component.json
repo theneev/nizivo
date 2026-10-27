@@ -1,0 +1,20 @@
+{
+  "name": "copy-button",
+  "status": "unstable",
+  "tier": "client",
+  "parts": [],
+  "exports": ["CopyButton"],
+  "interactive": ["copy-button"],
+  "focusTarget": "self",
+  "stateIndicator": [],
+  "cssDeps": ["base"],
+  "variants": {
+    "variant": ["idle", "copied"]
+  },
+  "figma": {
+    "canonical": ["7416:21"],
+    "ghosts": [],
+    "variantsSeen": ["7416:12", "7416:17"],
+    "related": []
+  }
+}

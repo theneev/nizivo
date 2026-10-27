@@ -1,0 +1,33 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/link.css (Figma Link 7367:397), UNSTABLE. Label/M in text/brand, always
+   underlined (from the font's own position and thickness); under the pointer bg/brand-hover's
+   darker green. An external link ends in a 16 px arrow, 4 px after the text. It inherits the size
+   of the text it sits in when it is inside a sentence. */
+@layer nz.components {
+  .nz-link {
+    border-radius: var(--nz-radius-xs);
+    color: var(--nz-text-brand);
+    font-weight: var(--nz-font-label-m-font-weight);
+    text-decoration-line: underline;
+    text-decoration-thickness: from-font;
+    text-underline-position: from-font;
+
+    @media (hover: hover) {
+      &:hover {
+        color: var(--nz-bg-brand-hover);
+      }
+    }
+  }
+
+  .nz-link-icon {
+    display: inline-flex;
+    margin-inline-start: var(--nz-space-1);
+    font-size: 1em;
+    vertical-align: -0.125em;
+  }
+
+  .nz-link-icon:dir(rtl) {
+    scale: -1 1;
+  }
+}

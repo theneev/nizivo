@@ -747,6 +747,13 @@
         "size": ["sm", "md", "lg"]
       }
     },
+    "7367:397": {
+      "component": "link",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/link",
+      "export": "Link",
+      "props": {}
+    },
     "7370:21": {
       "component": "avatar",
       "role": "canonical",
@@ -970,6 +977,31 @@
       "role": "canonical",
       "import": "@nizivo/react/unstable/ai-welcome",
       "export": "AiWelcome",
+      "props": {}
+    },
+    "7416:21": {
+      "component": "copy-button",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/copy-button",
+      "export": "CopyButton",
+      "props": {
+        "variant": ["idle", "copied"]
+      }
+    },
+    "7416:53": {
+      "component": "code-block",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/code-block",
+      "export": "CodeBlock",
+      "props": {
+        "variant": ["command", "snippet"]
+      }
+    },
+    "7416:59": {
+      "component": "docs-card",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/docs-card",
+      "export": "DocsCard",
       "props": {}
     }
   }

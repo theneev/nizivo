@@ -55,6 +55,8 @@ const LUCIDE: Record<string, string> = {
   pause: 'pause',
   'skip-back': 'skip-back',
   'skip-forward': 'skip-forward',
+  copy: 'copy',
+  'arrow-up-right': 'arrow-up-right',
 };
 
 /**
@@ -75,6 +77,7 @@ const FEATHER = new Set([
   'circle-alert',
   'arrow-up',
   'clock',
+  'arrow-up-right',
 ]);
 
 // _internal/glyphs.tsx reuses Lucide path data; ISC requires its notice in every copy (§14.2, §19.3).
