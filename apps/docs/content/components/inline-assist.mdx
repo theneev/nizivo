@@ -1,0 +1,19 @@
+---
+title: InlineAssist
+description: 'Unstable: the AI actions for selected text (Improve, Shorten, Translate, Ask AI…) in a dark floating toolbar with one Tab stop and arrow-key movement. Import it from @nizivo/react/unstable/inline-assist.'
+---
+
+## Static or interactive
+
+**Client.** A `role="toolbar"` that moves focus with the arrow keys, Home and End (mirrored right
+to left). [How to choose](/docs/guides/static-or-interactive/).
+
+## Actions
+
+`actions` lists the actions, each with a `value`, a `label` and an `icon`; `onAction` gets the
+value. "Ask AI…" comes last, after a divider, and calls `onAsk`.
+
+## Where it appears
+
+Placing it at the selection and opening it on Ctrl/⌘+J are the app's: the toolbar never takes
+focus on its own. A result replaces the selection only after the person accepts it, with Undo.

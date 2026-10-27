@@ -383,6 +383,14 @@
       "types": "./dist/unstable/feedback-bar/index.d.ts",
       "default": "./dist/unstable/feedback-bar/index.js"
     },
+    "./unstable/inline-assist": {
+      "types": "./dist/unstable/inline-assist/index.d.ts",
+      "default": "./dist/unstable/inline-assist/index.js"
+    },
+    "./unstable/model-selector": {
+      "types": "./dist/unstable/model-selector/index.d.ts",
+      "default": "./dist/unstable/model-selector/index.js"
+    },
     "./unstable/response-block": {
       "types": "./dist/unstable/response-block/index.d.ts",
       "default": "./dist/unstable/response-block/index.js"
@@ -406,6 +414,10 @@
     "./unstable/usage-meter": {
       "types": "./dist/unstable/usage-meter/index.d.ts",
       "default": "./dist/unstable/usage-meter/index.js"
+    },
+    "./unstable/voice-orb": {
+      "types": "./dist/unstable/voice-orb/index.d.ts",
+      "default": "./dist/unstable/voice-orb/index.js"
     },
     "./css/accordion.css": "./dist/css/accordion.css",
     "./css/ai-badge.css": "./dist/css/ai-badge.css",
@@ -442,6 +454,7 @@
     "./css/heading.css": "./dist/css/heading.css",
     "./css/icon-button.css": "./dist/css/icon-button.css",
     "./css/image.css": "./dist/css/image.css",
+    "./css/inline-assist.css": "./dist/css/inline-assist.css",
     "./css/inline-error.css": "./dist/css/inline-error.css",
     "./css/inline.css": "./dist/css/inline.css",
     "./css/input.css": "./dist/css/input.css",
@@ -452,6 +465,7 @@
     "./css/metric.css": "./dist/css/metric.css",
     "./css/mobile-tab-bar.css": "./dist/css/mobile-tab-bar.css",
     "./css/mobile-top-bar.css": "./dist/css/mobile-top-bar.css",
+    "./css/model-selector.css": "./dist/css/model-selector.css",
     "./css/motion.css": "./dist/css/motion.css",
     "./css/native-select.css": "./dist/css/native-select.css",
     "./css/nav-item.css": "./dist/css/nav-item.css",
@@ -495,6 +509,7 @@
     "./css/top-bar.css": "./dist/css/top-bar.css",
     "./css/trend-card.css": "./dist/css/trend-card.css",
     "./css/usage-meter.css": "./dist/css/usage-meter.css",
+    "./css/voice-orb.css": "./dist/css/voice-orb.css",
     "./styles.css": "./dist/styles.css",
     "./package.json": "./package.json"
   },

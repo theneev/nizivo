@@ -30,8 +30,9 @@ Lucide icons:
   circle-alert       (the ResponseBlock error mark)
   circle-stop        (the ResponseBlock Stop generating mark)
   refresh-cw         (the ResponseBlock Retry mark)
+  mic                (the VoiceOrb start mark)
 
-Lucide's licence covers all twenty-four:
+Lucide's licence covers all twenty-five:
 
 ISC License
 

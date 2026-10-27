@@ -1,0 +1,182 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/voice-orb.css (Figma Voice Orb 7411:301), UNSTABLE. A 240 px column, padded 24
+   with 16 px between: the 160 px orb, the waveform (nine 4 px bars, 4 px apart, radius 2, in
+   icon/secondary while listening and bg/brand while speaking), the Label/M state and a 48 px round
+   IconButtonStatic (primary to start, critical to stop). Figma's orb is the Glow Orb shader; until
+   @nizivo/lab, gradients draw it: a lime-to-brand sphere with a highlight, in a soft halo on
+   bg/canvas. */
+@layer nz.components {
+  .nz-voice-orb {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--nz-space-4);
+    inline-size: calc(var(--nz-space-10) * 6);
+    max-inline-size: 100%;
+    padding-block: var(--nz-space-6);
+    text-align: center;
+  }
+
+  .nz-voice-orb-orb {
+    display: grid;
+    place-items: center;
+    inline-size: calc(var(--nz-space-10) * 4);
+    block-size: calc(var(--nz-space-10) * 4);
+    overflow: hidden;
+    border-radius: var(--nz-radius-full);
+    background: radial-gradient(
+      circle,
+      color-mix(in oklab, var(--nz-bg-accent) 45%, var(--nz-bg-canvas)) 0 45%,
+      var(--nz-bg-canvas) 72%
+    );
+  }
+
+  .nz-voice-orb-sphere {
+    inline-size: 68%;
+    block-size: 68%;
+    border-radius: var(--nz-radius-full);
+    background:
+      radial-gradient(circle at 34% 28%, rgb(255 255 255 / 0.9) 0 6%, transparent 22%),
+      radial-gradient(circle at 36% 32%, var(--nz-bg-accent) 0 30%, var(--nz-bg-brand) 92%);
+    box-shadow: 0 0 var(--nz-space-6) color-mix(in oklab, var(--nz-bg-accent) 60%, transparent);
+    animation: nz-voice-orb-breathe calc(var(--nz-duration-pulse) * 2) ease-in-out infinite
+      alternate;
+  }
+
+  @keyframes nz-voice-orb-breathe {
+    to {
+      scale: 1.04;
+    }
+  }
+
+  .nz-voice-orb-wave {
+    display: flex;
+    align-items: center;
+    gap: var(--nz-space-1);
+    block-size: calc(var(--nz-space-8) - var(--nz-space-0-5));
+  }
+
+  .nz-voice-orb-bar {
+    --_nz-voice-orb-bar: 0.5rem;
+
+    inline-size: var(--nz-space-1);
+    block-size: var(--_nz-voice-orb-bar);
+    border-radius: 2px;
+    background: var(--nz-icon-secondary);
+    transform-origin: center;
+    animation: nz-voice-orb-wave var(--nz-duration-pulse) ease-in-out infinite alternate;
+  }
+
+  .nz-voice-orb[data-tone='speaking'] .nz-voice-orb-bar {
+    background: var(--nz-bg-brand);
+  }
+
+  /* Figma's heights, listening then speaking */
+  .nz-voice-orb-bar:nth-child(1) {
+    --_nz-voice-orb-bar: 0.5rem;
+    animation-delay: -0.1s;
+  }
+  .nz-voice-orb-bar:nth-child(2) {
+    --_nz-voice-orb-bar: 1.125rem;
+    animation-delay: -0.5s;
+  }
+  .nz-voice-orb-bar:nth-child(3) {
+    --_nz-voice-orb-bar: 1.75rem;
+    animation-delay: -0.3s;
+  }
+  .nz-voice-orb-bar:nth-child(4) {
+    --_nz-voice-orb-bar: 0.875rem;
+    animation-delay: -0.7s;
+  }
+  .nz-voice-orb-bar:nth-child(5) {
+    --_nz-voice-orb-bar: 1.375rem;
+    animation-delay: -0.2s;
+  }
+  .nz-voice-orb-bar:nth-child(6) {
+    --_nz-voice-orb-bar: 0.625rem;
+    animation-delay: -0.6s;
+  }
+  .nz-voice-orb-bar:nth-child(7) {
+    --_nz-voice-orb-bar: 1.625rem;
+    animation-delay: -0.4s;
+  }
+  .nz-voice-orb-bar:nth-child(8) {
+    --_nz-voice-orb-bar: 1rem;
+    animation-delay: -0.8s;
+  }
+  .nz-voice-orb-bar:nth-child(9) {
+    --_nz-voice-orb-bar: 0.5rem;
+    animation-delay: -0.15s;
+  }
+  .nz-voice-orb[data-tone='speaking'] .nz-voice-orb-bar:nth-child(1) {
+    --_nz-voice-orb-bar: 0.75rem;
+  }
+  .nz-voice-orb[data-tone='speaking'] .nz-voice-orb-bar:nth-child(2) {
+    --_nz-voice-orb-bar: 1.5rem;
+  }
+  .nz-voice-orb[data-tone='speaking'] .nz-voice-orb-bar:nth-child(3) {
+    --_nz-voice-orb-bar: 1rem;
+  }
+  .nz-voice-orb[data-tone='speaking'] .nz-voice-orb-bar:nth-child(4) {
+    --_nz-voice-orb-bar: 1.875rem;
+  }
+  .nz-voice-orb[data-tone='speaking'] .nz-voice-orb-bar:nth-child(5) {
+    --_nz-voice-orb-bar: 1.25rem;
+  }
+  .nz-voice-orb[data-tone='speaking'] .nz-voice-orb-bar:nth-child(6) {
+    --_nz-voice-orb-bar: 1.75rem;
+  }
+  .nz-voice-orb[data-tone='speaking'] .nz-voice-orb-bar:nth-child(7) {
+    --_nz-voice-orb-bar: 0.875rem;
+  }
+  .nz-voice-orb[data-tone='speaking'] .nz-voice-orb-bar:nth-child(8) {
+    --_nz-voice-orb-bar: 1.375rem;
+  }
+  .nz-voice-orb[data-tone='speaking'] .nz-voice-orb-bar:nth-child(9) {
+    --_nz-voice-orb-bar: 0.625rem;
+  }
+
+  @keyframes nz-voice-orb-wave {
+    to {
+      scale: 1 0.45;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nz-voice-orb-sphere,
+    .nz-voice-orb-bar {
+      animation: none;
+    }
+  }
+
+  [data-nz-motion='reduce'] :is(.nz-voice-orb-sphere, .nz-voice-orb-bar) {
+    animation: none;
+  }
+
+  .nz-voice-orb-label {
+    color: var(--nz-text-primary);
+    font: var(--nz-font-label-m);
+  }
+
+  .nz-voice-orb .nz-voice-orb-button {
+    border-radius: var(--nz-radius-full);
+  }
+
+  .nz-voice-orb-captions {
+    align-self: stretch;
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-body-s);
+  }
+
+  @media (forced-colors: active) {
+    .nz-voice-orb-orb {
+      outline: 1px solid CanvasText;
+    }
+
+    .nz-voice-orb-bar {
+      forced-color-adjust: none;
+      background: CanvasText;
+    }
+  }
+}

@@ -843,6 +843,36 @@
       "export": "ApprovalCard",
       "props": {}
     },
+    "7410:346": {
+      "component": "inline-assist",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/inline-assist",
+      "export": "InlineAssist",
+      "props": {}
+    },
+    "7410:384": {
+      "component": "model-selector",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/model-selector",
+      "export": "ModelSelector",
+      "props": {}
+    },
+    "7410:394": {
+      "component": "model-selector",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/model-selector",
+      "export": "ModelSelector",
+      "props": {}
+    },
+    "7411:301": {
+      "component": "voice-orb",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/voice-orb",
+      "export": "VoiceOrb",
+      "props": {
+        "tone": ["idle", "listening", "speaking"]
+      }
+    },
     "7411:307": {
       "component": "usage-meter",
       "role": "canonical",

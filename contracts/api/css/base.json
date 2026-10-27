@@ -38,6 +38,7 @@
     "nz-form-summary-link",
     "nz-hit-target",
     "nz-icon-button",
+    "nz-inline-assist-action",
     "nz-input",
     "nz-menu-checkbox-item",
     "nz-menu-item",
@@ -47,6 +48,8 @@
     "nz-meter-track",
     "nz-mobile-tab-bar-link",
     "nz-mobile-tab-bar-more-trigger",
+    "nz-model-selector-item",
+    "nz-model-selector-trigger",
     "nz-native-select-trigger",
     "nz-nav-item",
     "nz-number-field",
@@ -83,7 +86,8 @@
     "nz-toast-region",
     "nz-tooltip-popup",
     "nz-tooltip-trigger",
-    "nz-visually-hidden"
+    "nz-visually-hidden",
+    "nz-voice-orb-button"
   ],
   "entry": "./css/base.css",
   "hooks": [],

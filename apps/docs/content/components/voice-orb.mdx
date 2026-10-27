@@ -1,0 +1,25 @@
+---
+title: VoiceOrb
+description: 'Unstable: voice mode, an orb, a written state (Tap to talk, Listening…, Speaking…) and one big control that starts and stops. Import it from @nizivo/react/unstable/voice-orb.'
+---
+
+## Static or interactive
+
+**Server.** No client JavaScript: the control is an `IconButtonStatic`
+([IconButton](/docs/components/icon-button/) without its tooltip) that calls `onToggle`.
+[How to choose](/docs/guides/static-or-interactive/).
+
+## State
+
+`state` is `idle`, `listening` or `speaking`. The label carries it, in a polite live region, and
+the button changes from Start talking (the mic) to Stop. The orb and the waveform are decoration;
+both stand still under Reduced motion.
+
+## Captions
+
+Put what was heard, and what the assistant says, in the children: voice needs a text twin.
+
+## The orb
+
+The design's orb is a shader. Shaders wait for a later package, so the orb is drawn with CSS
+gradients; `orb` takes any picture in its place, hidden from assistive technology.

@@ -1,0 +1,21 @@
+{
+  "name": "model-selector",
+  "status": "unstable",
+  "tier": "client",
+  "parts": [],
+  "exports": ["ModelSelector"],
+  "interactive": ["model-selector-trigger", "model-selector-item"],
+  "focusTarget": {
+    "model-selector-trigger": "self",
+    "model-selector-item": "engine"
+  },
+  "stateIndicator": [],
+  "cssDeps": ["base", "popover", "select"],
+  "variants": {},
+  "figma": {
+    "canonical": ["7410:384", "7410:394"],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": []
+  }
+}

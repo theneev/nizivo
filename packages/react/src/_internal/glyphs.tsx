@@ -11,8 +11,8 @@
 // THIRD_PARTY_NOTICES; `circle-check` (the success Toast's) and `eye` and `eye-off`
 // (PasswordInput's show and hide marks) are Lucide's own, as are the AI kit's `sparkles` (the AI
 // mark), `globe` and `file-text` (SourceCard's web and file marks), `thumbs-up` and `thumbs-down`
-// (FeedbackBar's votes), `wand-sparkles` (ToolCallCard's mark), `circle-stop` (ResponseBlock's Stop)
-// and `refresh-cw` (its Retry); `circle-alert` (ResponseBlock's error mark) is Feather-derived.
+// (FeedbackBar's votes), `wand-sparkles` (ToolCallCard's mark), `circle-stop` (ResponseBlock's Stop),
+// `refresh-cw` (its Retry) and `mic` (VoiceOrb's start); `circle-alert` (ResponseBlock's error mark) is Feather-derived.
 //
 // One export per glyph, so an entry carries only the paths it draws (a name → paths table kept every
 // glyph in every entry that drew one: about 160 B gzip on the Dialog entry).
@@ -42,7 +42,8 @@ export type GlyphName =
   | 'wand-sparkles'
   | 'circle-alert'
   | 'circle-stop'
-  | 'refresh-cw';
+  | 'refresh-cw'
+  | 'mic';
 
 function svg(name: GlyphName, paths: ReactNode): JSX.Element {
   return (
@@ -279,5 +280,16 @@ export const RefreshCwGlyph = (): JSX.Element =>
       <path d="M21 3v5h-5" />
       <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
       <path d="M8 16H3v5" />
+    </>,
+  );
+
+/** Lucide's `mic`: VoiceOrb's start button. */
+export const MicGlyph = (): JSX.Element =>
+  svg(
+    'mic',
+    <>
+      <path d="M12 19v3" />
+      <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+      <rect x="9" y="2" width="6" height="13" rx="3" />
     </>,
   );

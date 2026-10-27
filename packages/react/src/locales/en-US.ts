@@ -37,6 +37,9 @@ import type { ToolCallCardLabels } from '../unstable/tool-call-card/index';
 import type { ResponseBlockLabels } from '../unstable/response-block/index';
 import type { FeedbackBarLabels } from '../unstable/feedback-bar/index';
 import type { ApprovalCardLabels } from '../unstable/approval-card/index';
+import type { ModelSelectorLabels } from '../unstable/model-selector/index';
+import type { InlineAssistLabels } from '../unstable/inline-assist/index';
+import type { VoiceOrbLabels } from '../unstable/voice-orb/index';
 import type { RankedListLabels } from '../ranked-list/index';
 import type { SearchFieldLabels } from '../search-field/index';
 import type { SidebarLabels } from '../sidebar/index';
@@ -83,6 +86,9 @@ export const enUS: {
   responseBlock: ResponseBlockLabels;
   feedbackBar: FeedbackBarLabels;
   approvalCard: ApprovalCardLabels;
+  modelSelector: ModelSelectorLabels;
+  inlineAssist: InlineAssistLabels;
+  voiceOrb: VoiceOrbLabels;
   rankedList: RankedListLabels;
   searchField: SearchFieldLabels;
   sidebar: SidebarLabels;
@@ -181,6 +187,15 @@ export const enUS: {
     reasons: 'What went wrong',
   },
   approvalCard: { badge: 'Needs your approval', cancel: 'Cancel', edit: 'Edit first' },
+  modelSelector: { label: 'Model' },
+  inlineAssist: { label: 'Writing tools', ask: 'Ask AI…' },
+  voiceOrb: {
+    idle: 'Tap to talk',
+    listening: 'Listening…',
+    speaking: 'Speaking…',
+    start: 'Start talking',
+    stop: 'Stop',
+  },
   rankedList: { loading: 'Loading {label}', empty: 'No data', error: 'Could not load {label}' },
   searchField: { label: 'Search', clear: 'Clear search' },
   sidebar: { nav: 'Primary' },

@@ -1,0 +1,70 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/model-selector.css (Figma Model Selector 7410:384, Model Menu 7410:394), UNSTABLE.
+   Select's sm trigger as a pill: radius/full, padded 6 by 10 and 8, 6 px between a 14 px sparkles,
+   the Label/M name and a 14 px chevron-down (Select's chevron turned). The menu is 300 px, its rows
+   padded 10 by 12 with radius 10: the name in Label/M (Semibold when chosen) over the trade-off in
+   Body/S text/secondary. */
+@layer nz.components {
+  .nz-model-selector {
+    display: inline-flex;
+  }
+
+  .nz-model-selector-trigger.nz-select-trigger {
+    gap: var(--nz-space-1-5);
+    block-size: auto;
+    padding-block: var(--nz-space-1-5);
+    padding-inline: calc(var(--nz-space-2) + var(--nz-space-0-5)) var(--nz-space-2);
+    border-color: var(--nz-border-default);
+    border-radius: var(--nz-radius-full);
+    font: var(--nz-font-label-m);
+  }
+
+  .nz-model-selector-trigger .nz-select-icon {
+    color: var(--nz-icon-brand);
+    font-size: 0.875rem;
+  }
+
+  .nz-model-selector-trigger .nz-select-chevron {
+    font-size: 0.875rem;
+  }
+
+  .nz-model-selector-chevron {
+    display: inline-flex;
+    rotate: 90deg;
+  }
+
+  .nz-model-selector-popup.nz-select-popup {
+    inline-size: calc(var(--nz-space-10) * 7.5);
+    max-inline-size: calc(100vw - var(--nz-space-8));
+  }
+
+  .nz-model-selector-item.nz-select-item {
+    align-items: center;
+    padding-block: calc(var(--nz-space-2) + var(--nz-space-0-5));
+    padding-inline: var(--nz-space-3);
+    border-radius: calc(var(--nz-radius-sm) * 1.25);
+  }
+
+  .nz-model-selector-text {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: var(--nz-space-0-5);
+    min-inline-size: 0;
+  }
+
+  .nz-model-selector-name {
+    color: var(--nz-text-primary);
+    font: var(--nz-font-label-m);
+  }
+
+  .nz-model-selector-item[data-selected] .nz-model-selector-name {
+    font: var(--nz-font-label-m-strong);
+  }
+
+  .nz-model-selector-description {
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-body-s);
+  }
+}

@@ -119,6 +119,8 @@ const NIZIVO_CLIENT_MARKERS = [
   // the AI kit's client parts (v0.4, D-dn): their root classes
   'nz-feedback-bar',
   'nz-approval-card',
+  'nz-model-selector',
+  'nz-inline-assist',
 ];
 
 /**
@@ -170,6 +172,9 @@ const CLIENT_PAGES: Record<string, string[]> = {
   ],
   '/docs/components/response-block/': ['tooltip-popup'],
   '/docs/components/approval-card/': ['nz-approval-card'],
+  // ModelSelector is a Select, which reads its Field through FieldScope
+  '/docs/components/model-selector/': ['nz-model-selector', 'select-popup', 'willValidate'],
+  '/docs/components/inline-assist/': ['nz-inline-assist'],
   '/docs/components/drawer/': ['drawer-popup'],
   // Form and SubmitButton are client leaves (FormMessage is a server part); the examples put Inputs
   // in Fields.

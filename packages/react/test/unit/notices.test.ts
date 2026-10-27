@@ -45,6 +45,7 @@ const LUCIDE: Record<string, string> = {
   'circle-alert': 'circle-alert',
   'circle-stop': 'circle-stop',
   'refresh-cw': 'refresh-cw',
+  mic: 'mic',
 };
 
 /**

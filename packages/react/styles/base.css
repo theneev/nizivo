@@ -31,9 +31,11 @@
     .nz-form-summary,
     .nz-form-summary-link,
     .nz-icon-button,
+    .nz-inline-assist-action,
     .nz-menu-trigger,
     .nz-mobile-tab-bar-link,
     .nz-mobile-tab-bar-more-trigger,
+    .nz-model-selector-trigger,
     .nz-native-select-trigger,
     .nz-nav-item,
     .nz-pagination-next,
@@ -58,7 +60,8 @@
     .nz-toast-action,
     .nz-toast-close,
     .nz-toast-region,
-    .nz-tooltip-trigger
+    .nz-tooltip-trigger,
+    .nz-voice-orb-button
   ):is(:focus-visible, [data-focus-visible]) {
     outline: var(--nz-border-width-focus) solid var(--nz-border-focus);
     outline-offset: 2px;
@@ -69,6 +72,7 @@
     .nz-menu-checkbox-item,
     .nz-menu-item,
     .nz-menu-radio-item,
+    .nz-model-selector-item,
     .nz-select-item
   ):focus-visible {
     outline: none;
@@ -79,6 +83,7 @@
     .nz-menu-checkbox-item,
     .nz-menu-item,
     .nz-menu-radio-item,
+    .nz-model-selector-item,
     .nz-select-item
   )[data-focus-visible] {
     outline: var(--nz-border-width-focus) solid var(--nz-border-focus);
@@ -145,12 +150,15 @@
     .nz-form-summary,
     .nz-form-summary-link,
     .nz-icon-button,
+    .nz-inline-assist-action,
     .nz-menu-checkbox-item,
     .nz-menu-item,
     .nz-menu-radio-item,
     .nz-menu-trigger,
     .nz-mobile-tab-bar-link,
     .nz-mobile-tab-bar-more-trigger,
+    .nz-model-selector-item,
+    .nz-model-selector-trigger,
     .nz-native-select-trigger,
     .nz-nav-item,
     .nz-pagination-next,
@@ -177,7 +185,8 @@
     .nz-toast-action,
     .nz-toast-close,
     .nz-toast-region,
-    .nz-tooltip-trigger
+    .nz-tooltip-trigger,
+    .nz-voice-orb-button
   ) {
     touch-action: pan-x pan-y pinch-zoom;
   }

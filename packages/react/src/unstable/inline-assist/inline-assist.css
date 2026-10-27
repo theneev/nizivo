@@ -1,0 +1,77 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/inline-assist.css (Figma Inline Assist 7410:346), UNSTABLE. bg/inverse with
+   Elevation/3, radius 14, padded 4 with 2 px between the buttons: each padded 8 by 10 and 12, radius
+   10, a 16 px glyph and Label/M in text/inverse; under the pointer or the keyboard it lifts to
+   bg/inverse-elevated with text/inverse-accent, Figma's "Improve". A 20 px divider sets "Ask AI…"
+   apart. Dark in both modes, as Figma draws it. */
+@layer nz.components {
+  .nz-inline-assist {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    padding: var(--nz-space-1);
+    border-radius: calc(var(--nz-radius-xs) * 3.5);
+    background: var(--nz-bg-inverse);
+    box-shadow: var(--nz-elevation-3);
+  }
+
+  .nz-inline-assist-action {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--nz-space-1-5);
+    padding-block: var(--nz-space-2);
+    padding-inline: calc(var(--nz-space-2) + var(--nz-space-0-5)) var(--nz-space-3);
+    border: 0;
+    border-radius: calc(var(--nz-radius-sm) * 1.25);
+    background: transparent;
+    color: var(--nz-text-inverse);
+    font: var(--nz-font-label-m);
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+      background-color var(--nz-duration-fast) var(--nz-easing-standard),
+      color var(--nz-duration-fast) var(--nz-easing-standard);
+
+    @media (hover: hover) {
+      &:hover:not(:disabled) {
+        background: var(--nz-bg-inverse-elevated);
+        color: var(--nz-text-inverse-accent);
+      }
+    }
+
+    &:focus-visible {
+      background: var(--nz-bg-inverse-elevated);
+      color: var(--nz-text-inverse-accent);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  .nz-inline-assist-icon {
+    display: inline-flex;
+    flex: none;
+    font-size: var(--nz-size-icon-sm);
+  }
+
+  .nz-inline-assist-divider {
+    flex: none;
+    inline-size: 1px;
+    block-size: var(--nz-space-5);
+    margin-inline: var(--nz-space-0-5);
+    background: var(--nz-text-inverse);
+  }
+
+  @media (forced-colors: active) {
+    .nz-inline-assist {
+      border: 1px solid CanvasText;
+    }
+
+    .nz-inline-assist-divider {
+      background: CanvasText;
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "voice-orb",
+  "status": "unstable",
+  "tier": "server",
+  "exports": ["VoiceOrb"],
+  "interactive": ["voice-orb-button"],
+  "cssDeps": ["base", "icon-button"],
+  "variants": {
+    "tone": ["idle", "listening", "speaking"]
+  },
+  "figma": {
+    "canonical": ["7411:301"],
+    "ghosts": [],
+    "variantsSeen": ["7411:256", "7411:265", "7411:283"],
+    "related": ["7389:78"]
+  }
+}

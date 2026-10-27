@@ -1,0 +1,16 @@
+---
+title: ModelSelector
+description: 'Unstable: which model answers, as a trade-off in plain words (Fast, Balanced, Deep), in a pill that opens a list describing each one. Import it from @nizivo/react/unstable/model-selector.'
+---
+
+## Static or interactive
+
+**Client.** It is a [Select](/docs/components/select/): the same keyboard, typeahead and hidden
+native `<select>` for forms. [How to choose](/docs/guides/static-or-interactive/).
+
+## Models
+
+`models` lists the choices, each with a `value`, a `label` that names the trade-off ("Balanced",
+never a version number) and a `description` that says it in words ("Good for most work").
+`value`, `defaultValue` (the first model by default) and `onValueChange` hold the choice. The
+trigger shows the chosen name only; its accessible name ends with `labels.label` ("Balanced Model").

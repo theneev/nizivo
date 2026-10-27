@@ -6,7 +6,7 @@
       "limitKiB": 143
     },
     "@nizivo/react/accordion": {
-      "measured": 1313,
+      "measured": 1312,
       "limitKiB": 1.5
     },
     "@nizivo/react/alert": {
@@ -106,7 +106,7 @@
       "limitKiB": 1.9
     },
     "@nizivo/react/file-upload": {
-      "measured": 5687,
+      "measured": 5688,
       "limitKiB": 6.1
     },
     "@nizivo/react/form": {
@@ -158,7 +158,7 @@
       "limitKiB": 2.5
     },
     "@nizivo/react/locales/en-US": {
-      "measured": 1291,
+      "measured": 1376,
       "limitKiB": 1.4
     },
     "@nizivo/react/menu": {
@@ -194,7 +194,7 @@
       "limitKiB": 1.4
     },
     "@nizivo/react/number-field": {
-      "measured": 28926,
+      "measured": 28925,
       "limitKiB": 32
     },
     "@nizivo/react/number-value": {
@@ -318,7 +318,7 @@
       "limitKiB": 0.4
     },
     "@nizivo/react/toast": {
-      "measured": 14913,
+      "measured": 14911,
       "limitKiB": 16
     },
     "@nizivo/react/tooltip": {
@@ -357,6 +357,14 @@
       "measured": 19656,
       "limitKiB": 21.2
     },
+    "@nizivo/react/unstable/inline-assist": {
+      "measured": 1690,
+      "limitKiB": 1.9
+    },
+    "@nizivo/react/unstable/model-selector": {
+      "measured": 63788,
+      "limitKiB": 69
+    },
     "@nizivo/react/unstable/response-block": {
       "measured": 2309,
       "limitKiB": 2.5
@@ -374,19 +382,23 @@
       "limitKiB": 1
     },
     "@nizivo/react/unstable/tool-call-card": {
-      "measured": 1635,
+      "measured": 1636,
       "limitKiB": 1.8
     },
     "@nizivo/react/unstable/usage-meter": {
       "measured": 1872,
       "limitKiB": 2.1
     },
+    "@nizivo/react/unstable/voice-orb": {
+      "measured": 1888,
+      "limitKiB": 20
+    },
     "@nizivo/react dashboard set": {
       "measured": 78934,
       "limitKiB": 85
     },
     "@nizivo/react { Button } from the barrel": {
-      "measured": 1280,
+      "measured": 1279,
       "limitKiB": 1.4
     },
     "@nizivo/react { Select } from the barrel": {
@@ -629,6 +641,14 @@
       "measured": 849,
       "limitKiB": 1
     },
+    "@nizivo/react own: unstable/inline-assist/inline-assist.client": {
+      "measured": 819,
+      "limitKiB": 0.9
+    },
+    "@nizivo/react own: unstable/model-selector/model-selector.client": {
+      "measured": 764,
+      "limitKiB": 0.8
+    },
     "@nizivo/react lazy: the DateRangePicker calendar": {
       "measured": 39816,
       "limitKiB": 43
@@ -678,8 +698,8 @@
       "limitKiB": 0.8
     },
     "@nizivo/react/css/base.css": {
-      "measured": 1408,
-      "limitKiB": 1.4
+      "measured": 1444,
+      "limitKiB": 1.6
     },
     "@nizivo/react/css/breadcrumb.css": {
       "measured": 551,
@@ -785,6 +805,10 @@
       "measured": 243,
       "limitKiB": 0.3
     },
+    "@nizivo/react/css/inline-assist.css": {
+      "measured": 547,
+      "limitKiB": 0.6
+    },
     "@nizivo/react/css/inline-error.css": {
       "measured": 273,
       "limitKiB": 0.3
@@ -823,6 +847,10 @@
     },
     "@nizivo/react/css/mobile-top-bar.css": {
       "measured": 536,
+      "limitKiB": 0.6
+    },
+    "@nizivo/react/css/model-selector.css": {
+      "measured": 479,
       "limitKiB": 0.6
     },
     "@nizivo/react/css/motion.css": {
@@ -997,8 +1025,12 @@
       "measured": 443,
       "limitKiB": 0.5
     },
+    "@nizivo/react/css/voice-orb.css": {
+      "measured": 955,
+      "limitKiB": 1.1
+    },
     "@nizivo/react/styles.css": {
-      "measured": 25914,
+      "measured": 25950,
       "limitKiB": 26
     },
     "@nizivo/tokens": {

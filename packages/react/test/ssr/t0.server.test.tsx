@@ -94,6 +94,7 @@ const COMPONENTS = [
   'usage-meter',
   'tool-call-card',
   'response-block',
+  'voice-orb',
 ] as const;
 type Name = (typeof COMPONENTS)[number];
 
@@ -242,6 +243,7 @@ const entries = {
   'usage-meter': () => import('../../src/unstable/usage-meter/index'),
   'tool-call-card': () => import('../../src/unstable/tool-call-card/index'),
   'response-block': () => import('../../src/unstable/response-block/index'),
+  'voice-orb': () => import('../../src/unstable/voice-orb/index'),
   'bulk-action-bar': () => import('../../src/bulk-action-bar/index'),
   'data-view': () => import('../../src/data-view/index'),
   surface: () => import('../../src/surface/index'),
@@ -307,6 +309,7 @@ const exampleModules = {
   'usage-meter': () => import('../../src/unstable/usage-meter/usage-meter.example'),
   'tool-call-card': () => import('../../src/unstable/tool-call-card/tool-call-card.example'),
   'response-block': () => import('../../src/unstable/response-block/response-block.example'),
+  'voice-orb': () => import('../../src/unstable/voice-orb/voice-orb.example'),
   'bulk-action-bar': () => import('../../src/bulk-action-bar/bulk-action-bar.example'),
   'data-view': () => import('../../src/data-view/data-view.example'),
   surface: () => import('../../src/surface/surface.example'),
