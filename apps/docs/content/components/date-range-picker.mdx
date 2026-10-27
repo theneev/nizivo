@@ -1,0 +1,58 @@
+---
+title: DateRangePicker
+description: 'Unstable: a range of dates from a trigger in Select''s look, through a popover with presets, one month of calendar and Cancel and Apply. Values are ISO plain dates; "today" is counted in the time zone you pass. Import it from @nizivo/react/unstable/date-range-picker.'
+keyboard:
+  - keys: Enter, Space
+    action: On the trigger, opens the popover; focus moves into it.
+  - keys: Tab
+    action: Moves between the presets, the month buttons, the calendar and Cancel and Apply.
+  - keys: Arrow keys
+    action: In the calendar, move a day or a week.
+  - keys: Page Up, Page Down
+    action: In the calendar, move a month.
+  - keys: Home, End
+    action: In the calendar, move to the start or end of the week.
+  - keys: Enter
+    action: In the calendar, picks the range's first day and moves on a day; then picks its last day.
+  - keys: Escape
+    action: Closes the popover and keeps the old range; focus returns to the trigger.
+keyboardSource: React Aria Components 1.22.1 `RangeCalendar` (`_engines/react-aria/date-range-picker.client.tsx`) inside the Popover. The browser lane (`test/browser/date-range-picker.spec.tsx`) checks hydration, the trigger's name, opening on the applied month, presets, Apply, Cancel, Escape, two days by keyboard, the time zone's today and the form's value.
+---
+
+## Unstable
+
+It ships at `@nizivo/react/unstable/date-range-picker`, outside the semver promise, because the
+design has not drawn an unavailable day or a comparison with the previous period yet. Its props may
+change in a minor release.
+
+## Static or interactive
+
+**Client.** It is React Aria's RangeCalendar inside the Popover. The server renders the trigger,
+with the applied range as its text, and the hidden form input; the popover, the calendar and
+anything that depends on today's date render only after hydration, when it opens.
+[How to choose](/docs/guides/static-or-interactive/).
+
+## Value
+
+`value` and `defaultValue` are `{ start, end }`, ISO plain dates (`'2026-10-01'`), both ends
+included, or `null`. Nothing is applied until Apply: choosing a preset or two days only changes what
+the popover shows, and Cancel, Escape or a press outside keep the old range. `onValueChange` then
+gets the range and `{ reason: 'preset' }` or `{ reason: 'calendar' }`. With `name`, the form gets one
+field whose value is the ISO interval `2026-10-01/2026-10-07`.
+
+`timeZone` is required: the presets and the today mark count from today in it. `min` and `max` limit
+the days that can be picked.
+
+## Presets
+
+`presets` lists them in order: `today`, `yesterday`, `last-7-days`, `last-30-days`, `this-quarter`,
+`year-to-date` (all six by default; `[]` for none). Each ends today. A chosen preset is shown pressed
+until a day is picked.
+
+## Reading the range
+
+The trigger and the footer read the range as `labels.range`, `'{start} – {end}'` by default, each
+end formatted on its own in `locale` ("Oct 1 – Oct 7, 2026"; the start drops the year when both
+share it), never with `Intl.DateTimeFormat.formatRange`, whose spacing differs between browsers. Inside
+a Field, the trigger is named by its value and the label, as Select's is, and a press on the label
+focuses it without opening the popover.

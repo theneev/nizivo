@@ -69,15 +69,15 @@ const reactCache = new Map<string, ReactApiFile>();
 const cssCache = new Map<string, CssApiFile>();
 
 export function reactApi(entry: CatalogEntry): ReactApiFile {
-  const hit = reactCache.get(entry.name);
+  // the file is named by the subpath: react/alert.json, react/unstable/date-range-picker.json
+  const path = entry.entry.slice(2);
+  const hit = reactCache.get(path);
   if (hit) return hit;
-  const file = readApi(join(apiDir(), 'react', `${entry.name}.json`), entry.entry, isReactApi);
+  const file = readApi(join(apiDir(), 'react', `${path}.json`), entry.entry, isReactApi);
   if (entry.kind === 'component' && file.component === undefined) {
-    throw new Error(
-      `docs: react/${entry.name}.json has no component field, but component.json exists.`,
-    );
+    throw new Error(`docs: react/${path}.json has no component field, but component.json exists.`);
   }
-  reactCache.set(entry.name, file);
+  reactCache.set(path, file);
   return file;
 }
 

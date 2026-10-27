@@ -30,11 +30,11 @@
       "limitKiB": 0.9
     },
     "@nizivo/react/banner": {
-      "measured": 1414,
+      "measured": 1413,
       "limitKiB": 1.5
     },
     "@nizivo/react/breadcrumb": {
-      "measured": 1290,
+      "measured": 1291,
       "limitKiB": 1.4
     },
     "@nizivo/react/bulk-action-bar": {
@@ -106,11 +106,11 @@
       "limitKiB": 1.9
     },
     "@nizivo/react/file-upload": {
-      "measured": 5685,
+      "measured": 5687,
       "limitKiB": 6.1
     },
     "@nizivo/react/form": {
-      "measured": 2852,
+      "measured": 2854,
       "limitKiB": 3
     },
     "@nizivo/react/grid": {
@@ -138,7 +138,7 @@
       "limitKiB": 0.8
     },
     "@nizivo/react/inline-error": {
-      "measured": 1049,
+      "measured": 1048,
       "limitKiB": 1.2
     },
     "@nizivo/react/input": {
@@ -150,12 +150,12 @@
       "limitKiB": 1.3
     },
     "@nizivo/react/kpi-tile": {
-      "measured": 2323,
+      "measured": 2322,
       "limitKiB": 2.5
     },
     "@nizivo/react/locales/en-US": {
-      "measured": 739,
-      "limitKiB": 0.8
+      "measured": 873,
+      "limitKiB": 1
     },
     "@nizivo/react/menu": {
       "measured": 57163,
@@ -170,7 +170,7 @@
       "limitKiB": 2.4
     },
     "@nizivo/react/mobile-tab-bar": {
-      "measured": 33344,
+      "measured": 33342,
       "limitKiB": 36
     },
     "@nizivo/react/mobile-top-bar": {
@@ -206,11 +206,11 @@
       "limitKiB": 1.3
     },
     "@nizivo/react/pagination": {
-      "measured": 1989,
+      "measured": 1988,
       "limitKiB": 2
     },
     "@nizivo/react/password-input": {
-      "measured": 2672,
+      "measured": 2671,
       "limitKiB": 2.8
     },
     "@nizivo/react/pointer-fx": {
@@ -230,15 +230,15 @@
       "limitKiB": 1.3
     },
     "@nizivo/react/quantity-stepper": {
-      "measured": 2681,
+      "measured": 2682,
       "limitKiB": 2.9
     },
     "@nizivo/react/radio-group": {
-      "measured": 2200,
+      "measured": 2201,
       "limitKiB": 2.4
     },
     "@nizivo/react/ranked-list": {
-      "measured": 2475,
+      "measured": 2473,
       "limitKiB": 2.7
     },
     "@nizivo/react/search-field": {
@@ -294,7 +294,7 @@
       "limitKiB": 1.8
     },
     "@nizivo/react/table-selection": {
-      "measured": 1859,
+      "measured": 1860,
       "limitKiB": 1.9
     },
     "@nizivo/react/tabs": {
@@ -329,6 +329,10 @@
       "measured": 2442,
       "limitKiB": 2.7
     },
+    "@nizivo/react/unstable/date-range-picker": {
+      "measured": 62501,
+      "limitKiB": 68
+    },
     "@nizivo/react dashboard set": {
       "measured": 78936,
       "limitKiB": 85
@@ -344,6 +348,10 @@
     "@nizivo/react own: _engines/react-aria/combobox.client": {
       "measured": 1614,
       "limitKiB": 1.7
+    },
+    "@nizivo/react own: _engines/react-aria/date-range-picker.client": {
+      "measured": 762,
+      "limitKiB": 0.9
     },
     "@nizivo/react own: _engines/react-aria/dialog.client": {
       "measured": 1084,
@@ -549,6 +557,10 @@
       "measured": 519,
       "limitKiB": 0.6
     },
+    "@nizivo/react own: unstable/date-range-picker/date-range-picker.client": {
+      "measured": 2372,
+      "limitKiB": 2.5
+    },
     "@nizivo/react seam K6 (stateAttrs, details, EngineLocale, engineDom)": {
       "measured": 757,
       "limitKiB": 0.9
@@ -582,7 +594,7 @@
       "limitKiB": 0.8
     },
     "@nizivo/react/css/base.css": {
-      "measured": 1307,
+      "measured": 1333,
       "limitKiB": 1.4
     },
     "@nizivo/react/css/breadcrumb.css": {
@@ -624,6 +636,10 @@
     "@nizivo/react/css/data-view.css": {
       "measured": 570,
       "limitKiB": 0.7
+    },
+    "@nizivo/react/css/date-range-picker.css": {
+      "measured": 1214,
+      "limitKiB": 1.3
     },
     "@nizivo/react/css/delta.css": {
       "measured": 472,
@@ -862,7 +878,7 @@
       "limitKiB": 0.5
     },
     "@nizivo/react/styles.css": {
-      "measured": 25805,
+      "measured": 25835,
       "limitKiB": 26
     },
     "@nizivo/tokens": {

@@ -69,11 +69,15 @@ function stylesheets(): string {
   ].join('\n');
 }
 
-/** A component is a subpath with a component.json (the same rule as lib/catalog.ts). */
+/**
+ * A component is a subpath with a component.json (the same rule as lib/catalog.ts); an unstable
+ * one (`unstable/<name>`) gets its page at the bare name, as the catalog lists it.
+ */
 function components(): string[] {
-  return reactSubpaths().filter(
-    (name) => !name.includes('/') && existsSync(join(reactRoot, 'src', name, 'component.json')),
-  );
+  return reactSubpaths()
+    .filter((subpath) => /^(?:unstable\/)?[a-z0-9-]+$/.test(subpath))
+    .filter((subpath) => existsSync(join(reactRoot, 'src', subpath, 'component.json')))
+    .map((subpath) => subpath.replace(/^unstable\//, ''));
 }
 
 function route(name: string, hasExamples: boolean): string {

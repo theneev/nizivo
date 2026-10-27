@@ -25,6 +25,7 @@ import type { PaginationLabels } from '../pagination/index';
 import type { PasswordInputLabels } from '../password-input/index';
 import type { PopoverLabels } from '../popover/index';
 import type { QuantityStepperLabels } from '../quantity-stepper/index';
+import type { DateRangePickerLabels } from '../unstable/date-range-picker/index';
 import type { RankedListLabels } from '../ranked-list/index';
 import type { SearchFieldLabels } from '../search-field/index';
 import type { SidebarLabels } from '../sidebar/index';
@@ -59,6 +60,7 @@ export const enUS: {
   passwordInput: PasswordInputLabels;
   popover: Pick<PopoverLabels, 'close'>;
   quantityStepper: QuantityStepperLabels;
+  dateRangePicker: DateRangePickerLabels;
   rankedList: RankedListLabels;
   searchField: SearchFieldLabels;
   sidebar: SidebarLabels;
@@ -107,6 +109,19 @@ export const enUS: {
   passwordInput: { toggle: 'Show password' },
   popover: { close: 'Close' },
   quantityStepper: { decrement: 'Decrease quantity', increment: 'Increase quantity' },
+  dateRangePicker: {
+    placeholder: 'Select dates',
+    range: '{start} – {end}',
+    cancel: 'Cancel',
+    apply: 'Apply',
+    presets: 'Presets',
+    today: 'Today',
+    yesterday: 'Yesterday',
+    last7Days: 'Last 7 days',
+    last30Days: 'Last 30 days',
+    thisQuarter: 'This quarter',
+    yearToDate: 'Year to date',
+  },
   rankedList: { loading: 'Loading {label}', empty: 'No data', error: 'Could not load {label}' },
   searchField: { label: 'Search', clear: 'Clear search' },
   sidebar: { nav: 'Primary' },

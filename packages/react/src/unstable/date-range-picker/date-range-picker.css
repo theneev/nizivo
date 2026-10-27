@@ -1,0 +1,270 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/date-range-picker.css (ARCHITECTURE.md §16.3; Figma's Date Range Picker
+   746:267). UNSTABLE. The trigger is Select's (select.css, `nz-select-trigger` on the same
+   element) with a calendar mark. The popup is the Popover's, at Figma's size: padding 20, 16
+   between its body and footer, radius/xl. The body: the presets (167 px, a border/subtle line at
+   their end; rows 36 px, 8 / 10 px padding, radius/sm, Body/M; the chosen one bg/brand-subtle with
+   text/brand) beside one month (296 px: a 32 px heading row in Label/M Strong between the month
+   buttons, weekday initials in Label/M text/tertiary, 42 x 36 day cells in Body/M). Days: outside
+   the month text/disabled; inside the range bg/brand-subtle, square; its first and last day
+   bg/brand with text/on-brand in Label/M Strong, radius/sm; today text/brand with a 4 px bg/brand
+   dot. The footer: the chosen range in Body/M Strong, then Cancel and Apply (Buttons). In a popup
+   narrower than 30rem (a phone) the presets become a row of chips above the month. Public --nz-date-range-picker-* hooks are read
+   once, at the property. */
+@layer nz.components {
+  /* Figma's 525 px; the body is a size container, so the popup takes a width of its own */
+  .nz-popover-popup.nz-date-range-picker-popup {
+    inline-size: 33rem;
+    max-inline-size: calc(100vw - 2 * var(--nz-space-4));
+    border-radius: var(--nz-radius-xl);
+
+    & > .nz-popover-content {
+      gap: var(--nz-space-4);
+      padding: var(--nz-space-5);
+    }
+
+    /* with no presets, as wide as the month */
+    &:not(:has(.nz-date-range-picker-presets)) {
+      inline-size: calc(18.5rem + 2 * var(--nz-space-5) + 2 * var(--nz-border-width-default));
+    }
+  }
+
+  .nz-date-range-picker-body {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--nz-space-5);
+    container: nz-date-range-picker / inline-size;
+  }
+
+  /* Narrower than the presets and the month side by side (a phone): the presets become a row of
+     chips above the month, with the line under them */
+  @container nz-date-range-picker (inline-size < 30rem) {
+    .nz-date-range-picker-presets {
+      flex-direction: row;
+      flex-wrap: wrap;
+      padding-block-end: var(--nz-space-4);
+      padding-inline-end: 0;
+      border-block-end: var(--nz-border-width-default) solid var(--nz-border-subtle);
+      border-inline-end: 0;
+    }
+
+    .nz-date-range-picker-calendar {
+      inline-size: 100%;
+    }
+  }
+
+  .nz-date-range-picker-presets {
+    display: flex;
+    min-inline-size: 0;
+    margin: 0;
+    padding-block: 0;
+    padding-inline-start: 0;
+    border: 0;
+    flex: 1 1 9rem;
+    flex-direction: column;
+    gap: var(--nz-space-0-5);
+    padding-inline-end: var(--nz-space-4);
+    border-inline-end: var(--nz-border-width-default) solid var(--nz-border-subtle);
+  }
+
+  .nz-date-range-picker-preset {
+    min-block-size: 2.25rem;
+    padding-block: var(--nz-space-2);
+    padding-inline: calc(var(--nz-space-2) + var(--nz-space-0-5));
+    border: 0;
+    border-radius: var(--nz-radius-sm);
+    background: transparent;
+    color: var(--nz-text-primary);
+    font: var(--nz-font-body-m);
+    letter-spacing: var(--nz-tracking-body-m);
+    text-align: start;
+    cursor: pointer;
+
+    @media (hover: hover) {
+      &:hover:not([aria-pressed='true']) {
+        background: var(--nz-bg-hover);
+      }
+    }
+
+    &[aria-pressed='true'] {
+      background: var(--nz-date-range-picker-chosen-bg, var(--nz-bg-brand-subtle));
+      color: var(--nz-text-brand);
+    }
+  }
+
+  .nz-date-range-picker-calendar {
+    display: flex;
+    flex: none;
+    flex-direction: column;
+    gap: var(--nz-space-2);
+    inline-size: 18.5rem;
+  }
+
+  .nz-date-range-picker-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-block-size: var(--nz-space-8);
+  }
+
+  .nz-date-range-picker-heading {
+    margin: 0;
+    color: var(--nz-text-primary);
+    font: var(--nz-font-label-m-strong);
+    letter-spacing: var(--nz-tracking-label-m-strong);
+  }
+
+  .nz-date-range-picker-nav {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: var(--nz-space-8);
+    block-size: var(--nz-space-8);
+    padding: 0;
+    border: 0;
+    border-radius: var(--nz-radius-sm);
+    background: transparent;
+    color: var(--nz-icon-secondary);
+    font-size: var(--nz-size-icon-md);
+    cursor: pointer;
+
+    @media (hover: hover) {
+      &:hover:not([data-disabled]) {
+        background: var(--nz-bg-hover);
+      }
+    }
+
+    &[data-disabled] {
+      color: var(--nz-text-disabled);
+      cursor: not-allowed;
+    }
+  }
+
+  /* the previous month's button: the chevron points back, mirrored in right-to-left */
+  .nz-date-range-picker-nav:first-child > .nz-date-range-picker-nav-icon {
+    rotate: 180deg;
+
+    &:dir(rtl) {
+      rotate: none;
+    }
+  }
+
+  .nz-date-range-picker-nav:last-child > .nz-date-range-picker-nav-icon:dir(rtl) {
+    rotate: 180deg;
+  }
+
+  .nz-date-range-picker-nav-icon {
+    display: inline-flex;
+  }
+
+  .nz-date-range-picker-grid {
+    border-collapse: collapse;
+    inline-size: 100%;
+    table-layout: fixed;
+  }
+
+  .nz-date-range-picker-weekday {
+    block-size: 1.75rem;
+    padding: 0;
+    color: var(--nz-text-tertiary);
+    font: var(--nz-font-label-m);
+    letter-spacing: var(--nz-tracking-label-m);
+  }
+
+  .nz-date-range-picker-grid td {
+    padding: 0;
+  }
+
+  .nz-date-range-picker-day {
+    position: relative;
+    display: grid;
+    place-items: center;
+    block-size: 2.25rem;
+    color: var(--nz-text-primary);
+    font: var(--nz-font-body-m);
+    letter-spacing: var(--nz-tracking-body-m);
+    text-align: center;
+    cursor: pointer;
+
+    @media (hover: hover) {
+      &:hover:not([data-selected], [data-disabled]) {
+        border-radius: var(--nz-radius-sm);
+        background: var(--nz-bg-hover);
+      }
+    }
+
+    &[data-outside-month],
+    &[data-disabled] {
+      color: var(--nz-text-disabled);
+    }
+
+    &[data-disabled] {
+      cursor: not-allowed;
+    }
+
+    &[data-today] {
+      color: var(--nz-text-brand);
+
+      &::after {
+        content: '';
+        position: absolute;
+        inset-block-end: var(--nz-space-1);
+        inset-inline-start: calc(50% - var(--nz-space-0-5));
+        inline-size: var(--nz-space-1);
+        block-size: var(--nz-space-1);
+        border-radius: var(--nz-radius-full);
+        background: var(--nz-bg-brand);
+      }
+    }
+
+    &[data-selected] {
+      background: var(--nz-date-range-picker-range-bg, var(--nz-bg-brand-subtle));
+    }
+
+    &:is([data-range-start], [data-range-end]) {
+      border-radius: var(--nz-radius-sm);
+      background: var(--nz-bg-brand);
+      color: var(--nz-text-on-brand);
+      font: var(--nz-font-label-m-strong);
+      letter-spacing: var(--nz-tracking-label-m-strong);
+
+      &::after {
+        background: var(--nz-text-on-brand);
+      }
+    }
+  }
+
+  .nz-date-range-picker-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--nz-space-2);
+  }
+
+  /* as wide as its text, so an empty range leaves Cancel and Apply on the line */
+  .nz-date-range-picker-range {
+    flex: 1 1 auto;
+    color: var(--nz-text-primary);
+    font: var(--nz-font-body-m-strong);
+    letter-spacing: var(--nz-tracking-body-m-strong);
+  }
+
+  @media (forced-colors: active) {
+    .nz-date-range-picker-preset[aria-pressed='true'],
+    .nz-date-range-picker-day:is([data-range-start], [data-range-end]) {
+      forced-color-adjust: none;
+      background: Highlight;
+      color: HighlightText;
+    }
+
+    .nz-date-range-picker-day[data-selected]:not([data-range-start], [data-range-end]) {
+      outline: 1px solid CanvasText;
+      outline-offset: -1px;
+    }
+
+    .nz-date-range-picker-presets {
+      border-color: CanvasText;
+    }
+  }
+}

@@ -159,6 +159,8 @@ const CLIENT_PAGES: Record<string, string[]> = {
   '/docs/components/number-field/': ['number-field-input', 'willValidate'],
   // Combobox reads its Field through useFieldControl, which lives in FieldScope's module.
   '/docs/components/combobox/': ['combobox-popup', 'willValidate'],
+  // the Popover's popup holds the calendar; FieldScope for the Field in its examples
+  '/docs/components/date-range-picker/': ['popover-popup', 'willValidate'],
   // The shell (week 20): TopBar and MobileTopBar are server parts whose examples put a SearchField
   // and IconButtons in their slots; MobileTabBar renders its inset island and More's Drawer sheet,
   // and AppShell's example holds all of them.

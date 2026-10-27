@@ -21,6 +21,7 @@ import { NavItem } from '../../src/nav-item/index';
 import { Pagination } from '../../src/pagination/index';
 import { PasswordInput } from '../../src/password-input/index';
 import { QuantityStepper } from '../../src/quantity-stepper/index';
+import { DateRangePicker } from '../../src/unstable/date-range-picker/index';
 import { SearchField } from '../../src/search-field/index';
 
 const SRC = rekey(
@@ -41,6 +42,7 @@ const REACHED: Partial<Record<Key, string>> = {
   // SubmitButton, Button's client twin: Button itself is a server part and keeps per-instance labels
   button: 'src/form/submit-button.client.tsx',
   chipGroup: 'src/chip-group/chip-group.client.tsx',
+  dateRangePicker: 'src/unstable/date-range-picker/date-range-picker.client.tsx',
   dialog: 'src/dialog/dialog.client.tsx',
   drawer: 'src/drawer/drawer.client.tsx',
   fileUpload: 'src/file-upload/file-upload.client.tsx',
@@ -109,6 +111,7 @@ const SCOPE: NizivoLabels = {
   mobileTabBarMore: { more: 'Mehr' },
   passwordInput: { toggle: 'Passwort anzeigen' },
   quantityStepper: { decrement: 'Verringern', increment: 'Erhöhen' },
+  dateRangePicker: { placeholder: 'Zeitraum wählen' },
   searchField: { label: 'Suchen', clear: 'Suche leeren' },
   alertDismiss: { dismiss: 'Schließen' },
   // the server parts' keys: ignored by them (SubmitButton, Button's client twin, reads `button`)
@@ -123,6 +126,7 @@ function clientParts(own: { searchField?: NizivoLabels['searchField'] } = {}): R
       <SearchField defaultValue="mug" {...(own.searchField && { labels: own.searchField })} />
       <PasswordInput aria-label="Password" />
       <QuantityStepper aria-label="Quantity" />
+      <DateRangePicker timeZone="UTC" />
       <BannerDismiss />
       <AlertDismiss />
       <ChipGroup aria-label="Glaze">
@@ -173,10 +177,12 @@ describe('NizivoConfig labels, server-rendered', () => {
       'Mehr',
       'Es gibt ein Problem',
       'Lädt…',
+      'Zeitraum wählen',
     ]) {
       expect(html).toContain(text);
     }
     for (const english of [
+      'Select dates',
       'Clear search',
       'Show password',
       'Decrease quantity',
@@ -217,6 +223,7 @@ describe('NizivoConfig labels, server-rendered', () => {
         'More',
         'There is a problem',
         'Loading…',
+        'Select dates',
       ]) {
         expect(html).toContain(text);
       }

@@ -355,6 +355,10 @@
       "types": "./dist/trend-card/index.d.ts",
       "default": "./dist/trend-card/index.js"
     },
+    "./unstable/date-range-picker": {
+      "types": "./dist/unstable/date-range-picker/index.d.ts",
+      "default": "./dist/unstable/date-range-picker/index.js"
+    },
     "./css/accordion.css": "./dist/css/accordion.css",
     "./css/alert.css": "./dist/css/alert.css",
     "./css/app-shell.css": "./dist/css/app-shell.css",
@@ -372,6 +376,7 @@
     "./css/combobox.css": "./dist/css/combobox.css",
     "./css/container.css": "./dist/css/container.css",
     "./css/data-view.css": "./dist/css/data-view.css",
+    "./css/date-range-picker.css": "./dist/css/date-range-picker.css",
     "./css/delta.css": "./dist/css/delta.css",
     "./css/dialog.css": "./dist/css/dialog.css",
     "./css/drawer.css": "./dist/css/drawer.css",
@@ -451,6 +456,7 @@
     "test:visual": "node scripts/visual/run.ts"
   },
   "dependencies": {
+    "@internationalized/date": "catalog:",
     "@nizivo/tokens": "workspace:*",
     "react-aria": "catalog:",
     "react-aria-components": "catalog:"

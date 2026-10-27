@@ -170,6 +170,9 @@ catalogs:
     '@changesets/cli':
       specifier: 3.0.3
       version: 3.0.3
+    '@internationalized/date':
+      specifier: ^3.12.4
+      version: 3.12.4
     '@size-limit/esbuild':
       specifier: 14.2.0
       version: 14.2.0
@@ -595,6 +598,9 @@ importers:
 
   packages/react:
     dependencies:
+      '@internationalized/date':
+        specifier: 'catalog:'
+        version: 3.12.4
       '@nizivo/tokens':
         specifier: workspace:*
         version: link:../tokens

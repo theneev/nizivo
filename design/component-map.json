@@ -83,6 +83,15 @@
       "parts": ["Root", "Trigger", "Popup"],
       "props": {}
     },
+    "746:267": {
+      "component": "date-range-picker",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/date-range-picker",
+      "export": "DateRangePicker",
+      "props": {
+        "size": ["sm", "md", "lg"]
+      }
+    },
     "751:367": {
       "component": "progress-bar",
       "role": "ghost",

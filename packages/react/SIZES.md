@@ -102,155 +102,158 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 #### `@nizivo/react`: Public JS entries (bundled with what they import, React Aria included)
 
-| Entry              | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
-| ------------------ | -------: | ---------: | ---------: | ----------: | -----------: |
-| `.`                |  134,591 |      131.4 |    110,581 |         143 |       11,841 |
-| /accordion         |    1,312 |        1.3 |      1,205 |         1.5 |          224 |
-| /alert             |    1,379 |        1.3 |      1,273 |         1.4 |           54 |
-| /app-shell         |      462 |        0.5 |        433 |         0.5 |           50 |
-| /augment           |        0 |        0.0 |          0 |           0 |            — |
-| /avatar            |    1,472 |        1.4 |      1,355 |         1.5 |           64 |
-| /badge             |      796 |        0.8 |        727 |         0.9 |          125 |
-| /banner            |    1,414 |        1.4 |      1,295 |         1.5 |          122 |
-| /breadcrumb        |    1,290 |        1.3 |      1,198 |         1.4 |          143 |
-| /bulk-action-bar   |      941 |        0.9 |        858 |           1 |           83 |
-| /button            |    1,276 |        1.2 |      1,169 |         1.4 |          157 |
-| /card              |    1,086 |        1.1 |        971 |         1.2 |          142 |
-| /checkbox          |    2,069 |        2.0 |      1,900 |         2.3 |          286 |
-| /chip-group        |    2,589 |        2.5 |      2,367 |         2.7 |          175 |
-| /choice-card       |    2,289 |        2.2 |      2,104 |         2.5 |          271 |
-| /combobox          |   66,814 |       65.2 |     57,393 |          72 |        6,914 |
-| /config            |      175 |        0.2 |        177 |         0.2 |           29 |
-| /container         |      694 |        0.7 |        633 |         0.8 |          125 |
-| /contracts         |    1,021 |        1.0 |        915 |         1.1 |          105 |
-| /data-view         |      980 |        1.0 |        886 |         1.1 |          146 |
-| /delta             |    1,012 |        1.0 |        932 |         1.1 |          114 |
-| /dialog            |   32,661 |       31.9 |     28,982 |          32 |          107 |
-| /drawer            |   32,732 |       32.0 |     29,118 |          35 |        3,108 |
-| /empty-state       |      840 |        0.8 |        768 |           1 |          184 |
-| /field             |    3,627 |        3.5 |      3,307 |         3.9 |          366 |
-| /fieldset          |    1,715 |        1.7 |      1,559 |         1.9 |          230 |
-| /file-upload       |    5,685 |        5.6 |      5,200 |         6.1 |          561 |
-| /form              |    2,852 |        2.8 |      2,589 |           3 |          220 |
-| /grid              |      793 |        0.8 |        737 |         0.9 |          128 |
-| /heading           |      767 |        0.7 |        697 |         0.9 |          154 |
-| /i18n              |      208 |        0.2 |        182 |         0.3 |           99 |
-| /icon-button       |   17,531 |       17.1 |     15,820 |          19 |        1,925 |
-| /image             |      794 |        0.8 |        723 |         0.9 |          127 |
-| /inline            |      703 |        0.7 |        639 |         0.8 |          116 |
-| /inline-error      |    1,049 |        1.0 |        955 |         1.2 |          179 |
-| /input             |    1,837 |        1.8 |      1,662 |           2 |          211 |
-| /kbd               |    1,192 |        1.2 |      1,087 |         1.3 |          139 |
-| /kpi-tile          |    2,323 |        2.3 |      2,117 |         2.5 |          237 |
-| /locales/en-US     |      739 |        0.7 |        624 |         0.8 |           80 |
-| /menu              |   57,163 |       55.8 |     49,372 |          57 |        1,205 |
-| /meter             |    1,143 |        1.1 |      1,058 |         1.3 |          188 |
-| /metric            |    2,144 |        2.1 |      1,948 |         2.4 |          313 |
-| /mobile-tab-bar    |   33,344 |       32.6 |     29,599 |          36 |        3,520 |
-| /mobile-top-bar    |      840 |        0.8 |        771 |           1 |          184 |
-| /motion            |    1,573 |        1.5 |      1,436 |         1.7 |          167 |
-| /native-select     |    1,560 |        1.5 |      1,420 |         1.7 |          180 |
-| /nav-item          |    1,221 |        1.2 |      1,102 |         1.4 |          212 |
-| /number-field      |   28,926 |       28.2 |     25,814 |          32 |        3,842 |
-| /number-value      |      788 |        0.8 |        716 |         0.9 |          133 |
-| /page-header       |      890 |        0.9 |        814 |           1 |          134 |
-| /page-indicator    |    1,147 |        1.1 |      1,043 |         1.3 |          184 |
-| /pagination        |    1,989 |        1.9 |      1,841 |           2 |           59 |
-| /password-input    |    2,672 |        2.6 |      2,400 |         2.8 |          195 |
-| /pointer-fx        |    1,107 |        1.1 |      1,004 |         1.2 |          121 |
-| /popover           |   36,054 |       35.2 |     31,988 |          39 |        3,882 |
-| /progress-bar      |    1,137 |        1.1 |      1,039 |         1.3 |          194 |
-| /progress-ring     |    1,194 |        1.2 |      1,097 |         1.3 |          137 |
-| /quantity-stepper  |    2,681 |        2.6 |      2,468 |         2.9 |          288 |
-| /radio-group       |    2,200 |        2.1 |      2,026 |         2.4 |          257 |
-| /ranked-list       |    2,475 |        2.4 |      2,284 |         2.7 |          289 |
-| /search-field      |    3,418 |        3.3 |      3,102 |         3.6 |          268 |
-| /segmented-control |    2,371 |        2.3 |      2,172 |         2.6 |          291 |
-| /select            |   63,748 |       62.3 |     54,661 |          66 |        3,836 |
-| /separator         |      772 |        0.8 |        699 |         0.9 |          149 |
-| /sidebar           |   17,314 |       16.9 |     15,643 |          19 |        2,142 |
-| /skeleton          |      716 |        0.7 |        652 |         0.8 |          103 |
-| /split             |      880 |        0.9 |        804 |           1 |          144 |
-| /stack             |      703 |        0.7 |        640 |         0.8 |          116 |
-| /sticky-bar        |      799 |        0.8 |        729 |         0.9 |          122 |
-| /surface           |      714 |        0.7 |        645 |         0.8 |          105 |
-| /switch            |    1,734 |        1.7 |      1,579 |         1.9 |          211 |
-| /tab-nav           |    1,031 |        1.0 |        949 |         1.2 |          197 |
-| /table             |    1,661 |        1.6 |      1,504 |         1.8 |          182 |
-| /table-selection   |    1,859 |        1.8 |      1,697 |         1.9 |           86 |
-| /tabs              |   33,683 |       32.9 |     29,840 |          35 |        2,157 |
-| /text              |      716 |        0.7 |        653 |         0.8 |          103 |
-| /textarea          |    1,368 |        1.3 |      1,251 |         1.5 |          168 |
-| /theme-script      |      363 |        0.4 |        289 |         0.4 |           46 |
-| /toast             |   14,912 |       14.6 |     13,339 |          16 |        1,472 |
-| /tooltip           |   16,530 |       16.1 |     14,971 |          18 |        1,902 |
-| /top-bar           |      846 |        0.8 |        781 |           1 |          178 |
-| /trend-card        |    2,442 |        2.4 |      2,217 |         2.7 |          322 |
+| Entry                       | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
+| --------------------------- | -------: | ---------: | ---------: | ----------: | -----------: |
+| `.`                         |  134,591 |      131.4 |    110,581 |         143 |       11,841 |
+| /accordion                  |    1,312 |        1.3 |      1,204 |         1.5 |          224 |
+| /alert                      |    1,379 |        1.3 |      1,279 |         1.4 |           54 |
+| /app-shell                  |      462 |        0.5 |        433 |         0.5 |           50 |
+| /augment                    |        0 |        0.0 |          0 |           0 |            — |
+| /avatar                     |    1,472 |        1.4 |      1,355 |         1.5 |           64 |
+| /badge                      |      796 |        0.8 |        727 |         0.9 |          125 |
+| /banner                     |    1,413 |        1.4 |      1,295 |         1.5 |          123 |
+| /breadcrumb                 |    1,291 |        1.3 |      1,204 |         1.4 |          142 |
+| /bulk-action-bar            |      941 |        0.9 |        858 |           1 |           83 |
+| /button                     |    1,276 |        1.2 |      1,173 |         1.4 |          157 |
+| /card                       |    1,086 |        1.1 |        971 |         1.2 |          142 |
+| /checkbox                   |    2,069 |        2.0 |      1,903 |         2.3 |          286 |
+| /chip-group                 |    2,589 |        2.5 |      2,367 |         2.7 |          175 |
+| /choice-card                |    2,289 |        2.2 |      2,104 |         2.5 |          271 |
+| /combobox                   |   66,814 |       65.2 |     57,393 |          72 |        6,914 |
+| /config                     |      175 |        0.2 |        177 |         0.2 |           29 |
+| /container                  |      694 |        0.7 |        633 |         0.8 |          125 |
+| /contracts                  |    1,021 |        1.0 |        915 |         1.1 |          105 |
+| /data-view                  |      980 |        1.0 |        886 |         1.1 |          146 |
+| /delta                      |    1,012 |        1.0 |        932 |         1.1 |          114 |
+| /dialog                     |   32,661 |       31.9 |     29,070 |          32 |          107 |
+| /drawer                     |   32,732 |       32.0 |     29,072 |          35 |        3,108 |
+| /empty-state                |      840 |        0.8 |        768 |           1 |          184 |
+| /field                      |    3,627 |        3.5 |      3,302 |         3.9 |          366 |
+| /fieldset                   |    1,715 |        1.7 |      1,562 |         1.9 |          230 |
+| /file-upload                |    5,687 |        5.6 |      5,191 |         6.1 |          559 |
+| /form                       |    2,854 |        2.8 |      2,589 |           3 |          218 |
+| /grid                       |      793 |        0.8 |        737 |         0.9 |          128 |
+| /heading                    |      767 |        0.7 |        697 |         0.9 |          154 |
+| /i18n                       |      208 |        0.2 |        182 |         0.3 |           99 |
+| /icon-button                |   17,531 |       17.1 |     15,820 |          19 |        1,925 |
+| /image                      |      794 |        0.8 |        723 |         0.9 |          127 |
+| /inline                     |      703 |        0.7 |        639 |         0.8 |          116 |
+| /inline-error               |    1,048 |        1.0 |        953 |         1.2 |          180 |
+| /input                      |    1,837 |        1.8 |      1,662 |           2 |          211 |
+| /kbd                        |    1,192 |        1.2 |      1,087 |         1.3 |          139 |
+| /kpi-tile                   |    2,322 |        2.3 |      2,117 |         2.5 |          238 |
+| /locales/en-US              |      873 |        0.9 |        730 |           1 |          151 |
+| /menu                       |   57,163 |       55.8 |     49,372 |          57 |        1,205 |
+| /meter                      |    1,143 |        1.1 |      1,058 |         1.3 |          188 |
+| /metric                     |    2,144 |        2.1 |      1,949 |         2.4 |          313 |
+| /mobile-tab-bar             |   33,342 |       32.6 |     29,657 |          36 |        3,522 |
+| /mobile-top-bar             |      840 |        0.8 |        771 |           1 |          184 |
+| /motion                     |    1,573 |        1.5 |      1,436 |         1.7 |          167 |
+| /native-select              |    1,560 |        1.5 |      1,407 |         1.7 |          180 |
+| /nav-item                   |    1,221 |        1.2 |      1,102 |         1.4 |          212 |
+| /number-field               |   28,926 |       28.2 |     25,814 |          32 |        3,842 |
+| /number-value               |      788 |        0.8 |        716 |         0.9 |          133 |
+| /page-header                |      890 |        0.9 |        814 |           1 |          134 |
+| /page-indicator             |    1,147 |        1.1 |      1,043 |         1.3 |          184 |
+| /pagination                 |    1,988 |        1.9 |      1,830 |           2 |           60 |
+| /password-input             |    2,671 |        2.6 |      2,401 |         2.8 |          196 |
+| /pointer-fx                 |    1,107 |        1.1 |      1,004 |         1.2 |          121 |
+| /popover                    |   36,054 |       35.2 |     31,988 |          39 |        3,882 |
+| /progress-bar               |    1,137 |        1.1 |      1,039 |         1.3 |          194 |
+| /progress-ring              |    1,194 |        1.2 |      1,097 |         1.3 |          137 |
+| /quantity-stepper           |    2,682 |        2.6 |      2,462 |         2.9 |          287 |
+| /radio-group                |    2,201 |        2.1 |      2,031 |         2.4 |          256 |
+| /ranked-list                |    2,473 |        2.4 |      2,285 |         2.7 |          291 |
+| /search-field               |    3,418 |        3.3 |      3,103 |         3.6 |          268 |
+| /segmented-control          |    2,371 |        2.3 |      2,172 |         2.6 |          291 |
+| /select                     |   63,748 |       62.3 |     54,661 |          66 |        3,836 |
+| /separator                  |      772 |        0.8 |        699 |         0.9 |          149 |
+| /sidebar                    |   17,314 |       16.9 |     15,643 |          19 |        2,142 |
+| /skeleton                   |      716 |        0.7 |        652 |         0.8 |          103 |
+| /split                      |      880 |        0.9 |        804 |           1 |          144 |
+| /stack                      |      703 |        0.7 |        640 |         0.8 |          116 |
+| /sticky-bar                 |      799 |        0.8 |        729 |         0.9 |          122 |
+| /surface                    |      714 |        0.7 |        645 |         0.8 |          105 |
+| /switch                     |    1,734 |        1.7 |      1,579 |         1.9 |          211 |
+| /tab-nav                    |    1,031 |        1.0 |        949 |         1.2 |          197 |
+| /table                      |    1,661 |        1.6 |      1,507 |         1.8 |          182 |
+| /table-selection            |    1,860 |        1.8 |      1,687 |         1.9 |           85 |
+| /tabs                       |   33,683 |       32.9 |     29,840 |          35 |        2,157 |
+| /text                       |      716 |        0.7 |        653 |         0.8 |          103 |
+| /textarea                   |    1,368 |        1.3 |      1,251 |         1.5 |          168 |
+| /theme-script               |      363 |        0.4 |        289 |         0.4 |           46 |
+| /toast                      |   14,912 |       14.6 |     13,339 |          16 |        1,472 |
+| /tooltip                    |   16,530 |       16.1 |     14,971 |          18 |        1,902 |
+| /top-bar                    |      846 |        0.8 |        781 |           1 |          178 |
+| /trend-card                 |    2,442 |        2.4 |      2,216 |         2.7 |          322 |
+| /unstable/date-range-picker |   62,501 |       61.0 |     54,063 |          68 |        7,131 |
 
 #### `@nizivo/react`: Composite bundles (one bundle; React Aria counted once)
 
 | Entry                      | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | -------------------------- | -------: | ---------: | ---------: | ----------: | -----------: |
 | dashboard set              |   78,936 |       77.1 |     66,679 |          85 |        8,104 |
-| { Button } from the barrel |    1,279 |        1.2 |      1,172 |         1.4 |          154 |
+| { Button } from the barrel |    1,279 |        1.2 |      1,171 |         1.4 |          154 |
 | { Select } from the barrel |   63,690 |       62.2 |     54,686 |          68 |        5,942 |
 
 #### `@nizivo/react`: Own code (one module minified alone, imports not counted)
 
-| Entry                                           | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
-| ----------------------------------------------- | -------: | ---------: | ---------: | ----------: | -----------: |
-| own: _engines/react-aria/combobox.client        |    1,614 |        1.6 |      1,443 |         1.7 |          126 |
-| own: _engines/react-aria/dialog.client          |    1,084 |        1.1 |        967 |         1.3 |          247 |
-| own: _engines/react-aria/drawer.client          |      100 |        0.1 |         90 |         0.2 |          104 |
-| own: _engines/react-aria/file-upload.client     |      369 |        0.4 |        332 |         0.4 |           40 |
-| own: _engines/react-aria/locale.client          |      162 |        0.2 |        142 |         0.2 |           42 |
-| own: _engines/react-aria/menu.client            |    1,823 |        1.8 |      1,612 |           2 |          225 |
-| own: _engines/react-aria/number-field.client    |      712 |        0.7 |        645 |         0.8 |          107 |
-| own: _engines/react-aria/open-state.client      |      341 |        0.3 |        305 |         0.4 |           68 |
-| own: _engines/react-aria/outside-press.client   |      503 |        0.5 |        425 |         0.6 |          111 |
-| own: _engines/react-aria/overlay.client         |      556 |        0.5 |        476 |         0.6 |           58 |
-| own: _engines/react-aria/popover.client         |    1,211 |        1.2 |      1,086 |         1.3 |          120 |
-| own: _engines/react-aria/popup.client           |    1,230 |        1.2 |      1,077 |         1.3 |          101 |
-| own: _engines/react-aria/select.client          |    1,505 |        1.5 |      1,328 |         1.6 |          133 |
-| own: _engines/react-aria/tabs.client            |      769 |        0.8 |        702 |         0.9 |          152 |
-| own: _engines/react-aria/toast.client           |      325 |        0.3 |        296 |         0.4 |           84 |
-| own: _engines/react-aria/tooltip.client         |      724 |        0.7 |        656 |         0.8 |           95 |
-| own: _internal/modal.client                     |      562 |        0.5 |        503 |         0.7 |          154 |
-| own: alert/alert-dismiss.client                 |      423 |        0.4 |        368 |         0.5 |           89 |
-| own: banner/banner-dismiss.client               |      424 |        0.4 |        371 |         0.5 |           88 |
-| own: checkbox/checkbox.client                   |      750 |        0.7 |        692 |         0.9 |          171 |
-| own: chip-group/chip-group.client               |    1,332 |        1.3 |      1,210 |         1.5 |          204 |
-| own: choice-card/choice-card.client             |    1,091 |        1.1 |        991 |         1.2 |          137 |
-| own: combobox/combobox.client                   |    1,159 |        1.1 |      1,076 |         1.3 |          172 |
-| own: config/config.client                       |      249 |        0.2 |        230 |         0.3 |           58 |
-| own: dialog/dialog.client                       |    1,025 |        1.0 |        943 |         1.4 |          408 |
-| own: drawer/drawer.client                       |    1,091 |        1.1 |      1,003 |         1.2 |          137 |
-| own: field/field-scope.client                   |    1,523 |        1.5 |      1,348 |         1.6 |          115 |
-| own: file-upload/file-upload.client             |    3,136 |        3.1 |      2,870 |         3.4 |          345 |
-| own: form/form.client                           |    1,322 |        1.3 |      1,188 |         1.4 |          111 |
-| own: form/submit-button.client                  |      228 |        0.2 |        191 |         0.3 |           79 |
-| own: icon-button/icon-button.client             |      353 |        0.3 |        304 |         0.4 |           56 |
-| own: input/input.client                         |      721 |        0.7 |        639 |         0.8 |           98 |
-| own: menu/menu.client                           |    1,035 |        1.0 |        932 |         1.2 |          193 |
-| own: mobile-tab-bar/mobile-tab-bar-inset.client |      370 |        0.4 |        316 |         0.4 |           39 |
-| own: mobile-tab-bar/mobile-tab-bar-more.client  |      640 |        0.6 |        574 |         0.7 |           76 |
-| own: motion/count-up.client                     |    1,032 |        1.0 |        945 |         1.2 |          196 |
-| own: number-field/number-field.client           |      957 |        0.9 |        900 |         1.1 |          169 |
-| own: password-input/password-input.client       |    1,117 |        1.1 |        971 |         1.2 |          111 |
-| own: pointer-fx/pointer-fx.client               |      586 |        0.6 |        522 |         0.7 |          130 |
-| own: popover/popover.client                     |      966 |        0.9 |        867 |         1.1 |          160 |
-| own: quantity-stepper/quantity-stepper.client   |    1,307 |        1.3 |      1,185 |         1.4 |          126 |
-| own: radio-group/radio-group.client             |      614 |        0.6 |        541 |         0.7 |          102 |
-| own: search-field/search-field.client           |    1,297 |        1.3 |      1,160 |         1.4 |          136 |
-| own: segmented-control/segmented-control.client |    1,169 |        1.1 |      1,052 |         1.3 |          162 |
-| own: select/select.client                       |    1,146 |        1.1 |      1,055 |         1.3 |          185 |
-| own: sidebar/sidebar-item.client                |      565 |        0.6 |        509 |         0.7 |          151 |
-| own: switch/switch.client                       |      552 |        0.5 |        475 |         0.6 |           62 |
-| own: table-selection/table-selection.client     |      896 |        0.9 |        776 |         0.9 |           25 |
-| own: tabs/tabs.client                           |      486 |        0.5 |        439 |         0.6 |          128 |
-| own: textarea/textarea.client                   |      350 |        0.3 |        305 |         0.4 |           59 |
-| own: toast/toaster.client                       |    2,114 |        2.1 |      1,907 |         2.2 |          138 |
-| own: tooltip/tooltip.client                     |      519 |        0.5 |        460 |         0.6 |           95 |
+| Entry                                                    | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
+| -------------------------------------------------------- | -------: | ---------: | ---------: | ----------: | -----------: |
+| own: _engines/react-aria/combobox.client                 |    1,614 |        1.6 |      1,443 |         1.7 |          126 |
+| own: _engines/react-aria/date-range-picker.client        |      762 |        0.7 |        706 |         0.9 |          159 |
+| own: _engines/react-aria/dialog.client                   |    1,084 |        1.1 |        967 |         1.3 |          247 |
+| own: _engines/react-aria/drawer.client                   |      100 |        0.1 |         90 |         0.2 |          104 |
+| own: _engines/react-aria/file-upload.client              |      369 |        0.4 |        332 |         0.4 |           40 |
+| own: _engines/react-aria/locale.client                   |      162 |        0.2 |        142 |         0.2 |           42 |
+| own: _engines/react-aria/menu.client                     |    1,823 |        1.8 |      1,612 |           2 |          225 |
+| own: _engines/react-aria/number-field.client             |      712 |        0.7 |        645 |         0.8 |          107 |
+| own: _engines/react-aria/open-state.client               |      341 |        0.3 |        305 |         0.4 |           68 |
+| own: _engines/react-aria/outside-press.client            |      503 |        0.5 |        425 |         0.6 |          111 |
+| own: _engines/react-aria/overlay.client                  |      556 |        0.5 |        476 |         0.6 |           58 |
+| own: _engines/react-aria/popover.client                  |    1,211 |        1.2 |      1,086 |         1.3 |          120 |
+| own: _engines/react-aria/popup.client                    |    1,230 |        1.2 |      1,077 |         1.3 |          101 |
+| own: _engines/react-aria/select.client                   |    1,505 |        1.5 |      1,328 |         1.6 |          133 |
+| own: _engines/react-aria/tabs.client                     |      769 |        0.8 |        702 |         0.9 |          152 |
+| own: _engines/react-aria/toast.client                    |      325 |        0.3 |        296 |         0.4 |           84 |
+| own: _engines/react-aria/tooltip.client                  |      724 |        0.7 |        656 |         0.8 |           95 |
+| own: _internal/modal.client                              |      562 |        0.5 |        503 |         0.7 |          154 |
+| own: alert/alert-dismiss.client                          |      423 |        0.4 |        368 |         0.5 |           89 |
+| own: banner/banner-dismiss.client                        |      424 |        0.4 |        371 |         0.5 |           88 |
+| own: checkbox/checkbox.client                            |      750 |        0.7 |        692 |         0.9 |          171 |
+| own: chip-group/chip-group.client                        |    1,332 |        1.3 |      1,210 |         1.5 |          204 |
+| own: choice-card/choice-card.client                      |    1,091 |        1.1 |        991 |         1.2 |          137 |
+| own: combobox/combobox.client                            |    1,159 |        1.1 |      1,076 |         1.3 |          172 |
+| own: config/config.client                                |      249 |        0.2 |        230 |         0.3 |           58 |
+| own: dialog/dialog.client                                |    1,025 |        1.0 |        943 |         1.4 |          408 |
+| own: drawer/drawer.client                                |    1,091 |        1.1 |      1,003 |         1.2 |          137 |
+| own: field/field-scope.client                            |    1,523 |        1.5 |      1,348 |         1.6 |          115 |
+| own: file-upload/file-upload.client                      |    3,136 |        3.1 |      2,870 |         3.4 |          345 |
+| own: form/form.client                                    |    1,322 |        1.3 |      1,188 |         1.4 |          111 |
+| own: form/submit-button.client                           |      228 |        0.2 |        191 |         0.3 |           79 |
+| own: icon-button/icon-button.client                      |      353 |        0.3 |        304 |         0.4 |           56 |
+| own: input/input.client                                  |      721 |        0.7 |        639 |         0.8 |           98 |
+| own: menu/menu.client                                    |    1,035 |        1.0 |        932 |         1.2 |          193 |
+| own: mobile-tab-bar/mobile-tab-bar-inset.client          |      370 |        0.4 |        316 |         0.4 |           39 |
+| own: mobile-tab-bar/mobile-tab-bar-more.client           |      640 |        0.6 |        574 |         0.7 |           76 |
+| own: motion/count-up.client                              |    1,032 |        1.0 |        945 |         1.2 |          196 |
+| own: number-field/number-field.client                    |      957 |        0.9 |        900 |         1.1 |          169 |
+| own: password-input/password-input.client                |    1,117 |        1.1 |        971 |         1.2 |          111 |
+| own: pointer-fx/pointer-fx.client                        |      586 |        0.6 |        522 |         0.7 |          130 |
+| own: popover/popover.client                              |      966 |        0.9 |        867 |         1.1 |          160 |
+| own: quantity-stepper/quantity-stepper.client            |    1,307 |        1.3 |      1,185 |         1.4 |          126 |
+| own: radio-group/radio-group.client                      |      614 |        0.6 |        541 |         0.7 |          102 |
+| own: search-field/search-field.client                    |    1,297 |        1.3 |      1,160 |         1.4 |          136 |
+| own: segmented-control/segmented-control.client          |    1,169 |        1.1 |      1,052 |         1.3 |          162 |
+| own: select/select.client                                |    1,146 |        1.1 |      1,055 |         1.3 |          185 |
+| own: sidebar/sidebar-item.client                         |      565 |        0.6 |        509 |         0.7 |          151 |
+| own: switch/switch.client                                |      552 |        0.5 |        475 |         0.6 |           62 |
+| own: table-selection/table-selection.client              |      896 |        0.9 |        776 |         0.9 |           25 |
+| own: tabs/tabs.client                                    |      486 |        0.5 |        439 |         0.6 |          128 |
+| own: textarea/textarea.client                            |      350 |        0.3 |        305 |         0.4 |           59 |
+| own: toast/toaster.client                                |    2,114 |        2.1 |      1,907 |         2.2 |          138 |
+| own: tooltip/tooltip.client                              |      519 |        0.5 |        460 |         0.6 |           95 |
+| own: unstable/date-range-picker/date-range-picker.client |    2,372 |        2.3 |      2,189 |         2.5 |          188 |
 
 #### `@nizivo/react`: Seam helpers (seam ledger K6 and K7; React Aria external)
 
@@ -269,7 +272,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/avatar.css            |      745 |        0.7 |        606 |         0.9 |          176 |
 | /css/badge.css             |      512 |        0.5 |        424 |         0.6 |          102 |
 | /css/banner.css            |      658 |        0.6 |        533 |         0.8 |          161 |
-| /css/base.css              |    1,307 |        1.3 |      1,115 |         1.4 |          126 |
+| /css/base.css              |    1,333 |        1.3 |      1,136 |         1.4 |          100 |
 | /css/breadcrumb.css        |      551 |        0.5 |        431 |         0.6 |           63 |
 | /css/bulk-action-bar.css   |      400 |        0.4 |        325 |         0.5 |          112 |
 | /css/button.css            |    1,153 |        1.1 |        974 |         1.3 |          178 |
@@ -280,6 +283,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/combobox.css          |    1,047 |        1.0 |        857 |         1.2 |          181 |
 | /css/container.css         |      185 |        0.2 |        155 |         0.2 |           19 |
 | /css/data-view.css         |      570 |        0.6 |        449 |         0.7 |          146 |
+| /css/date-range-picker.css |    1,214 |        1.2 |      1,036 |         1.3 |          117 |
 | /css/delta.css             |      472 |        0.5 |        383 |         0.5 |           40 |
 | /css/dialog.css            |      944 |        0.9 |        787 |           1 |           80 |
 | /css/drawer.css            |    1,103 |        1.1 |        938 |         1.2 |          125 |
@@ -339,7 +343,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/tooltip.css           |      581 |        0.6 |        503 |         0.6 |           33 |
 | /css/top-bar.css           |      452 |        0.4 |        379 |         0.5 |           60 |
 | /css/trend-card.css        |      403 |        0.4 |        346 |         0.5 |          109 |
-| /styles.css                |   25,805 |       25.2 |     20,710 |          26 |          819 |
+| /styles.css                |   25,835 |       25.2 |     20,760 |          26 |          789 |
 
 #### `@nizivo/tokens`: Public JS entries (bundled with what they import, React Aria included)
 

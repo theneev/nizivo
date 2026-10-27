@@ -1,14 +1,15 @@
 // NO directive: server-safe. The few glyphs core draws itself, so @nizivo/react imports no icon
 // package (ARCHITECTURE.md §6, §14.2). Paths are Lucide's (ISC; notice in THIRD_PARTY_NOTICES).
-// Stroke follows settled 7: 1.92 on the 24 viewBox, non-absolute, so it renders 1.28 px in the 16 px
-// slots (Button icon, Select chevron) that size the glyph through font-size. `chevron` (Lucide's
+// Stroke follows settled 7: 1.92 on the 24 viewBox, non-absolute, so it renders 1.28 px in the 16
+// px slots (Button icon, Select chevron) that size the glyph through font-size. `chevron` (Lucide's
 // `chevron-right`, the Breadcrumb separator and Pagination's marks), `circle-x` (the error mark of
 // Field, Fieldset and InlineError), `close` (Lucide's `x`, AlertDismiss's default), and `check` and
-// `minus` (Checkbox's checked mark and indeterminate dash; with `plus`, QuantityStepper's buttons), `info` (the neutral Toast's mark),
-// `search` (SearchField's magnifier) and `ellipsis` (MobileTabBar's More, Feather's
-// `more-horizontal`) are on Lucide's list of Feather-derived icons, so they also carry the Feather
-// MIT notice in THIRD_PARTY_NOTICES; `circle-check` (the success Toast's) and
-// `eye` and `eye-off` (PasswordInput's show and hide marks) are Lucide's own.
+// `minus` (Checkbox's checked mark and indeterminate dash; with `plus`, QuantityStepper's buttons),
+// `info` (the neutral Toast's mark), `search` (SearchField's magnifier), `calendar` (the
+// DateRangePicker trigger's) and `ellipsis` (MobileTabBar's More, Feather's `more-horizontal`) are
+// on Lucide's list of Feather-derived icons, so they also carry the Feather MIT notice in
+// THIRD_PARTY_NOTICES; `circle-check` (the success Toast's) and `eye` and `eye-off`
+// (PasswordInput's show and hide marks) are Lucide's own.
 //
 // One export per glyph, so an entry carries only the paths it draws (a name → paths table kept every
 // glyph in every entry that drew one: about 160 B gzip on the Dialog entry).
@@ -28,6 +29,7 @@ export type GlyphName =
   | 'eye'
   | 'eye-off'
   | 'search'
+  | 'calendar'
   | 'ellipsis';
 
 function svg(name: GlyphName, paths: ReactNode): JSX.Element {
@@ -157,5 +159,17 @@ export const EllipsisGlyph = (): JSX.Element =>
       <circle cx="12" cy="12" r="1" />
       <circle cx="19" cy="12" r="1" />
       <circle cx="5" cy="12" r="1" />
+    </>,
+  );
+
+/** The DateRangePicker trigger's calendar. */
+export const CalendarGlyph = (): JSX.Element =>
+  svg(
+    'calendar',
+    <>
+      <path d="M8 2v3" />
+      <path d="M16 2v3" />
+      <rect x="3" y="3" width="18" height="18" rx="2" />
+      <path d="M3 9h18" />
     </>,
   );

@@ -27,6 +27,33 @@ export interface HarnessInput {
 
 /** Room around a crop for the focus halo (`border-width-focus` + 4 px) and shadows. */
 const PAD = 12;
+/**
+ * Components whose examples draw "today" (a calendar's month and its today mark): while one is
+ * mounted, `Date` reads 8 October 2026, 12:00 UTC (the today Figma's Date Range Picker 746:267
+ * draws), so their shots are the same on every run. Only `Date` changes, and only for them: a
+ * page-wide fake clock disturbs React Aria's timing in other components' shots.
+ */
+const FIXED_NOW = new Set(['date-range-picker']);
+const RealDate = globalThis.Date;
+const NOW = RealDate.UTC(2026, 9, 8, 12);
+
+function fixDate(): void {
+  class FixedDate extends RealDate {
+    constructor(...args: [] | [string | number | Date]) {
+      if (args.length === 0) super(NOW);
+      else super(args[0]);
+    }
+
+    static override now(): number {
+      return NOW;
+    }
+  }
+  // FixedDate is Date with a fixed "now"; the constructor's call signature (Date() as a string) is
+  // the only part it does not cover, and no example calls it
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+  globalThis.Date = FixedDate as DateConstructor;
+}
+
 /** Open popups, and the toast stack, which the Toaster portals to <body> like a popup. */
 const POPUP = '[data-slot$="-popup"], [data-slot="toast-region"]';
 const DISABLED = ':disabled, [data-disabled], [aria-disabled="true"]';
@@ -160,6 +187,7 @@ export function start(input: HarnessInput): void {
 
     async mount(component, name): Promise<Mounted> {
       await api.unmount();
+      if (FIXED_NOW.has(component)) fixDate();
       const Example = input.modules[component]?.[name];
       if (!isComponent(Example)) throw new Error(`harness: no example ${component}/${name}`);
       host = document.createElement('div');
@@ -193,6 +221,7 @@ export function start(input: HarnessInput): void {
     async unmount(): Promise<void> {
       root?.unmount();
       root = undefined;
+      globalThis.Date = RealDate;
       host?.remove();
       host = undefined;
       // anything an overlay portalled and left behind
@@ -230,7 +259,11 @@ export function start(input: HarnessInput): void {
 
     popups: (family?: string) =>
       openPopups().filter(
-        (el) => family === undefined || el.getAttribute('data-slot') === `${family}-popup`,
+        (el) =>
+          family === undefined ||
+          el.getAttribute('data-slot') === `${family}-popup` ||
+          // a component that composes the Popover keeps its popup slot and adds its own class
+          el.classList.contains(`nz-${family}-popup`),
       ).length,
 
     crop(id?: string): Rect {

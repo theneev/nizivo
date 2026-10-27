@@ -61,14 +61,15 @@ export function catalog(): CatalogEntry[] {
   for (const key of keys) {
     // Files (./css/<name>.css, ./styles.css, ./package.json) are not JS entries.
     if (!key.startsWith('./') || /\.[a-z]+$/.test(key)) continue;
-    const name = key.slice(2);
+    // ./unstable/<name> is a component page at its bare name, marked unstable by its manifest
+    const unstable = /^unstable\/([a-z0-9-]+)$/.exec(key.slice(2))?.[1];
+    const name = unstable ?? key.slice(2);
     // ./locales/<tag> (a string catalogue) is a utility page at /docs/utilities/locales/<tag>/.
     const locale = /^locales\/([A-Za-z0-9-]+)$/.exec(name)?.[1];
     if (name.includes('/') && locale === undefined) {
-      // ./unstable/<name> joins the catalog once the docs design an unstable section.
       throw new Error(`docs: no page layout for the nested entry ${key} yet (lib/catalog.ts).`);
     }
-    const manifestPath = `packages/react/src/${name}/component.json`;
+    const manifestPath = `packages/react/src/${unstable === undefined ? '' : 'unstable/'}${name}/component.json`;
     const manifest = repoFileExists(manifestPath)
       ? readRepoJson(manifestPath, isManifest)
       : undefined;
@@ -77,7 +78,7 @@ export function catalog(): CatalogEntry[] {
     entries.push({
       name,
       entry: key,
-      specifier: `@nizivo/react/${name}`,
+      specifier: `@nizivo/react/${key.slice(2)}`,
       kind,
       // Utilities too, so the sidebar's Utilities group reads like the Components one.
       title: locale === undefined ? pascal(name) : `Locales/${locale}`,

@@ -19,13 +19,21 @@ if (tokensPath === undefined)
 const tokens = readFileSync(tokensPath, 'utf8');
 const LAYERS = layerStatement();
 
-/** Every component sheet in dist/css (no unstable component exists yet; styles.ts leaves them out). */
+/** The unstable components (src/unstable/<name>): their sheets ship alone, outside styles.css. */
+const UNSTABLE = new Set(
+  // folders only: an unstable component is a folder of its own
+  readdirSync(new URL('../../src/unstable/', import.meta.url)).filter(
+    (name) => !name.includes('.'),
+  ),
+);
+
+/** Every stable component sheet in dist/css (styles.ts leaves the unstable ones out). */
 const built = new Set(
   readdirSync(new URL('css/', DIST))
     .filter((file) => file.endsWith('.css'))
     .map((file) => file.slice(0, -'.css'.length)),
 );
-const components = [...built].filter((name) => name !== 'base').toSorted();
+const components = [...built].filter((name) => name !== 'base' && !UNSTABLE.has(name)).toSorted();
 
 describe('dist/styles.css', () => {
   test('line 1 is the canonical layer statement', () => {

@@ -1,0 +1,25 @@
+{
+  "name": "date-range-picker",
+  "status": "unstable",
+  "tier": "own",
+  "engine": "react-aria",
+  "exports": ["DateRangePicker"],
+  "interactive": [
+    "date-range-picker-trigger",
+    "date-range-picker-preset",
+    "date-range-picker-nav",
+    "date-range-picker-day"
+  ],
+  "focusTarget": "self",
+  "stateIndicator": [],
+  "cssDeps": ["base", "button", "popover", "select"],
+  "variants": {
+    "size": ["sm", "md", "lg"]
+  },
+  "figma": {
+    "canonical": ["746:267"],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": ["7275:11438"]
+  }
+}

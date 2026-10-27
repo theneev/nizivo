@@ -480,6 +480,7 @@ snapshots:
 
   '@nizivo/react@file:.packed/react(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
     dependencies:
+      '@internationalized/date': 3.12.4
       '@nizivo/tokens': file:.packed/tokens
       react: 19.3.0
       react-aria: 3.53.1(react-dom@19.3.0(react@19.3.0))(react@19.3.0)

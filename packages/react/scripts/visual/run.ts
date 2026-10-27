@@ -159,11 +159,26 @@ interface Component {
   overlay: boolean;
 }
 
+/** Each component folder, `src/<name>` and `src/unstable/<name>`, by name. */
+function folders(): [name: string, dir: string][] {
+  const out: [string, string][] = [];
+  for (const name of readdirSync(SRC).toSorted()) {
+    if (name !== 'unstable') {
+      out.push([name, join(SRC, name)]);
+      continue;
+    }
+    for (const inner of readdirSync(join(SRC, name)).toSorted()) {
+      out.push([inner, join(SRC, name, inner)]);
+    }
+  }
+  return out.toSorted(([a], [b]) => a.localeCompare(b));
+}
+
 function components(): Component[] {
   const found: Component[] = [];
-  for (const name of readdirSync(SRC).toSorted()) {
-    const manifest = join(SRC, name, 'component.json');
-    const example = join(SRC, name, `${name}.example.tsx`);
+  for (const [name, dir] of folders()) {
+    const manifest = join(dir, 'component.json');
+    const example = join(dir, `${name}.example.tsx`);
     if (!existsSync(example)) continue;
     // a charts part has no manifest: no interactive slots of its own, no overlay
     if (!existsSync(manifest)) {
@@ -176,7 +191,16 @@ function components(): Component[] {
     const interactive = Array.isArray(json['interactive'])
       ? json['interactive'].filter((s): s is string => typeof s === 'string')
       : [];
-    found.push({ name, example, interactive, overlay: json['overlay'] === true });
+    // a component that composes the Popover (its sheet in cssDeps: the DateRangePicker) opens one
+    // from its trigger too, so its open state is shot as an overlay's
+    const composesPopover =
+      Array.isArray(json['cssDeps']) && json['cssDeps'].includes('popover') && name !== 'popover';
+    found.push({
+      name,
+      example,
+      interactive,
+      overlay: json['overlay'] === true || composesPopover,
+    });
   }
   if (found.length === 0) throw new Error(`no examples under ${rel(SRC)}`);
   return found;
@@ -232,8 +256,13 @@ function distImports(): Rolldown.Plugin {
     resolveId(source, importer) {
       if (importer === undefined || !importer.endsWith('.example.tsx')) return null;
       if (!importer.startsWith(SRC)) return null;
-      const own = basename(dirname(importer));
-      const target = source === './index' ? own : /^\.\.\/([a-z0-9-]+)\/index$/.exec(source)?.[1];
+      // an unstable component's entry is dist/unstable/<name>; its examples reach the others at ../../
+      const unstable = basename(dirname(dirname(importer))) === 'unstable';
+      const own = `${unstable ? 'unstable/' : ''}${basename(dirname(importer))}`;
+      const other = unstable
+        ? /^\.\.\/\.\.\/([a-z0-9-]+)\/index$/.exec(source)?.[1]
+        : /^\.\.\/([a-z0-9-]+)\/index$/.exec(source)?.[1];
+      const target = source === './index' ? own : other;
       if (target === undefined) {
         if (source.startsWith('.')) {
           throw new Error(`${rel(importer)}: cannot map '${source}' to a public entry`);

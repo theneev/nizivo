@@ -152,7 +152,10 @@ function mapChartsSpecifier(file: string, part: string, from: string): string {
 function mapSpecifier(file: string, name: string, from: string, subpaths: Set<string>): string {
   if (ALLOWED_EXTERNAL.has(from)) return from;
   if (from === './index') return `@nizivo/react/${name}`;
-  const sibling = /^\.\.\/([a-z0-9-]+)\/index$/.exec(from);
+  // an unstable component's example reaches the stable ones from src/unstable/<name>/
+  const sibling = name.startsWith('unstable/')
+    ? /^\.\.\/\.\.\/([a-z0-9-]+)\/index$/.exec(from)
+    : /^\.\.\/([a-z0-9-]+)\/index$/.exec(from);
   if (sibling?.[1] !== undefined && subpaths.has(sibling[1])) return `@nizivo/react/${sibling[1]}`;
   const pub = /^@nizivo\/react\/([a-z0-9-]+)$/.exec(from);
   if (pub?.[1] !== undefined && subpaths.has(pub[1])) return from;
@@ -368,11 +371,13 @@ export function generateExamples(): { files: Map<string, string>; manifest: Exam
     }
   }
 
-  for (const name of subpathList) {
-    const file = join(srcRoot, name, `${name}.example.tsx`);
+  for (const subpath of subpathList) {
+    // ./unstable/<name> keeps its folder under src/unstable; its page and files use the bare name
+    const name = subpath.replace(/^unstable\//, '');
+    const file = join(srcRoot, subpath, `${name}.example.tsx`);
     if (!existsSync(file)) continue;
     const { module, entry } = exampleFile(file, name, HEADER, (from) =>
-      mapSpecifier(file, name, from, subpaths),
+      mapSpecifier(file, subpath, from, subpaths),
     );
     files.set(`${name}.example.tsx`, module);
     manifest[name] = entry;
