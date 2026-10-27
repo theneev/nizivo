@@ -8,11 +8,13 @@ import { renderToString } from 'react-dom/server';
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import { userEvent } from 'vitest/browser';
 import { AnnouncementBar } from '../../src/unstable/announcement-bar/announcement-bar';
+import { BentoTile } from '../../src/unstable/bento-tile/bento-tile';
 import { CtaBand } from '../../src/unstable/cta-band/cta-band';
 import { FeatureCard } from '../../src/unstable/feature-card/feature-card';
 import { NewsletterSignup } from '../../src/unstable/newsletter-signup/newsletter-signup.client';
 import { SectionHeader } from '../../src/unstable/section-header/section-header';
 import { SiteFooter } from '../../src/unstable/site-footer/site-footer';
+import { SiteNavbar } from '../../src/unstable/site-navbar/site-navbar';
 import { StatBlock } from '../../src/unstable/stat-block/stat-block';
 import { TestimonialCard } from '../../src/unstable/testimonial-card/testimonial-card';
 
@@ -121,5 +123,26 @@ describe('marketing parts', () => {
         'Thanks — check your inbox to confirm.',
       ),
     );
+  });
+
+  test('SiteNavbar: a nav named "Main", the current page marked; BentoTile: its h3', async () => {
+    const container = await hydrate(
+      <>
+        <SiteNavbar
+          links={[
+            { label: 'Docs', href: '/docs/', current: true },
+            { label: 'Pricing', href: '/pricing/' },
+          ]}
+        />
+        <BentoTile title="Tokens" />
+      </>,
+    );
+    const nav = container.querySelector('header nav');
+    expect(nav?.getAttribute('aria-label')).toBe('Main');
+    const current = [...container.querySelectorAll('a[aria-current="page"]')];
+    expect(current.length).toBeGreaterThan(0);
+    expect(current.every((link) => link.textContent === 'Docs')).toBe(true);
+    expect(container.querySelector('summary')?.getAttribute('aria-label')).toBe('Menu');
+    expect(container.querySelector('article h3')?.textContent).toBe('Tokens');
   });
 });

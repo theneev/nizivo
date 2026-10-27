@@ -1,0 +1,16 @@
+---
+title: SiteNavbar
+description: "Unstable: a website's main navigation, the brand, the links and the actions, as a full-width bar or a floating glass pill; below 768 px the links fold into a menu. Import it from @nizivo/react/unstable/site-navbar."
+---
+
+## Static or interactive
+
+**Server.** No client JavaScript: the narrow menu is a native `<details>` disclosure.
+[How to choose](/docs/guides/static-or-interactive/).
+
+## Use
+
+It is a `<header>` holding a `<nav>` named "Main". `links` (a `label`, an `href`, and `current` for
+the page you are on, which gets `aria-current="page"`) sit between `brand` and `actions`. `variant`
+is `bar`, full width with a rule under it, or `floating`, a glass pill for over a hero. Below 768 px
+the links move into a menu button named "Menu" whose panel opens under the bar.

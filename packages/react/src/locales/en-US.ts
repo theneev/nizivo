@@ -54,6 +54,7 @@ import type { CopyButtonLabels } from '../unstable/copy-button/index';
 import type { CodeBlockLabels } from '../unstable/code-block/index';
 import type { AnnouncementBarLabels } from '../unstable/announcement-bar/index';
 import type { NewsletterSignupLabels } from '../unstable/newsletter-signup/index';
+import type { SiteNavbarLabels } from '../unstable/site-navbar/index';
 import type { RankedListLabels } from '../ranked-list/index';
 import type { SearchFieldLabels } from '../search-field/index';
 import type { SidebarLabels } from '../sidebar/index';
@@ -118,6 +119,7 @@ export const enUS: {
   codeBlock: CodeBlockLabels;
   announcementBar: AnnouncementBarLabels;
   newsletterSignup: NewsletterSignupLabels;
+  siteNavbar: SiteNavbarLabels;
   rankedList: RankedListLabels;
   searchField: SearchFieldLabels;
   sidebar: SidebarLabels;
@@ -262,6 +264,7 @@ export const enUS: {
     missing: 'Enter your email address.',
     invalid: 'Enter an email address like name@example.com.',
   },
+  siteNavbar: { label: 'Main', menu: 'Menu' },
   rankedList: { loading: 'Loading {label}', empty: 'No data', error: 'Could not load {label}' },
   searchField: { label: 'Search', clear: 'Clear search' },
   sidebar: { nav: 'Primary' },

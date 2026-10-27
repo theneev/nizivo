@@ -1,0 +1,118 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/site-navbar.css (Figma Site Navbar 7392:80), UNSTABLE. 64 px tall: the brand, the
+   Label/M text/secondary links 28 px apart (text/primary for the current page, underlined), and the
+   actions 8 px apart. Bar: bg/surface, full width, padded 32, a border/subtle rule under it.
+   Floating: a radius/full glass pill (bg/surface at 72 % with a 12 px blur), a border/subtle edge
+   and a soft shadow, padded 20 and 12. Below 768 px the links fold into a <details> menu whose
+   panel opens under the bar. */
+@layer nz.components {
+  .nz-site-navbar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--nz-space-6);
+    box-sizing: border-box;
+    min-block-size: calc(var(--nz-space-10) * 1.6);
+    padding-inline: var(--nz-space-8);
+    border-block-end: var(--nz-border-width-default) solid var(--nz-border-subtle);
+    background: var(--nz-bg-surface);
+  }
+
+  .nz-site-navbar[data-variant='floating'] {
+    padding-inline: var(--nz-space-5) var(--nz-space-3);
+    border: var(--nz-border-width-default) solid var(--nz-border-subtle);
+    border-radius: var(--nz-radius-full);
+    background: color-mix(in oklab, var(--nz-bg-surface) 72%, transparent);
+    box-shadow: var(--nz-elevation-2);
+    backdrop-filter: blur(12px);
+  }
+
+  .nz-site-navbar-brand,
+  .nz-site-navbar-actions {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: var(--nz-space-2);
+  }
+
+  .nz-site-navbar-links {
+    display: flex;
+    gap: calc(var(--nz-space-6) + var(--nz-space-1));
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .nz-site-navbar-link {
+    border-radius: var(--nz-radius-xs);
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-label-m);
+    text-decoration: none;
+
+    @media (hover: hover) {
+      &:hover {
+        color: var(--nz-text-primary);
+      }
+    }
+
+    &[aria-current='page'] {
+      color: var(--nz-text-primary);
+      text-decoration-line: underline;
+      text-underline-offset: 0.3em;
+    }
+  }
+
+  .nz-site-navbar-narrow {
+    display: none;
+  }
+
+  .nz-site-navbar-menu {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: var(--nz-space-10);
+    block-size: var(--nz-space-10);
+    border-radius: var(--nz-radius-md);
+    color: var(--nz-text-primary);
+    font-size: var(--nz-size-icon-md);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .nz-site-navbar-menu::-webkit-details-marker {
+    display: none;
+  }
+
+  .nz-site-navbar-panel {
+    position: absolute;
+    inset-inline: 0;
+    inset-block-start: 100%;
+    z-index: 1;
+    padding: var(--nz-space-4) var(--nz-space-8);
+    border-block-end: var(--nz-border-width-default) solid var(--nz-border-subtle);
+    background: var(--nz-bg-surface);
+  }
+
+  .nz-site-navbar-panel .nz-site-navbar-links {
+    flex-direction: column;
+    gap: var(--nz-space-4);
+  }
+
+  @media (width < 48rem) {
+    .nz-site-navbar-wide {
+      display: none;
+    }
+
+    .nz-site-navbar-narrow {
+      display: block;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .nz-site-navbar[data-variant='floating'] {
+      border-color: CanvasText;
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "site-navbar",
+  "status": "unstable",
+  "tier": "server",
+  "exports": ["SiteNavbar"],
+  "interactive": ["site-navbar-link", "site-navbar-menu"],
+  "cssDeps": ["base"],
+  "variants": {
+    "variant": ["bar", "floating"]
+  },
+  "figma": {
+    "canonical": ["7392:80"],
+    "ghosts": [],
+    "variantsSeen": ["7392:20", "7392:53"],
+    "related": []
+  }
+}

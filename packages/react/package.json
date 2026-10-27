@@ -375,6 +375,10 @@
       "types": "./dist/unstable/approval-card/index.d.ts",
       "default": "./dist/unstable/approval-card/index.js"
     },
+    "./unstable/bento-tile": {
+      "types": "./dist/unstable/bento-tile/index.d.ts",
+      "default": "./dist/unstable/bento-tile/index.js"
+    },
     "./unstable/chat-message": {
       "types": "./dist/unstable/chat-message/index.d.ts",
       "default": "./dist/unstable/chat-message/index.js"
@@ -475,6 +479,10 @@
       "types": "./dist/unstable/site-footer/index.d.ts",
       "default": "./dist/unstable/site-footer/index.js"
     },
+    "./unstable/site-navbar": {
+      "types": "./dist/unstable/site-navbar/index.d.ts",
+      "default": "./dist/unstable/site-navbar/index.js"
+    },
     "./unstable/slider": {
       "types": "./dist/unstable/slider/index.d.ts",
       "default": "./dist/unstable/slider/index.js"
@@ -526,6 +534,7 @@
     "./css/badge.css": "./dist/css/badge.css",
     "./css/banner.css": "./dist/css/banner.css",
     "./css/base.css": "./dist/css/base.css",
+    "./css/bento-tile.css": "./dist/css/bento-tile.css",
     "./css/breadcrumb.css": "./dist/css/breadcrumb.css",
     "./css/bulk-action-bar.css": "./dist/css/bulk-action-bar.css",
     "./css/button.css": "./dist/css/button.css",
@@ -604,6 +613,7 @@
     "./css/separator.css": "./dist/css/separator.css",
     "./css/sidebar.css": "./dist/css/sidebar.css",
     "./css/site-footer.css": "./dist/css/site-footer.css",
+    "./css/site-navbar.css": "./dist/css/site-navbar.css",
     "./css/skeleton.css": "./dist/css/skeleton.css",
     "./css/slider.css": "./dist/css/slider.css",
     "./css/source-card.css": "./dist/css/source-card.css",

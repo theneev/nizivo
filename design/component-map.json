@@ -793,6 +793,15 @@
       "export": "AnnouncementBar",
       "props": {}
     },
+    "7392:80": {
+      "component": "site-navbar",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/site-navbar",
+      "export": "SiteNavbar",
+      "props": {
+        "variant": ["bar", "floating"]
+      }
+    },
     "7392:91": {
       "component": "section-header",
       "role": "canonical",
@@ -831,6 +840,15 @@
       "import": "@nizivo/react/unstable/site-footer",
       "export": "SiteFooter",
       "props": {}
+    },
+    "7395:80": {
+      "component": "bento-tile",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/bento-tile",
+      "export": "BentoTile",
+      "props": {
+        "size": ["wide", "square", "tall"]
+      }
     },
     "7395:85": {
       "component": "testimonial-card",

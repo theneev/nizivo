@@ -98,7 +98,7 @@
       "limitKiB": 1
     },
     "@nizivo/react/field": {
-      "measured": 3628,
+      "measured": 3627,
       "limitKiB": 3.9
     },
     "@nizivo/react/fieldset": {
@@ -110,7 +110,7 @@
       "limitKiB": 6.1
     },
     "@nizivo/react/form": {
-      "measured": 2854,
+      "measured": 2853,
       "limitKiB": 3
     },
     "@nizivo/react/grid": {
@@ -158,7 +158,7 @@
       "limitKiB": 2.5
     },
     "@nizivo/react/locales/en-US": {
-      "measured": 1788,
+      "measured": 1806,
       "limitKiB": 1.8
     },
     "@nizivo/react/menu": {
@@ -242,7 +242,7 @@
       "limitKiB": 2.4
     },
     "@nizivo/react/ranked-list": {
-      "measured": 2475,
+      "measured": 2474,
       "limitKiB": 2.7
     },
     "@nizivo/react/search-field": {
@@ -254,7 +254,7 @@
       "limitKiB": 2.6
     },
     "@nizivo/react/select": {
-      "measured": 63747,
+      "measured": 63744,
       "limitKiB": 66
     },
     "@nizivo/react/separator": {
@@ -346,11 +346,15 @@
       "limitKiB": 1.3
     },
     "@nizivo/react/unstable/approval-card": {
-      "measured": 2095,
+      "measured": 2096,
       "limitKiB": 2.3
     },
+    "@nizivo/react/unstable/bento-tile": {
+      "measured": 889,
+      "limitKiB": 1
+    },
     "@nizivo/react/unstable/chat-message": {
-      "measured": 1340,
+      "measured": 1341,
       "limitKiB": 1.5
     },
     "@nizivo/react/unstable/citation": {
@@ -366,7 +370,7 @@
       "limitKiB": 64
     },
     "@nizivo/react/unstable/comment": {
-      "measured": 1585,
+      "measured": 1586,
       "limitKiB": 1.8
     },
     "@nizivo/react/unstable/copy-button": {
@@ -382,7 +386,7 @@
       "limitKiB": 68
     },
     "@nizivo/react/unstable/docs-card": {
-      "measured": 1067,
+      "measured": 1068,
       "limitKiB": 1.2
     },
     "@nizivo/react/unstable/event-card": {
@@ -418,7 +422,7 @@
       "limitKiB": 69
     },
     "@nizivo/react/unstable/newsletter-signup": {
-      "measured": 4901,
+      "measured": 4900,
       "limitKiB": 5.3
     },
     "@nizivo/react/unstable/notification-item": {
@@ -438,7 +442,7 @@
       "limitKiB": 1.7
     },
     "@nizivo/react/unstable/response-block": {
-      "measured": 2310,
+      "measured": 2311,
       "limitKiB": 2.5
     },
     "@nizivo/react/unstable/section-header": {
@@ -448,6 +452,10 @@
     "@nizivo/react/unstable/site-footer": {
       "measured": 976,
       "limitKiB": 1.1
+    },
+    "@nizivo/react/unstable/site-navbar": {
+      "measured": 1194,
+      "limitKiB": 1.3
     },
     "@nizivo/react/unstable/slider": {
       "measured": 1362,
@@ -466,11 +474,11 @@
       "limitKiB": 1.4
     },
     "@nizivo/react/unstable/tag": {
-      "measured": 1321,
+      "measured": 1319,
       "limitKiB": 1.5
     },
     "@nizivo/react/unstable/testimonial-card": {
-      "measured": 1152,
+      "measured": 1153,
       "limitKiB": 1.3
     },
     "@nizivo/react/unstable/thinking-indicator": {
@@ -478,11 +486,11 @@
       "limitKiB": 1
     },
     "@nizivo/react/unstable/tool-call-card": {
-      "measured": 1638,
+      "measured": 1637,
       "limitKiB": 1.8
     },
     "@nizivo/react/unstable/usage-meter": {
-      "measured": 1873,
+      "measured": 1874,
       "limitKiB": 2.1
     },
     "@nizivo/react/unstable/voice-orb": {
@@ -494,7 +502,7 @@
       "limitKiB": 85
     },
     "@nizivo/react { Button } from the barrel": {
-      "measured": 1280,
+      "measured": 1279,
       "limitKiB": 1.4
     },
     "@nizivo/react { Select } from the barrel": {
@@ -826,8 +834,12 @@
       "limitKiB": 0.8
     },
     "@nizivo/react/css/base.css": {
-      "measured": 1533,
+      "measured": 1544,
       "limitKiB": 1.6
+    },
+    "@nizivo/react/css/bento-tile.css": {
+      "measured": 721,
+      "limitKiB": 0.8
     },
     "@nizivo/react/css/breadcrumb.css": {
       "measured": 551,
@@ -1141,6 +1153,10 @@
       "measured": 505,
       "limitKiB": 0.6
     },
+    "@nizivo/react/css/site-navbar.css": {
+      "measured": 785,
+      "limitKiB": 0.9
+    },
     "@nizivo/react/css/skeleton.css": {
       "measured": 365,
       "limitKiB": 0.4
@@ -1246,7 +1262,7 @@
       "limitKiB": 1.1
     },
     "@nizivo/react/styles.css": {
-      "measured": 26051,
+      "measured": 26063,
       "limitKiB": 26
     },
     "@nizivo/tokens": {

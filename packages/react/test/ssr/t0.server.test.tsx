@@ -115,6 +115,8 @@ const COMPONENTS = [
   'testimonial-card',
   'cta-band',
   'site-footer',
+  'bento-tile',
+  'site-navbar',
 ] as const;
 type Name = (typeof COMPONENTS)[number];
 
@@ -284,6 +286,8 @@ const entries = {
   'testimonial-card': () => import('../../src/unstable/testimonial-card/index'),
   'cta-band': () => import('../../src/unstable/cta-band/index'),
   'site-footer': () => import('../../src/unstable/site-footer/index'),
+  'bento-tile': () => import('../../src/unstable/bento-tile/index'),
+  'site-navbar': () => import('../../src/unstable/site-navbar/index'),
   'bulk-action-bar': () => import('../../src/bulk-action-bar/index'),
   'data-view': () => import('../../src/data-view/index'),
   surface: () => import('../../src/surface/index'),
@@ -369,6 +373,8 @@ const exampleModules = {
   'testimonial-card': () => import('../../src/unstable/testimonial-card/testimonial-card.example'),
   'cta-band': () => import('../../src/unstable/cta-band/cta-band.example'),
   'site-footer': () => import('../../src/unstable/site-footer/site-footer.example'),
+  'bento-tile': () => import('../../src/unstable/bento-tile/bento-tile.example'),
+  'site-navbar': () => import('../../src/unstable/site-navbar/site-navbar.example'),
   'bulk-action-bar': () => import('../../src/bulk-action-bar/bulk-action-bar.example'),
   'data-view': () => import('../../src/data-view/data-view.example'),
   surface: () => import('../../src/surface/surface.example'),

@@ -1,0 +1,17 @@
+{
+  "name": "bento-tile",
+  "status": "unstable",
+  "tier": "server",
+  "exports": ["BentoTile"],
+  "interactive": [],
+  "cssDeps": ["base"],
+  "variants": {
+    "size": ["wide", "square", "tall"]
+  },
+  "figma": {
+    "canonical": ["7395:80"],
+    "ghosts": [],
+    "variantsSeen": ["7395:65", "7395:70", "7395:75"],
+    "related": ["7389:78"]
+  }
+}

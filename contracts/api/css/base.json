@@ -82,6 +82,8 @@
     "nz-select-popup",
     "nz-select-trigger",
     "nz-sidebar-item",
+    "nz-site-navbar-link",
+    "nz-site-navbar-menu",
     "nz-slider-input",
     "nz-source-card",
     "nz-suggestion-chip",

@@ -1,0 +1,99 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/bento-tile.css (Figma Bento Tile 7395:80), UNSTABLE. radius/2xl on bg/canvas, at
+   least 360 px tall (a tall tile spans two rows), the background filling it, and a caption card 24 px
+   in from the bottom start: bg/surface at 78 % with a 10 px backdrop blur, radius/xl, padded 20, the
+   Heading/H3 title over the Body/M text/secondary line, 6 px apart, at most 320 px wide. In a grid of
+   12 columns a wide tile spans 8, square and tall 4. */
+@layer nz.components {
+  .nz-bento-tile {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    box-sizing: border-box;
+    min-block-size: calc(var(--nz-space-10) * 9);
+    overflow: hidden;
+    padding: var(--nz-space-6);
+    border-radius: var(--nz-radius-2xl);
+    background: var(--nz-bg-canvas);
+    grid-column: span 4;
+    align-self: stretch;
+  }
+
+  .nz-bento-tile[data-size='wide'] {
+    grid-column: span 8;
+  }
+
+  .nz-bento-tile[data-size='tall'] {
+    grid-row: span 2;
+  }
+
+  .nz-bento-tile-background {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(
+        45% 55% at 20% 45%,
+        color-mix(in oklab, var(--nz-bg-accent) 45%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(
+        50% 60% at 85% 90%,
+        color-mix(in oklab, var(--nz-bg-brand-muted) 90%, transparent),
+        transparent 75%
+      ),
+      linear-gradient(180deg, var(--nz-bg-canvas), var(--nz-bg-brand-subtle));
+  }
+
+  .nz-bento-tile-background > * {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  .nz-bento-tile-caption {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-1-5);
+    max-inline-size: 20rem;
+    padding: var(--nz-space-5);
+    border-radius: var(--nz-radius-xl);
+    background: color-mix(in oklab, var(--nz-bg-surface) 78%, transparent);
+    backdrop-filter: blur(10px);
+  }
+
+  .nz-bento-tile-title {
+    margin: 0;
+    color: var(--nz-text-primary);
+    font: var(--nz-font-heading-h3);
+    letter-spacing: var(--nz-tracking-heading-h3);
+  }
+
+  .nz-bento-tile-description {
+    margin: 0;
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-body-m);
+  }
+
+  /* without the blur, the card is opaque, so the text keeps its contrast */
+  @supports not (backdrop-filter: blur(10px)) {
+    .nz-bento-tile-caption {
+      background: var(--nz-bg-surface);
+    }
+  }
+
+  @media (prefers-reduced-transparency: reduce) {
+    .nz-bento-tile-caption {
+      background: var(--nz-bg-surface);
+      backdrop-filter: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .nz-bento-tile-caption {
+      border: 1px solid CanvasText;
+    }
+  }
+}

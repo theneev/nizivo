@@ -14,7 +14,8 @@
 // (FeedbackBar's votes), `wand-sparkles` (ToolCallCard's mark), `circle-stop` (ResponseBlock's Stop),
 // `refresh-cw` (its Retry), `mic` (VoiceOrb's start), `star` (Rating's), `heart` and
 // `message-circle` (Comment's Like and Reply), and `play`, `pause`, `skip-back` and `skip-forward`
-// (MediaPlayer's), `copy` (CopyButton's) and `quote` (TestimonialCard's); `circle-alert` (ResponseBlock's error mark), `arrow-up`
+// (MediaPlayer's), `copy` (CopyButton's), `quote` (TestimonialCard's) and `menu`
+// (SiteNavbar's); `circle-alert` (ResponseBlock's error mark), `arrow-up`
 // (PromptComposer's send), `clock` (EventCard's time) and `arrow-up-right` (Link's and DocsCard's
 // external mark) are Feather-derived.
 //
@@ -59,7 +60,8 @@ export type GlyphName =
   | 'skip-forward'
   | 'copy'
   | 'arrow-up-right'
-  | 'quote';
+  | 'quote'
+  | 'menu';
 
 function svg(name: GlyphName, paths: ReactNode): JSX.Element {
   return (
@@ -415,5 +417,16 @@ export const QuoteGlyph = (): JSX.Element =>
     <>
       <path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z" />
       <path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z" />
+    </>,
+  );
+
+/** Lucide's `menu`: SiteNavbar's menu button. */
+export const MenuGlyph = (): JSX.Element =>
+  svg(
+    'menu',
+    <>
+      <path d="M4 5h16" />
+      <path d="M4 12h16" />
+      <path d="M4 19h16" />
     </>,
   );

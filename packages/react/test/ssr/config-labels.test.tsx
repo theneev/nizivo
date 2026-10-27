@@ -92,6 +92,7 @@ const NOT_REACHED: Partial<Record<Key, string>> = {
   eventCard: SERVER,
   link: SERVER,
   announcementBar: SERVER,
+  siteNavbar: SERVER,
   kpiTile: SERVER,
   metric: SERVER,
   mobileTabBar: SERVER,

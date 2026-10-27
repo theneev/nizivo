@@ -58,6 +58,7 @@ const LUCIDE: Record<string, string> = {
   copy: 'copy',
   'arrow-up-right': 'arrow-up-right',
   quote: 'quote',
+  menu: 'menu',
 };
 
 /**
