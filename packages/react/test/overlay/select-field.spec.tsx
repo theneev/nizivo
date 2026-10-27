@@ -42,10 +42,16 @@ function Period(props: Partial<Parameters<typeof Select.Root>[0]>): JSX.Element 
   );
 }
 
-function hiddenSelect(root: ParentNode = document): HTMLSelectElement {
-  const select = root.querySelector('[data-slot="select"] select');
-  if (!(select instanceof HTMLSelectElement)) throw new Error('no hidden native select');
-  return select;
+/**
+ * The hidden form control that carries the name and value: a native <select> with React Aria, an
+ * <input> with Base UI (the canary). The contract asks for a hidden control, not its element (M74).
+ */
+function hiddenControl(root: ParentNode = document): HTMLSelectElement | HTMLInputElement {
+  const control = root.querySelector('[data-slot="select"] select, [data-slot="select"] input');
+  if (!(control instanceof HTMLSelectElement || control instanceof HTMLInputElement)) {
+    throw new Error('no hidden form control');
+  }
+  return control;
 }
 
 function label(): HTMLLabelElement {
@@ -107,7 +113,11 @@ describe('Select in a Field', () => {
     // the label's `for` points at the trigger
     expect(label().control).toBe(trigger);
     const labelledBy = (trigger.getAttribute('aria-labelledby') ?? '').split(' ');
-    expect(labelledBy).toContain(get('select-value').id);
+    // a button trigger (React Aria) is named by its value too; a combobox (Base UI, the canary)
+    // carries its value as the combobox's own value (M74)
+    expect(
+      trigger.getAttribute('role') === 'combobox' || labelledBy.includes(get('select-value').id),
+    ).toBe(true);
     expect(labelledBy).toContain(label().id);
     expect(trigger.getAttribute('aria-describedby')).toBe(
       `${get('field-description').id} ${get('field-error').id}`,
@@ -204,14 +214,14 @@ describe('Select in a Field', () => {
     );
     const [first, second] = [...document.querySelectorAll<HTMLElement>('[data-slot="field"]')];
     if (first === undefined || second === undefined) throw new Error('no fields');
-    const native = hiddenSelect(first);
+    const native = hiddenControl(first);
     expect(native.name).toBe('period');
     expect(native.required).toBe(true);
     expect(native.disabled).toBe(true);
     const trigger = get('select-trigger', first);
     expect(trigger.hasAttribute('disabled')).toBe(true);
     expect(trigger.hasAttribute('data-disabled')).toBe(true);
-    const own = hiddenSelect(second);
+    const own = hiddenControl(second);
     expect(own.name).toBe('own');
     expect(own.required).toBe(false);
     expect(own.disabled).toBe(false);
@@ -266,7 +276,7 @@ describe('Select in a Field', () => {
     await userEvent.click(container.querySelector('button[type="reset"]') ?? document.body);
     await until(() => expect(get('select-trigger').textContent).toContain('Last 30 days'));
     await until(() => expect(new FormData(form).get('period')).toBe('30d'));
-    expect(hiddenSelect().value).toBe('30d');
+    expect(hiddenControl().value).toBe('30d');
     await userEvent.click(container.querySelector('button[type="submit"]') ?? document.body);
     await until(() => expect(submitted).toBe(1));
   });
@@ -294,7 +304,7 @@ describe('Select in a Field', () => {
     await userEvent.click(container.querySelector('button[type="submit"]') ?? document.body);
     await settle();
     expect(submitted).toBe(false);
-    expect(hiddenSelect().validity.valueMissing).toBe(true);
+    expect(hiddenControl().validity.valueMissing).toBe(true);
     expect(document.activeElement).toBe(get('select-trigger'));
   });
 });
