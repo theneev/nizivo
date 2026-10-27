@@ -39,8 +39,8 @@ its published SHA-256 instead of a nonce; Profile B holds on the server-safe pag
   `touch-action` rule for pressables) is blocked on every page with a pressable, in every engine.
 - **Profile B** (`style-src-attr 'none'`): the server renders one `style=` attribute on these pages:
   React Aria's visually hidden wrapper around the Select's hidden `<select>` on `/overlays` (R13).
-  All three engines block it; the Select still opens and submits (its hidden control is off screen
-  either way). WebKit also reports `style-src-attr` on every `<select>` element (the NativeSelect on
+  All three engines block it and the Select still opens; whether its hidden control then shows on
+  the page was not checked. WebKit also reports `style-src-attr` on every `<select>` element (the NativeSelect on
   `/forms`, the hidden one on `/overlays`) with no `style` attribute in the HTML: its own form
   control rendering, recorded and not failed.
 - **All three engines enforce `style-src-attr`** (the control page's attribute is blocked), so the
