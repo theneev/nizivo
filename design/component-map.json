@@ -786,6 +786,45 @@
       "export": "Accordion",
       "parts": ["Root", "Item", "Trigger", "Panel"]
     },
+    "7392:9": {
+      "component": "announcement-bar",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/announcement-bar",
+      "export": "AnnouncementBar",
+      "props": {}
+    },
+    "7392:91": {
+      "component": "section-header",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/section-header",
+      "export": "SectionHeader",
+      "props": {
+        "variant": ["start", "center"]
+      }
+    },
+    "7392:129": {
+      "component": "feature-card",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/feature-card",
+      "export": "FeatureCard",
+      "props": {
+        "variant": ["plain", "tinted", "inverse"]
+      }
+    },
+    "7392:134": {
+      "component": "stat-block",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/stat-block",
+      "export": "StatBlock",
+      "props": {}
+    },
+    "7395:85": {
+      "component": "testimonial-card",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/testimonial-card",
+      "export": "TestimonialCard",
+      "props": {}
+    },
     "7396:26": {
       "component": "chat-message",
       "role": "canonical",

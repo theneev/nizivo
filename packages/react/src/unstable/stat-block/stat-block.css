@@ -1,0 +1,32 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/stat-block.css (Figma Stat Block 7392:134), UNSTABLE. The number in
+   Numeric/Display (tabular) over the Body/M text/secondary label, 4 px apart, then the Delta. The
+   label comes first in the markup (a <dt> before its <dd>) and is drawn second. Put the blocks in a
+   <dl>. */
+@layer nz.components {
+  .nz-stat-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--nz-space-1);
+  }
+
+  .nz-stat-block-value {
+    order: -1;
+    margin: 0;
+    color: var(--nz-text-primary);
+    font: var(--nz-font-numeric-display);
+    letter-spacing: var(--nz-tracking-numeric-display);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .nz-stat-block-label {
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-body-m);
+  }
+
+  .nz-stat-block-delta {
+    margin: 0;
+  }
+}

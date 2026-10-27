@@ -1,0 +1,32 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/section-header.css (Figma Section Header 7392:91), UNSTABLE. At most 720 px, 16 px
+   between the Heading/H1 title and the Body/L text/secondary line; centred, both centre. */
+@layer nz.components {
+  .nz-section-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--nz-space-4);
+    max-inline-size: 45rem;
+  }
+
+  .nz-section-header[data-variant='center'] {
+    align-items: center;
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .nz-section-header-title {
+    margin: 0;
+    color: var(--nz-text-primary);
+    font: var(--nz-font-heading-h1);
+    letter-spacing: var(--nz-tracking-heading-h1);
+  }
+
+  .nz-section-header-description {
+    margin: 0;
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-body-l);
+  }
+}

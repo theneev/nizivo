@@ -1,0 +1,61 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/announcement-bar.css (Figma Announcement Bar 7392:9), UNSTABLE. A 40 px bg/inverse
+   band, the Label/M message centred in text/inverse with its link 12 px after in
+   text/inverse-accent (underlined, so it is not colour alone), and a 16 px × 16 px from the end. */
+@layer nz.components {
+  .nz-announcement-bar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    min-block-size: var(--nz-space-10);
+    padding-block: var(--nz-space-2);
+    padding-inline: var(--nz-space-10);
+    background: var(--nz-bg-inverse);
+    color: var(--nz-text-inverse);
+    font: var(--nz-font-label-m);
+    text-align: center;
+  }
+
+  .nz-announcement-bar-message {
+    margin: 0;
+  }
+
+  .nz-announcement-bar-action {
+    margin-inline-start: var(--nz-space-3);
+  }
+
+  .nz-announcement-bar-action a {
+    color: var(--nz-text-inverse-accent);
+    text-decoration-line: underline;
+    text-underline-position: from-font;
+  }
+
+  .nz-announcement-bar-dismiss {
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-end: var(--nz-space-2);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: var(--nz-space-6);
+    block-size: var(--nz-space-6);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: var(--nz-radius-full);
+    background: transparent;
+    color: var(--nz-text-inverse);
+    font-size: var(--nz-size-icon-sm);
+    cursor: pointer;
+    translate: 0 -50%;
+  }
+
+  @media (forced-colors: active) {
+    .nz-announcement-bar {
+      border-block-end: 1px solid CanvasText;
+    }
+  }
+}

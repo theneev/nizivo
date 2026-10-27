@@ -14,7 +14,7 @@
 // (FeedbackBar's votes), `wand-sparkles` (ToolCallCard's mark), `circle-stop` (ResponseBlock's Stop),
 // `refresh-cw` (its Retry), `mic` (VoiceOrb's start), `star` (Rating's), `heart` and
 // `message-circle` (Comment's Like and Reply), and `play`, `pause`, `skip-back` and `skip-forward`
-// (MediaPlayer's), and `copy` (CopyButton's); `circle-alert` (ResponseBlock's error mark), `arrow-up`
+// (MediaPlayer's), `copy` (CopyButton's) and `quote` (TestimonialCard's); `circle-alert` (ResponseBlock's error mark), `arrow-up`
 // (PromptComposer's send), `clock` (EventCard's time) and `arrow-up-right` (Link's and DocsCard's
 // external mark) are Feather-derived.
 //
@@ -58,7 +58,8 @@ export type GlyphName =
   | 'skip-back'
   | 'skip-forward'
   | 'copy'
-  | 'arrow-up-right';
+  | 'arrow-up-right'
+  | 'quote';
 
 function svg(name: GlyphName, paths: ReactNode): JSX.Element {
   return (
@@ -404,5 +405,15 @@ export const ArrowUpRightGlyph = (): JSX.Element =>
     <>
       <path d="M7 7h10v10" />
       <path d="M7 17 17 7" />
+    </>,
+  );
+
+/** Lucide's `quote`: TestimonialCard's mark. */
+export const QuoteGlyph = (): JSX.Element =>
+  svg(
+    'quote',
+    <>
+      <path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z" />
+      <path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z" />
     </>,
   );

@@ -1,0 +1,15 @@
+{
+  "name": "testimonial-card",
+  "status": "unstable",
+  "tier": "server",
+  "exports": ["TestimonialCard"],
+  "interactive": [],
+  "cssDeps": ["base"],
+  "variants": {},
+  "figma": {
+    "canonical": ["7395:85"],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": []
+  }
+}

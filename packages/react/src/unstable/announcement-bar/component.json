@@ -1,0 +1,15 @@
+{
+  "name": "announcement-bar",
+  "status": "unstable",
+  "tier": "server",
+  "exports": ["AnnouncementBar"],
+  "interactive": ["announcement-bar-dismiss"],
+  "cssDeps": ["base"],
+  "variants": {},
+  "figma": {
+    "canonical": ["7392:9"],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": []
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "stat-block",
+  "status": "unstable",
+  "tier": "server",
+  "exports": ["StatBlock"],
+  "interactive": [],
+  "cssDeps": ["base"],
+  "variants": {},
+  "figma": {
+    "canonical": ["7392:134"],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": []
+  }
+}

@@ -107,6 +107,12 @@ const COMPONENTS = [
   'profile-card',
   'link',
   'docs-card',
+  // v0.6 (D-dp)
+  'announcement-bar',
+  'section-header',
+  'feature-card',
+  'stat-block',
+  'testimonial-card',
 ] as const;
 type Name = (typeof COMPONENTS)[number];
 
@@ -269,6 +275,11 @@ const entries = {
   'profile-card': () => import('../../src/unstable/profile-card/index'),
   link: () => import('../../src/unstable/link/index'),
   'docs-card': () => import('../../src/unstable/docs-card/index'),
+  'announcement-bar': () => import('../../src/unstable/announcement-bar/index'),
+  'section-header': () => import('../../src/unstable/section-header/index'),
+  'feature-card': () => import('../../src/unstable/feature-card/index'),
+  'stat-block': () => import('../../src/unstable/stat-block/index'),
+  'testimonial-card': () => import('../../src/unstable/testimonial-card/index'),
   'bulk-action-bar': () => import('../../src/bulk-action-bar/index'),
   'data-view': () => import('../../src/data-view/index'),
   surface: () => import('../../src/surface/index'),
@@ -347,6 +358,11 @@ const exampleModules = {
   'profile-card': () => import('../../src/unstable/profile-card/profile-card.example'),
   link: () => import('../../src/unstable/link/link.example'),
   'docs-card': () => import('../../src/unstable/docs-card/docs-card.example'),
+  'announcement-bar': () => import('../../src/unstable/announcement-bar/announcement-bar.example'),
+  'section-header': () => import('../../src/unstable/section-header/section-header.example'),
+  'feature-card': () => import('../../src/unstable/feature-card/feature-card.example'),
+  'stat-block': () => import('../../src/unstable/stat-block/stat-block.example'),
+  'testimonial-card': () => import('../../src/unstable/testimonial-card/testimonial-card.example'),
   'bulk-action-bar': () => import('../../src/bulk-action-bar/bulk-action-bar.example'),
   'data-view': () => import('../../src/data-view/data-view.example'),
   surface: () => import('../../src/surface/surface.example'),

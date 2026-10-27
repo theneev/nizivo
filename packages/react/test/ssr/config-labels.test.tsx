@@ -90,6 +90,7 @@ const NOT_REACHED: Partial<Record<Key, string>> = {
   comment: SERVER,
   eventCard: SERVER,
   link: SERVER,
+  announcementBar: SERVER,
   kpiTile: SERVER,
   metric: SERVER,
   mobileTabBar: SERVER,

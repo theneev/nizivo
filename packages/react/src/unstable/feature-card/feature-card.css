@@ -1,0 +1,90 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/feature-card.css (Figma Feature Card 7392:129), UNSTABLE. Radius 24, padded 28,
+   16 px between a 44 px icon tile (radius/md), the Heading/H3 title, the Body/M text and the link.
+   Plain: bg/surface in a border/subtle edge, a bg/brand-subtle tile. Tinted: bg/brand-subtle with a
+   bg/surface tile. Inverse: bg/inverse with a bg/inverse-elevated tile, text/inverse, and the link in
+   text/inverse-accent. A Link inside takes the card's link colour. */
+@layer nz.components {
+  /* Figma's 360 px at least, unless the container is narrower; it still stretches in a grid */
+  .nz-feature-card {
+    --_nz-feature-card-tile: var(--nz-bg-brand-subtle);
+    --_nz-feature-card-fg: var(--nz-text-primary);
+    --_nz-feature-card-muted: var(--nz-text-secondary);
+    --_nz-feature-card-link: var(--nz-text-brand);
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--nz-space-4);
+    box-sizing: border-box;
+    min-inline-size: min(100%, 22.5rem);
+    padding: calc(var(--nz-space-6) + var(--nz-space-1));
+    border: var(--nz-border-width-default) solid var(--nz-border-subtle);
+    border-radius: calc(var(--nz-radius-xl) + var(--nz-space-1));
+    background: var(--nz-bg-surface);
+    color: var(--_nz-feature-card-fg);
+  }
+
+  .nz-feature-card[data-variant='tinted'] {
+    --_nz-feature-card-tile: var(--nz-bg-surface);
+
+    border-color: transparent;
+    background: var(--nz-bg-brand-subtle);
+  }
+
+  .nz-feature-card[data-variant='inverse'] {
+    --_nz-feature-card-tile: var(--nz-bg-inverse-elevated);
+    --_nz-feature-card-fg: var(--nz-text-inverse);
+    --_nz-feature-card-muted: var(--nz-text-inverse);
+    --_nz-feature-card-link: var(--nz-text-inverse-accent);
+
+    border-color: transparent;
+    background: var(--nz-bg-inverse);
+  }
+
+  .nz-feature-card-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: calc(var(--nz-space-10) + var(--nz-space-1));
+    block-size: calc(var(--nz-space-10) + var(--nz-space-1));
+    border-radius: var(--nz-radius-md);
+    background: var(--_nz-feature-card-tile);
+    color: var(--nz-icon-brand);
+    font-size: var(--nz-size-icon-md);
+  }
+
+  .nz-feature-card[data-variant='inverse'] .nz-feature-card-icon {
+    color: var(--nz-text-inverse-accent);
+  }
+
+  .nz-feature-card-title {
+    margin: 0;
+    font: var(--nz-font-heading-h3);
+    letter-spacing: var(--nz-tracking-heading-h3);
+  }
+
+  .nz-feature-card-body {
+    color: var(--_nz-feature-card-muted);
+    font: var(--nz-font-body-m);
+  }
+
+  .nz-feature-card-body > :first-child {
+    margin-block-start: 0;
+  }
+
+  .nz-feature-card-body > :last-child {
+    margin-block-end: 0;
+  }
+
+  .nz-feature-card-action a {
+    color: var(--_nz-feature-card-link);
+  }
+
+  @media (forced-colors: active) {
+    .nz-feature-card {
+      border-color: CanvasText;
+    }
+  }
+}

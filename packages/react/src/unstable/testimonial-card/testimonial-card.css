@@ -1,0 +1,66 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/testimonial-card.css (Figma Testimonial Card 7395:85), UNSTABLE. bg/surface in a
+   border/subtle edge, radius 24, padded 28 with 20 px between a 24 px quote mark (icon/brand), the
+   Body/L quote and the author: a 40 px avatar, 12 px, then the Label/M Strong name over the Body/S
+   text/secondary role. */
+@layer nz.components {
+  /* Figma's 400 px at least, unless the container is narrower; it still stretches in a grid */
+  .nz-testimonial-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-5);
+    box-sizing: border-box;
+    min-inline-size: min(100%, 25rem);
+    margin: 0;
+    padding: calc(var(--nz-space-6) + var(--nz-space-1));
+    border: var(--nz-border-width-default) solid var(--nz-border-subtle);
+    border-radius: calc(var(--nz-radius-xl) + var(--nz-space-1));
+    background: var(--nz-bg-surface);
+  }
+
+  .nz-testimonial-card-mark {
+    display: inline-flex;
+    color: var(--nz-icon-brand);
+    font-size: var(--nz-space-6);
+  }
+
+  .nz-testimonial-card-quote {
+    margin: 0;
+    color: var(--nz-text-primary);
+    font: var(--nz-font-body-l);
+  }
+
+  .nz-testimonial-card-author {
+    display: flex;
+    align-items: center;
+    gap: var(--nz-space-3);
+  }
+
+  .nz-testimonial-card-avatar {
+    display: inline-flex;
+    flex: none;
+  }
+
+  .nz-testimonial-card-name-block {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .nz-testimonial-card-name {
+    color: var(--nz-text-primary);
+    font: var(--nz-font-label-m-strong);
+  }
+
+  .nz-testimonial-card-role {
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-body-s);
+  }
+
+  @media (forced-colors: active) {
+    .nz-testimonial-card {
+      border-color: CanvasText;
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "section-header",
+  "status": "unstable",
+  "tier": "server",
+  "exports": ["SectionHeader"],
+  "interactive": [],
+  "cssDeps": ["base"],
+  "variants": {
+    "variant": ["start", "center"]
+  },
+  "figma": {
+    "canonical": ["7392:91"],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": []
+  }
+}

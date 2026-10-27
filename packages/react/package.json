@@ -367,6 +367,10 @@
       "types": "./dist/unstable/ai-welcome/index.d.ts",
       "default": "./dist/unstable/ai-welcome/index.js"
     },
+    "./unstable/announcement-bar": {
+      "types": "./dist/unstable/announcement-bar/index.d.ts",
+      "default": "./dist/unstable/announcement-bar/index.js"
+    },
     "./unstable/approval-card": {
       "types": "./dist/unstable/approval-card/index.d.ts",
       "default": "./dist/unstable/approval-card/index.js"
@@ -406,6 +410,10 @@
     "./unstable/event-card": {
       "types": "./dist/unstable/event-card/index.d.ts",
       "default": "./dist/unstable/event-card/index.js"
+    },
+    "./unstable/feature-card": {
+      "types": "./dist/unstable/feature-card/index.d.ts",
+      "default": "./dist/unstable/feature-card/index.js"
     },
     "./unstable/feedback-bar": {
       "types": "./dist/unstable/feedback-bar/index.d.ts",
@@ -451,6 +459,10 @@
       "types": "./dist/unstable/response-block/index.d.ts",
       "default": "./dist/unstable/response-block/index.js"
     },
+    "./unstable/section-header": {
+      "types": "./dist/unstable/section-header/index.d.ts",
+      "default": "./dist/unstable/section-header/index.js"
+    },
     "./unstable/slider": {
       "types": "./dist/unstable/slider/index.d.ts",
       "default": "./dist/unstable/slider/index.js"
@@ -459,6 +471,10 @@
       "types": "./dist/unstable/source-card/index.d.ts",
       "default": "./dist/unstable/source-card/index.js"
     },
+    "./unstable/stat-block": {
+      "types": "./dist/unstable/stat-block/index.d.ts",
+      "default": "./dist/unstable/stat-block/index.js"
+    },
     "./unstable/suggestion-chip": {
       "types": "./dist/unstable/suggestion-chip/index.d.ts",
       "default": "./dist/unstable/suggestion-chip/index.js"
@@ -466,6 +482,10 @@
     "./unstable/tag": {
       "types": "./dist/unstable/tag/index.d.ts",
       "default": "./dist/unstable/tag/index.js"
+    },
+    "./unstable/testimonial-card": {
+      "types": "./dist/unstable/testimonial-card/index.d.ts",
+      "default": "./dist/unstable/testimonial-card/index.js"
     },
     "./unstable/thinking-indicator": {
       "types": "./dist/unstable/thinking-indicator/index.d.ts",
@@ -487,6 +507,7 @@
     "./css/ai-badge.css": "./dist/css/ai-badge.css",
     "./css/ai-welcome.css": "./dist/css/ai-welcome.css",
     "./css/alert.css": "./dist/css/alert.css",
+    "./css/announcement-bar.css": "./dist/css/announcement-bar.css",
     "./css/app-shell.css": "./dist/css/app-shell.css",
     "./css/approval-card.css": "./dist/css/approval-card.css",
     "./css/avatar.css": "./dist/css/avatar.css",
@@ -516,6 +537,7 @@
     "./css/drawer.css": "./dist/css/drawer.css",
     "./css/empty-state.css": "./dist/css/empty-state.css",
     "./css/event-card.css": "./dist/css/event-card.css",
+    "./css/feature-card.css": "./dist/css/feature-card.css",
     "./css/feedback-bar.css": "./dist/css/feedback-bar.css",
     "./css/field.css": "./dist/css/field.css",
     "./css/fieldset.css": "./dist/css/fieldset.css",
@@ -562,6 +584,7 @@
     "./css/rating.css": "./dist/css/rating.css",
     "./css/response-block.css": "./dist/css/response-block.css",
     "./css/search-field.css": "./dist/css/search-field.css",
+    "./css/section-header.css": "./dist/css/section-header.css",
     "./css/segmented-control.css": "./dist/css/segmented-control.css",
     "./css/select.css": "./dist/css/select.css",
     "./css/separator.css": "./dist/css/separator.css",
@@ -571,6 +594,7 @@
     "./css/source-card.css": "./dist/css/source-card.css",
     "./css/split.css": "./dist/css/split.css",
     "./css/stack.css": "./dist/css/stack.css",
+    "./css/stat-block.css": "./dist/css/stat-block.css",
     "./css/sticky-bar.css": "./dist/css/sticky-bar.css",
     "./css/suggestion-chip.css": "./dist/css/suggestion-chip.css",
     "./css/surface.css": "./dist/css/surface.css",
@@ -580,6 +604,7 @@
     "./css/table.css": "./dist/css/table.css",
     "./css/tabs.css": "./dist/css/tabs.css",
     "./css/tag.css": "./dist/css/tag.css",
+    "./css/testimonial-card.css": "./dist/css/testimonial-card.css",
     "./css/text.css": "./dist/css/text.css",
     "./css/textarea.css": "./dist/css/textarea.css",
     "./css/thinking-indicator.css": "./dist/css/thinking-indicator.css",

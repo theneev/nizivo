@@ -1,0 +1,15 @@
+---
+title: AnnouncementBar
+description: 'Unstable: one short site-wide message above the navigation, with a link and an optional close button. Import it from @nizivo/react/unstable/announcement-bar.'
+---
+
+## Static or interactive
+
+**Server.** No client JavaScript: the close button calls `onDismiss`.
+[How to choose](/docs/guides/static-or-interactive/).
+
+## Use
+
+One message at a time, in `children`, with a link in `action` (drawn in text/inverse-accent and
+underlined). It is a region named "Announcement". `dismissible` adds a close button named
+"Dismiss announcement"; remembering the choice across visits is the app's.

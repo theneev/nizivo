@@ -1,0 +1,17 @@
+{
+  "name": "feature-card",
+  "status": "unstable",
+  "tier": "server",
+  "exports": ["FeatureCard"],
+  "interactive": [],
+  "cssDeps": ["base"],
+  "variants": {
+    "variant": ["plain", "tinted", "inverse"]
+  },
+  "figma": {
+    "canonical": ["7392:129"],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": []
+  }
+}

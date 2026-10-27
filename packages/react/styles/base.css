@@ -8,6 +8,7 @@
   :where(
     .nz-accordion-trigger,
     .nz-alert-dismiss,
+    .nz-announcement-bar-dismiss,
     .nz-app-shell-skip,
     .nz-approval-card-action,
     .nz-banner-dismiss,
@@ -134,6 +135,7 @@
   :where(
     .nz-accordion-trigger,
     .nz-alert-dismiss,
+    .nz-announcement-bar-dismiss,
     .nz-app-shell-skip,
     .nz-approval-card-action,
     .nz-banner-dismiss,
