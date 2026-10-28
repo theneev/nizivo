@@ -1,0 +1,1714 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "nizivo",
+  "homepage": "https://nizivo.neevtechnologies.in/docs/guides/registry/",
+  "items": [
+    {
+      "name": "init",
+      "type": "registry:item",
+      "title": "Nizivo",
+      "description": "Installs @nizivo/react and @nizivo/icons and adds components/nizivo/nizivo.css, which imports their stylesheet. Add it before any pattern.",
+      "dependencies": [
+        "@nizivo/icons@~0.5.0",
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/nizivo.css",
+          "type": "registry:file",
+          "target": "components/nizivo/nizivo.css"
+        }
+      ]
+    },
+    {
+      "name": "analytics-page",
+      "type": "registry:block",
+      "title": "Analytics page",
+      "description": "A report inside the app shell, with a range control, key figures with sparklines, a sales trend, goals, sales by channel, orders per day and the top products.",
+      "dependencies": [
+        "@nizivo/charts@~0.5.0",
+        "@nizivo/icons@~0.5.0",
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/analytics-page.tsx",
+          "type": "registry:component",
+          "target": "components/nizivo/analytics-page.tsx"
+        },
+        {
+          "path": "nizivo/analytics-page.css",
+          "type": "registry:file",
+          "target": "components/nizivo/analytics-page.css"
+        }
+      ]
+    },
+    {
+      "name": "collection-circles",
+      "type": "registry:block",
+      "title": "Collection circles",
+      "description": "A row of story-ring links to a store's collections, a cover in a ring and the name under it, that scrolls sideways. A server composition; it ships no JavaScript.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/collection-circles.tsx",
+          "type": "registry:component",
+          "target": "components/nizivo/collection-circles.tsx"
+        },
+        {
+          "path": "nizivo/collection-circles.css",
+          "type": "registry:file",
+          "target": "components/nizivo/collection-circles.css"
+        }
+      ]
+    },
+    {
+      "name": "customer-card",
+      "type": "registry:block",
+      "title": "Customer card",
+      "description": "Who a customer is, what they are worth and how to reach them, an Avatar, their name and email, their orders and total spent, and their tags. A server composition; it ships no JavaScript.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/customer-card.tsx",
+          "type": "registry:component",
+          "target": "components/nizivo/customer-card.tsx"
+        },
+        {
+          "path": "nizivo/customer-card.css",
+          "type": "registry:file",
+          "target": "components/nizivo/customer-card.css"
+        }
+      ]
+    },
+    {
+      "name": "customers-page",
+      "type": "registry:block",
+      "title": "Customers page",
+      "description": "A customer index inside the app shell, with key figures, segment links and a customers table beside the top cities and a win-back card. It ships no JavaScript.",
+      "dependencies": [
+        "@nizivo/icons@~0.5.0",
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/customers-page.tsx",
+          "type": "registry:component",
+          "target": "components/nizivo/customers-page.tsx"
+        },
+        {
+          "path": "nizivo/customers-page.css",
+          "type": "registry:file",
+          "target": "components/nizivo/customers-page.css"
+        }
+      ]
+    },
+    {
+      "name": "discount-card",
+      "type": "registry:block",
+      "title": "Discount card",
+      "description": "A discount code, what it gives, its status, how much of it is used as a Meter and its dates, including an expired state that keeps its contrast. A server composition; it ships no JavaScript.",
+      "dependencies": [
+        "@nizivo/icons@~0.5.0",
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/discount-card.tsx",
+          "type": "registry:component",
+          "target": "components/nizivo/discount-card.tsx"
+        },
+        {
+          "path": "nizivo/discount-card.css",
+          "type": "registry:file",
+          "target": "components/nizivo/discount-card.css"
+        }
+      ]
+    },
+    {
+      "name": "discounts-page",
+      "type": "registry:block",
+      "title": "Discounts page",
+      "description": "A discount index inside the app shell, with a notice, key figures, status links and a card per discount showing its status, dates and usage on a Meter. It ships no JavaScript.",
+      "dependencies": [
+        "@nizivo/icons@~0.5.0",
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/discounts-page.tsx",
+          "type": "registry:component",
+          "target": "components/nizivo/discounts-page.tsx"
+        },
+        {
+          "path": "nizivo/discounts-page.css",
+          "type": "registry:file",
+          "target": "components/nizivo/discounts-page.css"
+        }
+      ]
+    },
+    {
+      "name": "onboarding-page",
+      "type": "registry:block",
+      "title": "Onboarding page",
+      "description": "A new store's home inside the app shell, with a setup checklist and its progress, an empty state for orders and next-step cards. It ships no JavaScript.",
+      "dependencies": [
+        "@nizivo/icons@~0.5.0",
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/onboarding-page.tsx",
+          "type": "registry:component",
+          "target": "components/nizivo/onboarding-page.tsx"
+        },
+        {
+          "path": "nizivo/onboarding-page.css",
+          "type": "registry:file",
+          "target": "components/nizivo/onboarding-page.css"
+        }
+      ]
+    },
+    {
+      "name": "order-summary",
+      "type": "registry:block",
+      "title": "Order summary",
+      "description": "An order's lines and totals on a Card, the totals a description list with the amounts in tabular figures. A server composition; it ships no JavaScript.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/order-summary.tsx",
+          "type": "registry:component",
+          "target": "components/nizivo/order-summary.tsx"
+        },
+        {
+          "path": "nizivo/order-summary.css",
+          "type": "registry:file",
+          "target": "components/nizivo/order-summary.css"
+        }
+      ]
+    },
+    {
+      "name": "order-table",
+      "type": "registry:block",
+      "title": "Order table",
+      "description": "An order list whose rows link to their orders, with the date, the customer, payment and fulfilment as two Badges with words, and the total. A server composition; it ships no JavaScript.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/order-table.tsx",
+          "type": "registry:component",
+          "target": "components/nizivo/order-table.tsx"
+        }
+      ]
+    },
+    {
+      "name": "orders-page",
+      "type": "registry:block",
+      "title": "Orders page",
+      "description": "An order index inside the app shell, with key figures, status filters, search, an orders table and pagination; each order opens in a Drawer.",
+      "dependencies": [
+        "@nizivo/icons@~0.5.0",
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/orders-page.tsx",
+          "type": "registry:component",
+          "target": "components/nizivo/orders-page.tsx"
+        },
+        {
+          "path": "nizivo/orders-page.css",
+          "type": "registry:file",
+          "target": "components/nizivo/orders-page.css"
+        }
+      ]
+    },
+    {
+      "name": "payment-method",
+      "type": "registry:block",
+      "title": "Payment method",
+      "description": "A choice of saved cards, one ChoiceCard of a native radio group each, the brand in words, the last four digits, the expiry spoken as a month and year, and the default marked with a Badge.",
+      "dependencies": [
+        "@nizivo/icons@~0.5.0",
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/payment-method.tsx",
+          "type": "registry:component",
+          "target": "components/nizivo/payment-method.tsx"
+        },
+        {
+          "path": "nizivo/payment-method.css",
+          "type": "registry:file",
+          "target": "components/nizivo/payment-method.css"
+        }
+      ]
+    },
+    {
+      "name": "plan-billing-page",
+      "type": "registry:block",
+      "title": "Plan and billing page",
+      "description": "A settings page inside the app shell, with a section nav beside the current plan, its usage on Meters, the payment method, the invoices table and billing emails.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/plan-billing-page.tsx",
+          "type": "registry:component",
+          "target": "components/nizivo/plan-billing-page.tsx"
+        },
+        {
+          "path": "nizivo/plan-billing-page.css",
+          "type": "registry:file",
+          "target": "components/nizivo/plan-billing-page.css"
+        }
+      ]
+    },
+    {
+      "name": "plan-card",
+      "type": "registry:block",
+      "title": "Plan card",
+      "description": "A subscription plan with its name, its price per interval, its features and a link to start, with a featured plan, and a row of plans with a monthly or yearly price.",
+      "dependencies": [
+        "@nizivo/icons@~0.5.0",
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/plan-card.tsx",
+          "type": "registry:component",
+          "target": "components/nizivo/plan-card.tsx"
+        },
+        {
+          "path": "nizivo/plan-card.css",
+          "type": "registry:file",
+          "target": "components/nizivo/plan-card.css"
+        }
+      ]
+    },
+    {
+      "name": "product-card",
+      "type": "registry:block",
+      "title": "Product card",
+      "description": "A catalogue tile whose whole card links to the product, with a photo, the title, the price (and on a sale the price before it) and a status Badge. A server composition; it ships no JavaScript.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/product-card.tsx",
+          "type": "registry:component",
+          "target": "components/nizivo/product-card.tsx"
+        },
+        {
+          "path": "nizivo/product-card.css",
+          "type": "registry:file",
+          "target": "components/nizivo/product-card.css"
+        }
+      ]
+    },
+    {
+      "name": "product-detail-page",
+      "type": "registry:block",
+      "title": "Product detail page",
+      "description": "A product's edit form inside the app shell, with a breadcrumb, media, details, variants and pricing beside its status, sales and inventory.",
+      "dependencies": [
+        "@nizivo/icons@~0.5.0",
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/product-detail-page.tsx",
+          "type": "registry:component",
+          "target": "components/nizivo/product-detail-page.tsx"
+        },
+        {
+          "path": "nizivo/product-detail-page.css",
+          "type": "registry:file",
+          "target": "components/nizivo/product-detail-page.css"
+        }
+      ]
+    },
+    {
+      "name": "product-table",
+      "type": "registry:block",
+      "title": "Product table",
+      "description": "A catalogue table with row selection for bulk actions, a status Badge, the inventory and the price on each row, and a Menu of row actions named for its product.",
+      "dependencies": [
+        "@nizivo/icons@~0.5.0",
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/product-table.tsx",
+          "type": "registry:component",
+          "target": "components/nizivo/product-table.tsx"
+        },
+        {
+          "path": "nizivo/product-table.css",
+          "type": "registry:file",
+          "target": "components/nizivo/product-table.css"
+        }
+      ]
+    },
+    {
+      "name": "product-tag",
+      "type": "registry:block",
+      "title": "Product tag",
+      "description": "Hotspots on a post's photo, each a named button that opens a Popover with the product's name, price and link.",
+      "dependencies": [
+        "@nizivo/icons@~0.5.0",
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/product-tag.tsx",
+          "type": "registry:component",
+          "target": "components/nizivo/product-tag.tsx"
+        },
+        {
+          "path": "nizivo/product-tag.css",
+          "type": "registry:file",
+          "target": "components/nizivo/product-tag.css"
+        }
+      ]
+    },
+    {
+      "name": "products-page",
+      "type": "registry:block",
+      "title": "Products page",
+      "description": "A product index inside the app shell, with status filters, search, sort, a selectable product table and pagination.",
+      "dependencies": [
+        "@nizivo/icons@~0.5.0",
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/products-page.tsx",
+          "type": "registry:component",
+          "target": "components/nizivo/products-page.tsx"
+        },
+        {
+          "path": "nizivo/products-page.css",
+          "type": "registry:file",
+          "target": "components/nizivo/products-page.css"
+        }
+      ]
+    },
+    {
+      "name": "shipment-tracker",
+      "type": "registry:block",
+      "title": "Shipment tracker",
+      "description": "A shipment's steps as an ordered list, the current one marked with aria-current=\"step\" and every step's status said in words, a column on a narrow card and a row on a wide one. A server composition; it ships no JavaScript.",
+      "dependencies": [
+        "@nizivo/icons@~0.5.0",
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/shipment-tracker.tsx",
+          "type": "registry:component",
+          "target": "components/nizivo/shipment-tracker.tsx"
+        },
+        {
+          "path": "nizivo/shipment-tracker.css",
+          "type": "registry:file",
+          "target": "components/nizivo/shipment-tracker.css"
+        }
+      ]
+    },
+    {
+      "name": "shoppable-post",
+      "type": "registry:block",
+      "title": "Shoppable post",
+      "description": "A post's media as one link, with a Shop badge that counts its tagged products and reads in both themes, alone and in the storefront's grid. A server composition; it ships no JavaScript.",
+      "dependencies": [
+        "@nizivo/icons@~0.5.0",
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/shoppable-post.tsx",
+          "type": "registry:component",
+          "target": "components/nizivo/shoppable-post.tsx"
+        },
+        {
+          "path": "nizivo/shoppable-post.css",
+          "type": "registry:file",
+          "target": "components/nizivo/shoppable-post.css"
+        }
+      ]
+    },
+    {
+      "name": "storefront-bar",
+      "type": "registry:block",
+      "title": "Storefront bar",
+      "description": "The top of a store, with its Avatar, its name and Instagram link, its followers in compact notation, a Follow Button and the bag with its count.",
+      "dependencies": [
+        "@nizivo/icons@~0.5.0",
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/storefront-bar.tsx",
+          "type": "registry:component",
+          "target": "components/nizivo/storefront-bar.tsx"
+        },
+        {
+          "path": "nizivo/storefront-bar.css",
+          "type": "registry:file",
+          "target": "components/nizivo/storefront-bar.css"
+        }
+      ]
+    },
+    {
+      "name": "tagged-product",
+      "type": "registry:block",
+      "title": "Tagged product",
+      "description": "The products in a post, each a row with a thumbnail, its name as a link, variant, price and a named add-to-bag IconButton.",
+      "dependencies": [
+        "@nizivo/icons@~0.5.0",
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/tagged-product.tsx",
+          "type": "registry:component",
+          "target": "components/nizivo/tagged-product.tsx"
+        },
+        {
+          "path": "nizivo/tagged-product.css",
+          "type": "registry:file",
+          "target": "components/nizivo/tagged-product.css"
+        }
+      ]
+    },
+    {
+      "name": "variant-picker",
+      "type": "registry:block",
+      "title": "Variant picker",
+      "description": "A product's colour and size options as chips of native radios, with an out-of-stock option shown as sold out rather than disabled.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/variant-picker.tsx",
+          "type": "registry:component",
+          "target": "components/nizivo/variant-picker.tsx"
+        }
+      ]
+    },
+    {
+      "name": "accordion-css",
+      "type": "registry:item",
+      "title": "Accordion CSS",
+      "description": "The Accordion stylesheet to own and edit (re-skin). Import components/nizivo/accordion-css.css instead of @nizivo/react/css/accordion.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/accordion-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/accordion-css.css"
+        }
+      ]
+    },
+    {
+      "name": "alert-css",
+      "type": "registry:item",
+      "title": "Alert CSS",
+      "description": "The Alert stylesheet to own and edit (re-skin). Import components/nizivo/alert-css.css instead of @nizivo/react/css/alert.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/alert-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/alert-css.css"
+        }
+      ]
+    },
+    {
+      "name": "app-shell-css",
+      "type": "registry:item",
+      "title": "App shell CSS",
+      "description": "The App shell stylesheet to own and edit (re-skin). Import components/nizivo/app-shell-css.css instead of @nizivo/react/css/app-shell.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/app-shell-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/app-shell-css.css"
+        }
+      ]
+    },
+    {
+      "name": "avatar-css",
+      "type": "registry:item",
+      "title": "Avatar CSS",
+      "description": "The Avatar stylesheet to own and edit (re-skin). Import components/nizivo/avatar-css.css instead of @nizivo/react/css/avatar.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/avatar-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/avatar-css.css"
+        }
+      ]
+    },
+    {
+      "name": "badge-css",
+      "type": "registry:item",
+      "title": "Badge CSS",
+      "description": "The Badge stylesheet to own and edit (re-skin). Import components/nizivo/badge-css.css instead of @nizivo/react/css/badge.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/badge-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/badge-css.css"
+        }
+      ]
+    },
+    {
+      "name": "banner-css",
+      "type": "registry:item",
+      "title": "Banner CSS",
+      "description": "The Banner stylesheet to own and edit (re-skin). Import components/nizivo/banner-css.css instead of @nizivo/react/css/banner.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/banner-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/banner-css.css"
+        }
+      ]
+    },
+    {
+      "name": "breadcrumb-css",
+      "type": "registry:item",
+      "title": "Breadcrumb CSS",
+      "description": "The Breadcrumb stylesheet to own and edit (re-skin). Import components/nizivo/breadcrumb-css.css instead of @nizivo/react/css/breadcrumb.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/breadcrumb-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/breadcrumb-css.css"
+        }
+      ]
+    },
+    {
+      "name": "bulk-action-bar-css",
+      "type": "registry:item",
+      "title": "Bulk action bar CSS",
+      "description": "The Bulk action bar stylesheet to own and edit (re-skin). Import components/nizivo/bulk-action-bar-css.css instead of @nizivo/react/css/bulk-action-bar.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/bulk-action-bar-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/bulk-action-bar-css.css"
+        }
+      ]
+    },
+    {
+      "name": "button-css",
+      "type": "registry:item",
+      "title": "Button CSS",
+      "description": "The Button stylesheet to own and edit (re-skin). Import components/nizivo/button-css.css instead of @nizivo/react/css/button.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/button-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/button-css.css"
+        }
+      ]
+    },
+    {
+      "name": "card-css",
+      "type": "registry:item",
+      "title": "Card CSS",
+      "description": "The Card stylesheet to own and edit (re-skin). Import components/nizivo/card-css.css instead of @nizivo/react/css/card.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/card-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/card-css.css"
+        }
+      ]
+    },
+    {
+      "name": "checkbox-css",
+      "type": "registry:item",
+      "title": "Checkbox CSS",
+      "description": "The Checkbox stylesheet to own and edit (re-skin). Import components/nizivo/checkbox-css.css instead of @nizivo/react/css/checkbox.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/checkbox-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/checkbox-css.css"
+        }
+      ]
+    },
+    {
+      "name": "chip-group-css",
+      "type": "registry:item",
+      "title": "Chip group CSS",
+      "description": "The Chip group stylesheet to own and edit (re-skin). Import components/nizivo/chip-group-css.css instead of @nizivo/react/css/chip-group.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/chip-group-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/chip-group-css.css"
+        }
+      ]
+    },
+    {
+      "name": "choice-card-css",
+      "type": "registry:item",
+      "title": "Choice card CSS",
+      "description": "The Choice card stylesheet to own and edit (re-skin). Import components/nizivo/choice-card-css.css instead of @nizivo/react/css/choice-card.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/choice-card-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/choice-card-css.css"
+        }
+      ]
+    },
+    {
+      "name": "combobox-css",
+      "type": "registry:item",
+      "title": "Combobox CSS",
+      "description": "The Combobox stylesheet to own and edit (re-skin). Import components/nizivo/combobox-css.css instead of @nizivo/react/css/combobox.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/combobox-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/combobox-css.css"
+        }
+      ]
+    },
+    {
+      "name": "container-css",
+      "type": "registry:item",
+      "title": "Container CSS",
+      "description": "The Container stylesheet to own and edit (re-skin). Import components/nizivo/container-css.css instead of @nizivo/react/css/container.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/container-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/container-css.css"
+        }
+      ]
+    },
+    {
+      "name": "data-view-css",
+      "type": "registry:item",
+      "title": "Data view CSS",
+      "description": "The Data view stylesheet to own and edit (re-skin). Import components/nizivo/data-view-css.css instead of @nizivo/react/css/data-view.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/data-view-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/data-view-css.css"
+        }
+      ]
+    },
+    {
+      "name": "delta-css",
+      "type": "registry:item",
+      "title": "Delta CSS",
+      "description": "The Delta stylesheet to own and edit (re-skin). Import components/nizivo/delta-css.css instead of @nizivo/react/css/delta.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/delta-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/delta-css.css"
+        }
+      ]
+    },
+    {
+      "name": "dialog-css",
+      "type": "registry:item",
+      "title": "Dialog CSS",
+      "description": "The Dialog stylesheet to own and edit (re-skin). Import components/nizivo/dialog-css.css instead of @nizivo/react/css/dialog.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/dialog-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/dialog-css.css"
+        }
+      ]
+    },
+    {
+      "name": "drawer-css",
+      "type": "registry:item",
+      "title": "Drawer CSS",
+      "description": "The Drawer stylesheet to own and edit (re-skin). Import components/nizivo/drawer-css.css instead of @nizivo/react/css/drawer.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/drawer-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/drawer-css.css"
+        }
+      ]
+    },
+    {
+      "name": "empty-state-css",
+      "type": "registry:item",
+      "title": "Empty state CSS",
+      "description": "The Empty state stylesheet to own and edit (re-skin). Import components/nizivo/empty-state-css.css instead of @nizivo/react/css/empty-state.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/empty-state-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/empty-state-css.css"
+        }
+      ]
+    },
+    {
+      "name": "field-css",
+      "type": "registry:item",
+      "title": "Field CSS",
+      "description": "The Field stylesheet to own and edit (re-skin). Import components/nizivo/field-css.css instead of @nizivo/react/css/field.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/field-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/field-css.css"
+        }
+      ]
+    },
+    {
+      "name": "fieldset-css",
+      "type": "registry:item",
+      "title": "Fieldset CSS",
+      "description": "The Fieldset stylesheet to own and edit (re-skin). Import components/nizivo/fieldset-css.css instead of @nizivo/react/css/fieldset.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/fieldset-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/fieldset-css.css"
+        }
+      ]
+    },
+    {
+      "name": "file-upload-css",
+      "type": "registry:item",
+      "title": "File upload CSS",
+      "description": "The File upload stylesheet to own and edit (re-skin). Import components/nizivo/file-upload-css.css instead of @nizivo/react/css/file-upload.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/file-upload-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/file-upload-css.css"
+        }
+      ]
+    },
+    {
+      "name": "form-css",
+      "type": "registry:item",
+      "title": "Form CSS",
+      "description": "The Form stylesheet to own and edit (re-skin). Import components/nizivo/form-css.css instead of @nizivo/react/css/form.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/form-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/form-css.css"
+        }
+      ]
+    },
+    {
+      "name": "grid-css",
+      "type": "registry:item",
+      "title": "Grid CSS",
+      "description": "The Grid stylesheet to own and edit (re-skin). Import components/nizivo/grid-css.css instead of @nizivo/react/css/grid.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/grid-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/grid-css.css"
+        }
+      ]
+    },
+    {
+      "name": "heading-css",
+      "type": "registry:item",
+      "title": "Heading CSS",
+      "description": "The Heading stylesheet to own and edit (re-skin). Import components/nizivo/heading-css.css instead of @nizivo/react/css/heading.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/heading-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/heading-css.css"
+        }
+      ]
+    },
+    {
+      "name": "icon-button-css",
+      "type": "registry:item",
+      "title": "Icon button CSS",
+      "description": "The Icon button stylesheet to own and edit (re-skin). Import components/nizivo/icon-button-css.css instead of @nizivo/react/css/icon-button.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/icon-button-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/icon-button-css.css"
+        }
+      ]
+    },
+    {
+      "name": "image-css",
+      "type": "registry:item",
+      "title": "Image CSS",
+      "description": "The Image stylesheet to own and edit (re-skin). Import components/nizivo/image-css.css instead of @nizivo/react/css/image.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/image-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/image-css.css"
+        }
+      ]
+    },
+    {
+      "name": "inline-css",
+      "type": "registry:item",
+      "title": "Inline CSS",
+      "description": "The Inline stylesheet to own and edit (re-skin). Import components/nizivo/inline-css.css instead of @nizivo/react/css/inline.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/inline-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/inline-css.css"
+        }
+      ]
+    },
+    {
+      "name": "inline-error-css",
+      "type": "registry:item",
+      "title": "Inline error CSS",
+      "description": "The Inline error stylesheet to own and edit (re-skin). Import components/nizivo/inline-error-css.css instead of @nizivo/react/css/inline-error.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/inline-error-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/inline-error-css.css"
+        }
+      ]
+    },
+    {
+      "name": "input-css",
+      "type": "registry:item",
+      "title": "Input CSS",
+      "description": "The Input stylesheet to own and edit (re-skin). Import components/nizivo/input-css.css instead of @nizivo/react/css/input.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/input-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/input-css.css"
+        }
+      ]
+    },
+    {
+      "name": "kbd-css",
+      "type": "registry:item",
+      "title": "Kbd CSS",
+      "description": "The Kbd stylesheet to own and edit (re-skin). Import components/nizivo/kbd-css.css instead of @nizivo/react/css/kbd.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/kbd-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/kbd-css.css"
+        }
+      ]
+    },
+    {
+      "name": "kpi-tile-css",
+      "type": "registry:item",
+      "title": "Kpi tile CSS",
+      "description": "The Kpi tile stylesheet to own and edit (re-skin). Import components/nizivo/kpi-tile-css.css instead of @nizivo/react/css/kpi-tile.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/kpi-tile-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/kpi-tile-css.css"
+        }
+      ]
+    },
+    {
+      "name": "menu-css",
+      "type": "registry:item",
+      "title": "Menu CSS",
+      "description": "The Menu stylesheet to own and edit (re-skin). Import components/nizivo/menu-css.css instead of @nizivo/react/css/menu.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/menu-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/menu-css.css"
+        }
+      ]
+    },
+    {
+      "name": "meter-css",
+      "type": "registry:item",
+      "title": "Meter CSS",
+      "description": "The Meter stylesheet to own and edit (re-skin). Import components/nizivo/meter-css.css instead of @nizivo/react/css/meter.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/meter-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/meter-css.css"
+        }
+      ]
+    },
+    {
+      "name": "metric-css",
+      "type": "registry:item",
+      "title": "Metric CSS",
+      "description": "The Metric stylesheet to own and edit (re-skin). Import components/nizivo/metric-css.css instead of @nizivo/react/css/metric.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/metric-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/metric-css.css"
+        }
+      ]
+    },
+    {
+      "name": "mobile-tab-bar-css",
+      "type": "registry:item",
+      "title": "Mobile tab bar CSS",
+      "description": "The Mobile tab bar stylesheet to own and edit (re-skin). Import components/nizivo/mobile-tab-bar-css.css instead of @nizivo/react/css/mobile-tab-bar.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/mobile-tab-bar-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/mobile-tab-bar-css.css"
+        }
+      ]
+    },
+    {
+      "name": "mobile-top-bar-css",
+      "type": "registry:item",
+      "title": "Mobile top bar CSS",
+      "description": "The Mobile top bar stylesheet to own and edit (re-skin). Import components/nizivo/mobile-top-bar-css.css instead of @nizivo/react/css/mobile-top-bar.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/mobile-top-bar-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/mobile-top-bar-css.css"
+        }
+      ]
+    },
+    {
+      "name": "motion-css",
+      "type": "registry:item",
+      "title": "Motion CSS",
+      "description": "The Motion stylesheet to own and edit (re-skin). Import components/nizivo/motion-css.css instead of @nizivo/react/css/motion.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/motion-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/motion-css.css"
+        }
+      ]
+    },
+    {
+      "name": "native-select-css",
+      "type": "registry:item",
+      "title": "Native select CSS",
+      "description": "The Native select stylesheet to own and edit (re-skin). Import components/nizivo/native-select-css.css instead of @nizivo/react/css/native-select.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/native-select-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/native-select-css.css"
+        }
+      ]
+    },
+    {
+      "name": "nav-item-css",
+      "type": "registry:item",
+      "title": "Nav item CSS",
+      "description": "The Nav item stylesheet to own and edit (re-skin). Import components/nizivo/nav-item-css.css instead of @nizivo/react/css/nav-item.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/nav-item-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/nav-item-css.css"
+        }
+      ]
+    },
+    {
+      "name": "number-field-css",
+      "type": "registry:item",
+      "title": "Number field CSS",
+      "description": "The Number field stylesheet to own and edit (re-skin). Import components/nizivo/number-field-css.css instead of @nizivo/react/css/number-field.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/number-field-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/number-field-css.css"
+        }
+      ]
+    },
+    {
+      "name": "number-value-css",
+      "type": "registry:item",
+      "title": "Number value CSS",
+      "description": "The Number value stylesheet to own and edit (re-skin). Import components/nizivo/number-value-css.css instead of @nizivo/react/css/number-value.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/number-value-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/number-value-css.css"
+        }
+      ]
+    },
+    {
+      "name": "page-header-css",
+      "type": "registry:item",
+      "title": "Page header CSS",
+      "description": "The Page header stylesheet to own and edit (re-skin). Import components/nizivo/page-header-css.css instead of @nizivo/react/css/page-header.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/page-header-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/page-header-css.css"
+        }
+      ]
+    },
+    {
+      "name": "page-indicator-css",
+      "type": "registry:item",
+      "title": "Page indicator CSS",
+      "description": "The Page indicator stylesheet to own and edit (re-skin). Import components/nizivo/page-indicator-css.css instead of @nizivo/react/css/page-indicator.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/page-indicator-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/page-indicator-css.css"
+        }
+      ]
+    },
+    {
+      "name": "pagination-css",
+      "type": "registry:item",
+      "title": "Pagination CSS",
+      "description": "The Pagination stylesheet to own and edit (re-skin). Import components/nizivo/pagination-css.css instead of @nizivo/react/css/pagination.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/pagination-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/pagination-css.css"
+        }
+      ]
+    },
+    {
+      "name": "password-input-css",
+      "type": "registry:item",
+      "title": "Password input CSS",
+      "description": "The Password input stylesheet to own and edit (re-skin). Import components/nizivo/password-input-css.css instead of @nizivo/react/css/password-input.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/password-input-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/password-input-css.css"
+        }
+      ]
+    },
+    {
+      "name": "pointer-fx-css",
+      "type": "registry:item",
+      "title": "Pointer fx CSS",
+      "description": "The Pointer fx stylesheet to own and edit (re-skin). Import components/nizivo/pointer-fx-css.css instead of @nizivo/react/css/pointer-fx.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/pointer-fx-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/pointer-fx-css.css"
+        }
+      ]
+    },
+    {
+      "name": "popover-css",
+      "type": "registry:item",
+      "title": "Popover CSS",
+      "description": "The Popover stylesheet to own and edit (re-skin). Import components/nizivo/popover-css.css instead of @nizivo/react/css/popover.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/popover-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/popover-css.css"
+        }
+      ]
+    },
+    {
+      "name": "progress-bar-css",
+      "type": "registry:item",
+      "title": "Progress bar CSS",
+      "description": "The Progress bar stylesheet to own and edit (re-skin). Import components/nizivo/progress-bar-css.css instead of @nizivo/react/css/progress-bar.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/progress-bar-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/progress-bar-css.css"
+        }
+      ]
+    },
+    {
+      "name": "progress-ring-css",
+      "type": "registry:item",
+      "title": "Progress ring CSS",
+      "description": "The Progress ring stylesheet to own and edit (re-skin). Import components/nizivo/progress-ring-css.css instead of @nizivo/react/css/progress-ring.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/progress-ring-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/progress-ring-css.css"
+        }
+      ]
+    },
+    {
+      "name": "quantity-stepper-css",
+      "type": "registry:item",
+      "title": "Quantity stepper CSS",
+      "description": "The Quantity stepper stylesheet to own and edit (re-skin). Import components/nizivo/quantity-stepper-css.css instead of @nizivo/react/css/quantity-stepper.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/quantity-stepper-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/quantity-stepper-css.css"
+        }
+      ]
+    },
+    {
+      "name": "radio-group-css",
+      "type": "registry:item",
+      "title": "Radio group CSS",
+      "description": "The Radio group stylesheet to own and edit (re-skin). Import components/nizivo/radio-group-css.css instead of @nizivo/react/css/radio-group.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/radio-group-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/radio-group-css.css"
+        }
+      ]
+    },
+    {
+      "name": "ranked-list-css",
+      "type": "registry:item",
+      "title": "Ranked list CSS",
+      "description": "The Ranked list stylesheet to own and edit (re-skin). Import components/nizivo/ranked-list-css.css instead of @nizivo/react/css/ranked-list.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/ranked-list-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/ranked-list-css.css"
+        }
+      ]
+    },
+    {
+      "name": "search-field-css",
+      "type": "registry:item",
+      "title": "Search field CSS",
+      "description": "The Search field stylesheet to own and edit (re-skin). Import components/nizivo/search-field-css.css instead of @nizivo/react/css/search-field.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/search-field-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/search-field-css.css"
+        }
+      ]
+    },
+    {
+      "name": "segmented-control-css",
+      "type": "registry:item",
+      "title": "Segmented control CSS",
+      "description": "The Segmented control stylesheet to own and edit (re-skin). Import components/nizivo/segmented-control-css.css instead of @nizivo/react/css/segmented-control.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/segmented-control-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/segmented-control-css.css"
+        }
+      ]
+    },
+    {
+      "name": "select-css",
+      "type": "registry:item",
+      "title": "Select CSS",
+      "description": "The Select stylesheet to own and edit (re-skin). Import components/nizivo/select-css.css instead of @nizivo/react/css/select.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/select-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/select-css.css"
+        }
+      ]
+    },
+    {
+      "name": "separator-css",
+      "type": "registry:item",
+      "title": "Separator CSS",
+      "description": "The Separator stylesheet to own and edit (re-skin). Import components/nizivo/separator-css.css instead of @nizivo/react/css/separator.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/separator-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/separator-css.css"
+        }
+      ]
+    },
+    {
+      "name": "sidebar-css",
+      "type": "registry:item",
+      "title": "Sidebar CSS",
+      "description": "The Sidebar stylesheet to own and edit (re-skin). Import components/nizivo/sidebar-css.css instead of @nizivo/react/css/sidebar.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/sidebar-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/sidebar-css.css"
+        }
+      ]
+    },
+    {
+      "name": "skeleton-css",
+      "type": "registry:item",
+      "title": "Skeleton CSS",
+      "description": "The Skeleton stylesheet to own and edit (re-skin). Import components/nizivo/skeleton-css.css instead of @nizivo/react/css/skeleton.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/skeleton-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/skeleton-css.css"
+        }
+      ]
+    },
+    {
+      "name": "split-css",
+      "type": "registry:item",
+      "title": "Split CSS",
+      "description": "The Split stylesheet to own and edit (re-skin). Import components/nizivo/split-css.css instead of @nizivo/react/css/split.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/split-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/split-css.css"
+        }
+      ]
+    },
+    {
+      "name": "stack-css",
+      "type": "registry:item",
+      "title": "Stack CSS",
+      "description": "The Stack stylesheet to own and edit (re-skin). Import components/nizivo/stack-css.css instead of @nizivo/react/css/stack.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/stack-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/stack-css.css"
+        }
+      ]
+    },
+    {
+      "name": "sticky-bar-css",
+      "type": "registry:item",
+      "title": "Sticky bar CSS",
+      "description": "The Sticky bar stylesheet to own and edit (re-skin). Import components/nizivo/sticky-bar-css.css instead of @nizivo/react/css/sticky-bar.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/sticky-bar-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/sticky-bar-css.css"
+        }
+      ]
+    },
+    {
+      "name": "surface-css",
+      "type": "registry:item",
+      "title": "Surface CSS",
+      "description": "The Surface stylesheet to own and edit (re-skin). Import components/nizivo/surface-css.css instead of @nizivo/react/css/surface.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/surface-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/surface-css.css"
+        }
+      ]
+    },
+    {
+      "name": "switch-css",
+      "type": "registry:item",
+      "title": "Switch CSS",
+      "description": "The Switch stylesheet to own and edit (re-skin). Import components/nizivo/switch-css.css instead of @nizivo/react/css/switch.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/switch-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/switch-css.css"
+        }
+      ]
+    },
+    {
+      "name": "tab-nav-css",
+      "type": "registry:item",
+      "title": "Tab nav CSS",
+      "description": "The Tab nav stylesheet to own and edit (re-skin). Import components/nizivo/tab-nav-css.css instead of @nizivo/react/css/tab-nav.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/tab-nav-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/tab-nav-css.css"
+        }
+      ]
+    },
+    {
+      "name": "table-css",
+      "type": "registry:item",
+      "title": "Table CSS",
+      "description": "The Table stylesheet to own and edit (re-skin). Import components/nizivo/table-css.css instead of @nizivo/react/css/table.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/table-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/table-css.css"
+        }
+      ]
+    },
+    {
+      "name": "table-selection-css",
+      "type": "registry:item",
+      "title": "Table selection CSS",
+      "description": "The Table selection stylesheet to own and edit (re-skin). Import components/nizivo/table-selection-css.css instead of @nizivo/react/css/table-selection.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/table-selection-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/table-selection-css.css"
+        }
+      ]
+    },
+    {
+      "name": "tabs-css",
+      "type": "registry:item",
+      "title": "Tabs CSS",
+      "description": "The Tabs stylesheet to own and edit (re-skin). Import components/nizivo/tabs-css.css instead of @nizivo/react/css/tabs.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/tabs-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/tabs-css.css"
+        }
+      ]
+    },
+    {
+      "name": "text-css",
+      "type": "registry:item",
+      "title": "Text CSS",
+      "description": "The Text stylesheet to own and edit (re-skin). Import components/nizivo/text-css.css instead of @nizivo/react/css/text.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/text-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/text-css.css"
+        }
+      ]
+    },
+    {
+      "name": "textarea-css",
+      "type": "registry:item",
+      "title": "Textarea CSS",
+      "description": "The Textarea stylesheet to own and edit (re-skin). Import components/nizivo/textarea-css.css instead of @nizivo/react/css/textarea.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/textarea-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/textarea-css.css"
+        }
+      ]
+    },
+    {
+      "name": "toast-css",
+      "type": "registry:item",
+      "title": "Toast CSS",
+      "description": "The Toast stylesheet to own and edit (re-skin). Import components/nizivo/toast-css.css instead of @nizivo/react/css/toast.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/toast-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/toast-css.css"
+        }
+      ]
+    },
+    {
+      "name": "tooltip-css",
+      "type": "registry:item",
+      "title": "Tooltip CSS",
+      "description": "The Tooltip stylesheet to own and edit (re-skin). Import components/nizivo/tooltip-css.css instead of @nizivo/react/css/tooltip.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/tooltip-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/tooltip-css.css"
+        }
+      ]
+    },
+    {
+      "name": "top-bar-css",
+      "type": "registry:item",
+      "title": "Top bar CSS",
+      "description": "The Top bar stylesheet to own and edit (re-skin). Import components/nizivo/top-bar-css.css instead of @nizivo/react/css/top-bar.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/top-bar-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/top-bar-css.css"
+        }
+      ]
+    },
+    {
+      "name": "trend-card-css",
+      "type": "registry:item",
+      "title": "Trend card CSS",
+      "description": "The Trend card stylesheet to own and edit (re-skin). Import components/nizivo/trend-card-css.css instead of @nizivo/react/css/trend-card.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+      "dependencies": [
+        "@nizivo/react@~0.5.0"
+      ],
+      "files": [
+        {
+          "path": "nizivo/trend-card-css.css",
+          "type": "registry:file",
+          "target": "components/nizivo/trend-card-css.css"
+        }
+      ]
+    }
+  ]
+}
