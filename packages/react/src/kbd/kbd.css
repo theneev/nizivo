@@ -38,4 +38,13 @@
       border-color: CanvasText;
     }
   }
+
+  /* Optical centring (M85, as Button's label): trimmed to cap height and baseline, padded back to
+     one line, so the box keeps its height and the letters sit in its middle. */
+  @supports (text-box: trim-both cap alphabetic) {
+    .nz-kbd-label {
+      padding-block: calc((1lh - 1cap) / 2);
+      text-box: trim-both cap alphabetic;
+    }
+  }
 }

@@ -68,7 +68,11 @@ export function Kbd({ keys, render, className, children, ...rest }: KbdProps): R
       'data-slot': 'kbd',
       ...rest,
       className: cx('nz-kbd', className),
-      children: keys === undefined ? children : glyphs(keys),
+      children: (
+        <span className="nz-kbd-label" data-slot="kbd-label">
+          {keys === undefined ? children : glyphs(keys)}
+        </span>
+      ),
     },
   );
 }

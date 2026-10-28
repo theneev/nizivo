@@ -65,7 +65,7 @@ describe('Table markup', () => {
   test('a SortButton without render is a <button type="button">', () => {
     const html = renderToString(<Table.SortButton>Total</Table.SortButton>);
     expect(html).toMatch(
-      /^<button data-slot="table-sort-button" type="button" class="nz-table-sort-button nz-hit-target">Total<span/,
+      /^<button data-slot="table-sort-button" type="button" class="nz-table-sort-button nz-hit-target"><span class="nz-table-sort-text" data-slot="table-sort-text">Total<\/span><span/,
     );
   });
 

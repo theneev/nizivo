@@ -745,6 +745,14 @@
       "renderedBy": "Table.SortButton",
       "slot": "table-sort-icon",
       "stateIndicator": []
+    },
+    {
+      "attributes": [],
+      "interactive": false,
+      "part": false,
+      "renderedBy": "Table.SortButton",
+      "slot": "table-sort-text",
+      "stateIndicator": []
     }
   ],
   "version": 1

@@ -367,6 +367,14 @@
       "attributes": [],
       "interactive": false,
       "part": false,
+      "renderedBy": "RankedList.Action",
+      "slot": "ranked-list-action-text",
+      "stateIndicator": []
+    },
+    {
+      "attributes": [],
+      "interactive": false,
+      "part": false,
       "renderedBy": "RankedList.Item",
       "slot": "ranked-list-bar",
       "stateIndicator": []

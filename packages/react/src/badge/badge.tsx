@@ -40,7 +40,9 @@ export function Badge({
       children: (
         <>
           {dot && <span className="nz-badge-dot" data-slot="badge-dot" aria-hidden="true" />}
-          {children}
+          <span className="nz-badge-label" data-slot="badge-label">
+            {children}
+          </span>
         </>
       ),
     },

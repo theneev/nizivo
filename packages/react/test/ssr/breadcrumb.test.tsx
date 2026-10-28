@@ -80,14 +80,17 @@ describe('markup', () => {
     const items = html.match(/<li class="nz-breadcrumb-item" data-slot="breadcrumb-item">/g);
     expect(items).toHaveLength(3);
     expect(html).toContain(
-      '<a data-slot="breadcrumb-link" href="/products" class="nz-breadcrumb-link">Products</a>',
+      '<a data-slot="breadcrumb-link" href="/products" class="nz-breadcrumb-link">' +
+        '<span class="nz-breadcrumb-text" data-slot="breadcrumb-text">Products</span></a>',
     );
     expect(html).toContain(
-      '<a data-slot="breadcrumb-link" href="/products/mugs" class="nz-breadcrumb-link">Mugs &amp; cups</a>',
+      '<a data-slot="breadcrumb-link" href="/products/mugs" class="nz-breadcrumb-link">' +
+        '<span class="nz-breadcrumb-text" data-slot="breadcrumb-text">Mugs &amp; cups</span></a>',
     );
     // Figma: "the last item has aria-current="page" and is not a link"
     expect(html).toContain(
-      '<span class="nz-breadcrumb-current" data-slot="breadcrumb-current" aria-current="page">Stoneware mug</span>',
+      '<span class="nz-breadcrumb-current" data-slot="breadcrumb-current" aria-current="page">' +
+        '<span class="nz-breadcrumb-text" data-slot="breadcrumb-text">Stoneware mug</span></span>',
     );
     expect(html.match(/<a /g)).toHaveLength(2);
     // every separator is decorative and mirrors under RTL (the first is hidden by CSS)

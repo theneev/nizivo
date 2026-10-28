@@ -234,6 +234,14 @@
       "renderedBy": "Breadcrumb.Item",
       "slot": "breadcrumb-separator",
       "stateIndicator": []
+    },
+    {
+      "attributes": [],
+      "interactive": false,
+      "part": false,
+      "renderedBy": "Breadcrumb.Item",
+      "slot": "breadcrumb-text",
+      "stateIndicator": []
     }
   ],
   "version": 1

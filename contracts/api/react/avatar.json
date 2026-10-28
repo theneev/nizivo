@@ -314,6 +314,14 @@
       "attributes": [],
       "interactive": false,
       "part": false,
+      "renderedBy": "AvatarGroup",
+      "slot": "avatar-group-more-text",
+      "stateIndicator": []
+    },
+    {
+      "attributes": [],
+      "interactive": false,
+      "part": false,
       "renderedBy": "Avatar",
       "slot": "avatar-image",
       "stateIndicator": []

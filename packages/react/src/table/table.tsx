@@ -261,7 +261,9 @@ export function TableSortButton({
       className: cx('nz-table-sort-button', 'nz-hit-target', className),
       children: (
         <>
-          {children}
+          <span className="nz-table-sort-text" data-slot="table-sort-text">
+            {children}
+          </span>
           <span className="nz-table-sort-icon" data-slot="table-sort-icon" aria-hidden="true">
             <ChevronsUpDownGlyph />
             <ChevronGlyph />

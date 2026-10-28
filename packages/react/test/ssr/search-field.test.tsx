@@ -145,8 +145,10 @@ describe('markup', () => {
     expect(part(html, 'search-field-control')).toContain('aria-keyshortcuts="Meta+K Control+K"');
     expect(html).toContain(
       '<span class="nz-search-field-shortcut" data-slot="search-field-shortcut" aria-hidden="true">' +
-        '<kbd data-slot="kbd" class="nz-kbd"><span class="nz-kbd-glyphs" data-slot="kbd-glyphs" data-platform="apple">⌘K</span>' +
-        '<span class="nz-kbd-glyphs" data-slot="kbd-glyphs" data-platform="other">Ctrl+K</span></kbd></span>',
+        '<kbd data-slot="kbd" class="nz-kbd"><span class="nz-kbd-label" data-slot="kbd-label">' +
+        '<span class="nz-kbd-glyphs" data-slot="kbd-glyphs" data-platform="apple">⌘K</span>' +
+        '<span class="nz-kbd-glyphs" data-slot="kbd-glyphs" data-platform="other">Ctrl+K</span>' +
+        '</span></kbd></span>',
     );
     expect(
       part(

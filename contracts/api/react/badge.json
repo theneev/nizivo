@@ -124,6 +124,14 @@
       "renderedBy": "Badge",
       "slot": "badge-dot",
       "stateIndicator": []
+    },
+    {
+      "attributes": [],
+      "interactive": false,
+      "part": false,
+      "renderedBy": "Badge",
+      "slot": "badge-label",
+      "stateIndicator": []
     }
   ],
   "version": 1

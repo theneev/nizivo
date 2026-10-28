@@ -270,7 +270,11 @@ export function Pagination({
                     className: 'nz-pagination-page',
                     'aria-label': pageLabel.replaceAll('{page}', number.format(slot)),
                     'aria-current': slot === current ? 'page' : undefined,
-                    children: number.format(slot),
+                    children: (
+                      <span className="nz-pagination-page-text" data-slot="pagination-page-text">
+                        {number.format(slot)}
+                      </span>
+                    ),
                   })}
                 </li>
               ),

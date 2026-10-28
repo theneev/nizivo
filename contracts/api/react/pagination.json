@@ -331,6 +331,14 @@
     },
     {
       "attributes": [],
+      "interactive": false,
+      "part": false,
+      "renderedBy": "Pagination",
+      "slot": "pagination-page-text",
+      "stateIndicator": []
+    },
+    {
+      "attributes": [],
       "focusTarget": "self",
       "interactive": true,
       "part": false,

@@ -318,6 +318,7 @@ export function RankedListItem({
 export function RankedListAction({
   render,
   className,
+  children,
   ...rest
 }: RankedListActionProps): ReactElement {
   return renderElement(
@@ -328,6 +329,11 @@ export function RankedListAction({
       'data-slot': 'ranked-list-action',
       ...rest,
       className: cx('nz-ranked-list-action', className),
+      children: (
+        <span className="nz-ranked-list-action-text" data-slot="ranked-list-action-text">
+          {children}
+        </span>
+      ),
     },
   );
 }

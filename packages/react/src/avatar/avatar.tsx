@@ -219,7 +219,9 @@ export function AvatarGroup({
           {shown.map((avatar) => cloneElement(avatar, { size, decorative: true }))}
           {hidden > 0 && (
             <span className="nz-avatar-group-more" data-slot="avatar-group-more" aria-hidden="true">
-              {formatLabel(labels?.overflow ?? '+{count}', { count: hidden }, locale)}
+              <span className="nz-avatar-group-more-text" data-slot="avatar-group-more-text">
+                {formatLabel(labels?.overflow ?? '+{count}', { count: hidden }, locale)}
+              </span>
             </span>
           )}
         </>

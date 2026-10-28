@@ -15,7 +15,8 @@
     "nz-table-select-row",
     "nz-table-select-row-input",
     "nz-table-sort-button",
-    "nz-table-sort-icon"
+    "nz-table-sort-icon",
+    "nz-table-sort-text"
   ],
   "component": "table",
   "entry": "./css/table.css",

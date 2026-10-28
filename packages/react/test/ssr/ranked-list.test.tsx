@@ -159,7 +159,7 @@ describe('ready', () => {
     );
     expect(html).toContain('<h2 class="nz-ranked-list-title"');
     expect(html).toMatch(
-      /<a data-router="" href="\/channels" data-slot="ranked-list-action" class="nz-ranked-list-action">View all<\/a>/,
+      /<a data-router="" href="\/channels" data-slot="ranked-list-action" class="nz-ranked-list-action"><span class="nz-ranked-list-action-text" data-slot="ranked-list-action-text">View all<\/span><\/a>/,
     );
   });
 

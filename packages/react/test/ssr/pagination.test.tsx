@@ -35,7 +35,7 @@ const href = (page: number): string => `?page=${page}`;
 function visible(html: string): string[] {
   return [
     ...html.matchAll(
-      /<(?:a|span) [^>]*class="nz-pagination-(?:page|ellipsis)"[^>]*>([^<]*)<\/(?:a|span)>/g,
+      /<(?:a|span) [^>]*class="nz-pagination-(?:page|ellipsis)"[^>]*>(?:<span class="nz-pagination-page-text" data-slot="pagination-page-text">)?([^<]*)<\/(?:a|span)>/g,
     ),
   ].map((match) => match[1] ?? '');
 }
@@ -126,10 +126,12 @@ describe('markup', () => {
     expect(html).toContain('<ul class="nz-pagination-list" data-slot="pagination-list">');
     expect(visible(html)).toEqual(['1', '2', '3', '4', '5', '…', '13']);
     expect(html).toContain(
-      '<a href="?page=1" data-slot="pagination-page" class="nz-pagination-page" aria-label="Page 1" aria-current="page">1</a>',
+      '<a href="?page=1" data-slot="pagination-page" class="nz-pagination-page" aria-label="Page 1" aria-current="page">' +
+        '<span class="nz-pagination-page-text" data-slot="pagination-page-text">1</span></a>',
     );
     expect(html).toContain(
-      '<a href="?page=2" data-slot="pagination-page" class="nz-pagination-page" aria-label="Page 2">2</a>',
+      '<a href="?page=2" data-slot="pagination-page" class="nz-pagination-page" aria-label="Page 2">' +
+        '<span class="nz-pagination-page-text" data-slot="pagination-page-text">2</span></a>',
     );
     expect(html.match(/aria-current/g)).toHaveLength(1);
     // previous at the first page: still there, named, not a focusable link
@@ -171,7 +173,8 @@ describe('markup', () => {
       /<button type="button" class="nz-pagination-step nz-pagination-previous" data-slot="pagination-previous" aria-label="Previous page" disabled="" data-disabled="">/,
     );
     expect(html).toContain(
-      '<button type="button" data-slot="pagination-page" class="nz-pagination-page" aria-label="Page 1" aria-current="page">1</button>',
+      '<button type="button" data-slot="pagination-page" class="nz-pagination-page" aria-label="Page 1" aria-current="page">' +
+        '<span class="nz-pagination-page-text" data-slot="pagination-page-text">1</span></button>',
     );
     expect(html).toMatch(/<button type="button" data-slot="pagination-next" class="[^"]*"[^>]*>/);
     // previous, 1, 2, 3, 13, next
@@ -240,7 +243,10 @@ describe('markup', () => {
     expect(html).toMatch(
       /^<nav data-extra="" data-slot="pagination" data-size="sm" aria-label="Seiten"/,
     );
-    expect(html).toContain('aria-label="Seite 1.200" aria-current="page">1.200</a>');
+    expect(html).toContain(
+      'aria-label="Seite 1.200" aria-current="page">' +
+        '<span class="nz-pagination-page-text" data-slot="pagination-page-text">1.200</span></a>',
+    );
     expect(html).toContain('aria-label="Zurück"');
     expect(html).toContain('aria-label="Weiter"');
     expect(html).toContain(

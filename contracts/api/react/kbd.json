@@ -98,6 +98,14 @@
       "renderedBy": "Kbd",
       "slot": "kbd-glyphs",
       "stateIndicator": []
+    },
+    {
+      "attributes": [],
+      "interactive": false,
+      "part": false,
+      "renderedBy": "Kbd",
+      "slot": "kbd-label",
+      "stateIndicator": []
     }
   ],
   "version": 1

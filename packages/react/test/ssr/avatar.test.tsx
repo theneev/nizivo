@@ -144,7 +144,8 @@ describe('AvatarGroup', () => {
       3,
     );
     expect(html).toContain(
-      '<span class="nz-avatar-group-more" data-slot="avatar-group-more" aria-hidden="true">+4</span>',
+      '<span class="nz-avatar-group-more" data-slot="avatar-group-more" aria-hidden="true">' +
+        '<span class="nz-avatar-group-more-text" data-slot="avatar-group-more-text">+4</span></span>',
     );
     expect(html).not.toContain('Sam');
   });
@@ -171,7 +172,11 @@ describe('AvatarGroup', () => {
       </AvatarGroup>,
     );
     expect(de).toContain('aria-label="Maya und 1.200 weitere"');
-    expect(de).toContain('aria-hidden="true">+1.200</span>');
+    expect(de).toContain(
+      'aria-hidden="true">' +
+        '<span class="nz-avatar-group-more-text" data-slot="avatar-group-more-text">+1.200</span>' +
+        '</span>',
+    );
   });
 
   test('count labels take a CLDR plural object, chosen by the count in the group locale', () => {
@@ -190,6 +195,10 @@ describe('AvatarGroup', () => {
     expect(group(2)).toContain('aria-label="Maya i 1 inna osoba"');
     expect(group(4)).toContain('aria-label="Maya i 3 inne osoby"');
     expect(group(6)).toContain('aria-label="Maya i 5 innych osób"');
-    expect(group(6)).toContain('aria-hidden="true">+5</span>');
+    expect(group(6)).toContain(
+      'aria-hidden="true">' +
+        '<span class="nz-avatar-group-more-text" data-slot="avatar-group-more-text">+5</span>' +
+        '</span>',
+    );
   });
 });

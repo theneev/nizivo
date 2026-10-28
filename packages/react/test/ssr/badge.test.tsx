@@ -31,7 +31,8 @@ describe('Badge markup', () => {
   test('a span with its tone and a decorative dot before the label', () => {
     expect(renderToString(<Badge tone="success">Paid</Badge>)).toBe(
       '<span data-slot="badge" data-tone="success" class="nz-badge">' +
-        '<span class="nz-badge-dot" data-slot="badge-dot" aria-hidden="true"></span>Paid</span>',
+        '<span class="nz-badge-dot" data-slot="badge-dot" aria-hidden="true"></span>' +
+        '<span class="nz-badge-label" data-slot="badge-label">Paid</span></span>',
     );
   });
 
@@ -42,7 +43,10 @@ describe('Badge markup', () => {
           Draft
         </Badge>,
       ),
-    ).toBe('<span data-slot="badge" data-tone="neutral" id="b" class="nz-badge mine">Draft</span>');
+    ).toBe(
+      '<span data-slot="badge" data-tone="neutral" id="b" class="nz-badge mine">' +
+        '<span class="nz-badge-label" data-slot="badge-label">Draft</span></span>',
+    );
   });
 
   test('render: the element keeps its own props, the part keeps data-slot and data-tone', () => {
@@ -54,12 +58,18 @@ describe('Badge markup', () => {
     expect(html).toMatch(
       /^<a href="\/orders" data-tone="success" data-slot="badge" class="nz-badge">/,
     );
-    expect(html).toContain('aria-hidden="true"></span>Paid</a>');
+    expect(html).toContain(
+      'aria-hidden="true"></span>' +
+        '<span class="nz-badge-label" data-slot="badge-label">Paid</span></a>',
+    );
   });
 
   test('the example renders', () => {
     const html = renderToString(<BadgeExample />);
     expect(html.match(/data-slot="badge"/g)).toHaveLength(7);
-    expect(html).toContain('data-tone="brand" class="nz-badge">New</span>');
+    expect(html).toContain(
+      'data-tone="brand" class="nz-badge">' +
+        '<span class="nz-badge-label" data-slot="badge-label">New</span></span>',
+    );
   });
 });

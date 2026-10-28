@@ -113,7 +113,9 @@ export function BreadcrumbItem({
       data-slot="breadcrumb-current"
       aria-current="page"
     >
-      {children}
+      <span className="nz-breadcrumb-text" data-slot="breadcrumb-text">
+        {children}
+      </span>
     </span>
   ) : (
     renderElement(
@@ -124,7 +126,11 @@ export function BreadcrumbItem({
         'data-slot': 'breadcrumb-link',
         ...rest,
         className: cx('nz-breadcrumb-link', className),
-        children,
+        children: (
+          <span className="nz-breadcrumb-text" data-slot="breadcrumb-text">
+            {children}
+          </span>
+        ),
       },
     )
   );

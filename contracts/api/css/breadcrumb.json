@@ -5,7 +5,8 @@
     "nz-breadcrumb-item",
     "nz-breadcrumb-link",
     "nz-breadcrumb-list",
-    "nz-breadcrumb-separator"
+    "nz-breadcrumb-separator",
+    "nz-breadcrumb-text"
   ],
   "component": "breadcrumb",
   "entry": "./css/breadcrumb.css",
