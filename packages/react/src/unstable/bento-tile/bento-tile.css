@@ -45,6 +45,11 @@
       linear-gradient(180deg, var(--nz-bg-canvas), var(--nz-bg-brand-subtle));
   }
 
+  /* ShaderSurface (M89) paints the whole box: no CSS stand-in behind it */
+  .nz-bento-tile-background:has(> .nz-shader-surface) {
+    background: none;
+  }
+
   .nz-bento-tile-background > * {
     display: block;
     inline-size: 100%;

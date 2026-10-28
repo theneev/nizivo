@@ -41,6 +41,24 @@
       );
   }
 
+  /* ShaderSurface (M89) paints the whole box: no CSS stand-in behind it. Its curtains drift, so a
+     soft scrim of bg/code holds the middle, where the text sits, dark: at least about 10:1 for
+     text/on-dark whatever passes behind it (a full curtain alone would leave 1.6:1) */
+  .nz-cta-band-background:has(> .nz-shader-surface) {
+    background: none;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        55% 70% at 50% 50%,
+        color-mix(in oklab, var(--nz-bg-code) 78%, transparent),
+        transparent
+      );
+    }
+  }
+
   .nz-cta-band-background > * {
     display: block;
     inline-size: 100%;

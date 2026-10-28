@@ -18,5 +18,6 @@ becomes "Following".
 
 ## The cover
 
-The design's cover is a shader. Shaders wait for a later package, so the cover is drawn with CSS
-gradients; `cover` takes a picture in its place, hidden from assistive technology.
+The design's cover is the Aurora shader: pass `cover={<ShaderSurface />}`
+([ShaderSurface](/docs/components/shader-surface/)). Without it the cover is drawn with CSS gradients;
+`cover` takes any picture in its place, hidden from assistive technology.

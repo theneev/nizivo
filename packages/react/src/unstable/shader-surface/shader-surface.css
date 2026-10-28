@@ -1,0 +1,68 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/shader-surface.css (Figma's Shader Surface 7389:78), UNSTABLE. A box that fills
+   its parent; the canvas covers it once WebGL has drawn, and until then, or without WebGL, the poster
+   paints the same colours in CSS. The shader reads its colours from this element's computed logical
+   border colours (block start: the ground, inline end: the mid colour, block end: the curtains,
+   inline start: the deep colour),
+   which the variant sets from tokens: set the hooks to recolour it. Aurora's tokens match Figma's
+   colours: bg/accent-subtle, bg/brand-muted, bg/accent and bg/brand. `aurora-dark` resolves them in
+   the dark scheme on any page (`color-scheme: dark`), as CtaBand's dark band needs. */
+@layer nz.components {
+  .nz-shader-surface {
+    position: relative;
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    overflow: hidden;
+    border-block-start-color: var(--nz-shader-surface-ground, var(--nz-bg-accent-subtle));
+    border-inline-end-color: var(--nz-shader-surface-mid, var(--nz-bg-brand-muted));
+    border-block-end-color: var(--nz-shader-surface-curtain, var(--nz-bg-accent));
+    border-inline-start-color: var(--nz-shader-surface-deep, var(--nz-bg-brand));
+  }
+
+  .nz-shader-surface[data-variant='aurora-dark'] {
+    color-scheme: dark;
+  }
+
+  .nz-shader-surface-canvas {
+    position: absolute;
+    inset: 0;
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  /* the poster: Aurora's ground, its curtains as two soft blooms, the deep colour low */
+  .nz-shader-surface-poster {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(
+        40% 45% at 30% 45%,
+        color-mix(in oklab, var(--nz-shader-surface-curtain, var(--nz-bg-accent)) 65%, transparent),
+        transparent 75%
+      ),
+      radial-gradient(
+        30% 40% at 78% 50%,
+        color-mix(in oklab, var(--nz-shader-surface-curtain, var(--nz-bg-accent)) 40%, transparent),
+        transparent 75%
+      ),
+      linear-gradient(
+        180deg,
+        var(--nz-shader-surface-ground, var(--nz-bg-accent-subtle)) 15%,
+        var(--nz-shader-surface-mid, var(--nz-bg-brand-muted))
+      );
+
+    &[hidden] {
+      display: none;
+    }
+  }
+
+  /* the canvas is a picture of colour: forced colours leave the box to the system's colours */
+  @media (forced-colors: active) {
+    .nz-shader-surface-canvas {
+      display: none;
+    }
+  }
+}

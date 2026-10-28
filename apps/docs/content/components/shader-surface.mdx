@@ -1,0 +1,39 @@
+---
+title: ShaderSurface
+description: "Unstable: a moving background drawn by a WebGL shader, the design's Shader Surface, for CtaBand, BentoTile, ProfileCard or a page section. Aurora first. Import it from @nizivo/react/unstable/shader-surface."
+---
+
+## Static or interactive
+
+**Client.** The server renders a poster in the same colours, drawn with CSS; once the page
+hydrates, a canvas draws the shader over it from its first frame. A browser without WebGL keeps the
+poster. [How to choose](/docs/guides/static-or-interactive/).
+
+## Variants
+
+`variant` is the design's Shader Surface type. **Aurora** (`aurora`, the default) is soft curtains of
+light that sway, lime over a pale ground with mint below; it follows the theme. **Aurora Dark**
+(`aurora-dark`) keeps its dark colours on a light page, for a band that is always dark. The design's
+other types (Contour, Dot Matrix, Mesh, Rays) follow.
+
+## In a component
+
+It fills its box. Pass it to the components the design draws with it:
+[CtaBand](/docs/components/cta-band/)'s `background` (`<ShaderSurface variant="aurora-dark" />`),
+[BentoTile](/docs/components/bento-tile/)'s `background` and
+[ProfileCard](/docs/components/profile-card/)'s `cover`. Each drops its CSS background behind it, and
+CtaBand keeps a soft dark scrim behind its text, so the text stays readable whatever drifts behind.
+
+## Light on a phone
+
+No library: one fragment shader on WebGL 1, on the same small runtime as
+[GlowOrb](/docs/components/glow-orb/). It draws only while it is on screen and the page is visible,
+at a pixel ratio of at most 2. Under Reduced motion it draws one still frame. In forced colours the
+canvas is hidden and the system's colours show.
+
+## Colours
+
+Aurora reads Nizivo's accent and brand colours. Set `--nz-shader-surface-ground`,
+`--nz-shader-surface-mid`, `--nz-shader-surface-curtain` and `--nz-shader-surface-deep` to recolour
+it. It is decoration, hidden from assistive technology; never set text on it without a surface of
+its own.

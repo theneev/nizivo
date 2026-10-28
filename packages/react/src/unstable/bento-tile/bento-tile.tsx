@@ -1,6 +1,6 @@
 // NO directive: BentoTile is server-safe, 0 KB of client JS (ARCHITECTURE.md §21.4a; D-dp; Figma's
-// Bento Tile 7395:80). A showcase tile for a bento grid: a background (Figma's Aurora shader, drawn
-// here with CSS gradients until `@nizivo/lab`, §14.5; or a screenshot or photo in `background`) and a
+// Bento Tile 7395:80). A showcase tile for a bento grid: a background (Figma's Aurora shader:
+// `background={<ShaderSurface />}`, M89; without it CSS gradients; or a screenshot or photo) and a
 // frosted caption card. The text always sits on the card, never on the background. `size` spans the
 // tile on a 12-column grid: wide 8 by 1, square 4 by 1, tall 4 by 2. UNSTABLE: v0.6 is unreviewed.
 import type { ComponentPropsWithRef, ReactElement, ReactNode } from 'react';

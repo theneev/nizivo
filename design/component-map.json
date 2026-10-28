@@ -786,7 +786,25 @@
       "export": "Accordion",
       "parts": ["Root", "Item", "Trigger", "Panel"]
     },
-    "7389:78": {
+    "7389:71": {
+      "component": "shader-surface",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/shader-surface",
+      "export": "ShaderSurface",
+      "props": {
+        "variant": ["aurora", "aurora-dark"]
+      }
+    },
+    "7389:72": {
+      "component": "shader-surface",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/shader-surface",
+      "export": "ShaderSurface",
+      "props": {
+        "variant": ["aurora", "aurora-dark"]
+      }
+    },
+    "7389:75": {
       "component": "glow-orb",
       "role": "canonical",
       "import": "@nizivo/react/unstable/glow-orb",

@@ -10,7 +10,8 @@
     "nz-profile-card-stat",
     "nz-profile-card-stat-label",
     "nz-profile-card-stat-value",
-    "nz-profile-card-stats"
+    "nz-profile-card-stats",
+    "nz-shader-surface"
   ],
   "component": "profile-card",
   "entry": "./css/profile-card.css",

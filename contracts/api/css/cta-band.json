@@ -6,7 +6,8 @@
     "nz-cta-band-background",
     "nz-cta-band-content",
     "nz-cta-band-description",
-    "nz-cta-band-title"
+    "nz-cta-band-title",
+    "nz-shader-surface"
   ],
   "component": "cta-band",
   "entry": "./css/cta-band.css",

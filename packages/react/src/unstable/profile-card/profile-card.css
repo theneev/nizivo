@@ -41,6 +41,11 @@
       linear-gradient(180deg, var(--nz-bg-canvas), var(--nz-bg-brand-muted));
   }
 
+  /* ShaderSurface (M89) paints the whole box: no CSS stand-in behind it */
+  .nz-profile-card-cover:has(> .nz-shader-surface) {
+    background: none;
+  }
+
   .nz-profile-card-cover > * {
     display: block;
     inline-size: 100%;

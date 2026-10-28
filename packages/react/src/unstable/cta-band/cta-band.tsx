@@ -1,8 +1,9 @@
 // NO directive: CtaBand is server-safe, 0 KB of client JS (ARCHITECTURE.md §21.4a; D-dp; Figma's CTA
 // Band 7394:50). The last ask on a page: a heading, one line and two actions, one primary and one
-// quiet, centred on a dark band. Figma's band is the Aurora Dark shader, which waits for
-// `@nizivo/lab` (§14.5): here it is CSS gradients on bg/code, which stays dark in both themes, with
-// text/on-dark, and `background` takes a shader or a picture in its place. The primary action is
+// quiet, centred on a dark band. Figma's band is the Aurora Dark shader:
+// `background={<ShaderSurface variant="aurora-dark" />}` draws it (M89); without it the band is CSS
+// gradients on bg/code, which stays dark in both themes, with text/on-dark, and `background` takes
+// any other picture in its place. The primary action is
 // best an Accent Button: a Primary green sinks into the band. UNSTABLE: v0.6 is new and unreviewed.
 import type { ComponentPropsWithRef, ReactElement, ReactNode } from 'react';
 import { renderElement, type RenderProp } from '../../contracts/render';

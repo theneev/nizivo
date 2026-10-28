@@ -2,7 +2,8 @@
 // GlowOrb (M89, D-du; Figma's Glow Orb 7389:78, drawn in VoiceOrb 7411:301): the voice orb as a
 // WebGL shader, for VoiceOrb's `orb` slot or on its own. A glossy sphere that grows with the voice
 // level, its outline moving while it is live and its light drifting so the highlight changes angle;
-// the halo widens with the voice. No library: one fragment shader (glow-orb-gl.ts). The server, and a
+// the halo widens with the voice. No library: one fragment shader (glow-orb-gl.ts) on the shared
+// runtime (`_internal/shader-canvas.ts`). The server, and a
 // browser without WebGL, show the CSS orb VoiceOrb draws (the poster); the canvas takes over once its
 // first frame is drawn. Decorative: hidden from assistive technology, so the state belongs in words
 // beside it (VoiceOrb's label). Reduced motion draws one still frame.
@@ -17,12 +18,8 @@ import {
 } from 'react';
 import { cx } from '../../_internal/cx';
 import { mergeProps } from '../../contracts/merge-props';
-import {
-  startGlowOrb,
-  type GlowOrbInput,
-  type GlowOrbRenderer,
-  type GlowOrbState,
-} from './glow-orb-gl';
+import type { ShaderRun } from '../../_internal/shader-canvas';
+import { startGlowOrb, type GlowOrbInput, type GlowOrbState } from './glow-orb-gl';
 
 export type { GlowOrbState } from './glow-orb-gl';
 
@@ -41,7 +38,7 @@ export function GlowOrb({ state = 'idle', level, className, ...rest }: GlowOrbPr
   const [host, setHost] = useState<HTMLSpanElement | null>(null);
   const [canvas, setCanvas] = useState<HTMLCanvasElement | null>(null);
   const input = useRef<GlowOrbInput>({ state, level });
-  const renderer = useRef<GlowOrbRenderer | null>(null);
+  const renderer = useRef<ShaderRun | null>(null);
   const [ready, setReady] = useState(false);
 
   // the renderer reads the latest props each frame, and draws again now when it is still

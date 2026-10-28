@@ -1,11 +1,10 @@
-// GlowOrb's renderer (M89, D-du): one WebGL1 fragment shader over a triangle that covers the canvas,
-// no library. The sphere is shaded analytically (a normal from the disc), lit by a light that swings
-// a little, with a surface pattern that turns, a Fresnel rim, a glossy highlight and a halo that
-// widens with the voice. It draws only while the orb is on screen and the page is shown, at a pixel
-// ratio of at most 2; under reduced motion it draws one still frame, again when its input changes.
-// Its colours are the host's computed `color` (the light), `outline-color` (the deep) and
+// GlowOrb's shader (M89, D-du), on the shared runtime (`_internal/shader-canvas.ts`). The sphere is
+// shaded analytically (a normal from the disc), lit by a light that swings a little, with a surface
+// pattern that turns, a Fresnel rim, a glossy highlight and a halo that widens with the voice. Its
+// colours are the host's computed `color` (the light), `outline-color` (the deep) and
 // `text-decoration-color` (the halo, its alpha the halo's strength), which glow-orb.css sets from
-// tokens, so a theme change only needs a read. Plain DOM and WebGL: no React, no directive.
+// tokens. Plain DOM and WebGL: no React, no directive.
+import { rgba, runShader, type Rgba, type ShaderRun } from '../../_internal/shader-canvas';
 
 /** The voice states, as VoiceOrb names them. */
 export type GlowOrbState = 'idle' | 'listening' | 'speaking';
@@ -16,14 +15,6 @@ export interface GlowOrbInput {
   /** 0 to 1, or a function the orb calls each frame; absent: a voice simulated for the state. */
   level: number | (() => number) | undefined;
 }
-
-export interface GlowOrbRenderer {
-  /** Draws again after a change, or restarts the loop after a pause. */
-  wake(): void;
-  destroy(): void;
-}
-
-const VERT = 'attribute vec2 a_pos; void main() { gl_Position = vec4(a_pos, 0.0, 1.0); }';
 
 const FRAG = `
 precision highp float;
@@ -112,72 +103,10 @@ function levelOf(input: GlowOrbInput, t: number): number {
   return Number.isFinite(value) ? Math.min(1, Math.max(0, value)) : 0;
 }
 
-function reducedMotion(element: Element): boolean {
-  return (
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
-    element.closest('[data-nz-motion="reduce"]') !== null
-  );
-}
-
-type Rgba = [number, number, number, number];
-
-const RGB = /^rgba?\(\s*([\d.]+)[\s,]+([\d.]+)[\s,]+([\d.]+)\s*(?:[,/]\s*([\d.]+)(%?))?\s*\)$/;
-const SRGB = /^color\(srgb\s+([-\d.e]+)\s+([-\d.e]+)\s+([-\d.e]+)\s*(?:\/\s*([\d.]+)(%?))?\s*\)$/;
-
-function alphaOf(value: string | undefined, percent: string | undefined): number {
-  if (value === undefined) return 1;
-  return percent === '%' ? Number(value) / 100 : Number(value);
-}
-
-/**
- * A computed colour as 0 to 1 sRGB and alpha. Browsers compute the tokens' hex values as `rgb()` and
- * the halo's `color-mix(in srgb, …)` as `color(srgb …)`, both read here; any other syntax (a hook set
- * to `oklch()`, say) goes through a 1×1 2D canvas. Reading pixels back from a canvas stalls the GPU,
- * so that path is the exception.
- */
-function rgba(css: string): Rgba {
-  const rgb = RGB.exec(css);
-  if (rgb !== null) {
-    return [
-      Number(rgb[1]) / 255,
-      Number(rgb[2]) / 255,
-      Number(rgb[3]) / 255,
-      alphaOf(rgb[4], rgb[5]),
-    ];
-  }
-  const srgb = SRGB.exec(css);
-  if (srgb !== null) {
-    return [Number(srgb[1]), Number(srgb[2]), Number(srgb[3]), alphaOf(srgb[4], srgb[5])];
-  }
-  return probed(css);
-}
-
-function probed(css: string): Rgba {
-  const probe = document.createElement('canvas').getContext('2d', { willReadFrequently: true });
-  if (probe === null) return [0, 0, 0, 0];
-  probe.clearRect(0, 0, 1, 1);
-  probe.fillStyle = '#000';
-  probe.fillStyle = css;
-  probe.fillRect(0, 0, 1, 1);
-  const [r = 0, g = 0, b = 0, a = 0] = probe.getImageData(0, 0, 1, 1).data;
-  return [r / 255, g / 255, b / 255, a / 255];
-}
-
-function compile(gl: WebGLRenderingContext): WebGLProgram | null {
-  const program = gl.createProgram();
-  for (const [type, source] of [
-    [gl.VERTEX_SHADER, VERT],
-    [gl.FRAGMENT_SHADER, FRAG],
-  ] as const) {
-    const shader = gl.createShader(type);
-    if (shader === null) return null;
-    gl.shaderSource(shader, source);
-    gl.compileShader(shader);
-    if (gl.getShaderParameter(shader, gl.COMPILE_STATUS) !== true) return null;
-    gl.attachShader(program, shader);
-  }
-  gl.linkProgram(program);
-  return gl.getProgramParameter(program, gl.LINK_STATUS) === true ? program : null;
+interface Colours {
+  light: Rgba;
+  deep: Rgba;
+  halo: Rgba;
 }
 
 /**
@@ -189,159 +118,34 @@ export function startGlowOrb(
   canvas: HTMLCanvasElement,
   input: () => GlowOrbInput,
   onReady: () => void,
-): GlowOrbRenderer | null {
-  const gl = canvas.getContext('webgl', {
-    alpha: true,
-    premultipliedAlpha: true,
-    antialias: false,
-    depth: false,
-    stencil: false,
-    powerPreference: 'low-power',
-  });
-  if (gl === null) return null;
-  const program = compile(gl);
-  if (program === null) return null;
-  gl.useProgram(program);
-  gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
-  const position = gl.getAttribLocation(program, 'a_pos');
-  gl.enableVertexAttribArray(position);
-  gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
-  const at = (name: string): WebGLUniformLocation | null => gl.getUniformLocation(program, name);
-  const u = {
-    res: at('u_res'),
-    t: at('u_t'),
-    level: at('u_level'),
-    live: at('u_live'),
-    light: at('u_light'),
-    deep: at('u_deep'),
-    halo: at('u_halo'),
-  };
-
-  let colours = { light: [0, 0, 0, 0], deep: [0, 0, 0, 0], halo: [0, 0, 0, 0] };
-  const readColours = (): void => {
-    const css = getComputedStyle(host);
-    colours = {
-      light: rgba(css.color),
-      deep: rgba(css.outlineColor),
-      halo: rgba(css.textDecorationColor),
-    };
-  };
-  readColours();
-
-  let visible = true;
-  let frame = 0;
-  let last = 0;
-  let clock = 0;
+): ShaderRun | null {
   let level = 0;
   let live = input().state === 'idle' ? 0 : 1;
-  let ready = false;
-  let lost = false;
-
-  const still = (): boolean => reducedMotion(host);
-  const running = (): boolean => !lost && visible && !document.hidden && !still();
-
-  const draw = (dt: number): void => {
-    const now = input();
-    const goal = levelOf(now, clock);
-    // quick to rise, slower to fall, as a level meter moves
-    level =
-      dt === 0 ? goal : level + (goal - level) * (1 - Math.exp(-dt * (goal > level ? 14 : 5)));
-    const target = now.state === 'idle' ? 0 : 1;
-    live = dt === 0 ? target : live + (target - live) * (1 - Math.exp(-dt * 3));
-    gl.viewport(0, 0, canvas.width, canvas.height);
-    gl.uniform2f(u.res, canvas.width, canvas.height);
-    gl.uniform1f(u.t, clock);
-    gl.uniform1f(u.level, level);
-    gl.uniform1f(u.live, live);
-    gl.uniform3f(u.light, colours.light[0] ?? 0, colours.light[1] ?? 0, colours.light[2] ?? 0);
-    gl.uniform3f(u.deep, colours.deep[0] ?? 0, colours.deep[1] ?? 0, colours.deep[2] ?? 0);
-    gl.uniform4f(
-      u.halo,
-      colours.halo[0] ?? 0,
-      colours.halo[1] ?? 0,
-      colours.halo[2] ?? 0,
-      colours.halo[3] ?? 0,
-    );
-    gl.drawArrays(gl.TRIANGLES, 0, 3);
-    if (!ready) {
-      ready = true;
-      onReady();
-    }
-  };
-
-  const loop = (now: number): void => {
-    frame = 0;
-    if (!running()) return;
-    const dt = last === 0 ? 0 : Math.min(0.1, (now - last) / 1000);
-    last = now;
-    clock += dt;
-    draw(dt);
-    frame = requestAnimationFrame(loop);
-  };
-
-  const wake = (): void => {
-    if (lost) return;
-    if (running()) {
-      if (frame === 0) {
-        last = 0;
-        frame = requestAnimationFrame(loop);
-      }
-    } else if (still()) {
-      // the still frame: always the same instant, so it is the same picture every time
-      clock = 0;
-      draw(0);
-    }
-  };
-
-  const resize = (): void => {
-    const ratio = Math.min(window.devicePixelRatio || 1, 2);
-    const box = host.getBoundingClientRect();
-    canvas.width = Math.max(1, Math.round(box.width * ratio));
-    canvas.height = Math.max(1, Math.round(box.height * ratio));
-    if (frame === 0) wake();
-  };
-
-  const sized = new ResizeObserver(resize);
-  sized.observe(host);
-  const seen = new IntersectionObserver(([entry]) => {
-    visible = entry?.isIntersecting ?? true;
-    wake();
-  });
-  seen.observe(host);
-  const scheme = window.matchMedia('(prefers-color-scheme: dark)');
-  const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const retheme = (): void => {
-    readColours();
-    if (frame === 0) wake();
-  };
-  // a theme switch or a motion override on <html> (data-nz-theme, data-nz-motion, class, style)
-  const page = new MutationObserver(retheme);
-  page.observe(document.documentElement, { attributes: true });
-  const onLost = (event: Event): void => {
-    event.preventDefault();
-    lost = true;
-  };
-  scheme.addEventListener('change', retheme);
-  motion.addEventListener('change', wake);
-  document.addEventListener('visibilitychange', wake);
-  canvas.addEventListener('webglcontextlost', onLost);
-  resize();
-
-  return {
-    wake,
-    destroy() {
-      if (frame !== 0) cancelAnimationFrame(frame);
-      frame = 0;
-      lost = true;
-      sized.disconnect();
-      seen.disconnect();
-      page.disconnect();
-      scheme.removeEventListener('change', retheme);
-      motion.removeEventListener('change', wake);
-      document.removeEventListener('visibilitychange', wake);
-      canvas.removeEventListener('webglcontextlost', onLost);
-      gl.deleteProgram(program);
+  return runShader<Colours>(
+    host,
+    canvas,
+    {
+      frag: FRAG,
+      read: (css) => ({
+        light: rgba(css.color),
+        deep: rgba(css.outlineColor),
+        halo: rgba(css.textDecorationColor),
+      }),
+      frame(gl, at, c, t, dt) {
+        const now = input();
+        const goal = levelOf(now, t);
+        // quick to rise, slower to fall, as a level meter moves
+        level =
+          dt === 0 ? goal : level + (goal - level) * (1 - Math.exp(-dt * (goal > level ? 14 : 5)));
+        const target = now.state === 'idle' ? 0 : 1;
+        live = dt === 0 ? target : live + (target - live) * (1 - Math.exp(-dt * 3));
+        gl.uniform1f(at('u_level'), level);
+        gl.uniform1f(at('u_live'), live);
+        gl.uniform3f(at('u_light'), c.light[0], c.light[1], c.light[2]);
+        gl.uniform3f(at('u_deep'), c.deep[0], c.deep[1], c.deep[2]);
+        gl.uniform4f(at('u_halo'), c.halo[0], c.halo[1], c.halo[2], c.halo[3]);
+      },
     },
-  };
+    onReady,
+  );
 }

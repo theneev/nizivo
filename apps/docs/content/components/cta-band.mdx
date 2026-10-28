@@ -16,5 +16,7 @@ text/on-dark.
 
 ## The background
 
-The design's background is a shader. Shaders wait for a later package, so it is drawn with CSS
-gradients; `background` takes a picture in its place, hidden from assistive technology.
+The design's background is the Aurora Dark shader: pass
+`background={<ShaderSurface variant="aurora-dark" />}` ([ShaderSurface](/docs/components/shader-surface/))
+and a soft dark scrim keeps the middle, where the text sits, dark. Without it the band is drawn with
+CSS gradients; `background` takes any picture in its place, hidden from assistive technology.

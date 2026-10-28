@@ -414,7 +414,7 @@
       "limitKiB": 2.3
     },
     "@nizivo/react/unstable/glow-orb": {
-      "measured": 3612,
+      "measured": 3627,
       "limitKiB": 3.7
     },
     "@nizivo/react/unstable/inline-assist": {
@@ -464,6 +464,10 @@
     "@nizivo/react/unstable/section-header": {
       "measured": 845,
       "limitKiB": 1
+    },
+    "@nizivo/react/unstable/shader-surface": {
+      "measured": 3248,
+      "limitKiB": 3.5
     },
     "@nizivo/react/unstable/site-footer": {
       "measured": 976,
@@ -805,6 +809,10 @@
       "measured": 747,
       "limitKiB": 0.9
     },
+    "@nizivo/react own: unstable/shader-surface/shader-surface.client": {
+      "measured": 388,
+      "limitKiB": 0.5
+    },
     "@nizivo/react own: unstable/slider/slider.client": {
       "measured": 842,
       "limitKiB": 1
@@ -878,7 +886,7 @@
       "limitKiB": 1.6
     },
     "@nizivo/react/css/bento-tile.css": {
-      "measured": 768,
+      "measured": 787,
       "limitKiB": 0.8
     },
     "@nizivo/react/css/breadcrumb.css": {
@@ -946,7 +954,7 @@
       "limitKiB": 0.4
     },
     "@nizivo/react/css/cta-band.css": {
-      "measured": 583,
+      "measured": 643,
       "limitKiB": 0.7
     },
     "@nizivo/react/css/data-view.css": {
@@ -1142,7 +1150,7 @@
       "limitKiB": 0.8
     },
     "@nizivo/react/css/profile-card.css": {
-      "measured": 752,
+      "measured": 773,
       "limitKiB": 0.8
     },
     "@nizivo/react/css/progress-bar.css": {
@@ -1196,6 +1204,10 @@
     "@nizivo/react/css/separator.css": {
       "measured": 261,
       "limitKiB": 0.3
+    },
+    "@nizivo/react/css/shader-surface.css": {
+      "measured": 451,
+      "limitKiB": 0.5
     },
     "@nizivo/react/css/sidebar.css": {
       "measured": 928,

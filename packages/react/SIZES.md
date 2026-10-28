@@ -207,7 +207,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /unstable/feature-card       |      890 |        0.9 |        813 |           1 |          134 |
 | /unstable/feedback-bar       |   19,656 |       19.2 |     17,764 |        21.2 |        2,052 |
 | /unstable/file-item          |    2,065 |        2.0 |      1,883 |         2.3 |          290 |
-| /unstable/glow-orb           |    3,612 |        3.5 |      3,293 |         3.7 |          176 |
+| /unstable/glow-orb           |    3,627 |        3.5 |      3,291 |         3.7 |          161 |
 | /unstable/inline-assist      |    1,698 |        1.7 |      1,553 |         1.9 |          247 |
 | /unstable/link               |    1,069 |        1.0 |        974 |         1.2 |          159 |
 | /unstable/live-pulse         |      793 |        0.8 |        722 |         0.9 |          128 |
@@ -220,6 +220,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /unstable/rating             |    1,551 |        1.5 |      1,412 |         1.7 |          189 |
 | /unstable/response-block     |    2,319 |        2.3 |      2,080 |         2.5 |          241 |
 | /unstable/section-header     |      845 |        0.8 |        769 |           1 |          179 |
+| /unstable/shader-surface     |    3,248 |        3.2 |      2,926 |         3.5 |          336 |
 | /unstable/site-footer        |      976 |        1.0 |        909 |         1.1 |          150 |
 | /unstable/site-navbar        |    1,194 |        1.2 |      1,101 |         1.3 |          137 |
 | /unstable/slider             |    1,362 |        1.3 |      1,249 |         1.4 |           71 |
@@ -318,6 +319,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | own: unstable/model-selector/model-selector.client       |      764 |        0.7 |        696 |         0.8 |           55 |
 | own: unstable/newsletter-signup/newsletter-signup.client |      907 |        0.9 |        789 |           1 |          117 |
 | own: unstable/prompt-composer/prompt-composer.client     |      747 |        0.7 |        648 |         0.9 |          174 |
+| own: unstable/shader-surface/shader-surface.client       |      388 |        0.4 |        352 |         0.5 |          124 |
 | own: unstable/slider/slider.client                       |      842 |        0.8 |        765 |           1 |          182 |
 | own: unstable/word-rotator/word-rotator.client           |      686 |        0.7 |        636 |         0.8 |          133 |
 
@@ -343,7 +345,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/badge.css              |      566 |        0.6 |        481 |         0.6 |           48 |
 | /css/banner.css             |      658 |        0.6 |        533 |         0.8 |          161 |
 | /css/base.css               |    1,544 |        1.5 |      1,321 |         1.6 |           94 |
-| /css/bento-tile.css         |      768 |        0.8 |        631 |         0.8 |           51 |
+| /css/bento-tile.css         |      787 |        0.8 |        654 |         0.8 |           32 |
 | /css/breadcrumb.css         |      607 |        0.6 |        485 |         0.6 |            7 |
 | /css/bulk-action-bar.css    |      453 |        0.4 |        372 |         0.5 |           59 |
 | /css/button.css             |    1,215 |        1.2 |      1,025 |         1.3 |          116 |
@@ -360,7 +362,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/comment.css            |      575 |        0.6 |        473 |         0.6 |           39 |
 | /css/container.css          |      185 |        0.2 |        155 |         0.2 |           19 |
 | /css/copy-button.css        |      336 |        0.3 |        280 |         0.4 |           73 |
-| /css/cta-band.css           |      583 |        0.6 |        496 |         0.7 |          133 |
+| /css/cta-band.css           |      643 |        0.6 |        522 |         0.7 |           73 |
 | /css/data-view.css          |      570 |        0.6 |        449 |         0.7 |          146 |
 | /css/date-range-picker.css  |    1,278 |        1.2 |      1,084 |         1.3 |           53 |
 | /css/delta.css              |      524 |        0.5 |        436 |         0.6 |           90 |
@@ -409,7 +411,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/password-input.css     |      486 |        0.5 |        386 |         0.6 |          128 |
 | /css/pointer-fx.css         |      299 |        0.3 |        245 |         0.4 |          110 |
 | /css/popover.css            |      711 |        0.7 |        567 |         0.8 |          108 |
-| /css/profile-card.css       |      752 |        0.7 |        631 |         0.8 |           67 |
+| /css/profile-card.css       |      773 |        0.8 |        656 |         0.8 |           46 |
 | /css/progress-bar.css       |      800 |        0.8 |        664 |         0.9 |          121 |
 | /css/progress-ring.css      |      566 |        0.6 |        486 |         0.6 |           48 |
 | /css/prompt-composer.css    |      745 |        0.7 |        592 |         0.9 |          176 |
@@ -423,6 +425,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/segmented-control.css  |    1,040 |        1.0 |        861 |         1.1 |           86 |
 | /css/select.css             |    1,290 |        1.3 |      1,088 |         1.4 |          143 |
 | /css/separator.css          |      261 |        0.3 |        203 |         0.3 |           46 |
+| /css/shader-surface.css     |      451 |        0.4 |        373 |         0.5 |           61 |
 | /css/sidebar.css            |      928 |        0.9 |        753 |           1 |           96 |
 | /css/site-footer.css        |      505 |        0.5 |        407 |         0.6 |          109 |
 | /css/site-navbar.css        |      785 |        0.8 |        637 |         0.9 |          136 |

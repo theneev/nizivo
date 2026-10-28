@@ -8,9 +8,9 @@
   "cssDeps": ["base"],
   "variants": {},
   "figma": {
-    "canonical": ["7389:78"],
+    "canonical": ["7389:75"],
     "ghosts": [],
-    "variantsSeen": [],
-    "related": ["7411:301"]
+    "variantsSeen": ["7425:14046"],
+    "related": ["7389:78", "7411:301"]
   }
 }

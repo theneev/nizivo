@@ -1,8 +1,8 @@
 // NO directive: ProfileCard is server-safe, 0 KB of client JS (ARCHITECTURE.md §21.4a; D-do; Figma's
 // Profile Card 7397:114). A person at a glance: a cover, the avatar, the name as the card's
 // heading, what they do, a few counts and one action. The counts are a description list, each read
-// as "Posts, 142". Figma's cover is the Aurora shader, which waits for `@nizivo/lab` (§14.5): here
-// it is CSS gradients, and `cover` takes a picture in its place. The action is the app's (Figma's
+// as "Posts, 142". Figma's cover is the Aurora shader: `cover={<ShaderSurface />}` draws it (M89);
+// without it the cover is CSS gradients, and `cover` takes any picture in its place. The action is the app's (Figma's
 // Follow is a Button with `aria-pressed` that becomes "Following"). UNSTABLE: v0.5 is unreviewed.
 import type { ComponentPropsWithRef, ReactElement, ReactNode } from 'react';
 import { renderElement, type RenderProp } from '../../contracts/render';

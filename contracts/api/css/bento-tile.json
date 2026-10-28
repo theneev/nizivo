@@ -5,7 +5,8 @@
     "nz-bento-tile-background",
     "nz-bento-tile-caption",
     "nz-bento-tile-description",
-    "nz-bento-tile-title"
+    "nz-bento-tile-title",
+    "nz-shader-surface"
   ],
   "component": "bento-tile",
   "entry": "./css/bento-tile.css",
