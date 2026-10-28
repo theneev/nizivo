@@ -57,6 +57,24 @@ function read(file: string): string {
   return readFileSync(file, 'utf8');
 }
 
+/** A maintainer note that cites the design file, which stays internal (M83): its name or a node id. */
+const DESIGN_NOTE = /figma|\b\d{3,5}:\d{2,6}\b/i;
+
+/**
+ * A stylesheet as an item ships it: the source without the plain comments that cite the design
+ * file (M83). A note on lines of its own goes with its lines; one after a declaration leaves the
+ * declaration. Doc comments (the `/**` kind) and every other note stay.
+ */
+function shippedCss(file: string): string {
+  return read(file).replaceAll(
+    /(^[ \t]*)?[ \t]*\/\*(?!\*)[\s\S]*?\*\/([ \t]*\n)?/gm,
+    (note: string, start: string | undefined, end: string | undefined) => {
+      if (!DESIGN_NOTE.test(note)) return note;
+      return start !== undefined && end !== undefined ? '' : (end ?? '');
+    },
+  );
+}
+
 function versionOf(dir: string): string {
   const manifest: unknown = JSON.parse(read(join(dir, 'package.json')));
   if (!isRecord(manifest) || typeof manifest.version !== 'string') {
@@ -206,7 +224,7 @@ function patternItem(
       path: `nizivo/${name}.css`,
       type: 'registry:file',
       target: `${TARGET_DIR}/${name}.css`,
-      content: `${notice(name, version)}${read(cssFile)}`,
+      content: `${notice(name, version)}${shippedCss(cssFile)}`,
     });
   }
   const { title, description } = frontMatter(name);
@@ -240,7 +258,7 @@ function cssItem(
         path: `nizivo/${name}.css`,
         type: 'registry:file',
         target: `${TARGET_DIR}/${name}.css`,
-        content: `${notice(name, version)}${read(join(reactRoot, 'src', component, `${component}.css`))}`,
+        content: `${notice(name, version)}${shippedCss(join(reactRoot, 'src', component, `${component}.css`))}`,
       },
     ],
   );
@@ -299,6 +317,7 @@ export function registryProblems(
         problems.push(`${at}: ${f.path} does not carry the MIT notice where the CLI keeps it`);
       }
       if (!f.content.includes(' * MIT License\n')) problems.push(`${at}: ${f.path} has no licence`);
+      if (/figma/i.test(f.content)) problems.push(`${at}: ${f.path} names the design file (M83)`);
       if (f.type === 'registry:component') {
         for (const p of importedPackages(f.content)) imported.add(p);
         for (const m of f.content.matchAll(/^import\b[^;]*?'([^']+)';/gms)) {
