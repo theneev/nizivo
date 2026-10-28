@@ -103,6 +103,9 @@ const PACKAGE = join(REPO, 'packages', TARGET);
 const SRC = join(PACKAGE, 'src');
 const DIST = join(PACKAGE, 'dist');
 const TOKENS_CSS = join(REPO, 'packages', 'tokens', 'dist', 'tokens.css');
+/** Chromium's driver note for a WebGL read-back, which its software compositing causes. */
+const GPU_READBACK = /GL Driver Message \([^)]*Performance[^)]*\): GPU stall due to ReadPixels/;
+
 /** The browser half: one harness for every package (it imports only React). */
 const HARNESS = join(REACT, 'test', 'visual', 'harness.tsx');
 const LANE = join(PACKAGE, 'test', 'visual');
@@ -670,6 +673,9 @@ async function openPage(browser: Browser, origin: string, problems: string[]): P
   p.on('pageerror', (error) => problems.push(`page error: ${error.message}`));
   p.on('console', (message) => {
     if (message.type() === 'error' || message.type() === 'warning') {
+      // headless Chromium reads each WebGL frame back to composite it in software (GlowOrb, D-du)
+      // and its driver notes the stall: the test browser's, not the page's
+      if (GPU_READBACK.test(message.text())) return;
       problems.push(`console ${message.type()}: ${message.text()}`);
     }
   });

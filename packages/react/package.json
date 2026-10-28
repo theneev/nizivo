@@ -439,6 +439,10 @@
       "types": "./dist/unstable/file-item/index.d.ts",
       "default": "./dist/unstable/file-item/index.js"
     },
+    "./unstable/glow-orb": {
+      "types": "./dist/unstable/glow-orb/index.d.ts",
+      "default": "./dist/unstable/glow-orb/index.js"
+    },
     "./unstable/inline-assist": {
       "types": "./dist/unstable/inline-assist/index.d.ts",
       "default": "./dist/unstable/inline-assist/index.js"
@@ -587,6 +591,7 @@
     "./css/file-item.css": "./dist/css/file-item.css",
     "./css/file-upload.css": "./dist/css/file-upload.css",
     "./css/form.css": "./dist/css/form.css",
+    "./css/glow-orb.css": "./dist/css/glow-orb.css",
     "./css/grid.css": "./dist/css/grid.css",
     "./css/heading.css": "./dist/css/heading.css",
     "./css/icon-button.css": "./dist/css/icon-button.css",

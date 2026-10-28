@@ -207,6 +207,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /unstable/feature-card       |      890 |        0.9 |        813 |           1 |          134 |
 | /unstable/feedback-bar       |   19,656 |       19.2 |     17,764 |        21.2 |        2,052 |
 | /unstable/file-item          |    2,065 |        2.0 |      1,883 |         2.3 |          290 |
+| /unstable/glow-orb           |    3,423 |        3.3 |      3,101 |         3.7 |          365 |
 | /unstable/inline-assist      |    1,698 |        1.7 |      1,553 |         1.9 |          247 |
 | /unstable/link               |    1,069 |        1.0 |        974 |         1.2 |          159 |
 | /unstable/live-pulse         |      793 |        0.8 |        722 |         0.9 |          128 |
@@ -311,6 +312,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | own: unstable/copy-button/copy-button.client             |      611 |        0.6 |        546 |         0.7 |          105 |
 | own: unstable/date-range-picker/date-range-picker.client |    2,552 |        2.5 |      2,361 |         2.5 |            8 |
 | own: unstable/feedback-bar/feedback-bar.client           |      849 |        0.8 |        771 |           1 |          175 |
+| own: unstable/glow-orb/glow-orb.client                   |      456 |        0.4 |        416 |         0.5 |           56 |
 | own: unstable/inline-assist/inline-assist.client         |      831 |        0.8 |        734 |         0.9 |           90 |
 | own: unstable/media-player/media-player.client           |    1,022 |        1.0 |        921 |         1.1 |          104 |
 | own: unstable/model-selector/model-selector.client       |      764 |        0.7 |        696 |         0.8 |           55 |
@@ -374,6 +376,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/file-item.css          |      683 |        0.7 |        581 |         0.8 |          136 |
 | /css/file-upload.css        |    1,261 |        1.2 |      1,058 |         1.4 |          172 |
 | /css/form.css               |      280 |        0.3 |        225 |         0.4 |          129 |
+| /css/glow-orb.css           |      508 |        0.5 |        423 |         0.6 |          106 |
 | /css/grid.css               |      531 |        0.5 |        423 |         0.6 |           83 |
 | /css/heading.css            |      390 |        0.4 |        318 |         0.5 |          122 |
 | /css/icon-button.css        |    1,004 |        1.0 |        852 |         1.1 |          122 |
@@ -449,7 +452,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/top-bar.css            |      452 |        0.4 |        379 |         0.5 |           60 |
 | /css/trend-card.css         |      403 |        0.4 |        346 |         0.5 |          109 |
 | /css/usage-meter.css        |      443 |        0.4 |        356 |         0.5 |           69 |
-| /css/voice-orb.css          |      955 |        0.9 |        825 |         1.1 |          171 |
+| /css/voice-orb.css          |      974 |        1.0 |        849 |         1.1 |          152 |
 | /css/word-rotator.css       |      298 |        0.3 |        234 |         0.4 |          111 |
 | /styles.css                 |   26,289 |       25.7 |     21,051 |          26 |          335 |
 

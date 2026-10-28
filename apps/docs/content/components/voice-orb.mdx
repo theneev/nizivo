@@ -21,5 +21,6 @@ Put what was heard, and what the assistant says, in the children: voice needs a 
 
 ## The orb
 
-The design's orb is a shader. Shaders wait for a later package, so the orb is drawn with CSS
-gradients; `orb` takes any picture in its place, hidden from assistive technology.
+The design's orb is a shader: pass [GlowOrb](/docs/components/glow-orb/) as `orb`
+(`orb={<GlowOrb state={state} level={level} />}`) and it grows with the voice. Without it the orb is
+drawn with CSS gradients; `orb` takes any picture in its place, hidden from assistive technology.

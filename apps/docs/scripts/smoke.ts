@@ -444,12 +444,20 @@ function pageJs(path: string, fail = failures): Js {
 const PRELOAD_HINT =
   /^The resource http:\/\/127\.0\.0\.1:\d+\/_next\/static\/chunks\/[\w-]+\.css was preloaded using link preload but not used within a few seconds from the window's load event\./;
 
+/**
+ * Headless Chromium composites in software, so it reads each frame of a WebGL canvas back (GlowOrb,
+ * D-du) and its driver notes the stall: the test browser's, not the page's, and absent where the
+ * GPU composites.
+ */
+const GPU_READBACK = /GL Driver Message \([^)]*Performance[^)]*\): GPU stall due to ReadPixels/;
+
 /** Tracks console output, page errors and requests that leave the local server. */
 function instrument(page: Page): { messages: string[]; external: string[] } {
   const messages: string[] = [];
   const external: string[] = [];
   page.on('console', (m) => {
     if (m.type() === 'warning' && PRELOAD_HINT.test(m.text())) return;
+    if (m.type() === 'warning' && GPU_READBACK.test(m.text())) return;
     if (m.type() === 'error' || m.type() === 'warning') messages.push(`${m.type()}: ${m.text()}`);
   });
   page.on('pageerror', (e) => messages.push(`pageerror: ${e.message}`));

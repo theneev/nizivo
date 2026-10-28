@@ -39,7 +39,7 @@
           "type": "() => void"
         },
         {
-          "description": "Replaces the CSS orb, for example a Glow Orb shader. Decorative: it is hidden from assistive technology.",
+          "description": "Replaces the CSS orb, for example `<GlowOrb state={state} />`. Decorative: it is hidden from assistive technology.",
           "name": "orb",
           "required": false,
           "type": "ReactNode"

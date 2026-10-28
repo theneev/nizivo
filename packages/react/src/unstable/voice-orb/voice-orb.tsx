@@ -2,8 +2,9 @@
 // Figma's Voice Orb 7411:301). Voice mode: an orb, a written state and one big control. The orb is
 // decoration; the state is the label ("Listening…", a polite status) and the button (Mic, then
 // Stop), an IconButtonStatic: no tooltip, so no client code, and the state is written beside it.
-// Figma's orb is the Glow Orb shader, which waits for `@nizivo/lab` (§14.5, after 1.0): here
-// it is drawn with CSS gradients, and `orb` takes a shader or any other picture in its place. What
+// Figma's orb is the Glow Orb shader: `orb={<GlowOrb state={state} />}` draws it
+// (`@nizivo/react/unstable/glow-orb`, M89); without it the orb is drawn with CSS gradients, and `orb`
+// takes any other picture in its place. What
 // was heard belongs in `children`, as captions in text. The waveform and the orb's breathing stop
 // under Reduced motion. UNSTABLE: the AI kit is new and unreviewed.
 import type { ComponentPropsWithRef, ReactElement, ReactNode } from 'react';
@@ -34,7 +35,7 @@ export interface VoiceOrbProps extends Omit<ComponentPropsWithRef<'div'>, 'onTog
   state: VoiceState;
   /** The button calls it: start while idle, stop while listening or speaking. */
   onToggle?: () => void;
-  /** Replaces the CSS orb, for example a Glow Orb shader. Decorative: it is hidden from assistive technology. */
+  /** Replaces the CSS orb, for example `<GlowOrb state={state} />`. Decorative: it is hidden from assistive technology. */
   orb?: ReactNode;
   labels?: Partial<VoiceOrbLabels>;
   /** Must render a `<div>`. */

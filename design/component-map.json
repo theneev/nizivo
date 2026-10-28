@@ -786,6 +786,13 @@
       "export": "Accordion",
       "parts": ["Root", "Item", "Trigger", "Panel"]
     },
+    "7389:78": {
+      "component": "glow-orb",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/glow-orb",
+      "export": "GlowOrb",
+      "props": {}
+    },
     "7390:123": {
       "component": "ticker",
       "role": "canonical",

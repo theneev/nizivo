@@ -1,0 +1,78 @@
+@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
+
+/* @nizivo/react/css/glow-orb.css (Figma's Glow Orb 7389:78), UNSTABLE. A square that fills its box
+   (VoiceOrb's 160 px orb, or any size it is given); the canvas covers it once WebGL has drawn, and
+   until then, or without WebGL, the poster is the CSS orb VoiceOrb draws: a lime-to-brand sphere
+   with a highlight, 68 % of the box, in a soft halo. The shader reads its three colours from this
+   element's computed `color` (the light side), `outline-color` (the deep side) and
+   `text-decoration-color` (the halo, its alpha the halo's strength): set the hooks to recolour it. */
+@layer nz.components {
+  .nz-glow-orb {
+    position: relative;
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    aspect-ratio: 1;
+    color: var(--nz-glow-orb-light, var(--nz-bg-accent));
+    outline-color: var(--nz-glow-orb-deep, var(--nz-bg-brand));
+    /* the halo: half the accent, half bg/brand-muted (green-100, or green-900 in dark), so it is pale
+       on a light page and a soft green on a dark one, at 55 % (its alpha is the halo's strength) */
+    text-decoration-color: var(
+      --nz-glow-orb-halo,
+      color-mix(
+        in srgb,
+        color-mix(in oklab, var(--nz-bg-accent) 50%, var(--nz-bg-brand-muted)) 55%,
+        transparent
+      )
+    );
+  }
+
+  .nz-glow-orb-canvas {
+    position: absolute;
+    inset: 0;
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  .nz-glow-orb-poster {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    border-radius: var(--nz-radius-full);
+    background: radial-gradient(
+      circle,
+      color-mix(in oklab, var(--nz-bg-accent) 45%, var(--nz-bg-canvas)) 0 45%,
+      transparent 72%
+    );
+
+    &[hidden] {
+      display: none;
+    }
+  }
+
+  .nz-glow-orb-sphere {
+    inline-size: 68%;
+    block-size: 68%;
+    border-radius: var(--nz-radius-full);
+    background:
+      radial-gradient(circle at 34% 28%, rgb(255 255 255 / 0.9) 0 6%, transparent 22%),
+      radial-gradient(circle at 36% 32%, var(--nz-bg-accent) 0 30%, var(--nz-bg-brand) 92%);
+  }
+
+  /* the canvas is a picture of colour: forced colours show the orb's outline instead */
+  @media (forced-colors: active) {
+    .nz-glow-orb-canvas {
+      display: none;
+    }
+
+    /* one circle, the orb's edge (VoiceOrb draws the same one around its orb) */
+    .nz-glow-orb-poster,
+    .nz-glow-orb-poster[hidden] {
+      display: grid;
+      outline: 1px solid CanvasText;
+      outline-offset: -1px;
+    }
+  }
+}

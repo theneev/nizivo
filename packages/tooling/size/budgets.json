@@ -413,6 +413,10 @@
       "measured": 2065,
       "limitKiB": 2.3
     },
+    "@nizivo/react/unstable/glow-orb": {
+      "measured": 3423,
+      "limitKiB": 3.7
+    },
     "@nizivo/react/unstable/inline-assist": {
       "measured": 1698,
       "limitKiB": 1.9
@@ -777,6 +781,10 @@
       "measured": 849,
       "limitKiB": 1
     },
+    "@nizivo/react own: unstable/glow-orb/glow-orb.client": {
+      "measured": 456,
+      "limitKiB": 0.5
+    },
     "@nizivo/react own: unstable/inline-assist/inline-assist.client": {
       "measured": 831,
       "limitKiB": 0.9
@@ -1000,6 +1008,10 @@
     "@nizivo/react/css/form.css": {
       "measured": 280,
       "limitKiB": 0.4
+    },
+    "@nizivo/react/css/glow-orb.css": {
+      "measured": 508,
+      "limitKiB": 0.6
     },
     "@nizivo/react/css/grid.css": {
       "measured": 531,
@@ -1302,7 +1314,7 @@
       "limitKiB": 0.5
     },
     "@nizivo/react/css/voice-orb.css": {
-      "measured": 955,
+      "measured": 974,
       "limitKiB": 1.1
     },
     "@nizivo/react/css/word-rotator.css": {

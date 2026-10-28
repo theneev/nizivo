@@ -1,0 +1,37 @@
+---
+title: GlowOrb
+description: 'Unstable: the voice orb as a WebGL shader, a glossy sphere that grows with the voice level, for VoiceOrb or on its own. Import it from @nizivo/react/unstable/glow-orb.'
+---
+
+## Static or interactive
+
+**Client.** The server renders the CSS orb VoiceOrb draws, as a poster; once the page hydrates, a
+canvas draws the shader over it from its first frame. A browser without WebGL keeps the poster.
+[How to choose](/docs/guides/static-or-interactive/).
+
+## With VoiceOrb
+
+Pass it as VoiceOrb's `orb`, with the same `state`: `<VoiceOrb state={state} orb={<GlowOrb
+state={state} />} />`. It fills VoiceOrb's 160 px orb, and VoiceOrb drops its own halo behind it.
+On its own it fills its box, a square.
+
+## The voice level
+
+`level` is the voice's loudness, from 0 to 1. Pass a number, or a function the orb calls on every
+frame, such as one that reads a Web Audio `AnalyserNode`, so the page does not re-render sixty times
+a second. Without `level`, the orb simulates a voice for its `state`: still when idle, soft while
+listening, in syllables while speaking. The sphere grows with the level, its outline moves while it
+is live, the light drifts so the highlight changes angle, and the halo widens.
+
+## Light on a phone
+
+No library: one fragment shader on WebGL 1 and a few kilobytes of script. It draws only while it is
+on screen and the page is visible, at a pixel ratio of at most 2. Under Reduced motion it draws one
+still frame. In forced colours it shows the poster with an outline, since the canvas is only colour.
+
+## Colours
+
+It reads Nizivo's accent and brand colours, and follows the theme. Set `--nz-glow-orb-light`,
+`--nz-glow-orb-deep` and `--nz-glow-orb-halo` (a colour whose alpha is the halo's strength) to
+recolour it. It is decoration, hidden from assistive technology: say the state in words beside it,
+as VoiceOrb's label does.

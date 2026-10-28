@@ -3,9 +3,9 @@
 /* @nizivo/react/css/voice-orb.css (Figma Voice Orb 7411:301), UNSTABLE. A 240 px column, padded 24
    with 16 px between: the 160 px orb, the waveform (nine 4 px bars, 4 px apart, radius 2, in
    icon/secondary while listening and bg/brand while speaking), the Label/M state and a 48 px round
-   IconButtonStatic (primary to start, critical to stop). Figma's orb is the Glow Orb shader; until
-   @nizivo/lab, gradients draw it: a lime-to-brand sphere with a highlight, in a soft halo on
-   bg/canvas. */
+   IconButtonStatic (primary to start, critical to stop). Figma's orb is the Glow Orb shader, which
+   GlowOrb draws (`orb={<GlowOrb />}`, M89); without it, gradients draw it: a lime-to-brand sphere
+   with a highlight, in a soft halo on bg/canvas. */
 @layer nz.components {
   .nz-voice-orb {
     display: flex;
@@ -30,6 +30,11 @@
       color-mix(in oklab, var(--nz-bg-accent) 45%, var(--nz-bg-canvas)) 0 45%,
       var(--nz-bg-canvas) 72%
     );
+  }
+
+  /* GlowOrb (M89) draws its own halo: no second one behind it */
+  .nz-voice-orb-orb:has(> .nz-glow-orb) {
+    background: none;
   }
 
   .nz-voice-orb-sphere {

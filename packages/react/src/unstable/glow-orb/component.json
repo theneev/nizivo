@@ -1,0 +1,16 @@
+{
+  "name": "glow-orb",
+  "status": "unstable",
+  "tier": "client",
+  "parts": [],
+  "exports": ["GlowOrb"],
+  "stateIndicator": [],
+  "cssDeps": ["base"],
+  "variants": {},
+  "figma": {
+    "canonical": ["7389:78"],
+    "ghosts": [],
+    "variantsSeen": [],
+    "related": ["7411:301"]
+  }
+}
