@@ -85,26 +85,13 @@ export function outline(entry: CatalogEntry): Outline {
   const title = entry.title;
   const description = describe(entry, api);
   const notes = notesFor(entry.name);
-  const sections: Section[] = [{ id: 'import', title: 'Import', depth: 2 }];
+  const sections: Section[] = [];
   const contents: StructuredData['contents'] = [
     { heading: undefined, content: plain(description) },
   ];
-  const md: string[] = [`# ${title}`, '', description, '', '## Import', '', '```tsx'];
-  md.push(...importLines(api, entry.specifier));
-  if (css) md.push(`import '@nizivo/react/${css.entry.slice(2)}';`);
-  md.push('```', '');
-  contents.push({ heading: 'import', content: importLines(api, entry.specifier).join(' ') });
-  const headLength = md.length;
+  const md: string[] = [`# ${title}`, '', description, ''];
 
-  for (const t of notes?.toc ?? []) {
-    sections.push({
-      id: t.url.slice(1),
-      title: plain(nodeText(t.title)),
-      depth: t.depth === 3 ? 3 : 2,
-    });
-  }
-  for (const c of notes?.structuredData.contents ?? []) contents.push(c);
-
+  // What the component looks like comes first, then how to import it, then the notes and the API.
   const examples = examplesFor(entry.name);
   if (entry.kind === 'component') {
     sections.push({ id: 'examples', title: 'Examples', depth: 2 });
@@ -124,6 +111,23 @@ export function outline(entry: CatalogEntry): Outline {
     }
     if (examples.length === 0) md.push('No example yet.', '');
   }
+
+  sections.push({ id: 'import', title: 'Import', depth: 2 });
+  md.push('## Import', '', '```tsx');
+  md.push(...importLines(api, entry.specifier));
+  if (css) md.push(`import '@nizivo/react/${css.entry.slice(2)}';`);
+  md.push('```', '');
+  contents.push({ heading: 'import', content: importLines(api, entry.specifier).join(' ') });
+  const headLength = md.length;
+
+  for (const t of notes?.toc ?? []) {
+    sections.push({
+      id: t.url.slice(1),
+      title: plain(nodeText(t.title)),
+      depth: t.depth === 3 ? 3 : 2,
+    });
+  }
+  for (const c of notes?.structuredData.contents ?? []) contents.push(c);
 
   const comps = documentedComponents(api);
   const standalone = comps.filter((c) => c.kind === 'component');

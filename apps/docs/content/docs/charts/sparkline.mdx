@@ -3,19 +3,6 @@ title: Sparkline
 description: An inline trend line, 112 × 36, drawn on the server. Decorative by default, one named image with `label`; its colour follows the trend the data shows, and down is neutral grey, not red.
 ---
 
-## Import
-
-<ChartImport names="Sparkline" />
-
-## Static or interactive
-
-**Server.** Sparkline has no `'use client'` and imports no client module
-(`island-graph.test.ts` in `packages/charts/test/unit`); it has no interaction. The previews on this
-page import it from `@nizivo/charts/sparkline`, and the docs smoke check fails any page outside the
-AreaChart, BarChart and DonutChart pages that loads the charts island. Prefer the subpath to the barrel: under
-webpack without `optimizePackageImports` the barrel has not been measured.
-[How to choose](/docs/guides/static-or-interactive/).
-
 ## Examples
 
 ### Basic
@@ -33,6 +20,19 @@ webpack without `optimizePackageImports` the barrel has not been measured.
 ### Gap
 
 <ChartExample name="SparklineGapExample" />
+
+## Import
+
+<ChartImport names="Sparkline" />
+
+## Static or interactive
+
+**Server.** Sparkline has no `'use client'` and imports no client module
+(`island-graph.test.ts` in `packages/charts/test/unit`); it has no interaction. The previews on this
+page import it from `@nizivo/charts/sparkline`, and the docs smoke check fails any page outside the
+AreaChart, BarChart and DonutChart pages that loads the charts island. Prefer the subpath to the barrel: under
+webpack without `optimizePackageImports` the barrel has not been measured.
+[How to choose](/docs/guides/static-or-interactive/).
 
 ## Props
 
@@ -68,7 +68,7 @@ There is no `trend` prop: the trend is the last defined value against the first.
 
 <ChartCssHooks />
 
-`--nz-sparkline-width` and `--nz-sparkline-height` are Figma 03's 112 × 36 px; Figma 04's KPI tile
+`--nz-sparkline-width` and `--nz-sparkline-height` are the design's 112 × 36 px; the KPI tile
 uses 88 × 28 px. `--nz-sparkline-halo` is the ring around the end dot: the surface behind the
 sparkline. When the hook is unset, the ring takes the shared `--nz-surface` that `@nizivo/react`'s
 [Card](/docs/components/card/) declares for its children (KpiTile and TrendCard are Cards, so a
@@ -81,12 +81,6 @@ it is there: without `@nizivo/react` on the page it is unset and the halo is `--
 - Without `label`, the whole sparkline is `aria-hidden`: it is meant for a labelled context, such
   as a KPI tile whose Delta says the change. With `label`, it is one image with that name, and the
   name must say what the shape shows.
-- Down is grey, not red (Figma 03's "down is not bad" rule); the colour is never the only signal.
+- Down is grey, not red (the design's "down is not bad" rule); the colour is never the only signal.
 - The line reveals by `clip-path` over `--nz-duration-chart-draw`, 0 ms under Reduced motion.
 - The plot does not mirror in a right-to-left page: time runs left to right.
-
-## Figma
-
-Sparkline, `7275:13323`: `Trend=Up` `7275:13324` and `Trend=Down` `7275:13328`, both 112 × 36.
-"Inline trend, 112×36. Line draws in duration/chart-draw on reveal." The KPI tile (Figma 04,
-`7275:13780`) nests a duplicate set, `747:288`. Notes: `docs/figma/03-data-viz.md` §4.3.

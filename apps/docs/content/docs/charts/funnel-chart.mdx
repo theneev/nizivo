@@ -3,17 +3,6 @@ title: FunnelChart
 description: Steps in order, as bars of each step's share of the first, with the counts and the share of the step before as text. Drawn on the server, with no client JavaScript.
 ---
 
-## Import
-
-<ChartImport names="FunnelChart" />
-
-## Static or interactive
-
-**Server.** FunnelChart has no `'use client'` and renders no island: every value is already text in
-its rows, so there is nothing to rove. The rows are hidden from assistive technology, which reads the
-data table instead (step, count and % of previous), as Figma's description asks; `tableView="details"`
-shows the table to everyone. [How to choose](/docs/guides/static-or-interactive/).
-
 ## Examples
 
 ### Basic
@@ -27,6 +16,17 @@ shows the table to everyone. [How to choose](/docs/guides/static-or-interactive/
 ### Status
 
 <ChartExample name="FunnelChartStatusExample" />
+
+## Import
+
+<ChartImport names="FunnelChart" />
+
+## Static or interactive
+
+**Server.** FunnelChart has no `'use client'` and renders no island: every value is already text in
+its rows, so there is nothing to rove. The rows are hidden from assistive technology, which reads the
+data table instead (step, count and % of previous), as the design asks; `tableView="details"`
+shows the table to everyone. [How to choose](/docs/guides/static-or-interactive/).
 
 ## Steps
 
@@ -84,4 +84,4 @@ Inside the [ChartFrame](/docs/charts/chart-frame/#data-attributes-and-slots) roo
 <ChartCssHooks />
 
 The body sizes to its rows rather than ChartFrame's aspect ratio. While loading, empty or failed it
-keeps Figma's four-step height, so nothing moves when the data arrives.
+keeps the design's four-step height, so nothing moves when the data arrives.

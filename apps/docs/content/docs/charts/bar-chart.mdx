@@ -3,6 +3,20 @@ title: BarChart
 description: Counts per period, drawn on the server. Bars cap at 22 px, round only at the data end and sit under a value axis rounded out to whole ticks; one keyboard stop steps through the columns and shows each bar's tooltip card.
 ---
 
+## Examples
+
+### Basic
+
+<ChartExample name="BarChartExample" />
+
+### Negative
+
+<ChartExample name="BarChartNegativeExample" />
+
+### Status
+
+<ChartExample name="BarChartStatusExample" />
+
 ## Import
 
 <ChartImport names="BarChart" />
@@ -24,20 +38,6 @@ AreaChart's `/chart-area-static` measurement in the Next.js fixture, which has n
 yet. This page has its
 own route, so the island loads here and on the AreaChart page, and on no other page of this site.
 [How to choose](/docs/guides/static-or-interactive/).
-
-## Examples
-
-### Basic
-
-<ChartExample name="BarChartExample" />
-
-### Negative
-
-<ChartExample name="BarChartNegativeExample" />
-
-### Status
-
-<ChartExample name="BarChartStatusExample" />
 
 ## Props
 
@@ -103,7 +103,7 @@ Inside the [ChartFrame](/docs/charts/chart-frame/#data-attributes-and-slots) roo
 
 <ChartCssHooks />
 
-`--nz-bar-chart-aspect` is the body's aspect ratio (Figma 03's 640 × 260), in place of ChartFrame's,
+`--nz-bar-chart-aspect` is the body's aspect ratio (the design's 640 × 260), in place of ChartFrame's,
 and `--nz-bar-chart-bar-size` the widest a bar gets (22 px); a bar is at most 52 % of its column.
 
 ## Accessibility
@@ -156,13 +156,3 @@ and `--nz-bar-chart-bar-size` the widest a bar gets (22 px); a bar is at most 52
 Source: `chart-interaction.client.tsx` in `packages/charts/src/_island` (column mode). Touch: a tap
 shows the column's card and keeps it after the finger lifts (synthetic pointer events only; real
 touch hardware is not tested).
-
-## Figma
-
-Bar Chart, `7275:13387`: `State=Default` `7275:13388` and `State=Hover` `7275:13419`, 640 × 260.
-"Counts per period. Bars cap at 22px, round only at the data end, and dim their neighbours on
-hover." Under the island (the default) the tooltip is Figma 03's fixed-width Chart Tooltip card; with
-`interaction="none"` the CSS tooltip hugs its content ("Orders 299"), as in week 10. Two differences, on
-purpose: Figma's last bar (313) rises above its top tick (300), while code rounds the axis out
-first, so it ends at 400; and Figma dims to `chart/secondary`, code by opacity. Figma's crowded
-"29 30" labels become "27 … 30". Notes: `docs/figma/03-data-viz.md` §4.5.

@@ -3,18 +3,6 @@ title: ChartTooltip
 description: The tooltip card of a chart point, rendered from pre-formatted strings, so it works on the server, inside the ChartInteraction island and inside a third-party renderer alike.
 ---
 
-## Import
-
-<ChartImport names="ChartTooltip" />
-
-## Static or interactive
-
-**Server.** ChartTooltip has no `'use client'` and imports no client module
-(`island-graph.test.ts` in `packages/charts/test/unit`). It is only the card: showing it at a point,
-placing it and announcing the point are the ChartInteraction island's job, which AreaChart and
-BarChart render. The island imports this card, so a page with an interactive AreaChart or BarChart
-ships it as part of the island's client graph (the island, this card and `cx`). [How to choose](/docs/guides/static-or-interactive/).
-
 ## Examples
 
 ### Basic
@@ -28,6 +16,18 @@ ships it as part of the island's client graph (the island, this card and `cx`). 
 ### Down
 
 <ChartExample name="ChartTooltipDownExample" />
+
+## Import
+
+<ChartImport names="ChartTooltip" />
+
+## Static or interactive
+
+**Server.** ChartTooltip has no `'use client'` and imports no client module
+(`island-graph.test.ts` in `packages/charts/test/unit`). It is only the card: showing it at a point,
+placing it and announcing the point are the ChartInteraction island's job, which AreaChart and
+BarChart render. The island imports this card, so a page with an interactive AreaChart or BarChart
+ships it as part of the island's client graph (the island, this card and `cx`). [How to choose](/docs/guides/static-or-interactive/).
 
 ## Props
 
@@ -64,7 +64,7 @@ The change reads `text/success` for `up`, `text/critical` for `down` and `text/s
 
 <ChartCssHooks />
 
-`--nz-chart-tooltip-width` is the card's width (Figma: a fixed 200 px), and
+`--nz-chart-tooltip-width` is the card's width (the design's fixed 200 px), and
 `--nz-chart-tooltip-halo` the ring around the island's point dots: the surface behind the chart.
 When the hook is unset, the ring takes the shared `--nz-surface` that `@nizivo/react`'s
 [Card](/docs/components/card/) declares for its children (KpiTile and TrendCard are Cards, so a
@@ -80,10 +80,3 @@ it is there: without `@nizivo/react` on the page it is unset and the halo is `--
 - Inside the island the whole card is `aria-hidden`: the island's polite live region speaks the
   point, and the chart's data table carries every value. Rendered on its own, the card is ordinary
   text.
-
-## Figma
-
-Chart Tooltip, `7275:13303`: `Series=1` `7275:13304` (200 × 75) and `Series=2` `7275:13310`
-(200 × 133, with the delta row). "Follows the crosshair; flips side near edges. Fade + 4px travel,
-duration/fast. Values in Numeric/M (tabular)." The Area and Bar hover variants use a duplicate set,
-`747:287`, which is on no page; code follows `7275:13303`. Notes: `docs/figma/03-data-viz.md` §4.2.

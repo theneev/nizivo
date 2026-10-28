@@ -3,6 +3,20 @@ title: DonutChart
 description: Share of a whole, drawn on the server. At most three categories plus "Other", in fixed colours that never cycle, with a legend of values and shares beside the ring.
 ---
 
+## Examples
+
+### Basic
+
+<ChartExample name="DonutChartExample" />
+
+### Locale
+
+<ChartExample name="DonutChartLocaleExample" />
+
+### Status
+
+<ChartExample name="DonutChartStatusExample" />
+
 ## Import
 
 <ChartImport names="DonutChart" />
@@ -18,20 +32,6 @@ a segment or its legend row dims the others and swaps the centre in CSS alone, a
 no keyboard claim. In both modes the legend, with every value and share, and the data table carry
 the same information without a pointer; `tableView="details"` shows the table to everyone. [How to
 choose](/docs/guides/static-or-interactive/).
-
-## Examples
-
-### Basic
-
-<ChartExample name="DonutChartExample" />
-
-### Locale
-
-<ChartExample name="DonutChartLocaleExample" />
-
-### Status
-
-<ChartExample name="DonutChartStatusExample" />
 
 ## Folding
 
@@ -173,10 +173,3 @@ With `interaction="nizivo"` (default):
 Source: `chart-interaction.client.tsx` in `packages/charts/src/_island` (item mode).
 `donut-chart-interaction.spec.tsx` in `packages/charts/test/browser` checks it. With
 `interaction="none"` the ring has no Tab stop and no keys.
-
-## Figma
-
-Donut Chart, `7275:13455`: `State=Default` `7275:13456` and `State=Hover` `7275:13486`, 482 × 200
-with the legend. "Share-of-whole chart, max 3 categories + Other. Hover dims non-focused segments to
-35%." The ring is 200 px with a 26 px band (outer radius 100, inner 74) and real 3-unit gaps between
-segments. Notes: `docs/figma/03-data-viz.md` §4.6.

@@ -3,17 +3,6 @@ title: Heatmap
 description: A value for each row and column, such as orders by day and hour, as a grid of cells on a five-step ramp with a "Fewer … More" scale. Drawn on the server, with no client JavaScript, and never the only view of the data.
 ---
 
-## Import
-
-<ChartImport names="Heatmap" />
-
-## Static or interactive
-
-**Server.** Heatmap has no `'use client'` and renders no island. The grid is hidden from assistive
-technology, which reads the data table instead: one row per row of the grid, one column per column,
-every value as text. Figma asks for focusable cells or a table alternative; the table is it, and
-`tableView="details"` shows it to everyone. [How to choose](/docs/guides/static-or-interactive/).
-
 ## Examples
 
 ### Basic
@@ -28,9 +17,20 @@ every value as text. Figma asks for focusable cells or a table alternative; the 
 
 <ChartExample name="HeatmapStatusExample" />
 
+## Import
+
+<ChartImport names="Heatmap" />
+
+## Static or interactive
+
+**Server.** Heatmap has no `'use client'` and renders no island. The grid is hidden from assistive
+technology, which reads the data table instead: one row per row of the grid, one column per column,
+every value as text. The design asks for focusable cells or a table alternative; the table is it, and
+`tableView="details"` shows it to everyone. [How to choose](/docs/guides/static-or-interactive/).
+
 ## The ramp
 
-The colours are Figma's: `chart/primary` at 8, 25, 45, 70 and 100 %, over the surface in light and
+The colours are the design's: `chart/primary` at 8, 25, 45, 70 and 100 %, over the surface in light and
 dark. `heatmapStep(value, max)` is the rule, exported so a server can bucket the same way:
 
 1. Five equal widths over 0 to the largest value: 0 to 20 % of it is step 1, up to 40 % step 2, and
@@ -86,4 +86,4 @@ Inside the [ChartFrame](/docs/charts/chart-frame/#data-attributes-and-slots) roo
 <ChartCssHooks />
 
 Cells are square, at most 32 px, and shrink together in a narrow chart. While loading, empty or
-failed the body keeps Figma's seven-row height.
+failed the body keeps the design's seven-row height.

@@ -3,6 +3,28 @@ title: AreaChart
 description: A time series drawn on the server, this period in brand green with a 10% wash and an optional dashed comparison, with one interactive layer for the crosshair, the tooltip and keyboard access to every point.
 ---
 
+## Examples
+
+### Basic
+
+<ChartExample name="AreaChartExample" />
+
+### Single
+
+<ChartExample name="AreaChartSingleExample" />
+
+### Static
+
+<ChartExample name="AreaChartStaticExample" />
+
+### Status
+
+<ChartExample name="AreaChartStatusExample" />
+
+### Right to left
+
+<ChartExample name="AreaChartRtlExample" title="Right to left" />
+
 ## Import
 
 <ChartImport names="AreaChart" />
@@ -30,30 +52,8 @@ gzip), of which 23 KB is the island's props: about 64 B of JSON a point (week 10
 The same year bucketed weekly (52 points) is 14 KB of HTML (3.1 KB gzip) and 26 KB of RSC payload
 (5 KB gzip). `area-chart.server.test.tsx` in `packages/charts/test/ssr` holds the island's props
 to 50 to 80 B a point at 365 points. Bytes no longer force bucketing at 90 points (13.9 KB gzip in
-all, the island's code included), but on Figma's 720 px plot a daily year leaves 2 px a point and
+all, the island's code included), but on the design's 720 px plot a daily year leaves 2 px a point and
 365 arrow-key steps, so above about 90 points, bucket daily data weekly before passing it in.
-
-## Examples
-
-### Basic
-
-<ChartExample name="AreaChartExample" />
-
-### Single
-
-<ChartExample name="AreaChartSingleExample" />
-
-### Static
-
-<ChartExample name="AreaChartStaticExample" />
-
-### Status
-
-<ChartExample name="AreaChartStatusExample" />
-
-### Right to left
-
-<ChartExample name="AreaChartRtlExample" title="Right to left" />
 
 ## Props
 
@@ -65,7 +65,7 @@ and `axisFormat` are plain `Intl.NumberFormatOptions`, as `@nizivo/react`'s Delt
 them; there are no presets.
 
 `xTicks` (`ChartXTicks`): at most `max` x labels (AreaChart: 6), the last point always labelled.
-When `every` is not given, a daily date series rounds the step up to whole weeks (Figma 03's Oct 1,
+When `every` is not given, a daily date series rounds the step up to whole weeks (the design's Oct 1,
 8, 15, 22 and the forced 30).
 
 <ChartMembers name="ChartXTicks" />
@@ -139,7 +139,7 @@ it is there: without `@nizivo/react` on the page it is unset and the halo is `--
   pointer leaving, leaving the layer) empties it, so the next key that shows the card speaks the
   active point again. A key that does not move the point (End
   at the last point) says nothing, as a slider at its end does. A pointer shows the point and says
-  nothing (Figma 03).
+  nothing.
 - The tooltip card is `aria-hidden`: it repeats what the live region and the table say.
 - Against WCAG 1.4.13 (Content on Hover or Focus), the card is dismissable: Escape hides it
   wherever focus is, a card the pointer opened included (Escape on the focused plot hides only the
@@ -169,12 +169,3 @@ Source: `chart-interaction.client.tsx` in `packages/charts/src/_island`, checked
 Firefox by `chart-interaction.spec.tsx` in `packages/charts/test/browser`. Touch: a tap shows the point
 and keeps the card after the finger lifts (synthetic pointer events only; real touch hardware is
 not tested).
-
-## Figma
-
-Area Chart, `7275:13336`: `State=Default` `7275:13337` and `State=Hover` `7275:13358`, 720 × 280.
-"Time series, 1 axis. Hover: crosshair + ringed dots + Chart Tooltip (Series=2)." The hover
-variant places the duplicate tooltip set `747:287`; code treats `7275:13303` as the source.
-Figma's reveal path-trims the line and fades the area in after 120 ms; code reveals both by
-`clip-path`, because `pathLength` with non-scaling strokes is unverified. Notes:
-`docs/figma/03-data-viz.md` §4.4.

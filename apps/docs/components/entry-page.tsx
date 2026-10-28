@@ -207,11 +207,6 @@ export function EntryPage({
         )}
         {entry.manifest?.status === 'unstable' && <span className="nz-docs-flag">Unstable</span>}
       </p>
-      <Heading as="h2" id="import">
-        Import
-      </Heading>
-      <ServerCodeBlock themes={CODE_THEMES} code={code} lang="tsx" />
-      {Notes && <Notes components={defaultMdxComponents} />}
       {entry.kind === 'component' && (
         <>
           <Heading as="h2" id="examples">
@@ -226,6 +221,11 @@ export function EntryPage({
           )}
         </>
       )}
+      <Heading as="h2" id="import">
+        Import
+      </Heading>
+      <ServerCodeBlock themes={CODE_THEMES} code={code} lang="tsx" />
+      {Notes && <Notes components={defaultMdxComponents} />}
       {standalone.length > 0 && (
         <>
           <Heading as="h2" id="props">

@@ -3,6 +3,16 @@ title: Legend
 description: The series key of a chart, rendered on the server as a list. Its mark follows the series (a line, a dashed line or a dot); the vertical form adds values and shares, as the donut's legend does.
 ---
 
+## Examples
+
+### Basic
+
+<ChartExample name="LegendExample" />
+
+### Vertical
+
+<ChartExample name="LegendVerticalExample" />
+
 ## Import
 
 <ChartImport names="Legend" />
@@ -16,16 +26,6 @@ choose](/docs/guides/static-or-interactive/).
 Pass it to a [ChartFrame](/docs/charts/chart-frame/) as `legend`; the frame renders it between the
 caption and the plot in every status. AreaChart builds its own when it has a comparison series, and
 DonutChart always does.
-
-## Examples
-
-### Basic
-
-<ChartExample name="LegendExample" />
-
-### Vertical
-
-<ChartExample name="LegendVerticalExample" />
 
 ## Props
 
@@ -66,9 +66,3 @@ The mark's colour follows `data-series`: `current` in `chart/primary`, `previous
   (`Highlight`, hollow `Canvas`, `CanvasText`, `GrayText`, each outlined in `CanvasText`). Only
   Chromium's forced-colours emulation has been looked at; the treatment awaits an accessibility
   review.
-
-## Figma
-
-Chart Legend Item, `7275:13291`: `Mark=Line` `7275:13292` (92 × 21), `Mark=Dashed` `7275:13296`
-(92 × 21) and `Mark=Dot` `7275:13300` (86 × 21). Figma's donut legend is a custom row with a 10 px
-dot, not this component; code draws both from Legend. Notes: `docs/figma/03-data-viz.md` §4.1.

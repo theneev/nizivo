@@ -3,21 +3,6 @@ title: ChartFrame
 description: The `<figure>` every chart renders in, around any renderer, Nizivo's or a third party's. It owns the caption, the legend slot, the HTML tick labels, the server-rendered data table and the loading, empty and error statuses.
 ---
 
-## Import
-
-<ChartImport names="ChartFrame" />
-
-The contract every renderer may rely on is `chart-frame.contract.ts` in `packages/charts/src/chart-frame`
-(seam K9, §14.1).
-
-## Static or interactive
-
-**Server.** ChartFrame has no `'use client'` and imports no client module, so it ships no client
-JavaScript when a Server Component renders it. The `tableView="details"` disclosure is a native
-`<details>`, with no JavaScript. Its keyboard claim (`interaction`) is a statement about the child,
-not code: ChartFrame itself adds no Tab stop except the disclosure's summary. [How to
-choose](/docs/guides/static-or-interactive/).
-
 ## Examples
 
 ### Basic
@@ -39,6 +24,21 @@ choose](/docs/guides/static-or-interactive/).
 The [Charts overview](/docs/charts/#a-third-party-renderer) has the same recipe with a client
 renderer such as Recharts.
 
+## Import
+
+<ChartImport names="ChartFrame" />
+
+The contract every renderer may rely on is `chart-frame.contract.ts` in `packages/charts/src/chart-frame`
+(seam K9, §14.1).
+
+## Static or interactive
+
+**Server.** ChartFrame has no `'use client'` and imports no client module, so it ships no client
+JavaScript when a Server Component renders it. The `tableView="details"` disclosure is a native
+`<details>`, with no JavaScript. Its keyboard claim (`interaction`) is a statement about the child,
+not code: ChartFrame itself adds no Tab stop except the disclosure's summary. [How to
+choose](/docs/guides/static-or-interactive/).
+
 ## Props
 
 <ChartProps />
@@ -53,7 +53,7 @@ empty positions. `xDirection` is explained under [Right to left](/docs/charts/#r
 ### Hiding the caption
 
 `titleVisibility="hidden"` hides the title and summary visually, for a chart whose container
-already titles it, such as a card header (Figma's Revenue Card draws no chart caption). The default
+already titles it, such as a card header (the design's Revenue card draws no chart caption). The default
 is `"visible"`. The caption is not removed: the `<figcaption>` gets `nz-chart-visually-hidden` (a
 1 × 1 clipped box out of flow, never `display: none`), so it takes no layout space, stays in the
 server HTML, and still names the figure and its data table. Every chart takes the same prop
@@ -114,7 +114,7 @@ Classes a renderer draws with: `nz-chart-svg` (the percent-space SVG that fills 
 
 <ChartCssHooks />
 
-`--nz-chart-frame-aspect` is the body's aspect ratio (18 / 7, Figma 03's 720 × 280 plot), and
+`--nz-chart-frame-aspect` is the body's aspect ratio (18 / 7, the design's 720 × 280 plot), and
 `--nz-chart-frame-gutter` the y labels' column's minimum width (2.75rem). The column keeps it in
 every status, so the plot does not move while the labels are absent, and widens for longer labels
 (ar-EG's digits, say) instead of letting them overflow.
@@ -149,10 +149,3 @@ the data table.
 - Focus: the charts stylesheet draws its own focus outline (`--nz-border-width-focus`, solid
   `--nz-border-focus`, 2 px offset) on any link, button, summary or `[tabindex]` inside a frame or
   a legend, so it does not need `@nizivo/react`'s base CSS.
-
-## Figma
-
-Figma page 03, Data Visualization (`7275:13284`). The frame has no component of its own: it is the
-chrome the Area Chart (`7275:13336`, 720 × 280), Bar Chart (`7275:13387`, 640 × 260) and Donut
-Chart (`7275:13455`) sets share. Figma draws no data table; the hidden table is code's
-accessible alternative. Notes: `docs/figma/03-data-viz.md`.
