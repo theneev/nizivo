@@ -449,14 +449,23 @@ async function tooltip(p: Page, has: boolean): Promise<void> {
 }
 
 async function shot(p: Page, rect: Rect): Promise<Image> {
+  // A crop past the viewport (a tall example): grow the viewport to hold it for the one shot. Not
+  // Playwright's fullPage: after one full-page capture, Chromium drew later scrollers' text (the
+  // CodeBlock) without macOS font smoothing for the rest of the run, so shots depended on order.
+  const tall = rect.y + rect.height > VIEWPORT.height || rect.x + rect.width > VIEWPORT.width;
+  if (tall) {
+    await p.setViewportSize({
+      width: Math.max(VIEWPORT.width, Math.ceil(rect.x + rect.width)),
+      height: Math.max(VIEWPORT.height, Math.ceil(rect.y + rect.height)),
+    });
+  }
   const png = await p.screenshot({
     clip: rect,
-    // a crop past the viewport (a tall example) needs the full-page capture; overlays never are
-    fullPage: rect.y + rect.height > VIEWPORT.height || rect.x + rect.width > VIEWPORT.width,
     animations: 'disabled',
     caret: 'hide',
     scale: 'css',
   });
+  if (tall) await p.setViewportSize(VIEWPORT);
   return toRgb(decodePng(png));
 }
 

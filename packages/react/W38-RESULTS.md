@@ -64,13 +64,15 @@ them their own (`./locales/en-US/unstable`), so stable apps do not carry them.
   Firefox and WebKit.
 - The visual lane: 356 new baselines, stable on reruns of their own parts; no existing baseline
   moved.
-- **Known problem: the full visual lane fails on CodeBlock and CopyButton.** 32 shots (dark and
-  forced modes, about 850 px each, only the glyphs' anti-aliasing) differ whenever they run after
-  BentoTile in the same page, as the full lane runs them: `--only code-block` passes,
-  `--only bento-tile,code-block` fails, `--only announcement-bar,code-block` passes. Ruled out:
-  BentoTile's backdrop blur, its example's width, an opaque `<pre>` background, greyscale font
-  smoothing (worse) and the `<pre>` scroller. The baselines stay as recorded alone (recording them in
-  the full order would encode the leak). The release visual lane fails until this is found.
+- **Fixed: the full visual lane failed on CodeBlock and CopyButton.** 32 shots (dark and forced
+  modes, about 850 px each) differed whenever they ran after BentoTile in the same page, as the full
+  lane runs them. The cause was not BentoTile: any shot taller than the 720 px viewport (BentoTile,
+  FeatureCard, VoiceOrb, Image) went through Playwright's full-page capture, and after one of those
+  the page drew CodeBlock's code text without macOS font smoothing, thinner, for the rest of the
+  run (`--only feature-card,code-block` failed the same way). Setting the viewport back did not undo
+  it. The harness now grows the viewport to hold a tall shot, takes an ordinary screenshot and
+  shrinks it again (`shot` in `scripts/visual/run.ts`). The full lane then passes: 4,888 shots, 4,706
+  identical and 182 within the tolerance; charts 204, 196 and 8. No baseline was re-recorded.
 - **Flake seen:** Combobox `states--open-key-combobox-trigger-0--forced` (18 px) and
   `states--open-combobox-trigger-0--forced` (7 px), the input's blinking text caret, about one run
   in two or three; an existing baseline, not re-recorded.
