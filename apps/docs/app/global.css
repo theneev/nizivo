@@ -549,33 +549,38 @@ code.shiki:not(.not-fumadocs-code *) span {
     --fd-header-height: 4rem;
   }
 
-  /* Home */
+  /* Home (Figma's Website page, M90; components/home.tsx). Sections sit 80 px in at 1440, 16 px on a
+     phone; the hero and the two bands run to 16 px from the edge with the large radius. */
   .nz-home {
+    --nz-home-pad: clamp(var(--nz-space-4), 5.5vw, var(--nz-space-20));
     display: grid;
-    gap: var(--nz-space-12);
+    /* one column no wider than the page: the ticker's track is as wide as its items */
+    grid-template-columns: minmax(0, 1fr);
     inline-size: 100%;
-    max-inline-size: 72rem;
+    max-inline-size: 90rem;
     margin-inline: auto;
-    padding: var(--nz-space-16) var(--nz-space-6) var(--nz-space-24);
+    padding-block-end: var(--nz-space-16);
   }
-  .nz-not-found {
-    align-content: center;
-    min-block-size: 70vh;
-  }
-  .nz-home-hero {
+  .nz-home-section {
     display: grid;
-    gap: var(--nz-space-4);
-    max-inline-size: 44rem;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--nz-space-10);
+    padding: var(--nz-space-24) var(--nz-home-pad) var(--nz-space-12);
   }
-  .nz-home-hero h1 {
+  .nz-home-head {
+    display: grid;
+    grid-template-columns: 1fr minmax(0, 27.5rem);
+    align-items: end;
+    gap: var(--nz-space-6) var(--nz-space-12);
+  }
+  .nz-home-title {
     margin: 0;
-    font: var(--nz-font-display-l);
-    letter-spacing: var(--nz-tracking-display-l);
+    font: var(--nz-font-display-m);
+    letter-spacing: var(--nz-tracking-display-m);
     color: var(--nz-text-primary);
+    text-wrap: balance;
   }
-  .nz-home-eyebrow {
-    margin: 0;
-    font: var(--nz-font-label-m);
+  .nz-home-accent {
     color: var(--nz-text-brand);
   }
   .nz-home-lede {
@@ -583,91 +588,900 @@ code.shiki:not(.not-fumadocs-code *) span {
     font: var(--nz-font-body-l);
     color: var(--nz-text-secondary);
   }
+  .nz-home-card {
+    border-radius: var(--nz-radius-2xl);
+    background: var(--nz-bg-surface);
+    padding: var(--nz-space-6);
+  }
+  .nz-home-card-title {
+    margin: 0;
+    font: var(--nz-font-heading-h3);
+    color: var(--nz-text-primary);
+  }
+  .nz-home-card-text {
+    margin: 0;
+    font: var(--nz-font-body-s);
+    color: var(--nz-text-secondary);
+  }
+  .nz-home-more {
+    margin: 0;
+    text-align: center;
+    font: var(--nz-font-label-l);
+  }
+  .nz-home-more a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--nz-space-1);
+    color: var(--nz-text-brand);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .nz-home-more svg {
+    inline-size: 1rem;
+    block-size: 1rem;
+  }
+  .nz-home-stack {
+    display: grid;
+    gap: var(--nz-space-3);
+  }
+  .nz-home-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--nz-space-2);
+  }
+
+  /* Hero: Aurora behind, a pale wash behind the words so they keep AA on any frame */
+  .nz-home-hero {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    justify-items: center;
+    align-content: start;
+    min-block-size: 52rem;
+    margin: var(--nz-space-4) var(--nz-space-4) 0;
+    padding: var(--nz-space-20) var(--nz-space-4) var(--nz-space-16);
+    border-radius: var(--nz-radius-2xl);
+    overflow: clip;
+  }
+  .nz-home-hero-ground,
+  .nz-home-band-ground {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+  }
+  .nz-home-hero-text {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: var(--nz-space-6);
+    max-inline-size: 48rem;
+    text-align: center;
+  }
+  .nz-home-hero-text::before {
+    content: '';
+    position: absolute;
+    inset: -3rem -6rem;
+    z-index: -1;
+    background: radial-gradient(
+      closest-side,
+      color-mix(in oklab, var(--nz-bg-canvas) 82%, transparent),
+      color-mix(in oklab, var(--nz-bg-canvas) 55%, transparent) 70%,
+      transparent
+    );
+  }
+  .nz-home-hero-title {
+    margin: 0;
+    font: var(--nz-font-display-l);
+    letter-spacing: var(--nz-tracking-display-l);
+    text-wrap: balance;
+  }
+  .nz-home-hero-lede {
+    margin: 0;
+    max-inline-size: 42rem;
+    font: var(--nz-font-body-l);
+    color: var(--nz-text-secondary);
+  }
+  .nz-home-hero-code {
+    inline-size: min(32.5rem, 100%);
+    text-align: start;
+  }
   .nz-home-actions {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: var(--nz-space-3);
-    margin-block-start: var(--nz-space-2);
   }
-  .nz-home-cta,
-  .nz-home-link {
-    display: inline-flex;
-    align-items: center;
-    min-block-size: var(--nz-size-control-lg);
-    padding-inline: var(--nz-space-5);
-    border-radius: var(--nz-radius-full);
-    font: var(--nz-font-label-l);
+  .nz-home-cluster {
+    display: none;
   }
-  .nz-home-cta {
-    background: var(--nz-bg-brand);
-    color: var(--nz-text-on-brand);
-  }
-  .nz-home-cta:hover {
-    background: var(--nz-bg-brand-hover);
-  }
-  .nz-home-link {
-    box-shadow: inset 0 0 0 1px var(--nz-border-strong);
-    color: var(--nz-text-primary);
-  }
-  .nz-home-link:hover {
-    background: var(--nz-bg-hover);
-  }
-  .nz-home-cta:focus-visible,
-  .nz-home-link:focus-visible {
-    outline: var(--nz-border-width-focus) solid var(--nz-border-focus);
-    outline-offset: 2px;
-  }
-  .nz-home-composition {
-    display: grid;
-    gap: var(--nz-space-6);
-    padding: var(--nz-space-6);
-    border-radius: var(--nz-radius-2xl);
-    background: var(--nz-bg-subtle);
-    box-shadow: inset 0 0 0 1px var(--nz-border-subtle);
-  }
-  @media (width >= 48rem) {
-    .nz-home-composition {
-      grid-template-columns: 3fr 2fr;
-      padding: var(--nz-space-10);
+  @media (width >= 80rem) {
+    .nz-home-cluster {
+      display: block;
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
     }
   }
-  .nz-home-note {
-    margin: var(--nz-space-3) 0 0;
-    font: var(--nz-font-body-s);
+  .nz-home-float,
+  .nz-home-float-chip {
+    position: absolute;
+    box-shadow: var(--nz-elevation-2);
+  }
+  .nz-home-float {
+    display: grid;
+    gap: var(--nz-space-2);
+    border-radius: var(--nz-radius-lg);
+  }
+  .nz-home-float[data-at='rating'] {
+    inset: 27% auto auto 1%;
+    border-radius: var(--nz-radius-full);
+  }
+  .nz-home-float[data-at='source'] {
+    inset: 44% auto auto 4%;
+    inline-size: 15.5rem;
+  }
+  .nz-home-float[data-at='credits'] {
+    inset: 65% auto auto 7%;
+    inline-size: 15.5rem;
+  }
+  .nz-home-float[data-at='kpi'] {
+    inset: 62% auto auto 27%;
+    inline-size: 18.75rem;
+    border-radius: var(--nz-radius-xl);
+  }
+  .nz-home-float[data-at='photo'] {
+    inset: 70% auto auto 53%;
+    inline-size: 16.25rem;
+    border-radius: var(--nz-radius-xl);
+  }
+  .nz-home-float[data-at='model'] {
+    inset: 29% 5% auto auto;
+    inline-size: 15.5rem;
+    gap: var(--nz-space-1);
+  }
+  .nz-home-float[data-at='people'] {
+    inset: 87% 5% auto auto;
+    display: flex;
+    align-items: center;
+    gap: var(--nz-space-3);
+    border-radius: var(--nz-radius-full);
+  }
+  .nz-home-float-chip[data-at='draft'] {
+    inset: 58% 12% auto auto;
+  }
+  .nz-home-float-chip[data-at='stock'] {
+    inset: 70% 5% auto auto;
+  }
+  .nz-home-source {
+    display: flex;
+    align-items: center;
+    gap: var(--nz-space-2);
+    font: var(--nz-font-label-s);
+    color: var(--nz-text-secondary);
+  }
+  .nz-home-source svg {
+    inline-size: 1rem;
+    block-size: 1rem;
+  }
+  .nz-home-source .nz-badge {
+    margin-inline-start: auto;
+  }
+  .nz-home-float-title {
+    font: var(--nz-font-label-m-strong);
+  }
+  .nz-home-float-label {
+    font: var(--nz-font-label-m);
+    color: var(--nz-text-secondary);
+  }
+  .nz-home-kpi {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nz-home-kpi-value {
+    font: var(--nz-font-heading-h1);
+    font-variant-numeric: tabular-nums;
+  }
+  .nz-home-spark {
+    inline-size: 6rem;
+    fill: none;
+    stroke: var(--nz-icon-brand);
+    stroke-width: 1.5;
+  }
+  .nz-home-model {
+    position: relative;
+    display: grid;
+    padding: var(--nz-space-2) var(--nz-space-3);
+    border-radius: var(--nz-radius-sm);
+    font: var(--nz-font-label-s);
     color: var(--nz-text-tertiary);
   }
-  .nz-home-grid h2,
-  .nz-home-install h2 {
-    margin: 0 0 var(--nz-space-6);
-    font: var(--nz-font-heading-h2);
-    letter-spacing: var(--nz-tracking-heading-h2);
+  .nz-home-model strong {
+    font: var(--nz-font-label-m-strong);
+    color: var(--nz-text-primary);
   }
-  .nz-home-grid ul {
+  .nz-home-model[data-selected] {
+    background: var(--nz-bg-muted);
+  }
+  .nz-home-model svg {
+    position: absolute;
+    inset: 50% var(--nz-space-3) auto auto;
+    translate: 0 -50%;
+    inline-size: 1rem;
+    block-size: 1rem;
+    color: var(--nz-icon-brand);
+  }
+  .nz-home-photo {
+    position: relative;
+    display: block;
+  }
+  .nz-home-photo img {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: var(--nz-radius-lg);
+  }
+  .nz-home-photo .nz-badge {
+    position: absolute;
+    inset: var(--nz-space-3) auto auto var(--nz-space-3);
+  }
+
+  .nz-home-ticker {
+    padding: var(--nz-space-6) var(--nz-space-4) 0;
+  }
+
+  /* Get started */
+  .nz-home-steps {
     display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--nz-space-6);
     margin: 0;
     padding: 0;
     list-style: none;
   }
-  @media (width >= 48rem) {
-    .nz-home-grid ul {
-      grid-template-columns: repeat(4, 1fr);
-    }
+  .nz-home-step {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nz-space-4);
+    min-inline-size: 0;
   }
-  .nz-home-grid h3 {
-    margin: 0 0 var(--nz-space-2);
-    font: var(--nz-font-heading-h4);
+  .nz-home-step-n {
+    display: grid;
+    place-items: center;
+    inline-size: 2rem;
+    block-size: 2rem;
+    border-radius: var(--nz-radius-full);
+    background: var(--nz-bg-brand-subtle);
+    color: var(--nz-text-brand);
+    font: var(--nz-font-label-m-strong);
   }
-  .nz-home-grid p,
-  .nz-home-install p {
+
+  /* Browse the docs */
+  .nz-home-browse {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--nz-space-6);
     margin: 0;
-    font: var(--nz-font-body-m);
+    padding: 0;
+    list-style: none;
+  }
+  .nz-home-browse > li {
+    display: grid;
+  }
+
+  /* Design language: a bento on Aurora */
+  .nz-home-band {
+    position: relative;
+    isolation: isolate;
+    margin-inline: calc(var(--nz-space-4) - var(--nz-home-pad));
+    border-radius: var(--nz-radius-2xl);
+    overflow: clip;
+  }
+  .nz-home-bento {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1.6fr 1.45fr;
+    grid-template-rows: auto auto;
+    align-items: center;
+    gap: var(--nz-space-6);
+    padding: var(--nz-space-20) var(--nz-space-10);
+  }
+  /* placed by line: BentoTile brings its own 12-column span */
+  .nz-home-bento-player {
+    grid-area: 1 / 1 / 3 / 2;
+  }
+  .nz-home-bento-mark {
+    grid-area: 1 / 2 / 2 / 3;
+  }
+  .nz-home-bento-type {
+    grid-area: 2 / 2 / 3 / 3;
+  }
+  .nz-home-bento-orb.nz-home-bento-orb {
+    grid-area: 1 / 3 / 3 / 4;
+  }
+  .nz-home-bento-profile {
+    grid-area: 1 / 4 / 3 / 5;
+  }
+  .nz-home-bento-player .nz-media-player {
+    border-radius: var(--nz-radius-2xl);
+  }
+  .nz-home-bento-player img {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+  .nz-home-bento-mark,
+  .nz-home-bento-type {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 11 / 10;
+    border-radius: var(--nz-radius-2xl);
+  }
+  .nz-home-bento-type {
+    align-content: center;
+    gap: var(--nz-space-2);
+  }
+  .nz-home-bento-orb {
+    align-self: stretch;
+  }
+  .nz-home-orb {
+    display: grid;
+    place-items: center;
+    block-size: 100%;
+  }
+  .nz-home-orb .nz-glow-orb {
+    inline-size: 70%;
+    block-size: auto;
+    aspect-ratio: 1;
+  }
+  .nz-home-bento-profile {
+    grid-row: span 2;
+  }
+  .nz-home-aa {
+    position: relative;
+    isolation: isolate;
+    font: 600 5.5rem/1 var(--nz-font-family-sans);
+    letter-spacing: -0.04em;
+    color: var(--nz-text-primary);
+  }
+  .nz-home-aa::before {
+    content: '';
+    position: absolute;
+    inset: 32% auto auto -0.3em;
+    inline-size: 0.32em;
+    block-size: 0.32em;
+    border-radius: var(--nz-radius-full);
+    background: var(--nz-bg-accent);
+    z-index: -1;
+  }
+  .nz-home-caption {
+    font: var(--nz-font-label-s);
     color: var(--nz-text-secondary);
   }
-  .nz-home-install {
+
+  /* Colour palette */
+  .nz-home-palette {
     display: grid;
     gap: var(--nz-space-3);
-    max-inline-size: 44rem;
+    padding: var(--nz-space-5);
+  }
+  .nz-home-palette-row {
+    display: flex;
+    gap: var(--nz-space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .nz-home-swatch {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    gap: var(--nz-space-1);
+    min-block-size: 6rem;
+    padding: var(--nz-space-4);
+    border: var(--nz-border-width-default) solid var(--nz-border-subtle);
+    border-radius: var(--nz-radius-lg);
+  }
+  .nz-home-swatch[data-big] {
+    min-block-size: 11.5rem;
+  }
+  .nz-home-swatch[data-big]:first-child {
+    flex: 2;
+  }
+  .nz-home-swatch strong {
+    font: var(--nz-font-label-m-strong);
+  }
+  .nz-home-swatch code {
+    font: var(--nz-font-label-s);
+  }
+
+  /* Typography */
+  .nz-home-type {
+    display: grid;
+    gap: var(--nz-space-10);
+    padding: var(--nz-space-10);
+  }
+  .nz-home-type-top {
+    display: grid;
+    grid-template-columns: minmax(0, 16rem) 1fr;
+    align-items: center;
+    gap: var(--nz-space-10);
+    padding-block-end: var(--nz-space-10);
+    border-block-end: var(--nz-border-width-default) solid var(--nz-border-subtle);
+  }
+  .nz-home-aa-big {
+    justify-self: center;
+    font-size: 8.75rem;
+  }
+  .nz-home-weights,
+  .nz-home-scale {
+    display: grid;
+    gap: var(--nz-space-5);
+    margin: 0;
+  }
+  .nz-home-weights dt,
+  .nz-home-scale dt {
+    font: var(--nz-font-label-s);
+    color: var(--nz-text-tertiary);
+  }
+  .nz-home-weights dd {
+    margin: var(--nz-space-1) 0 0;
+    font: var(--nz-font-body-s);
+    color: var(--nz-text-primary);
+  }
+  .nz-home-weights [data-weight='medium'] dd {
+    font-weight: 500;
+  }
+  .nz-home-weights [data-weight='semibold'] dd {
+    font-weight: 600;
+  }
+  .nz-home-scale > div {
+    display: grid;
+    grid-template-columns: minmax(0, 9rem) 1fr;
+    align-items: baseline;
+    gap: var(--nz-space-6);
+  }
+  .nz-home-scale dd {
+    margin: 0;
+    color: var(--nz-text-primary);
+  }
+  .nz-home-scale [data-type='display-l'] {
+    font: var(--nz-font-display-l);
+    letter-spacing: var(--nz-tracking-display-l);
+  }
+  .nz-home-scale [data-type='heading-h1'] {
+    font: var(--nz-font-heading-h1);
+  }
+  .nz-home-scale [data-type='heading-h3'] {
+    font: var(--nz-font-heading-h3);
+  }
+  .nz-home-scale [data-type='body-l'] {
+    font: var(--nz-font-body-l);
+  }
+  .nz-home-scale dt span {
+    display: block;
+    margin-block-start: var(--nz-space-1);
+    font: var(--nz-font-label-s);
+    color: var(--nz-text-tertiary);
+  }
+  .nz-home-scale dt:has(span) {
+    font: var(--nz-font-label-m-strong);
+    color: var(--nz-text-primary);
+  }
+  .nz-home-scale > div:last-child {
+    align-items: center;
+    padding-block-start: var(--nz-space-6);
+    border-block-start: var(--nz-border-width-default) solid var(--nz-border-subtle);
+  }
+  .nz-home-type-motion {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    gap: var(--nz-space-6);
+  }
+  .nz-home-type-caret {
+    margin: 0;
+  }
+
+  /* Components library: three columns of cards */
+  .nz-home-library {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: start;
+    gap: var(--nz-space-6);
+  }
+  .nz-home-library-col {
+    display: grid;
+    gap: var(--nz-space-6);
+  }
+  .nz-home-show {
+    display: grid;
+    gap: var(--nz-space-4);
+  }
+  .nz-home-show-label {
+    margin: 0;
+    font: var(--nz-font-label-s);
+    color: var(--nz-text-secondary);
+  }
+  .nz-home-bare {
+    padding: 0;
+    border: 0;
+    background: none;
+    box-shadow: none;
+  }
+  .nz-home-stat {
+    display: grid;
+    gap: var(--nz-space-4);
+    background: var(--nz-bg-accent);
+    color: var(--nz-text-on-accent);
+  }
+  /* on lime, every word takes text/on-accent (StatBlock's own greys are for a surface) */
+  .nz-home-stat-list {
+    margin: 0;
+  }
+  .nz-home-stat .nz-home-show-label,
+  .nz-home-stat .nz-stat-block-value,
+  .nz-home-stat .nz-stat-block-label {
+    color: inherit;
+  }
+
+  /* Living surfaces: Dot Matrix behind, four surfaces in a row; the band is dark on either theme */
+  .nz-home-surfaces {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--nz-space-10);
+    margin-block-start: var(--nz-space-24);
+    padding: var(--nz-space-20) var(--nz-home-pad);
+    margin-inline: var(--nz-space-4);
+    color: var(--nz-text-primary);
+  }
+  /* the canvas fades in over the dots behind the heading, so the words stay clear of them */
+  .nz-home-surfaces::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+      to bottom,
+      color-mix(in oklab, var(--nz-bg-canvas) 92%, transparent) 0%,
+      color-mix(in oklab, var(--nz-bg-canvas) 70%, transparent) 30%,
+      transparent 55%
+    );
+  }
+  .nz-home-surface-list {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--nz-space-6);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .nz-home-surface-list li {
+    display: grid;
+    gap: var(--nz-space-1);
+    font: var(--nz-font-label-s);
+    color: var(--nz-text-secondary);
+  }
+  .nz-home-surface-list strong {
+    margin-block-start: var(--nz-space-2);
+    font: var(--nz-font-label-m-strong);
+    color: var(--nz-text-primary);
+  }
+  .nz-home-surface {
+    display: block;
+    block-size: 12.5rem;
+    border-radius: var(--nz-radius-xl);
+    overflow: clip;
+  }
+
+  /* Motion with manners */
+  .nz-home-motions,
+  .nz-home-stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--nz-space-6);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .nz-home-motion {
+    display: grid;
+    gap: var(--nz-space-1);
+    font: var(--nz-font-label-m-strong);
+  }
+  .nz-home-motion code {
+    font: var(--nz-font-label-s);
+    color: var(--nz-text-tertiary);
+  }
+  .nz-home-motion-stage {
+    display: grid;
+    place-items: center;
+    block-size: 10rem;
+    margin-block-end: var(--nz-space-4);
+    border-radius: var(--nz-radius-xl);
+    background: var(--nz-bg-subtle);
+    overflow: clip;
+  }
+  .nz-home-toast {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--nz-space-2);
+    padding: var(--nz-space-2) var(--nz-space-3);
+    border-radius: var(--nz-radius-full);
+    background: var(--nz-bg-inverse);
+    color: var(--nz-text-inverse);
+    font: var(--nz-font-label-s);
+    animation: nz-home-toast calc(var(--nz-duration-base) * 12) var(--nz-easing-enter) infinite;
+  }
+  .nz-home-toast svg {
+    inline-size: 0.875rem;
+    block-size: 0.875rem;
+  }
+  .nz-home-toast-action {
+    color: var(--nz-text-inverse-accent);
+    font-weight: 600;
+  }
+  /* it rises into the stage and drops out of it, clipped there: no fade, so its words keep their
+     contrast on every frame */
+  @keyframes nz-home-toast {
+    0% {
+      translate: 0 6rem;
+    }
+    12%,
+    80% {
+      translate: 0 0;
+    }
+    100% {
+      translate: 0 6rem;
+    }
+  }
+  .nz-home-skeleton {
+    display: grid;
+    gap: var(--nz-space-2);
+    inline-size: 70%;
+  }
+  .nz-home-skeleton .nz-skeleton:last-child {
+    inline-size: 60%;
+  }
+  .nz-home-rotator {
+    font: var(--nz-font-label-l);
+  }
+
+  /* Icon set */
+  .nz-home-icons {
+    display: grid;
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+    gap: var(--nz-space-6) var(--nz-space-2);
+    margin: 0;
+    padding: var(--nz-space-8) var(--nz-space-6);
+    list-style: none;
+  }
+  .nz-home-icons li {
+    display: grid;
+    justify-items: center;
+    gap: var(--nz-space-2);
+    font: var(--nz-font-label-s);
+    color: var(--nz-text-secondary);
+    text-align: center;
+    overflow-wrap: anywhere;
+  }
+  .nz-home-icons svg {
+    inline-size: 1.25rem;
+    block-size: 1.25rem;
+    color: var(--nz-icon-primary);
+  }
+
+  /* Accessible by default */
+  .nz-home-stats li {
+    display: grid;
+    align-content: start;
+    gap: var(--nz-space-2);
+    min-block-size: 10.75rem;
+    font: var(--nz-font-body-s);
+    color: var(--nz-text-secondary);
+  }
+  .nz-home-stats strong {
+    font: var(--nz-font-heading-h1);
+    color: var(--nz-text-brand);
+  }
+  .nz-home-focus-demo {
+    display: inline-flex;
+    align-items: center;
+    justify-self: start;
+    gap: var(--nz-space-2);
+    margin-block-start: var(--nz-space-2);
+    padding: var(--nz-space-2) var(--nz-space-4);
+    border-radius: var(--nz-radius-md);
+    background: var(--nz-bg-brand);
+    color: var(--nz-text-on-brand);
+    font: var(--nz-font-label-m);
+    outline: var(--nz-border-width-focus) solid var(--nz-border-focus);
+    outline-offset: 2px;
+  }
+  .nz-home-focus-demo svg {
+    inline-size: 1rem;
+    block-size: 1rem;
+  }
+
+  /* Closing band and footer */
+  .nz-home-closing {
+    padding: var(--nz-space-24) var(--nz-space-4) 0;
+  }
+  .nz-home-closing .nz-cta-band {
+    min-block-size: 28rem;
+    align-content: center;
+  }
+  .nz-home-closing .nz-cta-band-actions {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .nz-home-closing .nz-cta-band-content,
+  .nz-home-closing .nz-cta-band-actions {
+    min-inline-size: 0;
+    max-inline-size: 100%;
+  }
+  .nz-home-closing-code {
+    flex-basis: 100%;
+    min-inline-size: 0;
+    max-inline-size: 27.5rem;
+    margin-inline: auto;
+    text-align: start;
+  }
+  .nz-home-footer {
+    inline-size: 100%;
+    max-inline-size: 90rem;
+    margin-inline: auto;
+    padding-inline: clamp(var(--nz-space-4), 2vw, var(--nz-space-8));
+  }
+  .nz-home-footer-brand {
+    display: inline-flex;
+  }
+
+  @media (width < 64rem) {
+    .nz-home-icons {
+      grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr));
+    }
+    .nz-home-head {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .nz-home-steps {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .nz-home-browse,
+    .nz-home-motions,
+    .nz-home-stats,
+    .nz-home-surface-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .nz-home-bento {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      padding: var(--nz-space-10) var(--nz-space-4);
+    }
+    .nz-home-bento-mark,
+    .nz-home-bento-type {
+      grid-area: auto;
+    }
+    .nz-home-bento-player,
+    .nz-home-bento-orb.nz-home-bento-orb,
+    .nz-home-bento-profile {
+      grid-area: auto / span 2;
+    }
+    .nz-home-bento-orb {
+      min-block-size: 22rem;
+    }
+    .nz-home-library {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .nz-home-library-col:last-child {
+      grid-column: span 2;
+    }
+    .nz-home-palette-row {
+      flex-wrap: wrap;
+    }
+    .nz-home-swatch {
+      flex: 1 1 8rem;
+    }
+    .nz-home-type-top,
+    .nz-home-scale > div {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--nz-space-2);
+    }
+  }
+  @media (width < 48rem) {
+    .nz-home-section {
+      padding-block-start: var(--nz-space-16);
+    }
+    .nz-home-title {
+      font: var(--nz-font-heading-h1);
+      letter-spacing: var(--nz-tracking-heading-h1);
+    }
+    .nz-home-hero {
+      min-block-size: 0;
+      padding-block: var(--nz-space-12);
+    }
+    .nz-home-hero-title {
+      font: var(--nz-font-display-m);
+      letter-spacing: var(--nz-tracking-display-m);
+    }
+    .nz-home-library {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    /* a phone keeps each docs card's title, as Figma's mobile frame does */
+    .nz-home-browse {
+      gap: var(--nz-space-3);
+    }
+    .nz-home-browse .nz-docs-card-description,
+    .nz-home-browse .nz-docs-card-meta {
+      display: none;
+    }
+    .nz-home-weights {
+      display: none;
+    }
+    .nz-home-type-top {
+      padding-block-end: var(--nz-space-6);
+    }
+    .nz-home-scale [data-type='display-l'] {
+      font: var(--nz-font-heading-h1);
+    }
+    .nz-home-show[data-wide] {
+      display: none;
+    }
+    .nz-home-motions,
+    .nz-home-stats,
+    .nz-home-surface-list {
+      gap: var(--nz-space-3);
+    }
+    .nz-home-motion,
+    .nz-home-stats li {
+      padding: var(--nz-space-4);
+    }
+    .nz-home-motion-stage {
+      block-size: 6.5rem;
+    }
+    .nz-home-motion-stage .nz-home-toast {
+      scale: 0.8;
+    }
+    .nz-home-surface {
+      block-size: 8rem;
+    }
+    .nz-home-stats li {
+      min-block-size: 0;
+    }
+    .nz-home-library-col:last-child {
+      grid-column: auto;
+    }
+    .nz-home-type {
+      padding: var(--nz-space-5);
+    }
+    .nz-home-aa-big {
+      font-size: 6rem;
+    }
+    .nz-home-surfaces {
+      padding: var(--nz-space-12) var(--nz-space-4);
+    }
+    /* a phone shows the glyphs only, five to a row; the names stay for screen readers */
+    .nz-home-icons {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      padding: var(--nz-space-6) var(--nz-space-4);
+    }
+    .nz-home-icon-name {
+      position: absolute;
+      inline-size: 1px;
+      block-size: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .nz-home-toast {
+      animation: none;
+    }
   }
 }
 

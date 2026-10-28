@@ -137,6 +137,19 @@ const NIZIVO_CLIENT_MARKERS = [
  * zero-JS paths (ARCHITECTURE.md §23.4 D-aa).
  */
 const CLIENT_PAGES: Record<string, string[]> = {
+  // The home page (M90, components/home.tsx): CodeBlock (its tabs and copy) in the hero, the steps
+  // and the closing band; the player demo (MediaPlayer and its Slider scrubber); WordRotator; and
+  // the library's Inputs, which read their Field through FieldScope.
+  '/': [
+    'nz-code-block',
+    'nz-copy-button',
+    'tabs-tab',
+    'nz-media-player',
+    'nz-slider',
+    'nz-word-rotator',
+    'input-prefix',
+    'willValidate',
+  ],
   // Select reads its Field through useFieldControl, which lives in FieldScope's module (week 6).
   '/docs/components/select/': ['select-popup', 'willValidate'],
   '/docs/components/tooltip/': ['tooltip-popup'],
