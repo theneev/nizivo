@@ -24,6 +24,8 @@
 //   (repo-root patterns/, MIT), one route per pattern with a page in content/docs/patterns/, plus
 //   .generated/patterns.css, one `@import … layer(components)` per pattern stylesheet, which
 //   app/global.css imports after nizivo.css (each sheet writes into nz.patterns);
+// - .generated/version.json and changelog.json: the version (the header, a client module, so it
+//   gets only that) and the four packages' changelogs (the Changelog page) (scripts/site.ts);
 // - public/r/ and public/_headers: the copy-paste registry and its cache headers (scripts/registry.ts),
 //   which fails the build on an item-policy problem.
 // `--check` exits 1 when a generated file is stale instead of writing.
@@ -41,6 +43,7 @@ import {
 } from './examples.ts';
 import { generateIcons } from './icons.ts';
 import { buildRegistry } from './registry.ts';
+import { siteFacts } from './site.ts';
 
 const docsRoot = join(import.meta.dirname, '..');
 const repoRoot = join(docsRoot, '..', '..');
@@ -271,6 +274,15 @@ async function main(): Promise<void> {
       throw new ExampleError(`the registry's item policy:\n  ${registry.problems.join('\n  ')}`);
     }
     for (const [f, text] of registry.files) files.set(join(docsRoot, 'public', f), text);
+    const site = siteFacts(repoRoot);
+    files.set(
+      join(docsRoot, '.generated', 'version.json'),
+      `${JSON.stringify({ version: site.version })}\n`,
+    );
+    files.set(
+      join(docsRoot, '.generated', 'changelog.json'),
+      `${JSON.stringify(site.changelog)}\n`,
+    );
     const icons = await generateIcons(repoRoot);
     files.set(join(docsRoot, '.generated', 'icons', 'sprite.svg'), icons.sprite);
     files.set(

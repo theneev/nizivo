@@ -165,6 +165,10 @@
         "$TURBO_ROOT$/packages/react/src/**/*.css",
         "$TURBO_ROOT$/packages/icons/package.json",
         "$TURBO_ROOT$/packages/tokens/package.json",
+        "$TURBO_ROOT$/packages/react/CHANGELOG.md",
+        "$TURBO_ROOT$/packages/tokens/CHANGELOG.md",
+        "$TURBO_ROOT$/packages/icons/CHANGELOG.md",
+        "$TURBO_ROOT$/packages/charts/CHANGELOG.md",
         "$TURBO_ROOT$/patterns/LICENSE",
         "$TURBO_ROOT$/patterns/package.json",
         "$TURBO_ROOT$/patterns/src/**"
@@ -185,6 +189,10 @@
         "$TURBO_ROOT$/packages/react/src/**/*.css",
         "$TURBO_ROOT$/packages/icons/package.json",
         "$TURBO_ROOT$/packages/tokens/package.json",
+        "$TURBO_ROOT$/packages/react/CHANGELOG.md",
+        "$TURBO_ROOT$/packages/tokens/CHANGELOG.md",
+        "$TURBO_ROOT$/packages/icons/CHANGELOG.md",
+        "$TURBO_ROOT$/packages/charts/CHANGELOG.md",
         "$TURBO_ROOT$/patterns/LICENSE",
         "$TURBO_ROOT$/patterns/src/**"
       ],

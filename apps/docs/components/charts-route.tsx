@@ -18,7 +18,7 @@ import { createElement, type ComponentType, type JSX } from 'react';
 import type { Metadata } from 'next';
 import type { MDXComponents } from 'mdx/types';
 import type { InheritedProps, MemberDoc } from '@nizivo/tooling/api/schema';
-import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
+import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/notebook/page';
 import { ServerCodeBlock } from 'fumadocs-ui/components/codeblock.rsc';
 import { Callout } from 'fumadocs-ui/components/callout';
 import { CODE_THEMES } from '../lib/code';

@@ -8,7 +8,7 @@
 import type { Metadata } from 'next';
 import type { JSX } from 'react';
 import { notFound } from 'next/navigation';
-import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
+import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/notebook/page';
 import { EntryPage } from '../../../components/entry-page';
 import { InlineMd } from '../../../components/inline-md';
 import { mdxComponents } from '../../../components/mdx';

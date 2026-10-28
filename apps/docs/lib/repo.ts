@@ -3,6 +3,7 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { parseJson } from '../scripts/json';
+import { REPO_URL } from './repo-url';
 
 /** The monorepo root. `next build` runs with the docs app as its working directory. */
 export const REPO_ROOT: string = (() => {
@@ -44,7 +45,7 @@ export function repoFileExists(path: string): boolean {
   return existsSync(repoPath(path));
 }
 
-export const REPO_URL = 'https://github.com/theneev/nizivo';
+export { REPO_URL } from './repo-url';
 
 /** A repo-relative path → its page on GitHub (main branch). */
 export function repoFileUrl(path: string): string {

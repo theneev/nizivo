@@ -619,7 +619,14 @@ async function themeChecks(browser: Browser): Promise<void> {
     'theme: light Select trigger is --nz-bg-surface',
   );
   check((await codeColours(page)) === 'light', 'theme: code highlighting is in its light colours');
-  await page.locator('[data-theme-toggle] button[aria-label="Dark"]').first().click();
+  // the header's theme button steps Light → Dark → System (components/site-header.tsx, M90)
+  const themeButton = page.locator('[data-site-theme]').first();
+  for (let i = 0; i < 3; i += 1) {
+    // oxlint-disable-next-line no-await-in-loop -- one step at a time, as a reader clicks
+    if ((await page.evaluate(() => localStorage.getItem('nz-theme'))) === 'dark') break;
+    // oxlint-disable-next-line no-await-in-loop -- one step at a time, as a reader clicks
+    await themeButton.click();
+  }
   await page.waitForFunction(
     () => document.documentElement.getAttribute('data-nz-theme') === 'dark',
   );
@@ -1125,7 +1132,7 @@ async function skipLinkChecks(browser: Browser): Promise<void> {
 async function drawerChecks(browser: Browser): Promise<void> {
   const ctx = await context(browser, 'light', 375);
   const { page } = await visit(ctx, '/docs/components/badge/');
-  const opener = page.locator('#nd-subnav button[aria-controls="nd-sidebar-mobile"]').first();
+  const opener = page.locator('.nz-site-header button[aria-controls="nd-sidebar-mobile"]').first();
   await opener.focus();
   await page.keyboard.press('Enter');
   const drawer = page.locator('#nd-sidebar-mobile[data-state="open"]');

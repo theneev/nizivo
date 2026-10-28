@@ -5,7 +5,7 @@
 // llms-full.txt (lib/source.ts, lib/outline.ts).
 import type { Metadata } from 'next';
 import type { JSX } from 'react';
-import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
+import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/notebook/page';
 import { outline } from '../lib/outline';
 import { source, type GeneratedPageData } from '../lib/source';
 import { EntryPage } from './entry-page';

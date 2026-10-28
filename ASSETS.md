@@ -4,5 +4,6 @@ No image, render, photo, illustration or other binary asset from the Figma file 
 
 The 3D renders, product photos and portraits in the Figma file have unknown provenance and stay out until each one is cleared.
 
-| Path in repo | Source (Figma node id or URL) | Author or owner | Licence or permission | Evidence | Added | Notes |
-| ------------ | ----------------------------- | --------------- | --------------------- | -------- | ----- | ----- |
+| Path in repo                                                      | Source (Figma node id or URL)                | Author or owner   | Licence or permission                                 | Evidence                                                                            | Added      | Notes                                                                                                                          |
+| ----------------------------------------------------------------- | -------------------------------------------- | ----------------- | ----------------------------------------------------- | ----------------------------------------------------------------------------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `apps/docs/components/site-header.tsx` (`Mark`, inline SVG paths) | Figma `739:64` (Brand/Logo, the sprout mark) | Neev Technologies | Owned by Neev; cleared for the site by the maintainer | The maintainer, 2026-10-29, asked which logo the site uses: "The sprout mark" (M90) | 2026-10-29 | Drawn in tokens (bg/brand, text/on-brand), not the Figma raster; the Figma description still calls it the "Grove brand lockup" |

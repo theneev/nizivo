@@ -121,10 +121,11 @@ code.shiki:not(.not-fumadocs-code *) span {
     background: var(--nz-bg-surface-raised);
     color: var(--nz-text-primary);
     font: var(--nz-font-label-m-strong);
-    box-shadow: var(--nz-elevation-3);
     translate: 0 calc(-100% - var(--nz-space-4));
   }
+  /* the shadow only while it shows: hidden above the page, its blur reached down over the header */
   .nz-docs-skip:focus {
+    box-shadow: var(--nz-elevation-3);
     translate: 0 0;
   }
   .nz-docs-flag {
@@ -348,6 +349,204 @@ code.shiki:not(.not-fumadocs-code *) span {
     border-radius: var(--nz-radius-lg);
     background: var(--nz-bg-canvas);
     color: var(--nz-text-primary);
+  }
+
+  /* The site header (Figma's Docs Header 7416:78, M90): 64 px, sticky, blurred bg/surface, the
+     tabs Label/M in text/secondary with the current one on bg/hover. Below 1024 px the tabs, GitHub,
+     the theme and "Get started" give way to round 44 px buttons: search, the sidebar on a docs page,
+     and a menu with the sections, GitHub and the theme. */
+  .nz-site-header {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 40;
+    grid-area: header;
+    display: flex;
+    align-items: center;
+    gap: var(--nz-space-6);
+    block-size: 4rem;
+    padding-inline: var(--nz-space-8);
+    border-block-end: var(--nz-border-width-default) solid var(--nz-border-subtle);
+    background: color-mix(in oklab, var(--nz-bg-surface) 88%, transparent);
+    backdrop-filter: blur(10px);
+  }
+  .nz-site-brand {
+    display: flex;
+    align-items: center;
+    gap: calc(var(--nz-space-2) + var(--nz-space-0-5));
+  }
+  .nz-site-home {
+    display: inline-flex;
+    border-radius: var(--nz-radius-md);
+  }
+  .nz-site-mark rect {
+    fill: var(--nz-bg-brand);
+  }
+  .nz-site-mark path {
+    fill: var(--nz-text-on-brand);
+    stroke: var(--nz-text-on-brand);
+  }
+  .nz-site-mark path:first-of-type {
+    fill: none;
+  }
+  .nz-site-version {
+    padding: 3px var(--nz-space-2);
+    border-radius: var(--nz-radius-full);
+    background: var(--nz-bg-muted);
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-label-s);
+    text-decoration: none;
+  }
+  .nz-site-tabs {
+    display: flex;
+    gap: var(--nz-space-1);
+  }
+  .nz-site-tab {
+    padding: var(--nz-space-2) var(--nz-space-3);
+    border-radius: calc(var(--nz-radius-sm) * 1.25);
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-label-m);
+    text-decoration: none;
+  }
+  .nz-site-tab:hover,
+  .nz-site-tab[aria-current='page'] {
+    background: var(--nz-bg-hover);
+    color: var(--nz-text-primary);
+  }
+  .nz-site-spacer {
+    flex: 1 1 auto;
+  }
+  .nz-site-search {
+    display: flex;
+    align-items: center;
+    gap: var(--nz-space-2);
+    inline-size: 16.25rem;
+    block-size: 2.5rem;
+    padding-inline: var(--nz-space-3) var(--nz-space-2);
+    border: var(--nz-border-width-default) solid var(--nz-border-control);
+    border-radius: var(--nz-radius-md);
+    background: var(--nz-bg-subtle);
+    color: var(--nz-text-tertiary);
+    font: var(--nz-font-body-m);
+    cursor: pointer;
+  }
+  .nz-site-search > svg {
+    flex: none;
+    inline-size: 1rem;
+    block-size: 1rem;
+    color: var(--nz-icon-secondary);
+  }
+  .nz-site-search-text {
+    flex: 1 1 auto;
+    text-align: start;
+  }
+  .nz-site-icon svg {
+    inline-size: 1.125rem;
+    block-size: 1.125rem;
+  }
+  .nz-site-narrow {
+    display: none;
+  }
+  .nz-site-menu {
+    position: relative;
+  }
+  .nz-site-menu-button {
+    display: grid;
+    place-items: center;
+    inline-size: 2.75rem;
+    block-size: 2.75rem;
+    border: var(--nz-border-width-default) solid var(--nz-border-default);
+    border-radius: var(--nz-radius-full);
+    background: var(--nz-bg-surface);
+    color: var(--nz-icon-primary);
+    list-style: none;
+    cursor: pointer;
+  }
+  .nz-site-menu-button::-webkit-details-marker {
+    display: none;
+  }
+  .nz-site-menu-button > svg {
+    inline-size: 1.25rem;
+    block-size: 1.25rem;
+  }
+  .nz-site-menu-list {
+    position: absolute;
+    inset-block-start: calc(100% + var(--nz-space-2));
+    inset-inline-end: 0;
+    display: grid;
+    min-inline-size: 13rem;
+    padding: var(--nz-space-1-5);
+    border: var(--nz-border-width-default) solid var(--nz-border-subtle);
+    border-radius: var(--nz-radius-lg);
+    background: var(--nz-bg-surface-raised);
+    box-shadow: var(--nz-elevation-4);
+  }
+  .nz-site-menu-item {
+    display: flex;
+    align-items: center;
+    gap: var(--nz-space-3);
+    padding: calc(var(--nz-space-2) + var(--nz-space-0-5)) var(--nz-space-3);
+    border: 0;
+    border-radius: calc(var(--nz-radius-sm) * 1.25);
+    background: transparent;
+    color: var(--nz-text-primary);
+    font: var(--nz-font-label-m);
+    text-align: start;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .nz-site-menu-item:hover,
+  .nz-site-menu-item[aria-current='page'] {
+    background: var(--nz-bg-hover);
+  }
+  .nz-site-menu-item > svg {
+    inline-size: 1.125rem;
+    block-size: 1.125rem;
+    color: var(--nz-icon-secondary);
+  }
+  @media (width < 64rem) {
+    .nz-site-header {
+      gap: var(--nz-space-2);
+      padding-inline: var(--nz-space-4);
+    }
+    .nz-site-tabs,
+    .nz-site-wide {
+      display: none;
+    }
+    .nz-site-narrow {
+      display: block;
+    }
+    .nz-site-search {
+      justify-content: center;
+      inline-size: 2.75rem;
+      block-size: 2.75rem;
+      padding: 0;
+      border-color: var(--nz-border-default);
+      border-radius: var(--nz-radius-full);
+      background: var(--nz-bg-surface);
+    }
+    .nz-site-search > svg {
+      inline-size: 1.25rem;
+      block-size: 1.25rem;
+      color: var(--nz-icon-primary);
+    }
+    .nz-site-search-text {
+      position: absolute;
+      inline-size: 1px;
+      block-size: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+    .nz-site-header .nz-site-narrow.nz-site-icon {
+      display: inline-flex;
+      inline-size: 2.75rem;
+      block-size: 2.75rem;
+      border-radius: var(--nz-radius-full);
+    }
+  }
+  /* the notebook layout's grid gives the header its row */
+  #nd-notebook-layout {
+    --fd-header-height: 4rem;
   }
 
   /* Home */

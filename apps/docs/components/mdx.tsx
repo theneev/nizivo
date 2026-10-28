@@ -19,6 +19,7 @@ import {
   TypeScale,
   ZIndexScale,
 } from './foundations';
+import { Changelog } from './changelog';
 import { ClientPagingDemo, ClientSortDemo } from './client-demos';
 import { ComponentIndex } from './component-index';
 import { BrandGrid, IconCount, IconGrid } from './icons';
@@ -31,6 +32,7 @@ export const mdxComponents: MDXComponents = {
   ...defaultMdxComponents,
   table: MarkdownTable,
   Callout,
+  Changelog,
   ClientPagingDemo,
   ClientSortDemo,
   Steps,
