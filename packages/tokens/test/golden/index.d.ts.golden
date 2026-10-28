@@ -1138,7 +1138,7 @@ export type TokenId =
   | "z.sticky"
   | "z.toast";
 /** Where a token's value comes from in a context (TOKENS-JSON.md). */
-export type TokenProvenance = 'figma' | 'code-owned' | 'override' | 'proposal';
+export type TokenProvenance = 'design' | 'code-owned' | 'override' | 'proposal';
 
 /** A typography token's value: the `font` shorthand and its parts. */
 export interface TokenTypographyValue {
@@ -1169,13 +1169,13 @@ export interface TokenEntry extends TokenContextValue {
   status?: string;
   deprecated?: string | true;
   description?: string;
-  figma?: { name: string; variableId?: string; styleId?: string };
+  design?: { name: string };
 }
 
 /** `@nizivo/tokens/tokens.json`. A JSON import widens literals, so cast it: `data as TokensJson`. */
 export interface TokensJson {
   $comment: string;
-  format: 1;
+  format: 2;
   package: '@nizivo/tokens';
   prefix: string;
   modifiers: Record<string, { contexts: string[]; default: string }>;

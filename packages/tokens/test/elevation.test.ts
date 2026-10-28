@@ -147,8 +147,8 @@ describe('the elevation.0 sync in tokens.json and the js-refs entry', () => {
       cssVariable: '--nz-elevation-0',
       public: true,
       value: '0 0 0 0 transparent',
-      provenance: 'figma',
-      figma: { name: 'Elevation/0 Flat' },
+      provenance: 'design',
+      design: { name: 'Elevation/0 Flat' },
     });
     delete json.tokens['elevation.0'];
     delete expected.tokens['elevation.0'];

@@ -16,7 +16,7 @@ import {
   subValueVariableName,
 } from './css.ts';
 
-export type Provenance = 'figma' | 'code-owned' | 'override' | 'proposal';
+export type Provenance = 'design' | 'code-owned' | 'override' | 'proposal';
 
 /** A typography value: the `font` shorthand and its parts, as tokens.css declares them. */
 export interface TypographyValue {
@@ -50,7 +50,7 @@ export interface ResolvedToken extends ContextValue {
   description?: string;
   deprecated?: string | true;
   status?: string;
-  figma?: { name: string; variableId?: string; styleId?: string };
+  design?: { name: string };
 }
 
 export interface Modifier {
@@ -165,13 +165,13 @@ function declarations(transforms: TokenTransformed[]): Map<string, string> {
   return out;
 }
 
-/** override > proposal > code-owned (incl. generated from Figma) > figma, from the source markers. */
+/** override > proposal > code-owned (incl. generated from the design) > design, from the source markers. */
 function provenance(token: TokenNormalized): Provenance {
   const ext = token.$extensions ?? {};
   if ('app.nizivo.override' in ext) return 'override';
   if ('app.nizivo.proposal' in ext) return 'proposal';
   if ('app.nizivo.derived' in ext) return 'code-owned';
-  return 'dev.nizivo.figma' in ext ? 'figma' : 'code-owned';
+  return 'dev.nizivo.figma' in ext ? 'design' : 'code-owned';
 }
 
 /** A dimension token tokens.css never declares (breakpoints, frame widths). */
@@ -182,13 +182,11 @@ function literal(token: TokenNormalized): string {
   return `${token.$value.value}${token.$value.unit}`;
 }
 
-function figmaIdentity(token: TokenNormalized): ResolvedToken['figma'] {
+/** The design library's name for the token; its internal ids stay in the sources (M83). */
+function designIdentity(token: TokenNormalized): ResolvedToken['design'] {
   const figma = token.$extensions?.['dev.nizivo.figma'];
   if (!isRecord(figma) || typeof figma['name'] !== 'string') return undefined;
-  const out: NonNullable<ResolvedToken['figma']> = { name: figma['name'] };
-  if (typeof figma['variableId'] === 'string') out.variableId = figma['variableId'];
-  if (typeof figma['styleId'] === 'string') out.styleId = figma['styleId'];
-  return out;
+  return { name: figma['name'] };
 }
 
 const sameEntry = (a: ContextValue, b: ContextValue): boolean =>
@@ -329,8 +327,8 @@ export function resolveTokens(getTransforms: GetTransforms): ResolvedSet {
         out.deprecated = token.$deprecated === true ? true : String(token.$deprecated);
       const status = token.$extensions?.['app.nizivo.status'];
       if (typeof status === 'string') out.status = status;
-      const figma = figmaIdentity(token);
-      if (figma) out.figma = figma;
+      const design = designIdentity(token);
+      if (design) out.design = design;
       return out;
     });
   return { modifiers: mods, tokens };

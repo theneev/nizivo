@@ -147,7 +147,7 @@ const CASCADE: Record<string, string> = {
 
 describe('tokens.json', () => {
   test('lists every token once with the prefix, the format and the resolver modifiers', () => {
-    expect(json.format).toBe(1);
+    expect(json.format).toBe(2);
     expect(json.prefix).toBe('nz');
     expect(json.modifiers).toEqual({
       theme: { contexts: ['light', 'dark'], default: 'light' },
@@ -230,23 +230,23 @@ describe('tokens.json', () => {
 
   test('provenance follows the source markers, per context (plan §7.6, §15.4)', () => {
     const t = json.tokens;
-    expect(t['color.bg.surface']?.provenance).toBe('figma');
+    expect(t['color.bg.surface']?.provenance).toBe('design');
     // Proposals Figma adopted on 2026-10-18 are Figma's now; the last one, text/accent, was removed
     // before 0.2.0 (M42 item 14), so no token is a proposal.
-    expect(t['color.bg.scrim']?.provenance).toBe('figma');
-    expect(t['color.p.neutral.450']?.provenance).toBe('figma');
+    expect(t['color.bg.scrim']?.provenance).toBe('design');
+    expect(t['color.p.neutral.450']?.provenance).toBe('design');
     expect(t['color.text.accent']).toBeUndefined();
     expect(Object.values(t).filter((token) => token?.provenance === 'proposal')).toEqual([]);
     expect(t['font.family.sans']?.provenance).toBe('code-owned');
     expect(t['duration.spring']?.provenance).toBe('code-owned');
     // The former dark-only override: Figma holds red/400 itself now.
-    expect(t['color.text.critical']?.provenance).toBe('figma');
+    expect(t['color.text.critical']?.provenance).toBe('design');
     expect(t['color.text.critical']?.modes?.['theme']?.['dark']).toEqual({
       value: '#e47962',
-      provenance: 'figma',
+      provenance: 'design',
       aliasOf: 'color.p.red.400',
     });
-    expect(t['duration.spin']?.provenance).toBe('figma');
+    expect(t['duration.spin']?.provenance).toBe('design');
     const counts: Record<string, number> = {};
     for (const token of Object.values(t)) {
       for (const entry of [token, ...Object.values(token.modes ?? {}).flatMap(Object.values)]) {
@@ -263,7 +263,7 @@ describe('tokens.json', () => {
     }
     expect(overrides).toEqual([]);
     // and no proposal is left since text/accent was removed (M42 item 14)
-    expect(Object.keys(counts).toSorted(compareStrings)).toEqual(['code-owned', 'figma']);
+    expect(Object.keys(counts).toSorted(compareStrings)).toEqual(['code-owned', 'design']);
   });
 
   test('breakpoints carry their custom media, equal to custom-media.css', () => {
@@ -434,8 +434,8 @@ export const missing = color.bgNope;
 color.bgSurface = 'red';
 // @ts-expect-error not a token id
 export const wrongId: TokenId = 'color.bg.nope';
-// @ts-expect-error not a provenance
-export const wrongProvenance: TokensJson['tokens']['color.bg.surface']['provenance'] = 'figma-ish';
+// @ts-expect-error not a provenance (format 1 called the design's values 'figma')
+export const wrongProvenance: TokensJson['tokens']['color.bg.surface']['provenance'] = 'figma';
 `,
       );
       const result = spawnSync(TSC, ['-p', consumer], { encoding: 'utf8' });
