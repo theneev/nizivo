@@ -6,50 +6,22 @@
   "hooks": [
     {
       "fallback": {
-        "kind": "token",
-        "name": "--nz-bg-accent"
-      },
-      "name": "--nz-shader-surface-curtain",
-      "reads": [
-        {
-          "conditions": [],
-          "property": "border-block-end-color",
-          "selector": ".nz-shader-surface",
-          "slot": "shader-surface"
-        },
-        {
-          "conditions": [],
-          "property": "background",
-          "selector": ".nz-shader-surface-poster",
-          "slot": "shader-surface-poster"
-        },
-        {
-          "conditions": [],
-          "property": "background",
-          "selector": ".nz-shader-surface-poster",
-          "slot": "shader-surface-poster"
-        }
-      ]
-    },
-    {
-      "fallback": {
-        "kind": "token",
-        "name": "--nz-bg-brand"
-      },
-      "name": "--nz-shader-surface-deep",
-      "reads": [
-        {
-          "conditions": [],
-          "property": "border-inline-start-color",
-          "selector": ".nz-shader-surface",
-          "slot": "shader-surface"
-        }
-      ]
-    },
-    {
-      "fallback": {
-        "kind": "token",
-        "name": "--nz-bg-accent-subtle"
+        "kind": "private",
+        "name": "--_nz-shader-surface-ground",
+        "values": [
+          {
+            "conditions": [],
+            "selector": ".nz-shader-surface",
+            "value": "var(--nz-bg-accent-subtle)",
+            "when": {}
+          },
+          {
+            "conditions": [],
+            "selector": ".nz-shader-surface:not([data-variant=\"aurora\"], [data-variant=\"aurora-dark\"], [data-variant=\"dot-matrix\"])",
+            "value": "var(--nz-bg-canvas)",
+            "when": {}
+          }
+        ]
       },
       "name": "--nz-shader-surface-ground",
       "reads": [
@@ -69,10 +41,38 @@
     },
     {
       "fallback": {
-        "kind": "token",
-        "name": "--nz-bg-brand-muted"
+        "kind": "private",
+        "name": "--_nz-shader-surface-1",
+        "values": [
+          {
+            "conditions": [],
+            "selector": ".nz-shader-surface",
+            "value": "var(--nz-bg-brand-muted)",
+            "when": {}
+          },
+          {
+            "conditions": [],
+            "selector": ".nz-shader-surface:is([data-variant=\"contour\"], [data-variant=\"contour-dark\"])",
+            "value": "color-mix(in oklab, var(--nz-bg-brand) 25%, var(--nz-bg-canvas))",
+            "when": {}
+          },
+          {
+            "conditions": [],
+            "selector": ".nz-shader-surface:is([data-variant=\"glow-orb\"], [data-variant=\"glow-orb-dark\"])",
+            "value": "color-mix(in oklab, var(--nz-bg-accent) 35%, var(--nz-bg-brand-muted))",
+            "when": {}
+          },
+          {
+            "conditions": [],
+            "selector": ".nz-shader-surface[data-variant=\"rays\"]",
+            "value": "var(--nz-icon-warning)",
+            "when": {
+              "data-variant": "rays"
+            }
+          }
+        ]
       },
-      "name": "--nz-shader-surface-mid",
+      "name": "--nz-shader-surface-tone-1",
       "reads": [
         {
           "conditions": [],
@@ -87,11 +87,71 @@
           "slot": "shader-surface-poster"
         }
       ]
+    },
+    {
+      "fallback": {
+        "kind": "private",
+        "name": "--_nz-shader-surface-2",
+        "values": [
+          {
+            "conditions": [],
+            "selector": ".nz-shader-surface",
+            "value": "var(--nz-bg-accent)",
+            "when": {}
+          },
+          {
+            "conditions": [],
+            "selector": ".nz-shader-surface:is([data-variant=\"contour\"], [data-variant=\"contour-dark\"])",
+            "value": "var(--nz-bg-brand-subtle)",
+            "when": {}
+          }
+        ]
+      },
+      "name": "--nz-shader-surface-tone-2",
+      "reads": [
+        {
+          "conditions": [],
+          "property": "border-block-end-color",
+          "selector": ".nz-shader-surface",
+          "slot": "shader-surface"
+        }
+      ]
+    },
+    {
+      "fallback": {
+        "kind": "private",
+        "name": "--_nz-shader-surface-3",
+        "values": [
+          {
+            "conditions": [],
+            "selector": ".nz-shader-surface",
+            "value": "var(--nz-bg-brand)",
+            "when": {}
+          }
+        ]
+      },
+      "name": "--nz-shader-surface-tone-3",
+      "reads": [
+        {
+          "conditions": [],
+          "property": "border-inline-start-color",
+          "selector": ".nz-shader-surface",
+          "slot": "shader-surface"
+        }
+      ]
     }
   ],
   "layers": ["nz.components"],
   "package": "@nizivo/react",
   "runtime": [],
-  "tokens": ["--nz-bg-accent", "--nz-bg-accent-subtle", "--nz-bg-brand", "--nz-bg-brand-muted"],
+  "tokens": [
+    "--nz-bg-accent",
+    "--nz-bg-accent-subtle",
+    "--nz-bg-brand",
+    "--nz-bg-brand-muted",
+    "--nz-bg-brand-subtle",
+    "--nz-bg-canvas",
+    "--nz-icon-warning"
+  ],
   "version": 1
 }

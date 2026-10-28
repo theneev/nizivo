@@ -414,7 +414,7 @@
       "limitKiB": 2.3
     },
     "@nizivo/react/unstable/glow-orb": {
-      "measured": 3627,
+      "measured": 3764,
       "limitKiB": 3.7
     },
     "@nizivo/react/unstable/inline-assist": {
@@ -466,7 +466,7 @@
       "limitKiB": 1
     },
     "@nizivo/react/unstable/shader-surface": {
-      "measured": 3248,
+      "measured": 2987,
       "limitKiB": 3.5
     },
     "@nizivo/react/unstable/site-footer": {
@@ -810,7 +810,7 @@
       "limitKiB": 0.9
     },
     "@nizivo/react own: unstable/shader-surface/shader-surface.client": {
-      "measured": 388,
+      "measured": 427,
       "limitKiB": 0.5
     },
     "@nizivo/react own: unstable/slider/slider.client": {
@@ -1018,7 +1018,7 @@
       "limitKiB": 0.4
     },
     "@nizivo/react/css/glow-orb.css": {
-      "measured": 521,
+      "measured": 530,
       "limitKiB": 0.6
     },
     "@nizivo/react/css/grid.css": {
@@ -1206,7 +1206,7 @@
       "limitKiB": 0.3
     },
     "@nizivo/react/css/shader-surface.css": {
-      "measured": 451,
+      "measured": 509,
       "limitKiB": 0.5
     },
     "@nizivo/react/css/sidebar.css": {

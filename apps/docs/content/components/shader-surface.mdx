@@ -1,6 +1,6 @@
 ---
 title: ShaderSurface
-description: "Unstable: a moving background drawn by a WebGL shader, the design's Shader Surface, for CtaBand, BentoTile, ProfileCard or a page section. Aurora first. Import it from @nizivo/react/unstable/shader-surface."
+description: "Unstable: a moving background drawn by a WebGL shader, the design's Shader Surface in its nine types, for CtaBand, BentoTile, ProfileCard or a page section. Import it from @nizivo/react/unstable/shader-surface."
 ---
 
 ## Static or interactive
@@ -11,16 +11,30 @@ poster. [How to choose](/docs/guides/static-or-interactive/).
 
 ## Variants
 
-`variant` is the design's Shader Surface type. **Aurora** (`aurora`, the default) is soft curtains of
-light that sway, lime over a pale ground with mint below; it follows the theme. **Aurora Dark**
-(`aurora-dark`) keeps its dark colours on a light page, for a band that is always dark. The design's
-other types (Contour, Dot Matrix, Mesh, Rays) follow.
+`variant` is the design's Shader Surface type, and each follows the theme:
+
+- **Aurora** (`aurora`, the default): soft curtains of light that sway, lime over a pale ground with
+  mint below.
+- **Contour** (`contour`): the contour lines of a slowly drifting landscape, pale, with one level in
+  six drawn bold.
+- **Dot Matrix** (`dot-matrix`): a grid of dots in slow waves, lime where it is brightest. Always
+  dark, as the design draws it.
+- **Glow Orb** (`glow-orb`): [GlowOrb](/docs/components/glow-orb/)'s sphere in a glow that spreads
+  over the box.
+- **Rays** (`rays`): fine strands of green, lime and warm light, some soft, leaning and waving.
+- **Mesh** (`mesh`): a soft field of mint, lime, green and the page's ground, drifting.
+
+`aurora-dark`, `contour-dark` and `glow-orb-dark` keep their dark colours on a light page, for a band
+that is always dark. The design's Rays use an amber that is not in the palette; here the warm
+strands take `icon/warning`. Each variant's shader loads when the first surface of that variant
+mounts, so a page downloads only the ones it shows.
 
 ## In a component
 
 It fills its box. Pass it to the components the design draws with it:
 [CtaBand](/docs/components/cta-band/)'s `background` (`<ShaderSurface variant="aurora-dark" />`),
-[BentoTile](/docs/components/bento-tile/)'s `background` and
+[BentoTile](/docs/components/bento-tile/)'s `background` (Aurora for a wide tile, Glow Orb for a
+square one, Contour for a tall one, as the design draws them) and
 [ProfileCard](/docs/components/profile-card/)'s `cover`. Each drops its CSS background behind it, and
 CtaBand keeps a soft dark scrim behind its text, so the text stays readable whatever drifts behind.
 
@@ -28,12 +42,13 @@ CtaBand keeps a soft dark scrim behind its text, so the text stays readable what
 
 No library: one fragment shader on WebGL 1, on the same small runtime as
 [GlowOrb](/docs/components/glow-orb/). It draws only while it is on screen and the page is visible,
-at a pixel ratio of at most 2. Under Reduced motion it draws one still frame. In forced colours the
+at a pixel ratio of at most 2, and gives its WebGL context back when it unmounts (a page holds about
+sixteen at once). Under Reduced motion it draws one still frame. In forced colours the
 canvas is hidden and the system's colours show.
 
 ## Colours
 
-Aurora reads Nizivo's accent and brand colours. Set `--nz-shader-surface-ground`,
-`--nz-shader-surface-mid`, `--nz-shader-surface-curtain` and `--nz-shader-surface-deep` to recolour
-it. It is decoration, hidden from assistive technology; never set text on it without a surface of
+Each variant reads four of Nizivo's colours, chosen to match the design's. Set
+`--nz-shader-surface-ground` and `--nz-shader-surface-tone-1` to `-tone-3` to recolour any variant;
+the stylesheet says which tone is which in each. It is decoration, hidden from assistive technology; never set text on it without a surface of
 its own.

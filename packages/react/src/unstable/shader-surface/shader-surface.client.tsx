@@ -6,18 +6,21 @@
 // browser without WebGL, show a CSS poster in the same colours; the canvas takes over once its
 // first frame is drawn. Decorative: hidden from assistive technology, and text never sits on it
 // without a surface of its own. Reduced motion draws one still frame.
-// UNSTABLE: new; Aurora first, Figma's other types to follow.
+// UNSTABLE: new, and the design has not reviewed it on devices.
 import { useEffect, useState, type ComponentPropsWithRef, type JSX } from 'react';
 import { cx } from '../../_internal/cx';
 import { mergeProps } from '../../contracts/merge-props';
-import { startShaderSurface, type ShaderSurfaceVariant } from './shader-surface-gl';
+import type { ShaderRun } from '../../_internal/shader-canvas';
+import { loadProgram, startShaderSurface, type ShaderSurfaceVariant } from './shader-surface-gl';
 
 export type { ShaderSurfaceVariant } from './shader-surface-gl';
 
 export interface ShaderSurfaceProps extends Omit<ComponentPropsWithRef<'span'>, 'children'> {
   /**
-   * Figma's Shader Surface type. `aurora` follows the theme; `aurora-dark` keeps its dark colours on
-   * a light page (CtaBand's band). @default 'aurora'
+   * Figma's Shader Surface type: `aurora` (soft curtains of light), `contour` (topographic lines),
+   * `dot-matrix` (a grid of dots in slow waves, always dark), `glow-orb` (GlowOrb's sphere in a glow),
+   * `rays` (strands of light) or `mesh` (a soft four-colour field). They follow the theme; a `-dark`
+   * one keeps its dark colours on a light page (CtaBand's band). @default 'aurora'
    */
   variant?: ShaderSurfaceVariant;
 }
@@ -31,11 +34,18 @@ export function ShaderSurface({
   const [canvas, setCanvas] = useState<HTMLCanvasElement | null>(null);
   const [ready, setReady] = useState(false);
 
-  // a new variant has new colours: the run starts again and reads them
+  // the variant's program loads first (its own chunk); a new variant starts a new run
   useEffect(() => {
     if (host === null || canvas === null) return undefined;
-    const started = startShaderSurface(host, canvas, variant, () => setReady(true));
-    return () => started?.destroy();
+    let run: ShaderRun | null = null;
+    let gone = false;
+    void loadProgram(variant).then((frag) => {
+      if (!gone) run = startShaderSurface(host, canvas, frag, () => setReady(true));
+    });
+    return () => {
+      gone = true;
+      run?.destroy();
+    };
   }, [host, canvas, variant]);
 
   return (

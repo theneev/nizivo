@@ -792,7 +792,17 @@
       "import": "@nizivo/react/unstable/shader-surface",
       "export": "ShaderSurface",
       "props": {
-        "variant": ["aurora", "aurora-dark"]
+        "variant": [
+          "aurora",
+          "aurora-dark",
+          "contour",
+          "contour-dark",
+          "dot-matrix",
+          "glow-orb",
+          "glow-orb-dark",
+          "mesh",
+          "rays"
+        ]
       }
     },
     "7389:72": {
@@ -801,7 +811,55 @@
       "import": "@nizivo/react/unstable/shader-surface",
       "export": "ShaderSurface",
       "props": {
-        "variant": ["aurora", "aurora-dark"]
+        "variant": [
+          "aurora",
+          "aurora-dark",
+          "contour",
+          "contour-dark",
+          "dot-matrix",
+          "glow-orb",
+          "glow-orb-dark",
+          "mesh",
+          "rays"
+        ]
+      }
+    },
+    "7389:73": {
+      "component": "shader-surface",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/shader-surface",
+      "export": "ShaderSurface",
+      "props": {
+        "variant": [
+          "aurora",
+          "aurora-dark",
+          "contour",
+          "contour-dark",
+          "dot-matrix",
+          "glow-orb",
+          "glow-orb-dark",
+          "mesh",
+          "rays"
+        ]
+      }
+    },
+    "7389:74": {
+      "component": "shader-surface",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/shader-surface",
+      "export": "ShaderSurface",
+      "props": {
+        "variant": [
+          "aurora",
+          "aurora-dark",
+          "contour",
+          "contour-dark",
+          "dot-matrix",
+          "glow-orb",
+          "glow-orb-dark",
+          "mesh",
+          "rays"
+        ]
       }
     },
     "7389:75": {
@@ -810,6 +868,44 @@
       "import": "@nizivo/react/unstable/glow-orb",
       "export": "GlowOrb",
       "props": {}
+    },
+    "7389:76": {
+      "component": "shader-surface",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/shader-surface",
+      "export": "ShaderSurface",
+      "props": {
+        "variant": [
+          "aurora",
+          "aurora-dark",
+          "contour",
+          "contour-dark",
+          "dot-matrix",
+          "glow-orb",
+          "glow-orb-dark",
+          "mesh",
+          "rays"
+        ]
+      }
+    },
+    "7389:77": {
+      "component": "shader-surface",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/shader-surface",
+      "export": "ShaderSurface",
+      "props": {
+        "variant": [
+          "aurora",
+          "aurora-dark",
+          "contour",
+          "contour-dark",
+          "dot-matrix",
+          "glow-orb",
+          "glow-orb-dark",
+          "mesh",
+          "rays"
+        ]
+      }
     },
     "7390:123": {
       "component": "ticker",
@@ -1134,6 +1230,25 @@
       "import": "@nizivo/react/unstable/docs-card",
       "export": "DocsCard",
       "props": {}
+    },
+    "7425:14045": {
+      "component": "shader-surface",
+      "role": "canonical",
+      "import": "@nizivo/react/unstable/shader-surface",
+      "export": "ShaderSurface",
+      "props": {
+        "variant": [
+          "aurora",
+          "aurora-dark",
+          "contour",
+          "contour-dark",
+          "dot-matrix",
+          "glow-orb",
+          "glow-orb-dark",
+          "mesh",
+          "rays"
+        ]
+      }
     }
   }
 }

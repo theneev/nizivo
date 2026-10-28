@@ -12,7 +12,10 @@ export type Rgba = [number, number, number, number];
 export interface ShaderProgram<Read> {
   frag: string;
   read(css: CSSStyleDeclaration): Read;
-  /** Sets the frame's uniforms; `dt` is 0 for a still frame. `u_res` and `u_t` are set already. */
+  /**
+   * Sets the frame's uniforms; `dt` is 0 for a still frame. `u_res` (device pixels), `u_t` (seconds)
+   * and `u_dpr` (device pixels per CSS pixel) are set already.
+   */
   frame(
     gl: WebGLRenderingContext,
     at: (name: string) => WebGLUniformLocation | null,
@@ -25,8 +28,15 @@ export interface ShaderProgram<Read> {
 export interface ShaderRun {
   /** Draws again after a change, or restarts the loop after a pause. */
   wake(): void;
+  /** Stops, and gives the WebGL context back (a page may hold about sixteen at once). */
   destroy(): void;
 }
+
+/**
+ * The lose-context extension of each canvas whose context a run gave back, so a run that starts on
+ * the same canvas again (React mounts an effect twice in development) can ask for it back.
+ */
+const released = new WeakMap<HTMLCanvasElement, WEBGL_lose_context>();
 
 const VERT = 'attribute vec2 a_pos; void main() { gl_Position = vec4(a_pos, 0.0, 1.0); }';
 
@@ -39,10 +49,10 @@ function alphaOf(value: string | undefined, percent: string | undefined): number
 }
 
 /**
- * A computed colour as 0 to 1 sRGB and alpha. Browsers compute the tokens' hex values as `rgb()` and
- * a `color-mix(in srgb, …)` as `color(srgb …)`, both read here; any other syntax (a hook set to
- * `oklch()`, say) goes through a 1×1 2D canvas. Reading pixels back from a canvas stalls the GPU, so
- * that path is the exception.
+ * A computed colour as 0 to 1 sRGB and alpha. The shaders' CSS wraps every colour it hands over in
+ * `color-mix(in srgb, …)`, which browsers compute as `color(srgb …)` whatever the token or hook's own
+ * syntax; `rgb()` is read too. Anything else reads as transparent black (no pixel read-back, which
+ * stalls the GPU).
  */
 export function rgba(css: string): Rgba {
   const rgb = RGB.exec(css);
@@ -55,16 +65,9 @@ export function rgba(css: string): Rgba {
     ];
   }
   const srgb = SRGB.exec(css);
-  if (srgb !== null) {
-    return [Number(srgb[1]), Number(srgb[2]), Number(srgb[3]), alphaOf(srgb[4], srgb[5])];
-  }
-  const probe = document.createElement('canvas').getContext('2d', { willReadFrequently: true });
-  if (probe === null) return [0, 0, 0, 0];
-  probe.fillStyle = '#000';
-  probe.fillStyle = css;
-  probe.fillRect(0, 0, 1, 1);
-  const [r = 0, g = 0, b = 0, a = 0] = probe.getImageData(0, 0, 1, 1).data;
-  return [r / 255, g / 255, b / 255, a / 255];
+  return srgb === null
+    ? [0, 0, 0, 0]
+    : [Number(srgb[1]), Number(srgb[2]), Number(srgb[3]), alphaOf(srgb[4], srgb[5])];
 }
 
 /** A shared GLSL prelude: the grain hash and a smooth 2D value noise. */
@@ -104,9 +107,36 @@ function compile(gl: WebGLRenderingContext, frag: string): WebGLProgram | null {
 
 /**
  * Runs `shader` on `canvas`, sized to `host`; `null` when there is no WebGL (the poster stays).
- * `onReady` runs once the first frame is drawn.
+ * `onReady` runs once the first frame is drawn. On a canvas whose context an earlier run gave back,
+ * it asks for the context again and starts once it is restored.
  */
 export function runShader<Read>(
+  host: HTMLElement,
+  canvas: HTMLCanvasElement,
+  shader: ShaderProgram<Read>,
+  onReady: () => void,
+): ShaderRun | null {
+  const lost = released.get(canvas);
+  if (lost === undefined) return start(host, canvas, shader, onReady);
+  released.delete(canvas);
+  let run: ShaderRun | null = null;
+  let stopped = false;
+  const restored = (): void => {
+    if (!stopped) run = start(host, canvas, shader, onReady);
+  };
+  canvas.addEventListener('webglcontextrestored', restored, { once: true });
+  lost.restoreContext();
+  return {
+    wake: () => run?.wake(),
+    destroy() {
+      stopped = true;
+      canvas.removeEventListener('webglcontextrestored', restored);
+      run?.destroy();
+    },
+  };
+}
+
+function start<Read>(
   host: HTMLElement,
   canvas: HTMLCanvasElement,
   shader: ShaderProgram<Read>,
@@ -142,6 +172,8 @@ export function runShader<Read>(
   let clock = 0;
   let ready = false;
   let lost = false;
+  let ratio = 1;
+  const losing = gl.getExtension('WEBGL_lose_context');
 
   const still = (): boolean => reducedMotion(host);
   const running = (): boolean => !lost && visible && !document.hidden && !still();
@@ -150,6 +182,7 @@ export function runShader<Read>(
     gl.viewport(0, 0, canvas.width, canvas.height);
     gl.uniform2f(at('u_res'), canvas.width, canvas.height);
     gl.uniform1f(at('u_t'), clock);
+    gl.uniform1f(at('u_dpr'), ratio);
     shader.frame(gl, at, read, clock, dt);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
     if (!ready) {
@@ -183,7 +216,7 @@ export function runShader<Read>(
   };
 
   const resize = (): void => {
-    const ratio = Math.min(window.devicePixelRatio || 1, 2);
+    ratio = Math.min(window.devicePixelRatio || 1, 2);
     const box = host.getBoundingClientRect();
     canvas.width = Math.max(1, Math.round(box.width * ratio));
     canvas.height = Math.max(1, Math.round(box.height * ratio));
@@ -230,6 +263,14 @@ export function runShader<Read>(
       document.removeEventListener('visibilitychange', wake);
       canvas.removeEventListener('webglcontextlost', onLost);
       gl.deleteProgram(program);
+      if (losing !== null) {
+        // cancelled, so the context may be restored if a run starts on this canvas again
+        canvas.addEventListener('webglcontextlost', (event) => event.preventDefault(), {
+          once: true,
+        });
+        released.set(canvas, losing);
+        losing.loseContext();
+      }
     },
   };
 }

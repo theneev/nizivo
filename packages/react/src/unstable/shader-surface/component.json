@@ -7,12 +7,22 @@
   "stateIndicator": [],
   "cssDeps": ["base"],
   "variants": {
-    "variant": ["aurora", "aurora-dark"]
+    "variant": [
+      "aurora",
+      "aurora-dark",
+      "contour",
+      "contour-dark",
+      "dot-matrix",
+      "glow-orb",
+      "glow-orb-dark",
+      "mesh",
+      "rays"
+    ]
   },
   "figma": {
-    "canonical": ["7389:71", "7389:72"],
+    "canonical": ["7389:71", "7389:72", "7389:73", "7425:14045", "7389:74", "7389:76", "7389:77"],
     "ghosts": [],
-    "variantsSeen": [],
+    "variantsSeen": ["7389:75", "7425:14046"],
     "related": ["7389:78", "7394:50", "7395:80", "7397:114"]
   }
 }

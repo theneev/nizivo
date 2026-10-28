@@ -16,6 +16,48 @@ export interface GlowOrbInput {
   level: number | (() => number) | undefined;
 }
 
+/**
+ * The orb as a GLSL function, shared with ShaderSurface's Glow Orb background: the sphere and its halo
+ * at `p` (a unit of half the square's side), premultiplied. `clip` fades the halo out before the
+ * square's edge (GlowOrb's own box); 0 lets it spread over a wider surface.
+ */
+export const GLSL_ORB = `
+vec4 glowOrb(vec2 p, float aa, float t, float level, float live, vec3 light, vec3 deep, vec4 haloColour, float clip) {
+  float d = length(p);
+  float a = atan(p.y, p.x);
+
+  float wob = 0.006 * sin(3.0 * a + t * 0.9) + 0.004 * sin(5.0 * a - t * 1.3)
+    + 0.003 * sin(2.0 * a + t * 0.55);
+  wob *= 1.0 + live * (0.5 + 1.8 * level);
+  float breathe = 0.012 * sin(t * 1.3);
+  float r = 0.66 * (1.0 + 0.11 * level + breathe * (1.0 - live * 0.5)) + wob;
+  float inside = 1.0 - smoothstep(r - aa, r + aa, d);
+
+  vec2 q = p / r;
+  float z = sqrt(max(1.0 - dot(q, q), 0.0));
+  vec3 n = normalize(vec3(q, z));
+  vec3 L = normalize(vec3(-0.55 + 0.16 * sin(t * 0.31), 0.60 + 0.12 * cos(t * 0.23), 0.78));
+  float diff = clamp(dot(n, L), 0.0, 1.0);
+
+  float lon = atan(n.x, n.z) + t * (0.12 + 0.25 * live);
+  float swirl = sin(3.0 * lon + 2.0 * n.y + t * 0.4) * sin(2.0 * n.y - lon * 1.5 - t * 0.3);
+  vec3 base = mix(deep, light, smoothstep(0.08, 0.92, diff + 0.06 * swirl));
+  base += light * pow(clamp(dot(-n, L) * 0.5 + 0.5, 0.0, 1.0), 3.0) * 0.12;
+  float fres = pow(1.0 - z, 3.0);
+  vec3 room = mix(deep * 0.7, vec3(1.0), clamp(n.y * 0.5 + 0.55, 0.0, 1.0));
+  base = mix(base, room, fres * 0.35);
+  float nh = clamp(dot(n, normalize(L + vec3(0.0, 0.0, 1.0))), 0.0, 1.0);
+  vec3 sphere = base + vec3(1.0) * (pow(nh, 140.0) * 0.75 + pow(nh, 22.0) * 0.14);
+  sphere *= 0.86 + 0.14 * smoothstep(-0.2, 0.4, dot(n, L));
+
+  float w = 0.20 + 0.10 * level;
+  float halo = exp(-pow(max(d - r * 0.92, 0.0) / w, 2.0)) * (0.75 + 0.25 * level);
+  halo *= mix(1.0, 1.0 - smoothstep(0.94, 1.0, d), clip);
+  float haloA = halo * haloColour.a;
+
+  return vec4(sphere * inside + haloColour.rgb * haloA * (1.0 - inside), inside + haloA * (1.0 - inside));
+}`;
+
 const FRAG = `
 precision highp float;
 uniform vec2 u_res;
@@ -27,48 +69,14 @@ uniform vec3 u_deep;
 uniform vec4 u_halo;
 
 float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+${GLSL_ORB}
 
 void main() {
   float s = 0.5 * min(u_res.x, u_res.y);
   vec2 p = (gl_FragCoord.xy - 0.5 * u_res) / s;
-  float d = length(p);
-  float a = atan(p.y, p.x);
-  float t = u_t;
-
-  float wob = 0.006 * sin(3.0 * a + t * 0.9) + 0.004 * sin(5.0 * a - t * 1.3)
-    + 0.003 * sin(2.0 * a + t * 0.55);
-  wob *= 1.0 + u_live * (0.5 + 1.8 * u_level);
-  float breathe = 0.012 * sin(t * 1.3);
-  float r = 0.66 * (1.0 + 0.11 * u_level + breathe * (1.0 - u_live * 0.5)) + wob;
-  float aa = 1.6 / s;
-  float inside = 1.0 - smoothstep(r - aa, r + aa, d);
-
-  vec2 q = p / r;
-  float z = sqrt(max(1.0 - dot(q, q), 0.0));
-  vec3 n = normalize(vec3(q, z));
-  vec3 L = normalize(vec3(-0.55 + 0.16 * sin(t * 0.31), 0.60 + 0.12 * cos(t * 0.23), 0.78));
-  float diff = clamp(dot(n, L), 0.0, 1.0);
-
-  float lon = atan(n.x, n.z) + t * (0.12 + 0.25 * u_live);
-  float swirl = sin(3.0 * lon + 2.0 * n.y + t * 0.4) * sin(2.0 * n.y - lon * 1.5 - t * 0.3);
-  vec3 base = mix(u_deep, u_light, smoothstep(0.08, 0.92, diff + 0.06 * swirl));
-  base += u_light * pow(clamp(dot(-n, L) * 0.5 + 0.5, 0.0, 1.0), 3.0) * 0.12;
-  float fres = pow(1.0 - z, 3.0);
-  vec3 room = mix(u_deep * 0.7, vec3(1.0), clamp(n.y * 0.5 + 0.55, 0.0, 1.0));
-  base = mix(base, room, fres * 0.35);
-  float nh = clamp(dot(n, normalize(L + vec3(0.0, 0.0, 1.0))), 0.0, 1.0);
-  vec3 sphere = base + vec3(1.0) * (pow(nh, 140.0) * 0.75 + pow(nh, 22.0) * 0.14);
-  sphere *= 0.86 + 0.14 * smoothstep(-0.2, 0.4, dot(n, L));
-
-  float w = 0.20 + 0.10 * u_level;
-  float halo = exp(-pow(max(d - r * 0.92, 0.0) / w, 2.0)) * (0.75 + 0.25 * u_level);
-  halo *= 1.0 - smoothstep(0.94, 1.0, d);
-  float haloA = halo * u_halo.a;
-
-  vec3 rgb = sphere * inside + u_halo.rgb * haloA * (1.0 - inside);
-  float alpha = inside + haloA * (1.0 - inside);
-  rgb += (hash(gl_FragCoord.xy + fract(t) * 17.0) - 0.5) * (1.5 / 255.0) * alpha;
-  gl_FragColor = vec4(rgb, alpha);
+  vec4 orb = glowOrb(p, 1.6 / s, u_t, u_level, u_live, u_light, u_deep, u_halo, 1.0);
+  orb.rgb += (hash(gl_FragCoord.xy + fract(u_t) * 17.0) - 0.5) * (1.5 / 255.0) * orb.a;
+  gl_FragColor = orb;
 }`;
 
 /** A 0 to 1 hash of an integer. */

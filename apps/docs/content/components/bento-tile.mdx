@@ -11,7 +11,8 @@ description: 'Unstable: a showcase tile for a bento grid, a background and a fro
 
 `title` (h3 by default) and `description` sit on the frosted caption card, never on the
 background. `size` spans the tile in a 12-column grid: `wide` 8 columns, `square` 4, `tall` 4 by 2
-rows. `background` takes a screenshot or a photo, or the design's Aurora shader,
-`<ShaderSurface />` ([ShaderSurface](/docs/components/shader-surface/)); without one, CSS gradients
+rows. `background` takes a screenshot or a photo, or the design's shader
+([ShaderSurface](/docs/components/shader-surface/)): `<ShaderSurface />` (Aurora) on a wide tile,
+`variant="glow-orb"` on a square one and `variant="contour"` on a tall one; without one, CSS gradients
 stand in. Without backdrop blur, or with reduced
 transparency, the card is opaque.

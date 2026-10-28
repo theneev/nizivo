@@ -1,5 +1,6 @@
 // ShaderSurface in a browser (M89, D-dv): the server HTML is the poster and hydrates unchanged;
-// WebGL draws, then the canvas covers the poster at the box's size × the pixel ratio (at most 2);
+// WebGL draws, then the canvas covers the poster at the box's size × the pixel ratio (at most 2), for
+// each of the nine variants (each program compiles in every engine);
 // without WebGL the poster stays; `aurora-dark` resolves its tokens in the dark scheme on a light
 // page; and in CtaBand's, BentoTile's and ProfileCard's slots it replaces their CSS stand-ins, with a
 // scrim behind CtaBand's text. The loop's pausing is the shared runtime's, checked in glow-orb.spec.
@@ -10,7 +11,10 @@ import { afterEach, describe, expect, test, vi } from 'vitest';
 import { BentoTile } from '../../src/unstable/bento-tile/bento-tile';
 import { CtaBand } from '../../src/unstable/cta-band/cta-band';
 import { ProfileCard } from '../../src/unstable/profile-card/profile-card';
-import { ShaderSurface } from '../../src/unstable/shader-surface/shader-surface.client';
+import {
+  ShaderSurface,
+  type ShaderSurfaceVariant,
+} from '../../src/unstable/shader-surface/shader-surface.client';
 
 const STYLES = import.meta.glob(
   [
@@ -100,6 +104,90 @@ describe('ShaderSurface', () => {
       if (!(canvas instanceof HTMLCanvasElement)) throw new Error('no canvas');
       expect(canvas.width).toBe(Math.round(480 * ratio));
       expect(canvas.height).toBe(Math.round(300 * ratio));
+    },
+  );
+
+  const VARIANTS: readonly ShaderSurfaceVariant[] = [
+    'aurora',
+    'aurora-dark',
+    'contour',
+    'contour-dark',
+    'dot-matrix',
+    'glow-orb',
+    'glow-orb-dark',
+    'mesh',
+    'rays',
+  ];
+
+  test.runIf(webgl)('every variant compiles and draws its first frame', async () => {
+    const container = await mount(
+      <>
+        {VARIANTS.map((variant) => (
+          <Box key={variant}>
+            <ShaderSurface variant={variant} />
+          </Box>
+        ))}
+      </>,
+    );
+    await vi.waitFor(() =>
+      expect(
+        [...container.querySelectorAll<HTMLElement>('.nz-shader-surface')]
+          .filter((el) => !one(el, '.nz-shader-surface-poster').hidden)
+          .map((el) => el.dataset['variant']),
+      ).toEqual([]),
+    );
+  });
+
+  test('the dark variants and Dot Matrix resolve their tokens in the dark scheme on a light page', async () => {
+    const container = await mount(
+      <>
+        {VARIANTS.map((variant) => (
+          <Box key={variant}>
+            <ShaderSurface variant={variant} />
+          </Box>
+        ))}
+      </>,
+    );
+    const schemes = Object.fromEntries(
+      [...container.querySelectorAll<HTMLElement>('.nz-shader-surface')].map((el) => [
+        el.dataset['variant'],
+        getComputedStyle(el).colorScheme,
+      ]),
+    );
+    expect(
+      Object.keys(schemes)
+        .filter((v) => schemes[v] === 'dark')
+        .toSorted(),
+    ).toEqual(['aurora-dark', 'contour-dark', 'dot-matrix', 'glow-orb-dark']);
+  });
+
+  test.runIf(webgl)(
+    'an unmounted surface gives its WebGL context back: the first of 25 keeps its own',
+    async () => {
+      // A page holds about sixteen contexts; past that the browser takes the oldest one away. The
+      // first surface stays while 24 others come and go: if they kept theirs, it would lose its own.
+      const first = await mount(
+        <Box>
+          <ShaderSurface />
+        </Box>,
+      );
+      const kept = roots.pop();
+      await vi.waitFor(() => expect(one(first, '.nz-shader-surface-poster').hidden).toBe(true));
+      let lost = 0;
+      one(first, 'canvas').addEventListener('webglcontextlost', () => {
+        lost += 1;
+      });
+      for (let i = 0; i < 24; i += 1) {
+        // oxlint-disable-next-line no-await-in-loop -- one surface at a time, as a page swaps them
+        await mount(
+          <Box>
+            <ShaderSurface variant={VARIANTS[i % VARIANTS.length] ?? 'aurora'} />
+          </Box>,
+        );
+        roots.pop()?.unmount();
+      }
+      expect(lost).toBe(0);
+      kept?.unmount();
     },
   );
 

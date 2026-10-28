@@ -207,7 +207,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /unstable/feature-card       |      890 |        0.9 |        813 |           1 |          134 |
 | /unstable/feedback-bar       |   19,656 |       19.2 |     17,764 |        21.2 |        2,052 |
 | /unstable/file-item          |    2,065 |        2.0 |      1,883 |         2.3 |          290 |
-| /unstable/glow-orb           |    3,627 |        3.5 |      3,291 |         3.7 |          161 |
+| /unstable/glow-orb           |    3,764 |        3.7 |      3,447 |         3.7 |           24 |
 | /unstable/inline-assist      |    1,698 |        1.7 |      1,553 |         1.9 |          247 |
 | /unstable/link               |    1,069 |        1.0 |        974 |         1.2 |          159 |
 | /unstable/live-pulse         |      793 |        0.8 |        722 |         0.9 |          128 |
@@ -220,7 +220,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /unstable/rating             |    1,551 |        1.5 |      1,412 |         1.7 |          189 |
 | /unstable/response-block     |    2,319 |        2.3 |      2,080 |         2.5 |          241 |
 | /unstable/section-header     |      845 |        0.8 |        769 |           1 |          179 |
-| /unstable/shader-surface     |    3,248 |        3.2 |      2,926 |         3.5 |          336 |
+| /unstable/shader-surface     |    2,987 |        2.9 |      2,680 |         3.5 |          597 |
 | /unstable/site-footer        |      976 |        1.0 |        909 |         1.1 |          150 |
 | /unstable/site-navbar        |    1,194 |        1.2 |      1,101 |         1.3 |          137 |
 | /unstable/slider             |    1,362 |        1.3 |      1,249 |         1.4 |           71 |
@@ -319,7 +319,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | own: unstable/model-selector/model-selector.client       |      764 |        0.7 |        696 |         0.8 |           55 |
 | own: unstable/newsletter-signup/newsletter-signup.client |      907 |        0.9 |        789 |           1 |          117 |
 | own: unstable/prompt-composer/prompt-composer.client     |      747 |        0.7 |        648 |         0.9 |          174 |
-| own: unstable/shader-surface/shader-surface.client       |      388 |        0.4 |        352 |         0.5 |          124 |
+| own: unstable/shader-surface/shader-surface.client       |      427 |        0.4 |        388 |         0.5 |           85 |
 | own: unstable/slider/slider.client                       |      842 |        0.8 |        765 |           1 |          182 |
 | own: unstable/word-rotator/word-rotator.client           |      686 |        0.7 |        636 |         0.8 |          133 |
 
@@ -378,7 +378,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/file-item.css          |      683 |        0.7 |        581 |         0.8 |          136 |
 | /css/file-upload.css        |    1,261 |        1.2 |      1,058 |         1.4 |          172 |
 | /css/form.css               |      280 |        0.3 |        225 |         0.4 |          129 |
-| /css/glow-orb.css           |      521 |        0.5 |        432 |         0.6 |           93 |
+| /css/glow-orb.css           |      530 |        0.5 |        449 |         0.6 |           84 |
 | /css/grid.css               |      531 |        0.5 |        423 |         0.6 |           83 |
 | /css/heading.css            |      390 |        0.4 |        318 |         0.5 |          122 |
 | /css/icon-button.css        |    1,004 |        1.0 |        852 |         1.1 |          122 |
@@ -425,7 +425,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/segmented-control.css  |    1,040 |        1.0 |        861 |         1.1 |           86 |
 | /css/select.css             |    1,290 |        1.3 |      1,088 |         1.4 |          143 |
 | /css/separator.css          |      261 |        0.3 |        203 |         0.3 |           46 |
-| /css/shader-surface.css     |      451 |        0.4 |        373 |         0.5 |           61 |
+| /css/shader-surface.css     |      509 |        0.5 |        443 |         0.5 |            3 |
 | /css/sidebar.css            |      928 |        0.9 |        753 |           1 |           96 |
 | /css/site-footer.css        |      505 |        0.5 |        407 |         0.6 |          109 |
 | /css/site-navbar.css        |      785 |        0.8 |        637 |         0.9 |          136 |

@@ -13,8 +13,13 @@
     inline-size: 100%;
     block-size: 100%;
     aspect-ratio: 1;
-    color: var(--nz-glow-orb-light, var(--nz-bg-accent));
-    outline-color: var(--nz-glow-orb-deep, var(--nz-bg-brand));
+    /* each in color-mix(in srgb), so it computes as color(srgb …), the form the shader reads */
+    color: color-mix(in srgb, var(--nz-glow-orb-light, var(--nz-bg-accent)) 100%, transparent);
+    outline-color: color-mix(
+      in srgb,
+      var(--nz-glow-orb-deep, var(--nz-bg-brand)) 100%,
+      transparent
+    );
     /* the halo: half the accent, half bg/brand-muted (green-100, or green-900 in dark), so it is pale
        on a light page and a soft green on a dark one, at 55 % (its alpha is the halo's strength) */
     text-decoration-color: var(

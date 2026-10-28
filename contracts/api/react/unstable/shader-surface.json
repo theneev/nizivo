@@ -7,7 +7,17 @@
     "stylesheet": "./css/shader-surface.css",
     "tier": "client",
     "variants": {
-      "variant": ["aurora", "aurora-dark"]
+      "variant": [
+        "aurora",
+        "aurora-dark",
+        "contour",
+        "contour-dark",
+        "dot-matrix",
+        "glow-orb",
+        "glow-orb-dark",
+        "mesh",
+        "rays"
+      ]
     }
   },
   "entry": "./unstable/shader-surface",
@@ -29,11 +39,21 @@
       "props": [
         {
           "default": "'aurora'",
-          "description": "Figma's Shader Surface type. `aurora` follows the theme; `aurora-dark` keeps its dark colours on a light page (CtaBand's band).",
+          "description": "Figma's Shader Surface type: `aurora` (soft curtains of light), `contour` (topographic lines), `dot-matrix` (a grid of dots in slow waves, always dark), `glow-orb` (GlowOrb's sphere in a glow), `rays` (strands of light) or `mesh` (a soft four-colour field). They follow the theme; a `-dark` one keeps its dark colours on a light page (CtaBand's band).",
           "name": "variant",
           "required": false,
           "type": "ShaderSurfaceVariant",
-          "values": ["aurora", "aurora-dark"]
+          "values": [
+            "aurora",
+            "aurora-dark",
+            "contour",
+            "contour-dark",
+            "dot-matrix",
+            "glow-orb",
+            "glow-orb-dark",
+            "mesh",
+            "rays"
+          ]
         }
       ],
       "propsType": "ShaderSurfaceProps",
@@ -52,14 +72,24 @@
     },
     {
       "declaration": "type",
-      "description": "Figma's Shader Surface types built so far; the dark one keeps its dark colours on a light page.",
+      "description": "Figma's Shader Surface types; a `-dark` one keeps its dark colours on a light page.",
       "import": "import type { ShaderSurfaceVariant } from '@nizivo/react/unstable/shader-surface'",
       "kind": "type",
       "name": "ShaderSurfaceVariant",
       "source": "packages/react/src/unstable/shader-surface/shader-surface-gl.ts",
-      "text": "\"aurora\" | \"aurora-dark\"",
+      "text": "\"aurora\" | \"aurora-dark\" | \"contour\" | \"contour-dark\" | \"dot-matrix\" | \"glow-orb\" | \"glow-orb-dark\" | \"mesh\" | \"rays\"",
       "typeParameters": [],
-      "values": ["aurora", "aurora-dark"]
+      "values": [
+        "aurora",
+        "aurora-dark",
+        "contour",
+        "contour-dark",
+        "dot-matrix",
+        "glow-orb",
+        "glow-orb-dark",
+        "mesh",
+        "rays"
+      ]
     }
   ],
   "package": "@nizivo/react",
@@ -71,7 +101,17 @@
           "meaning": "The variant prop; values in each component manifest",
           "name": "data-variant",
           "prop": "variant",
-          "values": ["aurora", "aurora-dark"]
+          "values": [
+            "aurora",
+            "aurora-dark",
+            "contour",
+            "contour-dark",
+            "dot-matrix",
+            "glow-orb",
+            "glow-orb-dark",
+            "mesh",
+            "rays"
+          ]
         }
       ],
       "interactive": false,

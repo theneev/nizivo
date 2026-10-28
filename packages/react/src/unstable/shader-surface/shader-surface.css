@@ -2,61 +2,82 @@
 
 /* @nizivo/react/css/shader-surface.css (Figma's Shader Surface 7389:78), UNSTABLE. A box that fills
    its parent; the canvas covers it once WebGL has drawn, and until then, or without WebGL, the poster
-   paints the same colours in CSS. The shader reads its colours from this element's computed logical
-   border colours (block start: the ground, inline end: the mid colour, block end: the curtains,
-   inline start: the deep colour),
-   which the variant sets from tokens: set the hooks to recolour it. Aurora's tokens match Figma's
-   colours: bg/accent-subtle, bg/brand-muted, bg/accent and bg/brand. `aurora-dark` resolves them in
-   the dark scheme on any page (`color-scheme: dark`), as CtaBand's dark band needs. */
+   paints the same colours in CSS. The shader reads four colours from this element's computed logical
+   border colours: block start the ground, inline end tone 1, block end tone 2, inline start tone 3.
+   Each variant sets them from tokens chosen to match Figma's colours; the hooks
+   `--nz-shader-surface-ground` and `--nz-shader-surface-tone-1` to `-3` recolour any variant. A
+   `-dark` variant, and Dot Matrix (dark in Figma only), resolve the tokens in the dark scheme on any
+   page (`color-scheme: dark`). */
 @layer nz.components {
   .nz-shader-surface {
+    /* Aurora and Dot Matrix: a pale ground (the darkest green in dark); every variant: mint, lime
+       and green, unless it sets its own below */
+    --_nz-shader-surface-ground: var(--nz-bg-accent-subtle);
+    --_nz-shader-surface-1: var(--nz-bg-brand-muted);
+    --_nz-shader-surface-2: var(--nz-bg-accent);
+    --_nz-shader-surface-3: var(--nz-bg-brand);
+
     position: relative;
     display: block;
     inline-size: 100%;
     block-size: 100%;
-    overflow: hidden;
-    border-block-start-color: var(--nz-shader-surface-ground, var(--nz-bg-accent-subtle));
-    border-inline-end-color: var(--nz-shader-surface-mid, var(--nz-bg-brand-muted));
-    border-block-end-color: var(--nz-shader-surface-curtain, var(--nz-bg-accent));
-    border-inline-start-color: var(--nz-shader-surface-deep, var(--nz-bg-brand));
+    border-block-start-color: var(--nz-shader-surface-ground, var(--_nz-shader-surface-ground));
+    border-inline-end-color: var(--nz-shader-surface-tone-1, var(--_nz-shader-surface-1));
+    border-block-end-color: var(--nz-shader-surface-tone-2, var(--_nz-shader-surface-2));
+    border-inline-start-color: var(--nz-shader-surface-tone-3, var(--_nz-shader-surface-3));
   }
 
-  .nz-shader-surface[data-variant='aurora-dark'] {
+  /* every variant but Aurora and Dot Matrix stands on the page's canvas */
+  .nz-shader-surface:not(
+    [data-variant='aurora'],
+    [data-variant='aurora-dark'],
+    [data-variant='dot-matrix']
+  ) {
+    --_nz-shader-surface-ground: var(--nz-bg-canvas);
+  }
+
+  /* Contour: pale green lines, a faint green tint, bold lines in brand */
+  .nz-shader-surface:is([data-variant='contour'], [data-variant='contour-dark']) {
+    --_nz-shader-surface-1: color-mix(in oklab, var(--nz-bg-brand) 25%, var(--nz-bg-canvas));
+    --_nz-shader-surface-2: var(--nz-bg-brand-subtle);
+  }
+
+  /* Glow Orb: a lime-green glow, the sphere in accent and brand */
+  .nz-shader-surface:is([data-variant='glow-orb'], [data-variant='glow-orb-dark']) {
+    --_nz-shader-surface-1: color-mix(in oklab, var(--nz-bg-accent) 35%, var(--nz-bg-brand-muted));
+  }
+
+  /* Rays: warm strands in icon/warning (Figma's raw amber #f5a63f is off the palette), lime and
+     green ones */
+  .nz-shader-surface[data-variant='rays'] {
+    --_nz-shader-surface-1: var(--nz-icon-warning);
+  }
+
+  .nz-shader-surface:is(
+    [data-variant='aurora-dark'],
+    [data-variant='contour-dark'],
+    [data-variant='glow-orb-dark'],
+    [data-variant='dot-matrix']
+  ) {
     color-scheme: dark;
   }
 
   .nz-shader-surface-canvas {
     position: absolute;
     inset: 0;
-    display: block;
     inline-size: 100%;
     block-size: 100%;
   }
 
-  /* the poster: Aurora's ground, its curtains as two soft blooms, the deep colour low */
+  /* the poster, for every variant: the ground running into tone 1 (no display of its own, so the
+     browser's [hidden] removes it once the canvas has drawn) */
   .nz-shader-surface-poster {
     position: absolute;
     inset: 0;
-    background:
-      radial-gradient(
-        40% 45% at 30% 45%,
-        color-mix(in oklab, var(--nz-shader-surface-curtain, var(--nz-bg-accent)) 65%, transparent),
-        transparent 75%
-      ),
-      radial-gradient(
-        30% 40% at 78% 50%,
-        color-mix(in oklab, var(--nz-shader-surface-curtain, var(--nz-bg-accent)) 40%, transparent),
-        transparent 75%
-      ),
-      linear-gradient(
-        180deg,
-        var(--nz-shader-surface-ground, var(--nz-bg-accent-subtle)) 15%,
-        var(--nz-shader-surface-mid, var(--nz-bg-brand-muted))
-      );
-
-    &[hidden] {
-      display: none;
-    }
+    background: linear-gradient(
+      var(--nz-shader-surface-ground, var(--_nz-shader-surface-ground)) 15%,
+      var(--nz-shader-surface-tone-1, var(--_nz-shader-surface-1))
+    );
   }
 
   /* the canvas is a picture of colour: forced colours leave the box to the system's colours */
