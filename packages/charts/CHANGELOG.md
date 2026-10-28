@@ -1,5 +1,11 @@
 # @nizivo/charts
 
+## 0.5.0
+
+### Patch Changes
+
+- @nizivo/tokens@0.5.0
+
 ## 0.4.0
 
 ### Patch Changes

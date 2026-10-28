@@ -1,6 +1,6 @@
 {
   "name": "@nizivo/charts",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Nizivo charts: server-first SVG charts with one small interaction island, themed by @nizivo/tokens",
   "keywords": [
     "charts",

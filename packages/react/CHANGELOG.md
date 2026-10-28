@@ -1,5 +1,58 @@
 # @nizivo/react
 
+## 0.5.0
+
+### Minor Changes
+
+- 85ab812: The unstable CommandMenu takes results from a server, caps its groups and says how many rows show.
+  `filter="none"` on `CommandMenu.Popup` shows every item as given, `query`, `defaultQuery` and
+  `onQueryChange` make the search text yours to fetch with, and `loading` on `CommandMenu.List` marks
+  the list busy and shows "Searching…" while it has no rows. `limit` on `CommandMenu.Group` shows at
+  most that many of its matching rows, and the arrow keys skip the rest; a group with no matching row
+  is left out with its heading. Once the typing stops, a polite live region says "Results: {count}"
+  or "No results". Two strings join `enUS.commandMenu`: `loading` and `results`.
+- d1d616b: The unstable CommandMenu renders long lists in part: `virtualized` on `CommandMenu.List` keeps only
+  the rows in view in the page, in a fixed 20rem box, while the arrow keys, the search and the spoken
+  count still cover every row; the virtualizer loads in a chunk of its own, only for a virtualized
+  list. A row with `href` now renders an `<a>`, as React Aria's MenuItem expects (it warned in
+  development), so it opens in a new tab like any link; in forced colours its text takes the system's
+  link colour, as Menu's link rows do.
+- 31fd77c: New, unstable: `GlowOrb` (`@nizivo/react/unstable/glow-orb`), the voice orb as a WebGL shader with no
+  dependency. A glossy sphere that grows with the voice `level` (a number, or a function read each
+  frame), its outline moving while it listens or speaks and its light drifting so the highlight
+  changes angle; without a level it simulates a voice for its `state`. Pass it as VoiceOrb's `orb`.
+  It draws only on screen, at a pixel ratio of at most 2, one still frame under Reduced motion, and
+  shows VoiceOrb's CSS orb on the server and where WebGL is missing. `--nz-glow-orb-light`,
+  `--nz-glow-orb-deep` and `--nz-glow-orb-halo` recolour it.
+- 809812a: The unstable `ShaderSurface` has every type the design's Shader Surface has: `contour` and
+  `contour-dark` (topographic lines), `dot-matrix` (a grid of dots in slow waves, always dark),
+  `glow-orb` and `glow-orb-dark` (GlowOrb's sphere in a glow), `rays` (fine strands of light) and `mesh`
+  (a soft four-colour field), beside `aurora` and `aurora-dark`. Each variant's shader loads when the
+  first surface of that variant mounts. BentoTile's square and tall tiles take Glow Orb and Contour, as
+  the design draws them. The colour hooks are now `--nz-shader-surface-ground` and
+  `--nz-shader-surface-tone-1` to `-tone-3`, for every variant. GlowOrb and ShaderSurface now give
+  their WebGL context back when they unmount, so a page that mounts many in turn never runs out.
+- 370a6ba: New, unstable: `ShaderSurface` (`@nizivo/react/unstable/shader-surface`), the design's Shader Surface
+  as a dependency-free WebGL background, with Aurora first: `variant="aurora"` follows the theme and
+  `"aurora-dark"` stays dark on a light page. Pass it as CtaBand's `background`, BentoTile's
+  `background` or ProfileCard's `cover`, which then drop their CSS stand-ins; CtaBand keeps a soft dark
+  scrim behind its text. It shares GlowOrb's runtime: it draws only on screen, at a pixel ratio of at
+  most 2, one still frame under Reduced motion, and shows a CSS poster on the server and where WebGL is
+  missing.
+
+### Patch Changes
+
+- 38c4441: The unstable AiWelcome takes `GlowOrb` in its `orb` slot (`orb={<GlowOrb />}`) and drops its own CSS
+  halo behind it, as VoiceOrb does.
+- 460660a: Select's trigger no longer names ids that are not on the page in its server HTML, which is what a
+  page shows before hydration and without JavaScript. Outside a Field, or in a Field with no
+  description or error, its `aria-describedby` named React Aria's own description and error ids,
+  which Nizivo never renders; it now carries only the Field's ids and the trigger's own
+  `aria-describedby`. With an `aria-label` and an `id` of its own (a Field's, or one passed to
+  `Select.Trigger`), its `aria-labelledby` named React Aria's generated id for the trigger, and now
+  names the trigger's real id.
+- @nizivo/tokens@0.5.0
+
 ## 0.4.0
 
 ### Minor Changes
