@@ -9,4 +9,4 @@ button, to complete or an error with Retry, read once when complete; `ToolCallCa
 `FeedbackBar` (`./unstable/feedback-bar`) is a thumbs up and down that toggle, with optional reasons;
 `ApprovalCard` (`./unstable/approval-card`) asks before an action that cannot be undone, with focus on
 Cancel and Escape to cancel. ResponseBlock and ToolCallCard are server parts. Their strings join the
-en-US catalogue.
+unstable catalogue (`./locales/en-US-unstable`).

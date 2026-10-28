@@ -143,7 +143,8 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /input                       |    1,837 |        1.8 |      1,662 |           2 |          211 |
 | /kbd                         |    1,192 |        1.2 |      1,087 |         1.3 |          139 |
 | /kpi-tile                    |    2,324 |        2.3 |      2,110 |         2.5 |          236 |
-| /locales/en-US               |    1,806 |        1.8 |      1,523 |         1.8 |           37 |
+| /locales/en-US               |      918 |        0.9 |        767 |           1 |          106 |
+| /locales/en-US-unstable      |    1,058 |        1.0 |        861 |         1.2 |          170 |
 | /menu                        |   57,165 |       55.8 |     49,386 |          57 |        1,203 |
 | /meter                       |    1,143 |        1.1 |      1,058 |         1.3 |          188 |
 | /metric                      |    2,145 |        2.1 |      1,954 |         2.4 |          312 |
@@ -464,7 +465,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /custom-media.css |      166 |        0.2 |        126 |         0.2 |           38 |
 | /tailwind.css     |      811 |        0.8 |        711 |         0.9 |          110 |
 | /tokens.css       |    3,949 |        3.9 |      3,273 |         4.2 |          351 |
-| /tokens.json      |   10,360 |       10.1 |      8,236 |          12 |        1,928 |
+| /tokens.json      |    8,961 |        8.8 |      7,272 |          12 |        3,327 |
 
 #### `@nizivo/icons`: Public JS entries (bundled with what they import, React Aria included)
 

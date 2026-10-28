@@ -16,6 +16,7 @@ import { FileUpload } from '../../src/file-upload/index';
 import { Form, SubmitButton } from '../../src/form/index';
 import { Input } from '../../src/input/index';
 import { enUS } from '../../src/locales/en-US';
+import { enUSUnstable } from '../../src/locales/en-US-unstable';
 import { MobileTabBarMore } from '../../src/mobile-tab-bar/index';
 import { NavItem } from '../../src/nav-item/index';
 import { Pagination } from '../../src/pagination/index';
@@ -33,7 +34,8 @@ const SRC = rekey(
   'src/',
 );
 
-type Key = keyof typeof enUS;
+/** Every key of both catalogues: NizivoLabels covers the stable and the unstable parts (D-dr). */
+type Key = keyof typeof enUS | keyof typeof enUSUnstable;
 
 /** The catalogue keys NizivoConfig's labels reach, and the client module that reads each. */
 const REACHED: Partial<Record<Key, string>> = {
@@ -106,7 +108,7 @@ const NOT_REACHED: Partial<Record<Key, string>> = {
 
 describe('which parts read NizivoConfig labels', () => {
   test('every catalogue key is either reached or listed with a reason', () => {
-    const keys = Object.keys(enUS).toSorted();
+    const keys = [...Object.keys(enUS), ...Object.keys(enUSUnstable)].toSorted();
     expect([...Object.keys(REACHED), ...Object.keys(NOT_REACHED)].toSorted()).toEqual(keys);
   });
 

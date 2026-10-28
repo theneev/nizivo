@@ -7,6 +7,7 @@ import { describe, expect, test } from 'vitest';
 import { isClient, rekey } from '../helpers/graph';
 import { pluralLint } from '../helpers/plural-lint';
 import { enUS } from '../../src/locales/en-US';
+import { enUSUnstable } from '../../src/locales/en-US-unstable';
 
 type Catalogue = Readonly<Record<string, object>>;
 
@@ -35,7 +36,7 @@ const NOT_CATALOGUED: Record<string, string> = {
   NumberFieldLabels:
     "the step buttons' names are React Aria's localized ones unless `labels` sets them: engine-owned",
   NizivoLabels:
-    "NizivoConfig's `labels`: the catalogue's own shape, derived from it, not a part's strings",
+    "NizivoConfig's `labels`: the catalogues' own shape, derived from them, not a part's strings",
   SelectLabels: "`placeholder` is a prop whose default is React Aria's localized string",
   TooltipLabels: 'no strings',
 };
@@ -115,22 +116,14 @@ function catalogueTypes(text: string): Map<string, string> {
   );
 }
 
-/** Everything that differs between a catalogue and the sources' defaults. */
-function drift(
+/** One catalogue's entries against their Labels types: keys, `@default`s and the code's fallbacks. */
+function entryDrift(
   catalogue: Catalogue,
-  catalogueText: string,
+  keyed: Map<string, string>,
+  types: Map<string, LabelsType>,
   sources: Map<string, string>,
 ): string[] {
   const problems: string[] = [];
-  const types = labelsTypes(sources);
-  const keyed = catalogueTypes(catalogueText);
-  if ([...keyed.keys()].join() !== Object.keys(catalogue).join()) {
-    problems.push(
-      `the catalogue's type names ${[...keyed.keys()].join()}, its value ${Object.keys(catalogue).join()}`,
-    );
-  }
-  const catalogued = new Set(keyed.values());
-
   for (const [key, typeName] of keyed) {
     const type = types.get(typeName);
     if (type === undefined) {
@@ -162,6 +155,30 @@ function drift(
       }
     }
   }
+  return problems;
+}
+
+/**
+ * Everything that differs between the catalogues (`enUS` and `enUSUnstable`, each with its source
+ * text) and the sources' defaults. A Labels type or a fallback may be in either catalogue.
+ */
+function drift(
+  catalogues: readonly (readonly [Catalogue, string])[],
+  sources: Map<string, string>,
+): string[] {
+  const problems: string[] = [];
+  const types = labelsTypes(sources);
+  const catalogued = new Set<string>();
+  for (const [catalogue, catalogueText] of catalogues) {
+    const keyed = catalogueTypes(catalogueText);
+    if ([...keyed.keys()].join() !== Object.keys(catalogue).join()) {
+      problems.push(
+        `the catalogue's type names ${[...keyed.keys()].join()}, its value ${Object.keys(catalogue).join()}`,
+      );
+    }
+    for (const name of keyed.values()) catalogued.add(name);
+    problems.push(...entryDrift(catalogue, keyed, types, sources));
+  }
 
   for (const [name, type] of types) {
     if (!catalogued.has(name) && NOT_CATALOGUED[name] === undefined) {
@@ -184,11 +201,19 @@ function drift(
   return problems;
 }
 
-describe('locales/en-US', () => {
+/** Parts whose strings shipped in `./locales/en-US` with 0.3.0, while unstable; they stay there. */
+const UNSTABLE_IN_EN_US = ['commandMenu', 'dateRangePicker'];
+
+describe('locales/en-US and locales/en-US-unstable', () => {
   const text = SRC.get('src/locales/en-US.ts') ?? '';
+  const unstableText = SRC.get('src/locales/en-US-unstable.ts') ?? '';
+  const both = [
+    [enUS, text],
+    [enUSUnstable, unstableText],
+  ] as const;
 
   test('every entry equals the component default, and every default is in it', () => {
-    expect(drift(enUS, text, SRC)).toEqual([]);
+    expect(drift(both, SRC)).toEqual([]);
   });
 
   test('the drift check fails when a component default changes without the catalogue', () => {
@@ -202,34 +227,54 @@ describe('locales/en-US', () => {
       ),
     );
     expect(changed.get(button)).not.toBe(SRC.get(button));
-    expect(drift(enUS, text, changed)).toEqual([
-      'button.pending: catalogue "Loading…", code "Loading"',
-    ]);
+    expect(drift(both, changed)).toEqual(['button.pending: catalogue "Loading…", code "Loading"']);
 
     const store = 'src/toast/toaster.client.tsx';
     changed.set(
       store,
       (SRC.get(store) ?? '').replace("dismiss: 'Dismiss' }", "dismiss: 'Close' }"),
     );
-    expect(drift(enUS, text, changed)).toContain(
-      'toaster.dismiss: catalogue "Dismiss", code "Close"',
-    );
+    expect(drift(both, changed)).toContain('toaster.dismiss: catalogue "Dismiss", code "Close"');
 
     const docs = new Map(SRC);
     const metric = 'src/metric/metric.tsx';
     docs.set(metric, (SRC.get(metric) ?? '').replace("@default 'No data'", "@default 'Nothing'"));
-    expect(drift(enUS, text, docs)).toContain(
-      'metric.empty: catalogue "No data", @default "Nothing"',
+    expect(drift(both, docs)).toContain('metric.empty: catalogue "No data", @default "Nothing"');
+
+    const orb = 'src/unstable/voice-orb/voice-orb.tsx';
+    const unstable = new Map(SRC);
+    unstable.set(
+      orb,
+      (SRC.get(orb) ?? '').replace("labels?.idle ?? 'Tap to talk'", "labels?.idle ?? 'Tap'"),
     );
+    expect(unstable.get(orb)).not.toBe(SRC.get(orb));
+    expect(drift(both, unstable)).toEqual(['voiceOrb.idle: catalogue "Tap to talk", code "Tap"']);
   });
 
-  test('the module is the strings: no directive, type-only imports, one export', () => {
-    expect(isClient(text)).toBe(false);
-    const imports = text.match(/^import\b.*$/gm) ?? [];
-    expect(imports.length).toBeGreaterThan(0);
-    expect(imports.filter((line) => !line.startsWith('import type {'))).toEqual([]);
-    expect(text.match(/^export\b.*$/gm)).toEqual(['export const enUS: {']);
-    expect(Object.keys(LOCALES.get('src/locales/en-US.ts') ?? {})).toEqual(['enUS']);
+  test('each module is the strings: no directive, type-only imports, one export', () => {
+    for (const [file, name] of [
+      ['src/locales/en-US.ts', 'enUS'],
+      ['src/locales/en-US-unstable.ts', 'enUSUnstable'],
+    ] as const) {
+      const source = SRC.get(file) ?? '';
+      expect(isClient(source)).toBe(false);
+      const imports = source.match(/^import\b.*$/gm) ?? [];
+      expect(imports.length).toBeGreaterThan(0);
+      expect(imports.filter((line) => !line.startsWith('import type {'))).toEqual([]);
+      expect(source.match(/^export\b.*$/gm)).toEqual([`export const ${name}: {`]);
+      expect(Object.keys(LOCALES.get(file) ?? {})).toEqual([name]);
+    }
+  });
+
+  test('the unstable parts are in en-US-unstable, the stable ones in en-US (D-dr)', () => {
+    const types = labelsTypes(SRC);
+    const unstable = (typeName: string): boolean =>
+      types.get(typeName)?.file.startsWith('src/unstable/') ?? false;
+    const inStable = [...catalogueTypes(text)].filter(([, t]) => unstable(t)).map(([k]) => k);
+    expect(inStable.toSorted()).toEqual(UNSTABLE_IN_EN_US);
+    const stableInUnstable = [...catalogueTypes(unstableText)].filter(([, t]) => !unstable(t));
+    expect(stableInUnstable).toEqual([]);
+    expect(Object.keys(enUSUnstable).length).toBeGreaterThan(0);
   });
 });
 
@@ -237,7 +282,8 @@ describe('plural lint', () => {
   test('every catalogue under src/locales passes for its tag', () => {
     expect(LOCALES.size).toBeGreaterThan(0);
     for (const [path, module] of LOCALES) {
-      const tag = /src\/locales\/(.+)\.ts$/.exec(path)?.[1] ?? '';
+      // en-US-unstable is en-US's second file, not a locale of its own
+      const tag = (/src\/locales\/(.+)\.ts$/.exec(path)?.[1] ?? '').replace(/-unstable$/, '');
       const exported = Object.values(module);
       expect(exported).toHaveLength(1);
       expect({ path, problems: pluralLint(exported[0] ?? {}, tag) }).toEqual({

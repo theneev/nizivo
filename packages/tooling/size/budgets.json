@@ -158,8 +158,12 @@
       "limitKiB": 2.5
     },
     "@nizivo/react/locales/en-US": {
-      "measured": 1806,
-      "limitKiB": 1.8
+      "measured": 918,
+      "limitKiB": 1
+    },
+    "@nizivo/react/locales/en-US-unstable": {
+      "measured": 1058,
+      "limitKiB": 1.2
     },
     "@nizivo/react/menu": {
       "measured": 57165,
@@ -1322,7 +1326,7 @@
       "limitKiB": 4.2
     },
     "@nizivo/tokens/tokens.json": {
-      "measured": 10360,
+      "measured": 8961,
       "limitKiB": 12
     },
     "@nizivo/icons": {

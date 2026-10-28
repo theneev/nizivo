@@ -8,4 +8,4 @@ button; `SectionHeader` (`./unstable/section-header`), a section's heading and s
 `FeatureCard` (`./unstable/feature-card`), one benefit, plain, tinted or inverse; `StatBlock`
 (`./unstable/stat-block`), a headline number and its label, for a `<dl>`; and `TestimonialCard`
 (`./unstable/testimonial-card`), an attributed quote in a figure. AnnouncementBar's strings join
-the en-US catalogue.
+the unstable catalogue (`./locales/en-US-unstable`).

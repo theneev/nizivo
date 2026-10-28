@@ -7,4 +7,4 @@ v0.5 begins (unstable, Figma's Data Display and Product Patterns pages) with fou
 named remove button; `Rating` (`./unstable/rating`), a read-only score read as one sentence;
 `NotificationItem` (`./unstable/notification-item`), an activity row as one link that says
 "Unread"; `FileItem` (`./unstable/file-item`), an upload with real progress, a success mark or a
-written error, and cancel and retry buttons. Their strings join the en-US catalogue.
+written error, and cancel and retry buttons. Their strings join the unstable catalogue (`./locales/en-US-unstable`).

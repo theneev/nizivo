@@ -9,4 +9,4 @@ word, a polite status with CSS dots; `Citation` (`./unstable/citation`) links a 
 named "Source 1: …"; `SourceCard` (`./unstable/source-card`) is a web page or file as one link;
 `SuggestionChip` and `SuggestionGroup` (`./unstable/suggestion-chip`) are prompt starters that fill
 the composer; `UsageMeter` (`./unstable/usage-meter`) shows AI usage left on a Meter that warns from
-80 %. Their strings join the en-US catalogue.
+80 %. Their strings join the unstable catalogue (`./locales/en-US-unstable`).

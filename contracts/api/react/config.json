@@ -42,12 +42,12 @@
     },
     {
       "declaration": "type",
-      "description": "Built-in strings for every client part in the scope, shaped like the `enUS` catalogue (`@nizivo/react/locales/en-US`): keyed by component, every key and every string optional, so a whole catalogue of another locale fits. Read by the client parts the Strings guide lists; the other keys (server parts such as Pagination, Button and Breadcrumb, which cannot read a context, and AlertDismiss) are ignored here, and those parts take `labels` per instance.",
+      "description": "Built-in strings for every client part in the scope, shaped like the `enUS` and `enUSUnstable` catalogues (`@nizivo/react/locales/en-US` and `./locales/en-US-unstable`): keyed by component, every key and every string optional, so a whole catalogue of another locale fits. Read by the client parts the Strings guide lists; the other keys (server parts such as Pagination, Button and Breadcrumb, which cannot read a context, and AlertDismiss) are ignored here, and those parts take `labels` per instance. The unstable parts' keys change with those parts, outside semver.",
       "import": "import type { NizivoLabels } from '@nizivo/react/config'",
       "kind": "type",
       "name": "NizivoLabels",
       "source": "packages/react/src/config/config.client.tsx",
-      "text": "{ [K in keyof typeof enUS]?: Partial<(typeof enUS)[K]>; }",
+      "text": "{ [K in keyof Catalogues]?: Partial<Catalogues[K]>; }",
       "typeParameters": []
     }
   ],

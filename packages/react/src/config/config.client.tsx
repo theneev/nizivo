@@ -4,15 +4,20 @@
 // during render.
 import { createContext, use, useMemo, type JSX, type ReactNode } from 'react';
 import type { enUS } from '../locales/en-US';
+import type { enUSUnstable } from '../locales/en-US-unstable';
+
+/** Both catalogues' shapes: the stable parts' and the unstable parts' (D-dr). */
+type Catalogues = typeof enUS & typeof enUSUnstable;
 
 /**
- * Built-in strings for every client part in the scope, shaped like the `enUS` catalogue
- * (`@nizivo/react/locales/en-US`): keyed by component, every key and every string optional, so a
- * whole catalogue of another locale fits. Read by the client parts the Strings guide lists; the
- * other keys (server parts such as Pagination, Button and Breadcrumb, which cannot read a context,
- * and AlertDismiss) are ignored here, and those parts take `labels` per instance.
+ * Built-in strings for every client part in the scope, shaped like the `enUS` and `enUSUnstable`
+ * catalogues (`@nizivo/react/locales/en-US` and `./locales/en-US-unstable`): keyed by component,
+ * every key and every string optional, so a whole catalogue of another locale fits. Read by the
+ * client parts the Strings guide lists; the other keys (server parts such as Pagination, Button and
+ * Breadcrumb, which cannot read a context, and AlertDismiss) are ignored here, and those parts take
+ * `labels` per instance. The unstable parts' keys change with those parts, outside semver.
  */
-export type NizivoLabels = { [K in keyof typeof enUS]?: Partial<(typeof enUS)[K]> };
+export type NizivoLabels = { [K in keyof Catalogues]?: Partial<Catalogues[K]> };
 
 export interface NizivoConfigProps {
   /** BCP 47 tag used by engine-backed parts. @default 'en-US' */

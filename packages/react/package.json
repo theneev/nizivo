@@ -187,6 +187,10 @@
       "types": "./dist/locales/en-US.d.ts",
       "default": "./dist/locales/en-US.js"
     },
+    "./locales/en-US-unstable": {
+      "types": "./dist/locales/en-US-unstable.d.ts",
+      "default": "./dist/locales/en-US-unstable.js"
+    },
     "./menu": {
       "types": "./dist/menu/index.d.ts",
       "default": "./dist/menu/index.js"

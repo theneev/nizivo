@@ -30,6 +30,14 @@ Read it to see every string you need to translate, or copy its shape for your ow
 catalogue typed `typeof enUS` must give every string. A test keeps it equal to the components'
 defaults. See the [entry page](/docs/utilities/locales/en-US/) for its type.
 
+The unstable parts (`@nizivo/react/unstable/<name>`) keep their strings in a second catalogue,
+`@nizivo/react/locales/en-US-unstable`, which exports `enUSUnstable` in the same shape
+(`enUSUnstable.voiceOrb`, `enUSUnstable.copyButton`, …). It changes with those parts, outside
+semver, so a catalogue typed `typeof enUS` stays complete when an unstable part's strings change. An
+entry moves to `enUS` when its part becomes stable; CommandMenu's and DateRangePicker's shipped in
+`enUS` with 0.3.0 and stay there. `NizivoLabels` covers both, so one `labels` object reaches every
+client part. See its [entry page](/docs/utilities/locales/en-US-unstable/).
+
 Strings that React Aria renders from its own translations are not in `labels` and not in the
 catalogue: the visually hidden "Dismiss" buttons of the overlays, Select's "Select an item",
 NumberField's "Number field" role description and step buttons' names ("Increase Price"), and

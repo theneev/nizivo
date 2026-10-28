@@ -7,4 +7,4 @@ The AI kit gains the conversation (unstable): `ChatMessage` and `ChatLog`
 `role="log"` live region that holds them; `PromptComposer` (`./unstable/prompt-composer`) is a
 growing textarea with tools and a send button, Enter to send and Shift+Enter for a line;
 `AiWelcome` (`./unstable/ai-welcome`) is a new conversation's empty state. ChatMessage, ChatLog and
-AiWelcome are server parts. Their strings join the en-US catalogue.
+AiWelcome are server parts. Their strings join the unstable catalogue (`./locales/en-US-unstable`).
