@@ -147,6 +147,14 @@
       "renderedBy": "InlineAssist",
       "slot": "inline-assist-action",
       "stateIndicator": []
+    },
+    {
+      "attributes": [],
+      "interactive": false,
+      "part": false,
+      "renderedBy": "InlineAssist",
+      "slot": "inline-assist-label",
+      "stateIndicator": []
     }
   ],
   "version": 1

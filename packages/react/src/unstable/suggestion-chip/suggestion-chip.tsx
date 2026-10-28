@@ -43,7 +43,9 @@ export function SuggestionChip({
           <span className="nz-suggestion-chip-icon" aria-hidden="true">
             <SparklesGlyph />
           </span>
-          {children}
+          <span className="nz-suggestion-chip-label" data-slot="suggestion-chip-label">
+            {children}
+          </span>
         </>
       ),
     },

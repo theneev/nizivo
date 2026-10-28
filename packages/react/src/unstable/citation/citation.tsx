@@ -60,7 +60,11 @@ export function Citation({
       ...rest,
       href,
       className: cx('nz-citation', className),
-      children: new Intl.NumberFormat(locale).format(number),
+      children: (
+        <span className="nz-citation-number" data-slot="citation-number">
+          {new Intl.NumberFormat(locale).format(number)}
+        </span>
+      ),
     },
   );
 }

@@ -84,7 +84,9 @@ export function InlineAssist({
           {icon}
         </span>
       )}
-      {label}
+      <span className="nz-inline-assist-label" data-slot="inline-assist-label">
+        {label}
+      </span>
     </button>
   );
 

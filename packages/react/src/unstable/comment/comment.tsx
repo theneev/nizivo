@@ -102,7 +102,13 @@ export function Comment({
                   <span className="nz-comment-action-icon" aria-hidden="true">
                     <HeartGlyph />
                   </span>
-                  <span aria-hidden="true">{new Intl.NumberFormat(locale).format(likes)}</span>
+                  <span
+                    className="nz-comment-action-text"
+                    data-slot="comment-action-text"
+                    aria-hidden="true"
+                  >
+                    {new Intl.NumberFormat(locale).format(likes)}
+                  </span>
                 </button>
               )}
               {replyable && (
@@ -115,7 +121,9 @@ export function Comment({
                   <span className="nz-comment-action-icon" aria-hidden="true">
                     <MessageCircleGlyph />
                   </span>
-                  {labels?.reply ?? 'Reply'}
+                  <span className="nz-comment-action-text" data-slot="comment-action-text">
+                    {labels?.reply ?? 'Reply'}
+                  </span>
                 </button>
               )}
             </div>

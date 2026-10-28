@@ -109,6 +109,14 @@
       "renderedBy": "AiBadge",
       "slot": "ai-badge-icon",
       "stateIndicator": []
+    },
+    {
+      "attributes": [],
+      "interactive": false,
+      "part": false,
+      "renderedBy": "AiBadge",
+      "slot": "ai-badge-label",
+      "stateIndicator": []
     }
   ],
   "version": 1

@@ -25,7 +25,9 @@ export function LivePulse({ render, className, children, ...rest }: LivePulsePro
       children: (
         <>
           <span className="nz-live-pulse-dot" aria-hidden="true" />
-          {children}
+          <span className="nz-live-pulse-label" data-slot="live-pulse-label">
+            {children}
+          </span>
         </>
       ),
     },

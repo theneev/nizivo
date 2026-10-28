@@ -47,7 +47,9 @@ export function AiBadge({
           <span className="nz-ai-badge-icon" data-slot="ai-badge-icon" aria-hidden="true">
             <SparklesGlyph />
           </span>
-          {children ?? labels?.label ?? 'AI generated'}
+          <span className="nz-ai-badge-label" data-slot="ai-badge-label">
+            {children ?? labels?.label ?? 'AI generated'}
+          </span>
         </>
       ),
     },

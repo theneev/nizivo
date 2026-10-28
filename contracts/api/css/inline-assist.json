@@ -4,7 +4,8 @@
     "nz-inline-assist",
     "nz-inline-assist-action",
     "nz-inline-assist-divider",
-    "nz-inline-assist-icon"
+    "nz-inline-assist-icon",
+    "nz-inline-assist-label"
   ],
   "component": "inline-assist",
   "entry": "./css/inline-assist.css",

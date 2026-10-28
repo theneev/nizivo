@@ -65,6 +65,14 @@
       "renderedBy": "LivePulse",
       "slot": "live-pulse",
       "stateIndicator": []
+    },
+    {
+      "attributes": [],
+      "interactive": false,
+      "part": false,
+      "renderedBy": "LivePulse",
+      "slot": "live-pulse-label",
+      "stateIndicator": []
     }
   ],
   "version": 1

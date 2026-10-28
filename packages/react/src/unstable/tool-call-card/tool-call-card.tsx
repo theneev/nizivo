@@ -125,7 +125,12 @@ export function ToolCallCard({
               <span className="nz-tool-call-card-status-icon" aria-hidden="true">
                 {STATUS_GLYPH[status]}
               </span>
-              {L[status]}
+              <span
+                className="nz-tool-call-card-status-text"
+                data-slot="tool-call-card-status-text"
+              >
+                {L[status]}
+              </span>
             </span>
           </div>
           <ol className="nz-tool-call-card-steps" data-slot="tool-call-card-steps">

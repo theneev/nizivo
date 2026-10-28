@@ -76,7 +76,9 @@ export function Tag({
                   <CheckGlyph />
                 </span>
               )}
-              {label}
+              <span className="nz-tag-label" data-slot="tag-label">
+                {label}
+              </span>
             </button>
           ) : (
             <span className="nz-tag-label" data-slot="tag-label">

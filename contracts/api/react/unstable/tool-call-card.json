@@ -205,6 +205,14 @@
       "stateIndicator": []
     },
     {
+      "attributes": [],
+      "interactive": false,
+      "part": false,
+      "renderedBy": "ToolCallCard",
+      "slot": "tool-call-card-status-text",
+      "stateIndicator": []
+    },
+    {
       "attributes": [
         {
           "group": "presentational",

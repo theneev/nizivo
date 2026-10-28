@@ -126,6 +126,14 @@
     {
       "attributes": [],
       "interactive": false,
+      "part": false,
+      "renderedBy": "SuggestionChip",
+      "slot": "suggestion-chip-label",
+      "stateIndicator": []
+    },
+    {
+      "attributes": [],
+      "interactive": false,
       "part": true,
       "renderedBy": "SuggestionGroup",
       "slot": "suggestion-group",

@@ -170,6 +170,14 @@
       "interactive": false,
       "part": false,
       "renderedBy": "Comment",
+      "slot": "comment-action-text",
+      "stateIndicator": []
+    },
+    {
+      "attributes": [],
+      "interactive": false,
+      "part": false,
+      "renderedBy": "Comment",
       "slot": "comment-author",
       "stateIndicator": []
     },

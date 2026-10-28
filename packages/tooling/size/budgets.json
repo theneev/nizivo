@@ -338,7 +338,7 @@
       "limitKiB": 2.7
     },
     "@nizivo/react/unstable/ai-badge": {
-      "measured": 1137,
+      "measured": 1149,
       "limitKiB": 1.3
     },
     "@nizivo/react/unstable/ai-welcome": {
@@ -350,7 +350,7 @@
       "limitKiB": 1.3
     },
     "@nizivo/react/unstable/approval-card": {
-      "measured": 2096,
+      "measured": 2107,
       "limitKiB": 2.3
     },
     "@nizivo/react/unstable/bento-tile": {
@@ -366,7 +366,7 @@
       "limitKiB": 1.5
     },
     "@nizivo/react/unstable/citation": {
-      "measured": 932,
+      "measured": 970,
       "limitKiB": 1.1
     },
     "@nizivo/react/unstable/code-block": {
@@ -378,7 +378,7 @@
       "limitKiB": 64
     },
     "@nizivo/react/unstable/comment": {
-      "measured": 1586,
+      "measured": 1600,
       "limitKiB": 1.8
     },
     "@nizivo/react/unstable/copy-button": {
@@ -414,7 +414,7 @@
       "limitKiB": 2.3
     },
     "@nizivo/react/unstable/inline-assist": {
-      "measured": 1687,
+      "measured": 1698,
       "limitKiB": 1.9
     },
     "@nizivo/react/unstable/link": {
@@ -422,7 +422,7 @@
       "limitKiB": 1.2
     },
     "@nizivo/react/unstable/live-pulse": {
-      "measured": 776,
+      "measured": 793,
       "limitKiB": 0.9
     },
     "@nizivo/react/unstable/media-player": {
@@ -454,7 +454,7 @@
       "limitKiB": 1.7
     },
     "@nizivo/react/unstable/response-block": {
-      "measured": 2311,
+      "measured": 2319,
       "limitKiB": 2.5
     },
     "@nizivo/react/unstable/section-header": {
@@ -482,11 +482,11 @@
       "limitKiB": 0.9
     },
     "@nizivo/react/unstable/suggestion-chip": {
-      "measured": 1212,
+      "measured": 1223,
       "limitKiB": 1.4
     },
     "@nizivo/react/unstable/tag": {
-      "measured": 1319,
+      "measured": 1323,
       "limitKiB": 1.5
     },
     "@nizivo/react/unstable/testimonial-card": {
@@ -502,7 +502,7 @@
       "limitKiB": 1
     },
     "@nizivo/react/unstable/tool-call-card": {
-      "measured": 1637,
+      "measured": 1646,
       "limitKiB": 1.8
     },
     "@nizivo/react/unstable/usage-meter": {
@@ -774,7 +774,7 @@
       "limitKiB": 1
     },
     "@nizivo/react own: unstable/inline-assist/inline-assist.client": {
-      "measured": 819,
+      "measured": 831,
       "limitKiB": 0.9
     },
     "@nizivo/react own: unstable/media-player/media-player.client": {
@@ -822,7 +822,7 @@
       "limitKiB": 0.7
     },
     "@nizivo/react/css/ai-badge.css": {
-      "measured": 418,
+      "measured": 471,
       "limitKiB": 0.5
     },
     "@nizivo/react/css/ai-welcome.css": {
@@ -902,8 +902,8 @@
       "limitKiB": 1.1
     },
     "@nizivo/react/css/citation.css": {
-      "measured": 369,
-      "limitKiB": 0.4
+      "measured": 423,
+      "limitKiB": 0.5
     },
     "@nizivo/react/css/code-block.css": {
       "measured": 637,
@@ -918,7 +918,7 @@
       "limitKiB": 1
     },
     "@nizivo/react/css/comment.css": {
-      "measured": 522,
+      "measured": 575,
       "limitKiB": 0.6
     },
     "@nizivo/react/css/container.css": {
@@ -1010,7 +1010,7 @@
       "limitKiB": 0.3
     },
     "@nizivo/react/css/inline-assist.css": {
-      "measured": 547,
+      "measured": 598,
       "limitKiB": 0.6
     },
     "@nizivo/react/css/inline-error.css": {
@@ -1038,7 +1038,7 @@
       "limitKiB": 0.4
     },
     "@nizivo/react/css/live-pulse.css": {
-      "measured": 466,
+      "measured": 521,
       "limitKiB": 0.6
     },
     "@nizivo/react/css/media-player.css": {
@@ -1218,7 +1218,7 @@
       "limitKiB": 0.5
     },
     "@nizivo/react/css/suggestion-chip.css": {
-      "measured": 468,
+      "measured": 520,
       "limitKiB": 0.6
     },
     "@nizivo/react/css/surface.css": {
@@ -1274,7 +1274,7 @@
       "limitKiB": 1
     },
     "@nizivo/react/css/tool-call-card.css": {
-      "measured": 977,
+      "measured": 983,
       "limitKiB": 1
     },
     "@nizivo/react/css/tooltip.css": {

@@ -115,6 +115,14 @@
       "renderedBy": "Citation",
       "slot": "citation",
       "stateIndicator": []
+    },
+    {
+      "attributes": [],
+      "interactive": false,
+      "part": false,
+      "renderedBy": "Citation",
+      "slot": "citation-number",
+      "stateIndicator": []
     }
   ],
   "version": 1
