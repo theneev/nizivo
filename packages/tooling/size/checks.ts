@@ -290,6 +290,11 @@ export const LAZY_CHUNKS: readonly { name: string; module: string }[] = [
     module: 'unstable/date-range-picker/engine',
   },
   { name: '@nizivo/react lazy: the CommandMenu search', module: 'unstable/command-menu/engine' },
+  // loaded only for a `virtualized` list (D-dt), from inside the search chunk
+  {
+    name: '@nizivo/react lazy: the CommandMenu virtualizer',
+    module: '_engines/react-aria/command-menu-virtual.client',
+  },
 ];
 
 type EsbuildConfig = Record<string, unknown>;

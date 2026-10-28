@@ -5,6 +5,7 @@
 // only the rows that show; the arrow keys move the active row while focus stays in the field
 // (virtual focus, aria-activedescendant), Enter chooses it, and Escape clears the field first and
 // closes the dialog once it is empty.
+import { lazy } from 'react';
 import {
   Autocomplete,
   Header,
@@ -41,14 +42,28 @@ export const Input: CommandMenuEngine['Input'] = ({ label, field, render, ...dom
   </SearchField>
 );
 
-export const List: CommandMenuEngine['List'] = ({ empty, busy, render, children, ...dom }) => (
-  <Menu
-    renderEmptyState={() => empty}
-    render={(p) => render(mergeProps(engineDom(p), dom, busy ? { 'aria-busy': true } : {}), {})}
-  >
-    {children}
-  </Menu>
-);
+/** The virtualizer, loaded only for a `virtualized` list (a second chunk inside the search's). */
+const VirtualRows = lazy(() => import('./command-menu-virtual.client'));
+
+export const List: CommandMenuEngine['List'] = ({
+  empty,
+  busy,
+  virtualized,
+  render,
+  children,
+  ...dom
+}) => {
+  const menu = (
+    <Menu
+      renderEmptyState={() => empty}
+      render={(p) => render(mergeProps(engineDom(p), dom, busy ? { 'aria-busy': true } : {}), {})}
+    >
+      {children}
+    </Menu>
+  );
+  // the leaf's Suspense around the search holds its place while the chunk loads
+  return virtualized ? <VirtualRows>{menu}</VirtualRows> : menu;
+};
 
 export const Group: CommandMenuEngine['Group'] = ({ render, children, ...dom }) => (
   <MenuSection render={(p) => render(mergeProps(engineDom(p), dom), {})}>{children}</MenuSection>

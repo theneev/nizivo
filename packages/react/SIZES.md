@@ -197,7 +197,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /unstable/chat-message       |    1,341 |        1.3 |      1,235 |         1.5 |          195 |
 | /unstable/citation           |      970 |        0.9 |        890 |         1.1 |          156 |
 | /unstable/code-block         |   34,535 |       33.7 |     30,644 |          38 |        4,377 |
-| /unstable/command-menu       |   36,069 |       35.2 |     32,189 |          64 |       29,467 |
+| /unstable/command-menu       |   36,232 |       35.4 |     32,239 |          64 |       29,304 |
 | /unstable/comment            |    1,600 |        1.6 |      1,448 |         1.8 |          243 |
 | /unstable/copy-button        |    1,448 |        1.4 |      1,327 |         1.6 |          190 |
 | /unstable/cta-band           |      889 |        0.9 |        812 |           1 |          135 |
@@ -242,14 +242,16 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | { Button } from the barrel         |    1,279 |        1.2 |      1,172 |         1.4 |          154 |
 | { Select } from the barrel         |   63,760 |       62.3 |     54,767 |          68 |        5,872 |
 | lazy: the DateRangePicker calendar |   39,816 |       38.9 |     34,877 |          43 |        4,216 |
-| lazy: the CommandMenu search       |   44,798 |       43.7 |     38,857 |          49 |        5,378 |
+| lazy: the CommandMenu search       |   44,870 |       43.8 |     39,005 |          49 |        5,306 |
+| lazy: the CommandMenu virtualizer  |   11,829 |       11.6 |     10,699 |          13 |        1,483 |
 
 #### `@nizivo/react`: Own code (one module minified alone, imports not counted)
 
 | Entry                                                    | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | -------------------------------------------------------- | -------: | ---------: | ---------: | ----------: | -----------: |
 | own: _engines/react-aria/combobox.client                 |    1,614 |        1.6 |      1,443 |         1.7 |          126 |
-| own: _engines/react-aria/command-menu.client             |      584 |        0.6 |        516 |         0.7 |          132 |
+| own: _engines/react-aria/command-menu-virtual.client     |      188 |        0.2 |        160 |         0.3 |          119 |
+| own: _engines/react-aria/command-menu.client             |      649 |        0.6 |        584 |         0.7 |           67 |
 | own: _engines/react-aria/date-range-picker.client        |      762 |        0.7 |        706 |         0.9 |          159 |
 | own: _engines/react-aria/dialog.client                   |    1,084 |        1.1 |        967 |         1.3 |          247 |
 | own: _engines/react-aria/drawer.client                   |      100 |        0.1 |         90 |         0.2 |          104 |
@@ -305,7 +307,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | own: tooltip/tooltip.client                              |      519 |        0.5 |        460 |         0.6 |           95 |
 | own: unstable/approval-card/approval-card.client         |      717 |        0.7 |        631 |         0.8 |          102 |
 | own: unstable/code-block/code-block.client               |      633 |        0.6 |        570 |         0.7 |           83 |
-| own: unstable/command-menu/command-menu.client           |    2,358 |        2.3 |      2,147 |         2.6 |          304 |
+| own: unstable/command-menu/command-menu.client           |    2,510 |        2.5 |      2,301 |         2.6 |          152 |
 | own: unstable/copy-button/copy-button.client             |      611 |        0.6 |        546 |         0.7 |          105 |
 | own: unstable/date-range-picker/date-range-picker.client |    2,552 |        2.5 |      2,361 |         2.5 |            8 |
 | own: unstable/feedback-bar/feedback-bar.client           |      849 |        0.8 |        771 |           1 |          175 |
@@ -352,7 +354,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/citation.css           |      423 |        0.4 |        329 |         0.5 |           89 |
 | /css/code-block.css         |      637 |        0.6 |        541 |         0.7 |           79 |
 | /css/combobox.css           |    1,047 |        1.0 |        857 |         1.2 |          181 |
-| /css/command-menu.css       |      975 |        1.0 |        807 |           1 |           49 |
+| /css/command-menu.css       |      992 |        1.0 |        824 |           1 |           32 |
 | /css/comment.css            |      575 |        0.6 |        473 |         0.6 |           39 |
 | /css/container.css          |      185 |        0.2 |        155 |         0.2 |           19 |
 | /css/copy-button.css        |      336 |        0.3 |        280 |         0.4 |           73 |

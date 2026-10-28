@@ -374,7 +374,7 @@
       "limitKiB": 38
     },
     "@nizivo/react/unstable/command-menu": {
-      "measured": 36069,
+      "measured": 36232,
       "limitKiB": 64
     },
     "@nizivo/react/unstable/comment": {
@@ -533,8 +533,12 @@
       "measured": 1614,
       "limitKiB": 1.7
     },
+    "@nizivo/react own: _engines/react-aria/command-menu-virtual.client": {
+      "measured": 188,
+      "limitKiB": 0.3
+    },
     "@nizivo/react own: _engines/react-aria/command-menu.client": {
-      "measured": 584,
+      "measured": 649,
       "limitKiB": 0.7
     },
     "@nizivo/react own: _engines/react-aria/date-range-picker.client": {
@@ -758,7 +762,7 @@
       "limitKiB": 0.7
     },
     "@nizivo/react own: unstable/command-menu/command-menu.client": {
-      "measured": 2358,
+      "measured": 2510,
       "limitKiB": 2.6
     },
     "@nizivo/react own: unstable/copy-button/copy-button.client": {
@@ -806,8 +810,12 @@
       "limitKiB": 43
     },
     "@nizivo/react lazy: the CommandMenu search": {
-      "measured": 44798,
+      "measured": 44870,
       "limitKiB": 49
+    },
+    "@nizivo/react lazy: the CommandMenu virtualizer": {
+      "measured": 11829,
+      "limitKiB": 13
     },
     "@nizivo/react seam K6 (stateAttrs, details, EngineLocale, engineDom)": {
       "measured": 757,
@@ -914,7 +922,7 @@
       "limitKiB": 1.2
     },
     "@nizivo/react/css/command-menu.css": {
-      "measured": 975,
+      "measured": 992,
       "limitKiB": 1
     },
     "@nizivo/react/css/comment.css": {

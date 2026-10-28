@@ -29,6 +29,14 @@ const style = document.createElement('style');
 style.textContent = Object.values(STYLES).join('\n');
 document.head.append(style);
 
+// React Stately's virtualizer reads `process.env` as it renders: with NODE_ENV 'test' it renders every
+// row unless VIRT_ON is set, its own switch for tests. An app's bundler replaces NODE_ENV; in this
+// page `process` may be missing (Vite leaves it in pre-bundled dependencies), so the spec makes sure
+// it exists and turns the virtualizer on, as it runs in an app.
+const host = globalThis as { process?: { env: Record<string, string | undefined> } };
+host.process ??= { env: { NODE_ENV: 'development' } };
+host.process.env['VIRT_ON'] = '1';
+
 const roots: Root[] = [];
 afterEach(() => {
   for (const root of roots.splice(0)) root.unmount();
@@ -237,6 +245,28 @@ function Remote({ onQuery }: { onQuery?: (query: string) => void }): ReactNode {
   );
 }
 
+const MANY = Array.from({ length: 500 }, (_, i) => `Item ${i + 1}`);
+
+function Long(): ReactNode {
+  return (
+    <CommandMenu.Root>
+      <CommandMenu.Trigger>Search</CommandMenu.Trigger>
+      <CommandMenu.Popup>
+        <CommandMenu.Input />
+        <CommandMenu.List virtualized>
+          <CommandMenu.Group heading="Items">
+            {MANY.map((name) => (
+              <CommandMenu.Item key={name} href={`#${name}`}>
+                {name}
+              </CommandMenu.Item>
+            ))}
+          </CommandMenu.Group>
+        </CommandMenu.List>
+      </CommandMenu.Popup>
+    </CommandMenu.Root>
+  );
+}
+
 describe('caps, async sources and the count (D-dt)', () => {
   test("a group's limit shows its first matching rows; the arrow keys go from the last to the next group", async () => {
     const container = await mount(<Capped />);
@@ -282,6 +312,27 @@ describe('caps, async sources and the count (D-dt)', () => {
     await userEvent.keyboard('{Escape}');
     await closed();
     expect(popup()).toBeNull();
+  });
+
+  test('virtualized: few rows in the DOM; the arrow keys scroll the active row in; the count covers every row', async () => {
+    const container = await mount(<Long />);
+    await userEvent.click(trigger(container));
+    await settle();
+    await vi.waitFor(() => expect(rows()[0]).toBe('Item 1'));
+    expect(rows().length).toBeLessThan(60);
+    const list = document.querySelector<HTMLElement>('[data-slot="command-menu-list"]');
+    expect(list?.scrollTop).toBe(0);
+    for (let i = 0; i < 30; i += 1) {
+      // oxlint-disable-next-line no-await-in-loop -- one key at a time, as a reader presses them
+      await userEvent.keyboard('{ArrowDown}');
+    }
+    await vi.waitFor(() => expect(active()).toBe('Item 30'));
+    expect(list?.scrollTop ?? 0).toBeGreaterThan(0);
+    expect(document.activeElement).toBe(input());
+    // "Item 1", "Item 10" to "Item 19" and "Item 100" to "Item 199": 111 rows, most not in the DOM
+    await userEvent.keyboard('item 1');
+    await vi.waitFor(() => expect(status()).toBe('Results: 111'));
+    expect(rows().length).toBeLessThan(60);
   });
 
   test('the count is spoken once the typing stops, "No results" when none show, nothing on open', async () => {

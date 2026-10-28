@@ -208,6 +208,13 @@
               "name": "loading",
               "required": false,
               "type": "boolean"
+            },
+            {
+              "default": "false",
+              "description": "Only the rows in view are in the DOM, for a long list (hundreds of rows or more); the arrow keys, the search and the count still cover every row.",
+              "name": "virtualized",
+              "required": false,
+              "type": "boolean"
             }
           ],
           "propsType": "CommandMenuListProps",

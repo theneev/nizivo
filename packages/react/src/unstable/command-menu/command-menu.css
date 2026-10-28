@@ -73,6 +73,14 @@
     outline: none;
   }
 
+  /* virtualized: the virtualizer places each row itself, padding and gaps included, so the list is a
+     plain scroll box of a fixed height (the virtualizer needs one to know what is in view) */
+  .nz-command-menu-list-virtualized {
+    display: block;
+    block-size: 20rem;
+    padding: 0;
+  }
+
   .nz-command-menu-group {
     display: flex;
     flex-direction: column;

@@ -12,13 +12,13 @@ keyboard:
     action: Runs the active row and closes the menu.
   - keys: Escape
     action: Clears the search first; on an empty search, closes the menu and returns focus.
-keyboardSource: React Aria Components 1.22.1 `Autocomplete`, `SearchField` and `Menu` (`_engines/react-aria/command-menu.client.tsx`) inside the Dialog; the shortcut from `@nizivo/react/hotkeys`. The browser lane (`test/browser/command-menu.spec.tsx`) checks ⌘K, the trigger, filtering, a group's limit, an async source, the spoken count, the arrow keys, Enter, Escape and the hotkeys policy.
+keyboardSource: React Aria Components 1.22.1 `Autocomplete`, `SearchField` and `Menu` (`_engines/react-aria/command-menu.client.tsx`) inside the Dialog; the shortcut from `@nizivo/react/hotkeys`. The browser lane (`test/browser/command-menu.spec.tsx`) checks ⌘K, the trigger, filtering, a group's limit, an async source, the spoken count, a virtualized list of 500 rows, the arrow keys, Enter, Escape and the hotkeys policy.
 ---
 
 ## Unstable
 
-It ships at `@nizivo/react/unstable/command-menu`, outside the semver promise. Still to come: a long
-list that renders only what shows. The search loads on the first open.
+It ships at `@nizivo/react/unstable/command-menu`, outside the semver promise, until it has stayed
+the same in the design for two sync cycles. The search loads on the first open.
 
 ## Static or interactive
 
@@ -41,6 +41,12 @@ menu. `icon` draws a 20 px mark before its text, `kind` says what it is at the r
 item's text when it is a string. `filter` on the Popup is `'contains'` (default) or `'startsWith'`.
 A Group's `limit` shows at most that many of its matching rows, and the arrow keys skip the rest; a
 Group with no matching row hides with its heading.
+
+## Long lists
+
+Set `virtualized` on the List for hundreds of rows or more: only the rows in view are in the page,
+in a fixed 20rem box, and the arrow keys, the search and the spoken count still cover every row. The
+code that does it loads only for a virtualized list.
 
 ## Results from a server
 

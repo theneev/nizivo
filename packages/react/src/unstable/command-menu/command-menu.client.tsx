@@ -100,6 +100,7 @@ function itemText({
 }
 
 const renderDiv = toRenderFn<unknown>(undefined, 'div');
+const renderLink = toRenderFn<unknown>(undefined, 'a');
 const renderInput = toRenderFn<unknown>(undefined, 'input');
 const renderSection = toRenderFn<unknown>(undefined, 'section');
 const renderHeader = toRenderFn<unknown>(undefined, 'header');
@@ -258,7 +259,14 @@ const QUIET_MS = 500;
  * The polite count of the rows that show, outside the menu (a live region may not sit in one). Said once
  * the typing stops or the results arrive, not when the menu opens with its first rows.
  */
-function ResultCount({ loading }: { loading: boolean }): JSX.Element {
+function ResultCount({
+  loading,
+  count,
+}: {
+  loading: boolean;
+  /** The rows that show, when the list's children say; else the rows in the DOM are counted. */
+  count: number | undefined;
+}): JSX.Element {
   const { labels } = use(Scope);
   const { query } = use(FilterScope);
   const locale = useResolvedLocale();
@@ -274,11 +282,11 @@ function ResultCount({ loading }: { loading: boolean }): JSX.Element {
     if (query === opened.current && !waited.current) return undefined;
     const timer = setTimeout(() => {
       const popup = ref.current?.closest('[data-slot="dialog-popup"]');
-      const count = popup?.querySelectorAll('[data-slot="command-menu-item"]').length ?? 0;
-      setText(count === 0 ? labels.empty : formatLabel(labels.results, { count }, locale));
+      const shown = count ?? popup?.querySelectorAll('[data-slot="command-menu-item"]').length ?? 0;
+      setText(shown === 0 ? labels.empty : formatLabel(labels.results, { count: shown }, locale));
     }, QUIET_MS);
     return () => clearTimeout(timer);
-  }, [query, loading, labels, locale]);
+  }, [query, loading, count, labels, locale]);
   // a span with aria-live, as Field's announcer: not an <output>, which a form's reset rewrites
   return (
     <span
@@ -331,10 +339,12 @@ export function CommandMenuInput({ placeholder, className }: CommandMenuInputPro
 export function CommandMenuList({
   empty,
   loading = false,
+  virtualized = false,
   className,
   children,
 }: CommandMenuListProps): JSX.Element {
   const { labels } = use(Scope);
+  const { matches } = use(FilterScope);
   return (
     <>
       <Engine.List
@@ -349,15 +359,43 @@ export function CommandMenuList({
           )
         }
         busy={loading}
-        className={cx('nz-command-menu-list', className)}
+        virtualized={virtualized}
+        className={cx(
+          'nz-command-menu-list',
+          virtualized && 'nz-command-menu-list-virtualized',
+          className,
+        )}
         data-slot="command-menu-list"
         render={renderDiv}
       >
         {children}
       </Engine.List>
-      <ResultCount loading={loading} />
+      <ResultCount loading={loading} count={shownRows(children, matches)} />
     </>
   );
+}
+
+/**
+ * How many rows show, from the list's own children (its Items, and its Groups' Items after their
+ * limits): the DOM holds only the rows in view when the list is virtualized. `undefined` when a
+ * child is anything else, whose rows only the DOM can count.
+ */
+function shownRows(children: ReactNode, matches: FilterValue['matches']): number | undefined {
+  let shown = 0;
+  for (const child of Children.toArray(children)) {
+    if (isValidElement<CommandMenuItemProps>(child) && child.type === CommandMenuItem) {
+      if (matches(itemText(child.props))) shown += 1;
+    } else if (isValidElement<CommandMenuGroupProps>(child) && child.type === CommandMenuGroup) {
+      const rows = groupRows(child.props.children, matches, child.props.limit) ?? [];
+      for (const row of rows) {
+        if (!isValidElement(row) || row.type !== CommandMenuItem) return undefined;
+        shown += 1;
+      }
+    } else {
+      return undefined;
+    }
+  }
+  return shown;
 }
 
 /**
@@ -441,7 +479,8 @@ export function CommandMenuItem({
       data-slot="command-menu-item"
       // the keyboard ring sits inside the row, as on the menu rows (§8.5)
       data-focus-inset=""
-      render={renderDiv}
+      // a link row is an <a>, as React Aria's MenuItem expects for `href` (open in a new tab works)
+      render={href === undefined ? renderDiv : renderLink}
     >
       {icon != null && (
         <span className="nz-command-menu-icon" aria-hidden="true">

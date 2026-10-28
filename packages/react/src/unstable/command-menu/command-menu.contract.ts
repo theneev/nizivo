@@ -76,6 +76,11 @@ export interface CommandMenuListProps {
    * place of `empty` while it has no rows. @default false
    */
   loading?: boolean;
+  /**
+   * Only the rows in view are in the DOM, for a long list (hundreds of rows or more); the arrow
+   * keys, the search and the count still cover every row. @default false
+   */
+  virtualized?: boolean;
   className?: string;
   children: ReactNode;
 }
@@ -141,7 +146,12 @@ export interface CommandMenuEngine {
     },
   ): ReactElement;
   List(
-    p: EnginePart<'div', NoState> & { empty: ReactNode; busy: boolean; children: ReactNode },
+    p: EnginePart<'div', NoState> & {
+      empty: ReactNode;
+      busy: boolean;
+      virtualized: boolean;
+      children: ReactNode;
+    },
   ): ReactElement;
   Group(p: EnginePart<'section', NoState> & { children: ReactNode }): ReactElement;
   GroupLabel(p: EnginePart<'header', NoState>): ReactElement;
