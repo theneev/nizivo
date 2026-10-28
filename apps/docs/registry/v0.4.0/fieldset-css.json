@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "fieldset-css",
+  "type": "registry:item",
+  "title": "Fieldset CSS",
+  "description": "The Fieldset stylesheet to own and edit (re-skin). Import components/nizivo/fieldset-css.css instead of @nizivo/react/css/fieldset.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+  "dependencies": [
+    "@nizivo/react@~0.4.0"
+  ],
+  "files": [
+    {
+      "path": "nizivo/fieldset-css.css",
+      "type": "registry:file",
+      "target": "components/nizivo/fieldset-css.css",
+      "content": "/*\n * Nizivo registry item \"fieldset-css\", v0.4.0: https://nizivo.neevtechnologies.in/r/v0.4.0/fieldset-css.json\n * Yours to edit: the registry sends no updates. Licensed under MIT:\n *\n * MIT License\n *\n * Copyright (c) 2026 Neev Technologies\n *\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in all\n * copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n */\n@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;\n\n\n@layer nz.components {\n  .nz-fieldset {\n    --_nz-fieldset-legend-fg: var(--nz-text-primary);\n\n    min-inline-size: 0;\n    margin: 0;\n    padding: 0;\n    border: 0;\n  }\n\n  .nz-fieldset:is(:disabled, [data-disabled]) {\n    --_nz-fieldset-legend-fg: var(--nz-text-disabled);\n  }\n\n  .nz-fieldset-legend {\n    padding: 0;\n    color: var(--nz-fieldset-legend-fg, var(--_nz-fieldset-legend-fg));\n    font: var(--nz-fieldset-legend-font, var(--nz-font-label-m));\n  }\n\n  /* decorative: the group's controls carry `required` */\n  .nz-fieldset-required {\n    margin-inline-start: var(--nz-space-0-5);\n    color: var(--nz-fieldset-required-fg, var(--nz-text-critical));\n  }\n\n  .nz-fieldset-content {\n    display: flex;\n    flex-direction: column;\n    gap: var(--nz-fieldset-gap, var(--nz-space-3));\n  }\n\n  .nz-fieldset-legend + .nz-fieldset-content {\n    margin-block-start: var(--nz-fieldset-legend-gap, var(--nz-space-2));\n  }\n\n  .nz-fieldset-description {\n    color: var(--nz-fieldset-description-fg, var(--nz-text-tertiary));\n    font: var(--nz-fieldset-description-font, var(--nz-font-body-m));\n  }\n}\n"
+    }
+  ]
+}

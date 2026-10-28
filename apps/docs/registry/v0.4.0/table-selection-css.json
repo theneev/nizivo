@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "table-selection-css",
+  "type": "registry:item",
+  "title": "Table selection CSS",
+  "description": "The Table selection stylesheet to own and edit (re-skin). Import components/nizivo/table-selection-css.css instead of @nizivo/react/css/table-selection.css (or after styles.css, where it wins by order within nz.components). Markup, classes, data attributes, behaviour and the base layer still come from npm.",
+  "dependencies": [
+    "@nizivo/react@~0.4.0"
+  ],
+  "files": [
+    {
+      "path": "nizivo/table-selection-css.css",
+      "type": "registry:file",
+      "target": "components/nizivo/table-selection-css.css",
+      "content": "/*\n * Nizivo registry item \"table-selection-css\", v0.4.0: https://nizivo.neevtechnologies.in/r/v0.4.0/table-selection-css.json\n * Yours to edit: the registry sends no updates. Licensed under MIT:\n *\n * MIT License\n *\n * Copyright (c) 2026 Neev Technologies\n *\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in all\n * copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n */\n@layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;\n\n/* @nizivo/react/css/table-selection.css (ARCHITECTURE.md §16.2, D-cf): row selection for Table. The\n   checkboxes are Checkbox's own box (checkbox.css); table.css paints a checked row and narrows the\n   selection column, with no script. */\n@layer nz.components {\n  /* the island's box takes no space: the table keeps its container's layout */\n  .nz-table-selection {\n    display: contents;\n  }\n}\n"
+    }
+  ]
+}
