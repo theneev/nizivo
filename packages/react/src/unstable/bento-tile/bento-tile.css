@@ -13,7 +13,7 @@
     box-sizing: border-box;
     min-block-size: calc(var(--nz-space-10) * 9);
     overflow: hidden;
-    padding: var(--nz-space-6);
+    container: nz-bento-tile / inline-size;
     border-radius: var(--nz-radius-2xl);
     background: var(--nz-bg-canvas);
     grid-column: span 4;
@@ -58,6 +58,7 @@
     flex-direction: column;
     gap: var(--nz-space-1-5);
     max-inline-size: 20rem;
+    margin: var(--nz-space-6);
     padding: var(--nz-space-5);
     border-radius: var(--nz-radius-xl);
     background: color-mix(in oklab, var(--nz-bg-surface) 78%, transparent);
@@ -78,6 +79,15 @@
   }
 
   /* without the blur, the card is opaque, so the text keeps its contrast */
+  /* A tile smaller than the design's smallest (the 360 px square) keeps the caption 16 px in and
+     16 px padded, so the card does not crowd it (design review, M84). */
+  @container nz-bento-tile (inline-size < 22.5rem) {
+    .nz-bento-tile-caption {
+      margin: var(--nz-space-4);
+      padding: var(--nz-space-4);
+    }
+  }
+
   @supports not (backdrop-filter: blur(10px)) {
     .nz-bento-tile-caption {
       background: var(--nz-bg-surface);

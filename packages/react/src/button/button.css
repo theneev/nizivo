@@ -128,6 +128,18 @@
     --_nz-button-icon-size: var(--nz-size-icon-md);
   }
 
+  /* Centre the letters, not the line box: Geist's glyphs sit about 0.055em high in their line
+     (M85). The label is trimmed to cap height and baseline, then padded back to one line, so its
+     box keeps its height and the letters sit in its middle. Without text-box, the line box centres,
+     as before. */
+  @supports (text-box: trim-both cap alphabetic) {
+    .nz-button-label,
+    .nz-button-pending-label {
+      padding-block: calc((1lh - 1cap) / 2);
+      text-box: trim-both cap alphabetic;
+    }
+  }
+
   .nz-button-icon {
     display: inline-flex;
     inline-size: var(--_nz-button-icon-size);

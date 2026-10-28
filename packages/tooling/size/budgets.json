@@ -834,7 +834,7 @@
       "limitKiB": 0.8
     },
     "@nizivo/react/css/announcement-bar.css": {
-      "measured": 481,
+      "measured": 534,
       "limitKiB": 0.6
     },
     "@nizivo/react/css/app-shell.css": {
@@ -862,7 +862,7 @@
       "limitKiB": 1.6
     },
     "@nizivo/react/css/bento-tile.css": {
-      "measured": 721,
+      "measured": 768,
       "limitKiB": 0.8
     },
     "@nizivo/react/css/breadcrumb.css": {
@@ -870,11 +870,11 @@
       "limitKiB": 0.6
     },
     "@nizivo/react/css/bulk-action-bar.css": {
-      "measured": 400,
+      "measured": 453,
       "limitKiB": 0.5
     },
     "@nizivo/react/css/button.css": {
-      "measured": 1153,
+      "measured": 1215,
       "limitKiB": 1.3
     },
     "@nizivo/react/css/card.css": {
@@ -894,7 +894,7 @@
       "limitKiB": 0.9
     },
     "@nizivo/react/css/chip-group.css": {
-      "measured": 986,
+      "measured": 1040,
       "limitKiB": 1.1
     },
     "@nizivo/react/css/choice-card.css": {
@@ -906,8 +906,8 @@
       "limitKiB": 0.4
     },
     "@nizivo/react/css/code-block.css": {
-      "measured": 588,
-      "limitKiB": 0.6
+      "measured": 637,
+      "limitKiB": 0.7
     },
     "@nizivo/react/css/combobox.css": {
       "measured": 1047,
@@ -938,12 +938,12 @@
       "limitKiB": 0.7
     },
     "@nizivo/react/css/date-range-picker.css": {
-      "measured": 1225,
+      "measured": 1278,
       "limitKiB": 1.3
     },
     "@nizivo/react/css/delta.css": {
-      "measured": 472,
-      "limitKiB": 0.5
+      "measured": 524,
+      "limitKiB": 0.6
     },
     "@nizivo/react/css/dialog.css": {
       "measured": 944,
@@ -1066,7 +1066,7 @@
       "limitKiB": 0.6
     },
     "@nizivo/react/css/model-selector.css": {
-      "measured": 479,
+      "measured": 531,
       "limitKiB": 0.6
     },
     "@nizivo/react/css/motion.css": {
@@ -1078,7 +1078,7 @@
       "limitKiB": 1
     },
     "@nizivo/react/css/nav-item.css": {
-      "measured": 1004,
+      "measured": 1058,
       "limitKiB": 1.1
     },
     "@nizivo/react/css/newsletter-signup.css": {
@@ -1106,7 +1106,7 @@
       "limitKiB": 0.7
     },
     "@nizivo/react/css/pagination.css": {
-      "measured": 816,
+      "measured": 875,
       "limitKiB": 0.9
     },
     "@nizivo/react/css/password-input.css": {
@@ -1130,7 +1130,7 @@
       "limitKiB": 0.9
     },
     "@nizivo/react/css/progress-ring.css": {
-      "measured": 509,
+      "measured": 566,
       "limitKiB": 0.6
     },
     "@nizivo/react/css/prompt-composer.css": {
@@ -1154,7 +1154,7 @@
       "limitKiB": 0.4
     },
     "@nizivo/react/css/response-block.css": {
-      "measured": 819,
+      "measured": 868,
       "limitKiB": 0.9
     },
     "@nizivo/react/css/search-field.css": {
@@ -1166,11 +1166,11 @@
       "limitKiB": 0.4
     },
     "@nizivo/react/css/segmented-control.css": {
-      "measured": 986,
+      "measured": 1040,
       "limitKiB": 1.1
     },
     "@nizivo/react/css/select.css": {
-      "measured": 1237,
+      "measured": 1290,
       "limitKiB": 1.4
     },
     "@nizivo/react/css/separator.css": {
@@ -1230,7 +1230,7 @@
       "limitKiB": 1
     },
     "@nizivo/react/css/tab-nav.css": {
-      "measured": 842,
+      "measured": 895,
       "limitKiB": 1
     },
     "@nizivo/react/css/table-selection.css": {
@@ -1242,11 +1242,11 @@
       "limitKiB": 1.1
     },
     "@nizivo/react/css/tabs.css": {
-      "measured": 972,
+      "measured": 1024,
       "limitKiB": 1.1
     },
     "@nizivo/react/css/tag.css": {
-      "measured": 656,
+      "measured": 711,
       "limitKiB": 0.8
     },
     "@nizivo/react/css/testimonial-card.css": {
@@ -1262,7 +1262,7 @@
       "limitKiB": 0.8
     },
     "@nizivo/react/css/thinking-indicator.css": {
-      "measured": 472,
+      "measured": 528,
       "limitKiB": 0.6
     },
     "@nizivo/react/css/ticker.css": {
@@ -1274,7 +1274,7 @@
       "limitKiB": 1
     },
     "@nizivo/react/css/tool-call-card.css": {
-      "measured": 913,
+      "measured": 977,
       "limitKiB": 1
     },
     "@nizivo/react/css/tooltip.css": {
@@ -1302,7 +1302,7 @@
       "limitKiB": 0.4
     },
     "@nizivo/react/styles.css": {
-      "measured": 26063,
+      "measured": 26259,
       "limitKiB": 26
     },
     "@nizivo/tokens": {

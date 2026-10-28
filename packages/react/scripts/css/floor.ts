@@ -80,9 +80,11 @@ export const UNMODELLED_PROPERTIES: ReadonlySet<string> = new Set([
 /**
  * Properties beyond the floor that a stylesheet may use only inside `@supports (<property>: …)` (not
  * under `not`), as an enhancement over a floor fallback outside the block: Textarea's auto-grow,
- * `field-sizing: content` (Chrome 123 has it; Firefox 129 and Safari 17.5 keep `rows`).
+ * `field-sizing: content` (Chrome 123 has it; Firefox 129 and Safari 17.5 keep `rows`); the labels'
+ * optical centring, `text-box` (Chrome 133, Safari 18.2; elsewhere the line box centres, as before;
+ * M85).
  */
-export const SUPPORTS_GATED_PROPERTIES: ReadonlySet<string> = new Set(['field-sizing']);
+export const SUPPORTS_GATED_PROPERTIES: ReadonlySet<string> = new Set(['field-sizing', 'text-box']);
 
 /** Properties Lightning CSS models that at least one floor browser does not support. */
 export const OFF_FLOOR_PROPERTIES: ReadonlySet<string> = new Set([
