@@ -1,8 +1,8 @@
 @layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
 
 /* @nizivo/react/css/tool-call-card.css (Figma Tool Call Card 7410:294), UNSTABLE. bg/surface, radius/xl,
-   padded 16 with 12 px between parts; the edge is border/subtle, border/critical when it failed. The
-   header: a 32 px bg/accent-subtle tile (radius 10, radius/sm × 1.25) with the 16 px wand, the
+   padded 16, the steps 6 px under the header and the actions 16 px under the steps; the edge is
+   border/subtle, border/critical when it failed. The header: a 32 px bg/accent-subtle tile (radius 10, radius/sm × 1.25) with the 16 px wand, the
    Label/M Strong title, and a status pill (Label/S on bg/muted, success-subtle or critical-subtle).
    The steps sit 42 px in (the tile and its gap), 8 px apart, a 14 px mark and Body/S each. */
 @layer nz.components {
@@ -13,7 +13,10 @@
 
     display: flex;
     flex-direction: column;
-    gap: var(--nz-space-3);
+    /* 6 px under the header and 16 px above the actions (design review, 2026-10-28): the 32 px
+       icon tile makes the header taller than its title, so an even gap read as more space under
+       the title than above the actions. */
+    gap: var(--nz-space-1-5);
     padding: var(--nz-space-4);
     border: var(--nz-border-width-default) solid var(--_nz-tool-call-card-edge);
     border-radius: var(--nz-tool-call-card-radius, var(--nz-radius-xl));
@@ -145,6 +148,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: var(--nz-space-2);
+    margin-block-start: calc(var(--nz-space-4) - var(--nz-space-1-5));
     padding-inline-start: calc(var(--nz-space-8) + var(--nz-space-2) + var(--nz-space-0-5));
   }
 
