@@ -1,0 +1,146 @@
+{
+  "snapshots": [
+    {
+      "date": "2026-10-28",
+      "parts": {
+        "ai-badge": {
+          "7409:25": "b4027f82"
+        },
+        "ai-welcome": {
+          "7411:321": "6e21bebb"
+        },
+        "announcement-bar": {
+          "7392:9": "71cd7d63"
+        },
+        "approval-card": {
+          "7410:300": "72c540b3"
+        },
+        "bento-tile": {
+          "7395:80": "ddd662f6"
+        },
+        "caret-headline": {
+          "7390:134": "96a91357"
+        },
+        "chat-message": {
+          "7396:26": "287cfe05"
+        },
+        "citation": {
+          "7410:151": "101b6c0b"
+        },
+        "code-block": {
+          "7416:53": "9303b952"
+        },
+        "command-menu": {
+          "755:889": "de1a85ee"
+        },
+        "comment": {
+          "7397:64": "a5370c19"
+        },
+        "copy-button": {
+          "7416:21": "c7c0b4e1"
+        },
+        "cta-band": {
+          "7394:50": "9d8708b4"
+        },
+        "date-range-picker": {
+          "746:267": "b7e621ce"
+        },
+        "docs-card": {
+          "7416:59": "87d42bfd"
+        },
+        "event-card": {
+          "7397:145": "a99e056e"
+        },
+        "feature-card": {
+          "7392:129": "e26f2cbc"
+        },
+        "feedback-bar": {
+          "7409:298": "a5d7ec82"
+        },
+        "file-item": {
+          "7396:153": "40df4f94"
+        },
+        "inline-assist": {
+          "7410:346": "d9261dfb"
+        },
+        "link": {
+          "7367:397": "ec6522f4"
+        },
+        "live-pulse": {
+          "7390:171": "c9e95be8"
+        },
+        "media-player": {
+          "7397:85": "74e7eabf"
+        },
+        "model-selector": {
+          "7410:384": "0dbb1afe",
+          "7410:394": "d0a55a06"
+        },
+        "newsletter-signup": {
+          "7395:100": "2bc8d03c"
+        },
+        "notification-item": {
+          "7396:102": "5893d173"
+        },
+        "profile-card": {
+          "7397:114": "00d45854"
+        },
+        "prompt-composer": {
+          "7396:83": "7ee4abc6"
+        },
+        "rating": {
+          "7396:158": "28cbfeba"
+        },
+        "response-block": {
+          "7409:247": "c6d46d82"
+        },
+        "section-header": {
+          "7392:91": "4ac7a14e"
+        },
+        "site-footer": {
+          "7394:81": "26cfc5fb"
+        },
+        "site-navbar": {
+          "7392:80": "51a757ce"
+        },
+        "slider": {
+          "7367:345": "e2bdcfcb"
+        },
+        "source-card": {
+          "7410:177": "21f5128f"
+        },
+        "stat-block": {
+          "7392:134": "cba9a5a5"
+        },
+        "suggestion-chip": {
+          "7409:46": "bb2f7a02",
+          "7409:47": "4f0412c4"
+        },
+        "tag": {
+          "7370:69": "cd1d9622"
+        },
+        "testimonial-card": {
+          "7395:85": "5b977589"
+        },
+        "thinking-indicator": {
+          "7409:103": "6c3718d7"
+        },
+        "ticker": {
+          "7390:123": "b3be3ff4"
+        },
+        "tool-call-card": {
+          "7410:294": "7376502d"
+        },
+        "usage-meter": {
+          "7411:307": "0220fca1"
+        },
+        "voice-orb": {
+          "7411:301": "4e2b4325"
+        },
+        "word-rotator": {
+          "7390:161": "b920bd19"
+        }
+      }
+    }
+  ]
+}
