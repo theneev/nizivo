@@ -3,7 +3,8 @@
 /* @nizivo/react/css/ai-welcome.css (Figma AI Welcome 7411:321), UNSTABLE. A centred column, padded
    32 with 20 px between: the 72 px orb, the greeting in Heading/H1, the description in Body/M
    text/secondary, then the children (the starters, the composer) at full width. Figma's orb is the
-   Glow Orb shader; until @nizivo/lab, gradients draw it, as in VoiceOrb. */
+   Glow Orb shader, which GlowOrb draws (`orb={<GlowOrb />}`, M89); without it, gradients draw it, as
+   in VoiceOrb. */
 @layer nz.components {
   .nz-ai-welcome {
     display: flex;
@@ -31,6 +32,11 @@
       color-mix(in oklab, var(--nz-bg-accent) 45%, var(--nz-bg-canvas)) 0 45%,
       var(--nz-bg-canvas) 72%
     );
+  }
+
+  /* GlowOrb (M89) draws its own halo: no second one behind it */
+  .nz-ai-welcome-orb:has(> .nz-glow-orb) {
+    background: none;
   }
 
   .nz-ai-welcome-sphere {

@@ -2,7 +2,8 @@
 // AI Welcome 7411:321). The empty state of a new conversation: a greeting, what the assistant can
 // see and do (be honest about its scope and its access to data), then the starters and the
 // composer, passed as children (a SuggestionGroup, a PromptComposer). The orb is decoration, drawn
-// with CSS as VoiceOrb's is; `orb` takes a shader or a picture in its place.
+// with CSS as VoiceOrb's is; `orb={<GlowOrb />}` draws Figma's Glow Orb shader in its place (M89),
+// and `orb` takes any other picture too.
 // UNSTABLE: the AI kit is new and unreviewed.
 import type { ComponentPropsWithRef, ReactElement, ReactNode } from 'react';
 import { renderElement, type RenderProp } from '../../contracts/render';
@@ -15,7 +16,7 @@ export interface AiWelcomeProps extends Omit<ComponentPropsWithRef<'section'>, '
   headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
   /** What the assistant can see and do: "Ask about your orders… I can see your store and Instagram." */
   description?: ReactNode;
-  /** Replaces the CSS orb. Decorative: hidden from assistive technology. */
+  /** Replaces the CSS orb, for example `<GlowOrb />`. Decorative: hidden from assistive technology. */
   orb?: ReactNode;
   /** Must render a `<section>`. */
   render?: RenderProp<Record<string, never>>;

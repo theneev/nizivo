@@ -207,7 +207,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /unstable/feature-card       |      890 |        0.9 |        813 |           1 |          134 |
 | /unstable/feedback-bar       |   19,656 |       19.2 |     17,764 |        21.2 |        2,052 |
 | /unstable/file-item          |    2,065 |        2.0 |      1,883 |         2.3 |          290 |
-| /unstable/glow-orb           |    3,423 |        3.3 |      3,101 |         3.7 |          365 |
+| /unstable/glow-orb           |    3,612 |        3.5 |      3,293 |         3.7 |          176 |
 | /unstable/inline-assist      |    1,698 |        1.7 |      1,553 |         1.9 |          247 |
 | /unstable/link               |    1,069 |        1.0 |        974 |         1.2 |          159 |
 | /unstable/live-pulse         |      793 |        0.8 |        722 |         0.9 |          128 |
@@ -334,7 +334,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | --------------------------- | -------: | ---------: | ---------: | ----------: | -----------: |
 | /css/accordion.css          |      583 |        0.6 |        487 |         0.7 |          133 |
 | /css/ai-badge.css           |      471 |        0.5 |        389 |         0.5 |           41 |
-| /css/ai-welcome.css         |      562 |        0.5 |        472 |         0.7 |          154 |
+| /css/ai-welcome.css         |      582 |        0.6 |        476 |         0.7 |          134 |
 | /css/alert.css              |      636 |        0.6 |        522 |         0.8 |          183 |
 | /css/announcement-bar.css   |      534 |        0.5 |        429 |         0.6 |           80 |
 | /css/app-shell.css          |      610 |        0.6 |        504 |         0.7 |          106 |
@@ -376,7 +376,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/file-item.css          |      683 |        0.7 |        581 |         0.8 |          136 |
 | /css/file-upload.css        |    1,261 |        1.2 |      1,058 |         1.4 |          172 |
 | /css/form.css               |      280 |        0.3 |        225 |         0.4 |          129 |
-| /css/glow-orb.css           |      508 |        0.5 |        423 |         0.6 |          106 |
+| /css/glow-orb.css           |      521 |        0.5 |        432 |         0.6 |           93 |
 | /css/grid.css               |      531 |        0.5 |        423 |         0.6 |           83 |
 | /css/heading.css            |      390 |        0.4 |        318 |         0.5 |          122 |
 | /css/icon-button.css        |    1,004 |        1.0 |        852 |         1.1 |          122 |

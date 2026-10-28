@@ -2,12 +2,13 @@
 // a first frame, then the canvas covers the poster at the box's size × the pixel ratio (at most 2);
 // without WebGL the poster stays; the level function is read each frame while the orb is on screen,
 // not while it is off screen or after it unmounts; under reduced motion it draws only when its input
-// changes; and in VoiceOrb's slot it replaces VoiceOrb's own halo.
+// changes; and in VoiceOrb's and AiWelcome's slots it replaces their own halo.
 import type { ReactNode } from 'react';
 import { createRoot, hydrateRoot, type Root } from 'react-dom/client';
 import { renderToString } from 'react-dom/server';
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import { GlowOrb } from '../../src/unstable/glow-orb/glow-orb.client';
+import { AiWelcome } from '../../src/unstable/ai-welcome/ai-welcome';
 import { VoiceOrb } from '../../src/unstable/voice-orb/voice-orb';
 
 const STYLES = import.meta.glob(
@@ -16,11 +17,12 @@ const STYLES = import.meta.glob(
     '../../styles/base.css',
     '../../src/icon-button/icon-button.css',
     '../../src/unstable/voice-orb/voice-orb.css',
+    '../../src/unstable/ai-welcome/ai-welcome.css',
     '../../src/unstable/glow-orb/glow-orb.css',
   ],
   { query: '?raw', import: 'default', eager: true },
 );
-if (Object.keys(STYLES).length !== 5)
+if (Object.keys(STYLES).length !== 6)
   throw new Error('a stylesheet is missing; build @nizivo/tokens');
 const style = document.createElement('style');
 style.textContent = Object.values(STYLES).join('\n');
@@ -187,5 +189,15 @@ describe('GlowOrb', () => {
     expect(getComputedStyle(orb).backgroundImage).toBe('none');
     expect(glow.getBoundingClientRect().width).toBe(160);
     expect(glow.getBoundingClientRect().height).toBe(160);
+  });
+
+  test("in AiWelcome's orb slot it fills the 72 px orb, and AiWelcome draws no halo of its own", async () => {
+    const container = await mount(<AiWelcome greeting="Good morning" orb={<GlowOrb />} />);
+    const orb = container.querySelector<HTMLElement>('.nz-ai-welcome-orb');
+    const glow = container.querySelector<HTMLElement>('[data-slot="glow-orb"]');
+    if (orb === null || glow === null) throw new Error('no orb');
+    expect(getComputedStyle(orb).backgroundImage).toBe('none');
+    expect(glow.getBoundingClientRect().width).toBe(72);
+    expect(glow.getBoundingClientRect().height).toBe(72);
   });
 });

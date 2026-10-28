@@ -5,7 +5,8 @@
     "nz-ai-welcome-description",
     "nz-ai-welcome-greeting",
     "nz-ai-welcome-orb",
-    "nz-ai-welcome-sphere"
+    "nz-ai-welcome-sphere",
+    "nz-glow-orb"
   ],
   "component": "ai-welcome",
   "entry": "./css/ai-welcome.css",

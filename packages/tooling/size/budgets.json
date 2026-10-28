@@ -414,7 +414,7 @@
       "limitKiB": 2.3
     },
     "@nizivo/react/unstable/glow-orb": {
-      "measured": 3423,
+      "measured": 3612,
       "limitKiB": 3.7
     },
     "@nizivo/react/unstable/inline-assist": {
@@ -842,7 +842,7 @@
       "limitKiB": 0.5
     },
     "@nizivo/react/css/ai-welcome.css": {
-      "measured": 562,
+      "measured": 582,
       "limitKiB": 0.7
     },
     "@nizivo/react/css/alert.css": {
@@ -1010,7 +1010,7 @@
       "limitKiB": 0.4
     },
     "@nizivo/react/css/glow-orb.css": {
-      "measured": 508,
+      "measured": 521,
       "limitKiB": 0.6
     },
     "@nizivo/react/css/grid.css": {
