@@ -62,6 +62,8 @@ moved.
 2. **Where it opens:** in the middle of the page, as the Dialog does; command palettes often sit
    higher. Figma does not place it.
 3. **Unstable until:** async sources, a per-group cap, a spoken result count and the lazy chunk.
+   Built since: the lazy chunk (D-dm) and the other three (D-dt, 2026-10-28); the promotion rule
+   (§20, D-ds) still applies.
 
 ## Unverified
 

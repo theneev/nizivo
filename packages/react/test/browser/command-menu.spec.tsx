@@ -3,8 +3,10 @@
 // and accents ignored; the arrow keys move the active row while focus stays in the field; Enter runs
 // the row and closes; Escape clears the field first, then closes and returns focus. The hotkeys
 // registry: no shortcut during an IME composition or while typing (unless allowed), the latest
-// registration of an id wins, and useHotkeys lists them.
-import type { ReactNode } from 'react';
+// registration of an id wins, and useHotkeys lists them. D-dt: a group's `limit` leaves the rows past
+// it out of the arrow keys' reach, an async source (`filter="none"`, `loading`) shows what the app
+// passes, and a polite status counts the rows once the typing stops.
+import { useState, type ReactNode } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import { userEvent } from 'vitest/browser';
@@ -171,6 +173,132 @@ describe('searching and choosing', () => {
     await closed();
     expect(popup()).toBeNull();
     expect(document.activeElement).toBe(trigger(container));
+  });
+});
+
+const status = (): string => document.querySelector('.nz-command-menu-status')?.textContent ?? '';
+
+function Capped(): ReactNode {
+  return (
+    <CommandMenu.Root>
+      <CommandMenu.Trigger>Search</CommandMenu.Trigger>
+      <CommandMenu.Popup>
+        <CommandMenu.Input />
+        <CommandMenu.List>
+          <CommandMenu.Group heading="Products" limit={2}>
+            <CommandMenu.Item href="#mug">Stoneware mug</CommandMenu.Item>
+            <CommandMenu.Item href="#bowl">Stoneware bowl</CommandMenu.Item>
+            <CommandMenu.Item href="#plate">Stoneware plate</CommandMenu.Item>
+          </CommandMenu.Group>
+          <CommandMenu.Group heading="Actions">
+            <CommandMenu.Item href="#new">Create product</CommandMenu.Item>
+          </CommandMenu.Group>
+        </CommandMenu.List>
+      </CommandMenu.Popup>
+    </CommandMenu.Root>
+  );
+}
+
+const CATALOGUE = ['Large bowl', 'Mug', 'Plate'];
+
+/** An async source: results arrive 150 ms after the query, from a list the menu never filters. */
+function Remote({ onQuery }: { onQuery?: (query: string) => void }): ReactNode {
+  const [query, setQuery] = useState('');
+  const [results, setResults] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
+  return (
+    <CommandMenu.Root>
+      <CommandMenu.Trigger>Search</CommandMenu.Trigger>
+      <CommandMenu.Popup
+        filter="none"
+        query={query}
+        onQueryChange={(next) => {
+          setQuery(next);
+          onQuery?.(next);
+          setLoading(true);
+          setResults([]);
+          setTimeout(() => {
+            // the server's answer: not a text match, so the menu must not filter it
+            setResults(next === '' ? [] : CATALOGUE.slice(0, 2));
+            setLoading(false);
+          }, 150);
+        }}
+      >
+        <CommandMenu.Input />
+        <CommandMenu.List loading={loading}>
+          {results.map((name) => (
+            <CommandMenu.Item key={name} href={`#${name}`}>
+              {name}
+            </CommandMenu.Item>
+          ))}
+        </CommandMenu.List>
+      </CommandMenu.Popup>
+    </CommandMenu.Root>
+  );
+}
+
+describe('caps, async sources and the count (D-dt)', () => {
+  test("a group's limit shows its first matching rows; the arrow keys go from the last to the next group", async () => {
+    const container = await mount(<Capped />);
+    await userEvent.click(trigger(container));
+    await settle();
+    await vi.waitFor(() =>
+      expect(rows()).toEqual(['Stoneware mug', 'Stoneware bowl', 'Create product']),
+    );
+    await userEvent.keyboard('{ArrowDown}{ArrowDown}{ArrowDown}');
+    expect(active()).toBe('Create product');
+    // the limit counts matching rows: "bowl" and "plate" match, the first one shows
+    await userEvent.keyboard('pl');
+    expect(rows()).toEqual(['Stoneware plate']);
+    // a group with no matching row shows no heading
+    expect(
+      [...document.querySelectorAll('.nz-command-menu-group-label')].map((el) => el.textContent),
+    ).toEqual(['Products']);
+  });
+
+  test('an async source: busy while loading, then exactly the rows the app passes, then the count', async () => {
+    const queries: string[] = [];
+    const container = await mount(<Remote onQuery={(q) => queries.push(q)} />);
+    await userEvent.click(trigger(container));
+    await settle();
+    await vi.waitFor(() => expect(document.activeElement).toBe(input()));
+    await userEvent.keyboard('mu');
+    expect(queries).toEqual(['m', 'mu']);
+    expect(document.querySelector('.nz-command-menu-loading')?.textContent).toBe('Searching…');
+    expect(
+      document.querySelector('[data-slot="command-menu-list"]')?.getAttribute('aria-busy'),
+    ).toBe('true');
+    expect(document.querySelector('.nz-command-menu-empty')).toBeNull();
+    await vi.waitFor(() => expect(rows()).toEqual(['Large bowl', 'Mug']));
+    expect(
+      document.querySelector('[data-slot="command-menu-list"]')?.hasAttribute('aria-busy'),
+    ).toBe(false);
+    await vi.waitFor(() => expect(status()).toBe('Results: 2'));
+    // Escape clears the field through onQueryChange, then closes
+    await userEvent.keyboard('{Escape}');
+    await settle();
+    expect(queries.at(-1)).toBe('');
+    expect(input().value).toBe('');
+    await userEvent.keyboard('{Escape}');
+    await closed();
+    expect(popup()).toBeNull();
+  });
+
+  test('the count is spoken once the typing stops, "No results" when none show, nothing on open', async () => {
+    const container = await mount(<Menu />);
+    await userEvent.click(trigger(container));
+    await settle();
+    await new Promise((resolve) => setTimeout(resolve, 700));
+    expect(status()).toBe('');
+    const live = document.querySelector('.nz-command-menu-status');
+    expect(live?.getAttribute('aria-live')).toBe('polite');
+    // outside the menu: a live region may not sit in a role="menu"
+    expect(live?.closest('[role="menu"]')).toBeNull();
+    await userEvent.keyboard('stone');
+    expect(status()).toBe('');
+    await vi.waitFor(() => expect(status()).toBe('Results: 1'));
+    await userEvent.keyboard('zzz');
+    await vi.waitFor(() => expect(status()).toBe('No results'));
   });
 });
 

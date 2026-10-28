@@ -130,11 +130,30 @@
               "type": "string"
             },
             {
+              "default": "''",
+              "description": "The search field's text at first open, uncontrolled.",
+              "name": "defaultQuery",
+              "required": false,
+              "type": "string"
+            },
+            {
               "default": "'contains'",
               "name": "filter",
               "required": false,
               "type": "CommandMenuFilter",
-              "values": ["contains", "startsWith"]
+              "values": ["contains", "startsWith", "none"]
+            },
+            {
+              "description": "Runs as the reader types, and with `''` when Escape clears the field: fetch results here.",
+              "name": "onQueryChange",
+              "required": false,
+              "type": "(query: string) => void"
+            },
+            {
+              "description": "The search field's text, controlled.",
+              "name": "query",
+              "required": false,
+              "type": "string"
             }
           ],
           "propsType": "CommandMenuPopupProps",
@@ -182,6 +201,13 @@
               "name": "empty",
               "required": false,
               "type": "ReactNode"
+            },
+            {
+              "default": "false",
+              "description": "Results are on their way (an async source): the list is busy, and shows `labels.loading` in place of `empty` while it has no rows.",
+              "name": "loading",
+              "required": false,
+              "type": "boolean"
             }
           ],
           "propsType": "CommandMenuListProps",
@@ -209,6 +235,12 @@
               "name": "heading",
               "required": true,
               "type": "ReactNode"
+            },
+            {
+              "description": "At most this many of the group's matching rows show, in order; the arrow keys skip the rest. Counts the `CommandMenu.Item`s that are the group's own children.",
+              "name": "limit",
+              "required": false,
+              "type": "number"
             }
           ],
           "propsType": "CommandMenuGroupProps",
@@ -297,14 +329,14 @@
     },
     {
       "declaration": "type",
-      "description": "How the typed text matches an item's text: anywhere in it, or at its start; case and accents ignored.",
+      "description": "How the typed text matches an item's text: anywhere in it, or at its start, case and accents ignored; or `'none'`, when the app filters itself (results from a server) and every item shows.",
       "import": "import type { CommandMenuFilter } from '@nizivo/react/unstable/command-menu'",
       "kind": "type",
       "name": "CommandMenuFilter",
       "source": "packages/react/src/unstable/command-menu/command-menu.contract.ts",
-      "text": "\"contains\" | \"startsWith\"",
+      "text": "\"contains\" | \"startsWith\" | \"none\"",
       "typeParameters": [],
-      "values": ["contains", "startsWith"]
+      "values": ["contains", "startsWith", "none"]
     },
     {
       "import": "import { CommandMenuFooter } from '@nizivo/react/unstable/command-menu'",
@@ -413,6 +445,13 @@
           "type": "string"
         },
         {
+          "default": "'Searching…'",
+          "description": "Shown, and announced, while `CommandMenu.List` is `loading`.",
+          "name": "loading",
+          "required": true,
+          "type": "string"
+        },
+        {
           "default": "'Navigate'",
           "description": "The footer's arrow keys hint.",
           "name": "navigate",
@@ -432,6 +471,13 @@
           "name": "placeholder",
           "required": true,
           "type": "string"
+        },
+        {
+          "default": "'Results: {count}'",
+          "description": "Announced politely after the typing stops, with the number of rows shown (`{count}`); \"No results\" is announced as `empty`.",
+          "name": "results",
+          "required": true,
+          "type": "string | PluralLabel"
         }
       ],
       "name": "CommandMenuLabels",

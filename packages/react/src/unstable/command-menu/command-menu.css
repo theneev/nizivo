@@ -142,6 +142,32 @@
     text-align: center;
   }
 
+  /* an async source on its way (D-dt): the empty row's place, a spinner before the words */
+  .nz-command-menu-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--nz-space-2);
+    margin: 0;
+    padding: var(--nz-space-6) var(--nz-space-3);
+    color: var(--nz-text-secondary);
+    font: var(--nz-font-body-m);
+    letter-spacing: var(--nz-tracking-body-m);
+
+    /* one turn per --nz-duration-spin; reduced motion sets it to 0 ms, so the glyph rests */
+    & .nz-glyph-spinner {
+      flex: none;
+      font-size: var(--nz-size-icon-sm);
+      animation: nz-command-menu-spin var(--nz-duration-spin) linear infinite;
+    }
+  }
+
+  @keyframes nz-command-menu-spin {
+    to {
+      rotate: 1turn;
+    }
+  }
+
   .nz-command-menu-footer {
     display: flex;
     flex: none;

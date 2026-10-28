@@ -133,6 +133,8 @@ export const enUS: {
     empty: 'No results',
     navigate: 'Navigate',
     open: 'Open',
+    loading: 'Searching…',
+    results: 'Results: {count}',
   },
   rankedList: { loading: 'Loading {label}', empty: 'No data', error: 'Could not load {label}' },
   searchField: { label: 'Search', clear: 'Clear search' },

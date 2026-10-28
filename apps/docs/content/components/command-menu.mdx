@@ -12,14 +12,13 @@ keyboard:
     action: Runs the active row and closes the menu.
   - keys: Escape
     action: Clears the search first; on an empty search, closes the menu and returns focus.
-keyboardSource: React Aria Components 1.22.1 `Autocomplete`, `SearchField` and `Menu` (`_engines/react-aria/command-menu.client.tsx`) inside the Dialog; the shortcut from `@nizivo/react/hotkeys`. The browser lane (`test/browser/command-menu.spec.tsx`) checks ⌘K, the trigger, filtering, the arrow keys, Enter, Escape and the hotkeys policy.
+keyboardSource: React Aria Components 1.22.1 `Autocomplete`, `SearchField` and `Menu` (`_engines/react-aria/command-menu.client.tsx`) inside the Dialog; the shortcut from `@nizivo/react/hotkeys`. The browser lane (`test/browser/command-menu.spec.tsx`) checks ⌘K, the trigger, filtering, a group's limit, an async source, the spoken count, the arrow keys, Enter, Escape and the hotkeys policy.
 ---
 
 ## Unstable
 
-It ships at `@nizivo/react/unstable/command-menu`, outside the semver promise. Still to come:
-results that load as the reader types (async sources), a cap per group, a long list that renders
-only what shows, a spoken count of the results, and loading the menu only on the first ⌘K.
+It ships at `@nizivo/react/unstable/command-menu`, outside the semver promise. Still to come: a long
+list that renders only what shows. The search loads on the first open.
 
 ## Static or interactive
 
@@ -40,6 +39,35 @@ An item is a link (`href`) or an action (`onAction`, in a client component); cho
 menu. `icon` draws a 20 px mark before its text, `kind` says what it is at the row's end ("Product",
 "Order"), and `shortcut` draws its own Kbd and announces it. The search matches `textValue`, or the
 item's text when it is a string. `filter` on the Popup is `'contains'` (default) or `'startsWith'`.
+A Group's `limit` shows at most that many of its matching rows, and the arrow keys skip the rest; a
+Group with no matching row hides with its heading.
+
+## Results from a server
+
+Pass `filter="none"` and the menu shows every item you give it, unfiltered. `onQueryChange` on the
+Popup runs as the reader types (and with `''` when Escape clears the field), so fetch there and
+render the results as items; `query` makes the field's text controlled. Set `loading` on the List
+while a request is on its way: the list is busy, and shows "Searching…" in place of "No results"
+while it has no rows.
+
+```tsx
+<CommandMenu.Popup filter="none" onQueryChange={search}>
+  <CommandMenu.Input />
+  <CommandMenu.List loading={pending}>
+    {results.map((r) => (
+      <CommandMenu.Item key={r.id} href={r.href} kind={r.kind}>
+        {r.title}
+      </CommandMenu.Item>
+    ))}
+  </CommandMenu.List>
+</CommandMenu.Popup>
+```
+
+## The count
+
+Once the typing stops, the menu says how many rows show ("Results: 3", or "No results"), politely,
+from a live region outside the list. It says nothing when it opens. `labels.results` takes
+`{count}`, and a plural object (`PluralLabel` from `@nizivo/react/i18n`) in other languages.
 
 ## Shortcuts
 

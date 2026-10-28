@@ -1,10 +1,10 @@
 'use client';
 // The ONLY CommandMenu module that imports the engine (ARCHITECTURE.md §9.2, §17 G18; gap report A
 // §5.3). Behaviour only: no class names. Inside the Dialog, React Aria's Autocomplete joins a
-// SearchField to a Menu: typing filters the rows (case and accents ignored), the arrow keys move the
-// active row while focus stays in the field (virtual focus, aria-activedescendant), Enter chooses
-// it, and Escape clears the field first and closes the dialog once it is empty.
-import type { JSX } from 'react';
+// SearchField to a Menu: the leaf filters the rows from the field's text (D-dt), so the Menu holds
+// only the rows that show; the arrow keys move the active row while focus stays in the field
+// (virtual focus, aria-activedescendant), Enter chooses it, and Escape clears the field first and
+// closes the dialog once it is empty.
 import {
   Autocomplete,
   Header,
@@ -13,7 +13,6 @@ import {
   MenuItem,
   MenuSection,
   SearchField,
-  useFilter,
 } from 'react-aria-components';
 import { mergeProps } from '../../contracts/merge-props';
 import { stateAttrs } from '../../contracts/state';
@@ -24,19 +23,14 @@ import type {
 import { defined, engineDom } from './dom';
 import { EngineLocale } from './locale.client';
 
-export const Search: CommandMenuEngine['Search'] = ({ filter, children }) => (
+export const Search: CommandMenuEngine['Search'] = ({ query, onQueryChange, children }) => (
   <EngineLocale>
-    <Filtered filter={filter}>{children}</Filtered>
+    {/* no filter: the leaf renders only the rows that match */}
+    <Autocomplete inputValue={query} onInputChange={onQueryChange}>
+      {children}
+    </Autocomplete>
   </EngineLocale>
 );
-
-function Filtered({ filter, children }: Parameters<CommandMenuEngine['Search']>[0]): JSX.Element {
-  // the locale's collation, so "é" matches "e" (sensitivity base)
-  const { contains, startsWith } = useFilter({ sensitivity: 'base' });
-  return (
-    <Autocomplete filter={filter === 'startsWith' ? startsWith : contains}>{children}</Autocomplete>
-  );
-}
 
 export const Input: CommandMenuEngine['Input'] = ({ label, field, render, ...dom }) => (
   // opened, the dialog focuses the field: the reader asked for the menu to type in it (APG
@@ -47,8 +41,11 @@ export const Input: CommandMenuEngine['Input'] = ({ label, field, render, ...dom
   </SearchField>
 );
 
-export const List: CommandMenuEngine['List'] = ({ empty, render, children, ...dom }) => (
-  <Menu renderEmptyState={() => empty} render={(p) => render(mergeProps(engineDom(p), dom), {})}>
+export const List: CommandMenuEngine['List'] = ({ empty, busy, render, children, ...dom }) => (
+  <Menu
+    renderEmptyState={() => empty}
+    render={(p) => render(mergeProps(engineDom(p), dom, busy ? { 'aria-busy': true } : {}), {})}
+  >
     {children}
   </Menu>
 );

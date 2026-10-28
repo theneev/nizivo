@@ -1,12 +1,16 @@
 // Public, engine-free types and the CommandMenuEngine interface (ARCHITECTURE.md §9.2, §17 G18).
 // NO directive. The .d.ts import-graph walk must never reach an engine from here.
 import type { ComponentPropsWithRef, ReactElement, ReactNode } from 'react';
+import type { PluralLabel } from '../../i18n/format-label';
 import type { RenderProp } from '../../contracts/render';
 import type { DialogTriggerState } from '../../dialog/dialog.contract';
 import type { EnginePart, RenderFn } from '../../_internal/engine-part';
 
-/** How the typed text matches an item's text: anywhere in it, or at its start; case and accents ignored. */
-export type CommandMenuFilter = 'contains' | 'startsWith';
+/**
+ * How the typed text matches an item's text: anywhere in it, or at its start, case and accents
+ * ignored; or `'none'`, when the app filters itself (results from a server) and every item shows.
+ */
+export type CommandMenuFilter = 'contains' | 'startsWith' | 'none';
 
 /** CommandMenu's own strings (§16.4): serialisable, English defaults. */
 export interface CommandMenuLabels {
@@ -20,6 +24,13 @@ export interface CommandMenuLabels {
   navigate: string;
   /** The footer's Enter hint. @default 'Open' */
   open: string;
+  /** Shown, and announced, while `CommandMenu.List` is `loading`. @default 'Searching…' */
+  loading: string;
+  /**
+   * Announced politely after the typing stops, with the number of rows shown (`{count}`); "No
+   * results" is announced as `empty`. @default 'Results: {count}'
+   */
+  results: string | PluralLabel;
 }
 
 export interface CommandMenuRootProps {
@@ -41,6 +52,12 @@ export interface CommandMenuTriggerProps extends Omit<ComponentPropsWithRef<'but
 export interface CommandMenuPopupProps {
   /** @default 'contains' */
   filter?: CommandMenuFilter;
+  /** The search field's text, controlled. */
+  query?: string;
+  /** The search field's text at first open, uncontrolled. @default '' */
+  defaultQuery?: string;
+  /** Runs as the reader types, and with `''` when Escape clears the field: fetch results here. */
+  onQueryChange?: (query: string) => void;
   className?: string;
   /** `CommandMenu.Input`, `CommandMenu.List` and `CommandMenu.Footer`. */
   children: ReactNode;
@@ -54,6 +71,11 @@ export interface CommandMenuInputProps {
 export interface CommandMenuListProps {
   /** Replaces `labels.empty` when nothing matches. */
   empty?: ReactNode;
+  /**
+   * Results are on their way (an async source): the list is busy, and shows `labels.loading` in
+   * place of `empty` while it has no rows. @default false
+   */
+  loading?: boolean;
   className?: string;
   children: ReactNode;
 }
@@ -61,6 +83,11 @@ export interface CommandMenuListProps {
 export interface CommandMenuGroupProps {
   /** The group's heading, in Select's group label look. */
   heading: ReactNode;
+  /**
+   * At most this many of the group's matching rows show, in order; the arrow keys skip the rest.
+   * Counts the `CommandMenu.Item`s that are the group's own children.
+   */
+  limit?: number;
   className?: string;
   children: ReactNode;
 }
@@ -101,14 +128,21 @@ type NoState = Record<string, never>;
  * no class names; the leaf's render functions add them.
  */
 export interface CommandMenuEngine {
-  Search(p: { filter: CommandMenuFilter; children: ReactNode }): ReactElement;
+  /** The search over the list: the leaf filters the rows, the engine shows what it is given. */
+  Search(p: {
+    query: string;
+    onQueryChange: (query: string) => void;
+    children: ReactNode;
+  }): ReactElement;
   Input(
     p: EnginePart<'input', NoState> & {
       label: string;
       field: RenderFn<NoState>;
     },
   ): ReactElement;
-  List(p: EnginePart<'div', NoState> & { empty: ReactNode; children: ReactNode }): ReactElement;
+  List(
+    p: EnginePart<'div', NoState> & { empty: ReactNode; busy: boolean; children: ReactNode },
+  ): ReactElement;
   Group(p: EnginePart<'section', NoState> & { children: ReactNode }): ReactElement;
   GroupLabel(p: EnginePart<'header', NoState>): ReactElement;
   Item(
