@@ -1,5 +1,112 @@
 # @nizivo/react
 
+## 0.4.0
+
+### Minor Changes
+
+- 2cdae5c: The AI kit gains its answer and agent parts (unstable): `ResponseBlock`
+  (`@nizivo/react/unstable/response-block`) is one answer from thinking through streaming, with a Stop
+  button, to complete or an error with Retry, read once when complete; `ToolCallCard`
+  (`./unstable/tool-call-card`) shows an action the AI takes step by step, each step's status spoken;
+  `FeedbackBar` (`./unstable/feedback-bar`) is a thumbs up and down that toggle, with optional reasons;
+  `ApprovalCard` (`./unstable/approval-card`) asks before an action that cannot be undone, with focus on
+  Cancel and Escape to cancel. ResponseBlock and ToolCallCard are server parts. Their strings join the
+  unstable catalogue (`./locales/en-US-unstable`).
+- fa0e7fe: The AI kit gains its controls (unstable): `ModelSelector` (`@nizivo/react/unstable/model-selector`)
+  picks a model by its trade-off in words, on Select; `InlineAssist` (`./unstable/inline-assist`) is a
+  toolbar of AI actions for selected text, with one Tab stop and the arrow keys; `VoiceOrb`
+  (`./unstable/voice-orb`) is voice mode, a written state and one start and stop button, with a CSS
+  orb that an `orb` slot can replace. VoiceOrb is a server part. Their strings join the unstable
+  catalogue (`./locales/en-US-unstable`).
+- 74451f5: The AI kit gains the conversation (unstable): `ChatMessage` and `ChatLog`
+  (`@nizivo/react/unstable/chat-message`) are a turn with its sender named in text and the
+  `role="log"` live region that holds them; `PromptComposer` (`./unstable/prompt-composer`) is a
+  growing textarea with tools and a send button, Enter to send and Shift+Enter for a line;
+  `AiWelcome` (`./unstable/ai-welcome`) is a new conversation's empty state. ChatMessage, ChatLog and
+  AiWelcome are server parts. Their strings join the unstable catalogue (`./locales/en-US-unstable`).
+- 63c8cf8: The AI kit begins (unstable, Figma's AI page), with six server parts and no client JavaScript:
+  `AiBadge` (`@nizivo/react/unstable/ai-badge`) says content was written or changed by AI, in the lime
+  that marks AI; `ThinkingIndicator` (`./unstable/thinking-indicator`) is the wait before the first
+  word, a polite status with CSS dots; `Citation` (`./unstable/citation`) links a claim to its source,
+  named "Source 1: …"; `SourceCard` (`./unstable/source-card`) is a web page or file as one link;
+  `SuggestionChip` and `SuggestionGroup` (`./unstable/suggestion-chip`) are prompt starters that fill
+  the composer; `UsageMeter` (`./unstable/usage-meter`) shows AI usage left on a Meter that warns from
+  80 %. Their strings join the unstable catalogue (`./locales/en-US-unstable`).
+- 9b7590a: v0.5 adds Figma's Link and docs-site parts (unstable): `Link` (`@nizivo/react/unstable/link`),
+  underlined navigation in text that says when it opens a new tab; `DocsCard`
+  (`./unstable/docs-card`), an entry point into documentation as one link; `CopyButton`
+  (`./unstable/copy-button`), which copies text and announces "Copied" for 2 seconds; and `CodeBlock`
+  (`./unstable/code-block`), copyable commands or snippets on a dark surface with versions as tabs.
+  Link and DocsCard are server parts. Their strings join the unstable catalogue (`./locales/en-US-unstable`).
+- d9526ea: Labels sit in the middle of their box. In Chromium, Geist's letters sat about 0.055em above the
+  middle of every centred control (0.77 px at 14 px). Labels now take
+  `text-box: trim-both cap alphabetic` with `padding-block: calc((1lh - 1cap) / 2)` inside
+  `@supports (text-box: …)`: each box keeps its height and only the letters move (Chromium 133+,
+  Safari 18.2+; other browsers are unchanged). Badge, Kbd, Breadcrumb, Pagination's pages,
+  AvatarGroup's overflow, Table's sort button and RankedList's action now wrap their text in a new
+  slot (`badge-label`, `kbd-label`, `breadcrumb-text`, `pagination-page-text`,
+  `avatar-group-more-text`, `table-sort-text`, `ranked-list-action-text`); CSS that targets these
+  parts' text as a direct child of the part needs the new span. The unstable AiBadge, SuggestionChip,
+  Tag, ToolCallCard, InlineAssist, Comment, Citation and LivePulse do the same. ToolCallCard's steps
+  sit 6 px under its header and its actions 16 px under the steps, and a BentoTile narrower than
+  360 px keeps its caption 16 px in and padded 16.
+- c69db58: v0.6 adds three more marketing parts (unstable): `CtaBand` (`@nizivo/react/unstable/cta-band`), a
+  closing heading, line and two actions on a band dark in both themes; `SiteFooter`
+  (`./unstable/site-footer`), a footer whose link columns are navs named by their headings and that
+  stacks when narrow; and `NewsletterSignup` (`./unstable/newsletter-signup`), an
+  email form with a visible label, inline validation and an announced success. NewsletterSignup's
+  strings join the unstable catalogue (`./locales/en-US-unstable`).
+- 01abc25: v0.6's last marketing parts (unstable): `BentoTile` (`@nizivo/react/unstable/bento-tile`), a
+  showcase tile with a frosted caption card, wide, square or tall in a 12-column grid; and
+  `SiteNavbar` (`./unstable/site-navbar`), a website's main navigation as a bar or a floating pill,
+  its links folding into a native `<details>` menu below 768 px. Both are server parts.
+  SiteNavbar's strings join the unstable catalogue (`./locales/en-US-unstable`).
+- 98b8cc3: v0.6 begins (unstable, Figma's Marketing page) with five server parts: `AnnouncementBar`
+  (`@nizivo/react/unstable/announcement-bar`), one site-wide message with a link and a named close
+  button; `SectionHeader` (`./unstable/section-header`), a section's heading and supporting line;
+  `FeatureCard` (`./unstable/feature-card`), one benefit, plain, tinted or inverse; `StatBlock`
+  (`./unstable/stat-block`), a headline number and its label, for a `<dl>`; and `TestimonialCard`
+  (`./unstable/testimonial-card`), an attributed quote in a figure. AnnouncementBar's strings join
+  the unstable catalogue (`./locales/en-US-unstable`).
+- 7cf2148: Figma's CSS motion parts (unstable; D-dq): `Ticker` (`@nizivo/react/unstable/ticker`), an endless
+  strip that pauses under the pointer or focus; `CaretHeadline` (`./unstable/caret-headline`), a
+  heading with a blinking caret; `LivePulse` (`./unstable/live-pulse`), a pulsing dot beside its words;
+  and `WordRotator` (`./unstable/word-rotator`), a headline keyword that turns over while a screen
+  reader hears every word once. Every loop stops under Reduced motion. The first three are server
+  parts.
+- b01beae: v0.5 adds three more server parts (unstable): `Comment` (`@nizivo/react/unstable/comment`), a
+  comment with Like (a toggle named with its count) and Reply, and its replies indented under it;
+  `EventCard` (`./unstable/event-card`), an event with a presentational date block, a full `<time>`,
+  when and where, and who is going; `ProfileCard` (`./unstable/profile-card`), a person with a cover,
+  the name as the heading, counts as a description list and one action. Their strings join the
+  unstable catalogue (`./locales/en-US-unstable`).
+- 2cece3c: v0.5 begins (unstable, Figma's Data Display and Product Patterns pages) with four server parts:
+  `Tag` (`@nizivo/react/unstable/tag`), a filter chip or removable token with a pressed check and a
+  named remove button; `Rating` (`./unstable/rating`), a read-only score read as one sentence;
+  `NotificationItem` (`./unstable/notification-item`), an activity row as one link that says
+  "Unread"; `FileItem` (`./unstable/file-item`), an upload with real progress, a success mark or a
+  written error, and cancel and retry buttons. Their strings join the unstable catalogue (`./locales/en-US-unstable`).
+- 69e57df: v0.5 adds two client parts (unstable): `Slider` (`@nizivo/react/unstable/slider`), a value in a
+  range on a native `<input type="range">` with its name and value written out and read as
+  `aria-valuetext`; and `MediaPlayer` (`./unstable/media-player`), controls for audio or video that
+  hold no media of their own, with a Slider scrubber read in minutes and seconds, a play button whose
+  name follows its icon, and back and forward. MediaPlayer's strings join the unstable catalogue (`./locales/en-US-unstable`).
+- bac9b4e: The unstable parts' built-in strings have their own catalogue, `@nizivo/react/locales/en-US-unstable`
+  (`enUSUnstable`, shaped like `enUS`), so `./locales/en-US`, and a translation typed `typeof enUS`,
+  changes only with the stable parts. CommandMenu's and DateRangePicker's strings, which shipped in
+  `enUS` with 0.3.0, stay there. `NizivoLabels` (`@nizivo/react/config`) covers both catalogues, so
+  `NizivoConfig labels` still reaches every client part, unstable ones included.
+
+### Patch Changes
+
+- 38649de: DateRangePicker and CommandMenu (both unstable) load their React Aria parts on the first open, in a
+  chunk of their own: a page ships the picker's trigger and presets without the calendar (the
+  `./unstable/date-range-picker` entry drops from 61 to 37 KB gzip), and the menu's trigger and Dialog
+  without the search (`./unstable/command-menu` from 57 to 34 KB). A placeholder holds each part's
+  place while it loads, and on a first open with no presets the calendar takes focus when it arrives.
+- Updated dependencies [9981305]
+  - @nizivo/tokens@0.4.0
+
 ## 0.3.0
 
 ### Minor Changes
