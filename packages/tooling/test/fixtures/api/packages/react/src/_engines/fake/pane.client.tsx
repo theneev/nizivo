@@ -15,10 +15,21 @@ export const Root = ({
   open?: boolean;
   render: Render<object>;
   [key: string]: unknown;
-}): ReactElement => {
-  const attrs = stateAttrs({ open: open === true, disabled: false });
+}): ReactElement => <RootInner open={open === true} render={render} dom={dom} />;
+
+// Handed the parts' props under another name: nz api follows `dom={dom}` into it.
+function RootInner({
+  open,
+  render,
+  dom,
+}: {
+  open: boolean;
+  render: Render<object>;
+  dom: Record<string, unknown>;
+}): ReactElement {
+  const attrs = stateAttrs({ open, disabled: false });
   return render(mergeProps(dom, attrs), {});
-};
+}
 
 export const Trigger = ({
   render,

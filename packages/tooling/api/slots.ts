@@ -550,6 +550,25 @@ function adapterPart(fn: FunctionLike): AdapterPart {
           for (const key of mergedStateKeys(arg)) names.add(attributeOf(key, stateTable));
         }
       }
+      // `<Inner dom={dom} />`: a component of the same file the adapter hands the binding to (the
+      // hooks Tooltip's PopupInner, mounted only while the popup shows), read the same way.
+      const local = topLevelFunctions(fn.getSourceFile());
+      const elements = [
+        ...fn.getDescendantsOfKind(SyntaxKind.JsxOpeningElement),
+        ...fn.getDescendantsOfKind(SyntaxKind.JsxSelfClosingElement),
+      ];
+      for (const element of elements) {
+        const inner = local.get(element.getTagNameNode().getText());
+        if (inner === undefined || inner === fn) continue;
+        for (const attribute of element.getAttributes()) {
+          if (!Node.isJsxAttribute(attribute)) continue;
+          const value = attribute.getInitializer();
+          const expression = Node.isJsxExpression(value) ? value.getExpression() : undefined;
+          if (!Node.isIdentifier(expression) || expression.getText() !== binding) continue;
+          const prop = attribute.getNameNode().getText();
+          for (const name of adapterPart(inner).attributes(prop, [], stateTable)) names.add(name);
+        }
+      }
       return [...names];
     },
   };

@@ -303,7 +303,7 @@ describe('the fixture', () => {
     expect(typeExport(pane, 'PaneTriggerState').stateOf).toBe('Pane.Trigger');
   });
 
-  test('engine parts carry the attributes the adapter merges, through each prop it is given', () => {
+  test('engine parts carry the attributes the adapter merges, through each prop it is given and each same-file component it hands one to', () => {
     const attributes = Object.fromEntries(
       pane.slots.map((slot) => [slot.slot, slot.attributes.map((attribute) => attribute.name)]),
     );
