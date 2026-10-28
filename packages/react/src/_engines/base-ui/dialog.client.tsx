@@ -127,8 +127,6 @@ export const Popup: DialogEngine['Popup'] = ({
           'div',
           mergeProps(engineDom(p), positioner, stateAttrs({ open: true })),
           p.children,
-          // the nested-portal container (§12.1 L2), last in the positioner
-          createElement('div', { ref: nestedRef, style: NESTED_STYLE }),
         )
       }
     >
@@ -183,6 +181,9 @@ export const Popup: DialogEngine['Popup'] = ({
           </Dialog.Popup>
         </OverlayScope>
       </Dialog.Viewport>
+      {/* the nested-portal container (§12.1 L2), last in the positioner: Base UI portals its
+          children into the element the render prop makes, after that element's own children */}
+      <div ref={nestedRef} style={NESTED_STYLE} />
     </Dialog.Portal>
   );
 };

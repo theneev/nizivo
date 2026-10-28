@@ -159,7 +159,8 @@ export function describeOverlay(subject: OverlaySubject): void {
         await mount(subject.app());
         const before = pageStyles();
         await open(subject);
-        expect(locked()).toBe(true);
+        // Base UI takes its lock one task after the popup shows (a setTimeout(0)); React Aria at once
+        await until(() => expect(locked()).toBe(true));
         await userEvent.keyboard('{Escape}');
         await gone(subject);
         await settle();
@@ -247,6 +248,9 @@ export function describeOverlay(subject: OverlaySubject): void {
       async () => {
         await mount(subject.app());
         const popup = await open(subject);
+        // read once the entry has started: Base UI holds `transition: none` while data-entering is
+        // set (its starting style), then the CSS transition runs from it; React Aria keeps it on
+        await until(() => expect(popup.hasAttribute('data-entering')).toBe(false));
         const durations = transitionMs(popup);
         const spring = getComputedStyle(document.documentElement)
           .getPropertyValue('--nz-duration-spring')

@@ -15,9 +15,11 @@ import {
   createElement,
   isValidElement,
   use,
+  useEffect,
   useId,
   useLayoutEffect,
   useMemo,
+  useRef,
   useState,
   type ReactNode,
 } from 'react';
@@ -105,6 +107,19 @@ export const Root: SelectEngine['Root'] = ({
 }) => {
   const [isOpen, setOpen] = useState(defaultOpen ?? false);
   const [exiting, setExiting] = useState(false);
+  // Base UI keeps its value on a form's reset: the adapter holds an uncontrolled value itself and
+  // puts the default back after the browser has reset the hidden control (React Aria does this).
+  const [ownValue, setOwnValue] = useState<string | null>(defaultValue ?? null);
+  const [root, setRoot] = useState<HTMLElement | null>(null);
+  const initial = useRef(defaultValue ?? null);
+  useEffect(() => {
+    const form = root?.querySelector('input')?.form;
+    const onReset = (): void => {
+      setTimeout(() => setOwnValue(initial.current));
+    };
+    form?.addEventListener('reset', onReset);
+    return () => form?.removeEventListener('reset', onReset);
+  }, [root]);
   const fallbackId = useId();
   const [triggerId, setTriggerId] = useState(fallbackId);
   const items = useMemo(() => itemLabels(children), [children]);
@@ -125,11 +140,13 @@ export const Root: SelectEngine['Root'] = ({
   }, [triggerId, fallbackId, shown, exiting, placeholder, label, labelledBy]);
   return render(
     mergeProps(dom, stateAttrs({ ...s, required, invalid }), {
+      ref: setRoot,
       // the children go in the root element, as React Aria's render puts them
       children: (
         <SelectScope value={scope}>
           <Select.Root<string>
-            {...defined({ value, defaultValue, name, required, disabled })}
+            {...defined({ name, required, disabled })}
+            value={value === undefined ? ownValue : value}
             open={shown}
             items={items}
             // a closed popup leaves the DOM (§12.2), once its exit has run
@@ -141,9 +158,10 @@ export const Root: SelectEngine['Root'] = ({
               if (!next) setExiting(true);
               onOpenChange?.(next, openDetails(d.reason, d.event));
             }}
-            onValueChange={(next, d) =>
-              onValueChange?.(next, details(VALUE_REASONS[d.reason] ?? 'unknown', d.event))
-            }
+            onValueChange={(next, d) => {
+              setOwnValue(next);
+              onValueChange?.(next, details(VALUE_REASONS[d.reason] ?? 'unknown', d.event));
+            }}
           >
             {children}
           </Select.Root>
