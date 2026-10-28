@@ -142,7 +142,7 @@
     },
     {
       "declaration": "type",
-      "description": "Figma \"State\".",
+      "description": "Where the upload is: uploading, done or failed.",
       "import": "import type { FileItemStatus } from '@nizivo/react/unstable/file-item'",
       "kind": "type",
       "name": "FileItemStatus",

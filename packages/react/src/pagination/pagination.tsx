@@ -16,7 +16,7 @@ import { renderElement, type RenderProp } from '../contracts/render';
 import { cx } from '../_internal/cx';
 import { ChevronGlyph } from '../_internal/glyphs';
 
-/** 40 px (`md`) or 32 px (`sm`) squares; Figma's 36 px is off the control scale (figma/06). */
+/** 40 px (`md`) or 32 px (`sm`) squares, on the control scale. */
 export type PaginationSize = 'sm' | 'md';
 
 /** Pagination's own strings (§16.4): serialisable, English defaults; `{page}` is replaced. */
@@ -72,7 +72,7 @@ export interface PaginationProps extends Omit<ComponentPropsWithRef<'nav'>, 'chi
    * the slots wrap, so use `sm` and `siblingCount={0}` (7 slots, 248 px) there. @default 'md'
    */
   size?: PaginationSize;
-  /** Text before the pages, for example "Showing 1–20 of 248" (Figma); you format it. */
+  /** Text before the pages, for example "Showing 1–20 of 248"; you format it. */
   summary?: ReactNode;
   /** Replaces the chevron of the previous link (mirrored under `dir="rtl"` only by default). */
   previousIcon?: ReactNode;

@@ -62,7 +62,7 @@ function Hotspot({ tag }: { tag: ProductTag }): JSX.Element {
 }
 
 /**
- * Figma 10's Product Tag (`7275:19846`) on a post's photo: each dot is a button named for its
+ * Product Tags on a post's photo: each dot is a button named for its
  * product ("Product: Moss mug") that opens a Popover with the name, the price and a link to the
  * product. Escape or a press outside closes it, and focus returns to the dot. The dots sit at
  * fractions of the photo's size, so they stay on their products at any width. The Popover is a

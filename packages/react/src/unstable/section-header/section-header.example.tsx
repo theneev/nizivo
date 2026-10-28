@@ -1,7 +1,7 @@
 import type { JSX } from 'react';
 import { SectionHeader } from './index';
 
-/** Figma's two alignments: start for most sections, centre for a short single idea. */
+/** Two alignments: start for most sections, centre for a short single idea. */
 export function SectionHeaderExample(): JSX.Element {
   return (
     <div style={{ display: 'grid', gap: 48 }}>

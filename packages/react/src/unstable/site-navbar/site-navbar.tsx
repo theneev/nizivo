@@ -30,7 +30,7 @@ export interface SiteNavbarProps extends Omit<ComponentPropsWithRef<'header'>, '
   links: readonly SiteNavbarLink[];
   /** At the end: Sign in, Get started. */
   actions?: ReactNode;
-  /** Figma "Style". @default 'bar' */
+  /** The look: a full-width bar or a floating one. @default 'bar' */
   variant?: 'bar' | 'floating';
   labels?: Partial<SiteNavbarLabels>;
   /** Must render a `<header>`. */

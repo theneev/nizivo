@@ -2,7 +2,7 @@ import type { JSX } from 'react';
 import { Button } from '../../button/index';
 import { ToolCallCard } from './index';
 
-/** Figma's three states of one action: running, done, and failed with a scoped retry. */
+/** Three states of one action: running, done, and failed with a scoped retry. */
 export function ToolCallCardExample(): JSX.Element {
   return (
     <div style={{ display: 'grid', gap: 16, maxInlineSize: 460 }}>

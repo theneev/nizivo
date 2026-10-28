@@ -5,7 +5,7 @@ import { renderElement, type RenderProp } from '../contracts/render';
 import { cx } from '../_internal/cx';
 
 export type ProgressRingTone = 'brand' | 'success' | 'warning' | 'critical' | 'neutral';
-/** 48 / 72 / 96 px; Figma draws only 72. */
+/** 48 / 72 / 96 px. */
 export type ProgressRingSize = 'sm' | 'md' | 'lg';
 
 export interface ProgressRingState {
@@ -17,7 +17,7 @@ export interface ProgressRingState {
 }
 
 export interface ProgressRingProps extends Omit<ComponentPropsWithRef<'div'>, 'role'> {
-  /** Figma "Value" (25 / 50 / 75 / 100 there). Clamped to `0…max`. */
+  /** The progress so far. Clamped to `0…max`. */
   value: number;
   /** Must be above zero. @default 100 */
   max?: number;

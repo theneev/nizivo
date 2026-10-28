@@ -1,7 +1,7 @@
 import type { JSX } from 'react';
 import { SourceCard } from './index';
 
-/** Figma's two types under an answer: a web page (opens in a new tab) and a file. */
+/** Two types under an answer: a web page (opens in a new tab) and a file. */
 export function SourceCardExample(): JSX.Element {
   return (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 17.5rem)', gap: 16 }}>

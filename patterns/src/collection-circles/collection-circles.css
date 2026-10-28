@@ -36,7 +36,7 @@
   }
 
   /* A fixed box: the ring is a shadow inside it, so a new and a seen circle are the same size
-     (Figma's hugging frame grows 2 px with the thicker ring, figma/10 §3.1). */
+     (the design's hugging frame grows 2 px with the thicker ring). */
   .nzp-collection-circles-ring {
     display: grid;
     box-sizing: border-box;

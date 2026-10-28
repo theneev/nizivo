@@ -16,13 +16,13 @@ In a client app (a Vite or React Router single-page app, or a `'use client'` fil
 
 `tone="brand"` and `tone="accent"` are new in 0.2.0; 0.1.0 has `surface`, `subtle` and `inverse`
 only. In dark mode `bg/brand-subtle` and `bg/accent-subtle`
-are both green-950, so the two tints look the same there. That is Figma's design, and the code
-follows it for now (Figma 04 issue 5; the maintainer's decision M42).
+are both green-950, so the two tints look the same there. That is the design, and the code
+follows it for now (the maintainer's decision M42).
 
 On `brand` and `accent`, a [Delta](/docs/components/delta/) inside the Card is drawn as a
-`bg/surface` pill, so it shows on the tint: Figma's `bg/success-subtle` pill is the same colour as
+`bg/surface` pill, so it shows on the tint: the design's `bg/success-subtle` pill is the same colour as
 `bg/brand-subtle` (green-50 in light, and all three are green-950 in dark), so it would show no fill.
-This is a deviation from Figma 04 (gap 4) that the maintainer chose (M42). The pill's text keeps its
+This is a deliberate departure from the design (the maintainer's decision M42). The pill's text keeps its
 colour, at least 5.68:1 on `bg/surface` in light and 5.96:1 in dark (`text/critical`; CONTRAST.md).
 The nearest Card decides: a Delta inside an untinted Card nested in a tinted one keeps its own
 pill. A `--nz-delta-bg` you set still wins.

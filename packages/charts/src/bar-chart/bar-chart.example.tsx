@@ -6,7 +6,7 @@ interface Day {
   orders: number;
 }
 
-// Figma 03's bar chart: orders per day, Oct 17–30. The last bar (313) is above Figma's top tick
+// Orders per day, Oct 17–30. The last bar (313) is above the design's top tick
 // (300); here the domain is niced first, so the axis ends at 400.
 const ORDERS: Day[] = [183, 214, 196, 241, 269, 232, 205, 228, 251, 279, 263, 299, 287, 313].map(
   (orders, i) => ({ date: `2026-10-${String(17 + i)}`, orders }),

@@ -29,7 +29,7 @@
       "props": [
         {
           "default": "true",
-          "description": "Figma \"Dot\": a decorative status dot before the label. The label carries the meaning.",
+          "description": "A decorative status dot before the label. The label carries the meaning.",
           "name": "dot",
           "required": false,
           "type": "boolean"
@@ -89,7 +89,7 @@
     },
     {
       "declaration": "type",
-      "description": "Figma \"Tone\". `brand` is the only solid fill.",
+      "description": "The badge's colour, by status. `brand` is the only solid fill.",
       "import": "import type { BadgeTone } from '@nizivo/react/badge'",
       "kind": "type",
       "name": "BadgeTone",

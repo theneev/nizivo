@@ -151,7 +151,7 @@ function PlanCard({ plan, intervals }: { plan: Plan; intervals: Interval[] }): J
 }
 
 /**
- * Figma 05's Plan Card (`7275:14284`), the Basic tier: the name, the price per month, a line
+ * A Plan Card, the Basic tier: the name, the price per month, a line
  * about it, the features and a link to start. A server composition: it ships no JavaScript.
  */
 export function PlanCardExample(): JSX.Element {

@@ -139,7 +139,7 @@ assumes subpath imports.
    prefer the alternative.
 5. **Alert:** pass `dismiss` only when the alert can be dismissed. Nothing else changes what it ships.
 6. **IconButton:** does a sighted user need the hover or focus text to know what the button does?
-   - Yes (the usual case for an icon-only button, and Figma's rule: "Icon-only buttons have an
+   - Yes (the usual case for an icon-only button, and the design's rule: "Icon-only buttons have an
      aria-label and a Tooltip"): use `IconButton`. If the name can be visible text instead, use a
      `Button`, which needs no JavaScript.
    - No, because something visible already names it (a column header, a heading, a visible label next

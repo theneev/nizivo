@@ -88,7 +88,7 @@ function Destinations(): JSX.Element {
 }
 
 /**
- * Figma's Sidebar, expanded: the store, the destinations (`SidebarItem`s) and Settings at the foot. `collapsed={false}`
+ * Expanded: the store, its `SidebarItem`s and Settings at the foot. `collapsed={false}`
  * keeps it 264 px wide here; in an app it is 264 px from 1280 px and the icon rail from 640 px.
  * (The examples set `blockSize`; in a shell it is the viewport's height.)
  */

@@ -124,7 +124,7 @@
     },
     {
       "declaration": "type",
-      "description": "Figma \"Trend\", derived from the sign of `value`.",
+      "description": "The direction of the change, derived from the sign of `value`.",
       "import": "import type { DeltaTrend } from '@nizivo/react/delta'",
       "kind": "type",
       "name": "DeltaTrend",

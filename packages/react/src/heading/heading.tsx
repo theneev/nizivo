@@ -7,7 +7,7 @@ import type { TextTone } from '../text/text';
 /** The document outline level: `<h1>` to `<h6>`. */
 export type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
 
-/** The Figma display and heading text styles. */
+/** The display and heading text styles. */
 export type HeadingVariant =
   | 'display-l'
   | 'display-m'
@@ -27,7 +27,7 @@ export interface HeadingProps extends ComponentPropsWithRef<'h2'> {
   level: HeadingLevel;
   /**
    * The text style, independent of `level` (a page title can be an `<h1>` drawn as Heading/H3).
-   * @default the style named after the level, and `heading-h4` for levels 5 and 6 (Figma has no H5 or H6)
+   * @default the style named after the level, and `heading-h4` for levels 5 and 6 (there is no H5 or H6 style)
    */
   variant?: HeadingVariant;
   /**

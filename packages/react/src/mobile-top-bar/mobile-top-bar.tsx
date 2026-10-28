@@ -10,9 +10,9 @@ export interface MobileTopBarProps extends Omit<
   ComponentPropsWithRef<'header'>,
   'title' | 'children'
 > {
-  /** The page's name, in Heading/H4's look (Figma's Title). Not a heading element. */
+  /** The page's name, in Heading/H4's look. Not a heading element. */
   title?: ReactNode;
-  /** The store's mark, drawn as Figma's 32 px Store mark: an initial, or a logo image that fills it. */
+  /** The store's mark, drawn as a 32 px mark: an initial, or a logo image that fills it. */
   mark?: ReactNode;
   /** In place of `mark`, for example a back link on a detail page. */
   leading?: ReactNode;

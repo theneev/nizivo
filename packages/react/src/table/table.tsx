@@ -49,7 +49,7 @@ export interface TableRowProps extends ComponentPropsWithRef<'tr'> {
   /** `data-selected` (never `aria-selected` inside a table, §16.2). @default false */
   selected?: boolean;
   /**
-   * The whole row is the hit area of its `Table.RowLink` (a stretched link) and shows Figma's hover.
+   * The whole row is the hit area of its `Table.RowLink` (a stretched link) and shows a hover state.
    * Other controls in the row stay above the link. @default false
    */
   interactive?: boolean;
@@ -273,7 +273,7 @@ export function TableSortButton({
 }
 
 /**
- * A row's link, usually its first cell's text (Figma Order Row: the order number). In a row with
+ * A row's link, usually its first cell's text (in an orders table, the order number). In a row with
  * `interactive`, it stretches over the whole row.
  */
 export function TableRowLink({ render, className, ...rest }: TableRowLinkProps): ReactElement {

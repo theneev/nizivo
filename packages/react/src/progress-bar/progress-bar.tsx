@@ -4,7 +4,7 @@ import { useId, type ComponentPropsWithRef, type ReactElement, type ReactNode } 
 import { renderElement, type RenderProp } from '../contracts/render';
 import { cx } from '../_internal/cx';
 
-/** Figma "Tone" (Brand, Warning, Critical) plus `success` and `neutral`. */
+/** The bar's colour: `brand`, `success`, `warning`, `critical` or `neutral`. */
 export type ProgressBarTone = 'brand' | 'success' | 'warning' | 'critical' | 'neutral';
 
 export interface ProgressBarState {

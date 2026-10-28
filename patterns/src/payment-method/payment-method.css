@@ -5,7 +5,7 @@
     max-inline-size: 27rem;
   }
 
-  /* Figma's 44 × 30 card mark: a generic card glyph where the brand's logo goes */
+  /* The 44 × 30 card mark: a generic card glyph where the brand's logo goes */
   .nzp-payment-method-mark {
     display: inline-grid;
     flex: none;

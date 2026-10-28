@@ -23,7 +23,7 @@
     gap: var(--nz-space-2);
   }
 
-  /* the code: Figma's dashed chip, in Mono */
+  /* the code: a dashed chip, in Mono */
   .nzp-discount-card-code {
     display: inline-flex;
     align-items: center;

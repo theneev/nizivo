@@ -1,7 +1,7 @@
 import type { JSX } from 'react';
 import { AiBadge } from './index';
 
-/** Figma's two styles: subtle beside a block of text, solid where it must stand out. */
+/** Two styles: subtle beside a block of text, solid where it must stand out. */
 export function AiBadgeExample(): JSX.Element {
   return (
     <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>

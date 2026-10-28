@@ -83,7 +83,7 @@ function Inventory({ product }: { product: Product }): JSX.Element {
 }
 
 /**
- * Figma 05's Product Row (`7275:14040`) as a bulk-editable catalogue table. Each row's checkbox is a
+ * Product Rows as a bulk-editable catalogue table. Each row's checkbox is a
  * native input of the form above the table, so "Archive selected" submits the checked ids before any
  * JavaScript runs; `TableSelection` adds the select-all box, Shift-click ranges and Escape. Each row's
  * "…" opens a Menu named for that product. The thumbnail stands in for the product's `Image`.

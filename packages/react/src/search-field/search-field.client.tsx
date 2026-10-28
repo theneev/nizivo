@@ -54,7 +54,7 @@ export interface SearchFieldProps extends Omit<
   ComponentPropsWithRef<'input'>,
   'type' | 'size' | 'prefix' | 'children'
 > {
-  /** 32 / 40 / 48 px, as Input, Button and Select (Figma's 42 is off the scale). @default 'md' */
+  /** 32 / 40 / 48 px, as Input, Button and Select. @default 'md' */
   size?: ControlSize;
   /**
    * An error message is presented for this field (§8.3). Inside a Field, the Field sets it; an

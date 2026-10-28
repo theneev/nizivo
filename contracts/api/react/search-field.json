@@ -65,7 +65,7 @@
         },
         {
           "default": "'md'",
-          "description": "32 / 40 / 48 px, as Input, Button and Select (Figma's 42 is off the scale).",
+          "description": "32 / 40 / 48 px, as Input, Button and Select.",
           "name": "size",
           "required": false,
           "type": "ControlSize",

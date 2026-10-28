@@ -79,7 +79,7 @@ const ORDERS: Order[] = [
 ];
 
 /**
- * Figma 05's Order Row (`7275:14091`) as an order list. The order number is a stretched link, so
+ * Order Rows as an order list. The order number is a stretched link, so
  * the whole row is its hit area and the row is one Tab stop. Payment and fulfilment are two Badges
  * with words, never colour alone. A server composition: it ships no JavaScript.
  */

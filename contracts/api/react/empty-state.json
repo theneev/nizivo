@@ -12,7 +12,7 @@
   "exports": [
     {
       "client": false,
-      "description": "Figma: \"A render, a headline, one action. No paragraphs.\"",
+      "description": "A render, a headline, one action. No paragraphs.",
       "import": "import { EmptyState } from '@nizivo/react/empty-state'",
       "inherits": [
         {

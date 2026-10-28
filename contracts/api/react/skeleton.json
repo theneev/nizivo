@@ -68,7 +68,7 @@
     },
     {
       "declaration": "type",
-      "description": "Figma \"Shape\": a text line, a block (media, a chart) or a circle (an avatar).",
+      "description": "The placeholder's shape: a text line, a block (media, a chart) or a circle (an avatar).",
       "import": "import type { SkeletonShape } from '@nizivo/react/skeleton'",
       "kind": "type",
       "name": "SkeletonShape",

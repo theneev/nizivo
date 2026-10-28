@@ -59,7 +59,7 @@ function stock(count: number): [text: string, tone: TextTone] {
 }
 
 /**
- * Figma 08's Pattern 1, Products: the content of the app shell's `<main>`. The page header and its
+ * The Products page: the content of the app shell's `<main>`. The page header and its
  * two actions, then the catalogue card: status filters as links (`TabNav`), a search form and a sort,
  * the product table with row selection, and pagination. `TableSelection` and the row checkboxes
  * submit the checked ids with the "Archive selected" form; the search, the sort and the pages are

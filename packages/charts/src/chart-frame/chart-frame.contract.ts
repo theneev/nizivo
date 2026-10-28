@@ -30,16 +30,16 @@ export type ChartAxes = 'frame' | 'none';
 export type ChartInteractionMode = 'nizivo' | 'none';
 
 /**
- * How the data table shows. `'hidden'`: visually hidden, read by assistive technology (no chrome,
- * as Figma 03 draws charts). `'details'`: a native `<details>` disclosure under the plot, so anyone
+ * How the data table shows. `'hidden'`: visually hidden, read by assistive technology (no visible
+ * chrome). `'details'`: a native `<details>` disclosure under the plot, so anyone
  * can open the values (zero JS).
  */
 export type ChartTableView = 'hidden' | 'details';
 
 /**
  * How x labels line up with the plot. `'point'`: one label per point of a point scale (lines and
- * areas): the first sits at the plot's start edge, the last at its end edge, both clamped inward
- * (Figma 03). `'band'`: one label centred in each band of a band scale (bars).
+ * areas): the first sits at the plot's start edge, the last at its end edge, both clamped inward.
+ * `'band'`: one label centred in each band of a band scale (bars).
  */
 export type ChartTickAlign = 'point' | 'band';
 
@@ -54,7 +54,7 @@ export type ChartXDirection = 'ltr' | 'rtl' | 'auto';
 /**
  * Whether the caption shows. `'visible'`: the title and summary above the plot. `'hidden'`: both
  * visually hidden (clipped to a 1 × 1 box out of flow, never `display: none`), for a chart whose
- * container already titles it (a card header, Figma's Revenue Card): the caption takes no layout
+ * container already titles it (a card header, as on a revenue card): the caption takes no layout
  * space, stays in the HTML and still names the figure and its data table.
  */
 export type ChartTitleVisibility = 'visible' | 'hidden';

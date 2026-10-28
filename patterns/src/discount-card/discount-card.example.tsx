@@ -129,8 +129,8 @@ function DiscountCard({ discount }: { discount: Discount }): JSX.Element {
 }
 
 /**
- * Figma 05's Discount Card (`7275:14130`): Active, Scheduled and Expired, plus a code with no usage
- * limit, which Figma does not draw. Usage is a `Meter` read as "310 of 500 used". The expired card
+ * Discount Cards: Active, Scheduled and Expired, plus a code with no usage
+ * limit, not in the design. Usage is a `Meter` read as "310 of 500 used". The expired card
  * keeps full-contrast text: only its status, its code and its meter turn neutral. A server
  * composition: it ships no JavaScript.
  */

@@ -42,7 +42,7 @@ const PRODUCTS: TaggedProduct[] = [
 ];
 
 /**
- * Figma 10's Tagged Product (`7275:19862`): the products in a post, listed under its photo. Each row
+ * Tagged Product: the products in a post, listed under its photo. Each row
  * has a thumbnail, the name as a link to the product, the variant and the price, and an add-to-bag
  * IconButton named for its product ("Add Moss mug to bag"). It is a toggle: a product already in the
  * bag shows a check, the button is pressed, and the row says "In your bag" in words. The IconButton

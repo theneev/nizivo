@@ -3,7 +3,7 @@ import { Button } from '../button/index';
 import { Dialog } from './index';
 
 /**
- * Figma Modal Type=Destructive: a server Button arrives as the trigger through `render`. Compose a
+ * A destructive dialog: a server Button arrives as the trigger through `render`. Compose a
  * Button (or an IconButton) into `Dialog.Trigger` rather than styling the bare part: it brings the
  * control look and the 40 px control height (the bare part has only the WCAG 2.2 2.5.8 minimum of
  * 24 x 24 px, and the 44 px hit area under a coarse pointer; M27). The bare
@@ -48,7 +48,7 @@ export function DialogOpenExample(): JSX.Element {
 
 /**
  * A footer-less dialog closed by a full-width `Dialog.Close` flush with the popup's bottom edge. The
- * content clips its corners (Figma), so a control placed straight in it draws its keyboard ring
+ * content clips its corners, so a control placed straight in it draws its keyboard ring
  * inside itself, where the clip cannot cut it (§12.3).
  */
 export function DialogPlainCloseExample(): JSX.Element {

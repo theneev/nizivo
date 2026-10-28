@@ -57,7 +57,7 @@
         },
         {
           "default": "'bar'",
-          "description": "Figma \"Style\".",
+          "description": "The look: a full-width bar or a floating one.",
           "name": "variant",
           "required": false,
           "type": "\"bar\" | \"floating\"",
@@ -140,7 +140,7 @@
       "attributes": [
         {
           "group": "presentational",
-          "meaning": "The variant prop; values are the lowercase Figma names in each component manifest",
+          "meaning": "The variant prop; values in each component manifest",
           "name": "data-variant",
           "prop": "variant",
           "values": ["bar", "floating"]

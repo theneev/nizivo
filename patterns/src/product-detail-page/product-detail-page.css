@@ -1,6 +1,6 @@
 @layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
 
-/* Figma 08 Pattern 2 (7275:15860): the breadcrumb, the header, then Split's two columns of cards,
+/* The breadcrumb, the header, then Split's two columns of cards,
    24 apart. The gallery is one large tile and four small ones (the last an upload tile); the three
    prices share a row once the column is 36rem wide (a container query on the column). */
 @layer nz.patterns {

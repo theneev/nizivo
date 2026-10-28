@@ -30,8 +30,8 @@
 
   /* On-media surface: bg/code and text/on-dark are dark and white in both themes, a pair the
      tokens' contrast check holds at 17.4:1 (light) and 18.7:1 (dark). Opaque, so the photo under it
-     cannot lower the contrast (Figma's #141714 at 62 % with text/inverse falls to 1.12:1 in dark
-     mode, figma/10 §3.2). */
+     cannot lower the contrast (the design's #141714 at 62 % with text/inverse falls to 1.12:1 in
+     dark mode). */
   .nzp-shoppable-post-badge {
     position: absolute;
     inset-block-end: var(--nz-space-2);

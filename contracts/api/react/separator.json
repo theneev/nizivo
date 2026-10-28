@@ -14,7 +14,7 @@
   "exports": [
     {
       "client": false,
-      "description": "An `<hr>`: a 1 px `border/subtle` line, Figma's Divider (7370:95). Decorative by default; spacing comes first, a line only when spacing is not enough (the Figma doc).",
+      "description": "An `<hr>`: a 1 px `border/subtle` line. Decorative by default; spacing comes first, a line only when spacing is not enough.",
       "import": "import { Separator } from '@nizivo/react/separator'",
       "inherits": [
         {
@@ -30,7 +30,7 @@
       "props": [
         {
           "default": "true",
-          "description": "Purely visual, hidden from assistive technology (`role=\"none\"`): the Figma Divider default (7370:95, M35). Pass `decorative={false}` for a separator that means something on its own, a break between two groups a screen reader should hear (an `<hr>`'s implicit `separator` role, with `aria-orientation` when vertical).",
+          "description": "Purely visual, hidden from assistive technology (`role=\"none\"`): the default (M35). Pass `decorative={false}` for a separator that means something on its own, a break between two groups a screen reader should hear (an `<hr>`'s implicit `separator` role, with `aria-orientation` when vertical).",
           "name": "decorative",
           "required": false,
           "type": "boolean"

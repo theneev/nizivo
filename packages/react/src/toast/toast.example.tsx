@@ -25,7 +25,7 @@ export function ToastExample(): JSX.Element {
 }
 
 /**
- * Figma's three tones as a stack, newest last. Each has an action or is critical, so all three stay
+ * The three tones as a stack, newest last. Each has an action or is critical, so all three stay
  * until dismissed; a plain toast would leave after 5 s.
  */
 export function ToastStackExample(): JSX.Element {

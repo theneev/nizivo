@@ -41,7 +41,7 @@ export const heatmapLabels: HeatmapLabels = {
   more: 'More',
 };
 
-/** The ramp's steps: chart/primary at 8, 25, 45, 70 and 100 % (Figma). */
+/** The ramp's steps: chart/primary at 8, 25, 45, 70 and 100 %. */
 export const HEATMAP_STEPS: number = 5;
 
 /**

@@ -76,14 +76,14 @@ export interface MetricProps
   size?: MetricSize;
   /**
    * A small chart at the end of the value row, for example a Sparkline; shown while ready. Its box is
-   * at most the row's (KpiTile draws it at 88 × 28, Figma's tile).
+   * at most the row's (KpiTile draws it at 88 × 28).
    */
   chart?: ReactNode;
   /** The id of the label element, for an enclosing group's `aria-labelledby` (KpiTile sets it). */
   labelId?: string;
   /**
    * Keep the change row's height when there is no `delta` and no `comparison`, so the box is the same
-   * whatever a fallback passes (KpiTile and TrendCard set it: Figma's tile and card always have it).
+   * whatever a fallback passes (KpiTile and TrendCard set it, so their boxes always have the row).
    */
   reserveChange?: boolean;
   render?: RenderProp<MetricState>;

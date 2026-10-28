@@ -61,7 +61,7 @@ const WHEN = new Intl.DateTimeFormat('en-US', {
 const MONEY = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
 
 /**
- * 08's Recent orders (Figma Order Row): each row links to its order through the order number, a
+ * The Recent orders table: each row links to its order through the order number, a
  * stretched link, so the whole row is the hit area. The caption names the table and is hidden,
  * because the card above it shows the same words.
  */

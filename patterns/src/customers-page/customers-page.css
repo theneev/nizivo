@@ -1,6 +1,6 @@
 @layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
 
-/* Figma 08 Pattern 4 (7275:16097): the header, the KPI row (16 apart), the segment links, then
+/* The header, the KPI row (16 apart), the segment links, then
    Split's two columns: the customers table and an aside of the top cities and a win-back card. The
    KPI row follows the page's own width. */
 @layer nz.patterns {

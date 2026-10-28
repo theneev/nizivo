@@ -119,7 +119,7 @@
     },
     {
       "declaration": "type",
-      "description": "Figma \"State\".",
+      "description": "What the voice assistant is doing: idle, listening or speaking.",
       "import": "import type { VoiceState } from '@nizivo/react/unstable/voice-orb'",
       "kind": "type",
       "name": "VoiceState",

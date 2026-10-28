@@ -59,7 +59,7 @@ const ICONS = {
 };
 
 /**
- * Figma's Mobile Tab Bar: four destinations and More, links in a `<nav>` (each is a page, so not a
+ * The Mobile Tab Bar: four destinations and More, links in a `<nav>` (each is a page, so not a
  * tablist). More opens the other destinations in a bottom sheet; following one closes it. Below
  * 640 px AppShell pins the bar to the bottom of the screen.
  */

@@ -28,9 +28,9 @@ export interface SidebarRootProps extends ComponentPropsWithRef<'nav'> {
 }
 
 export interface SidebarHeaderProps extends Omit<ComponentPropsWithRef<'div'>, 'title'> {
-  /** The store's mark, for example a square `Avatar` (Figma's 32 px Store mark). The rail keeps it. */
+  /** The store's mark, for example a square 32 px `Avatar`. The rail keeps it. */
   mark?: ReactNode;
-  /** The store's name (Figma's Store). In the rail it leaves the layout and stays in the DOM. */
+  /** The store's name. In the rail it leaves the layout and stays in the DOM. */
   title?: ReactNode;
   /** A line under the name, such as the store's domain. */
   description?: ReactNode;
@@ -69,7 +69,7 @@ export function SidebarRoot({
   );
 }
 
-/** The store at the top: its mark, name and a line under it, on a card (Figma's Store Switcher). */
+/** The store at the top: its mark, name and a line under it, on a card. */
 export function SidebarHeader({
   mark,
   title,
@@ -132,7 +132,7 @@ export function SidebarContent({ render, className, ...rest }: SidebarContentPro
   );
 }
 
-/** Pushed to the bottom, for Settings (Figma's Spacer frame becomes an auto margin). */
+/** Pushed to the bottom, for Settings (an auto margin). */
 export function SidebarFooter({ render, className, ...rest }: SidebarFooterProps): ReactElement {
   return renderElement(
     'div',

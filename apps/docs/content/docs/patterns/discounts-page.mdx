@@ -3,8 +3,7 @@ title: Discounts page
 description: A discount index inside the app shell, with a notice, key figures, status links and a card per discount showing its status, dates and usage on a Meter. It ships no JavaScript.
 ---
 
-From Figma 08 Overview Dashboard, Pattern 5 · Discounts (`7275:16204`). Uses
-[PageHeader](/docs/components/page-header/), [Button](/docs/components/button/),
+It uses [PageHeader](/docs/components/page-header/), [Button](/docs/components/button/),
 [Alert](/docs/components/alert/), [KpiTile](/docs/components/kpi-tile/),
 [TabNav](/docs/components/tab-nav/), [Card](/docs/components/card/),
 [Badge](/docs/components/badge/), [Meter](/docs/components/meter/) and
@@ -40,5 +39,5 @@ import { AppShell } from '@nizivo/react/app-shell';
   reader announces how many there are. Each status is a Badge's words, never its colour alone.
 - **Usage is a Meter**, not a ProgressBar: it measures how much of a fixed limit is used, and
   `valueText` reads it as "312 of 500".
-- **Not built.** Figma's Discount Card has no code component; each is a Card. The notice is not
+- **Not built.** The design's Discount Card has no code component; each is a Card. The notice is not
   dismissible here: add `dismiss={<AlertDismiss … />}` to let a reader close it.

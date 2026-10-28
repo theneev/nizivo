@@ -3,9 +3,7 @@ title: Shoppable post
 description: A post's media as one link, with a Shop badge that counts its tagged products and reads in both themes, alone and in the storefront's grid. A server composition; it ships no JavaScript.
 ---
 
-From Figma 10 Instagram Storefront, Shoppable Post (`7275:19815`, with the orphan master `772:4373`
-the screens use), Post Badge (`772:4419`, an orphan master) and the post grid of the mobile
-storefront (`7275:20803`). Uses [Badge](/docs/components/badge/) and the `ShoppingBag` and `Layers`
+It uses [Badge](/docs/components/badge/) and the `ShoppingBag` and `Layers`
 glyphs of [`@nizivo/icons`](/docs/icons/).
 
 ## Examples
@@ -27,14 +25,14 @@ glyphs of [`@nizivo/icons`](/docs/icons/).
 - **Text on media.** The badge and the carousel glyph sit on `--nz-bg-code` with
   `--nz-text-on-dark`: both stay dark and white in light and dark mode, and the tokens' contrast
   check holds the pair at 17.4:1 in light and 18.7:1 in dark. The surface is opaque, so no photo
-  under it can lower that. Figma's `#141714` at 62 % with `text/inverse` falls to 1.12:1 in dark
-  mode, because `text/inverse` turns dark there (figma/10 §3.2). The kit has no on-media token yet;
+  under it can lower that. The design's `#141714` at 62 % with `text/inverse` falls to 1.12:1 in dark
+  mode, because `text/inverse` turns dark there. The kit has no on-media token yet;
   this pair stands in for one.
 - **One link per tile.** The link's name says what the tile shows: "Post from 12 October, 3
   products to shop", and ", 4 photos" for a carousel. The badge and the glyph are hidden from
   screen readers, so nothing is read twice and nothing in the tile is a second control.
-- **Where it differs from Figma.** No hover-only "Shop 3 items" call to action: Figma shows it only
-  on hover and hides the count while it does (§3.2), which leaves touch and keyboard users without
+- **Where it differs from the design.** No hover-only "Shop 3 items" call to action: the design shows it
+  only on hover and hides the count while it does, which leaves touch and keyboard users without
   it. The badge is always there and the tile has a focus ring. The corner radius is `radius/xs`
-  (4 px) for Figma's off-scale 6 px. The carousel glyph gets the same dark backing as the badge, so
-  it shows on a light photo.
+  (4 px) for the design's off-scale 6 px. The carousel glyph gets the same dark backing as the badge,
+  so it shows on a light photo.

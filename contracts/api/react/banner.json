@@ -14,7 +14,7 @@
   "exports": [
     {
       "client": false,
-      "description": "A page-wide message under the header (Figma Banner 7275:15120): one at a time.",
+      "description": "A page-wide message under the header: one at a time.",
       "import": "import { Banner } from '@nizivo/react/banner'",
       "inherits": [
         {
@@ -47,7 +47,7 @@
           "type": "ReactNode"
         },
         {
-          "description": "A 72 px picture before the text, such as Figma's product render on the brand banner: `<img src=\"…\" alt=\"\" width={72} height={72} />`. Decorative; the text carries the message.",
+          "description": "A 72 px picture before the text, such as a product render on the brand banner: `<img src=\"…\" alt=\"\" width={72} height={72} />`. Decorative; the text carries the message.",
           "name": "media",
           "required": false,
           "type": "ReactNode"
@@ -94,7 +94,7 @@
     },
     {
       "client": true,
-      "description": "With no `render`, an IconButton (tertiary, `md`: a 20 px glyph, Figma draws 18, in a 40 px target, the height of the Banner's action) with no tooltip, as `Dialog.Close` does.",
+      "description": "With no `render`, an IconButton (tertiary, `md`: a 20 px glyph in a 40 px target, the height of the Banner's action) with no tooltip, as `Dialog.Close` does.",
       "import": "import { BannerDismiss } from '@nizivo/react/banner'",
       "inherits": [
         {
@@ -188,7 +188,7 @@
     },
     {
       "declaration": "type",
-      "description": "Figma \"Tone\": `brand` is Figma's Promo (handoff Q25, D-bq).",
+      "description": "The banner's colour: `brand` for a promotion (D-bq), `warning` for a problem to act on.",
       "import": "import type { BannerTone } from '@nizivo/react/banner'",
       "kind": "type",
       "name": "BannerTone",

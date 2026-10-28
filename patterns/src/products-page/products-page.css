@@ -1,6 +1,6 @@
 @layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
 
-/* Figma 08 Pattern 1 (7275:15757): the page content, 24 between the header and the catalogue card;
+/* The page content, 24 between the header and the catalogue card;
    inside the card the toolbar (16 / 24), the table full-bleed, then the footer (16 / 24). */
 @layer nz.patterns {
   .nzp-products-page {

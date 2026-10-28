@@ -150,7 +150,7 @@
     },
     {
       "declaration": "type",
-      "description": "Figma \"State\".",
+      "description": "Where the answer is: thinking, streaming, complete or failed.",
       "import": "import type { ResponseStatus } from '@nizivo/react/unstable/response-block'",
       "kind": "type",
       "name": "ResponseStatus",

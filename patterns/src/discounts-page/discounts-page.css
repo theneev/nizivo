@@ -1,7 +1,7 @@
 @layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
 
-/* Figma 08 Pattern 5 (7275:16204): the header, the notice, the KPI row (16 apart), the status links,
-   then the discount cards three to a row, 24 apart (Figma's Discount Card is a set with no code
+/* The header, the notice, the KPI row (16 apart), the status links,
+   then the discount cards three to a row, 24 apart (the design's Discount Card is a set with no code
    component, so each is a Card). The grids follow the page's own width. */
 @layer nz.patterns {
   .nzp-discounts-page {

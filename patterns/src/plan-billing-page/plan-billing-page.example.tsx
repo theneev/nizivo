@@ -40,7 +40,7 @@ const INVOICES = [
 ] as const;
 
 /**
- * Figma 08's Pattern 7, Settings · Plan & billing: the content of the app shell's `<main>`. The page
+ * The Settings · Plan & billing page: the content of the app shell's `<main>`. The page
  * header, then the settings sections as a nav column beside the page: the current plan, its usage
  * on Meters, the payment method, the invoices table and the billing emails. Only the Switches are
  * client components.

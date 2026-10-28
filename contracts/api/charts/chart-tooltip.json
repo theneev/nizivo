@@ -23,7 +23,7 @@
           "type": "ChartTooltipDelta"
         },
         {
-          "description": "One row per series; Figma's `Series` variant is `rows.length`.",
+          "description": "One row per series.",
           "name": "rows",
           "required": true,
           "type": "readonly ChartTooltipRow[]"

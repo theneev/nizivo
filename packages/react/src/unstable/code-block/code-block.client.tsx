@@ -27,7 +27,7 @@ export interface CodeBlockLabels {
 export interface CodeBlockProps extends Omit<ComponentPropsWithRef<'div'>, 'children'> {
   /** The versions, in tab order; one shows no tabs. */
   items: readonly CodeBlockItem[];
-  /** Figma "Type": a one-line shell command after a "$", or a snippet. @default 'snippet' */
+  /** The kind of code: a one-line shell command after a "$", or a snippet. @default 'snippet' */
   variant?: 'command' | 'snippet';
   /** The label of the version shown first. @default the first */
   defaultValue?: string;

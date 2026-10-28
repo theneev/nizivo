@@ -42,7 +42,7 @@ function Stat({ label, children }: { label: string; children: JSX.Element }): JS
 }
 
 /**
- * Figma 05's Customer Card (`754:530`, an orphan master): who they are, what they are worth and how
+ * A Customer Card: who they are, what they are worth and how
  * to reach them. The email is a link; the figures are a description list. A server composition: it
  * ships no JavaScript. Without a photo the Avatar shows the initials; with one, pass its `src`.
  */

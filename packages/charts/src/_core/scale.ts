@@ -139,8 +139,8 @@ export interface ValueDomainOptions {
 }
 
 /**
- * The y domain of a chart, niced BEFORE ticks are taken (§14.1; fixes Figma 03's "bar above the
- * top tick"): every value lies inside it and its ends are tick values. Empty or all-zero data gives
+ * The y domain of a chart, niced BEFORE ticks are taken (§14.1, so no bar rises above the top
+ * tick): every value lies inside it and its ends are tick values. Empty or all-zero data gives
  * [0, 1], so a flat series still has a baseline and a top.
  */
 export function valueDomain(

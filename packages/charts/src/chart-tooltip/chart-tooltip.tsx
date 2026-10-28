@@ -37,7 +37,7 @@ export interface ChartTooltipProps extends Omit<
 > {
   /** The point, for example "Tue, Oct 14" (Label/M Strong). */
   title: string;
-  /** One row per series; Figma's `Series` variant is `rows.length`. */
+  /** One row per series. */
   rows: readonly ChartTooltipRow[];
   delta?: ChartTooltipDelta | undefined;
 }

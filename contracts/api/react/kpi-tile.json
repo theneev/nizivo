@@ -30,7 +30,7 @@
       "name": "KpiTile",
       "props": [
         {
-          "description": "A small chart beside the value, shown while ready, for example `<Sparkline data={series} label=\"Sales, last 7 days\" />` from `@nizivo/charts`. Drawn at most 88 × 28 px (Figma).",
+          "description": "A small chart beside the value, shown while ready, for example `<Sparkline data={series} label=\"Sales, last 7 days\" />` from `@nizivo/charts`. Drawn at most 88 × 28 px.",
           "name": "chart",
           "required": false,
           "type": "ReactNode"
@@ -177,7 +177,7 @@
     },
     {
       "declaration": "type",
-      "description": "Figma \"Tone\": Surface, or Tinted as `brand` or `accent` (Card's tones of the same names).",
+      "description": "The tile's surface: `surface`, or tinted as `brand` or `accent` (Card's tones of the same names).",
       "import": "import type { KpiTileTone } from '@nizivo/react/kpi-tile'",
       "kind": "type",
       "name": "KpiTileTone",

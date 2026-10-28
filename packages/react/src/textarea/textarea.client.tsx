@@ -11,7 +11,7 @@ import { useFieldControl } from '../field/field-scope.client';
 
 export interface TextareaProps extends Omit<ComponentPropsWithRef<'textarea'>, 'children'> {
   /**
-   * Visible lines of text. The height is the larger of these rows and 112 px (Figma 7367:316; the
+   * Visible lines of text. The height is the larger of these rows and 112 px (the
    * `--nz-textarea-min-block-size` hook lowers it), so up to 4 rows of Body/M sit at 112 px. Where
    * the textarea grows with its content, that is also its minimum (1 to 10; a larger value keeps a
    * 3-line minimum there). @default 3

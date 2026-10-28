@@ -29,7 +29,7 @@
       "props": [
         {
           "default": "'start'",
-          "description": "Figma \"Align\".",
+          "description": "How the text lines up: at the start edge or centred.",
           "name": "align",
           "required": false,
           "type": "\"start\" | \"center\"",
@@ -85,7 +85,7 @@
       "attributes": [
         {
           "group": "presentational",
-          "meaning": "The variant prop; values are the lowercase Figma names in each component manifest",
+          "meaning": "The variant prop; values in each component manifest",
           "name": "data-variant",
           "values": ["start", "center"]
         }

@@ -81,14 +81,14 @@
         },
         {
           "default": "true",
-          "description": "Pairs the button with a Tooltip that shows `label` (\"Icon-only buttons have an aria-label and a Tooltip\", Figma). The tooltip is a client leaf; `false` renders the button with no client code running. Pass options to place it. Where visible text already names the action and the page should ship no JavaScript for the button, use `IconButtonStatic`: under Turbopack and `next dev` this module's import of the leaf ships the tooltip chain even with `tooltip={false}`.",
+          "description": "Pairs the button with a Tooltip that shows `label`, so a sighted user can read what the glyph does. The tooltip is a client leaf; `false` renders the button with no client code running. Pass options to place it. Where visible text already names the action and the page should ship no JavaScript for the button, use `IconButtonStatic`: under Turbopack and `next dev` this module's import of the leaf ships the tooltip chain even with `tooltip={false}`.",
           "name": "tooltip",
           "required": false,
           "type": "boolean | IconButtonTooltipOptions"
         },
         {
           "default": "'secondary'",
-          "description": "Figma \"Variant\".",
+          "description": "The button's emphasis, as Button's `variant`.",
           "name": "variant",
           "required": false,
           "type": "ButtonVariant",
@@ -155,7 +155,7 @@
     },
     {
       "client": false,
-      "description": "A server-safe IconButton with no tooltip: the same `<button>`, classes and CSS as `<IconButton tooltip={false}>`, from a module that imports no client code.\n\nUse it only where visible text already names the action for sighted users (a column header, a labelled row) and the page should ship no JavaScript for the button: a table row action that is a link (`render={<a href=\"/orders/42/edit\" />}`) under a header that says what it does, a submit button in a Server Action form (`type=\"submit\"` inside `<form action={deleteProduct}>`) beside its label. Under Turbopack and `next dev`, importing `IconButton` ships its tooltip code even with `tooltip={false}` (about 20 KB gzip in production); `IconButtonStatic` ships none.\n\nAn icon-only toolbar needs `IconButton`'s tooltip, so a sighted user can read what each glyph does (Figma: \"Icon-only buttons have an aria-label and a Tooltip\").\n\n`aria-label` is always required. You may also pass `aria-labelledby` pointing at visible text; it then names the button, with `aria-label` as the fallback. There is no `tooltip`, no `shortcut` (pass `aria-keyshortcuts` yourself, for example `\"Meta+B Control+B\"`) and no `label`.",
+      "description": "A server-safe IconButton with no tooltip: the same `<button>`, classes and CSS as `<IconButton tooltip={false}>`, from a module that imports no client code.\n\nUse it only where visible text already names the action for sighted users (a column header, a labelled row) and the page should ship no JavaScript for the button: a table row action that is a link (`render={<a href=\"/orders/42/edit\" />}`) under a header that says what it does, a submit button in a Server Action form (`type=\"submit\"` inside `<form action={deleteProduct}>`) beside its label. Under Turbopack and `next dev`, importing `IconButton` ships its tooltip code even with `tooltip={false}` (about 20 KB gzip in production); `IconButtonStatic` ships none.\n\nAn icon-only toolbar needs `IconButton`'s tooltip, so a sighted user can read what each glyph does.\n\n`aria-label` is always required. You may also pass `aria-labelledby` pointing at visible text; it then names the button, with `aria-label` as the fallback. There is no `tooltip`, no `shortcut` (pass `aria-keyshortcuts` yourself, for example `\"Meta+B Control+B\"`) and no `label`.",
       "import": "import { IconButtonStatic } from '@nizivo/react/icon-button'",
       "inherits": [
         {
@@ -240,7 +240,7 @@
         },
         {
           "default": "'secondary'",
-          "description": "Figma \"Variant\".",
+          "description": "The button's emphasis, as Button's `variant`.",
           "inheritedFrom": "IconButtonProps",
           "name": "variant",
           "required": false,
@@ -356,7 +356,7 @@
         },
         {
           "group": "presentational",
-          "meaning": "The variant prop; values are the lowercase Figma names in each component manifest",
+          "meaning": "The variant prop; values in each component manifest",
           "name": "data-variant",
           "prop": "variant",
           "values": ["primary", "secondary", "tertiary", "critical", "accent"]

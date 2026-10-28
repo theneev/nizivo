@@ -87,7 +87,7 @@ const TABS = [
 ] as const;
 
 /**
- * Figma 08's Pattern 5, Discounts: the content of the app shell's `<main>`. The page header, a
+ * The Discounts page: the content of the app shell's `<main>`. The page header, a
  * notice, three key figures and the status links, then the discounts as a list of cards: each code
  * with its offer, its status in words, its dates and a `Meter` of how many of its uses are taken. A
  * server composition: it ships no JavaScript.

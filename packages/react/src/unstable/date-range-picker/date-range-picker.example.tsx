@@ -3,7 +3,7 @@ import { Field } from '../../field/index';
 import { DateRangePicker } from './index';
 
 /**
- * The report period: Figma's picker with "Oct 1 – Oct 7, 2026" applied. Open it, pick a preset or two
+ * The report period: the picker with "Oct 1 – Oct 7, 2026" applied. Open it, pick a preset or two
  * days, then Apply; Cancel, Escape or a press outside keep the old range. The form gets
  * `period=2026-10-01/2026-10-07`.
  */

@@ -4,7 +4,7 @@ import { Field } from '../field/index';
 import { ChoiceCard, ChoiceCardGroup } from './index';
 
 /**
- * Stands in for a card brand's mark (Figma's 44 × 30 Mark). Brand marks have their own rules, so
+ * Stands in for a card brand's mark (a 44 × 30 Mark). Brand marks have their own rules, so
  * they are the app's to supply; the brand's name is in the text too.
  */
 function Mark({ brand }: { brand: string }): JSX.Element {

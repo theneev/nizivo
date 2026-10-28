@@ -54,7 +54,7 @@ function Globe(): JSX.Element {
   );
 }
 
-/** Figma's toolbar for a selection: three actions, then "Ask AI…". */
+/** A toolbar for a selection: three actions, then "Ask AI…". */
 export function InlineAssistExample(): JSX.Element {
   return (
     <InlineAssist

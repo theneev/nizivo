@@ -87,7 +87,7 @@
     },
     {
       "client": true,
-      "description": "With no `render`, an IconButton (tertiary, `sm`: the 16 px glyph Figma draws, in a 32 px target) with no tooltip, as `Dialog.Close` does.",
+      "description": "With no `render`, an IconButton (tertiary, `sm`: a 16 px glyph in a 32 px target) with no tooltip, as `Dialog.Close` does.",
       "import": "import { AlertDismiss } from '@nizivo/react/alert'",
       "inherits": [
         {
@@ -181,7 +181,7 @@
     },
     {
       "declaration": "type",
-      "description": "Figma \"Tone\".",
+      "description": "The status the alert conveys, which sets its colours and the glyph you pass.",
       "import": "import type { AlertTone } from '@nizivo/react/alert'",
       "kind": "type",
       "name": "AlertTone",

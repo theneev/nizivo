@@ -100,7 +100,7 @@ export function DrawerPopup({
   );
 }
 
-/** Figma's Header frame: the title, an optional description and badges, above a 1 px rule. */
+/** The header: the title, an optional description and badges, above a 1 px rule. */
 export function DrawerHeader({ className, render, ...rest }: DrawerHeaderProps): JSX.Element {
   return renderElement(
     'div',
@@ -161,7 +161,7 @@ export function DrawerBody({ className, render, ...rest }: DrawerBodyProps): JSX
   );
 }
 
-/** Figma's Footer frame: actions that share its width, above a 1 px rule. */
+/** The footer: actions that share its width, above a 1 px rule. */
 export function DrawerFooter({ className, render, ...rest }: DrawerFooterProps): JSX.Element {
   return renderElement(
     'div',

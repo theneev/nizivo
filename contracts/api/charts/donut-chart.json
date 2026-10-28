@@ -84,7 +84,7 @@
         },
         {
           "default": "3",
-          "description": "Categories kept before the rest fold into \"Other\", 1–3 (Figma: three at most).",
+          "description": "Categories kept before the rest fold into \"Other\", 1–3.",
           "name": "maxCategories",
           "required": false,
           "type": "number"

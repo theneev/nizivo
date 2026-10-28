@@ -3,7 +3,7 @@ import type { ComponentPropsWithRef, ReactElement } from 'react';
 import { renderElement, type RenderProp } from '../contracts/render';
 import { cx } from '../_internal/cx';
 
-/** Figma "Tone". `brand` is the only solid fill. */
+/** The badge's colour, by status. `brand` is the only solid fill. */
 export type BadgeTone = 'neutral' | 'success' | 'warning' | 'critical' | 'info' | 'brand';
 
 export interface BadgeState {
@@ -14,7 +14,7 @@ export interface BadgeState {
 export interface BadgeProps extends ComponentPropsWithRef<'span'> {
   /** @default 'neutral' */
   tone?: BadgeTone;
-  /** Figma "Dot": a decorative status dot before the label. The label carries the meaning. @default true */
+  /** A decorative status dot before the label. The label carries the meaning. @default true */
   dot?: boolean;
   /** Composition, for example `render={<a href="/orders?status=paid" />}`. */
   render?: RenderProp<BadgeState>;

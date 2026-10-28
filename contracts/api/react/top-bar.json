@@ -50,7 +50,7 @@
           "type": "ReactNode"
         },
         {
-          "description": "The page's name, in Heading/H3's look (Figma's Title). Not a heading element.",
+          "description": "The page's name, in Heading/H3's look. Not a heading element.",
           "name": "title",
           "required": false,
           "type": "ReactNode"

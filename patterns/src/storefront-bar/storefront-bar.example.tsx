@@ -36,7 +36,7 @@ function bagLabel(count: number): string {
 }
 
 /**
- * Figma 10's Storefront Bar (`7275:19889`): the top of a store, with its Avatar, its name beside the
+ * A Storefront Bar: the top of a store, with its Avatar, its name beside the
  * Instagram glyph (a link to the store's Instagram profile, the glyph's only allowed use), the
  * follower count in compact notation, a Follow Button and the bag. The bag is an IconButton whose
  * name carries the count ("Bag, 2 items"); the count badge on it is decoration. The IconButton

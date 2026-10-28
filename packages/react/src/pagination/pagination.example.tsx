@@ -7,7 +7,7 @@ function Link({ children, ...props }: ComponentPropsWithRef<'a'>): JSX.Element {
 }
 
 /**
- * Figma's footer: a summary and 13 pages, page 1 current. Every page is a URL, so it is
+ * A footer: a summary and 13 pages, page 1 current. Every page is a URL, so it is
  * server-rendered and needs no JavaScript; previous is disabled on the first page.
  */
 export function PaginationExample(): JSX.Element {
@@ -21,7 +21,7 @@ export function PaginationExample(): JSX.Element {
   );
 }
 
-/** Mid-list with a router's link, the compact size and Figma's single-page siblings. */
+/** Mid-list with a router's link, the compact size and the design's single-page siblings. */
 export function PaginationRouterExample(): JSX.Element {
   return (
     <Pagination

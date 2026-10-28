@@ -103,7 +103,7 @@
           "values": ["sm", "md"]
         },
         {
-          "description": "Text before the pages, for example \"Showing 1–20 of 248\" (Figma); you format it.",
+          "description": "Text before the pages, for example \"Showing 1–20 of 248\"; you format it.",
           "name": "summary",
           "required": false,
           "type": "ReactNode"
@@ -228,7 +228,7 @@
     },
     {
       "declaration": "type",
-      "description": "40 px (`md`) or 32 px (`sm`) squares; Figma's 36 px is off the control scale (figma/06).",
+      "description": "40 px (`md`) or 32 px (`sm`) squares, on the control scale.",
       "import": "import type { PaginationSize } from '@nizivo/react/pagination'",
       "kind": "type",
       "name": "PaginationSize",

@@ -16,7 +16,7 @@ export interface SectionHeaderProps extends Omit<
   headingLevel?: 1 | 2 | 3 | 4;
   /** The supporting line. */
   description?: ReactNode;
-  /** Figma "Align". @default 'start' */
+  /** How the text lines up: at the start edge or centred. @default 'start' */
   align?: 'start' | 'center';
   /** Must render a `<div>`. */
   render?: RenderProp<Record<string, never>>;

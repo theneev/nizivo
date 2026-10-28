@@ -269,7 +269,7 @@
     },
     {
       "declaration": "interface",
-      "description": "Figma \"Show action\": the control at the end of the header, for example an IconButton.",
+      "description": "The control at the end of the header, for example an IconButton.",
       "extends": ["ComponentPropsWithRef<\"div\">"],
       "import": "import type { CardActionProps } from '@nizivo/react/card'",
       "kind": "type",
@@ -286,7 +286,7 @@
     },
     {
       "declaration": "interface",
-      "description": "Figma's \"Slot\" frame.",
+      "description": "The card's content area.",
       "extends": ["ComponentPropsWithRef<\"div\">"],
       "import": "import type { CardBodyProps } from '@nizivo/react/card'",
       "kind": "type",
@@ -356,7 +356,7 @@
     },
     {
       "declaration": "type",
-      "description": "24 px (`md`, Figma) or 20 px (`sm`).",
+      "description": "24 px (`md`) or 20 px (`sm`).",
       "import": "import type { CardPadding } from '@nizivo/react/card'",
       "kind": "type",
       "name": "CardPadding",
@@ -418,7 +418,7 @@
     },
     {
       "declaration": "type",
-      "description": "Figma \"Style\": Surface | Subtle | Inverse, plus the tinted surfaces of the dashboard widgets (KPI Tile \"Tinted\", Insight Card Brand and Accent; figma/04 §2/§3, M41): `brand` (bg/brand-subtle) and `accent` (bg/accent-subtle).",
+      "description": "The card's surface: `surface`, `subtle` or `inverse`, plus the tinted surfaces of the dashboard widgets (KpiTile's tinted tiles and the brand and accent insight cards; M41): `brand` (bg/brand-subtle) and `accent` (bg/accent-subtle).",
       "import": "import type { CardTone } from '@nizivo/react/card'",
       "kind": "type",
       "name": "CardTone",

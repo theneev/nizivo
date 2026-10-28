@@ -2,7 +2,7 @@ import type { JSX } from 'react';
 import { Button } from '../button/index';
 import { EmptyState } from './index';
 
-/** Stands in for the Figma render (a box illustration); renders are not shipped. */
+/** Stands in for the design's render (a box illustration); renders are not shipped. */
 function BoxRender(): JSX.Element {
   return (
     <svg viewBox="0 0 140 140" width="140" height="140" aria-hidden="true">
@@ -11,7 +11,7 @@ function BoxRender(): JSX.Element {
   );
 }
 
-/** Figma Context=Orders and Context=Search are content, not props. */
+/** The Orders and Search contexts are content, not props. */
 export function EmptyStateExample(): JSX.Element {
   return (
     <div>

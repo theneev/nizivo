@@ -28,7 +28,7 @@
       "name": "Metric",
       "props": [
         {
-          "description": "A small chart at the end of the value row, for example a Sparkline; shown while ready. Its box is at most the row's (KpiTile draws it at 88 × 28, Figma's tile).",
+          "description": "A small chart at the end of the value row, for example a Sparkline; shown while ready. Its box is at most the row's (KpiTile draws it at 88 × 28).",
           "name": "chart",
           "required": false,
           "type": "ReactNode"
@@ -109,7 +109,7 @@
           "type": "RenderProp<MetricState>"
         },
         {
-          "description": "Keep the change row's height when there is no `delta` and no `comparison`, so the box is the same whatever a fallback passes (KpiTile and TrendCard set it: Figma's tile and card always have it).",
+          "description": "Keep the change row's height when there is no `delta` and no `comparison`, so the box is the same whatever a fallback passes (KpiTile and TrendCard set it, so their boxes always have the row).",
           "name": "reserveChange",
           "required": false,
           "type": "boolean"

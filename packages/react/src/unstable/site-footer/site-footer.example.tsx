@@ -2,7 +2,7 @@ import type { JSX } from 'react';
 import { Link } from '../link/index';
 import { SiteFooter } from './index';
 
-/** Figma's footer: the brand, three columns and the legal row. */
+/** A footer: the brand, three columns and the legal row. */
 export function SiteFooterExample(): JSX.Element {
   return (
     <SiteFooter

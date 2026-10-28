@@ -5,7 +5,7 @@ import type { ComponentPropsWithRef, ReactElement, ReactNode } from 'react';
 import { renderElement, type RenderProp } from '../contracts/render';
 import { cx } from '../_internal/cx';
 
-/** Figma "Tone": `brand` is Figma's Promo (handoff Q25, D-bq). */
+/** The banner's colour: `brand` for a promotion (D-bq), `warning` for a problem to act on. */
 export type BannerTone = 'brand' | 'warning';
 
 export interface BannerState {
@@ -18,7 +18,7 @@ export interface BannerProps extends Omit<ComponentPropsWithRef<'div'>, 'title'>
   /** One line, Heading/H4. The description is `children`. */
   title?: ReactNode;
   /**
-   * A 72 px picture before the text, such as Figma's product render on the brand banner:
+   * A 72 px picture before the text, such as a product render on the brand banner:
    * `<img src="…" alt="" width={72} height={72} />`. Decorative; the text carries the message.
    */
   media?: ReactNode;
@@ -36,7 +36,7 @@ export interface BannerProps extends Omit<ComponentPropsWithRef<'div'>, 'title'>
   render?: RenderProp<BannerState>;
 }
 
-/** A page-wide message under the header (Figma Banner 7275:15120): one at a time. */
+/** A page-wide message under the header: one at a time. */
 export function Banner({
   tone = 'brand',
   title,

@@ -6,7 +6,7 @@ function Link({ children, ...props }: ComponentPropsWithRef<'a'>): JSX.Element {
   return <a {...props}>{children}</a>;
 }
 
-/** Figma's trail: two links and the current page, which is text with `aria-current="page"`. */
+/** A trail: two links and the current page, which is text with `aria-current="page"`. */
 export function BreadcrumbExample(): JSX.Element {
   return (
     <Breadcrumb.Root>

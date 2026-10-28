@@ -21,8 +21,8 @@ the five server parts have no `'use client'` and import no client module, and Co
 what its own module ships: a [Sparkline](/docs/charts/sparkline/) ships nothing, an
 [AreaChart](/docs/charts/area-chart/) its island, a [Select](/docs/components/select/) its engine.
 
-Every part lives in `@nizivo/react`, each on its own subpath. The Figma 04 notes
-(`docs/figma/04-dashboard-widgets.md`) proposed separate `@nizivo/dashboard` and `@nizivo/motion`
+Every part lives in `@nizivo/react`, each on its own subpath. Early design notes
+proposed separate `@nizivo/dashboard` and `@nizivo/motion`
 packages. The plan superseded both (ARCHITECTURE.md §5.1, §13.4 and decision D3): neither package
 exists, the dashboard parts are core subpaths, and CountUp is the `./motion` subpath.
 `@nizivo/react` never imports `@nizivo/charts`, so a chart goes in through an element slot
@@ -51,14 +51,14 @@ import { NumberValue } from '@nizivo/react/number-value';
 `format` is plain `Intl.NumberFormatOptions` (default `{}`), as Delta and every chart take it;
 there are no presets. `locale` defaults to `'en-US'`; nothing reads `navigator.language`. The
 figures are tabular, the number never wraps and it is isolated from the surrounding text direction
-(`unicode-bidi: isolate`); its font is the surrounding one, and Metric sets Figma's numeric styles.
+(`unicode-bidi: isolate`); its font is the surrounding one, and Metric sets the design's numeric styles.
 The same formatting is exported as `formatNumber(value, format, locale)` from
 `@nizivo/react/number-value`: CountUp writes its server text and every frame with it, so the two
 agree.
 
 ## The headline block
 
-Metric is the label, number and change that Figma draws in both the KPI tile and the Revenue card.
+Metric is the label, number and change that the design draws in both the KPI tile and the Revenue card.
 KpiTile and TrendCard render a Metric and pass it the same props:
 
 - `label`; `value`, a number (`null`, `undefined` or `NaN` is the empty state); `format`; `locale`.
@@ -74,7 +74,7 @@ KpiTile and TrendCard are Card's surface: their root has Card's `nz-card` class 
 and `data-padding` (`sm`, 20 px, for KpiTile; `md`, 24 px, for TrendCard) and no shadow at rest.
 Each is a `role="group"` named by its label. KpiTile's `tone` is `'surface'` (default), `'brand'` or
 `'accent'`, the two tints Card gained for it ([Card](/docs/components/card/)). The tint groups a row
-of related KPIs and does not follow the trend: Figma's `Tone=Tinted` drew brand for a rising KPI and
+of related KPIs and does not follow the trend: the design's tinted tile drew brand for a rising KPI and
 accent for a falling one, and both are now a choice (M41). TrendCard takes any Card tone.
 
 RankedList is Card's surface too, with a heading (`title`; `titleLevel`, default 3), an `action`
@@ -183,7 +183,7 @@ import { TrendCard } from '@nizivo/react/trend-card';
 ```
 
 - KpiTile and Metric show `chart` only while ready, at the end of the value row, never wider than the
-  room the number leaves and by default at most 88 × 28 px, Figma's tile (`5.5rem` and `1.75rem`,
+  room the number leaves and by default at most 88 × 28 px, the design's tile (`5.5rem` and `1.75rem`,
   through `--nz-metric-chart-max-inline-size` and `--nz-metric-chart-max-block-size`).
 - TrendCard renders `action`, `chart`, `legend` and `footer` as given, in every status, so its box
   stays put. Give the chart the card's `status`: a ChartFrame keeps its own box in all four.
@@ -216,9 +216,9 @@ import { CountUp } from '@nizivo/react/motion';
   value shows at once, even when `duration` is passed ([Motion](/docs/foundations/motion/)).
 - **Nothing is announced while it counts.** The counting digits are `aria-hidden`, a visually
   hidden copy holds the final value, and there is no live region.
-- The curve is `cubic-bezier(0, 0, 0, 1)`, the same curve as `--nz-easing-enter`, which Figma 04
-  proposed; it is written into the code and the token is not read. Figma defines no easing for
-  count-up.
+- The curve is `cubic-bezier(0, 0, 0, 1)`, the same curve as `--nz-easing-enter`, which the design
+  proposed; it is written into the code and the token is not read. The design defines no easing
+  for count-up.
 
 Metric, KpiTile and TrendCard take `value` as a number and render a NumberValue: they do not count
 up.

@@ -305,7 +305,7 @@ export function CommandMenuItem({
   );
 }
 
-/** The keys the menu takes, as Figma's footer shows them. Decorative: the roles say the same. */
+/** The keys the menu takes, shown in its footer. Decorative: the roles say the same. */
 export function CommandMenuFooter({ className }: CommandMenuFooterProps): JSX.Element {
   const { labels } = use(Scope);
   return (

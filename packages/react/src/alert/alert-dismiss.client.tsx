@@ -36,7 +36,7 @@ export interface AlertDismissProps extends Omit<ComponentPropsWithRef<'button'>,
 // Tooltip chain (D-aa). The leaf-free icon-button-static.tsx could now be imported instead (a
 // follow-up in W9-RESULTS.md); a unit test compares the two.
 /**
- * With no `render`, an IconButton (tertiary, `sm`: the 16 px glyph Figma draws, in a 32 px target)
+ * With no `render`, an IconButton (tertiary, `sm`: a 16 px glyph in a 32 px target)
  * with no tooltip, as `Dialog.Close` does.
  */
 export function AlertDismiss({

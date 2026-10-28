@@ -198,7 +198,7 @@ function OrderDrawer({ order }: { order: Order }): JSX.Element {
 }
 
 /**
- * Figma 08's Pattern 3, Orders: the content of the app shell's `<main>`. The page header, four key
+ * The Orders page: the content of the app shell's `<main>`. The page header, four key
  * figures, then the orders card: status filters as links, a search form, the orders table and
  * pagination. Each row's View opens that order in a `Drawer` from the end edge, over a scrim; the
  * drawer is the only client part besides the search field.

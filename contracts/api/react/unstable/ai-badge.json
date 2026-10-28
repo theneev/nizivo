@@ -41,7 +41,7 @@
         },
         {
           "default": "'subtle'",
-          "description": "Figma \"Style\": `subtle` (accent-subtle with a brand edge) or `solid` (the accent).",
+          "description": "The look: `subtle` (accent-subtle with a brand edge) or `solid` (the accent).",
           "name": "variant",
           "required": false,
           "type": "\"subtle\" | \"solid\"",
@@ -90,7 +90,7 @@
       "attributes": [
         {
           "group": "presentational",
-          "meaning": "The variant prop; values are the lowercase Figma names in each component manifest",
+          "meaning": "The variant prop; values in each component manifest",
           "name": "data-variant",
           "prop": "variant",
           "values": ["subtle", "solid"]

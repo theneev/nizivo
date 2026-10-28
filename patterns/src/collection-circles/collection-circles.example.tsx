@@ -25,7 +25,7 @@ const COLLECTIONS: Collection[] = [
 ];
 
 /**
- * Figma 10's Collection Circle (`7275:19802`) in a rail: one link per collection, its cover in a
+ * Collection Circles in a rail: one link per collection, its cover in a
  * ring and its name under it. A new collection has a thick brand ring and a bold name, and its link
  * says ", new picks" to screen readers; a seen one has a thin grey ring. The list scrolls sideways
  * when it outgrows its container, and each link is a Tab stop, so the keyboard reaches every

@@ -23,7 +23,7 @@ export interface SourceCardProps extends Omit<ComponentPropsWithRef<'a'>, 'child
   title: string;
   /** Where it lives: a domain (`mossandkiln.com`) or a file's name or folder. */
   domain: string;
-  /** Figma "Type": a web page or a file. @default 'web' */
+  /** The kind of source: a web page or a file. @default 'web' */
   type?: 'web' | 'file';
   /** The source's number, as the answer's Citations show it. */
   number?: number;

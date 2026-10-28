@@ -10,7 +10,7 @@ interface Slot {
 const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 const HOURS = ['00', '02', '04', '06', '08', '10', '12', '14', '16', '18', '20', '22'];
 
-// Figma 03's heatmap: orders per two hours, a week, busiest at midday and in the evening.
+// Orders per two hours, a week, busiest at midday and in the evening.
 const ORDERS: number[][] = [
   [2, 1, 1, 9, 18, 21, 24, 52, 38, 22, 12, 9],
   [3, 2, 8, 11, 19, 22, 36, 40, 37, 23, 20, 10],
@@ -56,7 +56,7 @@ export function HeatmapDetailsExample(): JSX.Element {
   );
 }
 
-/** Loading, empty and failed: the same box, Figma's seven-day height. */
+/** Loading, empty and failed: the same box, the design's seven-day height. */
 export function HeatmapStatusExample(): JSX.Element {
   return (
     <div>

@@ -31,7 +31,7 @@ export function tickEvery(count: number, max: number): number {
 export interface EveryNthOptions {
   /**
    * A regular tick closer than this many points to the forced last one is dropped, so two labels
-   * never crowd (Figma 03's bar chart prints "29" and "30" side by side). @default floor(every / 2) + 1,
+   * never crowd ("29" and "30" side by side on a daily bar chart). @default floor(every / 2) + 1,
    * so a gap of half a step or less is dropped
    */
   minGap?: number;

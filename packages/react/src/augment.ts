@@ -2,7 +2,7 @@
 //   declare module '@nizivo/react/augment' { interface ButtonVariantMap { ai: true } }
 // plus CSS for `.nz-button[data-variant="ai"]`.
 
-/** Button variants, as lowercase Figma names. Augment this interface to add one. */
+/** Button variants, as lowercase names. Augment this interface to add one. */
 export interface ButtonVariantMap {
   primary: true;
   secondary: true;

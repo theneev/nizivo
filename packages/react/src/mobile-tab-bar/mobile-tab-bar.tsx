@@ -68,7 +68,7 @@ export function MobileTabBarRoot({
 }
 
 /**
- * One destination: a list item around a link, with its icon in Figma's indicator pill and its label
+ * One destination: a list item around a link, with its icon in an indicator pill and its label
  * under it. Props other than `icon`, `count` and `current` go to the link.
  */
 export function MobileTabBarItem({

@@ -65,7 +65,7 @@ The geometry needs no client code:
   (Playwright builds), and `stroke.spec.tsx` in `packages/charts/test/browser` keeps checking it in the
   three engines. Real Safari and the Safari 17.5 floor are not covered. Path coordinates are
   rounded to 2 decimals (`PATH_DIGITS` in `packages/charts/src/_core/path.ts`): 0.01 of the plot is
-  0.07 px on Figma 03's 720 px plot.
+  0.07 px on the design's 720 px plot.
 - Tick labels are HTML on CSS grid tracks, so no label needs a position of its own.
 - Bars are `<rect>` elements in percentage units; BarChart caps them at 22 px with CSS.
 
@@ -138,7 +138,7 @@ one Tab stop, no JavaScript) wherever keyboard users then need the data table.
 
 Every chart renders a `<table>` of its data on the server: one row per datum, with the formatted
 values. It is the accessible alternative to the picture, and it is visually hidden by default
-(`tableView="hidden"`), because Figma draws charts without a table. `tableView="details"` puts it
+(`tableView="hidden"`), because the design draws charts without a table. `tableView="details"` puts it
 under the plot in a native `<details>` disclosure that anyone can open, with no JavaScript. Pass
 your own [ChartFrame](/docs/charts/chart-frame/) `table` when you draw the chart yourself.
 

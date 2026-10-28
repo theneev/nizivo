@@ -114,7 +114,7 @@ function ProductCard({ product }: { product: Product }): JSX.Element {
 }
 
 /**
- * Figma 05's Product Card (`7275:13989`) as a catalogue grid. Each card is an `<article>` whose
+ * Product Cards as a catalogue grid. Each card is an `<article>` whose
  * title is its one link: the link's box is stretched over the card, so the whole card is the hit
  * area but the card is a single Tab stop with a short name. A server composition: it ships no
  * JavaScript. The grey block stands in for the product's `Image`.

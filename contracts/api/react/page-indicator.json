@@ -125,7 +125,7 @@
         },
         {
           "group": "presentational",
-          "meaning": "The variant prop; values are the lowercase Figma names in each component manifest",
+          "meaning": "The variant prop; values in each component manifest",
           "name": "data-variant",
           "prop": "variant",
           "values": ["dots", "fraction"]

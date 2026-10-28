@@ -23,7 +23,7 @@ function Warning(): JSX.Element {
 }
 
 /**
- * Figma's Promo banner (tone `brand`): a render, a title and a line, one primary action. Server
+ * A promo banner (tone `brand`): a render, a title and a line, one primary action. Server
  * rendered and static: no dismiss, no client JS.
  */
 export function BannerExample(): JSX.Element {

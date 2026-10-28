@@ -3,8 +3,8 @@ title: Analytics page
 description: A report inside the app shell, with a range control, key figures with sparklines, a sales trend, goals, sales by channel, orders per day and the top products.
 ---
 
-From Figma 08 Overview Dashboard, Pattern 6 · Analytics (`7275:16296`). Uses
-[PageHeader](/docs/components/page-header/), [SegmentedControl](/docs/components/segmented-control/),
+It uses [PageHeader](/docs/components/page-header/),
+[SegmentedControl](/docs/components/segmented-control/),
 [Button](/docs/components/button/), [KpiTile](/docs/components/kpi-tile/),
 [TrendCard](/docs/components/trend-card/), [Card](/docs/components/card/),
 [ProgressRing](/docs/components/progress-ring/), [Text](/docs/components/text/) and
@@ -47,8 +47,8 @@ Your app also loads `@nizivo/charts/styles.css` once, as the
   The area, bar and donut charts load their small interaction island; the sparklines ship nothing.
 - **The range.** The SegmentedControl submits `range` with a form, or drives the data from the
   client; the example leaves that wiring to your app.
-- **Layout.** Figma's row widths (798 / 314, 524 / 588, 690 / 422) match no column span, so the
+- **Layout.** The design's row widths (798 / 314, 524 / 588, 690 / 422) match no column span, so the
   report is two equal columns from 36rem, the three charts across both.
-- **Not built.** Figma's Funnel chart ("Checkout funnel") and Heatmap ("Orders by hour") have no
-  component in `@nizivo/charts`, so the example leaves both out and shows the sales trend in
-  their place.
+- **Funnel and heatmap.** The design also has a Funnel chart ("Checkout funnel") and a Heatmap
+  ("Orders by hour"). The example predates them and shows the sales trend in their place; drop in
+  [FunnelChart](/docs/charts/funnel-chart/) and [Heatmap](/docs/charts/heatmap/) there.

@@ -43,7 +43,7 @@
           "type": "boolean"
         },
         {
-          "description": "A mark after the radio, such as a card brand's logo (Figma's 44 × 30 Mark); decorative, so put the brand's name in the text too.",
+          "description": "A mark after the radio, such as a card brand's logo (44 × 30 px); decorative, so put the brand's name in the text too.",
           "name": "leading",
           "required": false,
           "type": "ReactNode"
@@ -54,7 +54,7 @@
           "type": "RenderProp<ChoiceCardState>"
         },
         {
-          "description": "Content at the card's end, such as a \"Default\" `Badge` (Figma's Show default): composition, not a prop. Its text joins the radio's name, after `children`.",
+          "description": "Content at the card's end, such as a \"Default\" `Badge`: composition, not a prop. Its text joins the radio's name, after `children`.",
           "name": "trailing",
           "required": false,
           "type": "ReactNode"

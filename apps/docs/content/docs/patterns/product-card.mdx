@@ -3,8 +3,7 @@ title: Product card
 description: A catalogue tile whose whole card links to the product, with a photo, the title, the price (and on a sale the price before it) and a status Badge. A server composition; it ships no JavaScript.
 ---
 
-From Figma 05 Commerce, Product Card (`7275:13989`; variants Active `7275:13990`, Draft
-`7275:13998`, Sold out `7275:14006`). Uses [Card](/docs/components/card/),
+It uses [Card](/docs/components/card/),
 [Badge](/docs/components/badge/), [Text](/docs/components/text/) and
 [NumberValue](/docs/components/number-value/).
 
@@ -25,18 +24,18 @@ From Figma 05 Commerce, Product Card (`7275:13989`; variants Active `7275:13990`
   but the link's name stays the product's title. Nothing else in the card is interactive: a
   quick-add or wishlist button inside a link is a nested control, so put it beside the card, not in
   it. Making the whole card an `<a>` would read every word on it as the link's name.
-- **Status in words.** Figma's Status axis mixes publication (Active, Draft) with inventory (Sold
+- **Status in words.** The design's Status axis mixes publication (Active, Draft) with inventory (Sold
   out), and the example table shows a fourth state, Low stock, that the card has no variant for.
   The example derives one Badge from both facts and says the inventory in a line of its own; the
   Badge's dot is decorative.
 - **Sale prices.** The struck-through price before a sale is read by screen readers without its
   strike-through, so each price has a visually hidden word ("Sale price", "Regular price"). Both are
   `NumberValue` with the store's currency.
-- **Long titles** wrap; the price keeps its line and its column. Figma's title has no truncation
+- **Long titles** wrap; the price keeps its line and its column. The design's title has no truncation
   and would collide with the price.
 - **Images.** The grey block, a square, stands in for the product's
   [`Image`](/docs/components/image/), with `alt=""` because the title next to it names the product.
-  Its radius is the card's radius less its padding, so the corners stay concentric (Figma's 14 px is
-  off the scale).
-- **Contrast.** Figma's inventory line uses `text/tertiary`, 4.31:1 on white. The example uses
+  Its radius is the card's radius less its padding, so the corners stay concentric (the design's
+  14 px is off the scale).
+- **Contrast.** The design's inventory line uses `text/tertiary`, 4.31:1 on white. The example uses
   `text/secondary`, and Nizivo's `text/tertiary` is re-pointed to pass anyway.

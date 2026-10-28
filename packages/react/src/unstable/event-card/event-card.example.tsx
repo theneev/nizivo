@@ -3,7 +3,7 @@ import { Avatar, AvatarGroup } from '../../avatar/index';
 import { EventCard } from './index';
 
 /**
- * Figma's live drop: the date block, the time and place, and who is going. `timeZone` keeps the
+ * A live drop: the date block, the time and place, and who is going. `timeZone` keeps the
  * server's date and the browser's the same.
  */
 export function EventCardExample(): JSX.Element {

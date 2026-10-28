@@ -140,7 +140,7 @@
     },
     {
       "declaration": "type",
-      "description": "Figma \"Tone\" (Brand, Warning, Critical) plus `success` and `neutral`.",
+      "description": "The bar's colour: `brand`, `success`, `warning`, `critical` or `neutral`.",
       "import": "import type { ProgressBarTone } from '@nizivo/react/progress-bar'",
       "kind": "type",
       "name": "ProgressBarTone",

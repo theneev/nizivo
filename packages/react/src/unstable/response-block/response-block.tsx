@@ -18,7 +18,7 @@ import { Button } from '../../button/index';
 import { AiBadge } from '../ai-badge/index';
 import { ThinkingIndicator } from '../thinking-indicator/index';
 
-/** Figma "State". */
+/** Where the answer is: thinking, streaming, complete or failed. */
 export type ResponseStatus = 'thinking' | 'streaming' | 'complete' | 'error';
 
 /** ResponseBlock's own strings (§16.4): serialisable, English defaults. */

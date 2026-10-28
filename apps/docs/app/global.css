@@ -185,7 +185,7 @@ code.shiki:not(.not-fumadocs-code *) span {
     color: var(--nz-text-primary);
     text-align: center;
   }
-  /* 20 px, the size Figma draws at, so the 1.92 stroke previews at the product's 1.6 px */
+  /* 20 px, the size the design draws at, so the 1.92 stroke previews at the product's 1.6 px */
   .nz-docs-icons svg {
     flex: none;
     inline-size: 1.25rem;

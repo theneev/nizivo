@@ -15,8 +15,7 @@ export interface ButtonState {
 /** Button's own strings (§16.4): serialisable, English defaults. */
 export interface ButtonLabels {
   /**
-   * The text a pending button shows in place of its label under Reduced motion, where the spinner stops
-   * (Figma: "Spinner and skeleton loops stop; a text label shows").
+   * The text a pending button shows in place of its label under Reduced motion, where the spinner stops.
    * @default 'Loading…'
    */
   pending: string;
@@ -24,7 +23,7 @@ export interface ButtonLabels {
 
 export interface ButtonProps extends Omit<ComponentPropsWithRef<'button'>, 'children'> {
   /**
-   * Figma "Variant". One primary per view; secondary for everything else; tertiary inside dense rows.
+   * The button's emphasis. One primary per view; secondary for everything else; tertiary inside dense rows.
    * @default 'secondary'
    */
   variant?: ButtonVariant;

@@ -24,7 +24,7 @@ In a client app (a Vite or React Router single-page app, or a `'use client'` fil
 ## Parts
 
 - `Sidebar.Root`: a `<nav>` landmark named "Primary" (`labels.nav`, or your own `aria-label`).
-- `Sidebar.Header`: the store, on a card. `mark` draws Figma's 32 px Store mark (an initial, or a logo
+- `Sidebar.Header`: the store, on a card. `mark` draws the 32 px Store mark (an initial, or a logo
   image that fills it), `title` the store's name and `description` the line under it. Pass
   `render={<a href="/" />}` to make it a link home, or a store switcher's trigger.
 - `Sidebar.Content`: the destinations, 4 px apart.
@@ -36,7 +36,7 @@ In a client app (a Vite or React Router single-page app, or a `'use client'` fil
 
 The width is the `layout/sidebar` token: 264 px from 1280 px (`--nz-lg`), the 72 px icon rail from
 640 px, and below 640 px the Sidebar is not shown, because the MobileTabBar is the navigation there
-(M49; Figma's frames are drawn at 248 and 76 px). The 1280 px threshold is provisional until design
+(M49; the design's frames are drawn at 248 and 76 px). The 1280 px threshold is provisional until design
 confirms it. An app with its own collapse control passes `collapsed`: `true` keeps the rail and
 `false` the full width at every width from 640 px. Store the choice where the server can read it, a
 cookie for example, so the first paint already has the right width.

@@ -7,9 +7,9 @@ import type { ReturnFocusTarget } from '../_internal/overlay';
 
 export type { OpenReason };
 
-/** Figma Modal `Type`: Default → `dialog`, Destructive → `alertdialog`. */
+/** The dialog's role: `dialog` by default, `alertdialog` for a destructive confirmation. */
 export type DialogRole = 'dialog' | 'alertdialog';
-/** `md` is Figma's only Modal width (480 px); `sm` (400) and `lg` (640) are provisional. */
+/** `md` is the standard width (480 px); `sm` (400) and `lg` (640) are provisional. */
 export type DialogSize = 'sm' | 'md' | 'lg';
 export type DialogTitleLevel = 2 | 3 | 4 | 5 | 6;
 

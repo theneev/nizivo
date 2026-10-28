@@ -473,7 +473,7 @@
     },
     {
       "declaration": "type",
-      "description": "Figma Modal `Type`: Default → `dialog`, Destructive → `alertdialog`.",
+      "description": "The dialog's role: `dialog` by default, `alertdialog` for a destructive confirmation.",
       "import": "import type { DialogRole } from '@nizivo/react/dialog'",
       "kind": "type",
       "name": "DialogRole",
@@ -499,7 +499,7 @@
     },
     {
       "declaration": "type",
-      "description": "`md` is Figma's only Modal width (480 px); `sm` (400) and `lg` (640) are provisional.",
+      "description": "`md` is the standard width (480 px); `sm` (400) and `lg` (640) are provisional.",
       "import": "import type { DialogSize } from '@nizivo/react/dialog'",
       "kind": "type",
       "name": "DialogSize",

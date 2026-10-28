@@ -15,7 +15,7 @@ export interface BentoTileProps extends Omit<
   /** The title's level. @default 3 */
   headingLevel?: 2 | 3 | 4;
   description?: ReactNode;
-  /** Figma "Size". @default 'square' */
+  /** The tile's shape in the grid: wide, square or tall. @default 'square' */
   size?: 'wide' | 'square' | 'tall';
   /** Replaces the CSS background: UI, a photo. Decorative: hidden from assistive technology. */
   background?: ReactNode;

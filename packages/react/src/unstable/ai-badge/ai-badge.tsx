@@ -17,7 +17,7 @@ export interface AiBadgeLabels {
 }
 
 export interface AiBadgeProps extends ComponentPropsWithRef<'span'> {
-  /** Figma "Style": `subtle` (accent-subtle with a brand edge) or `solid` (the accent). @default 'subtle' */
+  /** The look: `subtle` (accent-subtle with a brand edge) or `solid` (the accent). @default 'subtle' */
   variant?: 'subtle' | 'solid';
   /** Replaces "AI generated", for example `labels={{ label: 'Edited with AI' }}`. Children win. */
   labels?: Partial<AiBadgeLabels>;

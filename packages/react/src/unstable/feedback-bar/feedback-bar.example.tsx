@@ -3,7 +3,7 @@ import { FeedbackBar } from './index';
 
 const REASONS = ['Not accurate', 'Not helpful', 'Too long', 'Something else'];
 
-/** Figma's three states: not voted, a thumbs up, and a thumbs down with its reasons. */
+/** Three states: not voted, a thumbs up, and a thumbs down with its reasons. */
 export function FeedbackBarExample(): JSX.Element {
   return (
     <div style={{ display: 'grid', gap: 16 }}>

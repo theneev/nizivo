@@ -3,7 +3,7 @@ import type { ComponentPropsWithRef, ReactElement } from 'react';
 import { renderElement, type RenderProp } from '../contracts/render';
 import { cx } from '../_internal/cx';
 
-/** Figma "Shape": a text line, a block (media, a chart) or a circle (an avatar). */
+/** The placeholder's shape: a text line, a block (media, a chart) or a circle (an avatar). */
 export type SkeletonShape = 'line' | 'block' | 'circle';
 
 export interface SkeletonState {

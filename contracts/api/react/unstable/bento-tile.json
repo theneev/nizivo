@@ -54,7 +54,7 @@
         },
         {
           "default": "'square'",
-          "description": "Figma \"Size\".",
+          "description": "The tile's shape in the grid: wide, square or tall.",
           "name": "size",
           "required": false,
           "type": "\"wide\" | \"square\" | \"tall\"",

@@ -16,7 +16,7 @@ import {
 import { formatLabel } from '../../i18n/format-label';
 import { ProgressBar } from '../../progress-bar/index';
 
-/** Figma "State". */
+/** Where the upload is: uploading, done or failed. */
 export type FileItemStatus = 'uploading' | 'done' | 'error';
 
 /** FileItem's own strings (§16.4): serialisable, English defaults. */

@@ -85,7 +85,7 @@
         },
         {
           "default": "'secondary'",
-          "description": "Figma \"Variant\". One primary per view; secondary for everything else; tertiary inside dense rows.",
+          "description": "The button's emphasis. One primary per view; secondary for everything else; tertiary inside dense rows.",
           "name": "variant",
           "required": false,
           "type": "ButtonVariant",
@@ -131,7 +131,7 @@
       "members": [
         {
           "default": "'Loading…'",
-          "description": "The text a pending button shows in place of its label under Reduced motion, where the spinner stops (Figma: \"Spinner and skeleton loops stop; a text label shows\").",
+          "description": "The text a pending button shows in place of its label under Reduced motion, where the spinner stops.",
           "name": "pending",
           "required": true,
           "type": "string"
@@ -195,7 +195,7 @@
         },
         {
           "group": "presentational",
-          "meaning": "The variant prop; values are the lowercase Figma names in each component manifest",
+          "meaning": "The variant prop; values in each component manifest",
           "name": "data-variant",
           "prop": "variant",
           "values": ["primary", "secondary", "tertiary", "critical", "accent"]

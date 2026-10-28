@@ -97,7 +97,7 @@ const PRODUCTS = [
 ] as const;
 
 /**
- * Figma 08's Pattern 6, Analytics: the content of the app shell's `<main>`. The page header with the
+ * The Analytics page: the content of the app shell's `<main>`. The page header with the
  * range (a SegmentedControl) and Export, four key figures with sparklines, then the report: total
  * sales against the previous period, goals as progress rings, the top products, sales by channel
  * and orders per day. Each chart sits in a Card whose title names it; the chart keeps that name for its

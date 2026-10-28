@@ -3,8 +3,7 @@ title: Plan card
 description: A subscription plan with its name, its price per interval, its features and a link to start, with a featured plan, and a row of plans with a monthly or yearly price.
 ---
 
-From Figma 05 Commerce, Plan Card (`7275:14284`; tiers Basic `7275:14285`, Grow `7275:14303`,
-Scale `7275:14325`). Uses [Card](/docs/components/card/), [Badge](/docs/components/badge/),
+It uses [Card](/docs/components/card/), [Badge](/docs/components/badge/),
 [Button](/docs/components/button/), [Text](/docs/components/text/),
 [NumberValue](/docs/components/number-value/) and, in the row,
 [SegmentedControl](/docs/components/segmented-control/) and [Stack](/docs/components/stack/), with the `Check` and `X` icons from
@@ -29,10 +28,10 @@ Scale `7275:14325`). Uses [Card](/docs/components/card/), [Badge](/docs/componen
 - **Client JavaScript.** One plan is a server composition. The row adds a SegmentedControl, a
   client component; the prices switch through CSS on its native radios, so they work before it
   hydrates.
-- **Featured is structure, Tier is data.** Figma's Tier axis (Basic, Grow, Scale) is content; the
+- **Featured is structure, Tier is data.** The design's Tier axis (Basic, Grow, Scale) is content; the
   one structural difference is the featured plan, the only inverse card, with the accent CTA and a
   "Popular" Badge. In the dark theme `bg/inverse` is light, so the featured plan becomes the only
-  light card; Card's inverse tone keeps every colour inside it in the inverse scheme. Figma's
+  light card; Card's inverse tone keeps every colour inside it in the inverse scheme. The design's
   `Elevation/3 Popover` is for floating layers; the featured card takes elevation 1.
 - **Price.** `{price} / month` is a `NumberValue` and a separate word, never one concatenated
   string, so a translation can reorder them and the amount keeps its tabular figures.
@@ -40,5 +39,5 @@ Scale `7275:14325`). Uses [Card](/docs/components/card/), [Badge](/docs/componen
   included" in visually hidden text, as the cross alone would be colour and shape only.
 - **The CTA** is a link drawn as a Button (`render={<a />}`): starting a plan goes to a page. Its
   name is "Start with Basic", unique per card.
-- **Contrast.** Figma's tagline and "/ month" on the inverse card use `text/tertiary`, 4.03:1; here
+- **Contrast.** The design's tagline and "/ month" on the inverse card use `text/tertiary`, 4.03:1; here
   they are `text/secondary`, resolved in the inverse scheme.

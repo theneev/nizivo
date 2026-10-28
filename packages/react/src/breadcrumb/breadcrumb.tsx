@@ -45,8 +45,8 @@ export interface BreadcrumbItemState {
 
 export interface BreadcrumbItemProps extends Omit<ComponentPropsWithRef<'a'>, 'children'> {
   /**
-   * The page being shown: renders text with `aria-current="page"` instead of a link (Figma: the last
-   * item, Label/M Strong). @default false
+   * The page being shown: renders text with `aria-current="page"` instead of a link (the last
+   * item, in Label/M Strong). @default false
    */
   current?: boolean;
   /**

@@ -25,14 +25,14 @@ at a time. An **Alert** sits next to the content it is about, inside a form or a
 
 ## Tones
 
-`brand` (the default) is Figma's Promo, on `bg/brand-subtle`, usually with `media`: a 72 px picture
+`brand` (the default) is the design's Promo, on `bg/brand-subtle`, usually with `media`: a 72 px picture
 before the text, such as a product render (`<img alt="" width={72} height={72} />`; it is
-decorative). `warning` is on `bg/warning-subtle`, usually with an `icon` at 24 px. Figma names the
+decorative). `warning` is on `bg/warning-subtle`, usually with an `icon` at 24 px. The design names the
 first tone "Promo"; code calls it `brand`, as Badge and Card do (a question for design, handoff Q25).
 
 ## Layout
 
-Figma's row: 16 / 24 px padding, 20 px between parts, the title (Heading/H4) and its line (Body/M)
+The row: 16 / 24 px padding, 20 px between parts, the title (Heading/H4) and its line (Body/M)
 in a column, the action and the dismiss after it, all centred. With less room the action wraps under
 the text, and the dismiss stays at the row's end. Hooks: `--nz-banner-bg`, `--nz-banner-gap`,
 `--nz-banner-padding-block`, `--nz-banner-padding-inline`, `--nz-banner-radius`,
@@ -41,7 +41,7 @@ the text, and the dismiss stays at the row's end. Hooks: `--nz-banner-bg`, `--nz
 ## The dismiss button
 
 `<BannerDismiss />` is a tertiary IconButton, 40 px (the action's height) with a 20 px close glyph
-(Figma draws 18, which has no icon token), named "Dismiss" (`labels={{ dismiss: '…' }}` or
+(the design draws 18, which has no icon token), named "Dismiss" (`labels={{ dismiss: '…' }}` or
 `aria-label`). With `render`, your element. A page that imports per-component stylesheets needs
 `css/icon-button.css` too.
 

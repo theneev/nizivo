@@ -3,7 +3,7 @@ import { PromptComposer } from '../prompt-composer/index';
 import { SuggestionChip, SuggestionGroup } from '../suggestion-chip/index';
 import { AiWelcome } from './index';
 
-/** Figma's empty conversation: a greeting, what the assistant can see, starters and the composer. */
+/** An empty conversation: a greeting, what the assistant can see, starters and the composer. */
 export function AiWelcomeExample(): JSX.Element {
   return (
     <AiWelcome

@@ -33,7 +33,7 @@ export interface BannerDismissProps extends Omit<ComponentPropsWithRef<'button'>
 
 // AlertDismiss's markup (alert-dismiss.client.tsx), the IconButton element written out, at `md`.
 /**
- * With no `render`, an IconButton (tertiary, `md`: a 20 px glyph, Figma draws 18, in a 40 px target,
+ * With no `render`, an IconButton (tertiary, `md`: a 20 px glyph in a 40 px target,
  * the height of the Banner's action) with no tooltip, as `Dialog.Close` does.
  */
 export function BannerDismiss({

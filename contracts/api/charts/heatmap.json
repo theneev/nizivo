@@ -10,7 +10,7 @@
     },
     {
       "client": false,
-      "description": "The ramp's steps: chart/primary at 8, 25, 45, 70 and 100 % (Figma).",
+      "description": "The ramp's steps: chart/primary at 8, 25, 45, 70 and 100 %.",
       "import": "import { HEATMAP_STEPS } from '@nizivo/charts/heatmap'",
       "kind": "constant",
       "name": "HEATMAP_STEPS",

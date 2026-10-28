@@ -105,7 +105,7 @@ export interface ChipProps extends Omit<ComponentPropsWithRef<'label'>, 'htmlFor
    */
   unavailable?: boolean;
   /**
-   * A swatch or glyph before the text (Figma Type=Colour), in a 24 px circle; decorative. A colour
+   * A swatch or glyph before the text, in a 24 px circle; decorative. A colour
    * is data: pass an element with that background, such as `<span style={{ background: '#2e5a3c' }} />`.
    */
   leading?: ReactNode;

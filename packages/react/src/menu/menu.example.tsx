@@ -28,7 +28,7 @@ function StoreLink({ children, ...props }: ComponentPropsWithRef<'a'>): JSX.Elem
   return <a {...props}>{children}</a>;
 }
 
-/** The Figma Dropdown Menu: grouped actions with shortcuts; the destructive item sits last. */
+/** A dropdown menu: grouped actions with shortcuts; the destructive item sits last. */
 export function MenuExample(): JSX.Element {
   return (
     <Menu.Root>

@@ -77,7 +77,7 @@
           "values": ["brand", "success", "warning", "critical", "neutral"]
         },
         {
-          "description": "Figma \"Value\" (25 / 50 / 75 / 100 there). Clamped to `0…max`.",
+          "description": "The progress so far. Clamped to `0…max`.",
           "name": "value",
           "required": true,
           "type": "number"
@@ -133,7 +133,7 @@
     },
     {
       "declaration": "type",
-      "description": "48 / 72 / 96 px; Figma draws only 72.",
+      "description": "48 / 72 / 96 px.",
       "import": "import type { ProgressRingSize } from '@nizivo/react/progress-ring'",
       "kind": "type",
       "name": "ProgressRingSize",

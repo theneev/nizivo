@@ -279,7 +279,7 @@
         },
         {
           "client": true,
-          "description": "The keys the menu takes, as Figma's footer shows them. Decorative: the roles say the same.",
+          "description": "The keys the menu takes, shown in its footer. Decorative: the roles say the same.",
           "flatName": "CommandMenuFooter",
           "inherits": [],
           "name": "Footer",

@@ -60,7 +60,7 @@
     color: var(--nz-text-on-brand);
   }
 
-  /* Figma's upcoming node, bg/subtle, is 1.04:1 on white: a dashed ring shows it */
+  /* The design's upcoming node, bg/subtle, is 1.04:1 on white: a dashed ring shows it */
   .nzp-shipment-tracker-step-upcoming .nzp-shipment-tracker-node {
     border-style: dashed;
     border-color: var(--nz-border-strong);

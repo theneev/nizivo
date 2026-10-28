@@ -46,7 +46,7 @@ export interface ApprovalCardProps extends Omit<ComponentPropsWithRef<'section'>
   onEdit?: () => void;
   /** The confirm is in flight (Button `pending`). @default false */
   pending?: boolean;
-  /** Focus Cancel when the card mounts (Figma: "Focus lands on Cancel"). @default true */
+  /** Focus Cancel when the card mounts. @default true */
   autoFocus?: boolean;
   labels?: Partial<ApprovalCardLabels>;
   /** Must render a `<section>`. */

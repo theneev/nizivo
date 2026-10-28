@@ -12,7 +12,7 @@ export function SurfaceExample(): JSX.Element {
 }
 
 /**
- * Glass over an image: bg/surface at 72 % with the backdrop blurred behind it, as Figma's floating
+ * Glass over an image: bg/surface at 72 % with the backdrop blurred behind it, like the floating
  * navbar and the Lab's Glass card. Opaque where the backdrop cannot be blurred.
  */
 export function SurfaceGlassExample(): JSX.Element {

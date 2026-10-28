@@ -21,8 +21,7 @@ import type { IconButtonProps, IconButtonStaticProps } from './icon-button.contr
  * label. Under Turbopack and `next dev`, importing `IconButton` ships its tooltip code even with
  * `tooltip={false}` (about 20 KB gzip in production); `IconButtonStatic` ships none.
  *
- * An icon-only toolbar needs `IconButton`'s tooltip, so a sighted user can read what each glyph does
- * (Figma: "Icon-only buttons have an aria-label and a Tooltip").
+ * An icon-only toolbar needs `IconButton`'s tooltip, so a sighted user can read what each glyph does.
  *
  * `aria-label` is always required. You may also pass `aria-labelledby` pointing at visible text; it
  * then names the button, with `aria-label` as the fallback. There is no `tooltip`, no `shortcut`

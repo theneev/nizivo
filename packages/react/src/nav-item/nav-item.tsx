@@ -19,14 +19,14 @@ export interface NavItemState {
 
 export interface NavItemProps extends Omit<ComponentPropsWithRef<'a'>, 'children'> {
   /**
-   * The destination being shown: sets `aria-current="page"` and draws the filled state (Figma
-   * State=Active). The page knows its own route, so it says which item is current. @default false
+   * The destination being shown: sets `aria-current="page"` and draws the filled state.
+   * The page knows its own route, so it says which item is current. @default false
    */
   current?: boolean;
-  /** A decorative glyph before the label (20 px, Figma's Icon slot); it is `aria-hidden`. */
+  /** A decorative glyph before the label (20 px); it is `aria-hidden`. */
   icon?: ReactNode;
   /**
-   * A count after the label, such as the number of open orders (Figma's Count). Absent, or `null`,
+   * A count after the label, such as the number of open orders. Absent, or `null`,
    * shows none. It is part of the link's text, so it is announced with the label.
    */
   count?: ReactNode;
@@ -40,7 +40,7 @@ export interface NavItemProps extends Omit<ComponentPropsWithRef<'a'>, 'children
    * TanStack Router). It must render an `<a>`.
    */
   render?: RenderProp<NavItemState>;
-  /** The label (Figma's Label). It stays the accessible name in the collapsed rail. */
+  /** The label. It stays the accessible name in the collapsed rail. */
   children: ReactNode;
 }
 

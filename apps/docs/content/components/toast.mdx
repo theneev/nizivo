@@ -50,7 +50,7 @@ toast('Couldn’t publish 2 products', {
 `toast()` returns the toast's id. `toast.dismiss(id)` removes one, `toast.dismiss()` all of them.
 Passing an `id` that is still shown updates that toast in place, for a "Saving…" that becomes "Saved".
 
-`tone` is `neutral` (the default), `success` or `critical`, Figma's three. The message is one line of
+`tone` is `neutral` (the default), `success` or `critical`, the design's three. The message is one line of
 plain text; `description` adds a second.
 
 ## How long it stays
@@ -99,8 +99,8 @@ shortcut; with `hotkey="F9"` say F9 in it.
 
 ## Look
 
-Figma draws the toast dark on a light page (`bg/inverse`) with a lime action (`text/inverse-accent`),
+The toast is dark on a light page (`bg/inverse`) with a lime action (`text/inverse-accent`),
 and light on a dark page. The action is a real tertiary `sm` Button and the close an IconButton, so
-both have a 32 px target, a hover and a focus ring; that makes the toast 56 px tall where Figma draws
-44 px, which design is asked to confirm. The tone icon is 20 px (Figma: 18, which has no icon
+both have a 32 px target, a hover and a focus ring; that makes the toast 56 px tall where the design draws
+44 px, which design is asked to confirm. The tone icon is 20 px (the design draws 18, which has no icon
 token). Hooks: `--nz-toast-bg`, `--nz-toast-radius`, `--nz-toast-shadow`.

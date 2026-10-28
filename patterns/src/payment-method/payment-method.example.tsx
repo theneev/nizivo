@@ -70,7 +70,7 @@ function CardName({ card }: { card: SavedCard }): JSX.Element {
 }
 
 /**
- * Figma 05's Payment Method (`7275:14174`) as a choice of saved cards: a ChoiceCard per card, native
+ * A Payment Method as a choice of saved cards: a ChoiceCard per card, native
  * radios in a Field that names the group, so arrow keys move the choice and the form submits it. Each
  * card is read as "Visa ending in 4242, Default", described by "Expires August 2028". The generic
  * mark stands in for a card brand's logo, which is the app's to supply under the brand's rules.

@@ -27,7 +27,7 @@ function Plot(): JSX.Element {
   );
 }
 
-/** The Revenue Card recipe (Figma 7275:13818): a docs example, not an export. */
+/** The Revenue Card recipe: a docs example, not an export. */
 export function TrendCardExample(): JSX.Element {
   return (
     <TrendCard

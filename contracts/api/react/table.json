@@ -208,7 +208,7 @@
           "props": [
             {
               "default": "false",
-              "description": "The whole row is the hit area of its `Table.RowLink` (a stretched link) and shows Figma's hover. Other controls in the row stay above the link.",
+              "description": "The whole row is the hit area of its `Table.RowLink` (a stretched link) and shows a hover state. Other controls in the row stay above the link.",
               "name": "interactive",
               "required": false,
               "type": "boolean"
@@ -385,7 +385,7 @@
         },
         {
           "client": false,
-          "description": "A row's link, usually its first cell's text (Figma Order Row: the order number). In a row with `interactive`, it stretches over the whole row.",
+          "description": "A row's link, usually its first cell's text (in an orders table, the order number). In a row with `interactive`, it stretches over the whole row.",
           "flatName": "TableRowLink",
           "inherits": [
             {

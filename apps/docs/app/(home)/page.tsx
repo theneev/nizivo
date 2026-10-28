@@ -97,7 +97,7 @@ export default function HomePage(): JSX.Element {
         <p className="nz-home-eyebrow">Open source · Apache-2.0 · Pre-alpha</p>
         <h1>Nizivo UI</h1>
         <p className="nz-home-lede">
-          An accessible, server-first React design system, built from the Nizivo Figma library.
+          An accessible, server-first React design system, built from the Nizivo design library.
           Tokens and components for Next.js, Vite and Astro.
         </p>
         <div className="nz-home-actions">

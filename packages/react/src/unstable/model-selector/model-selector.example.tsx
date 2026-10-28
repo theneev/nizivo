@@ -7,7 +7,7 @@ const MODELS = [
   { value: 'deep', label: 'Deep', description: 'Slower, more careful reasoning' },
 ];
 
-/** Figma's three trade-offs, named in words, with Balanced chosen. */
+/** Three trade-offs, named in words, with Balanced chosen. */
 export function ModelSelectorExample(): JSX.Element {
   return <ModelSelector models={MODELS} defaultValue="balanced" />;
 }

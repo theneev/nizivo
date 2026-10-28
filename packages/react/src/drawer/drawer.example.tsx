@@ -4,7 +4,7 @@ import { Button } from '../button/index';
 import { Drawer } from './index';
 
 /**
- * Figma's Drawer (756:1001): an order's details from the end edge, with a header, a body that
+ * An order's details from the end edge, with a header, a body that
  * scrolls, and a footer whose two actions share its width. The bare `Drawer.Close` is the header's
  * close IconButton, named "Close".
  */

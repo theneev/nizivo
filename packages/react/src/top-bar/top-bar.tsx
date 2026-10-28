@@ -8,7 +8,7 @@ import { renderElement, type RenderProp } from '../contracts/render';
 import { cx } from '../_internal/cx';
 
 export interface TopBarProps extends Omit<ComponentPropsWithRef<'header'>, 'title' | 'children'> {
-  /** The page's name, in Heading/H3's look (Figma's Title). Not a heading element. */
+  /** The page's name, in Heading/H3's look. Not a heading element. */
   title?: ReactNode;
   /** In place of `title`, for example a Breadcrumb for a page deeper in the app. */
   start?: ReactNode;

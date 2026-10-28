@@ -18,7 +18,7 @@ export interface TooltipRootProps {
   defaultOpen?: boolean;
   /** `details.reason` is `'unknown'` with React Aria, which reports no cause. */
   onOpenChange?: (open: boolean, details: ChangeDetails<OpenReason>) => void;
-  /** Hover delay before opening, in ms (Figma: 400). Keyboard focus opens immediately. @default 400 */
+  /** Hover delay before opening, in ms. Keyboard focus opens immediately. @default 400 */
   delay?: number;
   disabled?: boolean;
   /**

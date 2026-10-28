@@ -82,7 +82,7 @@
             },
             {
               "default": "false",
-              "description": "The page being shown: renders text with `aria-current=\"page\"` instead of a link (Figma: the last item, Label/M Strong).",
+              "description": "The page being shown: renders text with `aria-current=\"page\"` instead of a link (the last item, in Label/M Strong).",
               "name": "current",
               "required": false,
               "type": "boolean"

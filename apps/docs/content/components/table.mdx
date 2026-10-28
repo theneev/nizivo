@@ -29,7 +29,7 @@ and pass `visuallyHidden`, or drop it and point the table at the heading with `a
 
 ## Rows that link
 
-`<Table.Row interactive>` with a `Table.RowLink` in it (usually the first cell, as Figma's Order Row
+`<Table.Row interactive>` with a `Table.RowLink` in it (usually the first cell, as the design's Order Row
 draws the order number) makes the whole row the link's hit area and shows `bg/hover` on hover.
 Buttons and other links in the row stay above it. Pass the router's link with
 `render={<Link href="/orders/1042" />}`.
@@ -62,7 +62,7 @@ and the browser print the same text.
 
 ## Layout
 
-Figma: a 12 px radius with a `border/subtle` stroke; the header on `bg/subtle` in Label/M; cells
+A 12 px radius with a `border/subtle` stroke; the header on `bg/subtle` in Label/M; cells
 12 / 20 px, a `border/subtle` line under each row. A table wider than its container scrolls inside
 it; when its rows hold no link or control, give `Table.Container` a `label`, which names it as a
 scrollable region and puts it in the Tab order, so a keyboard user can reach it and scroll it with the

@@ -159,7 +159,7 @@
         },
         {
           "client": true,
-          "description": "Figma's Header frame: the title, an optional description and badges, above a 1 px rule.",
+          "description": "The header: the title, an optional description and badges, above a 1 px rule.",
           "flatName": "DrawerHeader",
           "inherits": [
             {
@@ -276,7 +276,7 @@
         },
         {
           "client": true,
-          "description": "Figma's Footer frame: actions that share its width, above a 1 px rule.",
+          "description": "The footer: actions that share its width, above a 1 px rule.",
           "flatName": "DrawerFooter",
           "inherits": [
             {
@@ -526,7 +526,7 @@
     },
     {
       "declaration": "type",
-      "description": "The edge the drawer slides in from, in logical terms: `start` and `end` follow the writing direction (`end` is the right edge in a left-to-right page, as Figma draws the Drawer); `bottom` is the sheet, as AppShell's \"More\" sheet below 640 px.",
+      "description": "The edge the drawer slides in from, in logical terms: `start` and `end` follow the writing direction (`end` is the right edge in a left-to-right page, a drawer's usual edge); `bottom` is the sheet, as AppShell's \"More\" sheet below 640 px.",
       "import": "import type { DrawerSide } from '@nizivo/react/drawer'",
       "kind": "type",
       "name": "DrawerSide",

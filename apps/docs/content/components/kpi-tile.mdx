@@ -20,10 +20,10 @@ slots.
 `tone` is `surface` (the default), `brand` or `accent`: Card's surfaces, chosen for the row, not
 from the sign of the change.
 
-- On `brand` and `accent` the Delta pill is `bg/surface` rather than Figma's `bg/success-subtle`,
-  which is the same green-50 as the `brand` tint and would show no fill. A deviation from Figma 04
-  (gap 4), chosen by the maintainer (M42); see [Card](/docs/components/card/#tones).
-- In dark mode `brand` and `accent` are both green-950, so they look the same. That is Figma's
-  design, followed for now (Figma 04 issue 5; M42).
+- On `brand` and `accent` the Delta pill is `bg/surface` rather than the design's `bg/success-subtle`,
+  which is the same green-50 as the `brand` tint and would show no fill. A deliberate departure from
+  the design, chosen by the maintainer (M42); see [Card](/docs/components/card/#tones).
+- In dark mode `brand` and `accent` are both green-950, so they look the same. That is the
+  design, followed for now (M42).
 - The tile is a Card, so it declares `--nz-surface`: a Sparkline in `chart` draws its end-dot halo
   in the tile's colour, not as a white ring ([Card](/docs/components/card/#the-surface-variable)).

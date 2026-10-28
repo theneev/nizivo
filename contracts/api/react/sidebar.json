@@ -56,7 +56,7 @@
         },
         {
           "client": false,
-          "description": "The store at the top: its mark, name and a line under it, on a card (Figma's Store Switcher).",
+          "description": "The store at the top: its mark, name and a line under it, on a card.",
           "flatName": "SidebarHeader",
           "inherits": [
             {
@@ -76,7 +76,7 @@
               "type": "ReactNode"
             },
             {
-              "description": "The store's mark, for example a square `Avatar` (Figma's 32 px Store mark). The rail keeps it.",
+              "description": "The store's mark, for example a square 32 px `Avatar`. The rail keeps it.",
               "name": "mark",
               "required": false,
               "type": "ReactNode"
@@ -88,7 +88,7 @@
               "type": "RenderProp<Empty>"
             },
             {
-              "description": "The store's name (Figma's Store). In the rail it leaves the layout and stays in the DOM.",
+              "description": "The store's name. In the rail it leaves the layout and stays in the DOM.",
               "name": "title",
               "required": false,
               "type": "ReactNode"
@@ -131,7 +131,7 @@
         },
         {
           "client": false,
-          "description": "Pushed to the bottom, for Settings (Figma's Spacer frame becomes an auto margin).",
+          "description": "Pushed to the bottom, for Settings (an auto margin).",
           "flatName": "SidebarFooter",
           "inherits": [
             {
@@ -224,14 +224,14 @@
       "name": "SidebarItem",
       "props": [
         {
-          "description": "The label (Figma's Label). It stays the accessible name in the collapsed rail.",
+          "description": "The label. It stays the accessible name in the collapsed rail.",
           "inheritedFrom": "NavItemProps",
           "name": "children",
           "required": true,
           "type": "ReactNode"
         },
         {
-          "description": "A count after the label, such as the number of open orders (Figma's Count). Absent, or `null`, shows none. It is part of the link's text, so it is announced with the label.",
+          "description": "A count after the label, such as the number of open orders. Absent, or `null`, shows none. It is part of the link's text, so it is announced with the label.",
           "inheritedFrom": "NavItemProps",
           "name": "count",
           "required": false,
@@ -239,7 +239,7 @@
         },
         {
           "default": "false",
-          "description": "The destination being shown: sets `aria-current=\"page\"` and draws the filled state (Figma State=Active). The page knows its own route, so it says which item is current.",
+          "description": "The destination being shown: sets `aria-current=\"page\"` and draws the filled state. The page knows its own route, so it says which item is current.",
           "inheritedFrom": "NavItemProps",
           "name": "current",
           "required": false,
@@ -254,7 +254,7 @@
           "type": "boolean"
         },
         {
-          "description": "A decorative glyph before the label (20 px, Figma's Icon slot); it is `aria-hidden`.",
+          "description": "A decorative glyph before the label (20 px); it is `aria-hidden`.",
           "inheritedFrom": "NavItemProps",
           "name": "icon",
           "required": false,

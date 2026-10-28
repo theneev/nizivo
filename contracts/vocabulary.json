@@ -152,7 +152,7 @@
       "name": "data-variant",
       "values": null,
       "on": "component roots",
-      "meaning": "The variant prop; values are the lowercase Figma names in each component manifest"
+      "meaning": "The variant prop; values in each component manifest"
     },
     {
       "name": "data-size",
@@ -358,7 +358,7 @@
       "name": "data-trend",
       "values": ["up", "down", "flat"],
       "on": "Sparkline root; ChartTooltip delta",
-      "meaning": "The direction of a change. On Sparkline, derived from the data (last against first); on ChartTooltip, the caller's delta.trend (AreaChart derives it from the change). Sparkline's down draws in chart/neutral, not chart/negative (Figma 03 §4.3)"
+      "meaning": "The direction of a change. On Sparkline, derived from the data (last against first); on ChartTooltip, the caller's delta.trend (AreaChart derives it from the change). Sparkline's down draws in chart/neutral, not chart/negative"
     },
     {
       "name": "data-focus-inset",

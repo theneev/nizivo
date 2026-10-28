@@ -3,8 +3,7 @@ title: Products page
 description: A product index inside the app shell, with status filters, search, sort, a selectable product table and pagination.
 ---
 
-From Figma 08 Overview Dashboard, Pattern 1 · Products (`7275:15757`). Uses
-[PageHeader](/docs/components/page-header/), [Button](/docs/components/button/),
+It uses [PageHeader](/docs/components/page-header/), [Button](/docs/components/button/),
 [Card](/docs/components/card/), [TabNav](/docs/components/tab-nav/),
 [SearchField](/docs/components/search-field/), [Select](/docs/components/select/),
 [Table](/docs/components/table/), [TableSelection](/docs/components/table-selection/),
@@ -42,7 +41,7 @@ import { AppShell } from '@nizivo/react/app-shell';
   form, or move it into the URL from the client.
 - **Selection.** Each row's checkbox submits its id with the "Archive selected" form through `form`,
   before any JavaScript runs; `TableSelection` adds the select-all box, Shift-click ranges and Escape.
-- **Not in Figma.** Figma draws selected rows but no bulk-action bar, and a "…" row menu that is not
+- **Not in the design.** It draws selected rows but no bulk-action bar, and a "…" row menu that is not
   designed; the example has one bulk action and leaves the row menu out.
 - **Narrow screens.** The filters wrap under the tabs, and the table scrolls sideways inside the
-  card. Figma has no mobile design for this page.
+  card. There is no mobile design for this page.

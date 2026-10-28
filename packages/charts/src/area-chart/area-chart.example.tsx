@@ -7,7 +7,7 @@ interface Day {
   previous: number;
 }
 
-// Thirty days of sales, as Figma 03 draws them (Oct 1–30, this period vs the previous one).
+// Thirty days of sales (Oct 1–30, this period vs the previous one).
 // Deterministic, so the visual lane's shots are stable.
 const DAYS: Day[] = Array.from({ length: 30 }, (_, i) => ({
   date: `2026-10-${String(i + 1).padStart(2, '0')}`,

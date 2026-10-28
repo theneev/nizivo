@@ -22,7 +22,7 @@ In a client app (a Vite or React Router single-page app, or a `'use client'` fil
 
 ## Anatomy and names
 
-The radio is a real one, visible at the card's start (Figma drew an ellipse with a thick stroke).
+The radio is a real one, visible at the card's start (the design drew an ellipse with a thick stroke).
 `children` is the radio's name; `description` is a second line that describes it
 (`aria-describedby`) instead of joining the name; `trailing` sits at the card's end and its text
 joins the name after `children`. The "Default" Badge is composition: put it in `trailing`. `leading`
@@ -39,5 +39,5 @@ chosen card's ring turns critical (with nothing chosen, every radio's edge does,
 ## No size jump
 
 The edge is an inset ring, not a border: selecting fills the card with `bg/brand-subtle` and turns
-the edge into a 2 px brand ring in the same box, so a card never grows on select (Figma's grew from
+the edge into a 2 px brand ring in the same box, so a card never grows on select (the design's grew from
 73 to 74 px). With 16 px padding and two Body/M lines a card is 76 px high.

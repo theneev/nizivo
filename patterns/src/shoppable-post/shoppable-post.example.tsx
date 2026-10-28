@@ -55,8 +55,8 @@ function PostTile({ post }: { post: Post }): JSX.Element {
 }
 
 /**
- * Figma 10's Shoppable Post (`7275:19815`): a post's media as one link, with the Post Badge
- * (`772:4419`) "Shop" and the count of tagged products on it. The badge sits on a dark surface that
+ * A Shoppable Post: a post's media as one link, with the Post Badge
+ * "Shop" and the count of tagged products on it. The badge sits on a dark surface that
  * stays dark in both themes, so its text holds its contrast over any photo. A server composition: it
  * ships no JavaScript. The media block stands in for the post's `Image`.
  */
@@ -70,8 +70,8 @@ export function ShoppablePostExample(): JSX.Element {
 }
 
 /**
- * The storefront's grid: three columns of 4:5 tiles with 2 px between them, as on Figma's mobile
- * storefront (`7275:20803`). A post with several photos shows the layers glyph; a post with no
+ * The storefront's grid: three columns of 4:5 tiles with 2 px between them, as on a mobile
+ * storefront. A post with several photos shows the layers glyph; a post with no
  * tagged product shows no badge.
  */
 export function ShoppablePostGridExample(): JSX.Element {

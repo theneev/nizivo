@@ -41,7 +41,7 @@ function Swatch({ color }: { color: string }): JSX.Element {
 }
 
 /**
- * Figma 05's Variant Option (`7275:14018`) as a product's option picker: colour chips with
+ * Variant Options as a product's option picker: colour chips with
  * swatches and size chips, each a ChipGroup of native radios in a Field that names it, so arrow
  * keys move the choice and the form submits it with no JavaScript of its own. Sand and L are out of
  * stock: they keep their colour, are struck through and are described as sold out, and can still be

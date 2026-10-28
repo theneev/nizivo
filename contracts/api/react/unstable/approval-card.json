@@ -27,7 +27,7 @@
       "props": [
         {
           "default": "true",
-          "description": "Focus Cancel when the card mounts (Figma: \"Focus lands on Cancel\").",
+          "description": "Focus Cancel when the card mounts.",
           "name": "autoFocus",
           "required": false,
           "type": "boolean"

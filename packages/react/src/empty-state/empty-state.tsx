@@ -17,7 +17,7 @@ export interface EmptyStateProps extends Omit<ComponentPropsWithRef<'div'>, 'tit
   render?: RenderProp<Record<string, never>>;
 }
 
-/** Figma: "A render, a headline, one action. No paragraphs." */
+/** A render, a headline, one action. No paragraphs. */
 export function EmptyState({
   title,
   level = 2,

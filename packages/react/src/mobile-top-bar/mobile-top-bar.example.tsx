@@ -35,8 +35,8 @@ const ICONS = {
 };
 
 /**
- * Figma's Mobile Top Bar: the store's mark, the page's name, then search and notifications as
- * IconButtons (Figma draws bare icons). Below 640 px it takes the TopBar's place.
+ * The Mobile Top Bar: the store's mark, the page's name, then search and notifications as
+ * IconButtons (the design draws bare icons). Below 640 px it takes the TopBar's place.
  */
 export function MobileTopBarExample(): JSX.Element {
   return (

@@ -96,7 +96,7 @@
     },
     {
       "declaration": "type",
-      "description": "Figma \"Tone\". Critical is announced assertively and stays until dismissed.",
+      "description": "The message's status. Critical is announced assertively and stays until dismissed.",
       "import": "import type { ToastTone } from '@nizivo/react/toast'",
       "kind": "type",
       "name": "ToastTone",

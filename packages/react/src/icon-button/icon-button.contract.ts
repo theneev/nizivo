@@ -38,7 +38,7 @@ export interface IconButtonProps extends Omit<
   label: string;
   /** The glyph, decorative (`aria-hidden`): 16 px at `sm`, 20 px at `md`, 24 px at `lg`. */
   icon: ReactNode;
-  /** Figma "Variant". @default 'secondary' */
+  /** The button's emphasis, as Button's `variant`. @default 'secondary' */
   variant?: ButtonVariant;
   /** 32 / 40 / 48 px square. @default 'md' */
   size?: ControlSize;
@@ -58,8 +58,8 @@ export interface IconButtonProps extends Omit<
   /** Replaces the internal spinner glyph. */
   pendingIndicator?: ReactNode;
   /**
-   * Pairs the button with a Tooltip that shows `label` ("Icon-only buttons have an aria-label and a
-   * Tooltip", Figma). The tooltip is a client leaf; `false` renders the button with no client code
+   * Pairs the button with a Tooltip that shows `label`, so a sighted user can read what the
+   * glyph does. The tooltip is a client leaf; `false` renders the button with no client code
    * running. Pass options to place it. Where visible text already names the action and the page
    * should ship no JavaScript for the button, use `IconButtonStatic`: under Turbopack and `next dev`
    * this module's import of the leaf ships the tooltip chain even with `tooltip={false}`.

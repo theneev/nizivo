@@ -3,8 +3,7 @@ title: Onboarding page
 description: A new store's home inside the app shell, with a setup checklist and its progress, an empty state for orders and next-step cards. It ships no JavaScript.
 ---
 
-From Figma 08 Overview Dashboard, Pattern 8 · Onboarding (`7275:16478`). Uses
-[PageHeader](/docs/components/page-header/), [Split](/docs/components/split/),
+It uses [PageHeader](/docs/components/page-header/), [Split](/docs/components/split/),
 [Card](/docs/components/card/), [ProgressBar](/docs/components/progress-bar/),
 [Text](/docs/components/text/), [Button](/docs/components/button/),
 [EmptyState](/docs/components/empty-state/) and [NumberValue](/docs/components/number-value/).
@@ -39,6 +38,6 @@ import { AppShell } from '@nizivo/react/app-shell';
   its mark (a check or an empty circle) is decorative. Each action's name includes its step ("Set
   up: Set up payments"), since several sit in one list.
 - **Progress.** The ProgressBar's `valueText` reads "2 of 5 steps done" rather than a percentage.
-- **Not built.** Figma's Checklist / Setup guide, Insight Card and Plan Card have no component: the
+- **Not built.** The design's Checklist / Setup guide, Insight Card and Plan Card have no component: the
   guide is composed here, and the next steps are Cards (`tone="brand"` and `tone="inverse"`). The
-  neutral blocks stand in for Figma's 3D renders; put an [Image](/docs/components/image/) there.
+  neutral blocks stand in for the design's 3D renders; put an [Image](/docs/components/image/) there.

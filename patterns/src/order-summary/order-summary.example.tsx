@@ -12,7 +12,7 @@ interface LineItem {
   title: string;
   variant: string;
   quantity: number;
-  /** The line's total, not the unit price (Figma 05 §3.10). */
+  /** The line's total, not the unit price. */
   total: number;
 }
 
@@ -37,7 +37,7 @@ function Row({ label, value }: { label: string; value: number | string }): JSX.E
 }
 
 /**
- * Figma 05's Order Summary (`754:897`, an orphan master): the order's lines, then its totals as a
+ * An Order Summary: the order's lines, then its totals as a
  * description list. A server composition: it ships no JavaScript. Each line's thumbnail stands in for
  * the product's `Image`.
  */

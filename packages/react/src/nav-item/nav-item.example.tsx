@@ -58,7 +58,7 @@ const ICONS = {
   ),
 };
 
-/** A plain list: the items stack 4 px apart in a 216 px column, as in Figma's sidebar. */
+/** A plain list: the items stack 4 px apart in a 216 px column, as in the design's sidebar. */
 const LIST: CSSProperties = {
   display: 'grid',
   gap: 4,

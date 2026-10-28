@@ -22,7 +22,7 @@ import { renderElement, type RenderProp } from '../contracts/render';
 import { formatLabel, type PluralLabel } from '../i18n/format-label';
 import { cx } from '../_internal/cx';
 
-/** Figma "Size": Sm 24, Md 32, Lg 40, XL 56 px. */
+/** `sm` 24, `md` 32, `lg` 40, `xl` 56 px. */
 export type AvatarSize = 'sm' | 'md' | 'lg' | 'xl';
 
 export interface AvatarState {
@@ -55,14 +55,14 @@ export interface AvatarProps extends Omit<ComponentPropsWithRef<'span'>, 'childr
   image?: ReactElement<{ className?: string | undefined }>;
   /**
    * Replaces the initials derived from `name` (the first letters of the first and last words).
-   * Figma: at most two letters.
+   * At most two letters.
    */
   initials?: string;
   /** @default 'md' */
   size?: AvatarSize;
   /**
-   * The name is printed next to the avatar, so the avatar is hidden from assistive technology
-   * (Figma: `alt=""` when the name is printed next to it). @default false
+   * The name is printed next to the avatar, so the avatar is hidden from assistive technology,
+   * as `alt=""` hides an image whose text is printed beside it. @default false
    */
   decorative?: boolean;
   /** Composition of the root `<span>`. */
@@ -162,7 +162,7 @@ export interface AvatarGroupState {
 }
 
 export interface AvatarGroupProps extends ComponentPropsWithRef<'span'> {
-  /** How many avatars to show before the count. Figma: up to 3. @default 3 */
+  /** How many avatars to show before the count; three at most reads best. @default 3 */
   max?: number;
   /**
    * Everyone in the group, when it is more than the avatars passed (the server sends three faces and
@@ -180,7 +180,7 @@ export interface AvatarGroupProps extends ComponentPropsWithRef<'span'> {
 }
 
 /**
- * A stack of avatars and a count, announced as one item (Figma: "Maya, Jonah, Priya and 4 more"):
+ * A stack of avatars and a count, announced as one item, such as "Maya, Jonah, Priya and 4 more":
  * the root is `role="img"` named by the list of names, and every avatar inside is decorative.
  */
 export function AvatarGroup({

@@ -4,7 +4,7 @@ import type { ComponentPropsWithRef, ReactElement, ReactNode } from 'react';
 import { renderElement, type RenderProp } from '../contracts/render';
 import { cx } from '../_internal/cx';
 
-/** Figma "Tone". */
+/** The status the alert conveys, which sets its colours and the glyph you pass. */
 export type AlertTone = 'info' | 'success' | 'warning' | 'critical';
 
 export interface AlertState {

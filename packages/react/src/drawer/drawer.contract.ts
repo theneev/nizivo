@@ -11,7 +11,7 @@ export type { OpenReason };
 
 /**
  * The edge the drawer slides in from, in logical terms: `start` and `end` follow the writing direction
- * (`end` is the right edge in a left-to-right page, as Figma draws the Drawer); `bottom` is the sheet,
+ * (`end` is the right edge in a left-to-right page, a drawer's usual edge); `bottom` is the sheet,
  * as AppShell's "More" sheet below 640 px.
  */
 export type DrawerSide = 'start' | 'end' | 'bottom';

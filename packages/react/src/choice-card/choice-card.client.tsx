@@ -73,7 +73,7 @@ export interface ChoiceCardProps extends Omit<ComponentPropsWithRef<'label'>, 'h
   value: string;
   disabled?: boolean;
   /**
-   * A mark after the radio, such as a card brand's logo (Figma's 44 × 30 Mark); decorative, so put
+   * A mark after the radio, such as a card brand's logo (44 × 30 px); decorative, so put
    * the brand's name in the text too.
    */
   leading?: ReactNode;
@@ -83,7 +83,7 @@ export interface ChoiceCardProps extends Omit<ComponentPropsWithRef<'label'>, 'h
    */
   description?: ReactNode;
   /**
-   * Content at the card's end, such as a "Default" `Badge` (Figma's Show default): composition, not a
+   * Content at the card's end, such as a "Default" `Badge`: composition, not a
    * prop. Its text joins the radio's name, after `children`.
    */
   trailing?: ReactNode;

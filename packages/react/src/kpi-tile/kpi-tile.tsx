@@ -10,7 +10,7 @@ import { cx } from '../_internal/cx';
 import { dataStatusAttrs, type DataStatus } from '../_internal/data-status';
 import { Metric, resolveStatus, type MetricDataProps } from '../metric/metric';
 
-/** Figma "Tone": Surface, or Tinted as `brand` or `accent` (Card's tones of the same names). */
+/** The tile's surface: `surface`, or tinted as `brand` or `accent` (Card's tones of the same names). */
 export type KpiTileTone = 'surface' | 'brand' | 'accent';
 
 export interface KpiTileState {
@@ -27,7 +27,7 @@ export interface KpiTileProps
   /**
    * A small chart beside the value, shown while ready, for example
    * `<Sparkline data={series} label="Sales, last 7 days" />` from `@nizivo/charts`. Drawn at most
-   * 88 × 28 px (Figma).
+   * 88 × 28 px.
    */
   chart?: ReactNode;
   render?: RenderProp<KpiTileState>;

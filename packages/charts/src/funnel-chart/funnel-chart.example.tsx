@@ -6,7 +6,7 @@ interface Step {
   sessions: number;
 }
 
-// Figma 03's funnel: a store's checkout, sessions to purchases.
+// A store's checkout, sessions to purchases.
 const CHECKOUT: Step[] = [
   { name: 'Sessions', sessions: 48210 },
   { name: 'Added to cart', sessions: 9642 },
@@ -47,7 +47,7 @@ export function FunnelChartLocaleExample(): JSX.Element {
   );
 }
 
-/** Loading, empty and failed: the same box, Figma's four-step height. */
+/** Loading, empty and failed: the same box, the design's four-step height. */
 export function FunnelChartStatusExample(): JSX.Element {
   return (
     <div>

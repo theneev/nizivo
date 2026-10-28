@@ -9,7 +9,7 @@ export function SparklineExample(): JSX.Element {
   return <Sparkline data={UP} />;
 }
 
-/** Down draws in chart/neutral, not red (Figma 03: the shape is context, the Delta is the signal). */
+/** Down draws in chart/neutral, not red (the shape is context, the Delta is the signal). */
 export function SparklineDownExample(): JSX.Element {
   return <Sparkline data={DOWN} />;
 }

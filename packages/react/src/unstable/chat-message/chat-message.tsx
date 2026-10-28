@@ -18,7 +18,7 @@ export interface ChatMessageLabels {
 }
 
 export interface ChatMessageProps extends Omit<ComponentPropsWithRef<'div'>, 'role'> {
-  /** Whose turn it is (Figma "Role"). */
+  /** Whose turn it is. */
   from: 'user' | 'assistant';
   /** Names the sender. Replaces `labels.user` or `labels.assistant`. */
   sender?: ReactNode;

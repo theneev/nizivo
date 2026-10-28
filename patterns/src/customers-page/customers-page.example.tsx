@@ -99,7 +99,7 @@ const CITIES = [
 ] as const;
 
 /**
- * Figma 08's Pattern 4, Customers: the content of the app shell's `<main>`. The page header, three
+ * The Customers page: the content of the app shell's `<main>`. The page header, three
  * key figures and the segment links, then two columns: the customers table, each name with its
  * `Avatar` (initials here; a photo through `src` in the app), and an aside with the top cities and a
  * win-back prompt. A server composition: it ships no JavaScript.

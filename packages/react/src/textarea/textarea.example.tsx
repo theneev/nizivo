@@ -17,7 +17,7 @@ export function TextareaExample(): JSX.Element {
 }
 
 /**
- * 112 px at least (Figma 7367:316); `rows` above that sets the height, and the user can drag it
+ * 112 px at least; `rows` above that sets the height, and the user can drag it
  * taller. Where the browser has `field-sizing`, it also grows as the text does.
  */
 export function TextareaRowsExample(): JSX.Element {

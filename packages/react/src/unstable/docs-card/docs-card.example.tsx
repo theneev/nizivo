@@ -21,7 +21,7 @@ function Layers(): JSX.Element {
   );
 }
 
-/** Figma's entry point on a docs home page: one link, named by its title. */
+/** An entry point on a docs home page: one link, named by its title. */
 export function DocsCardExample(): JSX.Element {
   return (
     <div style={{ inlineSize: 300 }}>

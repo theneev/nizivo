@@ -2,7 +2,7 @@ import type { JSX } from 'react';
 import { Button } from '../../button/index';
 import { CtaBand } from './index';
 
-/** Figma's closing ask: an Accent primary action and a quiet Secondary one. */
+/** A closing ask: an Accent primary action and a quiet Secondary one. */
 export function CtaBandExample(): JSX.Element {
   return (
     <CtaBand

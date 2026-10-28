@@ -1,7 +1,7 @@
 import type { JSX } from 'react';
 import { NewsletterSignup } from './index';
 
-/** Figma's signup: what people get, a visible Email label, and a note on what happens next. */
+/** A signup: what people get, a visible Email label, and a note on what happens next. */
 export function NewsletterSignupExample(): JSX.Element {
   return (
     <NewsletterSignup

@@ -14,7 +14,7 @@
     },
     {
       "declaration": "interface",
-      "description": "Button variants, as lowercase Figma names. Augment this interface to add one.",
+      "description": "Button variants, as lowercase names. Augment this interface to add one.",
       "import": "import type { ButtonVariantMap } from '@nizivo/react/augment'",
       "kind": "type",
       "members": [

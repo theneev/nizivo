@@ -4,13 +4,13 @@ import { renderElement, type RenderProp } from '../contracts/render';
 import { cx } from '../_internal/cx';
 
 /**
- * Figma "Style": Surface | Subtle | Inverse, plus the tinted surfaces of the dashboard widgets (KPI
- * Tile "Tinted", Insight Card Brand and Accent; figma/04 §2/§3, M41): `brand` (bg/brand-subtle) and
- * `accent` (bg/accent-subtle).
+ * The card's surface: `surface`, `subtle` or `inverse`, plus the tinted surfaces of the dashboard
+ * widgets (KpiTile's tinted tiles and the brand and accent insight cards; M41): `brand`
+ * (bg/brand-subtle) and `accent` (bg/accent-subtle).
  */
 export type CardTone = 'surface' | 'subtle' | 'inverse' | 'brand' | 'accent';
 export type CardTitleLevel = 2 | 3 | 4 | 5 | 6;
-/** 24 px (`md`, Figma) or 20 px (`sm`). */
+/** 24 px (`md`) or 20 px (`sm`). */
 export type CardPadding = 'sm' | 'md';
 /** 0 draws no shadow (the rest elevation); 1 draws `--nz-elevation-1`. */
 export type CardElevation = 0 | 1;
@@ -51,12 +51,12 @@ export interface CardDescriptionProps extends ComponentPropsWithRef<'p'> {
   render?: RenderProp<Record<string, never>>;
 }
 
-/** Figma "Show action": the control at the end of the header, for example an IconButton. */
+/** The control at the end of the header, for example an IconButton. */
 export interface CardActionProps extends ComponentPropsWithRef<'div'> {
   render?: RenderProp<Record<string, never>>;
 }
 
-/** Figma's "Slot" frame. */
+/** The card's content area. */
 export interface CardBodyProps extends ComponentPropsWithRef<'div'> {
   render?: RenderProp<Record<string, never>>;
 }

@@ -34,7 +34,7 @@ interface Step {
   icon: ReactNode;
 }
 
-/** The four steps Figma's doc text names: Ordered, Packed, Shipped and Delivered. */
+/** The four steps: Ordered, Packed, Shipped and Delivered. */
 const STEPS: Step[] = [
   { label: 'Ordered', icon: <Receipt /> },
   { label: 'Packed', icon: <Package /> },
@@ -122,7 +122,7 @@ function ShipmentTracker({
 }
 
 /**
- * Figma 05's Shipment Tracker (`7275:14195`) at Step=Shipped. There is no Steps component, so the
+ * The Shipment Tracker at Step=Shipped. There is no Steps component, so the
  * tracker is an `<ol>` in the pattern's own stylesheet: the current step carries
  * `aria-current="step"`, and every step says its status in words. It is a column on a narrow
  * container and a row from 34rem, and its line follows the reading direction. A server composition:
@@ -142,7 +142,7 @@ export function ShipmentTrackerExample(): JSX.Element {
   );
 }
 
-/** Step=Delivered: every step reached, the last one current, as Figma draws it. */
+/** Step=Delivered: every step reached, the last one current, as the design draws it. */
 export function ShipmentTrackerDeliveredExample(): JSX.Element {
   return (
     <ShipmentTracker

@@ -34,9 +34,7 @@
 // - the skip link is the first Tab stop and moves focus into the page; the mobile drawer is modal
 //   while open (the page behind is inert, Escape closes it, focus returns to its button);
 // - search finds a component from the static index, offline, and opens it; Escape returns focus to
-//   the button that opened it;
-// - the Deviations page lists the overrides, proposals, every builder-chosen value and builder
-//   default, and every degradation (D1, D2, …) the plan records.
+//   the button that opened it.
 // Exit code 1 on any failure.
 /* oxlint-disable no-await-in-loop -- steps run one after another in a page, pages in a pool */
 import { createHash } from 'node:crypto';
@@ -1156,108 +1154,6 @@ async function drawerChecks(browser: Browser): Promise<void> {
   await ctx.close();
 }
 
-async function deviationsChecks(browser: Browser): Promise<void> {
-  const ctx = await context(browser, 'light');
-  const { page } = await visit(ctx, '/docs/deviations/');
-  const rows = async (label: string): Promise<number> =>
-    page.locator(`table[aria-label="${label}"] tbody tr`).count();
-  const overrides = await rows('Overrides');
-  const proposals = await rows('Proposals');
-  // The overrides table lists every entry of the a11y override files; with none left (Figma adopted
-  // all 14 on 2026-10-18) the page says so instead of drawing an empty table.
-  const overrideDir = join(import.meta.dirname, '../../../packages/tokens/src/code-owned/a11y');
-  const expectedOverrides = readdirSync(overrideDir)
-    .filter((file) => file.endsWith('.overrides.tokens.json'))
-    .reduce(
-      (sum, file) =>
-        sum +
-        (readFileSync(join(overrideDir, file), 'utf8').match(/"app\.nizivo\.override"/g) ?? [])
-          .length,
-      0,
-    );
-  check(
-    overrides === expectedOverrides &&
-      (expectedOverrides > 0 ||
-        (await page.getByText('None. Every Figma variable is used as Figma defines it').count()) ===
-          1),
-    `deviations: ${overrides} override rows (${expectedOverrides} in the override files)`,
-  );
-  // The same for the proposals: none is left since text/accent was removed before 0.2.0 (M42).
-  const proposalDir = join(import.meta.dirname, '../../../packages/tokens/src/code-owned');
-  const proposalFiles = [
-    join(proposalDir, 'proposals.tokens.json'),
-    ...readdirSync(join(proposalDir, 'proposals'), { recursive: true, encoding: 'utf8' })
-      .filter((file) => file.endsWith('.tokens.json'))
-      .map((file) => join(proposalDir, 'proposals', file)),
-  ];
-  const proposalTokens = new Set(
-    proposalFiles.flatMap((file) =>
-      [...readFileSync(file, 'utf8').matchAll(/"figma(?:Variable|Style)": "([^"]+)"/g)].map(
-        (m) => m[1],
-      ),
-    ),
-  );
-  check(
-    proposals === proposalTokens.size &&
-      (proposalTokens.size > 0 ||
-        (await page.getByText('None. Every token is a Figma variable or code-owned').count()) ===
-          1),
-    `deviations: ${proposals} proposal rows (${proposalTokens.size} in the proposal files)`,
-  );
-  const text = (await page.locator('article').textContent()) ?? '';
-  // Every degradation (§18.2) and every builder default (§23.4) the plan holds is on the page; the
-  // plan's sections as `nz gen` copies them into lib/plan.json (`nz gen --check` keeps them current).
-  const extract: unknown = JSON.parse(
-    readFileSync(join(import.meta.dirname, '../lib/plan.json'), 'utf8'),
-  );
-  const sections =
-    typeof extract === 'object' && extract !== null && 'sections' in extract
-      ? extract.sections
-      : undefined;
-  const plan =
-    typeof sections === 'object' && sections !== null
-      ? Object.values(sections)
-          .filter((s): s is string => typeof s === 'string')
-          .join('\n')
-      : '';
-  const planDs = [...plan.matchAll(/^\s*- \*\*(D\d+)\.\*\* "/gm)].map((m) => m[1] ?? '');
-  const planDefaults = [...plan.matchAll(/^\| (D-[a-z]+) \|/gm)].map((m) => m[1] ?? '');
-  const missingDs = planDs.filter((d) => !text.includes(d));
-  check(
-    planDs.length >= 4 &&
-      missingDs.length === 0 &&
-      ['Firefox', 'Mobile Safari 17.5'].every((t) => text.includes(t)),
-    `deviations: degradations ${planDs.join(', ')} and the Safari 17.5 status are listed${missingDs.length > 0 ? ` (missing ${missingDs.join(', ')})` : ''}`,
-  );
-  const defaults = await page
-    .locator('table[aria-label="Builder defaults"] tbody th')
-    .allTextContents();
-  const missingDefaults = planDefaults.filter((id) => !defaults.some((t) => t.startsWith(id)));
-  check(
-    planDefaults.length > 0 &&
-      missingDefaults.length === 0 &&
-      defaults.length === planDefaults.length,
-    `deviations: ${defaults.length} of the plan's ${planDefaults.length} builder defaults (§23.4) are listed${missingDefaults.length > 0 ? ` (missing ${missingDefaults.join(', ')})` : ''}`,
-  );
-  check(text.includes('D-i'), 'deviations: builder decision D-i is listed');
-  const chosen = await rows('Builder-chosen values');
-  const header = await page
-    .locator('table[aria-label="Builder-chosen values"] thead')
-    .textContent()
-    .catch(() => '');
-  check(
-    chosen > 0 && (header ?? '').includes('Chosen'),
-    `deviations: ${chosen} builder-chosen values, each with the value that ships`,
-  );
-  // Week 3: one row per item of docs/figma/12-w3-forms.md §5 (the build fails on a missing answer).
-  const w3 = await rows('Week 3 builder-chosen values');
-  check(w3 >= 29, `deviations: ${w3} week 3 builder-chosen values`);
-  // Week 4: one row per item of docs/figma/13-w4-menu-tabs.md §5.
-  const w4 = await rows('Week 4 builder-chosen values');
-  check(w4 >= 22, `deviations: ${w4} week 4 builder-chosen values`);
-  await ctx.close();
-}
-
 /** The routes that are not HTML pages: each answers 200 with its media type and a body. */
 const FILE_ROUTES: [path: string, type: string][] = [
   ['/llms.txt', 'text/plain'],
@@ -1493,7 +1389,6 @@ async function main(): Promise<void> {
     await skipLinkChecks(browser);
     await drawerChecks(browser);
     await searchChecks(browser);
-    await deviationsChecks(browser);
   } catch (error) {
     failures.push(
       `smoke aborted: ${error instanceof Error ? (error.stack ?? error.message) : String(error)}`,

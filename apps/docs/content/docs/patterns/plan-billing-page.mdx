@@ -3,8 +3,7 @@ title: Plan and billing page
 description: A settings page inside the app shell, with a section nav beside the current plan, its usage on Meters, the payment method, the invoices table and billing emails.
 ---
 
-From Figma 08 Overview Dashboard, Pattern 7 · Settings · Plan & billing (`7275:16412`). Uses
-[PageHeader](/docs/components/page-header/), [Split](/docs/components/split/),
+It uses [PageHeader](/docs/components/page-header/), [Split](/docs/components/split/),
 [NavItem](/docs/components/nav-item/), [Card](/docs/components/card/),
 [Badge](/docs/components/badge/), [Text](/docs/components/text/),
 [NumberValue](/docs/components/number-value/), [Button](/docs/components/button/),
@@ -39,10 +38,10 @@ import { AppShell } from '@nizivo/react/app-shell';
   PageHeader. In your app, drop `level` (the title becomes the page's `<h1>`).
 - **Section nav.** A `<nav>` of NavItems in Split's narrow column, the current section
   `aria-current="page"`. Split stacks the columns when the row is too narrow for both, as it is in
-  this site's preview; Figma has no small-screen design for it.
+  this site's preview; there is no small-screen design for it.
 - **Usage is a Meter**, with `high` at 80 % of each limit and `optimum` at zero, so a limit that is
   nearly used shows the warning colour, and `valueText` reads "248 of 500".
-- **Not built.** Figma shows the three plan tiers as Plan Cards and the payment methods as
+- **Not built.** The design shows the three plan tiers as Plan Cards and the payment methods as
   selectable Payment Method cards; neither has a component, so the example shows the current plan
-  and one method. Figma's "Billing emails" title is H3 while the other card titles are H4; here they
-  all are Card titles.
+  and one method. The design's "Billing emails" title is H3 while the other card titles are H4;
+  here they all are Card titles.

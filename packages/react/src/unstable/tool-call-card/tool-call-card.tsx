@@ -16,7 +16,7 @@ import {
   WandSparklesGlyph,
 } from '../../_internal/glyphs';
 
-/** The whole action's status (Figma "State"). */
+/** The whole action's status. */
 export type ToolCallStatus = 'running' | 'done' | 'failed';
 /** One step's status. */
 export type ToolCallStepStatus = 'todo' | 'running' | 'done' | 'failed';

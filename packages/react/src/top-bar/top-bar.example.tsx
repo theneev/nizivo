@@ -24,7 +24,7 @@ function Bell(): JSX.Element {
 }
 
 /**
- * Figma's Top Bar: the page's name, the search (a real input, M49) with its shortcut, then
+ * The Top Bar: the page's name, the search (a real input, M49) with its shortcut, then
  * notifications and the account. The title is text, not a heading: the page's PageHeader is the
  * `<h1>`.
  */

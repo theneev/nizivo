@@ -6,7 +6,7 @@ interface Channel {
   sales: number;
 }
 
-// Figma 03's donut: sales by channel. Five channels fold into three plus "Other" ($7,398).
+// Sales by channel. Five channels fold into three plus "Other" ($7,398).
 const CHANNELS: Channel[] = [
   { name: 'Online store', sales: 64120 },
   { name: 'Point of sale', sales: 34526 },

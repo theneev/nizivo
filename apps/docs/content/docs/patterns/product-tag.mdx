@@ -3,9 +3,7 @@ title: Product tag
 description: Hotspots on a post's photo, each a named button that opens a Popover with the product's name, price and link.
 ---
 
-From Figma 10 Instagram Storefront, Product Tag (`7275:19846`, with the orphan master `772:4390`
-the screens use) on the mobile post view's media (`7275:20923`). Uses
-[Popover](/docs/components/popover/), [Button](/docs/components/button/),
+It uses [Popover](/docs/components/popover/), [Button](/docs/components/button/),
 [NumberValue](/docs/components/number-value/), [Text](/docs/components/text/) and the `Tag` and
 `ArrowRight` glyphs of [`@nizivo/icons`](/docs/icons/).
 
@@ -23,18 +21,18 @@ the screens use) on the mobile post view's media (`7275:20923`). Uses
 
 - **A real button, named.** Each dot is the Popover's own trigger, a `<button>` named "Product:
   Moss mug" that says whether its popover is open. It is 24 px, and the trigger's hit area grows to
-  44 px on a coarse pointer, without changing the dot (Figma's dot is 24 px, under `size/touch-min`,
-  §3.3). The photo is a `<figure>` named "Products tagged in this photo", its
+  44 px on a coarse pointer, without changing the dot (the design's dot is 24 px, under
+  `size/touch-min`). The photo is a `<figure>` named "Products tagged in this photo", its
   caption the hint, and the dots are in reading order (by y,
   then x), so Tab moves through them as the eye does.
 - **Open, close, focus.** Opening moves focus to the product link; Escape or a press outside closes
   it and focus returns to the dot. Only the popover is client code: the photo stays
   server-rendered. Pair the photo with the [Tagged product](/docs/patterns/tagged-product/) list,
   which gives the same products without the photo.
-- **Where it differs from Figma.** The popover is the kit's Popover surface with a title, the price
-  in tabular figures and a link, not Figma's dark chip: the chip's price is `text/tertiary` on
-  `bg/inverse`, 4.03:1, under AA (§3.3). The Popover moves to another side when the end side has no
-  room, where Figma always opens to the right. The dot and the hint use the on-media pair of the
+- **Where it differs from the design.** The popover is the kit's Popover surface with a title, the price
+  in tabular figures and a link, not the design's dark chip: the chip's price is `text/tertiary` on
+  `bg/inverse`, 4.03:1, under AA. The Popover moves to another side when the end side has no
+  room, where the design always opens to the right. The dot and the hint use the on-media pair of the
   [Shoppable post](/docs/patterns/shoppable-post/) (`--nz-bg-code` with `--nz-text-on-dark`), so
   they read on any photo in both themes. There is no pulse: an endless animation needs a reduced
   motion story the kit does not have yet. Positions are fractions of the photo (0 to 1), so a tag

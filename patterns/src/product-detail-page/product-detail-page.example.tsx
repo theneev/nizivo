@@ -32,7 +32,7 @@ function Swatch({ color }: { color: string }): JSX.Element {
 }
 
 /**
- * Figma 08's Pattern 2, Product detail: the content of the app shell's `<main>`. A breadcrumb, the
+ * The Product detail page: the content of the app shell's `<main>`. A breadcrumb, the
  * page header with the product's status, then two columns (`Split`): media, details, variants and
  * pricing in the main column; sales channels, 30-day sales and inventory in the aside. Every field
  * belongs to one form, which the header's Save submits through `form`. The media tiles stand in for

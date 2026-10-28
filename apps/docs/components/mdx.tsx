@@ -5,15 +5,6 @@ import { Callout } from 'fumadocs-ui/components/callout';
 import { Step, Steps } from 'fumadocs-ui/components/steps';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 import {
-  BuilderChoices,
-  BuilderChoicesW3,
-  BuilderChoicesW4,
-  BuilderDefaults,
-  Degradations,
-  OverridesTable,
-  ProposalsTable,
-} from './deviations';
-import {
   ColourSwatches,
   ElevationScale,
   FontFamilies,
@@ -59,13 +50,6 @@ export const mdxComponents: MDXComponents = {
   ShadowValues,
   MotionTokens,
   TokenReference,
-  OverridesTable,
-  ProposalsTable,
-  BuilderChoices,
-  BuilderChoicesW3,
-  BuilderChoicesW4,
-  BuilderDefaults,
-  Degradations,
   IconGrid,
   BrandGrid,
   IconCount,

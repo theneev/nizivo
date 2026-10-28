@@ -25,9 +25,9 @@ handler. [How to choose](/docs/guides/static-or-interactive/).
 
 `pending` replaces the leading icon with a spinner, keeps the label, and keeps the button focusable
 with `aria-disabled`, swallowing clicks. The spinner turns once every 800 ms (`--nz-duration-spin`,
-Figma's `duration/spin`). Under Reduced motion (the OS setting, or `data-nz-motion="reduce"` on an
+the `duration/spin` token). Under Reduced motion (the OS setting, or `data-nz-motion="reduce"` on an
 ancestor) it stops, and the text "Loading…" shows in the label's place, so the wait is still
-visible without movement (Figma's Accessibility page: "Spinner and skeleton loops stop; a text label
+visible without movement (the design's accessibility rules: "Spinner and skeleton loops stop; a text label
 shows"). The text and the label share one space, so the button keeps its width when `pending`
 starts (it grows only if "Loading…" is wider than the label). Where the text does not fit, it ends
 in an ellipsis.

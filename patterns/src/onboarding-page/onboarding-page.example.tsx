@@ -55,10 +55,10 @@ const STEPS: Step[] = [
 ];
 
 /**
- * Figma 08's Pattern 8, Onboarding: the content of the app shell's `<main>` on a new store's home.
+ * The Onboarding page: the content of the app shell's `<main>` on a new store's home.
  * The page header, then the setup guide (an ordered list of steps, each done or to do in words, with
  * the overall progress on a ProgressBar), an empty state for the orders that have not come yet, and
- * an aside of next-step cards. The neutral blocks stand in for Figma's 3D renders, an `Image` in
+ * an aside of next-step cards. The neutral blocks stand in for 3D renders, an `Image` in
  * the app. A server composition: it ships no JavaScript.
  */
 export function OnboardingPageExample(): JSX.Element {

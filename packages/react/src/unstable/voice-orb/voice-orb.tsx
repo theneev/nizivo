@@ -13,7 +13,7 @@ import { CircleStopGlyph, MicGlyph } from '../../_internal/glyphs';
 // the static module, not the folder's index: that also exports IconButton and its tooltip leaf
 import { IconButtonStatic } from '../../icon-button/icon-button-static';
 
-/** Figma "State". */
+/** What the voice assistant is doing: idle, listening or speaking. */
 export type VoiceState = 'idle' | 'listening' | 'speaking';
 
 /** VoiceOrb's own strings (§16.4): serialisable, English defaults. */

@@ -1,7 +1,7 @@
 import type { JSX } from 'react';
 import { FileItem } from './index';
 
-/** Figma's three states of one upload: under way, done, and failed with its reason. */
+/** Three states of one upload: under way, done, and failed with its reason. */
 export function FileItemExample(): JSX.Element {
   return (
     <div style={{ display: 'grid', gap: 12, maxInlineSize: 420 }}>

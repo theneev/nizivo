@@ -783,7 +783,7 @@
     },
     {
       "declaration": "type",
-      "description": "Figma Menu Item `State=Critical`. `critical` items sit last, after a separator.",
+      "description": "`critical` marks a destructive item. `critical` items sit last, after a separator.",
       "import": "import type { MenuItemTone } from '@nizivo/react/menu'",
       "kind": "type",
       "name": "MenuItemTone",

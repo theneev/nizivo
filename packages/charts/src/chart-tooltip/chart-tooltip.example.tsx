@@ -1,7 +1,7 @@
 import type { JSX } from 'react';
 import { ChartTooltip } from './index';
 
-/** Figma 03 Series=1: one row. */
+/** One row. */
 export function ChartTooltipExample(): JSX.Element {
   return (
     <ChartTooltip
@@ -11,7 +11,7 @@ export function ChartTooltipExample(): JSX.Element {
   );
 }
 
-/** Figma 03 Series=2: the comparison row and the change, up in text/success with its sign. */
+/** Two series: the comparison row and the change, up in text/success with its sign. */
 export function ChartTooltipCompareExample(): JSX.Element {
   return (
     <ChartTooltip

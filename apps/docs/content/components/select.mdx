@@ -51,12 +51,12 @@ The selected row keeps a `--nz-bg-brand-subtle` tint, and its label turns Label/
 `--nz-text-primary`. A check at its end (`--nz-icon-brand`) carries the state for readers who do not
 see the colour (WCAG 1.4.1). The check's 16 px column is reserved on every row, so selecting never
 moves the text. `indicator` on `Select.Item` replaces the check, and `indicator={null}` removes it.
-Figma draws no tint on the selected row; the code keeps it (the maintainer's decision of
-2026-10-18, listed under [Deviations](/docs/deviations/)).
+The design draws no tint on the selected row; the code keeps it (the maintainer's decision of
+2026-10-18).
 
 ## The list
 
-The list follows Figma's Select Menu (7356:406): `--nz-radius-md`, `--nz-elevation-4`, 6 px inside,
+The list follows the design's Select Menu: `--nz-radius-md`, `--nz-elevation-4`, 6 px inside,
 and 4 px below the trigger (`sideOffset` on `Select.Popup`). Rows are 36 px of Label/M with 8 / 12 px
 padding and no gap between them, and the keyboard ring is drawn inside the row. Group labels are
 Label/S in `--nz-text-secondary`, padded 8 / 12 / 4 / 12. A separator has 4 px above and below. The

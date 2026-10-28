@@ -25,7 +25,7 @@ export function ApprovalCardExample(): JSX.Element {
   );
 }
 
-/** Figma's card: `onEdit` adds "Edit first", which opens the draft before anything is sent. */
+/** The card: `onEdit` adds "Edit first", which opens the draft before anything is sent. */
 export function ApprovalCardEditFirstExample(): JSX.Element {
   return (
     <div style={{ maxInlineSize: 480 }}>

@@ -1,7 +1,7 @@
 import type { JSX } from 'react';
 import { Ticker } from './index';
 
-/** Figma's strip of features; it pauses under the pointer and stands still under Reduced motion. */
+/** A strip of features; it pauses under the pointer and stands still under Reduced motion. */
 export function TickerExample(): JSX.Element {
   return (
     <div style={{ inlineSize: 720 }}>

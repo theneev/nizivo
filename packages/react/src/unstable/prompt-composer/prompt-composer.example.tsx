@@ -38,7 +38,7 @@ function Mic(): JSX.Element {
   );
 }
 
-/** Figma's composer: attach and dictate at the start, send at the end once there is text. */
+/** The composer: attach and dictate at the start, send at the end once there is text. */
 export function PromptComposerExample(): JSX.Element {
   return (
     <PromptComposer

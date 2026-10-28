@@ -23,7 +23,7 @@ React Aria inside, almost all of it shared with Dialog (size-limit, all locales;
 `Drawer.Popup` takes `side`:
 
 - `end` (the default): the right edge in a left-to-right page, the left edge in a right-to-left one.
-  This is Figma's Drawer: 440 px wide, the full height, rounded on its two inner corners.
+  This is the design's Drawer: 440 px wide, the full height, rounded on its two inner corners.
 - `start`: the opposite edge.
 - `bottom`: a bottom sheet, the full width and as tall as its content, rounded on its top corners.
   It is the "More" sheet AppShell will open below 640 px.
@@ -48,7 +48,7 @@ fades, in 120 ms.
 
 `<Drawer.Close />` with no `render` and no `children` is an IconButton (tertiary, `md`) showing the
 close glyph, named "Close". Placed as a direct child of `Drawer.Popup`, it sits in the header's end
-corner, where Figma draws the close glyph, and the header leaves room for it. With `children` it is a
+corner, where the design draws the close glyph, and the header leaves room for it. With `children` it is a
 plain button; with `render`, your element, for example `render={<Button>Cancel</Button>}`.
 
 ## Focus return

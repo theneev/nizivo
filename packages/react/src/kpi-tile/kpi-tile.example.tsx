@@ -18,7 +18,7 @@ function Shape({ d }: { d: string }): JSX.Element {
 const UP = 'M1 22 L12 19 L23 21 L34 15 L45 17 L56 11 L67 12 L78 6 L87 4';
 const DOWN = 'M1 6 L12 9 L23 7 L34 13 L45 11 L56 16 L67 15 L78 21 L87 23';
 
-/** Figma's four variants: the tint groups a row and no longer follows the trend. */
+/** The four variants: the tint groups a row and no longer follows the trend. */
 export function KpiTileExample(): JSX.Element {
   return (
     <div>

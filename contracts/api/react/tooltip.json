@@ -47,7 +47,7 @@
             },
             {
               "default": "400",
-              "description": "Hover delay before opening, in ms (Figma: 400). Keyboard focus opens immediately.",
+              "description": "Hover delay before opening, in ms. Keyboard focus opens immediately.",
               "name": "delay",
               "required": false,
               "type": "number"

@@ -77,7 +77,7 @@ export interface RankedListRootProps extends Omit<ComponentPropsWithRef<'div'>, 
   error?: ReactNode;
   /**
    * How many rows loading, empty and error reserve, so the box does not change when the data
-   * arrives. Pass the number of rows you show (Figma: 5; "max ~6 rows, then View all"). @default 5
+   * arrives. Pass the number of rows you show (about 6 at most, then View all). @default 5
    */
   rows?: number;
   labels?: Partial<RankedListLabels>;
@@ -314,7 +314,7 @@ export function RankedListItem({
   );
 }
 
-/** "View all": a real link, at least 24 px tall (WCAG 2.5.8; figma/04 issue 7). */
+/** "View all": a real link, at least 24 px tall (WCAG 2.5.8). */
 export function RankedListAction({
   render,
   className,

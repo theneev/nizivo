@@ -1,6 +1,6 @@
 @layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
 
-/* Figma 08 Pattern 7 (7275:16412): the header, then Split's narrow nav column (Figma's 232 px
+/* The header, then Split's narrow nav column (the design's 232 px
    settings menu, its items 4 apart) beside the page's cards, 24 apart. The usage meters sit two to a
    row once their card is 30rem wide (a container query on the main column). */
 @layer nz.patterns {
@@ -64,7 +64,7 @@
     background: var(--nz-bg-muted);
   }
 
-  /* Figma's "View all" text link: Label/M in text/brand */
+  /* The "View all" text link: Label/M in text/brand */
   .nzp-plan-billing-page-link {
     color: var(--nz-text-brand);
     font: var(--nz-font-label-m);

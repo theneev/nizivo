@@ -3,8 +3,7 @@ title: Orders page
 description: An order index inside the app shell, with key figures, status filters, search, an orders table and pagination; each order opens in a Drawer.
 ---
 
-From Figma 08 Overview Dashboard, Pattern 3 · Orders + drawer (`7275:15971`). Uses
-[PageHeader](/docs/components/page-header/), [Button](/docs/components/button/),
+It uses [PageHeader](/docs/components/page-header/), [Button](/docs/components/button/),
 [KpiTile](/docs/components/kpi-tile/), [Card](/docs/components/card/),
 [TabNav](/docs/components/tab-nav/), [SearchField](/docs/components/search-field/),
 [Table](/docs/components/table/), [Avatar](/docs/components/avatar/),
@@ -44,6 +43,6 @@ import { AppShell } from '@nizivo/react/app-shell';
   app that renders the order from the URL (`?order=1042`), one controlled Drawer is enough.
 - **Dates.** `Intl.DateTimeFormat` with an explicit locale and `timeZone`, so the server and the
   browser print the same text.
-- **Not in Figma.** Figma's second header action is unread; the example uses "Create order". Figma
-  has no mobile design for this page, so the table scrolls sideways inside its card on a narrow
-  screen.
+- **Not in the design.** Its second header action is unread; the example uses "Create order".
+  There is no mobile design for this page, so the table scrolls sideways inside its card on a
+  narrow screen.

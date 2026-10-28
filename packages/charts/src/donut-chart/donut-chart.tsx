@@ -186,7 +186,7 @@ export interface DonutChartProps<T> extends ChartFramePassthrough<
   totalFormat?: Intl.NumberFormatOptions;
   /** Shares. @default { style: 'percent', maximumFractionDigits: 0 } */
   shareFormat?: Intl.NumberFormatOptions;
-  /** Categories kept before the rest fold into "Other", 1–3 (Figma: three at most). @default 3 */
+  /** Categories kept before the rest fold into "Other", 1–3. @default 3 */
   maxCategories?: number;
   /** @default 'value' (largest first) */
   sort?: DonutChartSort;

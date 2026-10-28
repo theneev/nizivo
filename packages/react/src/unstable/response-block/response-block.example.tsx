@@ -41,7 +41,7 @@ function Refresh(): JSX.Element {
 }
 
 /**
- * Figma's four states of one answer: thinking, streaming with Stop, complete with actions, and an
+ * Four states of one answer: thinking, streaming with Stop, complete with actions, and an
  * error with Retry. Pass `onStop` and `onRetry` from the client component that streams the answer.
  */
 export function ResponseBlockExample(): JSX.Element {

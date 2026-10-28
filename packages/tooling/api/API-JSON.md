@@ -359,7 +359,7 @@ Alert is a server-safe shell with one client leaf, so `client` differs per expor
     },
     {
       "client": true,
-      "description": "With no `render`, an IconButton (tertiary, `sm`: the 16 px glyph Figma draws, in a 32 px target) with no tooltip, as `Dialog.Close` does (week 6): its markup is the IconButton element's (`iconButtonElement`, icon-button-static.tsx since M31), written out. Week 8 wrote it out because importing icon-button.tsx brought in the IconButton's tooltip leaf and the Tooltip chain (D-aa); the leaf-free icon-button-static.tsx could now be imported instead, a later change. A unit test compares the two.",
+      "description": "With no `render`, an IconButton (tertiary, `sm`: a 16 px glyph in a 32 px target) with no tooltip, as `Dialog.Close` does.",
       "import": "import { AlertDismiss } from '@nizivo/react/alert'",
       "inherits": [
         {
@@ -453,7 +453,7 @@ Alert is a server-safe shell with one client leaf, so `client` differs per expor
     },
     {
       "declaration": "type",
-      "description": "Figma \"Tone\".",
+      "description": "The status the alert conveys, which sets its colours and the glyph you pass.",
       "import": "import type { AlertTone } from '@nizivo/react/alert'",
       "kind": "type",
       "name": "AlertTone",

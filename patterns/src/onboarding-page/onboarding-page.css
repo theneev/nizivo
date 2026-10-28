@@ -1,7 +1,7 @@
 @layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
 
-/* Figma 08 Pattern 8 (7275:16478): the header, then Split's two columns, 24 apart: the setup guide
-   (steps 14 apart in Figma, 16 here, on the scale) and the empty state; the aside's next-step cards.
+/* The header, then Split's two columns, 24 apart: the setup guide
+   (steps 14 apart in the design, 16 here, on the scale) and the empty state; the aside's next-step cards.
    A done step's mark is icon/success; its words say "Done" as well. */
 @layer nz.patterns {
   .nzp-onboarding-page {

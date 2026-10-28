@@ -73,7 +73,7 @@ const ICONS = {
 };
 
 /**
- * The shell of Figma's 08 pages: the Sidebar (the icon rail from 640 px, 264 px from 1280 px) and the
+ * The app shell: the Sidebar (the icon rail from 640 px, 264 px from 1280 px) and the
  * TopBar over the page; below 640 px the MobileTopBar and the MobileTabBar with its More sheet. The
  * server renders both sets and CSS shows one. AppShell owns `<main>` and the skip link to it, the
  * first Tab stop. (The example sets a height; in an app the shell fills the viewport.)

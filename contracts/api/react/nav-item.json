@@ -26,20 +26,20 @@
       "name": "NavItem",
       "props": [
         {
-          "description": "The label (Figma's Label). It stays the accessible name in the collapsed rail.",
+          "description": "The label. It stays the accessible name in the collapsed rail.",
           "name": "children",
           "required": true,
           "type": "ReactNode"
         },
         {
-          "description": "A count after the label, such as the number of open orders (Figma's Count). Absent, or `null`, shows none. It is part of the link's text, so it is announced with the label.",
+          "description": "A count after the label, such as the number of open orders. Absent, or `null`, shows none. It is part of the link's text, so it is announced with the label.",
           "name": "count",
           "required": false,
           "type": "ReactNode"
         },
         {
           "default": "false",
-          "description": "The destination being shown: sets `aria-current=\"page\"` and draws the filled state (Figma State=Active). The page knows its own route, so it says which item is current.",
+          "description": "The destination being shown: sets `aria-current=\"page\"` and draws the filled state. The page knows its own route, so it says which item is current.",
           "name": "current",
           "required": false,
           "type": "boolean"
@@ -52,7 +52,7 @@
           "type": "boolean"
         },
         {
-          "description": "A decorative glyph before the label (20 px, Figma's Icon slot); it is `aria-hidden`.",
+          "description": "A decorative glyph before the label (20 px); it is `aria-hidden`.",
           "name": "icon",
           "required": false,
           "type": "ReactNode"

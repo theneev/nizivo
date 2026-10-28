@@ -77,7 +77,7 @@
         },
         {
           "default": "'web'",
-          "description": "Figma \"Type\": a web page or a file.",
+          "description": "The kind of source: a web page or a file.",
           "name": "type",
           "required": false,
           "type": "\"web\" | \"file\"",
@@ -126,7 +126,7 @@
       "attributes": [
         {
           "group": "presentational",
-          "meaning": "The variant prop; values are the lowercase Figma names in each component manifest",
+          "meaning": "The variant prop; values in each component manifest",
           "name": "data-variant",
           "values": ["web", "file"]
         }

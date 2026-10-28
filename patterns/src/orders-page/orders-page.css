@@ -1,6 +1,6 @@
 @layer nz.tokens, nz.themes, nz.reset, nz.base, nz.components, nz.patterns, nz.utilities;
 
-/* Figma 08 Pattern 3 (7275:15971): the header, the KPI row (16 apart, as Figma's KPI rows are), then
+/* The header, the KPI row (16 apart, as the design's KPI rows are), then
    the orders card with its toolbar, the table full-bleed and the footer. The drawer's contents are
    the order's lines and a short list of facts. The KPI row follows the page's own width. */
 @layer nz.patterns {

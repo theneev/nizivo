@@ -1,7 +1,7 @@
 import type { JSX } from 'react';
 import { BentoTile } from './index';
 
-/** Figma's three sizes in a 12-column bento grid. */
+/** The three sizes in a 12-column bento grid. */
 export function BentoTileExample(): JSX.Element {
   return (
     <div

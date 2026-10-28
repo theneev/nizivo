@@ -3,7 +3,7 @@ import type { ComponentPropsWithRef, ReactElement } from 'react';
 import { renderElement, type RenderProp } from '../contracts/render';
 import { cx } from '../_internal/cx';
 
-/** The Figma text styles as lowercase names (`Nizivo/Label/M` → `label-m`), plus the 12 px proposals. */
+/** The text styles as lowercase names (`Nizivo/Label/M` → `label-m`), plus the 12 px proposals. */
 export type TextVariant =
   | 'display-l'
   | 'display-m'
@@ -27,11 +27,11 @@ export type TextVariant =
   | 'mono-m-strong';
 
 /**
- * The `text/*` colour tokens. `accent` paints `--nz-text-brand`, since Figma has no accent text for page
- * surfaces (M38; `--nz-text-inverse-accent` is for `bg/inverse`).
+ * The `text/*` colour tokens. `accent` paints `--nz-text-brand`, since the palette has no accent text
+ * for page surfaces (M38; `--nz-text-inverse-accent` is for `bg/inverse`).
  *
  * Deprecated: `'accent'`, which looks exactly like `'brand'`; use `'brand'`. It keeps working; its
- * removal is deferred to 1.0, or to when Figma adds an accent text for page surfaces (M42).
+ * removal is deferred to 1.0, or to when the palette adds an accent text for page surfaces (M42).
  * TypeScript cannot deprecate one member of a union type, so this note is the marker. Card's and
  * KpiTile's `tone="accent"`, a surface, are not deprecated.
  */

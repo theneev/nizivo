@@ -1,7 +1,7 @@
 import type { JSX } from 'react';
 import { Rating } from './index';
 
-/** Figma's rating: the stars, the score and the count, read as one sentence. */
+/** A rating: the stars, the score and the count, read as one sentence. */
 export function RatingExample(): JSX.Element {
   return (
     <div style={{ display: 'grid', gap: 12, justifyItems: 'start' }}>

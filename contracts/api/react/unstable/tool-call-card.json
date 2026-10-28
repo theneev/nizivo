@@ -136,7 +136,7 @@
     },
     {
       "declaration": "type",
-      "description": "The whole action's status (Figma \"State\").",
+      "description": "The whole action's status.",
       "import": "import type { ToolCallStatus } from '@nizivo/react/unstable/tool-call-card'",
       "kind": "type",
       "name": "ToolCallStatus",

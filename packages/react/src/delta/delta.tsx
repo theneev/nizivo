@@ -3,7 +3,7 @@ import type { ComponentPropsWithRef, ReactElement, ReactNode } from 'react';
 import { renderElement, type RenderProp } from '../contracts/render';
 import { cx } from '../_internal/cx';
 
-/** Figma "Trend", derived from the sign of `value`. */
+/** The direction of the change, derived from the sign of `value`. */
 export type DeltaTrend = 'up' | 'down' | 'flat';
 /** The colour: up is `success`, down is `critical`, flat is `neutral` unless `tone` says otherwise. */
 export type DeltaTone = 'success' | 'critical' | 'neutral';

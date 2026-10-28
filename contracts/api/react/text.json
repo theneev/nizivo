@@ -200,7 +200,7 @@
     },
     {
       "declaration": "type",
-      "description": "The `text/*` colour tokens. `accent` paints `--nz-text-brand`, since Figma has no accent text for page surfaces (M38; `--nz-text-inverse-accent` is for `bg/inverse`).\n\nDeprecated: `'accent'`, which looks exactly like `'brand'`; use `'brand'`. It keeps working; its removal is deferred to 1.0, or to when Figma adds an accent text for page surfaces (M42). TypeScript cannot deprecate one member of a union type, so this note is the marker. Card's and KpiTile's `tone=\"accent\"`, a surface, are not deprecated.",
+      "description": "The `text/*` colour tokens. `accent` paints `--nz-text-brand`, since the palette has no accent text for page surfaces (M38; `--nz-text-inverse-accent` is for `bg/inverse`).\n\nDeprecated: `'accent'`, which looks exactly like `'brand'`; use `'brand'`. It keeps working; its removal is deferred to 1.0, or to when the palette adds an accent text for page surfaces (M42). TypeScript cannot deprecate one member of a union type, so this note is the marker. Card's and KpiTile's `tone=\"accent\"`, a surface, are not deprecated.",
       "import": "import type { TextTone } from '@nizivo/react/text'",
       "kind": "type",
       "name": "TextTone",
@@ -226,7 +226,7 @@
     },
     {
       "declaration": "type",
-      "description": "The Figma text styles as lowercase names (`Nizivo/Label/M` → `label-m`), plus the 12 px proposals.",
+      "description": "The text styles as lowercase names (`Nizivo/Label/M` → `label-m`), plus the 12 px proposals.",
       "import": "import type { TextVariant } from '@nizivo/react/text'",
       "kind": "type",
       "name": "TextVariant",
@@ -285,7 +285,7 @@
         },
         {
           "group": "presentational",
-          "meaning": "The variant prop; values are the lowercase Figma names in each component manifest",
+          "meaning": "The variant prop; values in each component manifest",
           "name": "data-variant",
           "prop": "variant",
           "values": [

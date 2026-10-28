@@ -14,7 +14,7 @@ export interface FeatureCardProps extends Omit<ComponentPropsWithRef<'article'>,
   icon?: ReactNode;
   /** After the text: a link, such as a Link. */
   action?: ReactNode;
-  /** Figma "Style". @default 'plain' */
+  /** The card's surface: plain, tinted or inverse. @default 'plain' */
   variant?: 'plain' | 'tinted' | 'inverse';
   /** Must render an `<article>`. */
   render?: RenderProp<Record<string, never>>;

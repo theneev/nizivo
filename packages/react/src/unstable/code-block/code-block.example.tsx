@@ -1,7 +1,7 @@
 import type { JSX } from 'react';
 import { CodeBlock } from './index';
 
-/** Figma's command: one install line per package manager. */
+/** A command: one install line per package manager. */
 export function CodeBlockExample(): JSX.Element {
   return (
     <CodeBlock
@@ -15,7 +15,7 @@ export function CodeBlockExample(): JSX.Element {
   );
 }
 
-/** Figma's snippet: a component and its stylesheet. */
+/** A snippet: a component and its stylesheet. */
 export function CodeBlockSnippetExample(): JSX.Element {
   return (
     <CodeBlock

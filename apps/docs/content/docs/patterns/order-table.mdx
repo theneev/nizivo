@@ -5,8 +5,7 @@ description: An order list whose rows link to their orders, with the date, the c
 full: true
 ---
 
-From Figma 05 Commerce, Order Row (`7275:14091`; the example table `7275:14114`). Uses
-[Table](/docs/components/table/), [Avatar](/docs/components/avatar/),
+It uses [Table](/docs/components/table/), [Avatar](/docs/components/avatar/),
 [Badge](/docs/components/badge/), [Inline](/docs/components/inline/) and
 [NumberValue](/docs/components/number-value/).
 
@@ -21,12 +20,12 @@ From Figma 05 Commerce, Order Row (`7275:14091`; the example table `7275:14114`)
 - **One link per row.** The order number is a `Table.RowLink`, a stretched link: the whole row is
   its hit area and shows the hover, but the row is one Tab stop and the link's name is the order
   number. Never put `role="link"` on a `<tr>`.
-- **Two statuses, in words.** Payment and fulfilment are separate Badges, as Figma draws them, and
+- **Two statuses, in words.** Payment and fulfilment are separate Badges, as the design draws them, and
   each says its state ("Paid", "Unfulfilled"); the tone only repeats the word.
 - **The customer.** The Avatar is decorative because the name is printed next to it; without a
-  photo it shows the initials, which Figma's raw ellipse could not.
+  photo it shows the initials, which the design's raw ellipse could not.
 - **Dates.** `Intl.DateTimeFormat` with an explicit locale and time zone, inside `<time dateTime>`,
   so the server and the browser print the same text and a locale picks its own 12 or 24 hour clock.
-  Figma's "Oct 14, 09:12" is hard-coded English.
+  The design's "Oct 14, 09:12" is hard-coded English.
 - **Money.** Totals are `NumberValue` in end-aligned tabular figures. A long currency needs no
   fixed column width: the table scrolls inside its named container rather than wrapping.

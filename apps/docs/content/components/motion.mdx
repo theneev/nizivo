@@ -24,8 +24,8 @@ The duration is `--nz-duration-count-up` (900 ms), read from the element; a `dur
 milliseconds replaces it. Under `prefers-reduced-motion: reduce` or `data-nz-motion="reduce"` the
 token is 0 ms and the value shows at once, whatever `duration` says
 ([Motion](/docs/foundations/motion/)). The curve is `cubic-bezier(0, 0, 0, 1)`, the same curve as
-`--nz-easing-enter`, which Figma 04 proposed for count-up; it is written into the code and the token is
-not read, so overriding the token does not change it. Figma defines no easing for count-up.
+`--nz-easing-enter`, which was proposed for count-up; it is written into the code and the token is
+not read, so overriding the token does not change it. The design defines no easing for count-up.
 
 ## Accessibility
 
@@ -34,5 +34,5 @@ which is what assistive technology reads. There is no live region, so nothing is
 counts or when `value` changes. While counting, the digits keep the final string's width, so nothing
 around them moves.
 
-The Figma 04 notes proposed a separate `@nizivo/motion` package for this; the plan put it at the
+An early proposal put this in a separate `@nizivo/motion` package; the plan put it at the
 `@nizivo/react/motion` subpath instead (ARCHITECTURE.md §13.4).

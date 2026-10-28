@@ -3,8 +3,7 @@ title: Shipment tracker
 description: A shipment's steps as an ordered list, the current one marked with aria-current="step" and every step's status said in words, a column on a narrow card and a row on a wide one. A server composition; it ships no JavaScript.
 ---
 
-From Figma 05 Commerce, Shipment Tracker (`7275:14195`; Packed `7275:14196`, Shipped `7275:14224`,
-Delivered `7275:14252`). Uses [Card](/docs/components/card/) and
+It uses [Card](/docs/components/card/) and
 [Text](/docs/components/text/), with the `Receipt`, `Package`, `Truck` and `House` icons from
 [`@nizivo/icons`](/docs/icons/). There is no Steps component, so the steps live in this pattern's
 stylesheet.
@@ -30,12 +29,12 @@ stylesheet.
   ("Completed", "Current step", "Not started"). The icons and the lines between the nodes are
   decorative.
 - **Not colour alone.** The current step is bold on a solid node, a completed step's node is
-  tinted and its line is green, and an upcoming step has a dashed ring: Figma's upcoming node,
+  tinted and its line is green, and an upcoming step has a dashed ring: the design's upcoming node,
   `bg/subtle`, is 1.04:1 on white and all but invisible.
-- **Four steps.** Figma's doc text names four steps but its Step axis has three (no Ordered); here
-  Ordered is the first step. Completed steps carry their date and time, as Figma draws them; an
-  upcoming step carries none, where Figma prints a dash a screen reader would read.
-- **Narrow and wide.** Figma's four 150 px columns do not fit a phone and overflow in longer
+- **Four steps.** The design's notes name four steps but its Step axis has three (no Ordered); here
+  Ordered is the first step. Completed steps carry their date and time, as the design draws them; an
+  upcoming step carries none, where the design prints a dash a screen reader would read.
+- **Narrow and wide.** The design's four 150 px columns do not fit a phone and overflow in longer
   languages. The tracker is a column until its card is 34rem wide (a container query, so it follows
   the space it is given, not the viewport), then a row.
 - **RTL.** The lines are placed with logical properties, so the row and its lines run right to

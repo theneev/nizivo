@@ -18,7 +18,7 @@ export type { OpenReason };
 /** Logical side; the resolved physical side is `data-side` on the popup. */
 export type MenuSide = 'top' | 'bottom' | 'start' | 'end';
 
-/** Figma Menu Item `State=Critical`. `critical` items sit last, after a separator. */
+/** `critical` marks a destructive item. `critical` items sit last, after a separator. */
 export type MenuItemTone = 'neutral' | 'critical';
 
 /** Why a checkbox item changed: the item was activated (pointer, touch or keyboard). */

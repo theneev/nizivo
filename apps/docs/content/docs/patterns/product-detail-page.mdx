@@ -3,8 +3,7 @@ title: Product detail page
 description: A product's edit form inside the app shell, with a breadcrumb, media, details, variants and pricing beside its status, sales and inventory.
 ---
 
-From Figma 08 Overview Dashboard, Pattern 2 · Product detail (`7275:15860`). Uses
-[Breadcrumb](/docs/components/breadcrumb/), [PageHeader](/docs/components/page-header/),
+It uses [Breadcrumb](/docs/components/breadcrumb/), [PageHeader](/docs/components/page-header/),
 [Badge](/docs/components/badge/), [Button](/docs/components/button/),
 [Split](/docs/components/split/), [Card](/docs/components/card/),
 [Field](/docs/components/field/), [Input](/docs/components/input/),
@@ -44,7 +43,7 @@ import { AppShell } from '@nizivo/react/app-shell';
 - **Columns.** `Split` puts the aside beside the main column while the main column keeps at least
   60 % of the row, and stacks them below that, so on this site's narrow preview the aside sits under
   the main column.
-- **Not built.** Figma's media gallery has no component: the example draws the tiles in its
-  stylesheet, with an "Add media" button where Figma draws the upload tile (use
-  [FileUpload](/docs/components/file-upload/) there). Figma shows no sticky save bar for small
+- **Not built.** The design's media gallery has no component: the example draws the tiles in its
+  stylesheet, with an "Add media" button where the design draws the upload tile (use
+  [FileUpload](/docs/components/file-upload/) there). The design shows no sticky save bar for small
   screens; [StickyBar](/docs/components/sticky-bar/) is the part for one.

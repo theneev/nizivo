@@ -16,7 +16,7 @@ const CHANNELS = [
 
 const USD = { style: 'currency', currency: 'USD', maximumFractionDigits: 0 } as const;
 
-/** Figma's "Top channels": five rows, bars relative to the leader, "View all" as a real link. */
+/** "Top channels": five rows, bars relative to the leader, "View all" as a real link. */
 export function RankedListExample(): JSX.Element {
   return (
     <RankedList.Root

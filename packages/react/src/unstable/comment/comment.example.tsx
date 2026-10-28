@@ -2,7 +2,7 @@ import type { JSX } from 'react';
 import { Avatar } from '../../avatar/index';
 import { Comment } from './index';
 
-/** Figma's comment with a reply under it. */
+/** A comment with a reply under it. */
 export function CommentExample(): JSX.Element {
   return (
     <div style={{ maxInlineSize: 480 }}>

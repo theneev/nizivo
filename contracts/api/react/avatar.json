@@ -30,7 +30,7 @@
       "props": [
         {
           "default": "false",
-          "description": "The name is printed next to the avatar, so the avatar is hidden from assistive technology (Figma: `alt=\"\"` when the name is printed next to it).",
+          "description": "The name is printed next to the avatar, so the avatar is hidden from assistive technology, as `alt=\"\"` hides an image whose text is printed beside it.",
           "name": "decorative",
           "required": false,
           "type": "boolean"
@@ -42,7 +42,7 @@
           "type": "ReactElement<{\n    className?: string | undefined;\n  }>"
         },
         {
-          "description": "Replaces the initials derived from `name` (the first letters of the first and last words). Figma: at most two letters.",
+          "description": "Replaces the initials derived from `name` (the first letters of the first and last words). At most two letters.",
           "name": "initials",
           "required": false,
           "type": "string"
@@ -112,7 +112,7 @@
     },
     {
       "client": false,
-      "description": "A stack of avatars and a count, announced as one item (Figma: \"Maya, Jonah, Priya and 4 more\"): the root is `role=\"img\"` named by the list of names, and every avatar inside is decorative.",
+      "description": "A stack of avatars and a count, announced as one item, such as \"Maya, Jonah, Priya and 4 more\": the root is `role=\"img\"` named by the list of names, and every avatar inside is decorative.",
       "import": "import { AvatarGroup } from '@nizivo/react/avatar'",
       "inherits": [
         {
@@ -146,7 +146,7 @@
         },
         {
           "default": "3",
-          "description": "How many avatars to show before the count. Figma: up to 3.",
+          "description": "How many avatars to show before the count; three at most reads best.",
           "name": "max",
           "required": false,
           "type": "number"
@@ -249,7 +249,7 @@
     },
     {
       "declaration": "type",
-      "description": "Figma \"Size\": Sm 24, Md 32, Lg 40, XL 56 px.",
+      "description": "`sm` 24, `md` 32, `lg` 40, `xl` 56 px.",
       "import": "import type { AvatarSize } from '@nizivo/react/avatar'",
       "kind": "type",
       "name": "AvatarSize",

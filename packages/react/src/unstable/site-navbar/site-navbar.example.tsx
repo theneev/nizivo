@@ -10,7 +10,7 @@ const LINKS = [
   { label: 'Pricing', href: '/pricing/' },
 ];
 
-/** Figma's two styles: the full-width bar, and the floating pill for over a hero. */
+/** Two styles: the full-width bar, and the floating pill for over a hero. */
 export function SiteNavbarExample(): JSX.Element {
   return (
     <div style={{ display: 'grid', gap: 24, inlineSize: 960 }}>

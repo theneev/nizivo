@@ -418,7 +418,7 @@
       "members": [
         {
           "default": "floor(every / 2) + 1, so a gap of half a step or less is dropped",
-          "description": "A regular tick closer than this many points to the forced last one is dropped, so two labels never crowd (Figma 03's bar chart prints \"29\" and \"30\" side by side).",
+          "description": "A regular tick closer than this many points to the forced last one is dropped, so two labels never crowd (\"29\" and \"30\" side by side on a daily bar chart).",
           "name": "minGap",
           "required": false,
           "type": "number"
@@ -1032,7 +1032,7 @@
     },
     {
       "client": false,
-      "description": "The y domain of a chart, niced BEFORE ticks are taken (§14.1; fixes Figma 03's \"bar above the top tick\"): every value lies inside it and its ends are tick values. Empty or all-zero data gives [0, 1], so a flat series still has a baseline and a top.",
+      "description": "The y domain of a chart, niced BEFORE ticks are taken (§14.1, so no bar rises above the top tick): every value lies inside it and its ends are tick values. Empty or all-zero data gives [0, 1], so a flat series still has a baseline and a top.",
       "import": "import { valueDomain } from '@nizivo/charts'",
       "kind": "function",
       "name": "valueDomain",

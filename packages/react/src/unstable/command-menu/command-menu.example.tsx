@@ -26,7 +26,7 @@ function Plus(): JSX.Element {
 }
 
 /**
- * Figma's command menu: products, an order and actions, filtered as you type. Press ⌘K (Ctrl+K
+ * A command menu: products, an order and actions, filtered as you type. Press ⌘K (Ctrl+K
  * elsewhere) or the button; the arrow keys move, Enter opens the row, Escape clears the search and
  * then closes.
  */

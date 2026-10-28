@@ -3,7 +3,7 @@
 import type { HTMLAttributes, RefObject } from 'react';
 import type { ToastItemAria, ToastRecord, ToastRegionOptions } from './seam';
 
-/** Figma "Tone". Critical is announced assertively and stays until dismissed. */
+/** The message's status. Critical is announced assertively and stays until dismissed. */
 export type ToastTone = 'neutral' | 'success' | 'critical';
 
 /** How a message is spoken: `polite` waits for the reader to finish, `assertive` interrupts. */

@@ -39,7 +39,7 @@
           "type": "ReactNode"
         },
         {
-          "description": "The store's mark, drawn as Figma's 32 px Store mark: an initial, or a logo image that fills it.",
+          "description": "The store's mark, drawn as a 32 px mark: an initial, or a logo image that fills it.",
           "name": "mark",
           "required": false,
           "type": "ReactNode"
@@ -50,7 +50,7 @@
           "type": "RenderProp<Record<string, never>>"
         },
         {
-          "description": "The page's name, in Heading/H4's look (Figma's Title). Not a heading element.",
+          "description": "The page's name, in Heading/H4's look. Not a heading element.",
           "name": "title",
           "required": false,
           "type": "ReactNode"

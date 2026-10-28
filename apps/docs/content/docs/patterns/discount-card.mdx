@@ -3,8 +3,7 @@ title: Discount card
 description: A discount code, what it gives, its status, how much of it is used as a Meter and its dates, including an expired state that keeps its contrast. A server composition; it ships no JavaScript.
 ---
 
-From Figma 05 Commerce, Discount Card (`7275:14130`; variants Active `7275:14131`, Scheduled
-`7275:14144`, Expired `7275:14157`). Uses [Card](/docs/components/card/),
+It uses [Card](/docs/components/card/),
 [Badge](/docs/components/badge/), [Meter](/docs/components/meter/),
 [Text](/docs/components/text/) and [NumberValue](/docs/components/number-value/), with the `Tag`
 icon from [`@nizivo/icons`](/docs/icons/).
@@ -21,16 +20,16 @@ icon from [`@nizivo/icons`](/docs/icons/).
 
 ## Notes
 
-- **Usage is a Meter.** Figma draws a raw track; here it is a native `<meter>` named "Usage", whose
+- **Usage is a Meter.** The design draws a raw track; here it is a native `<meter>` named "Usage", whose
   `valueText` is shown and read as "310 of 500 used" instead of a bare percentage. Expired's data
-  is corrected too: Figma's fill is 252 px in a 250 px track.
-- **No limit.** Figma has no unlimited code. A meter needs a maximum, so the fourth card says its
+  is corrected too: the design's fill is 252 px in a 250 px track.
+- **No limit.** The design has no unlimited code. A meter needs a maximum, so the fourth card says its
   count in words ("1,284 used · no limit") instead.
-- **Expired keeps its contrast.** Figma dims the whole Expired card with `opacity: 0.70`, which
+- **Expired keeps its contrast.** The design dims the whole Expired card with `opacity: 0.70`, which
   takes `text/secondary` to 3.25:1 and `text/tertiary` to 2.57:1. Here only the status Badge, the
   code and the meter turn neutral, and the words say "Expired" and "Ended"; the text stays at full
   contrast.
-- **Dates.** Scheduled gets its start and the others their end, which Figma leaves out, through
+- **Dates.** Scheduled gets its start and the others their end, which the design leaves out, through
   `Intl.DateTimeFormat` with an explicit time zone.
 - **The code** looks copyable but is plain text. A copy button with a "Copied" announcement is a
   client island; add one beside the code in your app if you need it.

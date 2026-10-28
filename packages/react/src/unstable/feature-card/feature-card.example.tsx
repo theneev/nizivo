@@ -23,7 +23,7 @@ function Sparkles(): JSX.Element {
   );
 }
 
-/** Figma's three styles side by side: plain, tinted and inverse. */
+/** The three styles side by side: plain, tinted and inverse. */
 export function FeatureCardExample(): JSX.Element {
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: 24 }}>

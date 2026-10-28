@@ -53,7 +53,7 @@
         },
         {
           "default": "'snippet'",
-          "description": "Figma \"Type\": a one-line shell command after a \"$\", or a snippet.",
+          "description": "The kind of code: a one-line shell command after a \"$\", or a snippet.",
           "name": "variant",
           "required": false,
           "type": "\"command\" | \"snippet\"",
@@ -123,7 +123,7 @@
       "attributes": [
         {
           "group": "presentational",
-          "meaning": "The variant prop; values are the lowercase Figma names in each component manifest",
+          "meaning": "The variant prop; values in each component manifest",
           "name": "data-variant",
           "prop": "variant",
           "values": ["command", "snippet"]

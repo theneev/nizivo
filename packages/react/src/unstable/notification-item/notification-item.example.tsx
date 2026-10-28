@@ -2,7 +2,7 @@ import type { JSX } from 'react';
 import { Avatar } from '../../avatar/index';
 import { NotificationItem } from './index';
 
-/** Figma's two rows in a panel: an unread comment and a read one. */
+/** Two rows in a panel: an unread comment and a read one. */
 export function NotificationItemExample(): JSX.Element {
   return (
     <div style={{ display: 'grid', gap: 4, maxInlineSize: 420 }}>

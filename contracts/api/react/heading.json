@@ -78,7 +78,7 @@
           ]
         },
         {
-          "default": "the style named after the level, and `heading-h4` for levels 5 and 6 (Figma has no H5 or H6)",
+          "default": "the style named after the level, and `heading-h4` for levels 5 and 6 (there is no H5 or H6 style)",
           "description": "The text style, independent of `level` (a page title can be an `<h1>` drawn as Heading/H3).",
           "name": "variant",
           "required": false,
@@ -174,7 +174,7 @@
     },
     {
       "declaration": "type",
-      "description": "The Figma display and heading text styles.",
+      "description": "The display and heading text styles.",
       "import": "import type { HeadingVariant } from '@nizivo/react/heading'",
       "kind": "type",
       "name": "HeadingVariant",
@@ -212,7 +212,7 @@
         },
         {
           "group": "presentational",
-          "meaning": "The variant prop; values are the lowercase Figma names in each component manifest",
+          "meaning": "The variant prop; values in each component manifest",
           "name": "data-variant",
           "prop": "variant",
           "values": [

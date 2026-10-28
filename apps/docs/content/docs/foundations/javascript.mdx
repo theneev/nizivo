@@ -32,13 +32,13 @@ so a custom prefix (`NZ_TOKEN_PREFIX`) changes the values, never the keys. The t
 A chart, a canvas, an email or a native renderer needs the colour itself, not a `var()`.
 `tokens.json` has all <TokensJsonCount /> tokens, flat and keyed by the token id that `contract.json`
 uses. Each entry has its CSS variable, its value in the default context and where the value comes from
-(Figma, an accessibility override, a proposal or code). `modes` lists only the contexts where the
-value differs:
+(the design library, an accessibility override, a proposal or code). `modes` lists only the contexts
+where the value differs:
 
 <TokensJsonSummary />
 
 Read a value for a context as `(token.modes?.[modifier]?.[context] ?? token).value`. For example,
-`color.text.critical` is Figma's colour in light and an accessibility override in dark:
+`color.text.critical` is the design's colour in light and an accessibility override in dark:
 
 <TokensJsonEntry id="color.text.critical" />
 
