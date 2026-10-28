@@ -104,8 +104,8 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 | Entry                        | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | ---------------------------- | -------: | ---------: | ---------: | ----------: | -----------: |
-| `.`                          |  134,672 |      131.5 |    110,443 |         143 |       11,760 |
-| /accordion                   |    1,328 |        1.3 |      1,224 |         1.5 |          208 |
+| `.`                          |  134,731 |      131.6 |    110,544 |         143 |       11,701 |
+| /accordion                   |    1,314 |        1.3 |      1,208 |         1.5 |          222 |
 | /alert                       |    1,383 |        1.4 |      1,260 |         1.4 |           50 |
 | /app-shell                   |      462 |        0.5 |        433 |         0.5 |           50 |
 | /augment                     |        0 |        0.0 |          0 |           0 |            — |
@@ -168,7 +168,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /ranked-list                 |    2,494 |        2.4 |      2,300 |         2.7 |          270 |
 | /search-field                |    3,429 |        3.3 |      3,113 |         3.6 |          257 |
 | /segmented-control           |    2,371 |        2.3 |      2,172 |         2.6 |          291 |
-| /select                      |   63,744 |       62.3 |     54,707 |          66 |        3,840 |
+| /select                      |   63,829 |       62.3 |     54,812 |          66 |        3,755 |
 | /separator                   |      772 |        0.8 |        699 |         0.9 |          149 |
 | /sidebar                     |   17,326 |       16.9 |     15,653 |          19 |        2,130 |
 | /skeleton                    |      716 |        0.7 |        652 |         0.8 |          103 |
@@ -211,7 +211,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /unstable/link               |    1,069 |        1.0 |        974 |         1.2 |          159 |
 | /unstable/live-pulse         |      793 |        0.8 |        722 |         0.9 |          128 |
 | /unstable/media-player       |    2,638 |        2.6 |      2,421 |         2.7 |          126 |
-| /unstable/model-selector     |   63,785 |       62.3 |     54,785 |          69 |        6,871 |
+| /unstable/model-selector     |   63,868 |       62.4 |     54,864 |          69 |        6,788 |
 | /unstable/newsletter-signup  |    4,900 |        4.8 |      4,453 |         5.3 |          527 |
 | /unstable/notification-item  |      940 |        0.9 |        862 |         1.1 |          186 |
 | /unstable/profile-card       |      985 |        1.0 |        901 |         1.1 |          141 |
@@ -238,9 +238,9 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 | Entry                              | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | ---------------------------------- | -------: | ---------: | ---------: | ----------: | -----------: |
-| dashboard set                      |   78,942 |       77.1 |     66,640 |          85 |        8,098 |
+| dashboard set                      |   79,011 |       77.2 |     66,741 |          85 |        8,029 |
 | { Button } from the barrel         |    1,279 |        1.2 |      1,172 |         1.4 |          154 |
-| { Select } from the barrel         |   63,690 |       62.2 |     54,713 |          68 |        5,942 |
+| { Select } from the barrel         |   63,760 |       62.3 |     54,767 |          68 |        5,872 |
 | lazy: the DateRangePicker calendar |   39,816 |       38.9 |     34,877 |          43 |        4,216 |
 | lazy: the CommandMenu search       |   44,989 |       43.9 |     39,070 |          49 |        5,187 |
 
@@ -262,7 +262,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | own: _engines/react-aria/overlay.client                  |      556 |        0.5 |        476 |         0.6 |           58 |
 | own: _engines/react-aria/popover.client                  |    1,211 |        1.2 |      1,086 |         1.3 |          120 |
 | own: _engines/react-aria/popup.client                    |    1,230 |        1.2 |      1,077 |         1.3 |          101 |
-| own: _engines/react-aria/select.client                   |    1,505 |        1.5 |      1,328 |         1.6 |          133 |
+| own: _engines/react-aria/select.client                   |    1,630 |        1.6 |      1,452 |         1.6 |            8 |
 | own: _engines/react-aria/tabs.client                     |      769 |        0.8 |        702 |         0.9 |          152 |
 | own: _engines/react-aria/toast.client                    |      325 |        0.3 |        296 |         0.4 |           84 |
 | own: _engines/react-aria/tooltip.client                  |      724 |        0.7 |        656 |         0.8 |           95 |
@@ -328,7 +328,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 
 | Entry                       | gzip (B) | gzip (KiB) | brotli (B) | Limit (KiB) | Headroom (B) |
 | --------------------------- | -------: | ---------: | ---------: | ----------: | -----------: |
-| /css/accordion.css          |      586 |        0.6 |        493 |         0.7 |          130 |
+| /css/accordion.css          |      583 |        0.6 |        487 |         0.7 |          133 |
 | /css/ai-badge.css           |      471 |        0.5 |        389 |         0.5 |           41 |
 | /css/ai-welcome.css         |      562 |        0.5 |        472 |         0.7 |          154 |
 | /css/alert.css              |      636 |        0.6 |        522 |         0.8 |          183 |
@@ -449,7 +449,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/usage-meter.css        |      443 |        0.4 |        356 |         0.5 |           69 |
 | /css/voice-orb.css          |      955 |        0.9 |        825 |         1.1 |          171 |
 | /css/word-rotator.css       |      298 |        0.3 |        234 |         0.4 |          111 |
-| /styles.css                 |   26,291 |       25.7 |     21,090 |          26 |          333 |
+| /styles.css                 |   26,289 |       25.7 |     21,051 |          26 |          335 |
 
 #### `@nizivo/tokens`: Public JS entries (bundled with what they import, React Aria included)
 

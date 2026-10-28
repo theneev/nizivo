@@ -3,6 +3,7 @@
 import { createElement, use, useEffect, useLayoutEffect, useRef, type RefObject } from 'react';
 import {
   Button,
+  ButtonContext,
   Header,
   ListBox,
   ListBoxItem,
@@ -13,6 +14,7 @@ import {
   SelectValue,
   Separator as EngineSeparator,
   useLocale,
+  useSlottedContext,
 } from 'react-aria-components';
 import { details } from '../../contracts/details';
 import { mergeProps } from '../../contracts/merge-props';
@@ -112,6 +114,20 @@ export const Root: SelectEngine['Root'] = ({
   );
 };
 
+/** An id list with one id swapped for another (the trigger's own, after a Field renames it). */
+function renameId(
+  list: unknown,
+  from: string | undefined,
+  to: string | undefined,
+): string | undefined {
+  if (typeof list !== 'string') return undefined;
+  if (from === undefined || to === undefined || from === to) return list;
+  return list
+    .split(' ')
+    .map((token) => (token === from ? to : token))
+    .join(' ');
+}
+
 export const Trigger: SelectEngine['Trigger'] = ({
   id,
   'aria-label': label,
@@ -122,9 +138,12 @@ export const Trigger: SelectEngine['Trigger'] = ({
 }) => {
   // ButtonRenderProps has no isOpen (verdict V10), so read it from the select state.
   const open = use(SelectStateContext)?.isOpen ?? false;
+  // The id React Aria gave the trigger: it names the trigger by it when the Select has an
+  // aria-label, and a Field's id replaces it on the element.
+  const engineId = useSlottedContext(ButtonContext)?.id;
   return (
     <Button
-      {...defined({ id, 'aria-label': label, 'aria-describedby': describedBy })}
+      {...defined({ id, 'aria-label': label })}
       render={(p, rp) => {
         const s: SelectTriggerState = {
           open,
@@ -133,7 +152,14 @@ export const Trigger: SelectEngine['Trigger'] = ({
           focusVisible: rp.isFocusVisible,
           disabled: rp.isDisabled,
         };
-        return render(mergeProps(engineDom(p), dom, stateAttrs(s)), s);
+        // React Aria's describedby names its own description and error slots, which Nizivo never
+        // renders (Field owns them): ids that point at nothing. The part passes the Field's ids.
+        const { 'aria-describedby': _slots, 'aria-labelledby': named, ...engine } = engineDom(p);
+        const ids = defined({
+          'aria-labelledby': renameId(named, engineId, id),
+          'aria-describedby': describedBy,
+        });
+        return render(mergeProps(engine, ids, dom, stateAttrs(s)), s);
       }}
     >
       {children}

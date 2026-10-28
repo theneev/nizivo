@@ -60,6 +60,16 @@ function label(): HTMLLabelElement {
   return element;
 }
 
+/** The ids an element's ARIA references name that are not on the page. */
+function missingIds(element: Element): string[] {
+  return ['aria-labelledby', 'aria-describedby', 'aria-controls'].flatMap((attribute) =>
+    (element.getAttribute(attribute) ?? '')
+      .split(' ')
+      .filter((id) => id !== '' && document.getElementById(id) === null)
+      .map((id) => `${attribute}: ${id}`),
+  );
+}
+
 /** The box of a trigger: what must match NativeSelect. */
 function edge(element: Element): Record<string, string> {
   const css = getComputedStyle(element);
@@ -144,6 +154,49 @@ describe('Select in a Field', () => {
     expect(trigger.id).toBe('own');
     expect(trigger.getAttribute('aria-describedby')).toBe(`${get('field-description').id} hint`);
   });
+
+  // React Aria's trigger names its own description and error slots, and itself by the id it made,
+  // which a Field's id replaces: every id the trigger and the open listbox name must be on the page.
+  const ID_CASES: [string, JSX.Element][] = [
+    ['no Field', <Period key="a" aria-label="Period" />],
+    [
+      'no Field, its own id',
+      <Select.Root key="b" aria-label="Period" defaultValue="7d">
+        <Select.Trigger id="own" />
+        <Select.Popup>
+          <Select.Item value="7d">Last 7 days</Select.Item>
+        </Select.Popup>
+      </Select.Root>,
+    ],
+    [
+      'a Field with no description',
+      <Field key="c" label="Period">
+        <Period />
+      </Field>,
+    ],
+    [
+      'a Field and an aria-label',
+      <Field key="d" label="Period" description="Shown on the report">
+        <Period aria-label="Time range" />
+      </Field>,
+    ],
+  ];
+
+  for (const [name, app] of ID_CASES) {
+    test(`every id the trigger and its listbox name is on the page: ${name}`, async () => {
+      await mount(app);
+      const trigger = get('select-trigger');
+      expect(missingIds(trigger)).toEqual([]);
+      trigger.focus();
+      await userEvent.keyboard('{ArrowDown}');
+      await until(() => expect(find('select-popup')).not.toBeNull());
+      const listbox = document.querySelector('[role="listbox"]');
+      if (listbox === null) throw new Error('no listbox');
+      expect([...missingIds(trigger), ...missingIds(listbox)]).toEqual([]);
+      await userEvent.keyboard('{Escape}');
+      await until(() => expect(find('select-popup')).toBeNull());
+    });
+  }
 
   test('a label click focuses the trigger with its ring and never opens the listbox', async () => {
     await mount(

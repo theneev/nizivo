@@ -2,11 +2,11 @@
   "$comment": "Size budgets (ARCHITECTURE.md §17), written by `node packages/tooling/size/measure.ts --write`. measured: bytes, gzip -9, as size-limit 14.2 reports them. limitKiB: measured + 10%, rounded up (method.ts limitKiB), never above the entry's §17.1 plan limit (method.ts PLAN_LIMITS_KIB). Limits only go up through a labelled PR (§17.3).",
   "entries": {
     "@nizivo/react": {
-      "measured": 134672,
+      "measured": 134731,
       "limitKiB": 143
     },
     "@nizivo/react/accordion": {
-      "measured": 1328,
+      "measured": 1314,
       "limitKiB": 1.5
     },
     "@nizivo/react/alert": {
@@ -258,7 +258,7 @@
       "limitKiB": 2.6
     },
     "@nizivo/react/select": {
-      "measured": 63744,
+      "measured": 63829,
       "limitKiB": 66
     },
     "@nizivo/react/separator": {
@@ -430,7 +430,7 @@
       "limitKiB": 2.7
     },
     "@nizivo/react/unstable/model-selector": {
-      "measured": 63785,
+      "measured": 63868,
       "limitKiB": 69
     },
     "@nizivo/react/unstable/newsletter-signup": {
@@ -518,7 +518,7 @@
       "limitKiB": 1.3
     },
     "@nizivo/react dashboard set": {
-      "measured": 78942,
+      "measured": 79011,
       "limitKiB": 85
     },
     "@nizivo/react { Button } from the barrel": {
@@ -526,7 +526,7 @@
       "limitKiB": 1.4
     },
     "@nizivo/react { Select } from the barrel": {
-      "measured": 63690,
+      "measured": 63760,
       "limitKiB": 68
     },
     "@nizivo/react own: _engines/react-aria/combobox.client": {
@@ -586,7 +586,7 @@
       "limitKiB": 1.3
     },
     "@nizivo/react own: _engines/react-aria/select.client": {
-      "measured": 1505,
+      "measured": 1630,
       "limitKiB": 1.6
     },
     "@nizivo/react own: _engines/react-aria/tabs.client": {
@@ -818,7 +818,7 @@
       "limitKiB": 0.8
     },
     "@nizivo/react/css/accordion.css": {
-      "measured": 586,
+      "measured": 583,
       "limitKiB": 0.7
     },
     "@nizivo/react/css/ai-badge.css": {
@@ -1302,7 +1302,7 @@
       "limitKiB": 0.4
     },
     "@nizivo/react/styles.css": {
-      "measured": 26291,
+      "measured": 26289,
       "limitKiB": 26
     },
     "@nizivo/tokens": {
