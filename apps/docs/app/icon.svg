@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+<style>.g{fill:#1a573a}.s{fill:#ffffff}.l{stroke:#ffffff}@media (prefers-color-scheme:dark){.g{fill:#4c9e71}.s{fill:#0a211a}.l{stroke:#0a211a}}</style>
+<rect class="g" width="32" height="32" rx="10"/>
+<path class="l" d="M16 25V15.5" stroke-width="2" stroke-linecap="round" fill="none"/>
+<path class="s" d="M16 16.5C16 11.8 19.4 8 24.5 8C24.5 12.7 20.9 16.5 16 16.5Z"/>
+<path class="s" d="M16 19C16 15.4 13.2 12.5 9.2 12.5C9.2 16.1 12.1 19 16 19Z" opacity="0.72"/>
+</svg>

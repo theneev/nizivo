@@ -34,6 +34,7 @@ import {
 import { pascal } from '../lib/catalog';
 import { plainText } from '../lib/markdown';
 import { repoFileUrl } from '../lib/repo';
+import { pageMetadata } from '../lib/seo';
 import { source } from '../lib/source';
 import { HooksTable, MembersTable, OtherExports } from './api';
 import { ChartsTable } from './charts-table';
@@ -259,6 +260,11 @@ export function ChartsRoute({
 }
 
 export function chartsMetadata(part: string): Metadata {
-  const { title, description } = mdxPage(part).data;
-  return { title, ...(description === undefined ? {} : { description: plainText(description) }) };
+  const page = mdxPage(part);
+  const { title, description } = page.data;
+  return pageMetadata({
+    title,
+    description: description === undefined ? undefined : plainText(description),
+    path: page.url,
+  });
 }

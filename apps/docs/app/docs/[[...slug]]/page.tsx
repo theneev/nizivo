@@ -16,6 +16,7 @@ import { hasChartsRoute } from '../../../lib/charts-api';
 import { hasPatternRoute } from '../../../lib/patterns';
 import { plainText } from '../../../lib/markdown';
 import { outline } from '../../../lib/outline';
+import { pageMetadata } from '../../../lib/seo';
 import { source, type DocsPage as SourcePage } from '../../../lib/source';
 
 interface Props {
@@ -76,8 +77,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const page = source.getPage(slug);
   if (!page) notFound();
   const { description } = page.data;
-  return {
+  return pageMetadata({
     title: page.data.title,
-    ...(description === undefined ? {} : { description: plainText(description) }),
-  };
+    description: description === undefined ? undefined : plainText(description),
+    path: page.url,
+  });
 }

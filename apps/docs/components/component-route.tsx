@@ -11,6 +11,7 @@ import { source, type GeneratedPageData } from '../lib/source';
 import { EntryPage } from './entry-page';
 import { PageHead } from './page-head';
 import { plainText } from '../lib/markdown';
+import { pageMetadata } from '../lib/seo';
 import type { ExampleModule } from './example';
 
 function pageData(name: string): GeneratedPageData {
@@ -48,5 +49,9 @@ export function ComponentRoute({
 
 export function componentMetadata(name: string): Metadata {
   const data = pageData(name);
-  return { title: data.title, description: plainText(data.description) };
+  return pageMetadata({
+    title: data.title,
+    description: plainText(data.description),
+    path: `/docs/components/${name}/`,
+  });
 }

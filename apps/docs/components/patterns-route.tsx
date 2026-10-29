@@ -14,6 +14,7 @@ import { Callout } from './callout';
 import { PageHead } from './page-head';
 import { CODE_THEMES } from '../lib/code';
 import { plainText } from '../lib/markdown';
+import { pageMetadata } from '../lib/seo';
 import { patternCss, patternExample } from '../lib/patterns';
 import { source } from '../lib/source';
 import type { ExampleModule } from './example';
@@ -122,6 +123,11 @@ export function PatternsRoute({
 }
 
 export function patternsMetadata(name: string): Metadata {
-  const { title, description } = mdxPage(name).data;
-  return { title, ...(description === undefined ? {} : { description: plainText(description) }) };
+  const page = mdxPage(name);
+  const { title, description } = page.data;
+  return pageMetadata({
+    title,
+    description: description === undefined ? undefined : plainText(description),
+    path: page.url,
+  });
 }

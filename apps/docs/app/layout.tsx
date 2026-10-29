@@ -11,12 +11,18 @@ import { GeistMono } from 'geist/font/mono';
 import { GeistSans } from 'geist/font/sans';
 import { Provider } from '../components/provider';
 import { ThemeScript } from '@nizivo/react/theme-script';
+import { SHARE_IMAGE, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from '../lib/seo';
 
+// The defaults every page inherits; each page sets its own title, description, canonical URL and share
+// tags (lib/seo.ts). The tab icon, favicon.ico and the Apple touch icon are files in app/, which Next
+// links from every page, and the share image is public/og.png (scripts/brand-assets.ts draws all four).
 export const metadata: Metadata = {
-  title: { default: 'Nizivo UI', template: '%s · Nizivo UI' },
-  description:
-    'Nizivo UI: an accessible, server-first React design system by Neev Technologies. React Server Components, Next.js, Vite and Astro.',
-  metadataBase: new URL('https://nizivo.neevtechnologies.in'),
+  title: { default: SITE_NAME, template: `%s · ${SITE_NAME}` },
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  metadataBase: new URL(SITE_URL),
+  openGraph: { type: 'website', siteName: SITE_NAME, locale: 'en_US', images: [SHARE_IMAGE] },
+  twitter: { card: 'summary_large_image', images: [SHARE_IMAGE] },
 };
 
 export const viewport: Viewport = {

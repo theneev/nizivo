@@ -14,7 +14,9 @@
 // are reported and do not fail the run (ARCHITECTURE.md §18.1). At 375 px nothing in the page is cut off without a scroller to reach it
 // (WCAG 1.4.10), and no raw Markdown (a backtick) shows outside code. The 404
 // page answers an unknown path with status 404 and passes the same checks, and the non-HTML routes
-// (llms.txt, llms-full.txt, the search index) answer 200 with their media type. The registry: every
+// (llms.txt, llms-full.txt, the search index, robots.txt, the sitemap, the icons and the share image)
+// answer 200 with their media type. Every page has a description, its own URL as the canonical one,
+// the share image and the three icon links, and the sitemap lists exactly the pages. The registry: every
 // file /r/latest/manifest.json lists answers as JSON at /r/latest/ and at /r/v<version>/ with the
 // SHA-256 the manifest gives, and out/_headers caches both (scripts/registry.ts). Then:
 // - JavaScript: the scripts each page's HTML loads (`noModule` polyfills excluded, since modern
@@ -44,6 +46,7 @@ import type { Server } from 'node:http';
 import { join, relative, sep } from 'node:path';
 import { gzipSync } from 'node:zlib';
 import { chromium, type Browser, type BrowserContext, type Page } from 'playwright';
+import { SHARE_IMAGE, SITE_URL } from '../lib/seo.ts';
 import { isRecord } from './json.ts';
 import { serve } from './serve.ts';
 
@@ -1191,7 +1194,35 @@ const FILE_ROUTES: [path: string, type: string][] = [
   ['/llms.txt', 'text/plain'],
   ['/llms-full.txt', 'text/plain'],
   ['/api/search.json', 'application/json'],
+  // search and share (lib/seo.ts, scripts/brand-assets.ts)
+  ['/robots.txt', 'text/plain'],
+  ['/sitemap.xml', 'application/xml'],
+  ['/favicon.ico', 'image/x-icon'],
+  ['/icon.svg', 'image/svg+xml'],
+  ['/apple-icon.png', 'image/png'],
+  [SHARE_IMAGE.url, 'image/png'],
 ];
+
+/**
+ * A page's search and share tags (lib/seo.ts): a description, its own URL as the canonical one, the
+ * share image, and the tab and touch icons.
+ */
+async function headTags(page: Page, path: string, fail: string[]): Promise<void> {
+  const head = await page.evaluate(() => ({
+    canonical: document.querySelector('link[rel="canonical"]')?.getAttribute('href') ?? '',
+    image: document.querySelector('meta[property="og:image"]')?.getAttribute('content') ?? '',
+    description: document.querySelector('meta[name="description"]')?.getAttribute('content') ?? '',
+    icons: document.querySelectorAll('link[rel="icon"], link[rel="apple-touch-icon"]').length,
+  }));
+  if (head.canonical !== `${SITE_URL}${path}`) {
+    fail.push(`${path}: canonical URL is "${head.canonical}", not ${SITE_URL}${path}`);
+  }
+  if (head.image !== `${SITE_URL}${SHARE_IMAGE.url}`) {
+    fail.push(`${path}: og:image is "${head.image}"`);
+  }
+  if (head.description === '') fail.push(`${path}: no meta description`);
+  if (head.icons < 3) fail.push(`${path}: ${head.icons} icon links, not 3`);
+}
 
 /** The copy-paste registry in the export: the manifest's files, as served, with its hashes. */
 async function registryChecks(): Promise<void> {
@@ -1246,6 +1277,18 @@ async function routeChecks(browser: Browser): Promise<void> {
       `${path}: HTTP ${res.status}, ${res.headers.get('content-type') ?? 'no type'}, ${body.length} bytes`,
     );
   }
+  // the sitemap lists every page of the export, by the URL the host serves, and nothing else
+  const sitemap = await (await fetch(`${ORIGIN}/sitemap.xml`)).text();
+  const listed = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1] ?? '');
+  const pages = htmlPages().map((p) => `${SITE_URL}${p}`);
+  const unlisted = pages.filter((u) => !listed.includes(u));
+  const extra = listed.filter((u) => !pages.includes(u));
+  check(
+    unlisted.length === 0 && extra.length === 0,
+    `sitemap.xml lists the ${pages.length} pages` +
+      (unlisted.length > 0 ? `; missing ${unlisted.slice(0, 5).join(', ')}` : '') +
+      (extra.length > 0 ? `; not pages: ${extra.slice(0, 5).join(', ')}` : ''),
+  );
   await registryChecks();
   // The 404 page: an unknown path gets it with status 404, and it passes the page checks.
   const ctx = await context(browser, 'light');
@@ -1325,6 +1368,7 @@ async function main(): Promise<void> {
     const light = await pool(paths, async (path) => {
       const fail: string[] = [];
       const { page, messages, external } = await visit(ctx, path, fail);
+      await headTags(page, path, fail);
       const found = await axe(page, true);
       const r: PageResult = {
         path,
