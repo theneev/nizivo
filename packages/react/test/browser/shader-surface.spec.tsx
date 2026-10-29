@@ -37,6 +37,7 @@ const roots: Root[] = [];
 afterEach(() => {
   for (const root of roots.splice(0)) root.unmount();
   document.body.replaceChildren();
+  window.scrollTo(0, 0);
   vi.restoreAllMocks();
 });
 
@@ -129,13 +130,37 @@ describe('ShaderSurface', () => {
         ))}
       </>,
     );
+    // a surface starts when it is within a screen's height of the viewport, so each is brought near
+    const surfaces = [...container.querySelectorAll<HTMLElement>('.nz-shader-surface')];
+    await Promise.all(
+      surfaces.map(async (el, i) => {
+        await wait(50 * i);
+        el.scrollIntoView();
+      }),
+    );
     await vi.waitFor(() =>
       expect(
-        [...container.querySelectorAll<HTMLElement>('.nz-shader-surface')]
+        surfaces
           .filter((el) => !one(el, '.nz-shader-surface-poster').hidden)
           .map((el) => el.dataset['variant']),
       ).toEqual([]),
     );
+  });
+
+  test.runIf(webgl)('a surface a screen or more below the viewport stays a poster', async () => {
+    const container = await mount(
+      <>
+        <div style={{ blockSize: window.innerHeight * 3 }} />
+        <Box>
+          <ShaderSurface />
+        </Box>
+      </>,
+    );
+    await wait(300);
+    const poster = one(container, '.nz-shader-surface-poster');
+    expect(poster.hidden).toBe(false);
+    one(container, '.nz-shader-surface').scrollIntoView();
+    await vi.waitFor(() => expect(poster.hidden).toBe(true));
   });
 
   test('the dark variants and Dot Matrix resolve their tokens in the dark scheme on a light page', async () => {

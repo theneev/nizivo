@@ -414,8 +414,8 @@
       "limitKiB": 2.3
     },
     "@nizivo/react/unstable/glow-orb": {
-      "measured": 3764,
-      "limitKiB": 3.7
+      "measured": 3919,
+      "limitKiB": 3.9
     },
     "@nizivo/react/unstable/inline-assist": {
       "measured": 1698,
@@ -466,7 +466,7 @@
       "limitKiB": 1
     },
     "@nizivo/react/unstable/shader-surface": {
-      "measured": 2987,
+      "measured": 3182,
       "limitKiB": 3.5
     },
     "@nizivo/react/unstable/site-footer": {
@@ -810,7 +810,7 @@
       "limitKiB": 0.9
     },
     "@nizivo/react own: unstable/shader-surface/shader-surface.client": {
-      "measured": 427,
+      "measured": 495,
       "limitKiB": 0.5
     },
     "@nizivo/react own: unstable/slider/slider.client": {

@@ -207,7 +207,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /unstable/feature-card       |      890 |        0.9 |        813 |           1 |          134 |
 | /unstable/feedback-bar       |   19,656 |       19.2 |     17,764 |        21.2 |        2,052 |
 | /unstable/file-item          |    2,065 |        2.0 |      1,883 |         2.3 |          290 |
-| /unstable/glow-orb           |    3,764 |        3.7 |      3,447 |         3.7 |           24 |
+| /unstable/glow-orb           |    3,919 |        3.8 |      3,585 |         3.9 |           74 |
 | /unstable/inline-assist      |    1,698 |        1.7 |      1,553 |         1.9 |          247 |
 | /unstable/link               |    1,069 |        1.0 |        974 |         1.2 |          159 |
 | /unstable/live-pulse         |      793 |        0.8 |        722 |         0.9 |          128 |
@@ -220,7 +220,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /unstable/rating             |    1,551 |        1.5 |      1,412 |         1.7 |          189 |
 | /unstable/response-block     |    2,319 |        2.3 |      2,080 |         2.5 |          241 |
 | /unstable/section-header     |      845 |        0.8 |        769 |           1 |          179 |
-| /unstable/shader-surface     |    2,987 |        2.9 |      2,680 |         3.5 |          597 |
+| /unstable/shader-surface     |    3,182 |        3.1 |      2,862 |         3.5 |          402 |
 | /unstable/site-footer        |      976 |        1.0 |        909 |         1.1 |          150 |
 | /unstable/site-navbar        |    1,194 |        1.2 |      1,101 |         1.3 |          137 |
 | /unstable/slider             |    1,362 |        1.3 |      1,249 |         1.4 |           71 |
@@ -319,7 +319,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | own: unstable/model-selector/model-selector.client       |      764 |        0.7 |        696 |         0.8 |           55 |
 | own: unstable/newsletter-signup/newsletter-signup.client |      907 |        0.9 |        789 |           1 |          117 |
 | own: unstable/prompt-composer/prompt-composer.client     |      747 |        0.7 |        648 |         0.9 |          174 |
-| own: unstable/shader-surface/shader-surface.client       |      427 |        0.4 |        388 |         0.5 |           85 |
+| own: unstable/shader-surface/shader-surface.client       |      495 |        0.5 |        434 |         0.5 |           17 |
 | own: unstable/slider/slider.client                       |      842 |        0.8 |        765 |           1 |          182 |
 | own: unstable/word-rotator/word-rotator.client           |      686 |        0.7 |        636 |         0.8 |          133 |
 
@@ -457,7 +457,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /css/usage-meter.css        |      443 |        0.4 |        356 |         0.5 |           69 |
 | /css/voice-orb.css          |      974 |        1.0 |        849 |         1.1 |          152 |
 | /css/word-rotator.css       |      298 |        0.3 |        234 |         0.4 |          111 |
-| /styles.css                 |   26,289 |       25.7 |     21,051 |          26 |          335 |
+| /styles.css                 |   26,289 |       25.7 |     21,077 |          26 |          335 |
 
 #### `@nizivo/tokens`: Public JS entries (bundled with what they import, React Aria included)
 
@@ -472,7 +472,7 @@ K6 helpers alone (stateAttrs, details, EngineLocale with the config context, eng
 | /contract.json    |    3,304 |        3.2 |      2,692 |         3.5 |          280 |
 | /custom-media.css |      166 |        0.2 |        126 |         0.2 |           38 |
 | /tailwind.css     |      811 |        0.8 |        711 |         0.9 |          110 |
-| /tokens.css       |    3,949 |        3.9 |      3,273 |         4.2 |          351 |
+| /tokens.css       |    3,949 |        3.9 |      3,271 |         4.2 |          351 |
 | /tokens.json      |    8,961 |        8.8 |      7,272 |          12 |        3,327 |
 
 #### `@nizivo/icons`: Public JS entries (bundled with what they import, React Aria included)

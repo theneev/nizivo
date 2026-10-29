@@ -1,6 +1,6 @@
 // The shaders' shared runtime (M89; D-du, D-dv): one WebGL 1 fragment shader over a triangle that
-// covers a canvas, no library. It draws only while the host is on screen and the page is shown, at a
-// pixel ratio of at most 2, with `powerPreference: 'low-power'`; under reduced motion (the media
+// covers a canvas, no library. It starts once the host is near the viewport, draws
+// only while the host is on screen and the page is shown, at a pixel ratio of at most 2, with `powerPreference: 'low-power'`; under reduced motion (the media
 // query or `data-nz-motion="reduce"`) it draws one frame at t = 0, again when `wake()` is called.
 // Each shader reads its colours from the host's computed style (set from tokens in its CSS), again
 // when the theme changes. GlowOrb and ShaderSurface run on it. Plain DOM and WebGL: no directive.
@@ -37,6 +37,9 @@ export interface ShaderRun {
  * the same canvas again (React mounts an effect twice in development) can ask for it back.
  */
 const released = new WeakMap<HTMLCanvasElement, WEBGL_lose_context>();
+
+/** A frame gap, in ms, that counts as slow (the loop restarts from `last = 0`, so a pause is no gap). */
+const SLOW_FRAME = 45;
 
 const VERT = 'attribute vec2 a_pos; void main() { gl_Position = vec4(a_pos, 0.0, 1.0); }';
 
@@ -106,31 +109,45 @@ function compile(gl: WebGLRenderingContext, frag: string): WebGLProgram | null {
 }
 
 /**
- * Runs `shader` on `canvas`, sized to `host`; `null` when there is no WebGL (the poster stays).
- * `onReady` runs once the first frame is drawn. On a canvas whose context an earlier run gave back,
- * it asks for the context again and starts once it is restored.
+ * Runs `shader` on `canvas`, sized to `host`. Nothing is created until the host is within a
+ * viewport's height of the screen, so a page of many surfaces compiles only the ones in reach;
+ * until then, and when there is no WebGL, the poster stays. `onReady` runs once the first frame is
+ * drawn. On a canvas whose context an earlier run gave back, it asks for the context again and
+ * starts once it is restored.
  */
 export function runShader<Read>(
   host: HTMLElement,
   canvas: HTMLCanvasElement,
   shader: ShaderProgram<Read>,
   onReady: () => void,
-): ShaderRun | null {
-  const lost = released.get(canvas);
-  if (lost === undefined) return start(host, canvas, shader, onReady);
-  released.delete(canvas);
+): ShaderRun {
   let run: ShaderRun | null = null;
   let stopped = false;
-  const restored = (): void => {
-    if (!stopped) run = start(host, canvas, shader, onReady);
+  const go = (): void => {
+    if (stopped) return;
+    const lost = released.get(canvas);
+    if (lost === undefined) {
+      run = start(host, canvas, shader, onReady);
+      return;
+    }
+    released.delete(canvas);
+    canvas.addEventListener('webglcontextrestored', go, { once: true });
+    lost.restoreContext();
   };
-  canvas.addEventListener('webglcontextrestored', restored, { once: true });
-  lost.restoreContext();
+  const near = new IntersectionObserver(
+    ([entry]) => {
+      if (!entry?.isIntersecting) return;
+      near.disconnect();
+      go();
+    },
+    { rootMargin: '100%' },
+  );
+  near.observe(host);
   return {
     wake: () => run?.wake(),
     destroy() {
       stopped = true;
-      canvas.removeEventListener('webglcontextrestored', restored);
+      near.disconnect();
       run?.destroy();
     },
   };
@@ -173,9 +190,14 @@ function start<Read>(
   let ready = false;
   let lost = false;
   let ratio = 1;
+  // a GPU-less or weak machine: two slow frames in a row halve the canvas, twice at most, and the
+  // next two stop the loop on a still frame
+  let scale = 1;
+  let slow = 0;
+  let held = false;
   const losing = gl.getExtension('WEBGL_lose_context');
 
-  const still = (): boolean => reducedMotion(host);
+  const still = (): boolean => held || reducedMotion(host);
   const running = (): boolean => !lost && visible && !document.hidden && !still();
 
   const draw = (dt: number): void => {
@@ -194,8 +216,21 @@ function start<Read>(
   const loop = (now: number): void => {
     frame = 0;
     if (!running()) return;
-    const dt = last === 0 ? 0 : Math.min(0.1, (now - last) / 1000);
+    const gap = last === 0 ? 0 : now - last;
+    const dt = Math.min(0.1, gap / 1000);
     last = now;
+    slow = gap > SLOW_FRAME ? slow + 1 : 0;
+    if (slow === 2) {
+      slow = 0;
+      if (scale > 0.25) scale /= 2;
+      else held = true;
+      size();
+      if (held) {
+        clock = 0;
+        draw(0);
+        return;
+      }
+    }
     clock += dt;
     draw(dt);
     frame = requestAnimationFrame(loop);
@@ -215,18 +250,28 @@ function start<Read>(
     }
   };
 
-  const resize = (): void => {
-    ratio = Math.min(window.devicePixelRatio || 1, 2);
+  /** Sizes the canvas to the host; whether that changed it (which clears it). */
+  const size = (): boolean => {
+    ratio = Math.min(window.devicePixelRatio || 1, 2) * scale;
     const box = host.getBoundingClientRect();
-    canvas.width = Math.max(1, Math.round(box.width * ratio));
-    canvas.height = Math.max(1, Math.round(box.height * ratio));
-    if (frame === 0) wake();
+    const width = Math.max(1, Math.round(box.width * ratio));
+    const height = Math.max(1, Math.round(box.height * ratio));
+    if (width === canvas.width && height === canvas.height) return false;
+    canvas.width = width;
+    canvas.height = height;
+    return true;
+  };
+
+  const resize = (): void => {
+    if (size() && frame === 0) wake();
   };
 
   const sized = new ResizeObserver(resize);
   sized.observe(host);
   const seen = new IntersectionObserver(([entry]) => {
-    visible = entry?.isIntersecting ?? true;
+    const now = entry?.isIntersecting ?? true;
+    if (now === visible) return;
+    visible = now;
     wake();
   });
   seen.observe(host);

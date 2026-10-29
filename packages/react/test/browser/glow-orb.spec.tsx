@@ -151,6 +151,30 @@ describe('GlowOrb', () => {
   );
 
   test.runIf(webgl)(
+    'slow frames halve the canvas twice, then hold a still frame and stop the loop',
+    async () => {
+      let now = 0;
+      vi.spyOn(window, 'requestAnimationFrame').mockImplementation((callback) =>
+        window.setTimeout(() => callback((now += 100)), 0),
+      );
+      const level = vi.fn<() => number>(() => 0.5);
+      const container = await mount(
+        <Box>
+          <GlowOrb state="speaking" level={level} />
+        </Box>,
+      );
+      await vi.waitFor(() => expect(poster(container).hidden).toBe(true));
+      const ratio = Math.min(window.devicePixelRatio || 1, 2);
+      await vi.waitFor(() => expect(canvas(container).width).toBe(Math.round(40 * ratio)));
+      await wait(100);
+      level.mockClear();
+      await wait(300);
+      expect(level).not.toHaveBeenCalled();
+      expect(poster(container).hidden).toBe(true);
+    },
+  );
+
+  test.runIf(webgl)(
     'reduced motion: one still frame, drawn again only when the input changes',
     async () => {
       document.documentElement.dataset['nzMotion'] = 'reduce';

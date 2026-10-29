@@ -34,16 +34,23 @@ export function ShaderSurface({
   const [canvas, setCanvas] = useState<HTMLCanvasElement | null>(null);
   const [ready, setReady] = useState(false);
 
-  // the variant's program loads first (its own chunk); a new variant starts a new run
+  // the variant's program loads first (its own chunk), once the page has loaded so the poster paints
+  // and the page becomes interactive first; a new variant starts a new run
   useEffect(() => {
     if (host === null || canvas === null) return undefined;
     let run: ShaderRun | null = null;
     let gone = false;
-    void loadProgram(variant).then((frag) => {
-      if (!gone) run = startShaderSurface(host, canvas, frag, () => setReady(true));
-    });
+    const load = (): void => {
+      void loadProgram(variant).then((frag) => {
+        if (!gone) run = startShaderSurface(host, canvas, frag, () => setReady(true));
+      });
+    };
+    const loaded = document.readyState === 'complete';
+    if (loaded) load();
+    else window.addEventListener('load', load, { once: true });
     return () => {
       gone = true;
+      window.removeEventListener('load', load);
       run?.destroy();
     };
   }, [host, canvas, variant]);
