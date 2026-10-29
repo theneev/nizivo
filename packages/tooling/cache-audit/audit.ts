@@ -167,7 +167,8 @@ function packageDirs(tasks: ReadonlyMap<string, TaskInfo>): string[] {
 
 /**
  * A copy of the repo with only `files`, the root files and the node_modules links; the root
- * node_modules is a link, or with `clone` a copy-on-write copy (about 8 s).
+ * node_modules is a link, or with `clone` a copy-on-write copy on macOS (about 8 s) and a copy of
+ * hard links on Linux.
  */
 function prune(
   copy: string,
@@ -181,8 +182,22 @@ function prune(
     mkdirSync(dirname(join(copy, file)), { recursive: true });
     copyFileSync(from, join(copy, file), constants.COPYFILE_FICLONE);
   }
-  if (clone) spawnSync('cp', ['-cR', join(REPO_ROOT, 'node_modules'), join(copy, 'node_modules')]);
-  else symlinkSync(join(REPO_ROOT, 'node_modules'), join(copy, 'node_modules'));
+  if (clone) {
+    // macOS's cp clones copy-on-write (-c); GNU cp has no -c, so Linux (a cloud session) hard-links
+    // each file instead (-l) and keeps symbolic links as links (-P; pnpm's links form cycles), as
+    // fast and as free of space. A failed copy stops the audit: without node_modules every task in
+    // the copy fails for a reason that is not a missing input.
+    const flags = process.platform === 'darwin' ? '-cR' : '-RlP';
+    const cp = spawnSync(
+      'cp',
+      [flags, join(REPO_ROOT, 'node_modules'), join(copy, 'node_modules')],
+      {
+        encoding: 'utf8',
+      },
+    );
+    if (cp.status !== 0)
+      throw new Error(`cache-audit: cp ${flags} node_modules: ${cp.stderr.trim()}`);
+  } else symlinkSync(join(REPO_ROOT, 'node_modules'), join(copy, 'node_modules'));
   for (const dir of dirs) {
     const from = join(REPO_ROOT, dir, 'node_modules');
     if (dir === '.' || !existsSync(from)) continue;
