@@ -154,6 +154,7 @@
         "!RESULTS.md",
         "!scripts/smoke.ts",
         "!scripts/serve.ts",
+        "!scripts/readme-images.ts",
         "$TURBO_ROOT$/contracts/api/**",
         "$TURBO_ROOT$/packages/react/package.json",
         "$TURBO_ROOT$/packages/react/src/**/*.example.tsx",
