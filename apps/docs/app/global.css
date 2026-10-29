@@ -566,6 +566,10 @@ code.shiki:not(.not-fumadocs-code *) span {
     grid-template-columns: minmax(0, 1fr);
     gap: var(--nz-space-10);
     padding: var(--nz-space-24) var(--nz-home-pad) var(--nz-space-12);
+    /* the browser skips a section's layout and paint until it is near the screen; the height it
+       reserves meanwhile is a typical section's, and the real one once it has been shown */
+    content-visibility: auto;
+    contain-intrinsic-block-size: auto 44rem;
   }
   .nz-home-head {
     display: grid;
@@ -1395,6 +1399,7 @@ code.shiki:not(.not-fumadocs-code *) span {
   @media (width < 48rem) {
     .nz-home-section {
       padding-block-start: var(--nz-space-16);
+      contain-intrinsic-block-size: auto 73rem;
     }
     .nz-home-title {
       font: var(--nz-font-heading-h1);

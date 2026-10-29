@@ -191,7 +191,7 @@ function HeroCluster(): JSX.Element {
         <span className="nz-home-photo">
           {/* lazy: React preloads an eager <img>, and every page that prefetches "/" (the header's
               home link) then warns that the preload went unused */}
-          <img src="/home/mug.jpg" alt="" width={240} height={240} loading="lazy" />
+          <img src="/home/mug-360.webp" alt="" width={240} height={240} loading="lazy" />
           <Badge tone="success" dot>
             Active
           </Badge>
@@ -199,9 +199,9 @@ function HeroCluster(): JSX.Element {
       </Card.Root>
       <Card.Root padding="sm" className="nz-home-float" data-at="people">
         <AvatarGroup size="sm">
-          <Avatar name="Maya" src="/home/portrait-2.jpg" />
-          <Avatar name="Ines" src="/home/portrait-3.jpg" />
-          <Avatar name="Clara" src="/home/portrait-4.jpg" />
+          <Avatar name="Maya" src="/home/portrait-2.webp" />
+          <Avatar name="Ines" src="/home/portrait-3.webp" />
+          <Avatar name="Clara" src="/home/portrait-4.webp" />
         </AvatarGroup>
         <span className="nz-home-float-label">Editing with 3 others</span>
       </Card.Root>
@@ -447,7 +447,7 @@ export function DesignLanguage(): JSX.Element {
         </span>
         <div className="nz-home-bento-player">
           <HomePlayer
-            artwork={<img src="/home/mug.jpg" alt="" width={720} height={720} loading="lazy" />}
+            artwork={<img src="/home/mug.webp" alt="" width={720} height={720} loading="lazy" />}
           />
         </div>
         <Card.Root tone="inverse" className="nz-home-bento-mark">
@@ -476,7 +476,7 @@ export function DesignLanguage(): JSX.Element {
           className="nz-home-bento-profile"
           headingLevel={3}
           name="Alex Rivera"
-          avatar={<Avatar name="Alex Rivera" src="/home/portrait-1.jpg" size="xl" decorative />}
+          avatar={<Avatar name="Alex Rivera" src="/home/portrait-1.webp" size="xl" decorative />}
           description="Product designer · Lisbon"
           stats={[
             { label: 'Posts', value: '142' },
@@ -689,7 +689,7 @@ export function Library({ facts }: { facts: HomeFacts }): JSX.Element {
               quote="We rebuilt our checkout in two weeks and the accessibility review came back clean the first time."
               name="Maya Lindqvist"
               jobTitle="Founder, Moss & Kiln"
-              avatar={<Avatar name="Maya Lindqvist" src="/home/portrait-1.jpg" decorative />}
+              avatar={<Avatar name="Maya Lindqvist" src="/home/portrait-1.webp" decorative />}
             />
           </Showcase>
           <div className="nz-home-card nz-home-stat">
@@ -718,14 +718,14 @@ export function Library({ facts }: { facts: HomeFacts }): JSX.Element {
                 title="Jonah Okafor commented on Autumn launch"
                 detail="“Love the new cover photo — ship it.”"
                 time="2 min ago"
-                avatar={<Avatar name="Jonah Okafor" src="/home/portrait-2.jpg" decorative />}
+                avatar={<Avatar name="Jonah Okafor" src="/home/portrait-2.webp" decorative />}
               />
               <NotificationItem
                 href="/docs/components/notification-item/"
                 title="Ines Duarte approved the price change"
                 detail="Stoneware mug — Sage, now $38"
                 time="1 h ago"
-                avatar={<Avatar name="Ines Duarte" src="/home/portrait-3.jpg" decorative />}
+                avatar={<Avatar name="Ines Duarte" src="/home/portrait-3.webp" decorative />}
               />
             </div>
           </Showcase>
