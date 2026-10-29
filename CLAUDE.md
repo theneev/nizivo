@@ -5,7 +5,7 @@ steps (GitHub settings, npm, Figma, DNS). Dayitava owns design and accessibility
 
 ## Where things are
 
-- `docs/ARCHITECTURE.md` is the source of truth. The latest work is §21.2 (the newest "Week N
+- `docs/ARCHITECTURE.md` is the source of truth. The latest work is §21.3 (the newest "Week N
   status" paragraph and its "Open" list); decisions are §23.3 (M-rows, the maintainer's words quoted
   verbatim) and §23.4 (D-rows, builder defaults the maintainer can override).
 - Each week's results and open questions: `packages/*/WNN-RESULTS.md` ("For the maintainer").

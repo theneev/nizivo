@@ -29,7 +29,6 @@ import { NotificationItem } from '@nizivo/react/unstable/notification-item';
 import { ProfileCard } from '@nizivo/react/unstable/profile-card';
 import { Rating } from '@nizivo/react/unstable/rating';
 import { ShaderSurface } from '@nizivo/react/unstable/shader-surface';
-import { SiteFooter } from '@nizivo/react/unstable/site-footer';
 import { StatBlock } from '@nizivo/react/unstable/stat-block';
 import { SuggestionChip } from '@nizivo/react/unstable/suggestion-chip';
 import { Tag } from '@nizivo/react/unstable/tag';
@@ -190,7 +189,9 @@ function HeroCluster(): JSX.Element {
       </SuggestionChip>
       <Card.Root padding="sm" className="nz-home-float" data-at="photo">
         <span className="nz-home-photo">
-          <img src="/home/mug.jpg" alt="" width={240} height={240} />
+          {/* lazy: React preloads an eager <img>, and every page that prefetches "/" (the header's
+              home link) then warns that the preload went unused */}
+          <img src="/home/mug.jpg" alt="" width={240} height={240} loading="lazy" />
           <Badge tone="success" dot>
             Active
           </Badge>
@@ -445,7 +446,9 @@ export function DesignLanguage(): JSX.Element {
           <ShaderSurface />
         </span>
         <div className="nz-home-bento-player">
-          <HomePlayer artwork={<img src="/home/mug.jpg" alt="" width={720} height={720} />} />
+          <HomePlayer
+            artwork={<img src="/home/mug.jpg" alt="" width={720} height={720} loading="lazy" />}
+          />
         </div>
         <Card.Root tone="inverse" className="nz-home-bento-mark">
           <Mark size={72} />
@@ -976,54 +979,5 @@ export function Closing(): JSX.Element {
         }
       />
     </div>
-  );
-}
-
-export function HomeFooter({ version }: { version: string }): JSX.Element {
-  return (
-    <SiteFooter
-      className="nz-home-footer"
-      brand={
-        <a href="/" className="nz-home-footer-brand">
-          <Mark size={28} />
-          <span className="nz-visually-hidden">Nizivo UI home</span>
-        </a>
-      }
-      description="Calm, accessible product UI from one set of tokens."
-      columns={[
-        {
-          title: 'Product',
-          links: [
-            { label: 'Components', href: '/docs/components/' },
-            { label: 'Patterns', href: '/docs/patterns/' },
-            { label: 'Charts', href: '/docs/charts/' },
-            { label: 'Changelog', href: '/docs/changelog/' },
-          ],
-        },
-        {
-          title: 'Resources',
-          links: [
-            { label: 'Getting started', href: '/docs/getting-started/next/' },
-            { label: 'Foundations', href: '/docs/foundations/colour/' },
-            { label: 'Tokens', href: '/docs/foundations/tokens/' },
-            { label: 'Icons', href: '/docs/icons/' },
-          ],
-        },
-        {
-          title: 'Project',
-          links: [
-            { label: 'GitHub', href: REPO_URL },
-            { label: 'npm', href: 'https://www.npmjs.com/package/@nizivo/react' },
-            { label: 'Licence', href: `${REPO_URL}/blob/main/LICENSE` },
-          ],
-        },
-      ]}
-      legal={
-        <>
-          <span>Nizivo UI · v{version}</span>
-          <span>Apache-2.0</span>
-        </>
-      }
-    />
   );
 }

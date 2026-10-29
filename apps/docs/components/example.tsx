@@ -6,7 +6,7 @@
 import { createElement, type ComponentType, type JSX } from 'react';
 import { ServerCodeBlock } from 'fumadocs-ui/components/codeblock.rsc';
 import { CODE_THEMES } from '../lib/code';
-import { Callout } from 'fumadocs-ui/components/callout';
+import { Callout } from './callout';
 import { Heading } from 'fumadocs-ui/components/heading';
 import type { ExampleEntry } from '../lib/examples';
 import { exampleId } from '../lib/examples';

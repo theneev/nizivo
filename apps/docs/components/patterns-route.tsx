@@ -8,9 +8,10 @@
 import { createElement, type ComponentType, type JSX } from 'react';
 import type { Metadata } from 'next';
 import type { MDXComponents } from 'mdx/types';
-import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/notebook/page';
+import { DocsBody, DocsPage } from 'fumadocs-ui/layouts/notebook/page';
 import { ServerCodeBlock } from 'fumadocs-ui/components/codeblock.rsc';
-import { Callout } from 'fumadocs-ui/components/callout';
+import { Callout } from './callout';
+import { PageHead } from './page-head';
 import { CODE_THEMES } from '../lib/code';
 import { plainText } from '../lib/markdown';
 import { patternCss, patternExample } from '../lib/patterns';
@@ -112,10 +113,7 @@ export function PatternsRoute({
   const Mdx = data.body;
   return (
     <DocsPage toc={data.toc} full={data.full ?? false} tabIndex={-1}>
-      <DocsTitle>{data.title}</DocsTitle>
-      <DocsDescription>
-        {data.description === undefined ? null : <InlineMd text={data.description} />}
-      </DocsDescription>
+      <PageHead url={page.url} title={data.title} description={data.description} />
       <DocsBody>
         <Mdx components={{ ...mdxComponents, ...patternsMdx(name, examples) }} />
       </DocsBody>

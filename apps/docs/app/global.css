@@ -87,8 +87,8 @@ code.shiki:not(.not-fumadocs-code *) span {
     padding: var(--nz-space-8) var(--nz-space-6);
     border: 1px solid var(--nz-border-default);
     border-bottom: 0;
-    border-start-start-radius: var(--nz-radius-lg);
-    border-start-end-radius: var(--nz-radius-lg);
+    border-start-start-radius: var(--nz-radius-xl);
+    border-start-end-radius: var(--nz-radius-xl);
     background: var(--nz-bg-surface);
     color: var(--nz-text-primary);
     font: var(--nz-font-body-m);
@@ -1488,12 +1488,38 @@ code.shiki:not(.not-fumadocs-code *) span {
 /* Unlayered from here: these rules restyle elements that Fumadocs styles with Tailwind utilities,
    and unlayered CSS beats every layer. */
 
-/* Nizivo's type scale on the docs pages, in place of Fumadocs' prose scale (a 28 px title). */
-#nd-page > h1 {
-  font: var(--nz-font-heading-h1);
-  letter-spacing: var(--nz-tracking-heading-h1);
+/* The docs pages in the home page's language (M90; derived, since Figma draws no full docs page):
+   the head (components/page-head.tsx) in the home's display type, Nizivo's heading scale in the
+   prose, code on the dark code surface as the kit's Code Block draws it, the sidebar's current page
+   as a header tab, and the previous and next links as Docs Cards. */
+.nz-docs-head {
+  display: grid;
+  gap: var(--nz-space-3);
+  margin-block-end: var(--nz-space-8);
 }
-#nd-page > h1 + p {
+.nz-docs-eyebrow {
+  margin: 0;
+  color: var(--nz-text-brand);
+  font: var(--nz-font-label-m-strong);
+}
+.nz-docs-title {
+  margin: 0;
+  color: var(--nz-text-primary);
+  font: var(--nz-font-display-m);
+  /* display-m is 44 px at 1440; a phone gets heading-h1's 32 */
+  font-size: clamp(
+    var(--nz-font-heading-h1-font-size),
+    1.2rem + 1.8vw,
+    var(--nz-font-display-m-font-size)
+  );
+  letter-spacing: var(--nz-tracking-display-m);
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+.nz-docs-lede {
+  max-inline-size: 46rem;
+  margin: var(--nz-space-1) 0 0;
+  color: var(--nz-text-secondary);
   font: var(--nz-font-body-l);
 }
 .prose :where(h2):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
@@ -1509,13 +1535,124 @@ code.shiki:not(.not-fumadocs-code *) span {
   letter-spacing: var(--nz-tracking-heading-h4);
 }
 
-/* An example's code block continues its preview: square top corners, the preview's radius below. */
+/* Code blocks: bg/code in both themes (the Code Block's surface), so the highlighting is always
+   the dark theme's, at least 5.64:1 on it (lib/code.ts). A hairline keeps the block's edge on the
+   dark canvas, where bg/code and bg/canvas meet. */
+#nd-page figure.shiki {
+  border: var(--nz-border-width-default) solid var(--nz-border-subtle);
+  border-radius: var(--nz-radius-lg);
+  background: var(--nz-bg-code);
+  color: var(--nz-text-code);
+}
+#nd-page figure.shiki code span {
+  color: var(--shiki-dark);
+}
+/* a titled block's bar: the file name in Label/S, a bg/code-elevated rule under it */
+#nd-page figure.shiki > div.border-b {
+  border-color: var(--nz-bg-code-elevated);
+  color: var(--nz-text-code-muted);
+  font: var(--nz-font-label-s);
+}
+#nd-page figure.shiki button {
+  color: var(--nz-text-code-muted);
+}
+#nd-page figure.shiki button:hover,
+#nd-page figure.shiki button[data-checked] {
+  background: var(--nz-bg-code-elevated);
+  color: var(--nz-text-code);
+}
+#nd-page figure.shiki > div.absolute {
+  backdrop-filter: none;
+}
+
+/* An example is one card: the live preview on bg/surface, its code under it on bg/code. */
 .nz-docs-preview + figure.nz-docs-example-code {
   margin-block-start: 0;
+  border-color: var(--nz-border-default);
+  border-block-start: 0;
   border-start-start-radius: 0;
   border-start-end-radius: 0;
-  border-end-start-radius: var(--nz-radius-lg);
-  border-end-end-radius: var(--nz-radius-lg);
+  border-end-start-radius: var(--nz-radius-xl);
+  border-end-end-radius: var(--nz-radius-xl);
+}
+
+/* MDX callouts are the kit's Alert (components/callout.tsx); prose gives its paragraphs margins */
+.nz-docs-callout {
+  margin-block: var(--nz-space-6);
+}
+.nz-docs-callout .nz-alert-description > :first-child {
+  margin-block-start: 0;
+}
+.nz-docs-callout .nz-alert-description > :last-child {
+  margin-block-end: 0;
+}
+/* A long hash or path in running text breaks rather than run off a phone (WCAG 1.4.10; the CSP hash
+   on the Next.js page). break-word, not anywhere, so table columns keep their min-content widths. */
+.prose :where(p, li) > code,
+.nz-docs-callout code {
+  overflow-wrap: break-word;
+}
+
+/* MDX cards are Docs Cards (components/cards.tsx), in a grid of 300 px columns at least. A card with
+   no icon keeps its arrow in the corner, so the title leads. */
+.nz-docs-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 18.75rem), 1fr));
+  gap: var(--nz-space-4);
+  margin-block: var(--nz-space-6);
+}
+.nz-docs-cards .nz-docs-card:not([data-icon]) {
+  position: relative;
+  padding-inline-end: calc(var(--nz-space-6) * 2);
+}
+.nz-docs-cards .nz-docs-card:not([data-icon]) .nz-docs-card-top {
+  position: absolute;
+  inset-block-start: var(--nz-space-6);
+  inset-inline-end: var(--nz-space-6);
+}
+.nz-docs-cards .nz-docs-card:not([data-icon]) .nz-docs-card-icon {
+  display: none;
+}
+
+/* The sidebar: group names in Label/S Strong, text/tertiary; the current page as the header's tabs
+   draw theirs, bg/muted here since the sidebar sits on the canvas (bg/hover is the canvas in light) */
+:where(#nd-sidebar, #nd-sidebar-mobile) p {
+  color: var(--nz-text-tertiary);
+  font: var(--nz-font-label-s);
+  font-weight: var(--nz-font-label-m-strong-font-weight);
+}
+:where(#nd-sidebar, #nd-sidebar-mobile) a {
+  color: var(--nz-text-secondary);
+  font: var(--nz-font-label-m);
+}
+:where(#nd-sidebar, #nd-sidebar-mobile) a:hover {
+  background: var(--nz-bg-muted);
+  color: var(--nz-text-primary);
+}
+:where(#nd-sidebar, #nd-sidebar-mobile) a[data-active='true'] {
+  background: var(--nz-bg-muted);
+  color: var(--nz-text-primary);
+  font: var(--nz-font-label-m-strong);
+}
+
+/* Previous and next: Docs Cards (Figma's Docs Card 7416:59), bg/surface, radius/xl */
+#nd-page > .\@container > a {
+  gap: var(--nz-space-1);
+  padding: var(--nz-space-5);
+  border-color: var(--nz-border-subtle);
+  border-radius: var(--nz-radius-xl);
+  background: var(--nz-bg-surface);
+  color: var(--nz-text-primary);
+  font: var(--nz-font-label-l);
+  transition: box-shadow var(--nz-duration-fast) ease;
+}
+#nd-page > .\@container > a:hover {
+  background: var(--nz-bg-surface);
+  box-shadow: var(--nz-elevation-2);
+}
+#nd-page > .\@container > a > p {
+  color: var(--nz-text-secondary);
+  font: var(--nz-font-body-s);
 }
 
 /* Skip-link targets take focus so the next Tab starts inside them; they are not controls. */

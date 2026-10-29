@@ -1,6 +1,7 @@
 import type { JSX, ReactNode } from 'react';
 import { HomeLayout } from 'fumadocs-ui/layouts/home';
-import { HomeAnnouncement, HomeFooter } from '../../components/home';
+import { HomeAnnouncement } from '../../components/home';
+import { PageFooter } from '../../components/site-footer';
 import { SiteHeader } from '../../components/site-header';
 import { SkipLink } from '../../components/skip-link';
 import { VERSION } from '../../lib/version';
@@ -24,7 +25,7 @@ export default function Layout({ children }: { children: ReactNode }): JSX.Eleme
         {children}
       </HomeLayout>
       {/* after <main>, so it stays the page's contentinfo landmark */}
-      <HomeFooter version={VERSION} />
+      <PageFooter version={VERSION} />
     </>
   );
 }

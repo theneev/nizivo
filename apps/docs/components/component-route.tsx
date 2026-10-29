@@ -5,11 +5,11 @@
 // llms-full.txt (lib/source.ts, lib/outline.ts).
 import type { Metadata } from 'next';
 import type { JSX } from 'react';
-import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/notebook/page';
+import { DocsBody, DocsPage } from 'fumadocs-ui/layouts/notebook/page';
 import { outline } from '../lib/outline';
 import { source, type GeneratedPageData } from '../lib/source';
 import { EntryPage } from './entry-page';
-import { InlineMd } from './inline-md';
+import { PageHead } from './page-head';
 import { plainText } from '../lib/markdown';
 import type { ExampleModule } from './example';
 
@@ -34,10 +34,11 @@ export function ComponentRoute({
   const { toc } = outline(data.entry);
   return (
     <DocsPage toc={toc} tabIndex={-1}>
-      <DocsTitle>{data.title}</DocsTitle>
-      <DocsDescription>
-        <InlineMd text={data.description} />
-      </DocsDescription>
+      <PageHead
+        url={`/docs/components/${name}`}
+        title={data.title}
+        description={data.description}
+      />
       <DocsBody>
         <EntryPage entry={data.entry} examples={examples} />
       </DocsBody>

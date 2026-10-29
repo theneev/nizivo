@@ -22,10 +22,10 @@
 //   A page loads a Nizivo client module only when one of its examples renders it: Select, Tooltip,
 //   Dialog and Alert's dismiss leaf, each on its own page and nowhere else;
 // - theme: the switch moves both Fumadocs (`dark` class) and Nizivo (`data-nz-theme`), and the page
-//   background, a live example and code highlighting follow (code from `data-nz-theme`, not the
-//   class); ThemeScript has the stored choice (`nz-theme`) or the server's `system` on <html> before
-//   <body> exists, and the first frame with a painted background is already in the right theme (no
-//   flash), for the OS preference and for each stored choice;
+//   background and a live example follow, and code blocks stay on the dark code surface in its dark
+//   colours (M90); ThemeScript has the stored choice (`nz-theme`) or the server's `system` on
+//   <html> before <body> exists, and the first frame with a painted background is already in the
+//   right theme (no flash), for the OS preference and for each stored choice;
 // - nesting: colour swatches keep their own scheme and an inverse Card flips, so `light-dark()`
 //   reached the browser unlowered (the browserslist in package.json);
 // - Tailwind: the `nz` utilities of @nizivo/tokens/tailwind.css compile and follow nested scopes;
@@ -63,6 +63,8 @@ const RGB = {
   canvasDark: 'rgb(16, 19, 17)', // --nz-p-neutral-950
   surfaceLight: 'rgb(255, 255, 255)', // --nz-p-neutral-0
   surfaceDark: 'rgb(24, 27, 25)', // --nz-p-neutral-900
+  codeLight: 'rgb(24, 27, 25)', // --nz-bg-code: --nz-p-neutral-900
+  codeDark: 'rgb(16, 19, 17)', // --nz-p-neutral-950
 };
 
 /** Client modules of @nizivo/react, recognised by a string only their code contains. */
@@ -631,7 +633,15 @@ async function themeChecks(browser: Browser): Promise<void> {
     (await bg(page, trigger)) === RGB.surfaceLight,
     'theme: light Select trigger is --nz-bg-surface',
   );
-  check((await codeColours(page)) === 'light', 'theme: code highlighting is in its light colours');
+  // code sits on the dark code surface in both themes (M90), so its highlighting is the dark theme's
+  check(
+    (await codeColours(page)) === 'dark',
+    'theme: code highlighting is in its dark colours in light, on bg/code',
+  );
+  check(
+    (await bg(page, '#nd-page figure.shiki')) === RGB.codeLight,
+    'theme: light code blocks are --nz-bg-code',
+  );
   // the header's theme button steps Light → Dark → System (components/site-header.tsx, M90)
   const themeButton = page.locator('[data-site-theme]').first();
   for (let i = 0; i < 3; i += 1) {
@@ -659,16 +669,10 @@ async function themeChecks(browser: Browser): Promise<void> {
     (await bg(page, trigger)) === RGB.surfaceDark,
     'theme: dark Select trigger follows (live example)',
   );
+  check((await codeColours(page)) === 'dark', 'theme: code highlighting stays in its dark colours');
   check(
-    (await codeColours(page)) === 'dark',
-    'theme: code highlighting follows to its dark colours',
-  );
-  // ThemeScript sets the theme before next-themes sets the class, so the code colours must not need
-  // the class: without it, they stay dark.
-  await page.evaluate(() => document.documentElement.classList.remove('dark'));
-  check(
-    (await codeColours(page)) === 'dark',
-    'theme: code highlighting follows data-nz-theme, not the dark class',
+    (await bg(page, '#nd-page figure.shiki')) === RGB.codeDark,
+    'theme: dark code blocks follow --nz-bg-code',
   );
   await ctx.close();
 

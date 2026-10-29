@@ -8,9 +8,9 @@
 import type { Metadata } from 'next';
 import type { JSX } from 'react';
 import { notFound } from 'next/navigation';
-import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/notebook/page';
+import { DocsBody, DocsPage } from 'fumadocs-ui/layouts/notebook/page';
 import { EntryPage } from '../../../components/entry-page';
-import { InlineMd } from '../../../components/inline-md';
+import { PageHead } from '../../../components/page-head';
 import { mdxComponents } from '../../../components/mdx';
 import { hasChartsRoute } from '../../../lib/charts-api';
 import { hasPatternRoute } from '../../../lib/patterns';
@@ -41,10 +41,7 @@ export default async function Page({ params }: Props): Promise<JSX.Element> {
     const { toc } = outline(data.entry);
     return (
       <DocsPage toc={toc} tabIndex={-1}>
-        <DocsTitle>{data.title}</DocsTitle>
-        <DocsDescription>
-          {data.description === undefined ? null : <InlineMd text={data.description} />}
-        </DocsDescription>
+        <PageHead url={page.url} title={data.title} description={data.description} />
         <DocsBody>
           <EntryPage entry={data.entry} />
         </DocsBody>
@@ -56,10 +53,7 @@ export default async function Page({ params }: Props): Promise<JSX.Element> {
   const Mdx = data.body;
   return (
     <DocsPage toc={data.toc} full={data.full ?? false} tabIndex={-1}>
-      <DocsTitle>{data.title}</DocsTitle>
-      <DocsDescription>
-        {data.description === undefined ? null : <InlineMd text={data.description} />}
-      </DocsDescription>
+      <PageHead url={page.url} title={data.title} description={data.description} />
       <DocsBody>
         <Mdx components={mdxComponents} />
       </DocsBody>

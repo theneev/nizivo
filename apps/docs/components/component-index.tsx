@@ -1,8 +1,8 @@
 // Every component and utility entry, generated from the exports map (lib/catalog.ts).
 import type { JSX } from 'react';
-import { Card, Cards } from 'fumadocs-ui/components/card';
 import { catalog } from '../lib/catalog';
 import { outline } from '../lib/outline';
+import { Card, Cards } from './cards';
 import { InlineMd } from './inline-md';
 
 export function ComponentIndex({

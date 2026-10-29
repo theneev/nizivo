@@ -2,9 +2,9 @@
 // The site's header (Figma's Docs Header 7416:78, on the Website and Docs Site pages; M90): the
 // sprout mark and the version, the section tabs, search, GitHub, the theme and "Get started". It
 // replaces Fumadocs' own nav on the home page and the docs pages alike. The current section's tab
-// carries aria-current; below 1024 px the tabs go into a menu, and on a docs page a second button
-// opens the sidebar. Search opens the docs' static-index dialog (components/search-dialog.tsx), as
-// ⌘K does. The theme button steps Light, Dark, System, so a reader who picked one can follow the
+// carries aria-current (lib/sections.ts); below 1024 px the tabs go into a menu, and on a docs page
+// a second button opens the sidebar, the current section's pages. Search opens the docs'
+// static-index dialog (components/search-dialog.tsx), as ⌘K does. The theme button steps Light, Dark, System, so a reader who picked one can follow the
 // OS again (Fumadocs' three-way switch did the same).
 import type { JSX } from 'react';
 import Link from 'next/link';
@@ -23,41 +23,9 @@ import { PanelLeft } from '@nizivo/icons/panel-left';
 import { Search } from '@nizivo/icons/search';
 import { Sun } from '@nizivo/icons/sun';
 import { REPO_URL } from '../lib/repo-url';
+import { SECTIONS, sectionOf } from '../lib/sections';
 import { Mark } from './site-mark';
 import { VERSION } from '../lib/version';
-
-/** The section tabs, each with the routes it covers. */
-export const SECTIONS: readonly { label: string; href: string; covers: readonly string[] }[] = [
-  {
-    label: 'Docs',
-    href: '/docs/',
-    covers: ['/docs/', '/docs/getting-started/', '/docs/guides/', '/docs/icons/'],
-  },
-  {
-    label: 'Components',
-    href: '/docs/components/',
-    covers: ['/docs/components/', '/docs/dashboard/', '/docs/charts/', '/docs/utilities/'],
-  },
-  { label: 'Foundations', href: '/docs/foundations/colour/', covers: ['/docs/foundations/'] },
-  { label: 'Tokens', href: '/docs/foundations/tokens/', covers: ['/docs/foundations/tokens/'] },
-  { label: 'Patterns', href: '/docs/patterns/', covers: ['/docs/patterns/'] },
-  { label: 'Changelog', href: '/docs/changelog/', covers: ['/docs/changelog/'] },
-];
-
-/** The tab the path belongs to: the one with the longest matching route (Tokens over Foundations). */
-function current(path: string): string | undefined {
-  const withSlash = path.endsWith('/') ? path : `${path}/`;
-  let best: { label: string; length: number } | undefined;
-  for (const section of SECTIONS) {
-    for (const route of section.covers) {
-      const hit = route === '/docs/' ? withSlash === route : withSlash.startsWith(route);
-      if (hit && (best === undefined || route.length > best.length)) {
-        best = { label: section.label, length: route.length };
-      }
-    }
-  }
-  return best?.label;
-}
 
 /** GitHub's mark, decorative: the link carries the name. */
 function GitHubMark(): JSX.Element {
@@ -130,7 +98,7 @@ function SearchButton(): JSX.Element {
   );
 }
 
-/** On a docs page below 1024 px: opens the sidebar, the pages of every section. */
+/** On a docs page below 1024 px: opens the sidebar, the current section's pages. */
 function SidebarButton(): JSX.Element {
   const { open, setOpen } = useSidebar();
   return (
@@ -148,7 +116,7 @@ function SidebarButton(): JSX.Element {
 
 export function SiteHeader({ docs = false }: { docs?: boolean }): JSX.Element {
   const path = usePathname();
-  const active = current(path);
+  const active = sectionOf(path)?.label;
   return (
     <header className="nz-site-header" data-docs={docs ? '' : undefined}>
       <div className="nz-site-brand">
