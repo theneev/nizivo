@@ -7,7 +7,11 @@
    14, off the scale; Product Row 12, D-bz); a row with a link shows bg/hover on hover; a selected
    row bg/brand-subtle. Numbers are end-aligned in tabular figures. Cells keep to one line. */
 @layer nz.components {
+  /* positioned, so it is the containing block of what sits in it: a visually hidden (absolutely
+     positioned) header in a column past the screen's edge scrolls with the table instead of
+     widening the page (GitHub #1) */
   .nz-table-container {
+    position: relative;
     overflow-x: auto;
     border: var(--nz-border-width-default) solid var(--nz-table-border, var(--nz-border-subtle));
     border-radius: var(--nz-table-radius, var(--nz-radius-md));

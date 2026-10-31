@@ -194,6 +194,46 @@ describe('Table', () => {
     expect(container.scrollWidth).toBeGreaterThan(container.clientWidth);
     expect(container.getBoundingClientRect().width).toBeLessThanOrEqual(360);
   });
+
+  // GitHub #1: the container is the containing block of what sits in it, so a visually hidden
+  // (absolutely positioned) header in a column past the screen's edge scrolls with the table and
+  // never widens the page, which a phone would zoom out to fit
+  test('a visually hidden header in an off-screen column leaves the page its width', async () => {
+    await page.viewport(390, 844);
+    try {
+      const columns = Array.from({ length: 8 }, (_, i) => `Column ${i + 1}`);
+      await hydrate(
+        <Table.Container>
+          <Table.Root>
+            <Table.Header>
+              <Table.Row>
+                {columns.map((column) => (
+                  <Table.Head key={column}>{column}</Table.Head>
+                ))}
+                <Table.Head>
+                  <span className="nz-visually-hidden">Actions</span>
+                </Table.Head>
+              </Table.Row>
+            </Table.Header>
+            <Table.Body>
+              <Table.Row>
+                {columns.map((column) => (
+                  <Table.Cell key={column}>Some cell text</Table.Cell>
+                ))}
+                <Table.Cell>Send again</Table.Cell>
+              </Table.Row>
+            </Table.Body>
+          </Table.Root>
+        </Table.Container>,
+        358,
+      );
+      const container = get('table-container');
+      expect(container.scrollWidth).toBeGreaterThan(container.clientWidth);
+      expect(document.documentElement.scrollWidth).toBeLessThanOrEqual(window.innerWidth);
+    } finally {
+      await page.viewport(1280, 800);
+    }
+  });
 });
 
 /** The font size a `font` shorthand value computes to. */
