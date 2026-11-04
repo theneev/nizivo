@@ -135,7 +135,7 @@ Measured and not changed:
 
 - **Other browsers.** Every smoke and axe check ran in Chromium 156 only: not Firefox (the 129 floor or current), not WebKit, not Safari (the 17.5 floor or current). A one-off WebKit probe of the mobile drawer saw focus move in, the page go inert and Escape close it, but Tab from the first link did not reach the drawer's buttons; it was not pursued.
 - **Forced colours and reduced motion.** The smoke test checks forced colours only on the open Select. Reduced motion was checked once by a probe (the Fumadocs drawer and dialogs drop their animations), not in the smoke test.
-- **Links on intent in Firefox** (D-ea): checked in Chromium and WebKit; Firefox did not launch in that shell. **D-eb on the host:** the cache rule was measured on a local server, so it needs `curl -I` after the next deploy.
+- **Links on intent in Firefox** (D-ea): checked in Chromium and WebKit; Firefox did not launch in that shell.
 - **Hosting.** No GitHub Pages deploy and no DNS `CNAME`; `scripts/serve.ts` imitates Pages locally.
 - **Screen readers** and real-device performance (no LCP or INP measured).
 - **Hook descriptions.** The hooks table renders a description from a `/** … */` comment, but no stylesheet has one yet.
