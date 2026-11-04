@@ -6,6 +6,7 @@ import { readdirSync } from 'node:fs';
 import { isRecord } from '../scripts/json';
 import { catalog } from './catalog';
 import { readRepoJson, readRepoText, repoPath } from './repo';
+import { sectionOf } from './sections';
 import { contract, resolveToken } from './tokens';
 import { VERSION } from './version';
 
@@ -23,10 +24,10 @@ export interface HomeFacts {
 }
 
 /** The pages in a docs content folder, its index left out. */
-function pages(folder: string): number {
-  return readdirSync(repoPath('apps/docs/content/docs', folder)).filter(
-    (f) => f.endsWith('.mdx') && f !== 'index.mdx',
-  ).length;
+function pages(folder: string): string[] {
+  return readdirSync(repoPath('apps/docs/content/docs', folder))
+    .filter((f) => f.endsWith('.mdx') && f !== 'index.mdx')
+    .map((f) => f.replace(/\.mdx$/, ''));
 }
 
 /**
@@ -63,9 +64,12 @@ export function homeFacts(): HomeFacts {
     ).length,
     contrast: contrast(),
     shaders: shaderSurface?.manifest?.variants?.['variant']?.length ?? 0,
-    foundations: pages('foundations'),
-    charts: pages('charts'),
-    patterns: pages('patterns'),
+    // the folder's pages that sit under the Foundations tab: the Tokens tab's are counted as tokens
+    foundations: pages('foundations').filter(
+      (p) => sectionOf(`/docs/foundations/${p}/`)?.label === 'Foundations',
+    ).length,
+    charts: pages('charts').length,
+    patterns: pages('patterns').length,
   };
   return cached;
 }

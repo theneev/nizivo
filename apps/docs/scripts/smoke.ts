@@ -1116,6 +1116,21 @@ async function forcedColoursChecks(browser: Browser): Promise<void> {
   await ctx.close();
 }
 
+/** Theming sits under the Tokens tab, with its sidebar and its URL unchanged (M93). */
+async function sectionChecks(browser: Browser): Promise<void> {
+  const ctx = await context(browser, 'light');
+  const { page } = await visit(ctx, '/docs/foundations/theming/');
+  const tab = await page.locator('.nz-site-tab[aria-current="page"]').allTextContents();
+  const sidebar = page.locator('#nd-sidebar');
+  const inTab = await sidebar.locator('a[href="/docs/foundations/tokens/"]').count();
+  const outOfTab = await sidebar.locator('a[href="/docs/foundations/colour/"]').count();
+  check(
+    tab.join() === 'Tokens' && inTab > 0 && outOfTab === 0,
+    `sections: Theming is under the Tokens tab (tab "${tab.join()}", All tokens ${inTab}, Colour ${outOfTab})`,
+  );
+  await ctx.close();
+}
+
 async function skipLinkChecks(browser: Browser): Promise<void> {
   for (const [path, target] of [
     ['/docs/components/badge/', 'nd-page'],
@@ -1463,6 +1478,7 @@ async function main(): Promise<void> {
     await nizivoDrawerChecks(browser);
     await forcedColoursChecks(browser);
     await skipLinkChecks(browser);
+    await sectionChecks(browser);
     await drawerChecks(browser);
     await searchChecks(browser);
   } catch (error) {

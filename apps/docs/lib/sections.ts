@@ -27,7 +27,11 @@ export const SECTIONS: readonly Section[] = [
   {
     label: 'Tokens',
     href: '/docs/foundations/tokens/',
-    covers: ['/docs/foundations/tokens/', '/docs/foundations/javascript/'],
+    covers: [
+      '/docs/foundations/tokens/',
+      '/docs/foundations/javascript/',
+      '/docs/foundations/theming/',
+    ],
   },
   { label: 'Patterns', href: '/docs/patterns/', covers: ['/docs/patterns/'] },
   { label: 'Changelog', href: '/docs/changelog/', covers: ['/docs/changelog/'] },
