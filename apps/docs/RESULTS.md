@@ -126,6 +126,15 @@ What it costs, click to the new page's heading (D-ea):
 
 Repeat visits on slow 4G, a second and third docs page in one session (D-eb): 18 `/_next/static` responses, all 304, become none; `load` goes from 857 and 881 ms to 344 and 370 ms, FCP from 432 and 420 ms to 196 and 200 ms.
 
+PageSpeed Insights on the live site after the deploy, captured 2026-11-04 at 22:05 IST, one run each (the website: its keyless API was over its daily quota that day):
+
+| Form factor | Performance | FCP and LCP | Total Blocking Time | CLS | Speed Index |
+| ----------- | ----------: | ----------: | ------------------: | --: | ----------: |
+| Mobile      |          91 |       1.4 s |              270 ms |   0 |       4.6 s |
+| Desktop     |          86 |       0.3 s |              320 ms |   0 |       1.0 s |
+
+The scores before D-dz was deployed were 81 and 63. By Lighthouse's scoring curves, desktop loses about 13 points to Total Blocking Time and reaches 90 at about 260 ms; 218 ms of its 326 ms of long-task overrun is in the chunk holding the shader runtime (63 of 269 ms on mobile, where most of the rest is in the chunk that looks like Next and React starting up). It stays as it is (M97). Taking 150 ms off mobile's FCP and LCP would add about 0.2 points, so the stylesheet's split would not move the score (M96).
+
 Measured and not changed:
 
 - **Polyfills.** Lighthouse estimates 13 KiB of legacy JavaScript in Next's chunk. The seven polyfills it names are one module, `next/dist/build/polyfills/polyfill-module.js`: 1,579 B in the chunk, 582 B with brotli.
