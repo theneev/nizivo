@@ -129,7 +129,7 @@ Repeat visits on slow 4G, a second and third docs page in one session (D-eb): 18
 Measured and not changed:
 
 - **Polyfills.** Lighthouse estimates 13 KiB of legacy JavaScript in Next's chunk. The seven polyfills it names are one module, `next/dist/build/polyfills/polyfill-module.js`: 1,579 B in the chunk, 582 B with brotli.
-- **The stylesheet.** 399,703 B, 46,359 B with brotli, on every page. Chromium's CSS coverage is no use here: it reports 96 to 97 % used on every page, with `@layer` blocks counted whole. Counting style rules that match an element after load gives 28 % of the bytes on the home page and 18 to 19 % on docs pages. In a scratch copy, the home page's cut to the 62 of 122 component stylesheets its DOM touches is 269,110 B, 34,147 B with brotli; simulated mobile FCP goes from 1,351 to 1,201 ms in two rounds of five. That is an upper bound for one page, and a real split reorders `nz.components` on every docs page, so it is left to the maintainer (Week 41).
+- **The stylesheet.** 399,703 B, 46,359 B with brotli, on every page. Chromium's CSS coverage is no use here: it reports 96 to 97 % used on every page, with `@layer` blocks counted whole. Counting style rules that match an element after load gives 28 % of the bytes on the home page and 18 to 19 % on docs pages. In a scratch copy, the home page's cut to the 62 of 122 component stylesheets its DOM touches is 269,110 B, 34,147 B with brotli; simulated mobile FCP goes from 1,351 to 1,201 ms in two rounds of five. That is an upper bound for one page, and a real split reorders `nz.components` on every docs page, so it is not built (M96).
 
 ## Not verified
 
