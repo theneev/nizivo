@@ -1131,6 +1131,29 @@ async function sectionChecks(browser: Browser): Promise<void> {
   await ctx.close();
 }
 
+/**
+ * Links prefetch on intent, not on sight (components/intent-link.tsx): a docs page asks for no other
+ * route's payload after it loads, and hovering a sidebar link asks for that link's.
+ */
+async function prefetchChecks(browser: Browser): Promise<void> {
+  const ctx = await context(browser, 'light');
+  const payloads: string[] = [];
+  ctx.on('request', (request) => {
+    if (/\.txt(\?|$)|[?&]_rsc=/.test(request.url())) payloads.push(request.url());
+  });
+  const { page } = await visit(ctx, '/docs/components/button/');
+  await page.waitForTimeout(1_500);
+  const onSight = payloads.length;
+  await page.locator('#nd-sidebar a[href="/docs/components/accordion/"]').hover();
+  await page.waitForTimeout(1_500);
+  const onHover = payloads.filter((url) => url.includes('/docs/components/accordion/')).length;
+  check(
+    onSight === 0 && onHover > 0,
+    `prefetch: none after the page loads (got ${onSight}), and hovering a link asks for its payload (${onHover})`,
+  );
+  await ctx.close();
+}
+
 async function skipLinkChecks(browser: Browser): Promise<void> {
   for (const [path, target] of [
     ['/docs/components/badge/', 'nd-page'],
@@ -1483,6 +1506,7 @@ async function main(): Promise<void> {
     await forcedColoursChecks(browser);
     await skipLinkChecks(browser);
     await sectionChecks(browser);
+    await prefetchChecks(browser);
     await drawerChecks(browser);
     await searchChecks(browser);
   } catch (error) {

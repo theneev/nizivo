@@ -3,8 +3,8 @@
 // the Introduction's "Where to start" and the Components and Utilities overviews. A card without an
 // icon keeps only its arrow, in the corner (global.css).
 import type { JSX, ReactNode } from 'react';
-import Link from 'next/link';
 import { DocsCard } from '@nizivo/react/unstable/docs-card';
+import { IntentLink as Link } from './intent-link';
 
 export function Cards({ children }: { children?: ReactNode }): JSX.Element {
   return <div className="not-prose nz-docs-cards">{children}</div>;

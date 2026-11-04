@@ -6,12 +6,14 @@
 //   script (lib/theme.ts);
 // - search: the static-index dialog (components/search-dialog.tsx) is a lazy module that is not
 //   mounted until the reader first opens search (`preload: false`), so the search engine and its
-//   index never load on a page view.
+//   index never load on a page view;
+// - links: Fumadocs' own links prefetch on intent, not on sight (components/intent-link.tsx).
 import type { JSX, ReactNode } from 'react';
 import { lazy, useEffect } from 'react';
 import { useTheme } from 'fumadocs-ui/provider/base';
 import { RootProvider } from 'fumadocs-ui/provider/next';
 import { THEME_ATTRIBUTE, THEME_STORAGE_KEY, THEME_VALUES } from '../lib/theme';
+import { IntentLink } from './intent-link';
 
 const SearchDialog = lazy(() => import('./search-dialog'));
 
@@ -40,6 +42,7 @@ export function Provider({ children }: { children: ReactNode }): JSX.Element {
         enableSystem: true,
       }}
       search={{ SearchDialog, preload: false }}
+      components={{ Link: IntentLink }}
     >
       <NizivoTheme />
       {children}

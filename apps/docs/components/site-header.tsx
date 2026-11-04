@@ -7,7 +7,6 @@
 // static-index dialog (components/search-dialog.tsx), as ⌘K does. The theme button steps Light, Dark, System, so a reader who picked one can follow the
 // OS again (Fumadocs' three-way switch did the same).
 import type { JSX } from 'react';
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useSearchContext } from 'fumadocs-ui/contexts/search';
 import { useSidebar } from 'fumadocs-ui/components/sidebar/base';
@@ -24,6 +23,7 @@ import { Search } from '@nizivo/icons/search';
 import { Sun } from '@nizivo/icons/sun';
 import { REPO_URL } from '../lib/repo-url';
 import { SECTIONS, sectionOf } from '../lib/sections';
+import { IntentLink as Link } from './intent-link';
 import { Mark } from './site-mark';
 import { VERSION } from '../lib/version';
 

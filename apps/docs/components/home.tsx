@@ -5,7 +5,6 @@
 // they name a package or a count the library does not ship. The hero's floating cards are a picture
 // of the kit, not controls: they are `inert` and hidden from assistive technology.
 import type { JSX, ReactNode } from 'react';
-import Link from 'next/link';
 import { Avatar, AvatarGroup } from '@nizivo/react/avatar';
 import { Badge } from '@nizivo/react/badge';
 import { Button } from '@nizivo/react/button';
@@ -84,6 +83,7 @@ import { Sparkles } from '@nizivo/icons/sparkles';
 import { REPO_URL } from '../lib/repo-url';
 import { swatchInk, type HomeFacts } from '../lib/home';
 import { FollowButton, HomePlayer } from './home-demos';
+import { IntentLink as Link } from './intent-link';
 import { Mark } from './site-mark';
 
 const INSTALL = [
