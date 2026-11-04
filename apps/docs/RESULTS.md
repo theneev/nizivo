@@ -101,10 +101,41 @@ The cold builds above (before the review fixes, which added no dependency and no
 
 `turbo run build --filter=@nizivo/docs --dry=json` gave `@nizivo/docs#build` a new hash after a one-line edit to each of: `packages/react/src/select/select.example.tsx`, `contracts/api/react/select.json`, `contracts/api/css/select.json`, `packages/tokens/src/code-owned/a11y/dark.overrides.tokens.json`, `packages/tokens/build/css.ts` and `docs/ARCHITECTURE.md`. An edit to `scripts/smoke.ts` leaves it unchanged, and restoring each file restores the hash. The built `@nizivo/tokens` files are not inputs: they are gitignored, so on a fresh clone they would be missing when the first hash is taken, and `dependsOn: ["^build"]` already puts the tokens build's hash into this one (rechecked after the review fixes with `packages/tokens/build/css.ts`). The task's outputs are `out/**`.
 
+## Performance, 2026-11-04 (week 41)
+
+The export served locally with brotli, ETags and the export's own `_headers`, as the host does (Cloudflare Pages sends the same `max-age=0, must-revalidate` default). Lighthouse 13.6.0 with its simulated throttling, five runs, medians. The rest is Playwright's Chromium with the network emulated at 1.6 Mbps and 150 ms (slow 4G), median of five. "Before" is the export of `1e575e9d`; both builds were measured side by side. Lighthouse scored 100 on both, so read the numbers, not the score, and do not compare them with PageSpeed, which runs on a slower machine.
+
+Traffic at a 412 px phone viewport, 1.5 s after `load` (D-ea):
+
+| Page                    | Requests after load | KiB after load | Page total KiB |
+| ----------------------- | ------------------: | -------------: | -------------: |
+| Home (`/`)              |              22 → 4 |        116 → 4 |      581 → 470 |
+| Introduction (`/docs/`) |              32 → 0 |        243 → 0 |      679 → 436 |
+| Button                  |              86 → 0 |        374 → 0 |      819 → 446 |
+
+Lighthouse's total byte weight agrees: home 585 → 471 KiB on mobile and 615 → 480 KiB on desktop, Button 829 → 447 and 937 → 447. FCP, LCP, TBT and CLS did not move, since prefetching starts after them.
+
+What it costs, click to the new page's heading (D-ea):
+
+| Click                            | Slow 4G, ms | Unthrottled, ms |
+| -------------------------------- | ----------: | --------------: |
+| Sidebar link, hover 150 ms first |   117 → 380 |       119 → 116 |
+| Sidebar link, no wait            |   115 → 378 |       108 → 110 |
+| Phone, home page's button        |   108 → 652 |       111 → 121 |
+| Phone, next-page card            |    83 → 357 |         83 → 87 |
+
+Repeat visits on slow 4G, a second and third docs page in one session (D-eb): 18 `/_next/static` responses, all 304, become none; `load` goes from 857 and 881 ms to 344 and 370 ms, FCP from 432 and 420 ms to 196 and 200 ms.
+
+Measured and not changed:
+
+- **Polyfills.** Lighthouse estimates 13 KiB of legacy JavaScript in Next's chunk. The seven polyfills it names are one module, `next/dist/build/polyfills/polyfill-module.js`: 1,579 B in the chunk, 582 B with brotli.
+- **The stylesheet.** 399,703 B, 46,359 B with brotli, on every page. Chromium's CSS coverage is no use here: it reports 96 to 97 % used on every page, with `@layer` blocks counted whole. Counting style rules that match an element after load gives 28 % of the bytes on the home page and 18 to 19 % on docs pages. In a scratch copy, the home page's cut to the 62 of 122 component stylesheets its DOM touches is 269,110 B, 34,147 B with brotli; simulated mobile FCP goes from 1,351 to 1,201 ms in two rounds of five. That is an upper bound for one page, and a real split reorders `nz.components` on every docs page, so it is left to the maintainer (Week 41).
+
 ## Not verified
 
 - **Other browsers.** Every smoke and axe check ran in Chromium 156 only: not Firefox (the 129 floor or current), not WebKit, not Safari (the 17.5 floor or current). A one-off WebKit probe of the mobile drawer saw focus move in, the page go inert and Escape close it, but Tab from the first link did not reach the drawer's buttons; it was not pursued.
 - **Forced colours and reduced motion.** The smoke test checks forced colours only on the open Select. Reduced motion was checked once by a probe (the Fumadocs drawer and dialogs drop their animations), not in the smoke test.
+- **Links on intent in Firefox** (D-ea): checked in Chromium and WebKit; Firefox did not launch in that shell. **D-eb on the host:** the cache rule was measured on a local server, so it needs `curl -I` after the next deploy.
 - **Hosting.** No GitHub Pages deploy and no DNS `CNAME`; `scripts/serve.ts` imitates Pages locally.
 - **Screen readers** and real-device performance (no LCP or INP measured).
 - **Hook descriptions.** The hooks table renders a description from a `/** … */` comment, but no stylesheet has one yet.
