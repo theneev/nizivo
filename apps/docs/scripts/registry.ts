@@ -437,6 +437,10 @@ export function buildRegistry(patterns: readonly string[]): Registry {
       '/r/latest/*',
       '  Access-Control-Allow-Origin: *',
       '  Cache-Control: public, max-age=300',
+      // Next's hashed build output, cached as `next start` serves it. Without this the host answers
+      // `max-age=0, must-revalidate`, and every page view asks again for every script and font.
+      '/_next/static/*',
+      '  Cache-Control: public, max-age=31536000, immutable',
       '',
     ].join('\n'),
   );

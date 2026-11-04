@@ -1279,6 +1279,10 @@ async function registryChecks(): Promise<void> {
     text.includes(`/r/v${version}/*`) && text.includes('/r/latest/*'),
     'registry: out/_headers caches /r/v<version>/ and /r/latest/',
   );
+  check(
+    /\/_next\/static\/\*\n {2}Cache-Control: public, max-age=31536000, immutable/.test(text),
+    'out/_headers caches the hashed build output for a year',
+  );
 }
 
 async function routeChecks(browser: Browser): Promise<void> {
